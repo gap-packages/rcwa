@@ -470,7 +470,7 @@ gap> control := PreImage(z,Image(h,PreImage(a,set)));;
 gap> control = F;
 true
 gap> nb := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[1,0,1]]);;
-gap> Complement(Image(nb));
+gap> Difference(Integers,Image(nb));
 Union of the residue classes 2(12) and 6(12)
 gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
 gap> im := Image(pc);
@@ -961,6 +961,7 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
