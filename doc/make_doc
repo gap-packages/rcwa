@@ -1,0 +1,11 @@
+
+tex manual
+bibtex manual
+makeindex manual
+tex manual
+dvips manual
+rm ../htm/*
+../../../etc/convert.pl -c -n RCWA . ../htm
+rm *.aux *.blg *.idx *.ilg *.log
+rm *~
+

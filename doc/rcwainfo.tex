@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%W  rcwainfo.tex              RCWA documentation              Stefan Kohl
+%%
+%H  @(#)$Id$
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Chapter{Getting Information about Computations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The Info class of the package}
+
+\>`RcwaInfo' V
+
+This is the Info class of the RCWA package (see~"ref:Info Functions" 
+in the {\GAP} Reference Manual for a description of the Info mechanism).
+
+\>RCWAInfo( <n> ) F
+
+For convenience: `RCWAInfo( <n> )' is a shorthand for
+`SetInfoLevel( RcwaInfo, <n> )'.
+
+\beginexample
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
+gap> Order(a);
+#I  The mapping IntegralRcwaMapping( [ [ 3, 0, 2 ], [ 3, 1, 4 ], [ 3, 0, 2 ], 
+  [ 3, -1, 4 ] 
+ ] ) has a cycle longer than 2 times the square of its modulus, hence we claim\
+ its order is infinite, although the validity of this criterium has not been p\
+roved so far.
+infinity
+gap> IsTame(T);
+#I  The 4th power of IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] 
+ ] ) has Modulus 
+16; this is larger than the square of the modulus of the base, so we claim the\
+ mapping is wild, although the validity of this criterium has not yet been pro\
+ved.
+false
+gap> StandardizingConjugator(v);
+#I  StandardConjugate for IntegralRcwaMapping( 
+[ [ -1, 2, 1 ], [ 1, -1, 1 ], [ 1, -1, 1 ] ] )
+#I  A set of representatives for the series of `halved' cycles is [ rec(
+      pts := [ 3, -1, -2, -3, 5, 4 ],
+      HalvedAt := 0 ) ].
+#I  A set of representatives for the series of `not halved' cycles is [  ].
+#I  The cycle type is [ [ 6 ], [  ] ].
+#I  [Preimage, image] - pairs defining a standardizing conjugator are 
+[ [ 0, 0 ], [ 2, 1 ], [ 1, 2 ], [ 0, 0 ], [ 2, 1 ], [ 1, 2 ], [ 3, -3 ], 
+  [ -1, -2 ], [ -2, -1 ], [ -3, 3 ], [ 5, 4 ], [ 4, 5 ] ].
+<integral rcwa mapping with modulus 3>
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E  rcwainfo.tex . . . . . . . . . . . . . . . . . . . . . . .  ends here

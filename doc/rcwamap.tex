@@ -1,0 +1,736 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%W  rcwamap.tex              RCWA documentation               Stefan Kohl
+%%
+%H  @(#)$Id$
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Chapter{Residue Class-Wise Affine Mappings}
+
+This chapter describes the functionality available for calculating with
+integral rcwa mappings.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The category of integral rcwa mappings}
+
+\>IsIntegralRcwaMapping( <f> ) C
+\>IsRcwaMapping( <f> ) C
+
+The category of all integral rcwa mappings.
+
+The version `IsRcwaMapping' is reserved as a term for denoting any kind
+of rcwa mappings, if in future versions also rcwa mappings over other
+PID's will be implemented. This also applies to similar identifiers not
+explicitly containing ...`Integral'... , wherever this makes sense.
+
+\>`IntegralRcwaMappingsFamily' V
+
+The family of all integral rcwa mappings.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Constructing rcwa mappings}
+
+\>IntegralRcwaMapping( <coeffs> ) F
+\>IntegralRcwaMapping( <perm>, <range> ) F
+\>IntegralRcwaMapping( <modulus>, <val> ) F
+\>RcwaMapping( <coeffs> ) F
+\>RcwaMapping( <perm>, <range> ) F
+\>RcwaMapping( <modulus>, <val> ) F
+
+Construction of the rcwa mapping 
+
+\beginlist
+\item{(a)}
+  with coefficients <coeffs> resp.
+\item{(b)}
+  acting on the translates of <range> by integral multiples
+  of the length of <range> as the translates of the action of the finite
+  permutation <perm> on <range> to the respective intervals,
+  where moved points of <perm> outside <range> are ignored
+  (<range> must entirely consist out of positive integers less than
+  $2^{28}$, since {\GAP} permutations can only move these), resp.
+\item{(c)}
+  with modulus <modulus> and with values prescribed by the list <val>,
+  which consists of 2 \* <modulus> pairs giving preimage and image for
+  2 points per residue class (mod <modulus>).
+\endlist
+
+In case (a), <coeffs> is a list of <m> lists of 3 integers each
+(where <m> is the modulus of the mapping), giving the coefficients $a_r$,
+$b_r$ and $c_r$ for $r = 0, \dots, m - 1$ as described in the
+introduction.
+
+\index{rcwa mappings!internal representation}
+The internal representation is always converted to a normalized (reduced)
+form, i.e. for all $r$, the coefficients $a_r$, $b_r$ and $c_r$ are
+divided by their gcd, and the mapping is reduced to the smallest possible
+modulus.
+
+\beginexample
+gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
+<integral rcwa mapping with modulus 2>
+gap> f = RcwaMapping((2,3),[2..3]);
+true
+gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
+<integral rcwa mapping with modulus 17>
+gap> Action(Group(g),[4..20]);
+Group([ ( 5, 6) ])
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
+<integral rcwa mapping with modulus 2>
+gap> T := RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]); # The same, by modulus and values.
+<integral rcwa mapping with modulus 2>
+gap> t := RcwaMapping(1,[[-1,1],[1,-1]]); # The involution n -> -n.
+<integral rcwa mapping with modulus 1>
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Extracting the components of rcwa mappings}
+
+\>Coefficients( <f> ) M
+\>CoefficientsOfRcwaMapping( <f> ) A
+
+The coefficients of the rcwa mapping <f>.
+
+\beginexample
+gap> Coefficients(T);
+[ [ 1, 0, 2 ], [ 3, 1, 2 ] ]
+\endexample
+
+\>Modulus( <f> ) O
+\>ModulusOfRcwaMapping( <f> ) A
+
+The modulus of the rcwa mapping <f>.
+
+See also `Modulus' for rcwa groups, and `IsTame'.
+
+\beginexample
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
+gap> Modulus(u);
+5
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\Section{Flat and order-preserving mappings, multiplier and divisor} 
+
+\>Multiplier( <f> ) A
+
+The multiplier of the rcwa mapping <f>.
+
+\beginexample
+gap> Multiplier(g);
+1
+gap> Multiplier(u);
+9
+gap> Multiplier(T);
+3
+\endexample
+
+\>Divisor( <f> ) A
+
+The divisor of the rcwa mapping <f>.
+
+\beginexample
+gap> Divisor(g);
+1
+gap> Divisor(u);
+5
+gap> Divisor(T);
+2
+\endexample
+
+\>IsFlat( <f> ) P
+
+Indicates whether the rcwa mapping <f> is flat or not.
+
+See also `IsFlat' for rcwa groups.
+
+\beginexample
+gap> IsFlat(g);
+true
+gap> IsFlat(u);
+false
+gap> IsFlat(T);
+false
+\endexample
+
+\>IsClassWiseOrderPreserving( <f> ) P
+
+Indicates whether the integral rcwa mapping <f> is class-wise
+order-preserving or not.
+
+See also `IsClassWiseOrderPreserving' for rcwa groups.
+
+\beginexample
+gap> IsClassWiseOrderPreserving(g);
+true
+gap> IsClassWiseOrderPreserving(u);
+true
+gap> IsClassWiseOrderPreserving(T);
+true
+gap> IsClassWiseOrderPreserving(t);
+false
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Checking for equality}
+
+\>`<f> = <g>' {rcwa mappings!equality}
+
+Tests whether the rcwa mappings <f> and <g> are equal.
+Since rcwa mappings are stored in a normalized form, this requires
+only comparing their coefficients.
+
+\beginexample
+gap> RcwaMapping([[1,1,1],[2,-2,2],[3,3,3],[4,-4,4]]) = RcwaMapping([[1,1,1],[1,-1,1]]);
+true
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Printing and displaying rcwa mappings}
+
+\>Print( <f> ) M
+
+Prints the rcwa mapping <f> in {\GAP}-readable format.
+
+\beginexample
+gap> Print(T,"\n");
+IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] ] )
+\endexample
+
+\>Display( <f> ) M
+
+Displays the rcwa mapping <f> in a nice human-readable form.
+
+\beginexample
+gap> Display(u);
+
+Integral rcwa mapping with modulus 5
+
+               n mod 5                  ||              f(n)              
+----------------------------------------+---------------------------------
+  0                                     || 3n/5
+  1                                     || (9n + 1)/5
+  2                                     || (3n - 1)/5
+  3                                     || (9n - 2)/5
+  4                                     || (9n + 4)/5
+
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Images and preimages under rcwa mappings}
+
+\>ImageElm( <f>, <n> ) M
+\>`<n>^<f>' {rcwa mappings!evaluation}
+
+Computes the image of the integer <n> under the rcwa mapping <f>.
+
+\beginexample
+gap> 15^T;
+23
+\endexample
+
+\>PreImageElm( <f>, <n> ) M
+
+Computes the preimage of the integer <n> under the bijective rcwa mapping
+<f>.
+
+\beginexample
+gap> PreImageElm(u,8);
+4
+\endexample
+
+If the mapping <f> is not bijective, we can use
+
+\>PreImagesElm( <f>, <n> ) M
+
+Computes the set of preimages of the integer <n> under the rcwa mapping
+<f>.
+
+\beginexample
+gap> PreImagesElm(T,8);
+[ 16, 5 ]
+gap> PreImagesElm(ZeroIntegralRcwaMapping,0);
+Integers
+\endexample
+
+If the preimage contains a full residue class, but is not equal to
+the full set of integers, it is not representable as a set in {\GAP}, and
+the method will give up.
+In this case, we can get at least a representative of the preimage by
+
+\>PreImagesRepresentative( <f>, <n> ) M
+
+A representative of the set of preimages of the integer <n> under the
+integral rcwa mapping <f>.
+
+\beginexample
+gap> d := RcwaMapping([[0,0,1],[0,1,1]]);;
+gap> PreImagesRepresentative(d,1);
+1
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Testing for injectivity, surjectivity and bijectivity}
+
+\>IsInjective( <f> ) M
+\>IsSurjective( <f> ) M
+\>IsBijective( <f> ) M
+
+Tests whether the rcwa mapping <f> is injective, surjective resp.
+bijective.
+
+\beginexample
+gap> IsInjective(T);
+false
+gap> IsSurjective(T);
+true
+gap> IsBijective(u);
+true
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Arithmetical operations and neutral elements}
+
+\>`<f> + <g>' {rcwa mappings!sum}
+\>`<f> - <g>' {rcwa mappings!difference}
+
+Computes the (pointwise) sum resp. difference of the rcwa mappings
+<f> and <g>.
+
+\beginexample
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
+gap> Display(a + b);
+
+Integral rcwa mapping with modulus 4
+
+               n mod 4                  ||              f(n)              
+----------------------------------------+---------------------------------
+  0 2                                   || 3n
+  1                                     || (3n + 7)/2
+  3                                     || (3n - 1)/2
+
+gap> Display(a - b);
+
+Integral rcwa mapping with modulus 4
+
+               n mod 4                  ||              f(n)              
+----------------------------------------+---------------------------------
+  0 2 3                                 || 0
+  1                                     || -3
+
+\endexample
+
+To be precise: Technically, there is no method for computing the
+difference of two rcwa mappings, but rather a method for computing
+the additive inverse of such a mapping. Then, a subtraction is
+automatically performed as an addition.
+
+\>`<f> * <g>' {rcwa mappings!product}
+
+Computes the product (composition) of the rcwa mappings <f> and <g>.
+The mapping <f> is applied first.
+
+\beginexample
+gap> Display(a*b);
+
+Integral rcwa mapping with modulus 16
+
+               n mod 16                 ||              f(n)              
+----------------------------------------+---------------------------------
+   0  4  8 12                           || 9n/4
+   1                                    || (9n + 55)/16
+   2 10                                 || (9n - 2)/8
+   3 11                                 || (9n - 3)/8
+   5 13                                 || (9n + 3)/8
+   6 14                                 || (9n + 26)/8
+   7                                    || (9n + 49)/16
+   9                                    || (9n - 1)/16
+  15                                    || (9n - 7)/16
+
+\endexample
+
+Multiplying rcwa mappings and (finite) permutations is forbidden, since
+{\GAP}-permutations can only move positive integers less than $2^{28}$;
+more precisely, one would encounter problems like the following:
+
+\begintt
+gap> (1,2)^RcwaMapping([[-1,0,1]]);
+(-2,-1)
+gap> (1,2)^RcwaMapping([[1,2^28,1]]);
+(268435457,268435458)
+\endtt
+
+\>Inverse( <f> ) M
+
+Computes the inverse mapping of the bijective rcwa mapping <f>.
+
+\beginexample
+gap> Display(Inverse(u));
+
+Integral rcwa mapping with modulus 9
+
+               n mod 9                  ||              f(n)              
+----------------------------------------+---------------------------------
+  0 3 6                                 || 5n/3
+  1 4 7                                 || (5n + 1)/3
+  2                                     || (5n - 1)/9
+  5                                     || (5n + 2)/9
+  8                                     || (5n - 4)/9
+
+\endexample
+
+\>`<f>^<g>' {rcwa mappings!conjugate}
+
+Computes the conjugate $f^g = g^{-1}fg$ of <f> under <g>.
+
+\beginexample
+gap> T^u;
+<integral rcwa mapping with modulus 18>
+\endexample
+
+\>`ZeroIntegralRcwaMapping' V
+\>Zero( <f> ) M
+
+The zero rcwa mapping.
+\index{rcwa mapping!zero} 
+
+\beginexample
+gap> Zero(a);
+<zero integral rcwa mapping>
+\endexample
+
+\>`IdentityIntegralRcwaMapping' V
+\>One( <f> ) M
+
+The identity rcwa mapping.
+\index{rcwa mapping!identity}
+
+\beginexample
+gap> One(a);
+<identity integral rcwa mapping>
+\endexample
+
+Sometimes this is also printed as `IdentityMapping( Integers )'.
+
+\index{no ring under add. and mult.}
+Caution: The set of integral rcwa mappings does not form a ring under
+addition and multiplication -- it holds only the left distibutive law
+($a*(b+c) = a*b + a*c$, but not necessary $(a+b)*c = a*c + b*c$), and
+the zero mapping multiplicatively is only a right zero element 
+($a*0 = 0$ for all $a$, but $0*a = 0$ if and only if $0^a = 0$).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Computing the order of an rcwa mapping}
+
+\>Order( <f> ) M
+
+Computes the multiplicative order of the bijective rcwa mapping <f>.
+
+One of the two sufficient criteria for <f> having infinite order which
+are used by this package relies on a currently unproved hypothesis.
+
+\beginexample
+gap> Order(Comm(a,b));
+6
+gap> Order(u);
+infinity
+\endexample
+
+The other criterium applies in case that <f> is tame:
+
+\>IsTame( <f> ) P
+
+Determines whether or not the rcwa mapping <f> is tame.
+
+See also `IsTame' for rcwa groups.
+
+\beginexample
+gap> IsTame(T);
+false
+gap> IsTame(a) or IsTame(b);
+false
+gap> IsTame(Comm(a,b));
+true
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Graph, transition matrix, prime set and variation}
+
+\>RcwaGraphAdjacencyMatrix( <f> ) O
+
+Computes the weighted adjacency matrix of the graph associated to the
+rcwa mapping <f>.
+
+\beginexample
+gap> Display(RcwaGraphAdjacencyMatrix(a));
+[ [  2,  0,  2,  0 ],
+  [  1,  1,  1,  1 ],
+  [  0,  2,  0,  2 ],
+  [  1,  1,  1,  1 ] ]
+\endexample
+
+\>RcwaGraph( <f> ) O
+
+Computes the graph associated to the rcwa mapping <f>.
+
+For technical reasons, the residue classes 0(<m>) .. <m>-1(<m>) modulo
+the modulus <m> of <f> are identified with vertices named 1 .. <m>, in
+this order.
+
+The result is returned as a `grape'-graph, hence the package `grape' has
+to be loaded via `RequirePackage' before calling this function; 
+otherwise, `fail' is returned after issueing a warning.
+
+\beginexample
+gap> RcwaGraph(a);
+rec( isGraph := true, order := 4, group := Group(()), 
+  schreierVector := [ -1, -2, -3, -4 ], 
+  adjacencies := [ [ 1, 3 ], [ 1, 2, 3, 4 ], [ 2, 4 ], [ 1, 2, 3, 4 ] ], 
+  representatives := [ 1, 2, 3, 4 ], names := [ 1, 2, 3, 4 ] )
+\endexample
+
+\>TransitionMatrix( <f>, <deg> ) F
+
+Computes the transition matrix of degree <deg> of the rcwa mapping <f>.
+
+\beginexample
+gap> M := TransitionMatrix(a,7);;
+gap> Display(M);
+[ [  1,  0,  1,  0,  0,  1,  0 ],
+  [  0,  1,  0,  0,  1,  1,  0 ],
+  [  1,  0,  0,  1,  0,  0,  0 ],
+  [  0,  1,  1,  0,  0,  0,  1 ],
+  [  0,  1,  0,  0,  0,  1,  1 ],
+  [  1,  0,  0,  0,  1,  0,  0 ],
+  [  0,  0,  1,  1,  0,  0,  1 ] ]
+gap> DeterminantMat(M);
+-5
+gap> M := TransitionMatrix(T,13);;
+gap> Display(M*One(GF(2)));
+ 1 . . . . . . 1 . . . . .
+ . . 1 . . . . 1 . . . . .
+ . 1 . . . . . . . . 1 . .
+ . . . . . 1 . . 1 . . . .
+ 1 . 1 . . . . . . . . . .
+ . . . . . . . . 1 1 . . .
+ . . . 1 . . . . . . . . .
+ . . . . . . . . . . 1 1 .
+ . . . . 1 . 1 . . . . . .
+ . 1 . . . . . . . . . 1 .
+ . . . . . 1 . . . 1 . . .
+ . . . . 1 . . . . . . . 1
+ . . . . . . 1 . . . . . 1
+gap> DeterminantMat(M);
+-16
+\endexample
+
+\>PrimeSet( <f> ) O
+
+Computes the prime set of the rcwa mapping <f>.
+
+See also `PrimeSet' for rcwa groups.
+
+\beginexample
+gap> PrimeSet(T);
+[ 2, 3 ]
+gap> PrimeSet(u);
+[ 3, 5 ]
+gap> PrimeSet(T^u);
+[ 2, 3 ]
+gap> PrimeSet(T^(u^-1));
+[ 2, 3, 5 ]
+\endexample
+
+\>Variation( <f> ) O
+
+Computes the variation of the rcwa mapping <f>.
+
+The variation of an rcwa mapping can be computed easily from its
+coefficients.
+
+\beginexample
+gap> Variation(T);
+1/2
+gap> Variation(u);
+12/25
+gap> Variation(T^u);
+23/27
+gap> Variation(T^(u^-1));
+13/30
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The normal form of an rcwa mapping}
+
+\>ShortCycles( <f>, <maxlng> ) O
+
+Computes all ``single'' finite cycles, hence all finite cycles not
+belonging to an infinite series, of the rcwa mapping <f> of length at 
+most <maxlng>.
+Since in {\GAP}, permutations cannot move negative integers, the cycles
+are returned as lists, for example, the list `[-3,1,2,-2]' denotes the
+cycle `(-3,1,2,-2)'.
+
+\beginexample
+gap> ShortCycles(a,2);
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ] ]
+gap> ShortCycles(a,5);
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], [ -9, -7, -5, -4, -6 ] ]
+gap> ShortCycles(u,2);
+[ [ 0 ], [ -1 ], [ 1, 2 ], [ 3, 5 ], [ -10, -6 ] ]
+gap> ShortCycles(Comm(a,b),10);
+[  ]
+gap> ShortCycles(a*b,2);
+[ [ 0 ], [ 2 ], [ 3 ], [ -26 ], [ 7 ], [ -3 ], [ -1 ] ]
+gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
+gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
+gap> Order(v);
+6
+gap> Order(w);
+8 
+gap> ShortCycles(v,10);
+[ [ 0, 2, 1 ] ]
+gap> ShortCycles(w,10);
+[ [ 0, 3, 2, 1 ] ]
+\endexample
+
+\>CycleType( <f> ) A
+
+The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
+lists, where the first list contains the lengths of ``halved'' cycles,
+hence the cycles belonging to a series producing a cycle of only half
+of the ``usual'' length at some point,with the respective
+multiplicities, and the second list is the set of the lengths of all
+other cycles, sortedby increasing length.
+
+\beginexample
+gap> CycleType(t);
+[ [ 2 ], [  ] ]
+gap> CycleType(RcwaMapping([[1,1,1],[1,-1,1]]));
+[ [  ], [ 2 ] ]
+gap> CycleType(v);
+[ [ 6 ], [  ] ]
+gap> CycleType(w);
+[ [ 8 ], [  ] ]
+gap> g := RcwaMapping([[-1,0,1],[1,2,1],[1,0,1],[1,-2,1]]);;
+gap> CycleType(g);
+[ [ 2 ], [ 1, 2 ] ]
+gap> CycleType(Comm(a,b));
+[ [  ], [ 1, 6 ] ]
+\endexample
+
+\>StandardConjugate( <f> ) A
+
+Some ``nice'' canonical representative of the conjugacy class of the
+bijective integral rcwa mapping <f> in the whole group RCWA($\Z$).
+Two integral rcwa mappings are conjugate in RCWA($\Z$) if and only if
+their ``standard conjugates'' are equal. 
+
+\beginexample
+gap> w_std := StandardConjugate(w);
+<integral rcwa mapping with modulus 4>
+gap> Order(w_std);
+8
+gap> ShortCycles(w_std,8);
+[ [ 0, 1, 2, 3 ] ]
+gap> ab := Comm(a,b);
+<integral rcwa mapping with modulus 18>
+gap> ab_std := StandardConjugate(ab);
+<integral rcwa mapping with modulus 7>
+gap> Display(ab_std);
+
+Integral rcwa mapping with modulus 7
+
+               n mod 7                  ||              f(n)
+----------------------------------------+---------------------------------
+  0                                     || n
+  1 2 3 4 5                             || n + 1
+  6                                     || n - 5
+
+gap> f := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
+>                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);
+<integral rcwa mapping with modulus 8>
+gap> f_std := StandardConjugate(f);
+<integral rcwa mapping with modulus 3>
+gap> Display(f_std);
+
+Integral rcwa mapping with modulus 3
+
+               n mod 3                  ||              f(n)
+----------------------------------------+---------------------------------
+  0 1                                   || n + 1
+  2                                     || n - 2
+
+\endexample
+
+\>StandardizingConjugator( <f> ) A
+
+An rcwa mapping mapping <x>, such that <f>^<x> is the ``standard''
+representative of the conjugacy class of the bijective integral
+rcwa mapping <f> in the whole integral residue class-wise affine group.
+
+\beginexample
+gap> ab_tostd := StandardizingConjugator(ab);
+<integral rcwa mapping with modulus 18>
+gap> Display(ab_tostd);
+
+Integral rcwa mapping with modulus 18
+
+               n mod 18                 ||              f(n)
+----------------------------------------+---------------------------------
+   0  9                                 || 28n/9
+   1 10                                 || (7n + 2)/9
+   2 11                                 || (28n + 7)/9
+   3 12                                 || (28n + 42)/9
+   4 13                                 || (7n + 80)/9
+   5 14                                 || (7n + 55)/9
+   6                                    || (7n + 156)/18
+   7 16                                 || (7n + 68)/9
+   8 17                                 || (28n - 35)/9
+  15                                    || (7n + 57)/18
+
+gap> ab^ab_tostd = ab_std;
+true
+gap> f_tostd := StandardizingConjugator(f);
+<bijective integral rcwa mapping with modulus 16>
+gap> Display(f_tostd);
+
+Bijective integral rcwa mapping with modulus 16
+
+               n mod 16                 ||              f(n)
+----------------------------------------+---------------------------------
+   0  8                                 || 9n/8
+   1  9                                 || (9n - 1)/8
+   2 10                                 || (9n + 6)/8
+   3 11                                 || (9n + 5)/8
+   4                                    || (9n + 44)/16
+   5 13                                 || (9n - 29)/8
+   6 14                                 || (9n - 6)/8
+   7 15                                 || (9n - 7)/8
+  12                                    || (9n + 20)/16
+
+gap> f^f_tostd = f_std;
+true
+\endexample
+
+\>`IsConjugate( RCWA( Integers ), <f>, <g> )'{IsConjugate}@{`IsConjugate'} M
+
+Checks whether the bijective integral rcwa mappings <f> and <g>
+are conjugate in the whole group RCWA($\Z$), e.g. via comparing
+their ``standard conjugates''. 
+This may fail or run into an infinite loop.
+
+\beginexample
+gap> IsConjugate(RCWA(Integers),w,w_std);
+true
+gap> IsConjugate(RCWA(Integers),a,b);
+false
+gap> IsConjugate(RCWA(Integers),ab,ab_std);
+true
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E  rcwamap.tex . . . . . . . . . . . . . . . . . . . . . . . . ends here

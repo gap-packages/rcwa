@@ -1,0 +1,162 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%W  intro.tex               RCWA documentation                Stefan Kohl
+%%
+%H  @(#)$Id$
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Chapter{Introduction}
+
+In this manual, we only give short definitions of the most important
+terms in this context.
+
+\index{rcwa mapping!definition} 
+\index{residue class-wise affine, definition}
+Let $R$ be a commutative principal ideal domain without zero-divisors,
+such that for all non-zero ideals $I$ of $R$,
+we have $|R/I| \ \< \ \infty$.
+
+We call a mapping $f$ from $R$ to itself *residue class-wise affine*
+if there is a non-zero ideal $I_f$ of $R$ such that $f$ is given on each
+residue class $r + I_f \in R/I_f$ by
+$$
+  n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r} 
+$$
+for some coefficients $a_r, b_r, c_r \in R$.
+In this case, we say that $f$ is an *rcwa mapping*.
+
+We always assume that all fractions are reduced, i.e. that
+$\gcd(a_r,b_r,c_r) = 1$, and that $I_f$ is the largest ideal having the
+described property.
+
+\index{rcwa mapping!modulus}
+We define the *modulus* ${\rm Mod}(f)$ of $f$ as the
+(up to multiplication by units uniquely determined) element $m_f$
+generating the ideal $I_f$.
+
+\index{rcwa mapping!multiplier}
+We define the *multiplier* ${\rm Mult}(f)$ of $f$ as the standard
+associate of the least common multiple of the coefficients $a_r$ in the
+numerators.
+ 
+\index{rcwa mapping!divisor}
+We define the *divisor* ${\rm Div}(f)$ of $f$ as the standard
+associate of the least common multiple of the coefficients $c_r$ in the
+denominators.
+
+\index{rcwa mapping!flat}
+We say that an rcwa mapping is *flat* in case its multiplier
+and divisor are both equal to 1.
+
+\index{rcwa mappings!integral}
+In case that the underlying ring is the ring of integers, we call an
+rcwa mapping $f$ an *integral rcwa mapping*.
+
+\index{rcwa mapping!class-wise order-preserving}
+We call an integral rcwa mapping *class-wise order-preserving* if its
+restriction to any residue class modulo its modulus is order-preserving.
+
+\index{rcwa mapping!graph}
+We define the *graph* $\Gamma_f$ associated to an rcwa mapping $f$ with 
+modulus $m$ as follows :
+\beginlist
+
+   \item{-} The vertices are the residue classes (mod $m$).
+
+   \item{-} There is an edge from $r_1(m)$ to $r_2(m)$ if and only if
+            there is some $n_1 \in r_1(m)$ such that
+            $n_1^f \in r_2(m)$.
+
+\endlist
+
+\index{rcwa mapping!weighted adjacency matrix}
+We define the *weighted adjacency matrix* $M$  of $\Gamma_f$, where $f$
+is an integral rcwa mapping, as follows : for all
+$i,j \in \{1, \dots, m\}$, let
+$$
+  M_{ij} \ := \ 
+  \left|
+    \left\{
+      0 \leq n \< m \cdot c, \
+      n \equiv i-1 \ (m), \ n^f \equiv j-1 \ (m)
+    \right\}
+  \right|,
+$$
+where $c$ denotes the least common multiple of the $c_r$'s.
+
+\index{rcwa mapping!transition matrix}
+\index{rcwa mapping!transitional rank}
+\index{rcwa mapping!transitional determinant}
+We define the *transition matrix* $M$ of degree $d$ of the integral rcwa
+mapping $f$ by $M_{i+1,j+1} = 1$ if there is an $n \equiv i$
+(mod $d$) such that $n^f \equiv j$ (mod $d$), and 0 if not.
+Their rank (and in case it is invertible the absolute value of its 
+determinant) does not depend on the particular assignment of the residue
+classes (mod $d$) to rows/columns, hence accordingly, we can define the
+*transitional rank* resp. the *transitional determinant* of $f$ of
+degree $d$ for any rcwa mapping.
+
+\index{rcwa mapping!prime set}
+We define the *prime set* of an rcwa mapping $f$ as the set of all prime
+elements dividing the modulus of $f$ or some coefficient $a_r$ or $c_r$
+(in the notation used above).
+ 
+\index{rcwa mapping!variation}
+We define the *variation* of an integral rcwa mapping $f$ as
+$$
+  \lim_{n \rightarrow \infty} \
+  \frac{1}{2n^2} \sum_{i=-n}^{n-1} \left| i^f - (i+1)^f \right|.
+$$
+The variation is some kind of measure for how much the mapping $f$ is
+``oscillating''.
+
+We set ${\rm RCWA}(R) \ := \ \{ \ \sigma \in {\rm Sym}(R) \ | \ \sigma$
+is residue class-wise affine $\}$.
+
+The set ${\rm RCWA}(R)$ is closed under multiplication and taking
+inverses (this can be verified easily), hence forms a subgroup of
+${\rm Sym}(R)$.
+Since $R$ contains no zero-divisors and the quotients $R/I$ are
+all finite, this subgroup is proper.
+
+\index{rcwa group!definition}
+We call a subgroup of ${\rm RCWA}(R)$ a residue class-wise affine group,
+or shortly, an *rcwa group*.
+
+\index{rcwa group!flat}
+We call an rcwa group *flat* if all of its elements are.
+
+\index{rcwa group!class-wise order-preserving}
+We call an integral rcwa group *class-wise order-preserving* if all of
+its elements are.
+
+\index{rcwa group!prime set}
+We define the *prime set* of an rcwa group as the union of the prime sets
+of its elements.
+
+\index{rcwa group!modulus}
+We define the *modulus* of an rcwa group $G$ as the least common multiple
+of the moduli of its elements in case this is finite, and zero otherwise.
+
+\index{rcwa mapping!tame}
+\index{rcwa mapping!wild}
+\index{rcwa group!tame}
+\index{rcwa group!wild}
+We say that an $R$-rcwa mapping $f$ is *tame* if and only if
+the moduli of its powers are bounded, and *wild* otherwise.
+Furthermore, we say that an $R$-rcwa group is tame if and only if
+its modulus is strictly positive, and wild otherwise.
+
+\index{rcwa representation!definition}
+We define an ($R$-) *rcwa representation* of a group $G$ as an
+homomorphism from $G$ to ${\rm RCWA}(R)$.
+
+For an introduction to this topic, see~\cite{Kohl01}.
+
+In this package, we (currently) restrict to the case of integral
+rcwa mappings.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E  intro.tex . . . . . . . . . . . . . . . . . . . . . . . . . ends here
