@@ -1,7 +1,7 @@
 #!/bin/sh
 #############################################################################
 ##
-#W  mktest            Test the RCWA manual examples            Volkmar Felsch
+#W  mktest         Test the ResClasses manual examples         Volkmar Felsch
 ##
 #H  $Id$
 ##
@@ -51,15 +51,10 @@ options=$*
 ##
 ##  Run the test for all documentation files (in some arbitrary order).
 ##
-$mkxtest $options -r rcwa abstract
-$mkxtest $options -r rcwa preface
-$mkxtest $options -r rcwa intro
-$mkxtest $options -r rcwa z_pi
-$mkxtest $options -r rcwa resclass
-$mkxtest $options -r rcwa rcwamap
-$mkxtest $options -r rcwa rcwagrp
-$mkxtest $options -r rcwa rcwainfo
-$mkxtest $options rcwaaux
-$mkxtest $options -r rcwa examples
-$mkxtest $options -r rcwa rcwa
+$mkxtest $options -r resclasses resclasses
+$mkxtest $options -r resclasses abstract
+$mkxtest $options -r resclasses preface
+$mkxtest $options -r resclasses z_pi
+$mkxtest $options -r resclasses resclass
+$mkxtest $options resclaux
 
