@@ -290,6 +290,8 @@ gap> List(components,MovedPoints);
 gap> List(components{[1,2]},Order); # We can split off two involutions.
 [ 2, 2 ]
 gap> f23c := components[3];; SetName(f23c,"f23c"); # The complicate part.
+gap> f23c^-1;
+<bijective rcwa mapping of Z with modulus 72>
 gap> Display(f23c);
 
 Bijective rcwa mapping of Z with modulus 72
@@ -1671,6 +1673,7 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 

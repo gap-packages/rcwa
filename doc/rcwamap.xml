@@ -576,8 +576,8 @@ gap> LargestSourcesOfAffineMappings(u^-1);
 gap> LargestSourcesOfAffineMappings(t);
 [ Integers ]
 gap> kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
-                           [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
-                           [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);;
+>                          [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
+>                          [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);;
 gap> SetName(kappa,"kappa");
 gap> LargestSourcesOfAffineMappings(kappa);
 [ 3(12) U 7(12), 1(4) U 0(12), 8(12), 11(12), 4(12), 2(4) ]
