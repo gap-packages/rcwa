@@ -840,6 +840,18 @@ InstallGlobalFunction( ClassUnionShift,
     return RcwaMapping(R,m,c);
   end );
 
+if not IsBound( PadicValue ) then
+PadicValue := function ( rat, p )
+
+  local  a1, a2;
+
+  a1 := AbsInt( NumeratorRat( rat ) );
+  a2 := DenominatorRat( rat );
+  a1 := Length( Filtered( FactorsInt( a1 ), x -> x = p ) );
+  a2 := Length( Filtered( FactorsInt( a2 ), x -> x = p ) );
+  return a1 - a2;
+end; fi;
+
 IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
 end;
