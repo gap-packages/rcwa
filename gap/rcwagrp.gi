@@ -1328,6 +1328,33 @@ InstallMethod( DirectProductOp,
     return D;
   end );
 
+############################################################################# 
+##
+#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallMethod( IsSolvable,
+               "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
+
+  function ( G )
+    if IsAbelian(G) then return true; fi;
+    if not IsTame(G) then TryNextMethod(); fi;
+    return IsSolvable(ActionOnClassPartition(G));
+  end );
+
+############################################################################# 
+##
+#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( IsPerfect,
+               "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
+
+  function ( G )
+    if IsTrivial(G) then return true; fi;
+    if IsAbelian(G) then return false; fi;
+    if not IsTame(G) then TryNextMethod(); fi;
+    return IsPerfect(ActionOnClassPartition(G));
+  end );
+
 #############################################################################
 ##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
@@ -1362,4 +1389,5 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
