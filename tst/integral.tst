@@ -981,11 +981,25 @@ gap> Projection(D,1);;
 gap> Embedding(D,2);
 [ g, h ] -> [ <integral rcwa mapping with modulus 18>,
   <integral rcwa mapping with modulus 18> ]
+gap> G := Group(g,h);;
+gap> IsSolvable(G);
+false
+gap> IsPerfect(G);
+false
+gap> IsPerfect(DerivedSubgroup(G));
+true
+gap> IsPerfect(TrivialSubgroup(G));
+true
+gap> g1 := RcwaMapping([[1,0,1],[2,0,1],[1,0,2],[2,0,1]]);;
+gap> g2 := RcwaMapping([[1,0,1],[2,4,1],[1,0,2],[2,4,1]]);;
+gap> IsSolvable(Group(g1,g2));
+true
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
