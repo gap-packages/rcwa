@@ -12,7 +12,7 @@
 ##  This procedure runs an automatic test of all examples given in the RCWA
 ##  documentation files.
 ##
-##  More precisely: Let 'file.tex' be one of these files. Then the test
+##  More precisely: Let 'file.xml' be one of these files. Then the test
 ##  function runs all examples given in that file and constructs (in the
 ##  current directory) a new version 'file.xtst' of the given file which is
 ##  up-to-date with respect to the output of the examples.
