@@ -275,16 +275,29 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping );
 
 #############################################################################
 ##
-#F  TransitionMatrix( <f>, <deg> ) . . <deg>x<deg>-`Transition matrix' of <f>
+#F  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
 ##
-##  We define the *transition matrix* <M> of degree <deg> of the rcwa mapping
-##  <f> by <M>[<i>+1][<j>+1] = 1 if there is an <n> congruent to <i> (mod
-##  <deg>) such that <n>^<f> is congruent to <j> mod <deg>, and 0 if not.
-##  Their rank (and in case it is invertible the absolute value of its 
-##  determinant) does not depend on the particular assignment of the residue
-##  classes (mod <deg>) to rows / columns.
+##  The *transition matrix* <T> of <f> for modulus <m>.
+##
+##  The entry $T_{i,j}$ is the ``proportion'' of the elements of the <i>th
+##  residue class which are mapped to the <j>th residue class under <f>.
+##  The numbering of the residue classes is the same as in the corresponding
+##  return value of the function `AllResidues'.
 ##
 DeclareGlobalFunction( "TransitionMatrix" );
+
+#############################################################################
+##
+#F  TransitionSets( <f>, <m> ) . . . . . . . . . . . .  set transition matrix
+##
+##  The *set transition matrix* <T> of <f> for modulus <m>.
+##
+##  The entry $T_{ij}$ is the subset of the <i>th residue class which is
+##  mapped to the <j>th residue class under <f>. The numbering of the residue
+##  classes is the same as in the corresponding return value of the function
+##  `AllResidues'.
+##
+DeclareGlobalFunction( "TransitionSets" );
 
 #############################################################################
 ##
@@ -488,6 +501,8 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
 
 

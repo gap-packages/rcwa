@@ -2375,7 +2375,7 @@ InstallMethod( Order,
 
 #############################################################################
 ##
-#F  TransitionMatrix( <f>, <m> ) . . Transition matrix of <f> for modulus <m>
+#F  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
 ##
 InstallGlobalFunction( TransitionMatrix,
 
@@ -2397,6 +2397,53 @@ InstallGlobalFunction( TransitionMatrix,
       T[i][j] := T[i][j] + 1;
     od;
     return List(T,l->l/Sum(l));
+  end );
+
+#############################################################################
+##
+#F  TransitionSets( <f>, <m> ) . . . . . . . . . . . .  set transition matrix
+##
+InstallGlobalFunction( TransitionSets,
+
+  function ( f, m )
+
+    local  M, R, res, cl, im, r, i, j;
+
+    R   := Source(f);
+    res := AllResidues(R,m);
+    cl  := List(res,r->ResidueClass(R,m,r));
+    M   := [];
+    for i in [1..Length(res)] do
+      im   := cl[i]^f;
+      M[i] := List([1..Length(res)],j->Intersection(im,cl[j]));
+    od;
+    return M;
+  end );
+
+#############################################################################
+##
+#M  \*( <A>, <B> ) . . . . . . . . . . . . . . . . . . . . for `set matrices'
+##
+InstallOtherMethod( \*,
+                    "for `set matrices' (RCWA)", ReturnTrue,
+                    [ IsListOrCollection, IsListOrCollection ], 100,
+
+  function ( A, B )
+
+    local  C, n;
+
+    if   not IsList(A) or not IsList(A[1])
+      or not IsListOrCollection(A[1][1])
+      or not ForAll(A,l->ForAll(l,IsListOrCollection))
+      or not ForAll(B,l->ForAll(l,IsListOrCollection))
+      or Length(Set(List(A,Length))) > 1 or Length(Set(List(B,Length))) > 1
+      or Length(A[1]) <> Length(B)
+    then TryNextMethod( ); fi;
+    C := List([1..Length(A)],
+              i->List([1..Length(B[1])],
+                      j->Union(List([1..Length(A[1])],
+                                    k->Intersection(A[i][k],B[k][j])))));
+    return C;
   end );
 
 #############################################################################
@@ -3064,6 +3111,9 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
+
 
 
 
