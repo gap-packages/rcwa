@@ -1260,11 +1260,12 @@ InstallMethod( LaTeXObj,
     str := indent;
     if ValueOption("Factorization") = true and IsBijective(f) then
       gens := List(FactorizationIntoGenerators(f),LaTeXName);
+      append("       ");
       for pos in [1..Length(gens)] do
         append(gens[pos]);
         if pos < Length(gens) then
-          if pos mod 5 = 0 then append("\\\\\n"); fi;
-          if pos mod 5 = 3 then append("\n"); fi;
+          if pos mod 5 = 0 then append(" \\\\\n"); fi;
+          if pos mod 5 in [2,4] then append("\n"); fi;
           append(" \\cdot ");
         else append("\n"); fi;
       od;
@@ -3603,29 +3604,42 @@ InstallMethod( FactorizationIntoGenerators,
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
+
     facts := []; elm := g;
+
     if not IsClassWiseOrderPreserving(g) then # First make <g> cwop.
       rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
-      revert := List(AsUnionOfFewClasses(rev^g),ClassReflection);
-      g := g/Product(revert);
-    else revert := []; fi;
+      revert := [List(AsUnionOfFewClasses(rev  ),ClassReflection),
+                 List(AsUnionOfFewClasses(rev^g),ClassReflection)];
+      if   Length(revert[1]) <= Length(revert[2])
+      then g := Product(revert[1])^-1 * g;
+      else g := g * Product(revert[2])^-1; fi;
+    else revert := [[],[]]; fi;
+
     if IsIntegral(g) then
+
       affsrc := Union(List(LargestSourcesOfAffineMappings(g),
                            AsUnionOfFewClasses));
       P := [];
       for cl in affsrc do
-        cyc := Cycle(g,cl);
-        if    Set(List(cyc,cl2->Length(Residues(cl2)))) = [1]
+        cyc := [cl];
+        repeat
+          Add(cyc,cyc[Length(cyc)]^g);
+        until    cyc[Length(cyc)] = cl
+              or Length(Residues(cyc[Length(cyc)])) > 1;
+        if    cyc[Length(cyc)] = cl
           and ForAll(cyc,cl2->ForAny(affsrc,cl3->IsSubset(cl3,cl2)))
         then
-          P := Union(P,cyc);
+          P := Union(P,cyc{[1..Length(cyc)-1]});
           if Union(P) = Integers then break; fi;
         fi;
       od;
+
       if   Union(P) <> Integers
       then P := RespectedPartition(g); fi;
       if   InfoLevel(InfoRCWA) >= 1
       then Print("#I Use respected partition "); View(P); Print(".\n"); fi;
+
       h := Permutation(g,P);
       cycs := Orbits(Group(h),MovedPoints(h));
       for cyc in cycs do
@@ -3635,6 +3649,7 @@ InstallMethod( FactorizationIntoGenerators,
                     Residues(P[cyc[i]])[1],Modulus(P[cyc[i]])));
         od;
       od;
+
       gfixP := g/Product(facts); # gfixP stabilizes the partition P.
       for cl in P do
         rest := RestrictedPerm(gfixP,cl);
@@ -3643,11 +3658,16 @@ InstallMethod( FactorizationIntoGenerators,
         c := Coefficients(rest)[r+1];
         facts := Concatenation([ClassShift(r,m)^(c[2]/m)],facts);
       od;
+
     else
+
       StateInfo();
       expandswitches := ValueOption("ExpandPrimeSwitches") = true;
+
       repeat
+
         while not IsBalanced(g) do
+
           p := 1; q := 1;
           multfacts := Set(Factors(Multiplier(g)));
           divfacts  := Set(Factors(Divisor(g)));
@@ -3655,6 +3675,7 @@ InstallMethod( FactorizationIntoGenerators,
           then p := Maximum(Difference(multfacts,divfacts)); fi;
           if   not IsSubset(multfacts,divfacts)
           then q := Maximum(Difference(divfacts,multfacts)); fi;
+
           if [p,q] <> [1,1] then
             if p > q then # Additional prime in multiplier.
               switch := PrimeSwitch(p);
@@ -3675,8 +3696,12 @@ InstallMethod( FactorizationIntoGenerators,
               Info(InfoRCWA,1,"Multiplying by ",Name(switch));
             fi;
           fi;
+
           StateInfo();
+
         od;
+
+        if IsOne(g) then break; fi;
 
         p     := Maximum(Factors(Multiplier(g)*Divisor(g)));
         kmult := Number(Factors(Multiplier(g)),q->q=p);
@@ -3698,6 +3723,7 @@ InstallMethod( FactorizationIntoGenerators,
           Print("\n#I Image of classes being divided by q*p^kdiv:\n#I ");
           ViewObj(clSdiv); Print("\n");
         fi;
+
         repeat
           pairs := Filtered(Cartesian(clSmult,clSdiv),
                      pair ->  Number(Factors(Modulus(pair[1])),q->q=p)
@@ -3723,7 +3749,9 @@ InstallMethod( FactorizationIntoGenerators,
             fi;
           fi;
         until pairs <> [];
+
         Info(InfoRCWA,1,"Found ",Length(pairs)," pairs.");
+
         splittedpairs := [];
         for i in [1..Length(pairs)] do
           largeprimes := List(pairs[i],
@@ -3744,9 +3772,11 @@ InstallMethod( FactorizationIntoGenerators,
             fi;
           fi;
         od;
+
         pairs := splittedpairs;
         Info(InfoRCWA,1,"After filtering and splitting: ",
                         Length(pairs)," pairs.");
+
         repeat
           disjoint := [pairs[1]]; i := 1;
           while i < Length(pairs)
@@ -3768,13 +3798,24 @@ InstallMethod( FactorizationIntoGenerators,
           od;
           pairs := Difference(pairs,disjoint);
         until pairs = [];
+
       until IsIntegral(g);
-      facts := Concatenation(FactorizationIntoGenerators(g),facts);
+
+      if   not IsOne(g)
+      then facts := Concatenation(FactorizationIntoGenerators(g),facts); fi;
+
     fi;
-    facts := Concatenation(facts,revert);
+
+    if   Length(revert[1]) <= Length(revert[2])
+    then facts := Concatenation(revert[1],facts);
+    else facts := Concatenation(facts,revert[2]); fi;
+
+    facts := Filtered(facts,fact->not IsOne(fact));
+
     if   Product(facts) <> elm
     then Error("FactorizationIntoGenerators: Internal error!");
     else return facts; fi;
+
   end );
 
 #############################################################################
