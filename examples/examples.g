@@ -45,6 +45,39 @@ ct2   := function(r1,m1,r2,m2)
                               RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
          end;
 
+# `Class switches': Involutions which interchange two residue classes which
+# are not necessarily disjoint (of course there must not be a proper subset
+# relation between them!):
+
+cs := function(r1,m1,r2,m2)
+
+  local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
+
+  cl := [rc(r1,m1),rc(r2,m2)];
+  int := Intersection(cl);
+  if int = [] then return ct(r1,m1,r2,m2); fi;
+  diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
+  if [] in diff then return fail; fi; # Subset relation --> no class switch!
+  diff := List(diff,AsUnionOfFewClasses); lng := List(diff,Length);
+  if lng[1] <> lng[2] then
+    if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
+    for i in [1..AbsInt(lng[1]-lng[2])] do
+      clsp := diff[pos][1];
+      sp   := [rc(Residues(clsp)[1],              2*Modulus(clsp)),
+               rc(Residues(clsp)[1]+Modulus(clsp),2*Modulus(clsp))];
+      diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
+    od;
+  fi;
+  lng := Maximum(lng); m := 2*lng; c := [];
+  for r in [0..m-1] do
+    rti := Residues(diff[r mod 2 + 1][Int(r/2)+1])[1];
+    mti := Modulus (diff[r mod 2 + 1][Int(r/2)+1]);
+    c[r+1] := [mti,m*rti-mti*r,m];
+  od;
+  rest := RcwaMapping(c);
+  return Restriction(tau,rest);
+end;
+
 #############################################################################
 ##
 ##  `Three involutions whose product has coprime multiplier and divisor'
