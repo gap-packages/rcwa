@@ -98,9 +98,44 @@ MakeReadOnlyGlobal( "RCWAReadExamples" );
 
 #############################################################################
 ##
+#C  IsFloat . . . . . . . . . . . . . . . . . . . . . . . . . . . . . C float
+##
+DeclareSynonym( "IsFloat", IS_FLOAT );
+
+#############################################################################
+##
+#M  AbsoluteValue( x ) . . . . . . . . . . . . . . . . . . . . . . for floats
+##
+InstallOtherMethod( AbsoluteValue,
+                    "for floats", true, [ IsFloat ], 0,
+
+  function ( x )
+    if x < FLOAT_INT(0) then return -x; else return x; fi;
+  end );
+
+#############################################################################
+##
+#O  Float( x ) . . . . . . . . . . . . . . . . . floating point approximation
+##
+DeclareOperation( "Float", [ IsObject ] );
+
+#############################################################################
+##
+#M  Float( n ) . . . . . . . . . . . . . . . . . . . . . . . . . for integers
+##
+InstallMethod( Float,
+               "for integers", true, [ IsInt ], 0, n -> FLOAT_INT(n) );
+
+#############################################################################
+##
+#M  Float( x ) . . . . . . . . . . . . . . . . . . . . . . . .  for rationals
+##
+InstallMethod( Float,
+               "for rationals", true, [ IsRat ], 0,
+               x -> FLOAT_INT(  NumeratorRat(x))/
+                    FLOAT_INT(DenominatorRat(x)) );
+
+#############################################################################
+##
 #E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-
-
-
 

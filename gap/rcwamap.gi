@@ -2988,30 +2988,54 @@ InstallOtherMethod( IsConjugate,
     until false;
   end );
 
+ReducedSetOfStartingValues := function ( S, f, lng )
+
+  local  n, min, max, traj;
+
+  min := Minimum(S); max := Maximum(S);
+  for n in [min..max] do
+    if n in S then
+      traj := Set(Trajectory(f,n,lng,"length"){[2..lng]});
+      if not n in traj then S := Difference(S,traj); fi;
+    fi;
+  od;
+  return S;
+end;
+MakeReadOnlyGlobal( "ReducedSetOfStartingValues" );
+
 #############################################################################
 ##
-#M  ContractionCentre( <f>, <maxn>, <maxlng> ) . .  for integral rcwa mapping
+#M  ContractionCentre( <f>, <maxn>, <bound> ) . . . for integral rcwa mapping
 ##
 InstallMethod( ContractionCentre,
                "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping, IsPosInt, IsPosInt ], 0,
 
-  function ( f, maxn, maxlng )
+  function ( f, maxn, bound )
 
-    local  S0, n, n_i, i, seq;
+    local  S0, S, n, n_i, i, seq;
 
-    if not IsIntegralRcwaMapping(f) or IsBijective(f) then return fail; fi;
+    if IsBijective(f) then return fail; fi;
+    S := ReducedSetOfStartingValues([-maxn..maxn],f,8);
+    Info(InfoRCWA,1,"#Remaining values to be examined after first ",
+                    "reduction step: ",Length(S));
+    S := ReducedSetOfStartingValues(S,f,64);
+    Info(InfoRCWA,1,"#Remaining values to be examined after second ",
+                    "reduction step: ",Length(S));
     S0 := [];
-    for n in Integers do
+    for n in S do
       seq := []; n_i := n;
-      for i in [1..maxlng] do
+      while AbsInt(n_i) <= bound do
         if n_i in S0 then break; fi;
-        if   n_i in seq
-        then S0 := Union(S0,Trajectory(f,n_i,n_i,"stop")); break; fi;
-        Add(seq,n_i);
+        if n_i in seq then
+          S0 := Union(S0,Trajectory(f,n_i,n_i,"stop"));
+          Info(InfoRCWA,1,"|S0| = ",Length(S0));
+          break;
+        fi;
+        AddSet(seq,n_i);
         n_i := n_i^f;
-        if   i = maxlng
-        then Info(InfoWarning,1,"Length limit exceeded, start value ",n); fi;
+        if   AbsInt(n_i) > bound
+        then Info(InfoRCWA,3,"Given bound exceeded, start value ",n); fi;
       od;
       if n >= maxn then break; fi;
     od;
@@ -3053,25 +3077,23 @@ InstallMethod( Divergence,
 
   function ( f )
 
-    local  M, pow, prev, m, c, facts, factsfloat, p, pfloat, k, eps, prec;
+    local  pow, m, c, M, approx, prev, facts, p, exp, eps, prec;
 
-    m := Modulus(f); c := Coefficients(f);
-    M := List(TransitionMatrix(f,m),l->l/Sum(l));
-    facts := List(c,t->t[1]/t[3]);
-    k := 1; pow := M; eps := 10^-10; prec := 10^6;
+    prec := 10^8; eps := Float(1/prec);
+    pow := f; exp := 1; approx := Float(0);
     repeat
-      prev := pow;
-      pow := pow * M;
-    until Maximum(Flat(pow-prev)) < eps;
-    p := List(TransposedMat(pow),l->Sum(l)/m);
-    # should be: return Product(List([1..m],r->facts[r]^p[r]));
-    factsfloat := List(facts,x->FLOAT_INT(Int(prec*x))/FLOAT_INT(prec));
-    pfloat := List(p,x->FLOAT_INT(Int(prec*x))/FLOAT_INT(prec));
-    return Product(List([1..m],r->factsfloat[r]^pfloat[r]));
+      m := Modulus(pow); c := Coefficients(pow);
+      M := List(TransitionMatrix(pow,m),l->l/Sum(l));
+      facts := List(c,t->Float(t[1]/t[3]));
+      p := List(TransposedMat(M),l->Float(Sum(l)/m));
+      prev := approx;
+      approx := Product(List([1..m],r->facts[r]^p[r]))^Float(1/exp);
+      pow := pow * f; exp := exp + 1;
+    until AbsoluteValue(approx-prev) < eps;
+    return approx;
   end );
 
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
 

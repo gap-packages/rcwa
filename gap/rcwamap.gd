@@ -447,7 +447,7 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
-#O  ContractionCentre( <f>, <boundstart>, <maxlng> ) . . . contraction centre
+#O  ContractionCentre( <f>, <maxn>, <bound> ) . . . . . .  contraction centre
 ##
 ##  Tries to compute the `contraction centre' of an rcwa mapping --
 ##  assuming its existence this is the uniquely-defined finite subset $S_0$
@@ -455,10 +455,10 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 ##  and where for any $x \in R$ there is an integer $k$ such that
 ##  $x^{f^k} \in S_0$. The mapping <f> is assumed to be contracting.
 ##  As this problem seems to be computationally undecidable methods will be
-##  probabilistic. The argument <boundstart> is a bound on the starting value
-##  and <maxlng> is a bound on the sequence length to be searched.
-##  If the limit <maxlng> is reached without completing a cycle a warning
-##  is issued.
+##  probabilistic. The argument <maxn> is a bound on the starting value
+##  and <bound> is a bound on the elements of the sequence to be searched.
+##  If the limit <bound> is exceeded, an Info message on some Info level
+##  of InfoRCWA is given.
 ##
 DeclareOperation( "ContractionCentre",
                   [ IsRcwaMapping, IsRingElement, IsPosInt ] );
