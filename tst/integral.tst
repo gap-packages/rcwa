@@ -994,20 +994,42 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(t);
 [  ]
 gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
-gap> S := ResidueClassUnion(Integers,6,[1,2,3,5]);
-1(2) U 2(6)
-gap> Rho(S);
-5/6
-gap> Rho(S+1);
-1/2
-gap> Rho(S+2);
-1/6
-gap> Rho(2*S);
-5/6
-gap> Rho(S^nu);
-1/2
-gap> Rho(S^a);
-5/6
+gap> LargestSourcesOfAffineMappings(a);
+[ 0(2), 1(4), 3(4) ]
+gap> LargestSourcesOfAffineMappings(One(a)); 
+[ Integers ]
+gap> LargestSourcesOfAffineMappings(T);
+[ 0(2), 1(2) ]
+gap> LargestSourcesOfAffineMappings(kappa);
+[ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ]
+gap> cl := ResidueClassWithFixedRepresentative(2,1);
+[1/2]
+gap> cl^T;
+[2/3]
+gap> last^T;
+[1/3] U [8/9]
+gap> last^T;
+[2/3] U [2/9] U [4/9] U [26/27]
+gap> last^T;
+[1/3] U [1/9] U [2/9] U [8/9] U [13/27] U [17/27] U [20/27] U [80/81]
+gap> AsOrdinaryUnionOfResidueClasses(last);
+1(3) U 2(9) U 8(9)
+gap> PreImagesSet(T,cl);
+[3/4] U [2/12] U [6/12] U [10/12]
+gap> AsOrdinaryUnionOfResidueClasses(last);
+2(4) U 3(4)
+gap> PreImagesSet(T,last2);
+[1/8] U [7/8] U [4/24] U [6/24] U [12/24] U [14/24] U [20/24] U [22/24]
+gap> Rho(last);            
+1/4
+gap> PreImagesSet(T,last2);
+<union of 16 residue classes with fixed rep's>
+gap> Rho(last);            
+5/4
+gap> AsOrdinaryUnionOfResidueClasses(last2);
+<union of 8 residue classes (mod 16)>
+gap> Residues(last);
+[ 2, 8, 9, 11, 12, 13, 14, 15 ]
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 

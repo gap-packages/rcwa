@@ -192,6 +192,10 @@ gap> Order(f);
 gap> SetOnWhichMappingIsClassWiseOrderPreserving(
 >      RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
 0(2)
+gap> LargestSourcesOfAffineMappings(a);
+[ 0(2), 1(4), 3(4) ]
+gap> LargestSourcesOfAffineMappings(One(a));
+[ Z_( 2, 3 ) ]
 gap> STOP_TEST( "semiloc.tst", 100000000 );
 
 #############################################################################

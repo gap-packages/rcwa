@@ -1430,6 +1430,25 @@ InstallOtherMethod( Determinant,
 
 #############################################################################
 ##
+#M  Determinant( <f>, <S> ) . .  for rcwa mapping on union of residue classes
+##
+InstallOtherMethod( Determinant,
+                    "for rcwa mappings on unions of residue classes (RCWA)",
+                    true, [ IsIntegralRcwaMapping,
+                            IsUnionOfResidueClassesOfZ ], 0,
+
+  function ( f, S )
+
+    local  m, c, r, cl;
+
+    m := Modulus(f); c := Coefficients(f);
+    return Sum(List([1..m],
+                    r->Density(Intersection(S,ResidueClass(Integers,m,r-1)))
+                      *c[r][2]/c[r][1]));
+  end );
+
+#############################################################################
+##
 #M  MovedPoints( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 ##  The set of moved points (support) of the rcwa mapping <f>.
@@ -1601,6 +1620,33 @@ InstallOtherMethod( \^,
 
 #############################################################################
 ##
+#M  \^( <U>, <f> ) . for residue class union with fixed reps and rcwa mapping
+##
+##  Image of the residue class union <U> of $\Z$ with fixed representatives
+##  under the rcwa mapping <f>.
+##
+InstallOtherMethod( \^,
+                    Concatenation("for residue class union with fixed reps ",
+                                  "and rcwa mapping (RCWA)"), ReturnTrue,
+                    [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
+                      IsIntegralRcwaMapping ], 0,
+
+  function ( U, f )
+
+    local  cls, abc, m, c, k, l;
+
+    m := Modulus(f); c := Coefficients(f);
+    k := List(Classes(U),cl->m/Gcd(m,cl[1])); l := Length(k);
+    cls := AsListOfClasses(U);
+    cls := List([1..l],i->RepresentativeStabilizingRefinement(cls[i],k[i]));
+    cls := Flat(List(cls,cl->AsListOfClasses(cl)));
+    abc := List(cls,cl->c[1 + Classes(cl)[1][2] mod m]);
+    cls := List([1..Length(cls)],i->(abc[i][1]*cls[i]+abc[i][2])/abc[i][3]);
+    return Union(cls);
+  end );
+
+#############################################################################
+##
 #M  PreImageElm( <f>, <n> ) . . . for bijective rcwa mapping and ring element
 ##
 ##  Preimage of the ring element <n> under the bijective rcwa mapping <f>.
@@ -1730,6 +1776,41 @@ InstallMethod( PreImagesSet,
       then preimage := Difference( preimage, diff ); fi;
     od;
     return preimage;
+  end );
+
+#############################################################################
+##
+#M  PreImagesSet( <f>, <U> ) . . . . as above, but with fixed representatives
+##
+##  Preimage of the residue class union <U> of $\Z$ with fixed
+##  representatives under the rcwa mapping <f>.
+##
+InstallOtherMethod( PreImagesSet,
+                    Concatenation("for rcwa mapping and residue class union",
+                                  " with fixed reps (RCWA)"), ReturnTrue,
+                    [ IsIntegralRcwaMapping,
+                      IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
+                    0,
+
+  function ( f, U )
+
+    local  cls, rep, m, minv, clm, k, l;
+
+    m := Modulus(f); minv := Multiplier(f) * m;
+    k := List(Classes(U),cl->minv/Gcd(minv,cl[1])); l := Length(k);
+    cls := AsListOfClasses(U);
+    cls := List([1..l],i->RepresentativeStabilizingRefinement(cls[i],k[i]));
+    cls := Flat(List(cls,cl->AsListOfClasses(cl)));
+    rep := List(cls,cl->PreImagesElm(f,Classes(cl)[1][2]));
+    cls := List(cls,cl->PreImagesSet(f,AsOrdinaryUnionOfResidueClasses(cl)));
+    clm := AllResidueClassesModulo(Integers,m);
+    cls := List(cls,cl1->List(clm,cl2->Intersection(cl1,cl2)));
+    cls := List(cls,list->Filtered(list,cl->cl<>[]));
+    cls := List([1..Length(cls)],
+                i->List(cls[i],cl->[Modulus(cl),
+                                    Intersection(rep[i],cl)[1]]));
+    cls := Concatenation(cls);
+    return ResidueClassUnionWithFixedRepresentatives(Integers,cls);
   end );
 
 #############################################################################
@@ -2927,6 +3008,24 @@ InstallMethod( CycleType,
 
 #############################################################################
 ##
+#M  LargestSourcesOfAffineMappings( <f> ) . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( LargestSourcesOfAffineMappings,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+
+    local  P, R, m, c, clm, affs;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    affs := Set(c); clm  := AllResidueClassesModulo(R,m);
+    P := List(affs,aff->Union(List(Filtered([1..Length(c)],i->c[i]=aff),
+                                   j->clm[j]))); 
+    return AsSortedList(P);
+  end );
+
+#############################################################################
+##
 #M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
 ##
 InstallMethod( RespectedClassPartition,
@@ -3104,29 +3203,6 @@ InstallMethod( ImageDensity,
 
 #############################################################################
 ##
-#F  Rho( <S> )
-##
-InstallGlobalFunction( Rho,
-
-  function ( S )
-
-    local  rho;
-
-    if   IsEmpty(S)    then return 0;
-    elif IsIntegers(S) then return 1/2;
-    elif IsUnionOfResidueClassesOfZ(S)
-    then rho := Sum(Residues(S))/Modulus(S) - Length(Residues(S))/2;
-         if   IsInt(rho) then return 0;
-         elif rho > 0    then return rho - Int(rho);
-                         else return rho - Int(rho) + 1;
-         fi;
-    else Error("Usage: Rho( <S> ) for a union <S> ",
-               "of residue classes of Z.\n");
-    fi;
-  end );
-
-#############################################################################
-##
 #M  CompatibleConjugate( <g>, <h> ) . . . . . . .  for integral rcwa mappings
 ##
 InstallMethod( CompatibleConjugate,
@@ -3178,3 +3254,4 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+

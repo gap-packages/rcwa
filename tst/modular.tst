@@ -252,10 +252,13 @@ gap> String(f);
 "RcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), x^2+Z(3)^0, Z(3)^0 ] ] )"
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(9)[x]: P -> Z(3^2)*P
+gap> LargestSourcesOfAffineMappings(r);
+[ 0*Z(2) ( mod x^2+Z(2)^0 ), Z(2)^0 ( mod x^2+Z(2)^0 ), x ( mod x^2+Z(2)^0 ), 
+  x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
+gap> LargestSourcesOfAffineMappings(One(r));
+[ GF(2)[x] ]
 gap> STOP_TEST( "modular.tst", 1500000000 );
 
 #############################################################################
 ##
 #E  modular.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-

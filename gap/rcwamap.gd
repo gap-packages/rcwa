@@ -501,7 +501,7 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 #A  RespectedClassPartition( <sigma> ) . . . . . .  respected class partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
-##  on which the bijective mapping <sigma> acts as a permutation. 
+##  on which the bijective mapping <sigma> acts as a permutation.
 ##  The partition is non-trivial as long as Modulus( <sigma> ) <> One( <R> ).
 ##  Such a partition exists always if <sigma> is tame and <R> has the
 ##  `class halving property'. 
@@ -517,6 +517,15 @@ DeclareAttribute( "RespectedClassPartition", IsRcwaMapping );
 ##  by <g> and <h>^<r> is tame. Methods may return any such mapping.
 ##
 DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
+#A  LargestSourcesOfAffineMappings( <f> ) .  partition on which <f> is affine
+##
+##  The coarsest partition of the base ring <R> on whose elements the rcwa
+##  mapping <f> is affine.
+##
+DeclareAttribute( "LargestSourcesOfAffineMappings", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -560,18 +569,6 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 ##  is equal to 1.
 ##
 DeclareAttribute( "ImageDensity", IsRcwaMapping );
-
-#############################################################################
-##
-#F  Rho( <S> )
-##
-##  An invariant of the residue class union <S>.
-##
-##  If <S> is the disjoint union of the residue classes $r_i(m_i)$,
-##  $i = 1, \dots, l$ then Rho( <S> ) is the sum of the fractions $r_i/m_i$,
-##  minus $l/2$ plus an integer to get a result in the interval [0,1[.
-##
-DeclareGlobalFunction( "Rho" );
 
 #############################################################################
 ##

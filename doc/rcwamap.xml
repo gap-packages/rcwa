@@ -532,15 +532,13 @@ true
   </ManSection>
 
   <ManSection>
-    <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Attr Name="SetOnWhichMappingIsClassWiseOrderReversing" Arg="f"/>
     <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
-    <Returns>
-      The union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
-      which the rcwa mapping <A>f</A> is class-wise order-preserving,
-      class-wise order-reversing resp. class-wise constant.
-    </Returns>
+    <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Description>
+      The union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
+      which the rcwa mapping <A>f</A> is class-wise order-reversing,
+      class-wise constant resp. class-wise order-preserving.
       The source of the rcwa mapping <A>f</A> must be ordered.
 <Example>
 <![CDATA[
@@ -563,12 +561,46 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
   </ManSection>
 
   <ManSection>
+    <Attr Name="LargestSourcesOfAffineMappings" Arg="f"/>
+    <Description>
+      The coarsest partition of <C>Source(<A>f</A>)</C> on whose
+      elements the rcwa mapping <A>f</A> is affine.
+<Example>
+<![CDATA[
+gap> LargestSourcesOfAffineMappings(T);
+[ 0(2), 1(2) ]
+gap> LargestSourcesOfAffineMappings(u);
+[ 0(5), 1(5), 2(5), 3(5), 4(5) ]
+gap> LargestSourcesOfAffineMappings(u^-1);
+[ 0(3), 1(3), 2(9), 5(9), 8(9) ]
+gap> LargestSourcesOfAffineMappings(t);
+[ Integers ]
+gap> kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                           [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                           [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);;
+gap> SetName(kappa,"kappa");
+gap> LargestSourcesOfAffineMappings(kappa);
+[ 3(12) U 7(12), 1(4) U 0(12), 8(12), 11(12), 4(12), 2(4) ]
+gap> LargestSourcesOfAffineMappings(r);
+[ 0*Z(2) ( mod x^2+Z(2)^0 ), Z(2)^0 ( mod x^2+Z(2)^0 ), x ( mod x^2+Z(2)^0 ), 
+  x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="Determinant" Arg="f"/>
+    <Meth Name="Determinant" Arg="f, S"/>
     <Returns> the determinant of the rcwa mapping <A>f</A>. </Returns>
     <Description>
       The determinant induces an epimorphism from the group of all class-wise
       order-preserving rcwa mappings of <M>\Z</M> onto the additive group
       <M>(\Z,+)</M>.
+
+      If a residue class union <A>S</A> is given as an additional
+      argument, the method returns the determinant of the restriction
+      of <A>f</A> to <A>S</A>.
 
       For the definition see Chapter <Ref Label="ch:Introduction"/>.
 <Example>
@@ -598,37 +630,6 @@ gap> Determinant(u^2*b^-3);
 </Example>
     </Description>
   </ManSection>
-
-  <ManSection>
-    <Func Name="Rho" Arg="S"/>
-    <Description>
-      An invariant of the residue class union <A>S</A>. <P/>
-
-      If <A>S</A> is the disjoint union of the residue classes
-      <M>r_i(m_i)</M>, <M>i = 1, \dots, l</M> then <C>Rho( <A>S</A> )</C>
-      is the sum of the fractions <M>r_i/m_i</M>, minus <M>l/2</M>
-      plus an integer to get a result in the interval <M>[0,1[</M>.
-<Example>
-<![CDATA[
-gap> S := ResidueClassUnion(Integers,6,[1,2,3,5]);
-1(2) U 2(6)
-gap> Rho(S);
-5/6
-gap> Rho(S+1);
-1/2
-gap> Rho(S+2);
-1/6
-gap> Rho(2*S);
-5/6
-gap> Rho(S^nu);
-1/2
-gap> Rho(S^a);
-5/6
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
 
 </Section>
 
@@ -673,6 +674,8 @@ x^3+Z(2)^0
       In particular, <A>S</A> can be a union of residue classes;
       thus, rcwa mappings resp. rcwa groups can act on sets of residue class
       unions as well as on sets of single ring elements.
+      The argument <A>S</A> can also be a union of residue classes with
+      fixed representatives.
 <Example>
 <![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
@@ -685,6 +688,18 @@ gap> Image(k);
 0(4)
 gap> A^u;
 1(9) U 3(9) U 14(27) U 20(27) U 26(27)
+gap> cl := ResidueClassWithFixedRepresentative(2,1);
+[1/2]
+gap> cl^T;
+[2/3]
+gap> last^T;
+[1/3] U [8/9]
+gap> last^T;
+[2/3] U [2/9] U [4/9] U [26/27]
+gap> last^T;
+[1/3] U [1/9] U [2/9] U [8/9] U [13/27] U [17/27] U [20/27] U [80/81]
+gap> AsOrdinaryUnionOfResidueClasses(last);
+1(3) U 2(9) U 8(9)
 ]]>
 </Example>
     </Description>
@@ -778,7 +793,8 @@ gap> PreImagesRepresentative(ZeroOne,1);
       the preimage of the set <A>S</A> under the rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      In particular, <A>S</A> can be a union of residue classes.
+      In particular, <A>S</A> can be a union of residue classes with or
+      without fixed representatives.
 <Example>
 <![CDATA[
 gap> PreImage(T,A);
@@ -788,6 +804,12 @@ gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od;
 gap> l;
 [ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, 277, 
   367, 488, 649, 869, 1154, 1534, 2039, 2721, 3629, 4843, 6458, 8608, 11472 ]
+gap> PreImagesSet(T,cl);
+[3/4] U [2/12] U [6/12] U [10/12]
+gap> AsOrdinaryUnionOfResidueClasses(last);
+2(4) U 3(4)
+gap> last2^T;                               
+[1/6] U [3/6] U [5/6] U [5/6]
 ]]>
 </Example>
     </Description>
@@ -1544,3 +1566,4 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
