@@ -605,8 +605,8 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     that such a factorization exists and the method finds it.
   </Returns>
   <Description>
-    This may stop with an error message or run into an infinite loop.
-    If it returns a result, this result is always correct.
+    This may return <C>fail</C>, stop with an error message or run into an
+    infinite loop. If it returns a result, this result is always correct.
     By default, prime switches are taken as one factor. 
     If the option <A>ExpandPrimeSwitches</A> is set, they are each
     decomposed into the 6 class transpositions given in
