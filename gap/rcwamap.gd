@@ -5,7 +5,7 @@
 #H  @(#)$Id$
 ##
 ##  This file contains declarations of functions, operations etc. for
-##  computing with integral residue class-wise affine mappings.
+##  computing with residue class-wise affine mappings.
 ##
 Revision.rcwamap_gd :=
   "@(#)$Id$";
@@ -30,17 +30,45 @@ DeclareGlobalFunction( "RCWAInfo" );
 
 #############################################################################
 ##
+#C  IsRcwaMapping . . . . . . . . . . . . . . . . . . . . . all rcwa mappings
+##
+##  The category of all rcwa mappings.
+##
+DeclareCategory( "IsRcwaMapping", IsRingElement );
+
+#############################################################################
+##
 #C  IsIntegralRcwaMapping . . . . . . . . . . . . . .  integral rcwa mappings
-#C  IsRcwaMapping 
 ##
 ##  The category of all integral rcwa mappings.
 ##
-##  The version `IsRcwaMapping' is reserved as a term for denoting any kind
-##  of rcwa mappings, if in future versions also rcwa mappings over other
-##  PID's will be implemented.
-##
 DeclareCategory( "IsIntegralRcwaMapping", IsRingElement );
-DeclareSynonym( "IsRcwaMapping", IsIntegralRcwaMapping );
+
+#############################################################################
+##
+#C  IsSemilocalIntegralRcwaMapping . . . . . semilocal integral rcwa mappings
+##
+##  The category of all semilocal integral rcwa mappings.
+##
+DeclareCategory( "IsSemilocalIntegralRcwaMapping", IsRingElement );
+
+#############################################################################
+##
+#C  IsRationalBasedRcwaMapping . . . . . semilocal- or integral rcwa mappings
+##
+##  The category of all integral or semilocal integral rcwa mappings.
+##  This is the union of the categories `IsIntegralRcwaMapping' and
+##  `IsSemilocalIntegralRcwaMapping'.
+##
+DeclareCategory( "IsRationalBasedRcwaMapping", IsRingElement );
+
+#############################################################################
+##
+#C  IsModularRcwaMapping . . . . . . . . . . . . . . .  modular rcwa mappings
+##
+##  The category of all modular rcwa mappings.
+##
+DeclareCategory( "IsModularRcwaMapping", IsRingElement );
 
 #############################################################################
 ##
@@ -50,10 +78,62 @@ DeclareGlobalVariable( "IntegralRcwaMappingsFamily" );
 
 #############################################################################
 ##
-#R  IsIntegralRcwaDenseRep . `dense' representation of integral rcwa mappings
+#F  SemilocalIntegralRcwaMappingsFamily( <primes> )
 ##
-##  Representation of integral rcwa mappings by coefficient list <coeffs>
-##  and modulus <modulus>.
+##  Family of semilocal integral rcwa mappings with underlying ring $\Z_\pi$,
+##  where the set $\pi$ is given by the list <primes>.
+##
+DeclareGlobalFunction( "SemilocalIntegralRcwaMappingsFamily" );
+
+#############################################################################
+##
+#F  ModularRcwaMappingsFamily( <R> ) . . . .  family of modular rcwa mappings
+##
+##  Family of modular rcwa mappings with underlying polynomial ring <R>.
+##
+DeclareGlobalFunction( "ModularRcwaMappingsFamily" );
+
+#############################################################################
+##
+#F  AllGFqPolynomialsModDegree( <q>, <d>, <x> ) . residues in canonical order
+##
+##  Returns a sorted list of all residues modulo a polynomial of degree <d>
+##  over GF(<q>) in the variable <x>.
+##  This gives also the ordering in which the coefficients of a modular rcwa
+##  mapping are stored; thus, if <f> is a modular rcwa mapping over
+##  GF(<q>)[x] with coefficients list <c>, whose modulus <m> has degree <d>,
+##  then <f> maps a polynomial <P> with <P> mod <m> = <r> to
+##
+##  ( <c>[`Position'(<res>,<r>)][1] * <P> + <c>[`Position'(<res>,<r>)][2] ) /
+##    <c>[`Position'(<res>,<r>)][3],
+##
+##  where <res> denotes the list of residues returned by this function.
+##
+DeclareGlobalFunction( "AllGFqPolynomialsModDegree" );
+
+#############################################################################
+##
+#F  UnderlyingRing( <fam> ) . . . . . . . . . . . . . . . . . underlying ring
+##
+##  The underlying ring of a family of rcwa mappings.
+##
+DeclareAttribute( "UnderlyingRing", IsObject );
+
+#############################################################################
+##
+#F  UnderlyingIndeterminate( <fam> ) . . indet. of underlying polynomial ring
+##
+##  The indeterminate of the underlying polynomial ring of the family <fam>
+##  of modular rcwa mappings.
+##
+DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
+
+#############################################################################
+##
+#R  IsRationalBasedRcwaDenseRep . ."dense" rep. of "rat.-based" rcwa mappings
+##
+##  Representation of integral rcwa mappings and semilocal integral rcwa
+##  mappings by modulus <modulus> and coefficient list <coeffs>.
 ##
 ##  The coefficient list is a list of <modulus> lists of 3 integers,
 ##  defining the mapping on the residue classes
@@ -61,20 +141,39 @@ DeclareGlobalVariable( "IntegralRcwaMappingsFamily" );
 ##  If <n> mod <modulus> = <r>, then <n> is mapped to
 ##  (<coeffs>[<r>+1][1] * <n> + <coeffs>[<r>+1][2])/<coeffs>[<r>+1][3].
 ##
-DeclareRepresentation( "IsIntegralRcwaDenseRep", 
+DeclareRepresentation( "IsRationalBasedRcwaDenseRep", 
                        IsComponentObjectRep and IsAttributeStoringRep, 
-                       [ "coeffs", "modulus" ] );
+                       [ "modulus", "coeffs" ] );
+
+#############################################################################
+##
+#R  IsModularRcwaDenseRep . .`dense' representation of integral rcwa mappings
+##
+##  Representation of modular rcwa mappings by finite field size <q>,
+##  modulus <modulus> and coefficient list <coeffs>.
+##
+##  The coefficient list is a list of <q>^<d> lists of 3 polynomials,
+##  where <d> denotes the degree of <modulus>, defining the mapping on the
+##  residue classes (mod <modulus>), in `natural' order. 
+##  If <P> mod <modulus> = <r>, then <P> is mapped to
+##  (<coeffs>[<pos(r)>][1]*<P>+<coeffs>[<pos(r)>][2])/<coeffs>[<pos(r)>][3],
+##  where <pos(r)> denotes the position of <r> in the sorted list of
+##  polynomials of degree less than <d> over GF(<q>).
+##
+DeclareRepresentation( "IsModularRcwaDenseRep", 
+                       IsComponentObjectRep and IsAttributeStoringRep, 
+                       [ "modulus", "coeffs" ] );
 
 #############################################################################
 ##
 #F  IntegralRcwaMapping( <coeffs> )
 #F  IntegralRcwaMapping( <perm>, <range> )
 #F  IntegralRcwaMapping( <modulus>, <val> )
-#F  RcwaMapping( <coeffs> )
-#F  RcwaMapping( <perm>, <range> )
-#F  RcwaMapping( <modulus>, <val> )
+#F  IntegralRcwaMappingNC( <coeffs> )
+#F  IntegralRcwaMappingNC( <perm>, <range> )
+#F  IntegralRcwaMappingNC( <modulus>, <val> )
 ##
-##  Construction of the rcwa mapping 
+##  Construction of the integral rcwa mapping 
 ##
 ##  \beginlist
 ##  \item{(a)}
@@ -89,8 +188,59 @@ DeclareRepresentation( "IsIntegralRcwaDenseRep",
 ##    per residue class (mod <modulus>).
 ##  \endlist
 ##
+##  The difference between `IntegralRcwaMapping' and `IntegralRcwaMappingNC'
+##  is that the former performs some argument checks which are omitted in the
+##  latter, where just anything may happen if wrong or inconsistent arguments
+##  are given.
+##
 DeclareGlobalFunction( "IntegralRcwaMapping" );
-DeclareSynonym( "RcwaMapping", IntegralRcwaMapping );
+DeclareGlobalFunction( "IntegralRcwaMappingNC" );
+
+#############################################################################
+##
+#F  SemilocalIntegralRcwaMapping( <fam>, <coeffs> )
+#F  SemilocalIntegralRcwaMappingNC( <fam>, <coeffs> )
+##
+##  Construction of the semilocal integral rcwa mapping with coefficients
+##  <coeffs> in the family <fam>.
+##
+##  The difference between `SemilocalIntegralRcwaMapping' and
+##  `SemilocalIntegralRcwaMappingNC' is that the former performs some
+##  argument checks which are omitted in the latter, where just anything may
+##  happen if wrong or inconsistent arguments are given.
+##
+DeclareGlobalFunction( "SemilocalIntegralRcwaMapping" );
+DeclareGlobalFunction( "SemilocalIntegralRcwaMappingNC" );
+
+#############################################################################
+##
+#F  ModularRcwaMapping( <fam>, <modulus>, <coeffs> )
+#F  ModularRcwaMappingNC( <fam>, <modulus>, <coeffs> )
+##
+##  Construction of the modular rcwa mapping with modulus <modulus> and
+##  coefficients <coeffs> in the family <fam>.
+##
+##  The difference between `ModularRcwaMapping' and `ModularRcwaMappingNC'
+##  is that the former performs some argument checks which are omitted in the
+##  latter, where just anything may happen if wrong or inconsistent arguments
+##  are given.
+##
+DeclareGlobalFunction( "ModularRcwaMapping" );
+DeclareGlobalFunction( "ModularRcwaMappingNC" );
+
+#############################################################################
+##
+#F  RcwaMapping( <coeffs> )
+#F  RcwaMapping( <perm>, <range> )
+#F  RcwaMapping( <modulus>, <val> )
+#F  RcwaMapping( <fam>, <coeffs> )
+#F  RcwaMapping( <fam>, <modulus>, <coeffs> )
+##
+##  Shorthand for `IntegralRcwaMapping' (first 3 cases),
+##  `SemilocalIntegralRcwaMapping' (4th case) resp.
+##  `ModularRcwaMapping' (last case).
+##
+DeclareGlobalFunction( "RcwaMapping" );
 
 #############################################################################
 ##
@@ -100,7 +250,7 @@ DeclareGlobalVariable( "ZeroIntegralRcwaMapping" );
 
 #############################################################################
 ##
-#V  IdentityIntegralRcwaMapping . . . . . . . identity integral rcwa mapping
+#V  IdentityIntegralRcwaMapping . . . . . . .  identity integral rcwa mapping
 ##
 DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 
@@ -109,18 +259,6 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 #O  Modulus( <f> ) . . . . . . . . . . . . .  modulus of the rcwa mapping <f>
 ##
 DeclareOperation( "Modulus", [ IsRcwaMapping ] );
-
-#############################################################################
-##
-#A  ModulusOfRcwaMapping( <f> ) . . . . . . . modulus of the rcwa mapping <f>
-##
-DeclareAttribute( "ModulusOfRcwaMapping", IsRcwaMapping );
-
-#############################################################################
-##
-#A  CoefficientsOfRcwaMapping( <f> ) . . coefficients of the rcwa mapping <f>
-##
-DeclareAttribute( "CoefficientsOfRcwaMapping", IsRcwaMapping );
 
 ############################################################################# 
 ## 
@@ -155,19 +293,10 @@ DeclareProperty( "IsFlat", IsRcwaMapping );
 ##
 #P  IsClassWiseOrderPreserving( <f> ) .  is <f> class-wise order-preserving ?
 ##
-##  Indicates whether or not the integral rcwa mapping <f> is class-wise
-##  order-preserving.
+##  Indicates whether or not the rational-based rcwa mapping <f> is
+##  class-wise order-preserving.
 ##
-DeclareProperty( "IsClassWiseOrderPreserving", IsIntegralRcwaMapping ); 
-
-#############################################################################
-##
-#O  RcwaGraphAdjacencyMatrix( <f> ) . . . .  adjacency matrix of graph of <f> 
-##
-##  Computes the weighted adjacency matrix of the graph of the
-##  rcwa mapping <f> (see `RcwaGraph' below).
-##
-DeclareOperation( "RcwaGraphAdjacencyMatrix", [ IsRcwaMapping ] );
+DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping ); 
 
 #############################################################################
 ##
@@ -190,7 +319,7 @@ DeclareOperation( "RcwaGraphAdjacencyMatrix", [ IsRcwaMapping ] );
 ##  This requires the package `grape' to be loaded.
 ##
 DeclareOperation( "RcwaGraph", [ IsRcwaMapping ] );
-if   TestPackageAvailability( "grape", "4.0" ) <> true
+if   TestPackageAvailability( "grape", "4.0" ) = fail
 then Graph := ReturnFail; fi;
 
 ############################################################################# 
@@ -268,20 +397,6 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 ##  whole group RCWA(Z).
 ##
 DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
-
-#############################################################################
-##
-#O  Variation( <f> ) . . . . . . . variation of the integral rcwa mapping <f>
-##
-##  We define the variation of an integral rcwa mapping <f> as
-##  $$
-##    \lim_{n \rightarrow \infty} \
-##    \frac{1}{2n^2} \sum_{i=-n}^{n-1} \left| i^f - (i+1)^f \right|.
-##  $$
-##  The variation is some kind of measure for how much the mapping <f> is
-##  `oscillating'. It can be computed easily from the coefficients.
-##
-DeclareOperation( "Variation", [ IsIntegralRcwaMapping ] );
 
 #############################################################################
 ##

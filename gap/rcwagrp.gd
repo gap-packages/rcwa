@@ -21,18 +21,52 @@ DeclareCategoryCollections( "IsIntegralRcwaMapping" );
 
 #############################################################################
 ##
+#C  IsRcwaGroup . . . . . . . . . . . . . . . . . . . . . . . all rcwa groups
+##
+##  The category of all rcwa groups.
+##
+DeclareSynonym( "IsRcwaGroup",
+                 CategoryCollections(IsRcwaMapping) and IsGroup );
+
+#############################################################################
+##
 #C  IsIntegralRcwaGroup . . . . . . . . . . . . . . . .  integral rcwa groups
-#C  IsRcwaGroup
 ##
 ##  The category of all integral rcwa groups.
 ##
-##  The version `IsRcwaGroup' is reserved as a term for denoting any kind
-##  of rcwa groups, if in future versions also rcwa groups over other
-##  PID's will be implemented.
-##
 DeclareSynonym( "IsIntegralRcwaGroup",
                  CategoryCollections(IsIntegralRcwaMapping) and IsGroup );
-DeclareSynonym( "IsRcwaGroup", IsIntegralRcwaGroup );
+
+#############################################################################
+##
+#C  IsSemilocalIntegralRcwaGroup . . . . . . . semilocal integral rcwa groups
+##
+##  The category of all semilocal integral rcwa groups.
+##
+DeclareSynonym( "IsSemilocalIntegralRcwaGroup",
+                 CategoryCollections(IsSemilocalIntegralRcwaMapping)
+                 and IsGroup );
+
+#############################################################################
+##
+#C  IsRationalBasedRcwaGroup . . . . . . . . . . . rational-based rcwa groups
+##
+##  The category of all integral or semilocal integral rcwa groups.
+##  This is the union of the categories `IsIntegralRcwaGroup' and
+##  `IsSemilocalIntegralRcwaGroup'.
+##
+DeclareSynonym( "IsRationalBasedRcwaGroup",
+                 CategoryCollections(IsRationalBasedRcwaMapping)
+                 and IsGroup );
+
+#############################################################################
+##
+#C  IsModularRcwaGroup . . . . . . . . . . . . . . . . .  modular rcwa groups
+##
+##  The category of all modular rcwa groups.
+##
+DeclareSynonym( "IsModularRcwaGroup",
+                 CategoryCollections(IsModularRcwaMapping) and IsGroup );
 
 #############################################################################
 ##
@@ -63,6 +97,18 @@ DeclareGlobalFunction( "RCWA" );
 #P  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . .  RCWA( Z )
 ##
 DeclareProperty( "IsNaturalRCWA_Z", IsRcwaGroup );
+
+#############################################################################
+##
+#P  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . .  RCWA( Z_pi )
+##
+DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
+
+#############################################################################
+##
+#P  IsNaturalRCWA_GF_q_x( <G> ) . . . . . . . . . . . . . .  RCWA( GF(q)[x] )
+##
+DeclareProperty( "IsNaturalRCWA_GF_q_x", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -148,7 +194,7 @@ DeclareAttribute( "RcwaBase", IsRcwaGroup );
 ##  Computes all finite orbits of the permutation group <G> of maximal length
 ##  <maxlng>, which intersect non-trivially with the set <S>.
 ##
-DeclareOperation( "ShortOrbits", [ IsGroup, IsSet, IsPosInt ] );
+DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
 
 #############################################################################
 ##

@@ -11,64 +11,83 @@
 Revision.rcwagrp_gi :=
   "@(#)$Id$";
 
-############################################################################# 
-## 
-#M  IsGeneratorsOfMagmaWithInverses( <l> ) .  for list of integral rcwa map's 
-## 
-##  Tests whether all rcwa mappings in the list <l> are bijective, hence 
-##  generate a group. 
-## 
-InstallMethod( IsGeneratorsOfMagmaWithInverses, 
-               "for lists of integral residue class-wise affine mappings", 
-               true, [ IsListOrCollection ], 0, 
- 
-  function ( l ) 
- 
-    if   ForAll(l, IsIntegralRcwaMapping) 
-    then return ForAll(l, f -> Inverse(f) <> fail); 
-    else TryNextMethod(); 
-    fi; 
-  end ); 
- 
-############################################################################# 
-## 
-#V  TrivialIntegralRcwaGroup( <G> ) . . . . . . . trivial integral rcwa group 
-#V  TrivialRcwaGroup( <G> ) 
-## 
-InstallValue( TrivialIntegralRcwaGroup, 
-              Group( IdentityIntegralRcwaMapping ) ); 
- 
-############################################################################# 
-## 
-#M  TrivialSubmagmaWithOne( <G> ). . . . . . . . . .  for integral rcwa group 
-## 
-InstallMethod( TrivialSubmagmaWithOne, 
-               "for integral residue class-wise affine groups", 
-               true, [ IsIntegralRcwaGroup ], 0, 
- 
-  function ( G ) 
- 
-    local  Triv; 
- 
-    Triv := Group(IdentityIntegralRcwaMapping); 
-    SetParentAttr(Triv,G); 
-    return Triv; 
-  end ); 
-
-############################################################################# 
-## 
-#V  IntegralRcwaGroupsFamily . . . . . the family of all integral rcwa groups 
-## 
-BindGlobal( "IntegralRcwaGroupsFamily", 
-            FamilyObj( TrivialIntegralRcwaGroup ) ); 
+InstallTrueMethod( IsGroup,     IsRcwaGroup );
+InstallTrueMethod( IsRcwaGroup, IsRationalBasedRcwaGroup );
+InstallTrueMethod( IsRationalBasedRcwaGroup, IsIntegralRcwaGroup );
+InstallTrueMethod( IsRationalBasedRcwaGroup,
+                   IsSemilocalIntegralRcwaGroup );
+InstallTrueMethod( IsRcwaGroup, IsModularRcwaGroup );
 
 #############################################################################
 ##
-#O  RCWACons( Integers ) . . . . . . . . . . . . . . . . . . . . .  RCWA( Z )
+#M  IsGeneratorsOfMagmaWithInverses( <l> ) .  for list of integral rcwa map's
+##
+##  Tests whether all rcwa mappings in the list <l> belong to the same
+##  family and are bijective, hence generate a group.
+##
+InstallMethod( IsGeneratorsOfMagmaWithInverses,
+               "for lists of rcwa mappings", 
+               true, [ IsListOrCollection ], 0,
+
+  function ( l )
+
+    if   ForAll(l,IsRcwaMapping)
+    then return     Length(Set(List(l,FamilyObj))) = 1
+                and ForAll(l,IsBijective); 
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+## 
+#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups
+## 
+InstallMethod( IsCyclic, "generic method for groups", true, [ IsGroup ], 50,
+
+  function ( G )
+
+    if   Length(GeneratorsOfGroup(G)) = 1
+    then return true;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#V  TrivialIntegralRcwaGroup( <G> ) . . . . . . . trivial integral rcwa group
+#V  TrivialRcwaGroup( <G> )
+##
+InstallValue( TrivialIntegralRcwaGroup,
+              Group( IdentityIntegralRcwaMapping ) );
+
+#############################################################################
+##
+#M  TrivialSubmagmaWithOne( <G> ). . . . . . . . . . . . . . . for rcwa group
+##
+InstallMethod( TrivialSubmagmaWithOne,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  Triv;
+
+    Triv := Group(One(G));
+    SetParentAttr(Triv,G);
+    return Triv;
+  end );
+
+#############################################################################
+##
+#V  IntegralRcwaGroupsFamily . . . . . the family of all integral rcwa groups
+##
+BindGlobal( "IntegralRcwaGroupsFamily",
+            FamilyObj( TrivialIntegralRcwaGroup ) );
+
+#############################################################################
+##
+#M  RCWACons( IsRcwaGroup, Integers ) . . . . . . . . . . . . . . . RCWA( Z )
 ##
 ##  Group formed by all bijective integral rcwa mappings.
 ##
-InstallMethod( RCWACons, "natural RCWA(Z)", true, 
+InstallMethod( RCWACons, "natural RCWA(Z)", true,
                [ IsRcwaGroup, IsIntegers ], 0,
 
   function ( filter, R )
@@ -90,17 +109,94 @@ InstallMethod( RCWACons, "natural RCWA(Z)", true,
 
 #############################################################################
 ##
+#M  RCWACons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . . .  RCWA( Z_pi )
+##
+##  Group formed by all bijective rcwa mappings over Z_pi.
+##
+InstallMethod( RCWACons, "natural RCWA(Z_pi)", true, 
+               [ IsRcwaGroup, IsZ_pi ], 0,
+
+  function ( filter, R )
+
+    local  G, pi, id;
+
+    pi := NoninvertiblePrimes( R );
+    id := SemilocalIntegralRcwaMapping( pi, [ [1,0,1] ] );
+    G  := Objectify( NewType( FamilyObj( Group( id ) ),
+                                  IsSemilocalIntegralRcwaGroup
+                              and IsAttributeStoringRep ),
+                     rec( ) );
+    SetIsTrivial( G, false );
+    SetIsNaturalRCWA_Z_pi( G, true );
+    SetOne( G, id );
+    SetIsFinite( G, false ); SetSize( G, infinity );
+  # SetIsFinitelyGeneratedGroup( G, false ); ???
+    SetRepresentative( G, -id );
+    SetName( G, Concatenation( "RCWA(", Name(R), ")" ) );
+    return G;
+  end );
+
+#############################################################################
+##
+#M  RCWACons( IsRcwaGroup, PolynomialRing( GF( <q> ), 1 ) )  RCWA( GF(q)[x] )
+##
+##  Group formed by all bijective rcwa mappings over GF(q)[x].
+##
+InstallMethod( RCWACons, "natural RCWA(Z_pi)", true, 
+               [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
+
+  function ( filter, R )
+
+    local  G, q, id;
+
+    q := Size( CoefficientsRing( R ) );
+    id := ModularRcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
+    G  := Objectify( NewType( FamilyObj( Group( id ) ),
+                                  IsModularRcwaGroup
+                              and IsAttributeStoringRep ),
+                     rec( ) );
+    SetIsTrivial( G, false );
+    SetIsNaturalRCWA_GF_q_x( G, true );
+    SetOne( G, id );
+    SetIsFinite( G, false ); SetSize( G, infinity );
+    SetIsFinitelyGeneratedGroup( G, false );
+    SetRepresentative( G, -id );
+    SetName( G, Concatenation( "RCWA(GF(", String(q), ")[x])" ) );
+    return G;
+  end );
+
+#############################################################################
+##
 #F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
 ##
 InstallGlobalFunction( RCWA, R -> RCWACons( IsRcwaGroup, R ) );
 
 #############################################################################
 ##
-#M  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . .  RCWA( Z )
+#M  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . . .  RCWA(Z)
+##
+##  The group RCWA(Z) can only be obtained by the above constructor.
 ##
 InstallMethod( IsNaturalRCWA_Z,
-               "for integral residue class-wise affine groups",
-               true, [ IsRcwaGroup ], 0, G -> G = RCWA( Integers ) );
+               "for rcwa groups", true, [ IsRcwaGroup ], 0, ReturnFalse );
+
+#############################################################################
+##
+#M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . . .  RCWA(Z_pi)
+##
+##  The groups RCWA(Z_pi) can only be obtained by the above constructor.
+##
+InstallMethod( IsNaturalRCWA_Z_pi,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0, ReturnFalse );
+
+#############################################################################
+##
+#M  IsNaturalRCWA_GF_q_x( <G> ) . . . . . . . . . . . . . . .  RCWA(GF(q)[x])
+##
+##  The groups RCWA(GF(q)[x]) can only be obtained by the above constructor.
+##
+InstallMethod( IsNaturalRCWA_GF_q_x,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0, ReturnFalse );
 
 #############################################################################
 ##
@@ -108,10 +204,36 @@ InstallMethod( IsNaturalRCWA_Z,
 ##
 InstallMethod( \in,
                "for integral rcwa mapping and RCWA(Z)", ReturnTrue,
-               [ IsIntegralRcwaMapping, IsNaturalRCWA_Z ], 0,
+               [ IsIntegralRcwaMapping, IsNaturalRCWA_Z ], 100,
 
   function ( g, G )
     return IsBijective(g);
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, RCWA( Z_pi( <pi> ) ) ) . . . .  for rcwa mapping and RCWA(Z_pi)
+##
+InstallMethod( \in,
+               "for semilocal integral rcwa mapping and RCWA(Z_pi)",
+               ReturnTrue,
+               [ IsSemilocalIntegralRcwaMapping, IsNaturalRCWA_Z_pi ], 100,
+
+  function ( g, G )
+    return FamilyObj(g) = FamilyObj(One(G)) and IsBijective(g);
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, RCWA( GF(q)[x] ) ) . . . .  for rcwa mapping and RCWA(GF(q)[x])
+##
+InstallMethod( \in,
+               "for modular rcwa mapping and RCWA(GF(q)[x])",
+               ReturnTrue,
+               [ IsModularRcwaMapping, IsNaturalRCWA_GF_q_x ], 100,
+
+  function ( g, G )
+    return FamilyObj(g) = FamilyObj(One(G)) and IsBijective(g);
   end );
 
 ############################################################################# 
@@ -119,50 +241,84 @@ InstallMethod( \in,
 #M  IsSubset( RCWA( Integers ), G ) . . . for RCWA(Z) and integral rcwa group
 ## 
 InstallMethod( IsSubset,
-               "for RCWA(Z) and integral rcwa group", ReturnTrue, 
+               "for RCWA(Z) and integral rcwa group", ReturnTrue,
                [ IsNaturalRCWA_Z, IsIntegralRcwaGroup ], 0, ReturnTrue );
- 
-############################################################################# 
-## 
-#M  Display( RCWA( Integers ) ) . . . . . . . . . . . . . . . . . for RCWA(Z) 
-## 
-InstallMethod( Display, 
-               "for RCWA(Z)", ReturnTrue, [ IsNaturalRCWA_Z ], 0, 
- 
-  function ( G ) 
-    Print(Name(G),"\n"); 
-  end ); 
- 
-############################################################################# 
-## 
-#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups 
-## 
-InstallMethod( IsCyclic, "generic method for groups", true, [ IsGroup ], 50, 
- 
-  function ( G ) 
- 
-    if   Length(GeneratorsOfGroup(G)) = 1  
-    then return true; 
-    else TryNextMethod(); fi; 
-  end ); 
- 
+
 #############################################################################
 ##
-#M  ViewObj( <G> ) . . . . . . . . . . . . . . . . .  for integral rcwa group
+#M  IsSubset( RCWA( Z_pi( <pi> ) ), G ) . . . . for RCWA(Z_pi) and rcwa group
+##
+InstallMethod( IsSubset,
+               "for RCWA(Z_pi) and semilocal integral rcwa group",
+               ReturnTrue,
+               [ IsNaturalRCWA_Z_pi, IsSemilocalIntegralRcwaGroup ], 0,
+
+  function ( RCWA_Z_pi, G )
+    return FamilyObj(One(RCWA_Z_pi)) = FamilyObj(One(G));
+  end );
+
+#############################################################################
+##
+#M  IsSubset( RCWA( GF(q)[x] ), G ) . . . . for RCWA(GF(q)[x]) and rcwa group
+##
+InstallMethod( IsSubset,
+               "for RCWA(GF(q)[x]) and modular rcwa group",
+               ReturnTrue,
+               [ IsNaturalRCWA_GF_q_x, IsModularRcwaGroup ], 0,
+
+  function ( RCWA_GF_q_x, G )
+    return FamilyObj(One(RCWA_GF_q_x)) = FamilyObj(One(G));
+  end );
+
+#############################################################################
+##
+#M  Display( RCWA( <R> ) ) . . . . . . . . . . . . . . . .  for whole RCWA(R)
+##
+InstallMethod( Display,
+               "for whole RCWA(R)", true, [ IsRcwaGroup and HasName ], 0,
+
+  function ( G )
+    if   IsNaturalRCWA_Z( G ) or IsNaturalRCWA_Z_pi( G )
+      or IsNaturalRCWA_GF_q_x( G )
+    then Print( Name( G ), "\n" ); else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  ViewObj( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
 InstallMethod( ViewObj,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    local  NrGens;
+    local  NrGens, pi, q, piStr, LocStr, RingStr;
 
+    if IsSemilocalIntegralRcwaGroup(G) then
+      pi    := NoninvertiblePrimes(Source(One(G)));
+      piStr := String(pi){[3..Length(String(pi)) - 2]};
+      if Length(pi) = 1 then LocStr := ""; else LocStr := "semi"; fi;
+    fi;
+    if   IsModularRcwaGroup(G)
+    then q := Size(UnderlyingField(One(G)));
+         RingStr := Concatenation("GF(",String(q),")[x]");
+    fi;
     Print("<");
     if   IsTrivial(G) 
-    then Print("trivial integral rcwa group");
+    then if   IsIntegralRcwaGroup(G)
+         then Print("trivial integral rcwa group");
+         elif IsSemilocalIntegralRcwaGroup(G)
+         then Print("trivial ",piStr,"-",LocStr,"local integral rcwa group");
+         else Print("trivial rcwa group over ",RingStr);
+         fi;
     else NrGens := Length(GeneratorsOfGroup(G));
-         Print("integral rcwa group with ",NrGens," generator");
+         if IsRationalBasedRcwaGroup(G) then
+           if IsSemilocalIntegralRcwaGroup(G) then
+             Print(piStr,"-",LocStr,"local ");
+           fi;
+           Print("integral rcwa group with ",NrGens," generator");
+         else Print("rcwa group over ",RingStr," with ",NrGens," generator");
+         fi;
          if NrGens > 1 then Print("s"); fi;
          if   HasIdGroup(G) then Print(", of isomorphism type ",IdGroup(G));
          elif HasSize(G)    then Print(", of size ",Size(G)); fi;
@@ -172,26 +328,51 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  Display( <G> ) . . . . . . . . . . . . . . . . .  for integral rcwa group
+#M  Display( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
 InstallMethod( Display,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    local  g;
+    local  pi, q, piStr, LocStr, RingStr, g;
 
+    if IsSemilocalIntegralRcwaGroup(G) then
+      pi    := NoninvertiblePrimes(Source(One(G)));
+      piStr := String(pi){[3..Length(String(pi)) - 2]};
+      if Length(pi) = 1 then LocStr := ""; else LocStr := "semi"; fi;
+    fi;
+    if   IsModularRcwaGroup(G)
+    then q := Size(UnderlyingField(One(G)));
+         RingStr := Concatenation("GF(",String(q),")[x]");
+    fi;
     if   IsTrivial(G) 
-    then Print("Trivial rcwa group\n");
-    else Print("\nRcwa group");
-         if   HasIdGroup(G) then Print(" of isomorphism type ",IdGroup(G));
-         elif HasSize(G)    then Print(" of size ",Size(G)); fi;
+    then if   IsIntegralRcwaGroup(G)
+         then Print("Trivial integral rcwa group");
+         elif IsSemilocalIntegralRcwaGroup(G)
+         then Print("Trivial ",piStr,"-",LocStr,"local integral rcwa group");
+         else Print("Trivial rcwa group over ",RingStr);
+         fi;
+         Print("\n");
+    else Print("\n");
+         if IsRationalBasedRcwaGroup(G) then
+           if IsSemilocalIntegralRcwaGroup(G) then
+             Print(piStr,"-",LocStr,"local i");
+           else Print("I"); fi;
+           Print("ntegral rcwa group");
+         else Print("Rcwa group over ",RingStr);
+         fi;
+         if   HasIdGroup(G)
+         then if IsModularRcwaGroup(G) then Print(","); fi;
+              Print(" of isomorphism type ",IdGroup(G));
+         elif HasSize(G)
+         then if IsModularRcwaGroup(G) then Print(","); fi;
+              Print(" of size ",Size(G));
+         fi;
          Print(", generated by\n\n[\n");
          for g in GeneratorsOfGroup(G) do Display(g); od;
          Print("]\n\n");
     fi;
-
   end );
 
 #############################################################################
@@ -290,7 +471,37 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Modulus( <G> ) . . . . . . . . . . . . . . . . .  for integral rcwa group
+#M  \in( <g>, <G> ) . . . . . . . . . . . . . for rcwa mapping and rcwa group
+##
+##  This may run into an infinite loop if <G> is infinite and <g> is not an
+##  element of <G>.
+##
+InstallMethod( \in,
+               "for rcwa mapping and rcwa group",
+               ReturnTrue, [ IsRcwaMapping, IsRcwaGroup ], 0,
+
+  function ( g, G )
+
+    local  gens, k;
+
+    if FamilyObj(g) <> FamilyObj(One(G)) then return false; fi;
+    gens := GeneratorsOfGroup(G);
+    if g = One(G) or g in gens or g^-1 in gens then return true; fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(g)) then return false; fi;
+    if   g in List(Combinations(gens,2), t -> Product(t))
+    then return true; fi;
+    gens := Union(gens,List(gens, g -> g^-1));
+    k := 2;
+    repeat
+      if   g in List(Tuples(gens,k), t -> Product(t))
+      then return true; fi;
+      k := k + 1;
+    until false;
+  end );
+
+#############################################################################
+##
+#M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
 ##  Modulus of rcwa group <G>.
 ##
@@ -300,8 +511,7 @@ InstallMethod( \in,
 ##  Caution: this is a highly probabilistic and experimental method !
 ##
 InstallOtherMethod( Modulus,
-                    "for integral residue class-wise affine groups",
-                    true, [ IsIntegralRcwaGroup ], 0,
+                    "for rcwa groups", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -331,52 +541,48 @@ InstallOtherMethod( Modulus,
 
 #############################################################################
 ##
-#M  ModulusOfRcwaGroup( <G> ) . . . . . . . . . . . . for integral rcwa group
+#M  ModulusOfRcwaGroup( <G> ) . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( ModulusOfRcwaGroup,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
                G -> Modulus( G ) );
 
 #############################################################################
 ##
-#M  PrimeSet( <G> ) . . . . . . . . . . . . . . . . . for integral rcwa group
+#M  PrimeSet( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( PrimeSet,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
                G -> Union( List( GeneratorsOfGroup( G ), PrimeSet ) ) );
 
 #############################################################################
 ##
-#M  IsFlat( <G> ) . . . . . . . . . . . . . . . . . . for integral rcwa group
+#M  IsFlat( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( IsFlat,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0, 
+               "for rcwa groups", true, [ IsRcwaGroup ], 0, 
                G -> ForAll( GeneratorsOfGroup( G ), IsFlat ) );
 
 #############################################################################
 ##
-#M  IsClassWiseOrderPreserving( <G> ) . . . . . . . . for integral rcwa group
+#M  IsClassWiseOrderPreserving( <G> ) . . . . . for rational-based rcwa group
 ##
-##  We say that an integral rcwa group is *class-wise order-preserving* if
-##  all of its elements are.
+##  We say that a rational-based rcwa group is *class-wise order-preserving*
+##  if all of its elements are.
 ##
-InstallMethod( IsClassWiseOrderPreserving,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
-               G -> ForAll( GeneratorsOfGroup( G ),
-                            IsClassWiseOrderPreserving ) );
+InstallOtherMethod( IsClassWiseOrderPreserving,
+                    "for rational-based rcwa groups",
+                    true, [ IsRationalBasedRcwaGroup ], 0,
+                    G -> ForAll( GeneratorsOfGroup( G ),
+                                 IsClassWiseOrderPreserving ) );
 
 #############################################################################
 ##
-#M  IsTame( <G> ) . . . . . . . . . . . . . . . . . . for integral rcwa group
+#M  IsTame( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( IsTame,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
-               G -> Modulus( G ) > 0 );
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
+               G -> Modulus( G ) <> Zero( Source( One( G ) ) ) );
 
 #############################################################################
 ##
@@ -464,11 +670,10 @@ InstallMethod( NiceMonomorphism,
 
 #############################################################################
 ##
-#M  NiceObject( <G> ) . . . . . . . . . . . . . . . . for integral rcwa group
+#M  NiceObject( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( NiceObject,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
                G -> Image( NiceMonomorphism( G ) ) );
 
 #############################################################################
@@ -482,7 +687,7 @@ InstallMethod( NiceObject,
 ##  into an infinite loop.
 ##
 InstallMethod( Size,
-               "for integral residue class-wise affine groups",
+               "for integral rcwa groups",
                true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -500,20 +705,44 @@ InstallMethod( Size,
     return Size(Image(IsomorphismPermGroup(G)));
   end );
 
+#############################################################################
+##
+#M  Size( <G> ) . . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
+##
+##  This method looks for elements of infinite order.
+##  In case this search is not successful, it gives up.
+##
+InstallMethod( Size,
+               "for rcwa groups", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  gen, k;
+
+    gen := GeneratorsOfGroup(G);
+    if ForAny(gen, g -> Order(g) = infinity) then return infinity; fi;
+    if   ForAny(Combinations(gen,2), t -> Order(Comm(t[1],t[2])) = infinity)
+    then return infinity; fi;
+    for k in [2..3] do
+      if   ForAny(Tuples(gen,k), t -> Order(Product(t)) = infinity)
+      then return infinity; fi;
+    od;
+    TryNextMethod();
+  end );
+
 ############################################################################# 
 ## 
-#M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . . for integral rcwa group
+#M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . . . . . .  for rcwa group
 ## 
 InstallMethod( ShortOrbits,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup, IsSet, IsPosInt ], 0,
+               "for rcwa groups", true, [ IsRcwaGroup, IsList, IsPosInt ], 0,
 
   function ( G, S, maxlng )
 
     local  gens, g, orbs, orb, oldorb, remaining, n;
 
     gens := GeneratorsOfGroup(G);
-    orbs := []; remaining := ShallowCopy(S);
+    orbs := []; remaining := ShallowCopy(Set(S));
     while remaining <> [] do
       orb := [remaining[1]];
       repeat
