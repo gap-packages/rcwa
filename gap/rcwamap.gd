@@ -255,6 +255,12 @@ DeclareGlobalFunction( "ClassTransposition" );
 
 #############################################################################
 ##
+#A  LaTeXName( obj ) . . . . . . . . . . . . .  LaTeX string for object <obj>
+##
+DeclareAttribute( "LaTeXName", IsObject );
+
+#############################################################################
+##
 #A  FactorizationIntoGenerators( <g> ) . . .  factorization into genenerators
 ##
 ##  A factorization of the group element <g> into generators.
@@ -265,7 +271,7 @@ DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
 
 #############################################################################
 ##
-#F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
+#F  PrimeSwitch( <p> ) .  rcwa mapping of Z with multiplier <p> and divisor 2
 ##
 DeclareGlobalFunction( "PrimeSwitch" );
 

@@ -706,6 +706,7 @@ InstallOtherMethod( RcwaMapping,
 #############################################################################
 ##
 #F  ClassShift( r, m ) . . . . . . . . . . . . . . . . .  class shift nu_r(m)
+#F  ClassShift( ResidueClass( r, m ) )
 #F  ClassShift( [ r, m ] )
 ##
 InstallGlobalFunction( ClassShift,
@@ -714,13 +715,19 @@ InstallGlobalFunction( ClassShift,
 
     local  result, coeff, r, m;
 
-    if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
+    if IsList(arg[1]) then arg := arg[1]; fi;
+    if   IsUnionOfResidueClasses(arg[1]) and Length(Residues(arg[1])) = 1
+    then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
+    if IsIntegers(arg[1]) then arg := [0,1]; fi;
+    r := arg[1]; m := arg[2];
     if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
     coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
     result := RcwaMapping(coeff);
     SetIsBijective(result,true);
     SetOrder(result,infinity); SetIsTame(result,true);
     SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
+    SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
+                                               String(m),")}"));
     SetFactorizationIntoGenerators(result,[result]);
     return result;
   end );
@@ -728,6 +735,7 @@ InstallGlobalFunction( ClassShift,
 #############################################################################
 ##
 #F  ClassReflection( r, m ) . . . . . . . . . . class reflection varsigma_r(m)
+#F  ClassReflection( ResidueClass( r, m ) )
 #F  ClassReflection( [ r, m ] )
 ##
 InstallGlobalFunction( ClassReflection,
@@ -736,7 +744,11 @@ InstallGlobalFunction( ClassReflection,
 
     local  result, coeff, r, m;
 
-    if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
+    if IsList(arg[1]) then arg := arg[1]; fi;
+    if   IsUnionOfResidueClasses(arg[1]) and Length(Residues(arg[1])) = 1
+    then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
+    if IsIntegers(arg[1]) then arg := [0,1]; fi;
+    r := arg[1]; m := arg[2];
     if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
@@ -744,6 +756,8 @@ InstallGlobalFunction( ClassReflection,
     SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassReflection(",
                                  String(r),",",String(m),")"));
+    SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
+                                                     String(m),")}"));
     SetFactorizationIntoGenerators(result,[result]);
     return result;
   end );
@@ -751,24 +765,34 @@ InstallGlobalFunction( ClassReflection,
 #############################################################################
 ##
 #F  ClassTransposition( r1, m1, r2, m2 )  cl. transposition tau_r1(m1),r2(m2)
+#F  ClassTransposition( ResidueClass( r1, m1 ), ResidueClass( r2, m2 ) )
 #F  ClassTransposition( [ r1, m1, r2, m2 ] )
 ##
 InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, r1, m1, r2, m2;
+    local  result, r1, m1, r2, m2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
+    if Length(arg) = 2 and ForAll(arg,IsUnionOfResidueClasses)
+      and ForAll(arg,cl->Length(Residues(cl)) = 1)
+    then arg := [Residues(arg[1])[1],Modulus(arg[1]),
+                 Residues(arg[2])[1],Modulus(arg[2])]; fi;
     if Length(arg) <> 4 or not ForAll(arg,IsInt) then return fail; fi;
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
     if m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then return fail; fi;
+    if   m1 > m2 or (m1 = m2 and r1 > r2)
+    then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
     result := RcwaMapping([[ResidueClass(Integers,m1,r1),
                             ResidueClass(Integers,m2,r2)]]);
     SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassTransposition(",
                                  String(r1),",",String(m1),",",
                                  String(r2),",",String(m2),")"));
+    SetLaTeXName(result,
+                 Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
+                                         String(r2),"(",String(m2),")}"));
     SetFactorizationIntoGenerators(result,[result]);
     return result;
   end );
@@ -794,6 +818,7 @@ InstallGlobalFunction( PrimeSwitch,
     result := Product(facts);
     SetIsTame(result,false); SetOrder(result,infinity);
     SetName(result,Concatenation("PrimeSwitch(",String(p),")"));
+    SetLaTeXName(result,Concatenation("\\sigma_{",String(p),"}"));
     SetFactorizationIntoGenerators(result,facts);
     return result;
   end );
@@ -1221,23 +1246,33 @@ InstallMethod( LaTeXObj,
   function ( f )
 
     local  c, m, mred, german, str, affs, maxafflng, t, poses, pos,
-           res, src, cls, cl, indent, append, i, j;
+           res, src, cls, cl, indent, append, gens, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
                           Concatenation([str],List(arg,String)));
     end;
 
+    if HasLaTeXName(f) then return LaTeXName(f); fi;
+    indent := ValueOption("Indentation");
+    if not IsPosInt(indent)
+    then indent := ""; else indent := String(" ",indent); fi;
+    str := indent;
+    if ValueOption("Factorization") = true and IsBijective(f) then
+      gens := List(FactorizationIntoGenerators(f),LaTeXName);
+      for pos in [1..Length(gens)] do
+        append(gens[pos]);
+        if pos mod 5 = 0 then append("\\\\\n"); fi;
+        if pos < Length(gens) then append(" \\cdot "); fi;
+      od;
+      return str;
+    fi;
     german := ValueOption("german") = true;
     c := Coefficients(f); m := Length(c);
     if m = 1 then
       return Concatenation("n \\ \\mapsto \\ ",
                            LaTeXIntegralAffineMapping(c[1]));
     fi;
-    indent := ValueOption("Indentation");
-    if not IsPosInt(indent)
-    then indent := ""; else indent := String(" ",indent); fi;
-    str := indent;
     append("n \\ \\longmapsto \\\n",indent,"\\begin{cases}\n");
     poses := AsSortedList( List( Set(c),
                                  t -> Filtered( [0..m-1],
@@ -2246,7 +2281,17 @@ InstallMethod( InverseOp,
     fi;
     SetInverse(f,Result); SetInverse(Result,f);
     if HasOrder(f) then SetOrder(Result,Order(f)); fi;
-    if HasName(f)  then SetName(Result,Concatenation(Name(f),"^-1")); fi;
+    if HasName(f) then
+      if   HasOrder(f) and Order(f) < infinity
+      then SetName(Result,Concatenation(Name(f),"^",String(Order(f)-1)));
+      else SetName(Result,Concatenation(Name(f),"^-1")); fi;
+    fi;
+    if HasLaTeXName(f) then
+      if   HasOrder(f) and Order(f) < infinity
+      then SetLaTeXName(Result,Concatenation(LaTeXName(f),
+                                             "^{",String(Order(f)-1),"}"));
+      else SetLaTeXName(Result,Concatenation(LaTeXName(f),"^{-1}")); fi;
+    fi;
 
     return Result;
   end );
@@ -2302,7 +2347,11 @@ InstallMethod( InverseOp,
     Result := RcwaMappingNC( q, mInv, cInv );
     SetInverse(f,Result); SetInverse(Result,f);
     if HasOrder(f) then SetOrder(Result,Order(f)); fi;
-    if HasName(f)  then SetName(Result,Concatenation(Name(f),"^-1")); fi;
+    if HasName(f) then
+      if   HasOrder(f) and Order(f) < infinity
+      then SetName(Result,Concatenation(Name(f),"^",String(Order(f)-1)));
+      else SetName(Result,Concatenation(Name(f),"^-1")); fi;
+    fi;
 
     return Result;
   end );
@@ -2350,8 +2399,6 @@ InstallMethod( \^,
 #M  \^( <f>, <n> ) . . . . . . . . . . . . . . . for rcwa mapping and integer
 ##
 ##  <n>-th power of the rcwa mapping <f>. 
-##  This method is for faster handling of the case of a negative exponent
-##  if the inverse of <f> already has been computed.
 ##
 InstallMethod( \^,
                "for rcwa mapping and integer (RCWA)",
@@ -2382,6 +2429,17 @@ InstallMethod( \^,
         then SetName(pow,Concatenation(Name(f),"^",String(n mod Order(f))));
         elif n mod Order(f) = 1
         then SetName(pow,Name(f));
+        fi;
+      fi;
+      if HasLaTeXName(f) then
+        if   Order(f) = infinity
+        then SetLaTeXName(pow,Concatenation(LaTeXName(f),"^{",
+                                            String(n),"}"));
+        elif not (n mod Order(f) in [0,1])
+        then SetLaTeXName(pow,Concatenation(LaTeXName(f),"^{",
+                                            String(n mod Order(f)),"}"));
+        elif n mod Order(f) = 1
+        then SetLaTeXName(pow,LaTeXName(f));
         fi;
       fi;
     fi;
@@ -3528,14 +3586,43 @@ InstallMethod( FactorizationIntoGenerators,
 
   function ( g )
 
-    local  facts, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr,
-           multfacts, divfacts, p, q, Smult, Sdiv, switch, i, j, k, r;
+    local  facts, StateInfo, elm, rev, revert, affsrc, P, h, cycs, cyc,
+           gfixP, cl, rest, c, m, cr, multfacts, divfacts, p, q,
+           Smult, Sdiv, clSmult, clSdiv, pairs, pair, diffs, largeprimes,
+           splitpair, splittedpairs, splittedpair, d, dpos, disjoint,
+           switch, expandswitches, ct, i, j, k, kmult, kdiv, r;
+
+    StateInfo := function ( )
+      Info(InfoRCWA,1,"Modulus(<g>) = ",Modulus(g),
+                      ", Multiplier(<g>) = ",Multiplier(g),
+                      ", Divisor(<g>) = ",Divisor(g));
+    end;
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
-    facts := [];
-    if IsTame(g) then
-      P := RespectedPartition(g);
+    facts := []; elm := g;
+    if not IsClassWiseOrderPreserving(g) then # First make <g> cwop.
+      rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
+      revert := List(AsUnionOfFewClasses(rev^g),ClassReflection);
+      g := g/Product(revert);
+    else revert := []; fi;
+    if IsIntegral(g) then
+      affsrc := Union(List(LargestSourcesOfAffineMappings(g),
+                           AsUnionOfFewClasses));
+      P := [];
+      for cl in affsrc do
+        cyc := Cycle(g,cl);
+        if    Set(List(cyc,cl2->Length(Residues(cl2)))) = [1]
+          and ForAll(cyc,cl2->ForAny(affsrc,cl3->IsSubset(cl3,cl2)))
+        then
+          P := Union(P,cyc);
+          if Union(P) = Integers then break; fi;
+        fi;
+      od;
+      if   Union(P) <> Integers
+      then P := RespectedPartition(g); fi;
+      if   InfoLevel(InfoRCWA) >= 1
+      then Print("#I Use respected partition "); View(P); Print(".\n"); fi;
       h := Permutation(g,P);
       cycs := Orbits(Group(h),MovedPoints(h));
       for cyc in cycs do
@@ -3551,18 +3638,13 @@ InstallMethod( FactorizationIntoGenerators,
         if IsOne(rest) then continue; fi;
         m := Modulus(rest); r := Residues(cl)[1];
         c := Coefficients(rest)[r+1];
-        if c[1] < 0 then
-          cr    := ClassReflection(r,m);
-          facts := Concatenation([cr],facts);
-          rest := rest * cr;
-        fi;
-        if IsOne(rest) then continue; fi;        
-        c := Coefficients(rest)[r+1];
         facts := Concatenation([ClassShift(r,m)^(c[2]/m)],facts);
       od;
     else
+      StateInfo();
+      expandswitches := ValueOption("ExpandPrimeSwitches") = true;
       repeat
-        repeat
+        while not IsBalanced(g) do
           p := 1; q := 1;
           multfacts := Set(Factors(Multiplier(g)));
           divfacts  := Set(Factors(Divisor(g)));
@@ -3573,31 +3655,121 @@ InstallMethod( FactorizationIntoGenerators,
           if [p,q] <> [1,1] then
             if p > q then # Additional prime in multiplier.
               switch := PrimeSwitch(p);
-              facts  := Concatenation(FactorizationIntoGenerators(switch),
-                                      facts);
-              g      := g/switch;
+              if expandswitches then
+                facts := Concatenation(FactorizationIntoGenerators(switch),
+                                       facts);
+              else facts := Concatenation([switch],facts); fi;
+              g := g/switch;
+              Info(InfoRCWA,1,"Dividing by ",Name(switch));
             else          # Additional prime in divisor.
               switch := PrimeSwitch(q);
-              facts  := Concatenation(
-                          Reversed(FactorizationIntoGenerators(switch)),
-                          facts);
-              g      := g/switch;
+              if expandswitches then
+                facts  := Concatenation(
+                            Reversed(FactorizationIntoGenerators(switch)),
+                            facts);
+              else facts := Concatenation([switch^-1],facts); fi;
+              g := g*switch;
+              Info(InfoRCWA,1,"Multiplying by ",Name(switch));
             fi;
           fi;
-        until IsBalanced(g);
-        p := Maximum(PrimeSet(g));
-        k := Minimum(Number(Factors(Multiplier(g)),q->q=p),
-                     Number(Factors(Multiplier(g)),q->q=p));
-        Smult := Multpk(g,p, k)^g;
-        Sdiv  := Multpk(g,p,-k)^g;
+          StateInfo();
+        od;
+
+        p     := Maximum(Factors(Multiplier(g)*Divisor(g)));
+        kmult := Number(Factors(Multiplier(g)),q->q=p);
+        kdiv  := Number(Factors(Divisor(g)),q->q=p);
+        k     := Maximum(kmult,kdiv);
+        Smult := Multpk(g,p,kmult)^g;
+        Sdiv  := Multpk(g,p,-kdiv)^g;
+
+        Info(InfoRCWA,1,"p = ",p,", kmult = ",kmult,", kdiv = ",kdiv);
 
         # Search residue classes r1(m1) in Smult, r2(m2) in Sdiv
-        # with m1/m2 = p.
+        # with m1/m2 = p^k.
 
-      until IsTame(g);
+        clSmult := AsUnionOfFewClasses(Smult);
+        clSdiv  := AsUnionOfFewClasses(Sdiv);
+        if InfoLevel(InfoRCWA) >= 1 then
+          Print("#I Image of classes which are multiplied by q*p^k:\n#I ");
+          ViewObj(clSmult);
+          Print("\n#I Image of classes which are divided by q*p^k:\n#I ");
+          ViewObj(clSdiv); Print("\n");
+        fi;
+        repeat
+          pairs := Filtered(Cartesian(clSmult,clSdiv),
+                     pair ->  Number(Factors(Modulus(pair[1])),q->q=p)
+                            - Number(Factors(Modulus(pair[2])),q->q=p) = k);
+          pairs := Set(pairs);
+          if pairs = [] then
+            diffs := List(Cartesian(clSmult,clSdiv),
+                          pair ->  Number(Factors(Modulus(pair[1])),q->q=p)
+                                 - Number(Factors(Modulus(pair[2])),q->q=p));
+            if Minimum(diffs) < k then
+              Info(InfoRCWA,2,"Split classes in clSmult.");
+              clSmult := Flat(List(clSmult,
+                              cl->List([0..p-1],
+                              t->ResidueClass(Residues(cl)[1]+t*Modulus(cl),
+                                              p*Modulus(cl)))));
+            fi;
+            if Maximum(diffs) > k then
+              Info(InfoRCWA,2,"Split classes in clSdiv.");
+              clSdiv := Flat(List(clSdiv,
+                             cl->List([0..p-1],
+                             t->ResidueClass(Residues(cl)[1]+t*Modulus(cl),
+                                             p*Modulus(cl)))));
+            fi;
+          fi;
+        until pairs <> [];
+        Info(InfoRCWA,1,"Found ",Length(pairs)," pairs.");
+        splittedpairs := [];
+        for i in [1..Length(pairs)] do
+          largeprimes := List(pairs[i],
+                              cl->Filtered(Factors(Modulus(cl)),q->q>p));
+          largeprimes := List(largeprimes,Product);
+          splitpair   := largeprimes/Gcd(largeprimes);
+          if 1 in splitpair then # Omit non-disjoint split.
+            if splitpair = [1,1] then Add(splittedpairs,pairs[i]); else
+              d := Maximum(splitpair); dpos := 3-Position(splitpair,d);
+              if dpos = 1 then
+                splittedpair := List(SplittedClass(pairs[i][1],d),
+                                     cl->[cl,pairs[i][2]]);
+              else
+                splittedpair := List(SplittedClass(pairs[i][2],d),
+                                     cl->[pairs[i][1],cl]);
+              fi;
+              splittedpairs := Concatenation(splittedpairs,splittedpair);
+            fi;
+          fi;
+        od;
+        pairs := splittedpairs;
+        Info(InfoRCWA,1,"After filtering and splitting: ",
+                        Length(pairs)," pairs.");
+        repeat
+          disjoint := [pairs[1]]; i := 1;
+          while i < Length(pairs)
+                and Sum(List(Flat(disjoint),Density))
+                  = Density(Union(Flat(disjoint)))
+          do
+            i := i + 1;
+            Add(disjoint,pairs[i]); 
+          od;
+          if   Sum(List(Flat(disjoint),Density))
+             > Density(Union(Flat(disjoint)))
+          then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
+          for pair in disjoint do
+            ct := ClassTransposition(Residues(pair[1])[1],Modulus(pair[1]),
+                                     Residues(pair[2])[1],Modulus(pair[2]));
+            g := g/ct;
+            facts := Concatenation([ct],facts);
+            Info(InfoRCWA,1,"Dividing by ",Name(ct)); StateInfo();
+          od;
+          pairs := Difference(pairs,disjoint);
+        until pairs = [];
+      until IsIntegral(g);
       facts := Concatenation(FactorizationIntoGenerators(g),facts);
     fi;
-    if   Product(facts) <> g
+    facts := Concatenation(facts,revert);
+    if   Product(facts) <> elm
     then Error("FactorizationIntoGenerators: Internal error!");
     else return facts; fi;
   end );
