@@ -17,20 +17,21 @@
 <Index Key="Collatz conjecture">Collatz mapping</Index>
 The development of this package has been motivated by the famous
 <M>3n+1</M> - Conjecture, which states that iterated application of the
-Collatz mapping
+Collatz mapping <P/>
 <Alt Only="Text"> 
   <![CDATA[
 
-                       /
-                      | n/2      if n even,
-   T: Z -> Z, n |--> <
-                      | (3n+1)/2 if n odd
-                       \
+       T: Z -> Z, n |-> n/2 if n even, and n |-> (3n+1)/2 if n odd
 
   ]]>
 </Alt>
 <Alt Only="HTML">
-  T (see &LaTeX; version of the manual)
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  T:&nbsp;&nbsp;&nbsp;&nbsp;Z&nbsp;->&nbsp;Z,&nbsp;&nbsp;&nbsp;&nbsp;
+  n&nbsp;|->&nbsp;n/2&nbsp;&nbsp;if&nbsp;n&nbsp;even,&nbsp;&nbsp;and
+  &nbsp;&nbsp;n&nbsp;|->&nbsp;(3n+1)/2&nbsp;&nbsp;if&nbsp;n&nbsp;odd
 </Alt>
 <Alt Only="LaTeX">
   <Display>

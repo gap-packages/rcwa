@@ -40,7 +40,9 @@ the restriction of the mapping <M>f</M> to the set
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    f|_r(m):   r(m) -> R,   n -> ( a_r(m) * n + b_r(m) ) / c_r(m).
+    f|_r(m):&nbsp;&nbsp;&nbsp;&nbsp;r(m)&nbsp;->&nbsp;R,
+    &nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;->&nbsp;(&nbsp;a_r(m)&nbsp;*&nbsp;n
+    &nbsp;+&nbsp;b_r(m)&nbsp;)&nbsp;/&nbsp;c_r(m).
   ]]>
 </Alt>
 <Alt Only="LaTeX">
@@ -88,7 +90,8 @@ ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
 running over the residue classes (mod&nbsp;<M>m</M>). <P/>
 
 A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
-<M>|R/mR|</M> coefficient triples <![CDATA[\verb|[ a_rm, b_rm, c_rm ]|]]>.
+<M>|R/mR|</M> coefficient triples <C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,
+&nbsp;c&uscore;rm&nbsp;]</C>.
 Their ordering is determined by the ordering of the representatives of the
 residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
 <C>AllResidues(<A>R</A>, <A>m</A>)</C>. For <M>R = \mathbb{Z}</M>, this means
@@ -99,7 +102,7 @@ The easiest way to enter a given rcwa mapping is by <C>RcwaMapping(
 [ <A>R</A>, <A>m</A>, ] <A>coeffs</A> )</C>. If the arguments <A>R</A> and
 <A>m</A> are omitted, they default to <C>Integers</C> resp. the length of
 the coefficient list <A>coeffs</A>. If the given coefficients would enforce
-a division by zero or images of elements of <A>R</A> outside <A>R</A>,
+a division by zero or images of elements of <A>R</A> outside&nbsp;<A>R</A>,
 an error message is printed and a break loop is entered. For example, the
 coefficient triple <C>[1,1,3]</C> at the first position is not allowed
 if <A>R</A> is the ring of integers. The reason for this is that not all
@@ -615,7 +618,7 @@ gap> List( [ nu, nu^2, nu^3 ], Sign );
 [ -1, 1, -1 ]
 gap> List( [ t, nu^3*t ], Sign );
 [ -1, 1 ]
-gap> List( [ a, a*b, (a*b)^, Comm(a,b) ], Sign );
+gap> List( [ a, a*b, (a*b)^2, Comm(a,b) ], Sign );
 [ 1, -1, 1, 1 ]
 ]]>
 </Example>
