@@ -994,6 +994,20 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(t);
 [  ]
 gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
+gap> S := ResidueClassUnion(Integers,6,[1,2,3,5]);
+1(2) U 2(6)
+gap> Rho(S);
+5/6
+gap> Rho(S+1);
+1/2
+gap> Rho(S+2);
+1/6
+gap> Rho(2*S);
+5/6
+gap> Rho(S^nu);
+1/2
+gap> Rho(S^a);
+5/6
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 

@@ -532,13 +532,13 @@ true
   </ManSection>
 
   <ManSection>
+    <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Attr Name="SetOnWhichMappingIsClassWiseOrderReversing" Arg="f"/>
     <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
-    <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Returns>
       The union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
-      which the rcwa mapping <A>f</A> is class-wise order-reversing,
-      class-wise constant resp. class-wise order-preserving.
+      which the rcwa mapping <A>f</A> is class-wise order-preserving,
+      class-wise order-reversing resp. class-wise constant.
     </Returns>
     <Description>
       The source of the rcwa mapping <A>f</A> must be ordered.
@@ -598,6 +598,37 @@ gap> Determinant(u^2*b^-3);
 </Example>
     </Description>
   </ManSection>
+
+  <ManSection>
+    <Func Name="Rho" Arg="S"/>
+    <Description>
+      An invariant of the residue class union <A>S</A>. <P/>
+
+      If <A>S</A> is the disjoint union of the residue classes
+      <M>r_i(m_i)</M>, <M>i = 1, \dots, l</M> then <C>Rho( <A>S</A> )</C>
+      is the sum of the fractions <M>r_i/m_i</M>, minus <M>l/2</M>
+      plus an integer to get a result in the interval <M>[0,1[</M>.
+<Example>
+<![CDATA[
+gap> S := ResidueClassUnion(Integers,6,[1,2,3,5]);
+1(2) U 2(6)
+gap> Rho(S);
+5/6
+gap> Rho(S+1);
+1/2
+gap> Rho(S+2);
+1/6
+gap> Rho(2*S);
+5/6
+gap> Rho(S^nu);
+1/2
+gap> Rho(S^a);
+5/6
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
 
 </Section>
 
@@ -1513,13 +1544,3 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
-
-
-
-
-
-
-
-
-
-

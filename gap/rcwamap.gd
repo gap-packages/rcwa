@@ -322,19 +322,19 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping );
 
 #############################################################################
 ##
+#A  SetOnWhichMappingIsClassWiseOrderPreserving( <f> )
 #A  SetOnWhichMappingIsClassWiseOrderReversing( <f> )
 #A  SetOnWhichMappingIsClassWiseConstant( <f> )
-#A  SetOnWhichMappingIsClassWiseOrderPreserving( <f> )
 ##
 ##  The union of the residue classes (mod Mod(<f>)) on which the rcwa mapping
-##  <f> is class-wise order-reversing, class-wise constant resp. class-wise
-##  order-preserving.
+##  <f> is class-wise order-preserving, class-wise order-reversing resp.
+##  class-wise constant.
 ##
+DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
+                  IsRationalBasedRcwaMapping );
 DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderReversing",
                   IsRationalBasedRcwaMapping );
 DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
-                  IsRationalBasedRcwaMapping );
-DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
                   IsRationalBasedRcwaMapping );
 
 #############################################################################
@@ -560,6 +560,18 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 ##  is equal to 1.
 ##
 DeclareAttribute( "ImageDensity", IsRcwaMapping );
+
+#############################################################################
+##
+#F  Rho( <S> )
+##
+##  An invariant of the residue class union <S>.
+##
+##  If <S> is the disjoint union of the residue classes $r_i(m_i)$,
+##  $i = 1, \dots, l$ then Rho( <S> ) is the sum of the fractions $r_i/m_i$,
+##  minus $l/2$ plus an integer to get a result in the interval [0,1[.
+##
+DeclareGlobalFunction( "Rho" );
 
 #############################################################################
 ##

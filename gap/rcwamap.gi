@@ -1369,10 +1369,16 @@ InstallMethod( Multpk,
 
 #############################################################################
 ##
+#M  SetOnWhichMappingIsClassWiseOrderPreserving  for rcwa mapping of Z / Z_pi
 #M  SetOnWhichMappingIsClassWiseOrderReversing . for rcwa mapping of Z / Z_pi
 #M  SetOnWhichMappingIsClassWiseConstant . . . . for rcwa mapping of Z / Z_pi
-#M  SetOnWhichMappingIsClassWiseOrderPreserving  for rcwa mapping of Z / Z_pi
 ##
+InstallMethod( SetOnWhichMappingIsClassWiseOrderPreserving,
+               "for rational-based rcwa mappings (RCWA)",
+               true, [ IsRationalBasedRcwaMapping ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                          Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                    r -> Coefficients( f )[r+1][1] > 0 ) ) );
 InstallMethod( SetOnWhichMappingIsClassWiseOrderReversing,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
@@ -1385,12 +1391,6 @@ InstallMethod( SetOnWhichMappingIsClassWiseConstant,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] = 0 ) ) );
-InstallMethod( SetOnWhichMappingIsClassWiseOrderPreserving,
-               "for rational-based rcwa mappings (RCWA)",
-               true, [ IsRationalBasedRcwaMapping ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-                          Filtered( [ 0 .. Modulus( f ) - 1 ],
-                                    r -> Coefficients( f )[r+1][1] > 0 ) ) );
 
 #############################################################################
 ##
@@ -3104,6 +3104,28 @@ InstallMethod( ImageDensity,
 
 #############################################################################
 ##
+#F  Rho( <S> )
+##
+InstallGlobalFunction( Rho,
+
+  function ( S )
+
+    local  rho;
+
+    if   IsIntegers(S) or IsEmpty(S) then return 0;
+    elif IsUnionOfResidueClassesOfZ(S)
+    then rho := Sum(Residues(S))/Modulus(S) - Length(Residues(S))/2;
+         if   IsInt(rho) then return 0;
+         elif rho > 0    then return rho - Int(rho);
+                         else return rho - Int(rho) + 1;
+         fi;
+    else Error("Usage: Rho( <S> ) for a union <S> ",
+               "of residue classes of Z.\n");
+    fi;
+  end );
+
+#############################################################################
+##
 #M  CompatibleConjugate( <g>, <h> ) . . . . . . .  for integral rcwa mappings
 ##
 InstallMethod( CompatibleConjugate,
@@ -3155,5 +3177,3 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
