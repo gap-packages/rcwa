@@ -9,9 +9,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Groups",
-Version          := "0.1",
-Date             := "11/02/2005",
-ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.1",
+Version          := "0.1.1",
+Date             := "14/02/2005",
+ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.1.1",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -43,12 +43,12 @@ PackageDoc       := rec(
                          HTMLStart := "doc/chap0.html",
                          PDFFile   := "doc/manual.pdf",
                          SixFile   := "doc/manual.six",
-                         LongTitle := "[R]esidue [C]lass-[W]ise [A]ffine representations of groups",
+                         LongTitle := "[R]esidue [C]lass-[W]ise [A]ffine groups",
                          Autoload  := false
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4",
-                         NeededOtherPackages    := [ ["ResClasses", ">=2.0"], ["GRAPE",">=4.0"],
+                         NeededOtherPackages    := [ ["ResClasses", ">=2.0.1"], ["GRAPE",">=4.0"],
                                                      ["GAPDoc",">=0.99"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
@@ -59,7 +59,9 @@ BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 Autoload         := false,
 TestFile         := "tst/testall.g",
-Keywords         := [ "infinite permutation groups", "permutation groups over rings" ]
+Keywords         := [ "infinite permutation groups", "permutation groups over rings",
+                      "residue class-wise affine groups", "residue class-wise affine mappings",
+                      "Collatz conjecture", "3n+1 conjecture" ]
 
 ) );
 
