@@ -141,15 +141,39 @@ kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
                       [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);
 SetName(kappa,"kappa");
 
-# A few other related examples.
+# A slight modification which also has only finite cycles.
 
-kappa24 := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
-                        [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
-                        [2, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
-                        [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
-                        [1,-1,3],[1, 0,1],[1,0,1],[1, 0,1],
-                        [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]);
-SetName(kappa24,"kappa24");
+kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                               [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                               [2, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                               [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                               [1,-1,3],[1, 0,1],[1,0,1],[1, 0,1],
+                               [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]);
+SetName(kappa24_fincyc,"kappa24_fincyc");
+
+# A mapping which has finite cycles of unbounded length and apparently
+# one `chaotically behaving' infinite cycle which has positive density
+# (about 0.22917) as a subset of Z.
+
+kappa24_densecyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
+                                 [3, 4,2],[1,-1,1],[6,4,1],[1, 23,1],
+                                 [2, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
+                                 [3, 4,2],[1,-1,1],[6,4,1],[1,-25,1],
+                                 [1,-1,3],[1, 0,1],[1,0,1],[1,  0,1],
+                                 [3, 4,2],[1, 0,3],[6,4,1],[1, 23,1]]);
+SetName(kappa24_densecyc,"kappa24_densecyc");
+
+# As above, but the density now seems to be 1/6.
+
+kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
+                                    [3, 4,2],[1,-1,1],[1,0,1],[6, 142,1],
+                                    [2, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
+                                    [3, 4,2],[1,-1,1],[1,0,1],[6,-146,1],
+                                    [1,-1,3],[1, 0,1],[1,0,1],[1,   0,1],
+                                    [3, 4,2],[1, 0,3],[1,0,1],[6, 142,1]]);
+SetName(kappa24_onesixthcyc,"kappa24_onesixthcyc");
+
+# A few other related examples.
 
 sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);
 sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
