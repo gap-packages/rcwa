@@ -273,6 +273,20 @@ kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
                                     [3, 4,2],[1, 0,3],[1,0,1],[6, 142,1]]);
 SetName(kappa24_onesixthcyc,"kappa24_onesixthcyc");
 
+# Apart from fixed points and three 2-cycles, the following permutation
+# apparently has only one(!) cycle, traversing the set (0(4) U 1(6) U 5(12)
+# U 6(12) U 22(36) U 26(36) U 27(36)) \ {-45, -17, 4, 6, 8, 13, 17, 36, 48}
+# in some sense `chaotically':
+
+kappa36 := RcwaMapping(
+             [[1,  3,3],[2, 10,1],[1,  0,1],[1,  0,1],[3, -4,2],[1, 11,1],
+              [3, -6,2],[1, 13,1],[3, -8,2],[1,  0,1],[1,  0,1],[1,  0,1],
+              [1,  3,3],[2, 10,1],[1,  0,1],[1,  0,1],[3, -4,2],[2, 14,1],
+              [3, -6,2],[2,-11,1],[3, -8,2],[1,  0,1],[1, -4,1],[1,  0,1],
+              [2, 24,1],[2, 13,1],[1,  4,1],[1, -6,3],[3, -4,2],[1, -1,1],
+              [3, -6,2],[1,  1,1],[3, -8,2],[1,  0,1],[1,  0,1],[1,  0,1]]);
+SetName(kappa36,"kappa36");
+
 # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group all of
 # whose orbits on Z seem to be finite.
 
@@ -281,6 +295,12 @@ sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
                        [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
                        [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
 SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
+
+theta := RcwaMapping([[3, 32,16],[3,-1,2],[9,-6,4],[9,-15,2],
+                      [3, 20, 8],[3,-1,2],[9,-6,4],[9,-15,2],
+                      [9,-72,16],[3,-1,2],[9,-6,4],[9,-15,2],
+                      [9, 12, 8],[3,-1,2],[9,-6,4],[9,-15,2]]);
+SetName(theta,"theta");
 
 sigma := sigma1 * sigma2; SetName(sigma,"sigma");
 
