@@ -1076,7 +1076,7 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 <!-- #################################################################### -->
 
 <Section Label="sec:MethodsForTameGroups">
-<Heading>Special methods for tame rcwa groups</Heading>
+<Heading>Special attributes for tame rcwa groups</Heading>
 
 There is a couple of attributes which a priori make only sense for tame
 rcwa groups. In the sequel, these attributes are described in detail. <P/>
