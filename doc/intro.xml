@@ -447,6 +447,21 @@ in arbitrary order.
     serves this purpose.
   </Item>
 
+  <Mark>-</Mark>
+  <Item>
+    Let <M>S</M> be a set of integers.
+    Then the properties <Q><M>S</M> contains arbitrarily long arithmetic
+    progressions</Q>&nbsp;(1) and <Q>the series <M>\sum_{n \in S} 1/n</M>
+    diverges</Q>&nbsp;(2) are both invariant under the natural action of
+    RCWA(<M>\Z</M>) on the power set of <M>\Z</M>.
+    In this context we would like to mention a recent preprint of
+    Ben&nbsp;Green and Terence&nbsp;Tao&nbsp;<Cite Key="GreenTao04"/>
+    where the authors show that the set of prime numbers has
+    Property&nbsp;(1) and state that the more general problem whether
+    Property&nbsp;(2) implies Property&nbsp;(1) which has been posed by
+    Erdös and Turan is still unsolved.
+  </Item>
+
 </List>
 
 We end this chapter by listing a few open problems, again in arbitrary order.
