@@ -411,11 +411,11 @@ gap> Difference(l,Intersection(F,[-20..20]));
     <Description>
 <Example>
 gap> Display(L+1);
- 
+
 The union of the residue classes r ( mod 30 )  for r =
- 
+
   0  2  8 12 14 18 20 24
- 
+
 gap> L+30 = L;
 true
 </Example>

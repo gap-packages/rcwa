@@ -128,7 +128,7 @@ true
 gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
 <integral rcwa mapping with modulus 17>
 gap> Action(Group(g),[4..20]);
-Group([ ( 5, 6) ])
+Group([ (5,6) ])
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 <integral rcwa mapping with modulus 2>
 gap> T := RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]); # The same, by mod. and values.
@@ -206,8 +206,8 @@ gap> r := ModularRcwaMapping( 2, x^2 + e,
       where <A>res</A> denotes the list of residues returned by this function.
 <Example>
 gap> AllGFqPolynomialsModDegree(2,4,x);
-[ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3,
-  x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x,
+[ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3, 
+  x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x, 
   x^3+x^2+x+Z(2)^0 ]
 </Example>
     </Description>
@@ -236,7 +236,7 @@ gap> AllGFqPolynomialsModDegree(2,4,x);
 gap> Coefficients(T);
 [ [ 1, 0, 2 ], [ 3, 1, 2 ] ]
 gap> Coefficients(r);
-[ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ],
+[ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], 
   [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ] ]
 </Example>
     </Description>
@@ -386,8 +386,8 @@ IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] ] )
 gap> Print(d,"\n");
 SemilocalIntegralRcwaMapping( [ 2 ], [ [ 1/3, 0, 1 ] ] )
 gap> Print(r,"\n");
-ModularRcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ],
-  [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ],
+ModularRcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ], 
+  [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ], 
   [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ] ] )
 </Example>
     </Description>
@@ -430,8 +430,8 @@ gap> SetName(r,"r");
 gap> Display(r);
 
 Rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0
- 
-      P mod x^2+Z(2)      |                        P^f
+
+      P mod x^2+Z(2)      |                        P^r
 --------------------------+---------------------------------------------------
  0*Z(2)                   | (x^2+x+Z(2))*P/(x^2+Z(2))
  Z(2)                     | ((x^2+x+Z(2))*P + x)/(x^2+Z(2))
@@ -587,7 +587,7 @@ Union of the residue classes 1(6), 3(6), 4(6) and 5(6)
 gap> M := [1];; l := [1];;
 gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od;
 gap> l;
-[ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, 277,
+[ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, 277, 
   367, 488, 649, 869, 1154, 1534, 2039, 2721, 3629, 4843, 6458, 8608, 11472 ]
 ]]>
 </Example>
@@ -741,18 +741,18 @@ Integral rcwa mapping with modulus 16
 
 gap> s := RcwaMapping(2,x,[[One(R),Zero(R),One(R)],[x,Zero(R),One(R)]]);
 <rcwa mapping of GF(2)[x] with modulus x>
-gap> s^2=s;
-true   # a non-trivial idempotent
-gap> IsInjective(s) or IsSurjective(s);
-false  # certainly not a group element ...
+gap> s^2=s; # a non-trivial idempotent
+true
+gap> IsInjective(s) or IsSurjective(s); # certainly not a group element ...
+false
 gap> Display(s*r-r*s);
 
 Rcwa mapping of GF(2)[x] with modulus x^3+x
 
        P mod x^3+x        |                        P^f
 --------------------------+---------------------------------------------------
- 0*Z(2)     Z(2)          |
- x          x^2           |
+ 0*Z(2)     Z(2)          | 
+ x          x^2           | 
  x^2+Z(2)   x^2+x         | 0*Z(2)
  x+Z(2)     x^2+x+Z(2)    | x
 
@@ -820,7 +820,7 @@ Rcwa mapping of GF(2)[x] with modulus x^3+x^2+x
 
      P mod x^3+x^2+x      |                        P^f
 --------------------------+---------------------------------------------------
- 0*Z(2)     x             |
+ 0*Z(2)     x             | 
  x^2        x^2+x         | P
  Z(2)       x^2+x+Z(2)    | x*P
  x+Z(2)     x^2+Z(2)      | x*P + x
@@ -1004,9 +1004,9 @@ gap> DeterminantMat(M);
 gap> TrajectoryModulo(a,8,25);
 [ 0, 0, 2, 3, 0, 2, 1, 2, 3, 2, 1, 3, 0, 0, 0, 0, 2, 3, 2, 1, 1, 2, 3, 1, 2 ]
 gap> TrajectoryModulo(T,27,2,100);
-[ 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0,
-  0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0,
-  1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1,
+[ 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 
+  0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 
+  1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 
   0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ]
 </Example>
     </Description>
@@ -1053,7 +1053,7 @@ gap> PrimeSet(r);
 gap> ShortCycles(a,2);
 [ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ] ]
 gap> ShortCycles(a,5);
-[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ],
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], 
   [ -9, -7, -5, -4, -6 ] ]
 gap> ShortCycles(u,2);
 [ [ 0 ], [ -1 ], [ 1, 2 ], [ 3, 5 ], [ -10, -6 ] ]
@@ -1066,7 +1066,7 @@ gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> Order(v);
 6
 gap> Order(w);
-8 
+8
 gap> ShortCycles(v,10);
 [ [ 0, 2, 1 ] ]
 gap> ShortCycles(w,10);
@@ -1185,7 +1185,7 @@ gap> f_tostd := StandardizingConjugator(f);
 gap> Display(f_tostd);
 
 Integral rcwa mapping with modulus 16
- 
+
                n mod 16                |                 n^f
 ---------------------------------------+--------------------------------------
    0  8                                | 9n/8
