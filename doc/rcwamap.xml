@@ -50,7 +50,7 @@ rcwa mappings. <P/>
   <ManSection>
     <Func Name="RcwaMappingsFamily" Arg="R"/>
     <Returns>
-      the family of rcwa mappings over the ring <A>R</A>.
+      the family of rcwa mappings of the ring <A>R</A>.
     </Returns>
   </ManSection>
 
@@ -1612,5 +1612,6 @@ IdentityMapping( Integers )
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
