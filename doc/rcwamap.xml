@@ -618,6 +618,49 @@ gap> LargestSourcesOfAffineMappings(r);
 </ManSection>
 
 <ManSection>
+  <Oper Name="Multpk" Arg="f, p, k"/>
+  <Returns>
+    The union of the residue classes <M>r(m)</M> such that
+    <M>p^k||a_{r(m)}</M> if <M>k \geq 0</M> and the union of the residue
+    classes <M>r(m)</M> such that <M>p^k||c_{r(m)}</M> if <M>k \leq 0</M>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> Multpk(T,2,-1);
+Integers
+gap> Multpk(T,3,1);
+1(2)
+gap> Multpk(u,3,0);
+[  ]
+gap> Multpk(u,3,1);
+0(5) U 2(5)
+gap> Multpk(u,3,2);
+1(5) U 3(5) U 4(5)
+gap> Multpk(u,5,-1);
+Integers
+gap> Multpk(kappa,2,1);
+4(12) U 11(12)
+gap> Multpk(kappa,2,-1);
+2(4)
+gap> Multpk(kappa,3,1);
+2(4)
+gap> Multpk(kappa,3,-1);
+8(12)
+]]>
+</Example>
+
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:SignAndDeterminant">
+<Heading>Sign and determinant</Heading>
+
+<ManSection>
   <Attr Name="Sign" Arg="f"/>
   <Returns> The sign of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
