@@ -137,6 +137,7 @@ sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
 sigmas := sigma1 * sigmas2;
 c := Comm(sigmas,sigma1);
 
+
 # The following mapping is wild, but all cycles of integers |n| < 29 are
 # finite.
 
@@ -144,9 +145,29 @@ f := RcwaMapping( [ [ 5, 0, 6 ], [ 5, 3, 4 ], [ 5,-4, 6 ], [ 5,-3, 4 ],
                     [ 5, 4, 6 ], [ 5, 3, 4 ], [ 5, 0, 6 ], [ 5,-3, 4 ],
                     [ 5,-4, 6 ], [ 5, 3, 4 ], [ 5, 4, 6 ], [ 5,-3, 4 ] ] );
 
+
 # An interesting probably contracting mapping (long trajectories ...).
 
 T7 := RcwaMapping([[1,0,6],[7,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,2]]);
+
+
+# Two mappings with non-balanced commutator.
+
+c1 := Restriction(a^-1,RcwaMapping([[2,0,1]]));
+c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);
+
+
+# Two tame mappings (of orders 3 and 2, respectively), whose product is not
+# balanced.
+
+g1 := RcwaMapping([[6,2,1],[1,-1,1],[1,4,6],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1]]);
+
+g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
+
 
 # Some other rcwa mappings.
 
@@ -156,5 +177,6 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
