@@ -217,6 +217,14 @@ gap> Representative(G);
 Rcwa mapping of Z: n -> -n
 gap> IsSubgroup(RCWA(Integers),TrivialIntegralRcwaGroup);
 true
+gap> IsSimple(G);
+false
+gap> IsSolvable(G);
+false
+gap> IsPerfect(G);
+false
+gap> Centre(G);
+Trivial rcwa group over Z
 gap> u in G;
 true
 gap> t in G;
@@ -1067,6 +1075,29 @@ gap> DecreasingOn(a^2);
 1(8) U 7(8)
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
+gap> FactorizationIntoGenerators(ab);
+[ <tame bijective rcwa mapping of Z with modulus 18, of order infinity>,
+  <tame bijective rcwa mapping of Z with modulus 18, of order infinity>,
+  <bijective rcwa mapping of Z with modulus 36, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 36, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 36, of order 2>,
+  <bijective rcwa mapping of Z with modulus 18, of order 2>,
+  <bijective rcwa mapping of Z with modulus 36, of order 2> ]
+gap> Product(last) = ab;
+true
+gap> FactorizationIntoGenerators(Comm(g,h));
+[ <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
+  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
+  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
+  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
+  <bijective rcwa mapping of Z with modulus 6, of order 2> ]
+gap> Product(last) = Comm(g,h);
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
