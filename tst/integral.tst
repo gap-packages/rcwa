@@ -1097,7 +1097,7 @@ gap> FactorizationIntoGenerators(nu*nu^a);
 gap> List([t,nu,tau,nu^2,nu^-1,t*nu],FactorizationIntoGenerators);
 [ [ ClassReflection(0,1) ], [ ClassShift(0,1) ],
   [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,1)^2 ],
-  [ ClassShift(0,1)^-1 ], [ ClassShift(0,1)^-1, ClassReflection(0,1) ] ]
+  [ ClassShift(0,1)^-1 ], [ ClassReflection(0,1), ClassShift(0,1) ] ]
 gap> FactorizationIntoGenerators(g^ClassReflection(0,4));
 [ ClassShift(8,12), ClassShift(3,6), ClassTransposition(1,6,5,6),
   ClassTransposition(1,6,3,6), ClassTransposition(0,12,10,12),
@@ -1106,6 +1106,11 @@ gap> FactorizationIntoGenerators(g^ClassReflection(0,4));
   ClassTransposition(10,12,4,24), ClassTransposition(8,12,4,24),
   ClassTransposition(1,6,4,12), ClassTransposition(1,6,2,12),
   ClassReflection(4,6), ClassReflection(2,24) ]
+gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
+[ ClassShift(15,18), ClassTransposition(1,9,5,9),
+  ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18),
+  ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18),
+  ClassReflection(0,3) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
