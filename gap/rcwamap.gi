@@ -2538,25 +2538,21 @@ InstallMethod( PrimeSet,
 ##
 #M  IsTame( <f> ) . . . . . . . . . . . . . . . .  for bijective rcwa mapping
 ##
-##  The `factors of multiplier and divisor' criterion.
+##  The balancedness criterion.
 ##  This is only applicable for bijective mappings, e.g. n -> 2n
 ##  certainly isn't wild.
 ##
 InstallMethod( IsTame,
-               "for bijective rcwa mappings (RCWA)", true, [ IsRcwaMapping ],
-               100,
+               "for bijective rcwa mappings, balancedness criterion (RCWA)",
+               true, [ IsRcwaMapping ], 100,
 
   function ( f )
-
-    local  R, mult, div;
-
     if   IsIntegral(f)
     then Info(InfoRCWA,4,"IsTame: mapping is integral, hence tame.");
          return true; fi;
     if not IsBijective(f) then TryNextMethod(); fi;
-    Info(InfoRCWA,1,"IsTame:`factors of multiplier and divisor' criterion.");
-    R := Source(f); mult := Multiplier(f); div := Divisor(f);
-    if   Set(Factors(R,mult)) <> Set(Factors(R,div))
+    Info(InfoRCWA,1,"IsTame: balancedness criterion.");
+    if   not IsBalanced(f)
     then SetOrder(f,infinity); return false; else TryNextMethod(); fi;
   end );
 
@@ -2568,8 +2564,8 @@ InstallMethod( IsTame,
 ##  This is only applicable for bijective mappings.
 ##
 InstallMethod( IsTame,
-               "for bijective rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 50,
+               "for bijective rcwa mappings, `dead end' criterion (RCWA)",
+               true, [ IsRcwaMapping ], 50,
 
   function ( f )
 
@@ -2588,13 +2584,39 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . .  for bijective rcwa mapping
+##
+##  The loop criterion.
+##  This is only applicable for bijective mappings.
+##
+InstallMethod( IsTame,
+               "for bijective rcwa mappings, loop criterion (RCWA)", true,
+               [ IsRcwaMapping ], 40,
+
+  function ( f )
+
+    local  R, m, RmodmR, cl, img;
+
+    Info(InfoRCWA,2,"IsTame: loop criterion.");
+    R := Source(f); m := Modulus(f);
+    RmodmR := List(AllResidues(R,m),r->ResidueClass(R,m,r));
+    for cl in RmodmR do
+      img := cl^f;
+      if   img <> cl and Intersection(cl,img) <> []
+      then SetOrder(f,infinity); return false; fi;
+    od;
+    TryNextMethod();
+  end );
+
+#############################################################################
+##
 #M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 ##  The `finite order or flat power' criterion.
 ##
 InstallMethod( IsTame,
-               "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 30,
+               "for rcwa mappings, `flat power' criterion (RCWA)",
+               true, [ IsRcwaMapping ], 30,
 
   function ( f )
 
@@ -2622,7 +2644,7 @@ InstallMethod( IsTame,
 ##  This is a probabilistic method.
 ##
 InstallMethod( IsTame,
-               "for rational-based rcwa mappings (RCWA)",
+               "for rat.-based rcwa mappings, probabilistic method (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
                
   function ( f )
@@ -2977,7 +2999,3 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
