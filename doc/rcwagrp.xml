@@ -365,9 +365,9 @@ gap> phi := IsomorphismPermGroup(H);
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> SetName(g,"g"); SetName(h,"h");
-gap> H := Group(g,h);
+gap> G := Group(g,h);
 <rcwa group over Z with 2 generators>
-gap> phi := IsomorphismMatrixGroup(H);;
+gap> phi := IsomorphismMatrixGroup(G);;
 gap> FieldOfMatrixGroup(Image(phi));
 Rationals
 gap> DegreeOfMatrixGroup(Image(phi));
@@ -408,6 +408,47 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
     </Description>
   </ManSection>
 
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:ElementFactorization">
+<Heading>
+  Factoring elements into generators
+</Heading>
+
+  There is some functionality which -- under <Q>suitable</Q> circumstances --
+  permits to factor elements of rcwa groups into generators. Before we start
+  with the descriptions of the methods in question, we need to introduce
+  an auxiliary function:
+
+  <ManSection>
+    <Func Name="ProjectionFromFreeGroupByGenerators" Arg="G"/>
+    <Returns>
+      the projection <C>F</C> <M>\rightarrow</M> <A>G</A> from a free group
+      <C>F</C> of suitable rank to <A>G</A> which maps the generators of
+      <C>F</C> to those of <A>G</A> one-by-one. If generators of <A>G</A>
+      have names, these are inherited by the corresponding generators of
+      <C>F</C>.
+    </Returns>
+    <Description>
+      Of course, <A>G</A> does not necessarily have to be an rcwa group,
+      but can be an arbitrary group with known generators.
+<Example>
+<![CDATA[
+gap> G := Group(a,t*u,g);
+<rcwa group over Z with 3 generators>
+gap> phi := ProjectionFromFreeGroupByGenerators(G);
+[ a, f2, g ] -> [ a, <bijective rcwa mapping of Z with modulus 5>, g ]
+gap> Source(phi);
+<free group on the generators [ a, f2, g ]>
+gap> Range(phi) = G and Image(phi) = G;
+true
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
   <ManSection>
     <Meth Name ="PreImagesRepresentative" Arg="phi, g"
           Label="PreImagesRepresentative (element factorization)"/>
@@ -425,25 +466,23 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
       The homomorphism <A>phi</A> must map the generators of the free
       group to the generators of the rcwa group one-by-one.
       This method is also suitable for wild groups. The implementation
-      is based on <Ref Oper="RepresentativeActionPreImage"/>
+      is based on <Ref Oper="RepresentativeActionPreImage"/>.
 <Example>
 <![CDATA[
-gap> F := FreeGroup("g","h");
-<free group on the generators [ g, h ]>
-gap> phi := GroupHomomorphismByImages(F,H,[F.1,F.2],[g,h]);
+gap> G := Group(g,h);
+<rcwa group over Z with 2 generators>
+gap> phi := ProjectionFromFreeGroupByGenerators(G);
 [ g, h ] -> [ g, h ]
 gap> PreImagesRepresentative(phi,h*g^3*h^2*g^-1*h*g*h^-3);
 h*g^3*h^2*g^-1*h*g*h^-3
 gap> nu := RcwaMapping([[1,1,1]]);
 Rcwa mapping of Z: n -> n + 1
 gap> SetName(nu,"nu");
-gap> F := FreeGroup("a","nu");
-<free group on the generators [ a, nu ]>
 gap> G := Group(a,nu);
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
 false
-gap> phi := GroupHomomorphismByImages(F,G,[F.1,F.2],[a,nu]);
+gap> phi := ProjectionFromFreeGroupByGenerators(G);
 [ a, nu ] -> [ a, nu ]
 gap> w := Comm(F.1,Comm(F.1,F.2^2));
 a^-1*nu^-2*a^-1*nu^2*a*nu^-2*a*nu^2
@@ -462,12 +501,86 @@ IdentityMapping( Integers )
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Oper Name ="PreImagesRepresentatives" Arg="phi, g"/>
+    <Returns>
+      a list of representatives of the set of preimages of <A>g</A> under
+      the homomorphism <A>phi</A> from a free group to an rcwa group over
+      <M>\mathbb{Z}</M>.
+    </Returns>
+    <Description>
+      Quite frequently, computing several preimages is not harder than
+      computing just one, i.e. often several preimages are found
+      simultaneously. This operation is called by
+      <Ref Meth ="PreImagesRepresentative"
+           Label="PreImagesRepresentative (element factorization)"/>,
+      which simply chooses the shortest representative -- for a slightly
+      more concise description see there.
+<Example>
+<![CDATA[
+gap> G := Group(g,h);
+<rcwa group over Z with 2 generators>
+gap> phi := ProjectionFromFreeGroupByGenerators(G);
+[ g, h ] -> [ g, h ]
+gap> f := g^3*h*g^-4*h^5*g;
+<bijective rcwa mapping of Z with modulus 12>
+gap> RCWAInfo(2);
+gap> pre := PreImagesRepresentatives(phi,f);
+#I  Orbit lengths after extension step 1: [ 11, 10 ]
+#I  |Candidates| = 2
+#I  Orbit lengths after extension step 1: [ 12, 10 ]
+#I  Orbit lengths after extension step 2: [ 77, 59 ]
+#I  |Candidates| = 1
+#I  Orbit lengths after extension step 1: [ 12, 10 ]
+#I  Orbit lengths after extension step 2: [ 88, 62 ]
+#I  Orbit lengths after extension step 3: [ 585, 380 ]
+#I  |Candidates| = 5
+#I  Orbit lengths after extension step 1: [ 12, 12 ]
+#I  Orbit lengths after extension step 2: [ 88, 86 ]
+#I  Orbit lengths after extension step 3: [ 598, 568 ]
+#I  Orbit lengths after extension step 4: [ 3760, 3460 ]
+#I  |Candidates| = 1
+#I  Orbit lengths after extension step 1: [ 12, 12 ]
+#I  Orbit lengths after extension step 2: [ 88, 88 ]
+#I  Orbit lengths after extension step 3: [ 598, 598 ]
+#I  Orbit lengths after extension step 4: [ 3789, 3789 ]
+#I  Orbit lengths after extension step 5: [ 23168, 23168 ]
+#I  |Candidates| = 16
+[ g*h*g*h*g^-2*h^-1*g^-1*h^5*g, g*h*g*h*g^-2*h*g^-1*h^-1*g^-1*h^2*g*h^2*g, 
+  g*h*g*h*g^-1*h^-2*g^-1*h^3*g^-1*h^3*g, h^2*g^-1*h^-1*g*h*g*h*g^-2*h^-1*g^
+    -1*h*g*h^3*g, h*g*h^2*g^-2*h^-1*g^-1*h^-1*g^2*h^-1*g^-1*h^-1*g^-1*h^2*g*h^
+    -1, g*h*g^-1*h^-1*g^-1*h*g^2*h*g^-1*h^-1*g*h^-1*g^-1*h^-1*g^-2*h*g*h^-2*g^
+    -1 ]
+gap> RCWAInfo(0);
+gap> Length(pre);
+6
+gap> List(pre,Length);
+[ 14, 16, 16, 18, 19, 22 ]
+gap> Set(List(pre,w->w^phi)) = [f];
+true
+gap> w := pre[5]*pre[6]^-1;
+h*g*h^2*g^-2*h^-1*g^-1*h^-1*g^2*h^-1*g^-1*h^-1*g^-1*h^2*g*h^-1*g*h^2*g^-1*h^
+-1*g^2*h*g*h*g^-1*h*g*h^-1*g^-2*h^-1*g*h*g*h^-1*g^-1
+gap> Length(w);
+41
+gap> w^phi; # A relation of length 41.
+IdentityMapping( Integers )
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
 
 <Section Label="sec:ActionOnR">
 <Heading>The action of an rcwa group on the underlying ring R</Heading>
+
+  In some cases -- in particular in the case that the group in question is
+  tame -- we can test for transitivity on the underlying ring. We can also
+  determine group elements which map a given tuple of elements of the
+  underlying ring to a given other tuple, in case such elements exist.
 
   <ManSection>
     <Meth Name="MovedPoints" Arg="G"/>
@@ -1375,4 +1488,5 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
