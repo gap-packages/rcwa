@@ -1538,7 +1538,7 @@ true
   </ManSection>
 
   <ManSection>
-    <Oper Name="ContractionCentre" Arg="f, boundstart, maxlng"/>
+    <Oper Name="ContractionCentre" Arg="f, maxn, bound"/>
     <Description>
       Tries to compute the <Q>contraction centre</Q> of an rcwa mapping -
       assuming its existence this is the uniquely-defined finite subset
@@ -1548,10 +1548,11 @@ true
       power of <M>f</M> lies in <M>S_0</M>.
       The mapping <A>f</A> is assumed to be contracting.
       As this problem seems to be computationally undecidable methods will be
-      probabilistic. The argument <A>boundstart</A> is a bound on the starting
-      value and <A>maxlng</A> is a bound on the sequence length to be searched.
-      If the limit <A>maxlng</A> is reached without completing a cycle a
-      warning is issued.
+      probabilistic. The argument <A>maxn</A> is a bound on the starting
+      value and <A>bound</A> is a bound on the elements of the sequence to be
+      searched.
+      If the limit <A>bound</A> is exceeded, an Info message on some Info
+      level of <C>InfoRCWA</C> is given.
 <Example>
 <![CDATA[
 gap> S0 := ContractionCentre(T,100,1000);
@@ -1593,4 +1594,5 @@ IdentityMapping( Integers )
 </Chapter>
 
 <!-- #################################################################### -->
+
 
