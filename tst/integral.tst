@@ -943,10 +943,21 @@ gap> RestrictedPerm(f,ResidueClass(Integers,2,1));
 <rcwa mapping of Z with modulus 12>
 gap> Order(last);
 12
+gap> P1 := [rc(0,2),rc(1,4),rc(3,4)];
+[ 0(2), 1(4), 3(4) ]
+gap> P2 := [rc(0,3),rc(1,3),rc(2,3)];
+[ 0(3), 1(3), 2(3) ]
+gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
+<rcwa mapping of Z with modulus 4>
+gap> P1^elm = P2;
+true
+gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
+<tame rcwa mapping of Z with modulus 24>
+gap> P1^elmt = P2;
+true
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
