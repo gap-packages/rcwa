@@ -6,6 +6,8 @@
 ##
 
 gap> START_TEST("$Id$");
+gap> oldwarninglevel := InfoLevel(InfoWarning);;
+gap> SetInfoLevel(InfoWarning,0);
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(2));; z := Zero(R);;
@@ -257,6 +259,7 @@ gap> LargestSourcesOfAffineMappings(r);
   x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
 gap> LargestSourcesOfAffineMappings(One(r));
 [ GF(2)[x] ]
+gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 1500000000 );
 
 #############################################################################

@@ -7,6 +7,8 @@
 
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
+gap> oldwarninglevel := InfoLevel(InfoWarning);;
+gap> SetInfoLevel(InfoWarning,0);
 gap> ResidueClassUnionViewingFormat("short");
 gap> IdentityIntegralRcwaMapping;
 IdentityMapping( Integers )
@@ -1063,6 +1065,7 @@ gap> DecreasingOn(a^2);
 1(8) U 7(8)
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
+gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 

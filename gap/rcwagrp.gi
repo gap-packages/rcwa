@@ -572,6 +572,8 @@ InstallMethod( Modulus,
 
     local  R, m, oldmod, maxfinmod, g, gens, els, step, maxstep;
 
+    Info(InfoWarning,1,"Warning: probabilistic method for computing\n",
+         "the modulus of an rcwa group may return wrong result.");
     if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
     R := Source(One(G)); gens := GeneratorsOfGroup(G);
     if IsIntegral(G) then
@@ -1014,6 +1016,8 @@ InstallMethod( Size,
 
     local  R, S, m, res;
 
+    Info(InfoWarning,1,"Warning: Probabilistic method for `Size' may\n",
+                       "return wrong result.");
     R := Source(One(G)); m := Modulus(G);
     if IsZero(m) then return infinity; fi;
     Info(InfoRCWA,1,"Size: use action on a finite set.");

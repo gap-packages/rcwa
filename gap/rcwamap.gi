@@ -2575,12 +2575,13 @@ InstallMethod( Order,
         m := m^f; CycLng := CycLng + 1;
       until m = n or CycLng > LengthLimit or m > SizeLimit;
       if CycLng > LengthLimit then
-        warning := Concatenation("Order: the mapping ",String(f),"\nhas a ",
+        warning := Concatenation("Warning, probabilistic method for Order:",
+                     "\nThe mapping ",String(f),"\nhas a ",
                      "cycle longer than 2 times the square of its modulus,",
                      "\nhence we claim its order is infinity, although the",
                      " validity of this\ncriterium has not been proved so ",
                      "far.");
-        Info(InfoRCWA,1,warning); Info(InfoWarning,2,warning);
+        Info(InfoWarning,1,warning);
         return infinity;
       fi;
       if m > SizeLimit then
@@ -2871,7 +2872,7 @@ InstallMethod( PrimeSet,
 ##
 ##  The balancedness criterion.
 ##  This is only applicable for bijective mappings, e.g. n -> 2n
-##  certainly isn't wild.
+##  of course isn't wild.
 ##
 InstallMethod( IsTame,
                "for bijective rcwa mappings, balancedness criterion (RCWA)",
@@ -2989,11 +2990,11 @@ InstallMethod( IsTame,
       pow := pow * pow; m := Modulus(pow); exp := exp * 2;
     until exp > maxexp or m > maxmod;
     if m > maxmod then
-      Info(InfoRCWA,3,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
-                      "Modulus ",m,"; this is larger than the square of the",
-                      " modulus of the base, so we claim the mapping is ",
-                      "wild, although the validity of this criterium has ",
-                      "not yet been proved.");
+      Info(InfoWarning,1,"Warning: IsTame: the ",Ordinal(exp)," power of ",f,
+                      " has Modulus ",m,"; this is larger than the square ",
+                      "of the modulus of the base, so we claim the mapping ",
+                      "is wild, although the validity of this criterium has",
+                      " not yet been proved.");
     fi;
     return m <= maxmod;
   end );
@@ -3194,6 +3195,10 @@ InstallMethod( ContractionCentre,
 
     local  S0, S, n, n_i, i, seq;
 
+    Info(InfoWarning,1,"Warning: `ContractionCentre' is highly ",
+                       "probabilistic.\nThe returned value can only be ",
+                       "regarded as a rough guess.\n See ?ContractionCentre",
+                       " for information on how to improve this guess.");
     if IsBijective(f) then return fail; fi;
     S := ReducedSetOfStartingValues([-maxn..maxn],f,8);
     Info(InfoRCWA,1,"#Remaining values to be examined after first ",
