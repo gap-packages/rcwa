@@ -35,7 +35,7 @@
        Germany
     </Address>
   </Author>
-  <Date>February 14, 2005</Date>
+  <Date>February 21, 2005</Date>
   <Copyright> &copyright; 2003 - 2005 by Stefan Kohl <P/>
               This package is distributed under the same conditions as the
               &GAP; system.
@@ -54,8 +54,9 @@
 <#Include SYSTEM "preface.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
-<#Include SYSTEM "rcwaaux.xml">
 <#Include SYSTEM "examples.xml">
+<#Include SYSTEM "algs.xml">
+<#Include SYSTEM "rcwaaux.xml">
 
 </Body>
 
