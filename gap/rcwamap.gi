@@ -3039,5 +3039,33 @@ InstallMethod( Restriction,
 
 #############################################################################
 ##
+#M  Divergence( <f> ) . . . . . . . . . . . . . . . for integral rcwa mapping
+##
+InstallMethod( Divergence,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  M, pow, prev, m, c, facts, factsfloat, p, pfloat, k, eps, prec;
+
+    m := Modulus(f); c := Coefficients(f);
+    M := List(TransitionMatrix(f,m),l->l/Sum(l));
+    facts := List(c,t->t[1]/t[3]);
+    k := 1; pow := M; eps := 10^-10; prec := 10^6;
+    repeat
+      prev := pow;
+      pow := pow * M;
+    until Maximum(Flat(pow-prev)) < eps;
+    p := List(TransposedMat(pow),l->Sum(l)/m);
+    # should be: return Product(List([1..m],r->facts[r]^p[r]));
+    factsfloat := List(facts,x->FLOAT_INT(Int(prec*x))/FLOAT_INT(prec));
+    pfloat := List(p,x->FLOAT_INT(Int(prec*x))/FLOAT_INT(prec));
+    return Product(List([1..m],r->factsfloat[r]^pfloat[r]));
+  end );
+
+#############################################################################
+##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
