@@ -231,7 +231,9 @@ gap> t in G;
 true
 gap> T in G;
 false
-gap> if not IsBound(rc) then rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end; fi;
+gap> if not IsBound(rc) then
+>      rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
+>    fi;
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
@@ -1076,26 +1078,17 @@ gap> DecreasingOn(a^2);
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
 gap> FactorizationIntoGenerators(ab);
-[ <tame bijective rcwa mapping of Z with modulus 18, of order infinity>,
-  <tame bijective rcwa mapping of Z with modulus 18, of order infinity>,
-  <bijective rcwa mapping of Z with modulus 36, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 36, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 36, of order 2>,
-  <bijective rcwa mapping of Z with modulus 18, of order 2>,
-  <bijective rcwa mapping of Z with modulus 36, of order 2> ]
+[ ClassShift(16,18), ClassShift(1,18)^-1, ClassTransposition(1,18,33,36),
+  ClassTransposition(1,18,14,18), ClassTransposition(1,18,24,36),
+  ClassTransposition(1,18,13,18), ClassTransposition(1,18,16,18),
+  ClassTransposition(4,18,7,18), ClassTransposition(4,18,10,18),
+  ClassTransposition(4,18,15,36), ClassTransposition(4,18,5,18),
+  ClassTransposition(4,18,6,36) ]
 gap> Product(last) = ab;
 true
 gap> FactorizationIntoGenerators(Comm(g,h));
-[ <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
-  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
-  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
-  <tame bijective rcwa mapping of Z with modulus 6, of order infinity>,
-  <bijective rcwa mapping of Z with modulus 6, of order 2> ]
+[ ClassShift(5,6)^-1, ClassShift(3,6), ClassShift(3,6), ClassShift(2,6)^-1,
+  ClassTransposition(0,6,3,6) ]
 gap> Product(last) = Comm(g,h);
 true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
