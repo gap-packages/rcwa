@@ -182,10 +182,10 @@ gap> [Multiplier(f),Divisor(f)];
     </Description>
   </ManSection>
 
-  The following is the auxiliary function for determining the correct order
-  of the coefficient triples of an rcwa mapping we already referred to
-  (to be precise, this function is part of the &ResClasses; package, but is
-  documented here since in &ResClasses; it is only used for internal
+  The following is the auxiliary function for determining the correct
+  ordering of the coefficient triples of an rcwa mapping we already referred
+  to (to be precise, this function is part of the &ResClasses; package, but
+  is documented here since in &ResClasses; it is only used for internal
   purposes):
 
   <ManSection>
@@ -198,18 +198,17 @@ gap> [Multiplier(f),Divisor(f)];
       rcwa mapping are stored; thus, if <A>f</A> is an rcwa mapping
       of <A>R</A> with coefficients list <A>c</A> and modulus <A>m</A>,
       then <A>f</A> maps an element <A>n</A> of <A>R</A>
-      with <A>n</A> mod <A>m</A> = <A>r</A> to <P/>
-      <Log>
-        <![CDATA[
-        ( c[ Position( res, r ) ][ 1 ] * n + c[ Position( res, r ) ][ 2 ] ) /
-          c[ Position( res, r ) ][ 3 ]]]>
-      </Log>
+      with <A>n</A> mod <A>m</A> = <A>r</A> to
+      <C>( c[ Position( res, r ) ][ 1 ] * n + c[ Position( res, r ) ][ 2 ] )
+         / c[ Position( res, r ) ][ 3 ]</C>
       where <A>res</A> denotes the list of residues returned
       by this function.
 <Example>
 <![CDATA[
 gap> AllResidues(Integers,6);
 [ 0 .. 5 ]
+gap> AllResidues(Z_pi([3,5,7]),700);
+[ 0 .. 174 ]
 gap> AllResidues(R,x^4+x^2);
 [ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3, 
   x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x, 
@@ -1613,4 +1612,5 @@ IdentityMapping( Integers )
 </Chapter>
 
 <!-- #################################################################### -->
+
 
