@@ -247,6 +247,12 @@ gap> l := [];;
 gap> for n in Complement(A) do Add(l,n); if Length(l)>100 then break; fi; od;
 gap> Set(l) = Intersection(Complement(A),[-75..75]);
 true
+gap> (((4+2*(F+7)*8)/2)*2-4)/16-7 = F;
+true
+gap> -F;
+Union of the residue classes 3(5) and 4(5), +2/-2 elements
+gap> -(-F) = F;
+true
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################
