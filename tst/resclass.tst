@@ -253,6 +253,16 @@ gap> -F;
 Union of the residue classes 3(5) and 4(5), +2/-2 elements
 gap> -(-F) = F;
 true
+gap> Difference(ResidueClass(Integers,6,1),Integers);
+[  ]
+gap> Difference(Integers,ResidueClass(Integers,6,1));
+Union of the residue classes 0(6), 2(6), 3(6), 4(6) and 5(6)
+gap> Difference(Integers,Integers);
+[  ]
+gap> Intersection(Integers,ResidueClass(Integers,6,1));
+The residue class 1(6)
+gap> Difference(Integers,[]) = Integers;
+true
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################
