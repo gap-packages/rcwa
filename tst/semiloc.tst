@@ -8,6 +8,10 @@
 gap> START_TEST("$Id$");
 gap> f := RcwaMapping([2],[[1/3,0,1]]);
 Rcwa mapping of Z_[ 2 ]: n -> 1/3 n
+gap> f * One(f) = f and One(f) * f = f;
+true
+gap> f * Zero(f) = Zero(f) and Zero(f) * f = Zero(f);
+true
 gap> IsBijective(f);
 true
 gap> f^2;

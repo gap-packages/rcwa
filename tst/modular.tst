@@ -31,6 +31,10 @@ gap> IsOne(r);
 false
 gap> IsOne(One(r));
 true
+gap> r * One(r) = r and One(r) * r = r;
+true
+gap> r * Zero(r) = Zero(r) and Zero(r) * r = Zero(r);
+true
 gap> Display(r);
 
 Rcwa mapping of GF(2)[x] with modulus Z(2)^0+x^2

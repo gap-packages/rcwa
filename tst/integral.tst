@@ -14,6 +14,10 @@ gap> Order(IdentityIntegralRcwaMapping);
 1
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
 <integral rcwa mapping with modulus 17>
+gap> f * One(f) = f and One(f) * f = f;
+true
+gap> f * Zero(f) = Zero(f) and Zero(f) * f = Zero(f);
+true
 gap> Action(Group(f),[4..20]) = Group([(5,6)]);
 true
 gap> IsIdenticalObj(f!.coeffs,Coefficients(f));
