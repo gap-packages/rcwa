@@ -82,8 +82,7 @@ We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
 affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
 modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
 there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
-the restriction of <M>f</M> to <M>r(m)</M> (in this context we regard
-residue classes as sets) is given by <P/>
+the restriction of <M>f</M> to <M>r(m)</M> is given by <P/>
 <Alt Only="Text"> 
   <![CDATA[
 
@@ -106,11 +105,12 @@ residue classes as sets) is given by <P/>
   </Display>
 </Alt>
 We always assume that all fractions are reduced, i.e. that
-<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that no proper divisor
-of <M>m</M> shares the given property. Apart from the restrictions imposed by
-the condition that the image of any residue class <M>r(m)</M> under <M>f</M>
-must be a subset of <M>R</M> and that we cannot divide by 0, the coefficients
-<M>a_{r(m)}</M>, <M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements.
+<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that we have chosen
+the multiplicatively smallest possible modulus <M>m</M>.
+Apart from the restrictions imposed by the condition that the image of any
+residue class <M>r(m)</M> under <M>f</M> must be a subset of <M>R</M> and
+that we cannot divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>,
+<M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements.
 <Index Key="rcwa mapping" Subkey="modulus"></Index>
 We call <M>m</M> the <E>modulus</E> of <M>f</M>.
 When talking about the <E>product</E> of some rcwa mappings we always mean
@@ -124,30 +124,23 @@ forms a subgroup of Sym(<M>R</M>). For reasons of cardinality this
 subgroup is proper.
 <Index Key="rcwa group" Subkey="definition"></Index>
 We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
-group, or in short an <E>rcwa</E> group.
-<Index Key="rcwa group" Subkey="modulus"></Index>
-We define the <E>modulus</E> of an rcwa group by the lcm of the moduli of
-its elements in case such an lcm exists, and by 0 otherwise. <P/>
-
-One of the major questions in this context is whether the groups
-RCWA(<M>R</M>) are simple or not. In fact there is some evidence that they
-are so (normal subgroups must be <Q>quite large</Q>, etc.), but also some
-evidence that they are not (e.g. there is an interesting epimorphism from
-the large subgroup RCWA<M>^+(\Z)</M> of all class-wise order-preserving
-rcwa mappings onto <M>(\Z,+)</M>). <P/>
+group, or in short an <E>rcwa</E> group. <P/>
 
 This package provides functionality for computing with rcwa mappings of
 the ring of integers, its semilocalizations and of polynomial rings in one
 variable over a finite field, as well as with rcwa groups over these rings.
 The reasons for choosing the given rings are basically the following:
 The Collatz conjecture is a question about the integers, thus we clearly
-want to look at these. The ring <M>\mathbb{Z}</M> has characteristic 0 and
-infinitely many prime elements. A natural question which arises is what
+want to look at these. The ring <M>\mathbb{Z}</M> has characteristic&nbsp;0
+and infinitely many prime elements. A natural question which arises is what
 happens when moving to some ring with characteristic <M>p</M> or with only
 finitely many prime elements.
 The rings GF(<M>q</M>)[<M>x</M>] and <M>\mathbb{Z}_{(\pi)}</M> are probably
 the examples which permit the most efficient computational treatment. <P/>
 
+<Index Key="rcwa group" Subkey="modulus"></Index>
+We define the <E>modulus</E> of an rcwa group by the lcm of the moduli of
+its elements in case such an lcm exists, and by&nbsp;0 otherwise.
 There are relatively elaborate methods for dealing with rcwa groups which
 have a comparatively easy structure, namely those having non-zero modulus.
 We call such groups and the mappings generating cyclic such groups
@@ -190,6 +183,14 @@ related to this topic has been done by Hans Läuchli and  Peter M. Neumann
 <Index Key="permutation groups" Subkey="countable"></Index>
 For a general survey of results concerning infinite permutation groups
 see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
+
+One of the major questions in this context is whether the groups
+RCWA(<M>R</M>) are simple or not. In fact there is some evidence that they
+are so (normal subgroups must be <Q>quite large</Q>, etc.), but also some
+evidence that they are not (e.g. there is an interesting epimorphism from
+the large subgroup RCWA<M>^+(\Z)</M> of all class-wise order-preserving
+rcwa mappings onto <M>(\Z,+)</M>, which can be evaluated for a given
+mapping using this package -- see &nbsp;<Ref Meth="Determinant"/>). <P/>
 
 The main reason for me to develop this package was the desire to get a
 suitable tool for investigating a large number of examples and getting deep

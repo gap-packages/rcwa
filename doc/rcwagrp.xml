@@ -207,15 +207,19 @@ gap> Modulus(Group(a,b));
 
   <ManSection>
     <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
+    <Returns>
+      <C>true</C> if the rcwa group <A>G</A> is tame and <C>false</C>
+      otherwise.
+    </Returns>
     <Description>
-      Indicates whether or not the rcwa group <A>G</A> is tame. <P/>
+      For the definition when an rcwa group is called <E>tame</E>
+      see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
-
-      This can be probabilistic, increase the Info level of <C>InfoRCWA</C>
-      (see <Ref Label="sec:TheInfoClass"/>) to get information about the
-      methods used in your particular case.
-      If <C>true</C> is returned this result is certain.
+      Methods for determining whether an rcwa group is tame can be
+      probabilistic -- increase the Info level of <C>InfoRCWA</C>
+      (see <Ref Label="sec:TheInfoClass"/>) to get information about
+      the methods used in your particular case. A positive result
+      (return value is <C>true</C>) is correct in any case.
 
       See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
       for rcwa mappings.
@@ -1500,6 +1504,7 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 

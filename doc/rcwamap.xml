@@ -1127,9 +1127,7 @@ IdentityMapping( Z_( 2 ) )
       the multiplicative order of the bijective rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      One of the sufficient criteria for <A>f</A> having infinite order
-      which are used by this package relies on a currently unproven
-      hypothesis. You can get information about the used methods on some
+      You can get information about the used methods on some
       Info level of <C>InfoRCWA</C>.
 <Example>
 <![CDATA[
@@ -1144,12 +1142,15 @@ infinity
 
   <ManSection>
     <Prop Name="IsTame" Arg="f" Label="Tame rcwa mapping"/>
+    <Returns>
+      <C>true</C> if the rcwa mapping <A>f</A> is tame and <C>false</C>
+      otherwise.
+    </Returns>
     <Description>
-      Indicates whether or not the rcwa mapping <A>f</A> is tame. For a
-      definition see Chapter <Ref Label="ch:Introduction"/>.
-      <P/>
-
-      See also <Ref Prop="IsTame" Label="Tame rcwa group"/> for rcwa groups.
+      For the definition when an rcwa mapping is called <E>tame</E>
+      see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+      See also&nbsp;<Ref Prop="IsTame" Label="Tame rcwa group"/>
+      for rcwa groups.
 <Example>
 <![CDATA[
 gap> IsTame(T);
@@ -1565,3 +1566,4 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+

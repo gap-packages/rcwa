@@ -15,8 +15,8 @@ give a couple of basic definitions followed by a list of some elementary
 properties of the defined objects, several examples, a very brief statement
 of a few results and finally a few open questions in this chapter. <P/>
 
-For everything not included in this manual (most theorems and lemmata,
-all proofs, ...) the reader is referred to the author's thesis
+For everything not included in this manual -- most theorems and lemmata,
+all proofs, ... -- the reader is referred to the author's thesis
 <Cite Key="Kohl04" />. <P/>
 
 We assume that on our underlying ring <M>R</M> we have defined a function
@@ -59,7 +59,8 @@ We proceed with the definitions concerning rcwa mappings.
   <Item>
     The <E>Modulus</E> of an rcwa mapping <M>f</M> is the standard associate
     of a multiplicatively smallest ring element <M>m</M> such that the
-    restriction of <M>f</M> to any residue class (mod <M>m</M>) is affine.
+    restriction of <M>f</M> to any residue class (mod&nbsp;<M>m</M>) is
+    affine.
     <M>\rightarrow</M> <Ref Oper ="Modulus"
                             Label="Modulus of an rcwa mapping"/>.
   </Item>
@@ -102,9 +103,9 @@ We proceed with the definitions concerning rcwa mappings.
 
   <Mark>tame</Mark>
   <Item>
-    An rcwa mapping is called <E>tame</E> if the cyclic group it generates
-    is tame (definition: see below). Tameness is a class invariant (this
-    means that all conjugates of tame mappings are also tame).
+    An rcwa mapping is called <E>tame</E> if the set of the moduli of its
+    powers is bounded. Tameness is a class invariant -- this means that all
+    conjugates of tame mappings are also tame.
     <M>\rightarrow</M> <Ref Prop="IsTame" Label="Tame rcwa mapping"/>.
   </Item>
 
@@ -262,9 +263,9 @@ left out in this context:
   familiar with rcwa mappings to try to find its inverse by hand.
   The result can afterwards be checked using this package.
   It can be seen easily that the mapping <M>a</M> centralizes the involution
-  <M>n \mapsto -n</M>. The permutation <M>a</M> has several finite cycles 
-  (find out which!), and as far as I know it is an unsolved problem whether
-  the cycle containing 8 is really infinite. Finally try to guess whether
+  <M>n \mapsto -n</M>. The permutation <M>a</M> has several finite cycles,
+  and as far as I know it is an unsolved problem whether the cycle
+  containing&nbsp;8 is really infinite. Finally try to guess whether
   <M>a</M> is tame or wild! <P/>
 
   The next one is an example of an rcwa mapping of <M>\mathbb{Z}_{(2)}</M>:
@@ -279,9 +280,10 @@ left out in this context:
     ]]>
   </Display>
   The reader may test his understanding of the definitions by trying to
-  determine the multiplier and the divisor of this mapping and by trying
+  determine the multiplier and the divisor of this mapping, by trying
   to figure out whether it is surjective, injective or even bijective --
-  all of this should be quite easy. The mapping <M>f</M> is tame (why?).<P/>
+  all of this should be quite easy -- and by checking that the mapping
+  <M>f</M> is tame. <P/>
 
   As our last example for now we give a wild element of
   RCWA(GF(2)[<M>x</M>]):
@@ -309,8 +311,8 @@ left out in this context:
 
 </Alt>
 
-We proceed with a list briefly giving some results and remarks
-(in arbitrary order).
+We proceed with a list briefly giving some results and remarks,
+in arbitrary order.
 
 <Index Key="Fürstenberg topology"></Index>
 
@@ -447,7 +449,7 @@ We proceed with a list briefly giving some results and remarks
 
 </List>
 
-We end this chapter by listing a few open problems (in arbitrary order).
+We end this chapter by listing a few open problems, again in arbitrary order.
 
 <List>
 
@@ -467,11 +469,10 @@ We end this chapter by listing a few open problems (in arbitrary order).
   <Item>
     What kind of structure can wild rcwa groups have? Only very little is
     currently known about this. E.g.: Does a free group of rank greater
-    than 1 have a faithful rcwa representation? (almost certainly).
+    than&nbsp;1 have a faithful rcwa representation?
     Do the groups GL(<M>n</M>,<M>\mathbb{Z}</M>) have such a representation?
-    (<Q>good question</Q>). Do all finitely presented groups have
-    faithful rcwa representations? Are all finitely generated rcwa groups
-    even finitely presented?
+    Do all finitely presented groups have faithful rcwa representations?
+    Are all finitely generated rcwa groups even finitely presented?
   </Item>
 
   <Mark>-</Mark>
@@ -487,7 +488,8 @@ We end this chapter by listing a few open problems (in arbitrary order).
 
   <Mark>-</Mark>
   <Item>
-    Prove the Collatz conjecture (maybe this is the hardest one).
+    Prove the Collatz conjecture --
+    maybe this is the hardest one of these problems.
     The theory of residue class-wise affine mappings gives rise to nice
     and natural generalizations of this long-standing conjecture.
     For related functionality of this package see
