@@ -265,6 +265,12 @@ DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
 
 #############################################################################
 ##
+#F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
+##
+DeclareGlobalFunction( "PrimeSwitch" );
+
+#############################################################################
+##
 #F  ClassUnionShift( <S> ) . . . . . shift of rc.-union <S> by Modulus( <S> )
 ##
 ##  The rcwa mapping which maps <S> to <S> + `Modulus'(<S>) and fixes the

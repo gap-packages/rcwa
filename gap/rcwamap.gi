@@ -720,6 +720,8 @@ InstallGlobalFunction( ClassShift,
     result := RcwaMapping(coeff);
     SetIsBijective(result,true);
     SetOrder(result,infinity); SetIsTame(result,true);
+    SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
+    SetFactorizationIntoGenerators(result,[result]);
     return result;
   end );
 
@@ -740,6 +742,9 @@ InstallGlobalFunction( ClassReflection,
     coeff[r+1] := [-1,2*r,1];
     result := RcwaMapping(coeff);
     SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
+    SetName(result,Concatenation("ClassReflection(",
+                                 String(r),",",String(m),")"));
+    SetFactorizationIntoGenerators(result,[result]);
     return result;
   end );
 
@@ -761,6 +766,35 @@ InstallGlobalFunction( ClassTransposition,
     result := RcwaMapping([[ResidueClass(Integers,m1,r1),
                             ResidueClass(Integers,m2,r2)]]);
     SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
+    SetName(result,Concatenation("ClassTransposition(",
+                                 String(r1),",",String(m1),",",
+                                 String(r2),",",String(m2),")"));
+    SetFactorizationIntoGenerators(result,[result]);
+    return result;
+  end );
+
+#############################################################################
+##
+#F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
+##
+InstallGlobalFunction( PrimeSwitch,
+
+  function ( p )
+
+    local  result, facts;
+
+    if   not IsPosInt(p) or not IsPrimeInt(p)
+    then return fail; fi;
+    facts := [ ClassTransposition(1,2*p,0,8),
+               ClassTransposition(2*p-1,2*p,4,8),
+               ClassTransposition(0,4,1,2*p),
+               ClassTransposition(2,4,2*p-1,2*p),
+               ClassTransposition(2,2*p,1,4*p),
+               ClassTransposition(4,2*p,2*p+1,4*p) ];
+    result := Product(facts);
+    SetIsTame(result,false); SetOrder(result,infinity);
+    SetName(result,Concatenation("PrimeSwitch(",String(p),")"));
+    SetFactorizationIntoGenerators(result,facts);
     return result;
   end );
 
@@ -2204,8 +2238,9 @@ InstallMethod( InverseOp,
     else pi := NoninvertiblePrimes( Source( f ) );
          Result := RcwaMappingNC( pi, cInv );
     fi;
-    SetInverse(f, Result); SetInverse(Result, f);
-    if HasOrder(f) then SetOrder(Result, Order(f)); fi;
+    SetInverse(f,Result); SetInverse(Result,f);
+    if HasOrder(f) then SetOrder(Result,Order(f)); fi;
+    if HasName(f)  then SetName(Result,Concatenation(Name(f),"^-1")); fi;
 
     return Result;
   end );
@@ -3473,7 +3508,8 @@ InstallMethod( FactorizationIntoGenerators,
 
   function ( g )
 
-    local  facts, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr, i, j, r;
+    local  facts, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr,
+           multfacts, divfacts, p, q, Smult, Sdiv, switch, i, j, k, r;
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
@@ -3507,7 +3543,41 @@ InstallMethod( FactorizationIntoGenerators,
                                ClassShift(r,m)^SignInt(c[2])),facts);
       od;
     else
-      TryNextMethod();
+      repeat
+        repeat
+          p := 1; q := 1;
+          multfacts := Set(Factors(Multiplier(g)));
+          divfacts  := Set(Factors(Divisor(g)));
+          if   not IsSubset(divfacts,multfacts)
+          then p := Maximum(Difference(multfacts,divfacts)); fi;
+          if   not IsSubset(multfacts,divfacts)
+          then q := Maximum(Difference(divfacts,multfacts)); fi;
+          if [p,q] <> [1,1] then
+            if p > q then # Additional prime in multiplier.
+              switch := PrimeSwitch(p);
+              facts  := Concatenation(FactorizationIntoGenerators(switch),
+                                      facts);
+              g      := g/switch;
+            else          # Additional prime in divisor.
+              switch := PrimeSwitch(q);
+              facts  := Concatenation(
+                          Reversed(FactorizationIntoGenerators(switch)),
+                          facts);
+              g      := g/switch;
+            fi;
+          fi;
+        until IsBalanced(g);
+        p := Maximum(PrimeSet(g));
+        k := Minimum(Number(Factors(Multiplier(g)),q->q=p),
+                     Number(Factors(Multiplier(g)),q->q=p));
+        Smult := Multpk(g,p, k)^g;
+        Sdiv  := Multpk(g,p,-k)^g;
+
+        # Search residue classes r1(m1) in Smult, r2(m2) in Sdiv
+        # with m1/m2 = p.
+
+      until IsTame(g);
+      facts := Concatenation(FactorizationIntoGenerators(g),facts);
     fi;
     if   Product(facts) <> g
     then Error("FactorizationIntoGenerators: Internal error!");
