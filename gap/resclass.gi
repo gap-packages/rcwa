@@ -422,7 +422,7 @@ InstallMethod( Display,
     if Length(included) > 1 then plin := "s"; else plin := ""; fi;
     if Length(excluded) > 1 then plex := "s"; else plex := ""; fi;
     if IsOne(m) then
-      Print(R," \\ ",excluded,"\n");
+      Print(R," \\ ",excluded,"\n"); return;
     elif Length(r) = 1 then
       if [included,excluded] <> [[],[]] then Print("\n"); fi;
       Print("The residue class ",r[1]," ( mod ",m," )");
@@ -526,7 +526,6 @@ InstallMethod( NextIterator,
         next := iter!.rem_included[1];
         RemoveSet(iter!.rem_included,next);
         iter!.counter := iter!.counter + 1;
-        iter!.element := next;
         return next;
       else
         m := Modulus(U); r := Residues(U);
@@ -536,7 +535,7 @@ InstallMethod( NextIterator,
             iter!.classpos := 1;
             iter!.m_count := iter!.m_count + 1;
           fi;
-          if iter!.element <> fail and iter!.element > 0 then
+          if iter!.element <> fail and iter!.element >= 0 then
             next := (-iter!.m_count-1) * m + r[iter!.classpos];
             iter!.classpos := iter!.classpos + 1;
           else
@@ -705,7 +704,7 @@ InstallMethod( Union2,
 ##
 InstallMethod( Union2,
                "for set and subset", ReturnTrue,
-               [ IsListOrCollection, IsListOrCollection ], 0,
+               [ IsListOrCollection, IsListOrCollection ], 20,
 
   function ( S1, S2 )
     if   IsSubset(S1,S2) then return S1;
@@ -814,6 +813,18 @@ InstallOtherMethod( Complement,
 
 #############################################################################
 ##
+#M  IsSubset( <U>, <l> ) . . . . . . for residue class union and element list
+##
+InstallMethod( IsSubset,
+               "for residue class union and element list", ReturnTrue,
+               [ IsUnionOfResidueClasses, IsList ], 0,
+
+  function ( U, l )
+    return ForAll( Set( l ), n -> n in U );
+  end );
+
+#############################################################################
+##
 #M  IsSubset( <U1>, <U2> ) . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( IsSubset,
@@ -828,8 +839,7 @@ InstallMethod( IsSubset,
     R := UnderlyingRing(FamilyObj(U1));
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
     r1 := U1!.r; r2 := U2!.r;
-    if not ForAll(U2!.included,n->n mod m1 in r1)
-      or ForAny(Difference(U1!.excluded,U2!.excluded),n->n mod m2 in r2)
+    if not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
     then return false; fi;
     allres  := AllResidues(R,m);
     allres1 := Filtered(allres,n->n mod m1 in r1);

@@ -84,7 +84,7 @@ fi;
 ##  This function builds the manual of the RCWA package in the file formats
 ##  &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunh˜ffer.
+##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunhˆffer.
 ##
 BuildRCWAManual := function ( )
 
@@ -158,6 +158,19 @@ RCWATest := function ( arg )
   od;
 end;
 MakeReadOnlyGlobal( "RCWATest" );
+
+#############################################################################
+##
+#F  ReadRCWAExamples( ) . . . . . . . . . . . . . . . . .  read examples file
+##
+ReadRCWAExamples := function ( )
+
+  local  dir;
+
+  dir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/examples/" );
+  Read( Concatenation( dir, "examples.g" ) );
+end;
+MakeReadOnlyGlobal( "ReadRCWAExamples" );
 
 #############################################################################
 ##

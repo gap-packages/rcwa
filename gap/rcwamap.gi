@@ -1353,7 +1353,7 @@ InstallMethod( ImagesSet,
         image    := Union(image,ResidueClass(Integers,t[1],residue));
       else image := Union(image,[c[r+1][2]]);
       fi;
-      if image = Integers then break; fi;
+      if IsIntegers(image) then break; fi;
     od;
     return image;
   end );
@@ -1371,28 +1371,29 @@ InstallMethod( ImagesSet,
 
   function ( f, S )
 
-    local  c, m, modulus, residues, excluded,
-           image, imagemod, val, residue, res, r, t, n, im;
+    local  c, m, modulus, immod, residues, excluded,
+           image, imagemod, val, residue, res, pers,
+           r, t, n, im;
 
     c := f!.coeffs; m := f!.modulus;
     image := List(IncludedElements(S),n->n^f);
     modulus := Modulus(S); residues := Residues(S);
+    immod := Lcm(m,modulus); pers := immod/modulus;
+    residues := Flat(List([0..pers-1],i->List(residues,res->res+i*modulus)));
     excluded := ExcludedElements(S);
     for res in residues do
-      for r in [0..m-1] do
-        if c[r+1][1] <> 0 then
-          t        := c[r+1];
-          imagemod := (modulus*t[1])/Gcd(modulus,t[3]);
-          val      := (t[1]*res + t[2])/t[3];
-          if Gcd(DenominatorRat(val),imagemod) <> 1 then continue; fi;
-          residue  := val mod imagemod;
-          image    := Union(image,ResidueClass(Integers,imagemod,residue));
-        elif Intersection(S,ResidueClass(Integers,m,r)) <> []
-        then image := Union(image,[c[r+1][2]]);
-        fi;
-        if image = Integers then break; fi;
-      od;
-      if image = Integers then break; fi;
+      r := res mod m;
+      if c[r+1][1] <> 0 then
+        t        := c[r+1];
+        imagemod := (immod*t[1])/Gcd(m*modulus,t[3]);
+        val      := (t[1]*res + t[2])/t[3];
+        if Gcd(DenominatorRat(val),imagemod) <> 1 then continue; fi;
+        residue  := val mod imagemod;
+        image    := Union(image,ResidueClass(Integers,imagemod,residue));
+      elif Intersection(S,ResidueClass(Integers,m,r)) <> []
+      then image := Union(image,[c[r+1][2]]);
+      fi;
+      if IsIntegers(image) then break; fi;
     od;
     for n in excluded do
       im := n^f;
@@ -1493,41 +1494,36 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
+#M  PreImagesSet( <f>, <l> ) . for rcwa mapping and list of el's of its range
+##
+InstallOtherMethod( PreImagesSet,
+                    "for rcwa mapping and list of elements of its range",
+                    true, [ IsRcwaMapping, IsList ], 0, 
+
+  function ( f, l )
+    return Union( List( Set( l ), n -> PreImagesElm( f, n ) ) );
+  end );
+
+#############################################################################
+##
 #M  PreImagesSet( <f>, <S> ) . . for integral rcwa map. and union of res. cl.
 ##
 ##  Preimage of the set <S> under the rcwa mapping <f>.
 ##
 InstallMethod( PreImagesSet,
                "for integral rcwa mapping and residue class union", true, 
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                 IsUnionOfResidueClassesOfZ ], 0, 
+               [ IsIntegralRcwaMapping, IsUnionOfResidueClassesOfZ ], 0, 
 
   function ( f, S )
 
-    local  c, m, modulus, residues, excluded, preimage, premod, 
-           residue, res, r, t, n, pre, pre2, im, diff;
+    local  preimage, premod, preres, rump, pre, pre2, im, diff, excluded, n;
 
-    c := f!.coeffs; m := f!.modulus;
-    preimage := Union(List(IncludedElements(S),n->PreImagesElm(f,n)));
-    modulus := Modulus(S); residues := Residues(S);
+    rump := ResidueClassUnion(Integers,Modulus(S),Residues(S));
+    premod := Lcm(Modulus(f)*Divisor(f),Modulus(S));
+    preres := Filtered([0..premod],n->n^f in rump);
+    preimage := Union(ResidueClassUnion(Integers,premod,preres),
+                      Flat(List(IncludedElements(S),n->PreImagesElm(f,n))));
     excluded := ExcludedElements(S);
-    for res in residues do
-      for r in [0..m-1] do
-        if c[r+1][1] <> 0 then
-          t        := c[r+1];
-          premod   := (modulus*t[3])/Gcd(modulus,t[1]);
-          residue  := (t[3]*res - t[2])/t[1] mod premod;
-          if residue^f mod modulus in residues then
-            preimage := Union(preimage,
-                              ResidueClass(Integers,premod,residue));
-          fi;
-        elif c[r+1][2] in S
-        then preimage := Union(preimage,ResidueClass(Integers,m,r));
-        fi;
-        if preimage = Integers then break; fi;
-      od;
-      if preimage = Integers then break; fi;
-    od;
     for n in excluded do
       pre  := PreImagesElm(f,n);
       im   := ImagesSet(f,pre);
