@@ -78,6 +78,20 @@
 
 <!-- ################################################################################# -->
 
+<Section Label="sec:TheColorMarkup">
+<Heading>The color markup</Heading>
+
+  By default, &RCWA; switches on coloring of &GAP; prompts and user input and uses
+  colored markup for displaying its online help texts. <P/>
+
+  If you do not like this or if your system does not support it, you can switch this
+  off by setting the option value <C>BlackAndWhite</C> to <C>true</C> when loading
+  the package: <C>RequirePackage( "rcwa" : BlackAndWhite );</C>.
+
+</Section>
+
+<!-- ################################################################################# -->
+
 </Chapter>
 
 <!-- ################################################################################# -->
