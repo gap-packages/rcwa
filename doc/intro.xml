@@ -452,6 +452,15 @@ in arbitrary order.
 
   <Mark>-</Mark>
   <Item>
+    Rcwa mappings which are surjective but not injective cannot be tame.
+    Although this statement is rather intuitive, proving it is non-trivial.
+    It can be seen easily that the other 3 combinations of (non-)injectivity
+    and (non-)surjectivity do not allow to conclude that a mapping is tame
+    or not.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
     Let <M>S</M> be a set of integers.
     Then the properties <Q><M>S</M>&nbsp;contains arbitrarily long arithmetic
     progressions</Q>&nbsp;(1) and <Q>The series <M>\sum_{n \in S} |1/n|</M>
