@@ -24,8 +24,8 @@ this here.
 
   <ManSection>
     <Func Name="Z_pi" Arg="pi"/>
+    <Returns>the ring <M>\Z_\pi</M>.</Returns>
     <Description>
-      The ring <M>\Z_\pi</M>.
 <Example>
 gap> R := Z_pi([2]);
 Z_[ 2 ]
@@ -73,9 +73,10 @@ true
 
   <ManSection>
     <Meth Name="Intersection" Arg="R, S"/>
+    <Returns>
+      the intersection of the semilocalizations <A>R</A> and <A>S</A> of the integers.
+    </Returns>
     <Description>
-      The intersection of the semilocalizations <A>R</A> and <A>S</A> of the
-      integers.
 <Example>
 gap> U := Intersection(R,S,T);
 Z_[ 2, 3, 5, 7, 11 ]
@@ -99,10 +100,11 @@ false
 
   <ManSection>
     <Meth Name="StandardAssociate" Arg="R, x"/>
+    <Returns>
+      the standard associate of <A>x</A> in the semilocalization
+      <A>R</A> of the integers.
+    </Returns>
     <Description>
-      Returns the standard associate of <A>x</A> in the semilocalization
-      <A>R</A> of the integers. <P/>
-
       We define the standard associate of an element of <M>\Z_\pi</M>
       as the product of the noninvertible prime factors of its numerator.
 <Example>
@@ -120,9 +122,11 @@ gap> StandardAssociate(U,36/13);
 
   <ManSection>
     <Meth Name="GcdOp" Arg="R, x, y"/>
-    <Description>
-      Returns the greatest common divisor of <A>x</A> and <A>y</A>
+    <Returns>
+      the greatest common divisor of <A>x</A> and <A>y</A>
       in the semilocalization <A>R</A> of the integers.
+    </Returns>
+    <Description>
 <Example>
 gap> GcdOp(S,-10/3,8/13);
 2
@@ -134,9 +138,11 @@ gap> Gcd(S,90/3,60/17,120/33);
 
   <ManSection>
     <Meth Name="LcmOp" Arg="R, x, y"/>
-    <Description>
-      Returns the least common multiple of <A>x</A> and <A>y</A>
+    <Returns>
+      the least common multiple of <A>x</A> and <A>y</A>
       in the semilocalization <A>R</A> of the integers.
+    </Returns>
+    <Description>
 <Example>
 gap> LcmOp(S,-10/3,8/13);
 40
@@ -148,10 +154,11 @@ gap> Lcm(S,90/3,60/17,120/33);
 
   <ManSection>
     <Meth Name="Factors" Arg="R, x"/>
+    <Returns>
+      a prime factorization of <A>x</A> in the semilocalization
+      <A>R</A> of the integers.
+    </Returns>
     <Description>
-      Computes a prime factorization of <A>x</A> in the semilocalization
-      <A>R</A> of the integers. <P/>
-
       This method returns a list <A>l</A>, where the noninvertible
       prime factors of the numerator of <A>x</A> are stored in
       <C><A>l</A>&obrace;[2..Length(<A>l</A>)]&cbrace;</C> in
@@ -175,8 +182,7 @@ gap> Factors(S,60/17);
       Checks whether <A>x</A> is a unit in the semilocalization
       <A>R</A> of the integers. <P/>
 
-      The method returns <C>fail</C>, if <A>x</A> is not an element of
-      <A>R</A>.
+      The method returns <C>fail</C>, if <A>x</A> is not an element of <A>R</A>.
 <Example>
 gap> IsUnit(S,3/11);
 true

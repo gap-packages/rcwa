@@ -76,13 +76,12 @@ rcwa groups. <P/>
 
   <ManSection>
     <Func Name="RCWA" Arg="R"/>
+    <Returns>
+      the group RCWA(<A>R</A>) of all bijective rcwa mappings over the ring <A>R</A>.
+    </Returns>
     <Description>
-      The group RCWA(<A>R</A>) of all bijective rcwa mappings over the ring
-      <A>R</A>. This group is (at least in general) not finitely generated,
+      This group is (at least in general) not finitely generated,
       hence no generators are stored.
-    </Description>
-  </ManSection>
-
 <Example>
 <![CDATA[
 gap> RCWA_Z := RCWA(Integers);
@@ -99,6 +98,8 @@ gap> IsSubgroup(RCWA_Z, Group(RcwaMapping([[-1,0,1]]),
 true 
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
 </Section>
 
@@ -138,13 +139,12 @@ infinity
   <ManSection>
     <Func Name="IntegralRcwaGroupByPermGroup" Arg="G"/>
     <Func Name="RcwaGroupByPermGroup" Arg="G"/>
-    <Description>
-      Constructs an integral rcwa group isomorphic to the (finite) permutation
+    <Returns>
+      an integral rcwa group isomorphic to the (finite) permutation
       group <A>G</A>, which acts on the range
       <C>[ 1 .. LargestMovedPoint(</C><A>G</A><C> ) ]</C> as <A>G</A> does.
-    </Description>
-  </ManSection>
-
+    </Returns>
+    <Description>
 <Example>
 <![CDATA[
 gap> H := RcwaGroupByPermGroup(Group((1,2),(3,4),(5,6),(7,8),
@@ -158,6 +158,8 @@ gap> List(DerivedSeries(H),Size);
 [ 384, 96, 32, 2, 1 ]
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Attr Name="IsomorphismIntegralRcwaGroup" Arg="G"/>
@@ -165,9 +167,6 @@ gap> List(DerivedSeries(H),Size);
     <Description>
       A faithful integral rcwa representation of the group <A>G</A>.
       Currently only supported for finite groups.
-    </Description>
-  </ManSection>
-
 <Example>
 <![CDATA[
 gap> G := GL(2,5);
@@ -180,14 +179,13 @@ CompositionMapping(
   <integral rcwa mapping with modulus 24> ], <action isomorphism> )             
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Meth Name="Display" Arg="G"/>
     <Description>
       Displays the rcwa group <A>G</A>.
-    </Description>
-  </ManSection>
-
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
@@ -222,6 +220,8 @@ Bijective integral rcwa mapping with modulus 4
 
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
 </Section>
 
@@ -239,14 +239,13 @@ Bijective integral rcwa mapping with modulus 4
       given by <C>IsomorphismPermGroup</C>( <A>G</A> ) is.
       If <A>G</A> is infinite and <A>g</A> is not in <A>G</A>, this method may
       run into an infinite loop.
-    </Description>
-  </ManSection>
-
 <Example>
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> u in H;
 false
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Meth Name="Size" Arg="G"/>
@@ -258,9 +257,6 @@ false
       infinite loop. You can increase the option value <A>Steps</A> to decrease
       the probability of getting a wrong result. The default value for
       <A>Steps</A> is 10.
-    </Description>
-  </ManSection>
-
 <Example>
 <![CDATA[
 gap> g1 := RcwaMapping((1,2),[1..2]);
@@ -275,6 +271,8 @@ gap> Size(G);
 265252859812191058636308480000000
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Meth Name="IsomorphismPermGroup" Arg="G"/>
@@ -287,9 +285,6 @@ gap> Size(G);
       proper factor group of <A>G</A>. You can increase the option value
       <A>Steps</A> to decrease the probability of getting a wrong result.
       The default value for <A>Steps</A> is 10.
-    </Description>
-  </ManSection>
-
 <Example>
 <![CDATA[
 gap> H := Group(g1,g2);
@@ -300,23 +295,22 @@ gap> phi := IsomorphismPermGroup(H);
 [ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ]                                             
 ]]>
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Meth Name="NiceMonomorphism" Arg="G"/>
-    <Description>
-      Returns the result of <C>IsomorphismPermGroup</C> in case the
+    <Returns>
+      the result of <C>IsomorphismPermGroup</C> in case the
       group is supposed to be finite by <C>Size</C>, and
       <C>IdentityMapping</C>( <A>G</A> ) otherwise.
-    </Description>
+    </Returns>
   </ManSection>
 
   <ManSection>
     <Meth Name="NiceObject" Arg="G"/>
+    <Returns>the image of <C>NiceMonomorphism</C>( <A>G</A> ).</Returns>
     <Description>
-      Returns the image of <C>NiceMonomorphism</C>( <A>G</A> ).
-    </Description>
-  </ManSection>
-
 <Example>
 gap> NiceObject(G);
 Group([ (1,2)(3,4)(5,6)(7,8)(9,10)(11,12)(13,14)(15,16)(17,18)(19,20)(21,
@@ -325,50 +319,45 @@ Group([ (1,2)(3,4)(5,6)(7,8)(9,10)(11,12)(13,14)(15,16)(17,18)(19,20)(21,
   (1,2,3,4,5)(6,7,8,9,10)(11,12,13,14,15)(16,17,18,19,20)(21,22,23,24,25)(26,
     27,28,29,30) ])                                                             
 </Example>
-
-  <ManSection>
-    <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
-    <Description>
-      Computes the modulus of the rcwa group <A>G</A>. <P/>
-
-      See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
-      for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
+    <Returns>the modulus of the rcwa group <A>G</A>.</Returns>
+    <Description>
+      See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
+      for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
 <Example>
 gap> Modulus(G);
 30
 gap> Modulus(Group(a,b));
 0
 </Example>
-
-  <ManSection>
-    <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
-    <Description>
-      Computes the prime set of the rcwa group <A>G</A>. <P/>
-
-      See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa mapping"/>
-      for rcwa mappings.
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
+    <Returns>the prime set of the rcwa group <A>G</A>.</Returns>
+    <Description>
+      See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa mapping"/>
+      for rcwa mappings.
 <Example>
 gap> PrimeSet(G);
 [ 2, 3, 5 ]
 gap> PrimeSet(H);
 [ 2, 3 ]
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Prop Name="IsFlat" Arg="G" Label="Flat rcwa group"/>
     <Description>
-      Determines whether or not the rcwa group <A>G</A> is flat. <P/>
+      Indicates whether or not the rcwa group <A>G</A> is flat. <P/>
 
       See also <Ref Prop="IsFlat" Label="Flat rcwa mapping"/> for rcwa mappings.
-    </Description>
-  </ManSection>
-
 <Example>
 gap> IsFlat(AlternatingGroup(IsIntegralRcwaGroup,5));
 true
@@ -377,6 +366,8 @@ false
 gap> IsFlat(Group(g));
 false
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Prop Name="IsClassWiseOrderPreserving" Arg="G"
@@ -388,9 +379,6 @@ false
      See also <Ref Prop="IsClassWiseOrderPreserving"
      Label="Class-wise order-preserving rcwa mapping"/>
      for rcwa mappings.
-    </Description>
-  </ManSection>
-
 <Example>
 gap> IsClassWiseOrderPreserving(Group(a,b));
 true
@@ -400,16 +388,15 @@ gap> t := RcwaMapping([[-1,0,1]]);;
 gap> IsClassWiseOrderPreserving(Group(t,g,h));
 false
 </Example>
+    </Description>
+  </ManSection>
 
   <ManSection>
     <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
     <Description>
-      Determines whether or not the rcwa group <A>G</A> is tame. <P/>
+      Indicates whether or not the rcwa group <A>G</A> is tame. <P/>
 
       See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/> for rcwa mappings.
-    </Description>
-  </ManSection>
-
 <Example>
 gap> IsTame(G);
 true
@@ -418,15 +405,16 @@ false
 gap> IsTame(Group(Comm(a,b),Comm(a,c)));
 true
 </Example>
-
-  <ManSection>
-    <Func Name="ShortOrbits" Arg="G, S, maxlng"/>
-    <Description>
-      Computes all finite orbits of the rcwa group <A>G</A> of maximal length
-      <A>maxlng</A>, which intersect non-trivially with the set <A>S</A>.
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Func Name="ShortOrbits" Arg="G, S, maxlng"/>
+    <Returns>
+      a list of all finite orbits of the rcwa group <A>G</A> of maximal length
+      <A>maxlng</A>, which intersect non-trivially with the set <A>S</A>.
+    </Returns>
+    <Description>
 <Example>
 gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);;
 gap> ShortOrbits(A5,[-10..10],100);
@@ -450,6 +438,8 @@ gap> ShortOrbits(Group(u),[-30..30],100);
   [ 3, 5 ], [ 24, 36, 39, 40, 44, 48, 60, 65, 67, 71, 80, 86, 93, 100, 112, 
       128, 138, 155, 167, 187, 230, 248, 312, 446, 520, 803, 867, 1445 ] ]
 </Example>
+    </Description>
+  </ManSection>
 
 </Section>
 
@@ -460,18 +450,19 @@ gap> ShortOrbits(Group(u),[-30..30],100);
 
   <ManSection>
     <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord"/>
-    <Description>
-      Computes the number of conjugacy classes of the whole group
+    <Returns>
+      the number of conjugacy classes of the whole group
       RCWA(<M>\Z</M>) of elements of order <A>ord</A>.
-    </Description>
-  </ManSection>
-
+    </Returns>
+    <Description>
 <Example>
 gap> NrConjugacyClassesOfRCWAZOfOrder(2);
 infinity
 gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 218
 </Example>
+    </Description>
+  </ManSection>
 
 </Section>
 
