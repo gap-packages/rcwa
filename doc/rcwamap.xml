@@ -294,7 +294,7 @@ interest:
 <![CDATA[
 gap> Display(ClassShift(5,12));    
 
-Rcwa mapping of Z with modulus 12
+Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 
                n mod 12                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -317,7 +317,7 @@ Rcwa mapping of Z with modulus 12
 <![CDATA[
 gap> Display(ClassReflection(5,9));
 
-Rcwa mapping of Z with modulus 9
+Bijective rcwa mapping of Z with modulus 9, of order 2
 
                 n mod 9                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -335,7 +335,7 @@ Rcwa mapping of Z with modulus 9
   <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
                                   Label="r1, m1, r2, m2"/>
   <Returns>
-    The <E>class transposition</E> <M>\tau_{r_1(m_1,r_2(m_2)}</M>.
+    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
   </Returns>
   <Description>
     The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an
@@ -346,7 +346,7 @@ Rcwa mapping of Z with modulus 9
 <![CDATA[
 gap> Display(ClassTransposition(1,2,8,10));
 
-Rcwa mapping of Z with modulus 10
+Bijective rcwa mapping of Z with modulus 10, of order 2
 
                n mod 10                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -437,7 +437,7 @@ gap> f^2*u*a^2;
 gap> f^2*u*a^2*f^-1;
 <rcwa mapping of Z with modulus 3840>
 gap> Comm(f,ClassShift(6,12)*f)^1000;
-<rcwa mapping of Z with modulus 18>
+<bijective rcwa mapping of Z with modulus 18>
 ]]>
 </Example>
 
@@ -481,22 +481,21 @@ many residue classes under an rcwa mapping can be computed using
 
 <Example>
 <![CDATA[
-gap> [ PreImageElm(u,8), PreImageElm(d,37/17) ];
-[ 4, 111/17 ]
-gap> [ PreImagesElm(T,8), PreImagesElm(ZeroIntegralRcwaMapping,0) ];
-[ [ 5, 16 ], Integers ]
+gap> [ PreImageElm(d,37/17), PreImagesElm(T,8), PreImagesElm(Zero(T),0) ];
+[ 111/17, [ 5, 16 ], Integers ]
 gap> PreImage(T,ResidueClass(Integers,3,2));
 1(2) U 4(6)
 gap> M := [1];; l := [1];;
-gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od;
-gap> l;
+gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
 [ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, 277, 
   367, 488, 649, 869, 1154, 1534, 2039, 2721, 3629, 4843, 6458, 8608, 11472 ]
 ]]>
 </Example>
 
 There is a method for the operation <C>MovedPoints</C> for computing the
-support of a bijective rcwa mapping.
+support of a bijective rcwa mapping, and there is a method for
+<C>RestrictedPerm</C> for computing the restriction of a bijective
+rcwa mapping to a union of residue classes it fixes setwisely.
 
 <Example>
 <![CDATA[
@@ -504,6 +503,8 @@ gap> [ MovedPoints(u), MovedPoints(u^2) ];
 [ Z \ [ -1, 0 ], Z \ [ -10, -6, -1, 0, 1, 2, 3, 5 ] ]
 gap> MovedPoints(r);
 GF(2)[x] \ [ 0*Z(2), Z(2)^0, x, x+Z(2)^0 ]
+gap> RestrictedPerm(f,ResidueClassUnion(Integers,36,[7,8]));
+<rcwa mapping of Z with modulus 36>
 ]]>
 </Example>
 
@@ -515,10 +516,8 @@ that the set of rcwa mappings of some ring does not form a ring under
 <![CDATA[
 gap> a  := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);;
 gap> b  := ClassShift(1,4) * a;;
-gap> Image((a + b));
-0(6) U 4(6) U 5(6)
-gap> Image((a - b));  
-[ -3, 0 ]
+gap> [ Image((a + b)), Image((a - b)) ];
+[ 0(6) U 4(6) U 5(6), [ -3, 0 ] ]
 gap> d+d+d;
 IdentityMapping( Z_( 2 ) )
 ]]>
