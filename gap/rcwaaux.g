@@ -4,9 +4,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
-#Y  Universit\"at Stuttgart, Germany
-##
 ##  This file contains auxiliary functions for the RCWA package.
 ##
 Revision.rcwaaux_g :=
@@ -19,16 +16,9 @@ InstallMethod( String, "for Integers", true, [ IsIntegers ], 0,
 
 #############################################################################
 ##
-#F  ExtRepOfPolynomial_String( <obj>, <names>, [<bra>] )
-##
-##  If the optional third argument is `true', brackets are put around the
-##  expression if any summands occur.
-##  If the optional fourth argument is `true' then brackets are put around
-##  the expression if at least one `\*' sign occurs in the string.
-##
 ##  Reverse monomial ordering in GAP 4.3. The leading term should be printed
-##  first. This function is taken from ratfun.gi in the library, and will
-##  be included in GAP 4.4.
+##  first. These functions are taken from ratfun.gi resp. ratfunul.gi in the
+##  library, and will be included in GAP 4.4.
 ##
 if not CompareVersionNumbers( VERSION, "4r4" ) then
 
@@ -90,8 +80,6 @@ if not CompareVersionNumbers( VERSION, "4r4" ) then
   end;
 
   MakeReadOnlyGlobal( "ExtRepOfPolynomial_String" );
-
-  # Another function for the same purpose, taken from lib/ratfunul.gi.
 
   MakeReadWriteGlobal( "DoPrintUnivariateLaurent" );
 
