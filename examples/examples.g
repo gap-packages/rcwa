@@ -74,6 +74,17 @@ SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
 
 #############################################################################
 ##
+##  `The examples by Matthews and Leigh'
+##
+##  The Matthews-Leigh examples -- the trajectories of 1 resp. x^3+x+1 can be
+##  shown to be divergent, and their iterates can be shown to be non-cyclic
+##  (mod x).
+##
+ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R));
+ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R));
+
+#############################################################################
+##
 ##  `An abelian rcwa group over a polynomial ring'
 ##
 ##  As the mappings <g> and <h> are modified within the example, we denote
@@ -108,17 +119,6 @@ r_2mod := RcwaMapping( 2, x^2 + e,
                          [ x^2 + x + e, x^2    , x^2 + e ],
                          [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
 SetName(r_2mod,"r");
-
-#############################################################################
-##
-##  `The examples by Matthews and Leigh'
-##
-##  The Matthews-Leigh examples -- the trajectories of 1 resp. x^3+x+1 can be
-##  shown to be divergent, and their iterates can be shown to be non-cyclic
-##  (mod x).
-##
-ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R));
-ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R));
 
 #############################################################################
 ##
