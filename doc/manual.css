@@ -1,13 +1,13 @@
-/* ####################################################################### */ 
+/* ####################################################################### */
 /* ##                                                                   ## */
-/* ##  manual.css           RCWA documentation             Stefan Kohl  ## */
+/* ##  manual.css            RCWA documentation            Stefan Kohl  ## */
 /* ##                                                                   ## */
 /* ##  $Id$           ## */
 /* ##                                                                   ## */
 /* ####################################################################### */
 
-body { 
-  background: #eeeeff; 
+body {
+  background: #ffffff;
   /* background-image: url(rcwa.jpg); */
   color: #000000; 
   margin-top: 15px; 
@@ -20,7 +20,7 @@ body {
 
 /* ####################################################################### */
 
-h1 { font-size: 200%; }
+h1 { font-size: 300%; }
 h2 { font-size: 160%; }
 h3 { font-size: 160%; }
 h4 { font-size: 130%; }
@@ -67,7 +67,7 @@ table.func {
 }
 
 table.example {
-  background-color: #ffffff;
+  background-color: #eeeeee;
   border-style: none; 
   border-width: 0pt; 
   padding: 0px;  
@@ -80,7 +80,7 @@ table.example td {
 }
 
 table.chlink {
-  background-color: #bbbbff;
+  background-color: #eeeeee;
   border-style: none; 
   border-width: thin;  
   text-align: center;
@@ -129,7 +129,7 @@ div.chlink {
   text-align: center;
 }
 td.chlink1 {
-  background-color: #8888ff;
+  background-color: #cccccc;
 }
 
 pre { 
