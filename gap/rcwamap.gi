@@ -2368,6 +2368,29 @@ InstallMethod( FactorizationOnConnectedComponents,
     return Set(Filtered(factors,f->not IsOne(f)));
   end );
 
+#############################################################################
+##
+#F  Trajectory( <f>, <n>, <end>, <cond> )
+##
+InstallGlobalFunction( Trajectory,
+
+  function ( f, n, val, cond )
+
+    local  seq, step;
+
+    if not (    IsRcwaMapping(f) and n in Source(f)
+            and (   val in Source(f) and cond = "stop"
+                 or IsPosInt(val) and cond = "length"))
+    then Error("for usage of `Trajectory' see manual.\n"); fi;
+    seq := [n];
+    if cond = "length" then
+      for step in [1..val-1] do Add(seq,seq[step]^f); od;
+    elif cond = "stop" then
+      repeat Add(seq,seq[Length(seq)]^f); until seq[Length(seq)] = val;
+    fi;
+    return seq;
+  end );
+
 ############################################################################# 
 ##
 #F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>

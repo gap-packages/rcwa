@@ -50,6 +50,8 @@ Surjective integral rcwa mapping with modulus 8
   6                                    | (9n + 10)/8
   7                                    | (27n + 19)/8
 
+gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,1,"stop"));
+307
 gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3)
 gap> Image(T,A);

@@ -957,7 +957,7 @@ true
 <!-- ################################################################################# -->
 
 <Section Label="sec:TransMatGraphPrimeSet">
-<Heading>Transition matrix, graph, trajectory and prime set</Heading>
+<Heading>Transition matrix, transition graph and trajectory</Heading>
 
   <ManSection>
     <Func Name="TransitionMatrix" Arg="f, deg"/>
@@ -1069,6 +1069,35 @@ gap> List(fact,MovedPoints);
   </ManSection>
 
   <ManSection>
+    <Func Name="Trajectory" Arg="f, n, val, cond"/>
+    <Description>
+      This function computes the trajectory of <A>n</A> under the rcwa mapping <A>f</A>.
+      The parameter <A>val</A> can either specify the length of the sequence to be
+      processed or be a <Q>stopping value</Q> such that the function stops when it
+      reaches some iterate <C><A>n</A>\^(<A>f</A>\^k) = <A>val</A></C>, depending on
+      whether <C><A>cond</A> = "length"</C> or <C><A>cond</A> = "stop"</C>.
+<Example>
+gap> Trajectory(a,8,100,"length");
+[ 8, 12, 18, 27, 20, 30, 45, 34, 51, 38, 57, 43, 32, 48, 72, 108, 162, 243, 
+  182, 273, 205, 154, 231, 173, 130, 195, 146, 219, 164, 246, 369, 277, 208, 
+  312, 468, 702, 1053, 790, 1185, 889, 667, 500, 750, 1125, 844, 1266, 1899, 
+  1424, 2136, 3204, 4806, 7209, 5407, 4055, 3041, 2281, 1711, 1283, 962, 
+  1443, 1082, 1623, 1217, 913, 685, 514, 771, 578, 867, 650, 975, 731, 548, 
+  822, 1233, 925, 694, 1041, 781, 586, 879, 659, 494, 741, 556, 834, 1251, 
+  938, 1407, 1055, 791, 593, 445, 334, 501, 376, 564, 846, 1269, 952 ]
+gap> Trajectory(T,27,1,"stop");
+[ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
+  233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
+  425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
+  3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
+  23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1 ]
+gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,1,"stop"));
+307
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Func Name="TrajectoryModulo" Arg="f, n, m, lng"/>
     <Func Name="TrajectoryModulo" Arg="f, n, lng"/>
     <Returns>
@@ -1096,10 +1125,8 @@ gap> TrajectoryModulo(T,27,2,100);
       <A>n</A> under the rcwa mapping <A>f</A>. More precisely: it computes a list
       <C>c</C> of coefficient triples such that for any <C>k</C>, we have
       <C><A>n</A>\^(<A>f</A>\^(k-1)) = (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C>.
-      The parameter <A>val</A> can either specify the length of the sequence to be
-      processed or be a <Q>stopping value</Q> such that the function stops when it
-      reaches some iterate <C><A>n</A>\^(<A>f</A>\^k) = <A>val</A></C>, depending on
-      whether <C><A>cond</A> = "length"</C> or <C><A>cond</A> = "stop"</C>.
+      The meaning of the arguments <A>val</A> and <A>cond</A> is the same as in
+      <Ref Func="Trajectory"/>.
       If <C><A>all</A> = true</C>, the whole sequence of coefficient triples
       is returned, otherwise the result is only the last triple.
 <Example>

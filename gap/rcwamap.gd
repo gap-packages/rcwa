@@ -375,6 +375,18 @@ DeclareOperation( "FactorizationOnConnectedComponents",
 
 #############################################################################
 ##
+#F  Trajectory( <f>, <n>, <val>, <cond> )
+##
+##  This function computes the trajectory of <n> under the rcwa mapping <f>.
+##  The parameter <val> can either specify the length of the sequence to
+##  be computed or be a `stopping value' such that the function stops when
+##  it reaches some iterate <n>^(<f>^<k>) = <val>, depending on whether
+##  <cond> = `"length"' or <cond> = `"stop"'.
+##
+DeclareGlobalFunction( "Trajectory" );
+
+#############################################################################
+##
 #F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
 #F  TrajectoryModulo( <f>, <n>, <lng> )
 ##
@@ -392,12 +404,9 @@ DeclareGlobalFunction( "TrajectoryModulo" );
 ##  under the rcwa mapping <f>. More precisely: it computes a list <c> of
 ##  coefficient triples such that for any <k>, we have
 ##  <n>^(<f>^(<k>-1)) = (<c>[<k>][1]*<n> + <c>[<k>][2])/<c>[<k>][3].
-##  The parameter <val> can either specify the length of the sequence to
-##  be processed or be a `stopping value' such that the function stops when
-##  it reaches some iterate <n>^(<f>^<k>) = <val>, depending on whether
-##  <cond> = `"length"' or <cond> = `"stop"'. If <all> = `true', the whole
-##  sequence of coefficient triples is returned, otherwise the result is only
-##  the last triple.
+##  The meaning of the arguments <val> and <cond> is the same as in
+##  `Trajectory'; if <all> = `true', the whole sequence of coefficient
+##  triples is returned, otherwise the result is only the last triple.
 ##
 DeclareGlobalFunction( "CoefficientsOnTrajectory" );
 
