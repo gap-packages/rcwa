@@ -6,6 +6,8 @@
 ##
 
 gap> START_TEST("$Id$");
+gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
+gap> ResidueClassUnionViewingFormat("long");;
 gap> IdentityIntegralRcwaMapping;
 IdentityMapping( Integers )
 gap> ZeroIntegralRcwaMapping;
@@ -994,11 +996,13 @@ gap> g1 := RcwaMapping([[1,0,1],[2,0,1],[1,0,2],[2,0,1]]);;
 gap> g2 := RcwaMapping([[1,0,1],[2,4,1],[1,0,2],[2,4,1]]);;
 gap> IsSolvable(Group(g1,g2));
 true
+gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
