@@ -2795,4 +2795,35 @@ InstallOtherMethod( IsConjugate,
 
 #############################################################################
 ##
+#M  ContractionCentre( <f>, <maxn>, <maxlng> ) . .  for integral rcwa mapping
+##
+InstallMethod( ContractionCentre,
+               "for integral rcwa mappings", true,
+               [ IsIntegralRcwaMapping, IsPosInt, IsPosInt ], 0,
+
+  function ( f, maxn, maxlng )
+
+    local  S0, n, n_i, i, seq;
+
+    if not IsIntegralRcwaMapping(f) or IsBijective(f) then return fail; fi;
+    S0 := [];
+    for n in Integers do
+      seq := []; n_i := n;
+      for i in [1..maxlng] do
+        if n_i in S0 then break; fi;
+        if   n_i in seq
+        then S0 := Union(S0,Trajectory(f,n_i,n_i,"stop")); break; fi;
+        Add(seq,n_i);
+        n_i := n_i^f;
+        if   i = maxlng
+        then Info(InfoWarning,1,"Length limit exceeded, start value ",n); fi;
+      od;
+      if n >= maxn then break; fi;
+    od;
+    return S0;
+  end );
+
+#############################################################################
+##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+

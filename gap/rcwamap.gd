@@ -386,7 +386,7 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
-#A  RespectedClassPartition( <sigma> ) . . . . . . .  permuted class partition
+#A  RespectedClassPartition( <sigma> ) . . . . . . . permuted class partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
 ##  on which the bijective mapping <sigma> acts as a permutation. 
@@ -449,4 +449,24 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  ContractionCentre( <f>, <boundstart>, <maxlng> ) . . . contraction centre
+##
+##  Tries to compute the `contraction centre' of an rcwa mapping --
+##  assuming its existence this is the uniquely-defined finite subset $S_0$
+##  of the base ring <R> which is mapped bijectively onto itself under <f>
+##  and where for any $x \in R$ there is an integer $k$ such that
+##  $x^{f^k} \in S_0$. The mapping <f> is assumed to be contracting.
+##  As this problem seems to be computationally undecidable methods will be
+##  probabilistic. The argument <boundstart> is a bound on the starting value
+##  and <maxlng> is a bound on the sequence length to be searched.
+##  If the limit <maxlng> is reached without completing a cycle a warning
+##  is issued.
+##
+DeclareOperation( "ContractionCentre",
+                  [ IsRcwaMapping, IsRingElement, IsPosInt ] );
+DeclareSynonym( "ContractionCenter", ContractionCentre );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
