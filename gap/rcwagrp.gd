@@ -201,20 +201,20 @@ DeclareAttribute( "PrimeSet", IsRcwaGroup );
 DeclareProperty( "IsTame", IsRcwaGroup );
 
 ############################################################################# 
-## 
+##
 #P  IsFlat( <G> ) . . . . . indicates whether or not <G> is a flat rcwa group 
-## 
+##
 ##  We say that an $R$-rcwa group is *flat* if and only if all of its
 ##  elements are flat.
-## 
+##
 DeclareProperty( "IsFlat", IsRcwaGroup ); 
 
 ############################################################################# 
-## 
+##
 #P  IsClassWiseOrderPreserving( <G> ) .  is <G> class-wise order-preserving ?
 ##
 ##  Indicates whether <G> is class-wise order-preserving or not.
-##  
+##
 ##  We say that an integral rcwa group <G> is *class-wise order-preserving*
 ##  if all of its elements are.
 ##
@@ -231,22 +231,34 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsIntegralRcwaGroup );
 DeclareAttribute( "RcwaBase", IsRcwaGroup );
 
 ############################################################################# 
-## 
+##
 #O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
-## 
+##
 ##  Computes all finite orbits of the rcwa group <G> of maximal length
 ##  <maxlng>, which intersect non-trivially with the set <S>.
 ##
 DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
 
 ############################################################################# 
-## 
+##
 #O  OrbitUnion( <G>, <S> ) . . . . . . .  union of the orbit of <S> under <G>
-## 
+##
 ##  Computes the union of the elements of the orbit of the set <S> under
 ##  the rcwa group <G>. In particular, <S> can be a union of residue classes.
 ##
 DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
+
+############################################################################# 
+##
+#O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+##  Computes the preimage of an element of <G> which maps <src> to <dest>
+##  under the canonical group homomorphism from the free group <F> onto <G>.
+##  The rank of <F> must be equal to the number of generators of <G>.
+##
+DeclareOperation( "RepresentativeActionPreImage",
+                  [ IsRcwaGroup, IsObject, IsObject,
+                    IsFunction, IsFreeGroup ] );
 
 #############################################################################
 ##
@@ -260,3 +272,4 @@ DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+

@@ -1199,6 +1199,106 @@ InstallOtherMethod( IsPrimitive,
     return true;
   end );
 
+SetOfRepresentatives := function ( S, rel, less, pref )
+
+  local  reps, elm, pos;
+
+  if IsEmpty(S) then return []; fi;
+  Sort(S,less); reps := [S[1]]; pos := 1;
+  for elm in S do
+    if rel(elm,reps[pos]) then
+      if pref(elm,reps[pos]) then reps[pos] := elm; fi;
+    else
+      pos := pos + 1;
+      reps[pos] := elm;
+    fi;
+  od;
+  return reps;
+end;
+MakeReadOnlyGlobal( "SetOfRepresentatives" );
+
+############################################################################# 
+##
+#M  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+InstallMethod( RepresentativeActionPreImage,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
+               0,
+
+  function ( G, src, dest, act, F )
+
+    local  R, extended, gensG, gensF, orbsrc, orbdest, g,
+           extstep, oldorbsizes, inter, intersrc, interdest,
+           compatible, minlng, shortest;
+
+    extended := function ( orb, g )
+
+      local  eq, lt, shorter;
+
+      orb := Union(orb,List(orb,t->[act(t[1],g),
+                                    t[2]*gensF[Position(gensG,g)]]));
+      eq := function(t1,t2) return t1[1] = t2[1]; end;
+      lt := function(t1,t2) return t1[1] < t2[1]; end;
+      shorter := function(t1,t2) return Length(t1[2]) < Length(t2[2]); end;
+      return SetOfRepresentatives(orb,eq,lt,shorter);
+    end;
+
+    R := Source(One(G));
+    gensG := Concatenation(GeneratorsOfGroup(G),
+                           List(GeneratorsOfGroup(G),g->g^-1));
+    gensF := Concatenation(GeneratorsOfGroup(F),
+                           List(GeneratorsOfGroup(F),f->f^-1));
+    if not IsSubset(R,[src,dest])
+       and not (IsSubset(R,src) and IsSubset(R,dest))
+    then TryNextMethod(); fi;
+    if   Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
+    then TryNextMethod(); fi;
+    if src in R then src := [src]; fi; if dest in R then dest := [dest]; fi;
+    orbsrc := [[src,One(F)]]; orbdest := [[dest,One(F)]]; extstep := 0;
+    repeat
+      oldorbsizes := [Length(orbsrc),Length(orbdest)];
+      for g in gensG do
+        orbsrc := extended(orbsrc,g); orbdest := extended(orbdest,g);
+      od;
+      extstep := extstep + 1;
+      Info(InfoRCWA,2,"Orbit lengths after extension step ",
+                      extstep,": ",[Length(orbsrc),Length(orbdest)]);
+      if Maximum(Length(orbsrc),Length(orbdest)) < 100 then
+        Info(InfoRCWA,3,"Orbits after extension step ",
+                        extstep,":\n",orbsrc,"\n",orbdest);
+      fi;
+      inter := Intersection(List(orbsrc,t->t[1]),List(orbdest,t->t[1]));
+    until inter <> [] or oldorbsizes = [Length(orbsrc),Length(orbdest)];
+    if inter = [] then return fail; fi;
+    intersrc  := Filtered(orbsrc, t->t[1] in inter);
+    interdest := Filtered(orbdest,t->t[1] in inter);
+    compatible := Filtered(Cartesian(intersrc,interdest),t->t[1][1]=t[2][1]);
+    minlng := Minimum(List(compatible,t->Length(t[1][2])+Length(t[2][2])));
+    shortest := Filtered(compatible,t->Length(t[1][2]*t[2][2]^-1)=minlng)[1];
+    return shortest[1][2]*shortest[2][2]^-1;
+  end );
+
+############################################################################# 
+##
+#M  RepresentativeActionOp( <G>, <src>, <dest>, <act> )
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for rcwa groups (RCWA)", ReturnTrue,
+                    [ IsRcwaGroup, IsObject, IsObject, IsFunction ], 0,
+
+  function ( G, src, dest, act )
+
+    local  F, phi, pre;
+
+     F := FreeGroup(Length(GeneratorsOfGroup(G)));
+     phi := GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
+                                          GeneratorsOfGroup(G));
+     pre := RepresentativeActionPreImage(G,src,dest,act,F);
+     if pre = fail then return fail; fi;
+     return pre^phi;
+  end );
+
 #############################################################################
 ##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
@@ -1233,5 +1333,7 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
 
