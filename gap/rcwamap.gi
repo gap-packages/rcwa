@@ -2534,14 +2534,15 @@ InstallMethod( Order,
 
   function ( f )
 
-    local  CycLng, CycLngs, LengthLimit, n, m, i, warning;
+    local  CycLng, CycLngs, LengthLimit, support, n, m, i, warning;
 
     if IsOne(f) then return 1; fi;
     if not IsBijective(f) 
     then Error("Order: <rcwa mapping> must be bijective\n"); fi;
-    LengthLimit := 2 * Modulus(f)^2;
-    for i in [1..10] do  # 10 trials ...
-      n := Random([1..2^27]); m := n; CycLng := 0; CycLngs := [];
+    LengthLimit := 2 * Modulus(f)^2; CycLngs := [];
+    for i in [1..25] do  # 25 trials ...
+      repeat n := Random([1..2^27]); until n^f <> n;
+      m := n; CycLng := 0;
       repeat
         m := m^f; CycLng := CycLng + 1;
       until m = n or CycLng > LengthLimit;
