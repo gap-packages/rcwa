@@ -89,9 +89,10 @@ end;
 ##  sed -e 's: );: ],:'
 ##
 TEST_FILES := [ [ "z_pi.tst"     ,    3000000 ],
+                [ "resclass.tst" ,  200000000 ],
                 [ "integral.tst" , 3100000000 ],
                 [ "semiloc.tst"  ,  100000000 ],
-                [ "modular.tst"  ,  160000000 ] ];
+                [ "modular.tst"  , 1500000000 ] ];
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 

@@ -226,7 +226,7 @@ gap> String(f);
 "ModularRcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), Z(3)^0+x^2, Z(3)^0 ] ] )"
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(9)[x]: P -> Z(3^2)*P
-gap> STOP_TEST( "modular.tst", 160000000 );
+gap> STOP_TEST( "modular.tst", 1500000000 );
 
 #############################################################################
 ##
