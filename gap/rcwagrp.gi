@@ -680,7 +680,7 @@ InstallMethod( KernelOfActionOnClassPartition,
 
   function ( G )
 
-    local  P, K, H, M, L, l, LHNF, T, rank, ModG, g, h, nrgens,
+    local  P, K, H, M, L, l, LHNF, T, lng, ModG, g, h, nrgens,
            genK, genKHNF, elH, elG, elK, c, nr, lasthit, erg, i;
 
     ModG := Modulus(G);
@@ -688,25 +688,25 @@ InstallMethod( KernelOfActionOnClassPartition,
     H := ActionOnClassPartition(G);
     g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
     nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
-    rank := 0; nr := 1; lasthit := 1; genK := [];
+    lng := 0; nr := 1; lasthit := 1; genK := [];
     repeat
       elK := elG^Order(elH);
       c   := Coefficients(elK);
       l   := List([1..Length(P)],
                   i -> c[Residues(P[i])[1] mod Modulus(elK) + 1][2]);
       if SolutionIntMat(L,l) = fail or (L = [] and not ForAll(l,IsZero)) then
-        rank := rank + 1; Add(L,l); Add(genK,elK); lasthit := nr;
-        Info(InfoRCWA,2,"KernelOfActionOnClassPartition: gen. #",nr,
-                        ", rank = ",rank);
+        lng := lng + 1; Add(L,l); Add(genK,elK); lasthit := nr;
+        Info(InfoRCWA,3,"KernelOfActionOnClassPartition: gen. #",nr,
+                        ", lng = ",lng);
       fi;
       i := Random([1..nrgens]); nr := nr + 1;
       elH := elH * h[i];
       elG := elG * g[i];
     until nr - lasthit > lasthit + 100; # This is probabilistic. 
-    erg := HermiteNormalFormIntegerMatTransforms(L{[1..rank]});
+    erg := HermiteNormalFormIntegerMatTransforms(L{[1..lng]});
     LHNF := erg.normal; T := erg.rowtrans;
-    genKHNF := List([1..rank],
-                    i->Product(List([1..rank],j->genK[j]^T[i][j])));
+    genKHNF := List([1..lng],
+                    i->Product(List([1..lng],j->genK[j]^T[i][j])));
     LHNF := Filtered(LHNF,l->not IsZero(l));
     genKHNF := Filtered(genKHNF,k->not IsOne(k));
     SetKernelOfActionOnClassPartitionHNFMat(G,LHNF);
@@ -714,7 +714,7 @@ InstallMethod( KernelOfActionOnClassPartition,
                      else K := TrivialSubgroup(G); fi;
     SetRespectedClassPartition(K,P);
     SetKernelOfActionOnClassPartition(K,K);
-    SetRankOfKernelOfActionOnClassPartition(K,rank);
+    SetRankOfKernelOfActionOnClassPartition(K,Length(genKHNF));
     SetKernelOfActionOnClassPartitionHNFMat(K,LHNF);
     return K;
   end );
@@ -903,7 +903,7 @@ InstallMethod( \in,
       K := KernelOfActionOnClassPartition(G);
       L := KernelOfActionOnClassPartitionHNFMat(G);
       if L = [] then return IsOne(k); fi;
-      Info(InfoRCWA,3,"The kernel has rank ",RankMat(L),".");
+      Info(InfoRCWA,3,"The kernel has rank ",Length(L),".");
       c := Coefficients(k);
       l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
       return SolutionIntMat(L,l) <> fail;
