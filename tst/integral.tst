@@ -442,6 +442,24 @@ gap> set := Image(a,PreImage(h,Image(z,F)));
 gap> control := PreImage(z,Image(h,PreImage(a,set)));;
 gap> control = F;
 true
+gap> nb := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[1,0,1]]);;
+gap> Complement(Image(nb));
+Union of the residue classes 2(12) and 6(12)
+gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
+gap> im := Image(pc);
+<union of 8 residue classes (mod 12), +1/-0 elements>
+gap> Display(im);
+ 
+The union of the residue classes r ( mod 12 )  for r =
+ 
+  0  1  3  4  7  8  9 10
+ 
+and the element
+ 
+ 2
+
+gap> PreImage(pc,Difference(im,[4]));
+Integers \ [ 2, 7 ]
 gap> CompositionMapping(a,b) = b*a;
 true
 gap> CompositionMapping(g,h) = h*g;
