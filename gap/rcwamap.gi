@@ -1480,10 +1480,10 @@ InstallMethod( ImageElm,
 
   function ( f, n )
 
-    local Coeffs, Modulus;
+    local  m, c;
 
-    Modulus := f!.modulus; Coeffs := f!.coeffs[n mod Modulus + 1];
-    return (Coeffs[1] * n + Coeffs[2]) / Coeffs[3];
+    m := f!.modulus; c := f!.coeffs[n mod m + 1];
+    return (c[1] * n + c[2]) / c[3];
   end );
 
 #############################################################################
@@ -1500,11 +1500,11 @@ InstallMethod( ImageElm,
 
   function ( f, n )
 
-    local Coeffs, Modulus;
+    local  m, c;
 
     if not n in Source(f) then TryNextMethod(); fi;
-    Modulus := f!.modulus; Coeffs := f!.coeffs[n mod Modulus + 1];
-    return (Coeffs[1] * n + Coeffs[2]) / Coeffs[3];
+    m := f!.modulus; c := f!.coeffs[n mod m + 1];
+    return (c[1] * n + c[2]) / c[3];
   end );
 
 #############################################################################
@@ -1520,19 +1520,12 @@ InstallMethod( ImageElm,
 
   function ( f, p )
 
-    local Coeffs, Modulus, F, FList, r, q, d, x, c, pos;
+    local  R, m, c, r;
 
-    if not p in Source(f) then TryNextMethod(); fi;
-    Modulus := f!.modulus; r := p mod Modulus;
-    F := UnderlyingField(f); q := Size(F);
-    d := DegreeOfLaurentPolynomial(Modulus);
-    x := IndeterminatesOfPolynomialRing(Source(f))[1];
-    c := CoefficientsOfUnivariatePolynomial(r);
-    c := Concatenation(c,ListWithIdenticalEntries(d-Length(c),Zero(F)));
-    FList := AsList(F); c := List(c,ci->Position(FList,ci)-1);
-    pos := Sum(List([1..d],i->c[i]*q^(i-1))) + 1;
-    Coeffs := f!.coeffs[pos];
-    return (Coeffs[1] * p + Coeffs[2]) / Coeffs[3];
+    R := Source(f); if not p in R then TryNextMethod(); fi;
+    m := f!.modulus; r := p mod m;
+    c := f!.coeffs[PositionSorted(AllResidues(R,m),r)];
+    return (c[1] * p + c[2]) / c[3];
   end );
 
 #############################################################################
@@ -1579,6 +1572,7 @@ InstallOtherMethod( ImagesSet,
     local  R, c, m, rc, res, r;
 
     R := Source(f); if not IsSubset(R,S) then TryNextMethod(); fi;
+    if IsList(S) then return Set(List(S,n->n^f)); fi;
     c := Coefficients(f); m := Modulus(f); res := AllResidues(R,m);
     rc := function(r,m) return ResidueClass(R,m,r); end;
     return Union(List([1..Length(res)],
@@ -3024,5 +3018,3 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
