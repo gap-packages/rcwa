@@ -865,6 +865,10 @@ InstallMethod( \in,
       Info(InfoRCWA,4,"<G> is class-wise order-preserving, <g> is not.");
       return false;
     fi;
+    if not IsSubset(MovedPoints(G),MovedPoints(g)) then
+      Info(InfoRCWA,4,"supp(<g>) is not a subset of supp(<G>).");
+      return false;
+    fi;
     if not IsTame(G) then
       Info(InfoRCWA,3,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
@@ -897,11 +901,12 @@ InstallMethod( \in,
       if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
       Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
       Info(InfoRCWA,3,"on RespectedClassPartition(<G>).");
-      phi  := EpimorphismFromFreeGroup(H);
-      h    := PreImagesRepresentative(phi,h:NoStabChain);
-      h    := Product(List(LetterRepAssocWord(h),
-                           id->gens[AbsInt(id)]^SignInt(id)));
-      k    := g/h;
+      phi := EpimorphismFromFreeGroup(H);
+      h   := PreImagesRepresentative(phi,h:NoStabChain);
+      if h = fail then return false; fi;
+      h   := Product(List(LetterRepAssocWord(h),
+                          id->gens[AbsInt(id)]^SignInt(id)));
+      k   := g/h;
       Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
       Info(InfoRCWA,3,"the action of <g> on RespectedClassPartition(<G>).");
       K := KernelOfActionOnClassPartition(G);
