@@ -24,11 +24,27 @@ tau := RcwaMapping([[1,1,1],[1,-1,1]]);
 # Class shifts, class reflections and class transpositions given as images of
 # these basic generators under restriction monomorphisms.
 
-nu_rm := function(r,m) return Restriction(nu,RcwaMapping([[m,r,1]])); end;
-t_rm  := function(r,m) return Restriction(t, RcwaMapping([[m,r,1]])); end;
-ct    := function(r1,m1,r2,m2)
-           return Restriction(tau,RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-         end;
+nu_rm := function(r,m)
+
+  local  coeff;
+
+  coeff := List([1..m],r->[1,0,1]);
+  coeff[r+1] := [1,m,1];
+  return RcwaMapping(coeff);
+end;
+
+t_rm := function(r,m)
+
+  local  coeff;
+
+  coeff := List([1..m],r->[1,0,1]);
+  coeff[r+1] := [-1,2*r,1];
+  return RcwaMapping(coeff);
+end;
+
+ct := function(r1,m1,r2,m2)
+        return Restriction(tau,RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+      end;
 
 # A class transposition ct(r1,m1,r2,m2) is the commutator of the following
 # mappings ct1(r1,m1,r2,m2) und ct2(r1,m1,r2,m2):
@@ -291,14 +307,14 @@ SetName(kappa36,"kappa36");
 # (-17,-45), (13,36) and (17,48), the following permutation seems to have
 # only one single cycle(!) on the integers:
 
-onecyc := RcwaMapping(
-            [[1,  3,3],[1,  9,1],[1, 14,1],[1, -7,1],[3, -4,2],[1,-14,3],
-             [3, -6,2],[1, 13,1],[3, -8,2],[3, 11,1],[2, -8,1],[3,  6,1],
-             [1,  3,3],[2, 10,1],[1,  4,1],[1, 15,1],[3, -4,2],[2, 14,1],
-             [3, -6,2],[2,-11,1],[3, -8,2],[3, 11,1],[1, -8,1],[3,  6,1],
-             [2, 24,1],[1,  9,1],[1,-11,1],[1, -6,3],[3, -4,2],[1, -1,1],
-             [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]);
-SetName(onecyc,"onecyc");
+omega := RcwaMapping(
+           [[1,  3,3],[1,  9,1],[1, 14,1],[1, -7,1],[3, -4,2],[1,-14,3],
+            [3, -6,2],[1, 13,1],[3, -8,2],[3, 11,1],[2, -8,1],[3,  6,1],
+            [1,  3,3],[2, 10,1],[1,  4,1],[1, 15,1],[3, -4,2],[2, 14,1],
+            [3, -6,2],[2,-11,1],[3, -8,2],[3, 11,1],[1, -8,1],[3,  6,1],
+            [2, 24,1],[1,  9,1],[1,-11,1],[1, -6,3],[3, -4,2],[1, -1,1],
+            [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]);
+SetName(omega,"omega");
 
 # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group all of
 # whose orbits on Z seem to be finite.
@@ -490,6 +506,72 @@ V6 := RcwaMapping([[1,  4,2],[1,  3,2],[ 1,  2, 2],[ 1,  1, 2],[ 1,  0, 2],
 V7 := RcwaMapping([[1,0,3],[2,-2,3],[5,-4,3],[4,0,3],[5,-8,3],[4,-2,3]]);
 
 V8 := RcwaMapping([[1,0,3],[1,-1,3],[5,5,3],[3,5,2],[3,2,2],[3,-1,2]]);
+
+#############################################################################
+##
+##  A factorization of `a' into involutions. 
+##
+INTEGRAL_PART_COEFFS :=
+[ -3, -26, -47, -40, 47, -1, 0, 17, 0, -4, 0, 28, 19, 12, 0, 2, -7, 20, 0,
+  -3, 0, 12, 0, 37, -3, 4, 0, 13, -9, -1, 0, 17, 0, 2, 0, 70, 38, 12, 0, 2,
+  3, -26, 0, -30, 0, 30, 0, 144, 19, -26, 0, -40, -7, -1, 0, 17, 0, -4, 0,
+  28, -3, 12, 0, 2, -9, 20, 0, -3, 0, -57, 0, -35, -3, 4, -47, 13, 47, -1, 0,
+  17, 0, 2, 0, -76, 19, 12, 0, 2, -7, -26, 0, -30, 0, 54, 0, 37, -3, -26, 0,
+  -40, -9, -1, 0, 17, 0, -4, 0, 28, 38, 12, 0, 2, 3, 20, 0, -3, 0, -22, 0,
+  24, 19, 4, 0, 13, -7, -1, 0, 17, 0, 2, 0, -52, -3, 12, 0, 2, -9, -26, 0,
+  -30, 0, -57, 0, -35, -3, -26, -47, -40, 47, -1, 0, 17, 0, -4, 0, 28, 19,
+  12, 0, 2, -7, 20, 0, -3, 0, 12, 0, 37, -3, 4, 0, 13, -9, -1, 0, 17, 0, 2,
+  0, 70, 38, 12, 0, 2, 3, -26, 0, -30, 0, 30, 0, 96, 19, -26, 0, -40, -7, -1,
+  0, 17, 0, -4, 0, 28, -3, 12, 0, 2, -9, 20, 0, -3, 0, -57, 0, -35, -3, 4,
+  -47, 13, 47, -1, 0, 17, 0, 2, 0, -76, 19, 12, 0, 2, -7, -26, 0, -30, 0, 54,
+  0, 37, -3, -26, 0, -40, -9, -1, 0, 17, 0, -4, 0, 28, 38, 12, 0, 2, 3, 20,
+  0, -3, 0, -214, 0, -24, 19, 4, 0, 13, -7, -1, 0, 17, 0, 2, 0, -52, -3, 12,
+  0, 2, -9, -26, 0, -30, 0, -57, 0, -35 ];
+
+FactorsOfa := [
+  RcwaMapping(List(INTEGRAL_PART_COEFFS,b_rm->[1,b_rm,1])), nu^-4,
+  RcwaMapping([[rc(3,144),rc(139,288)],[rc(75,144),rc(235,288)]]),
+  RcwaMapping([[rc(101,144),rc(43,288)]]),
+  RcwaMapping([[rc(27,36),rc(23,72)],[rc(17,36),rc(47,72)],
+               [rc(70,72),rc(71,144)],[rc(65,72),rc(143,144)]]),
+  RcwaMapping([[rc(29,144),rc(91,288)]]),
+  RcwaMapping([[rc(27,36),rc(70,72)],[rc(17,36),rc(3,72)]]),
+  RcwaMapping([[rc(29,72),rc(187,288)],[rc(65,72),rc(283,288)]]),
+  RcwaMapping([[rc(3,36),rc(8,72)],[rc(5,36),rc(32,72)],
+               [rc(15,36),rc(56,72)]]),
+  RcwaMapping([[rc(3,36),rc(91,288)],[rc(5,36),rc(187,288)],
+               [rc(15,36),rc(283,288)]]),
+  RcwaMapping([[rc(23,24),rc(7,48)],[rc(8,24),rc(33,48)],
+               [rc(13,24),rc(43,96)]]),
+  RcwaMapping([[rc(17,36),rc(91,288)],[rc(29,36),rc(283,288)]]),
+  RcwaMapping([[rc(20,24),rc(4,12)],[rc(19,48),rc(21,24)]]),
+  RcwaMapping([[rc(283,288),rc(29,36)]]),
+  RcwaMapping([[rc(3,36),rc(1,48)],[rc(15,36),rc(25,48)],
+               [rc(27,36),rc(11,48)],[rc(5,36),rc(35,48)],
+               [rc(17,36),rc(36,48)],[rc(29,36),rc(9,48)],
+               [rc(91,288),rc(33,48)],[rc(187,288),rc(20,24)],
+               [rc(283,288),rc(7,48)]]), f, nu^4, f^4 ];
+
+FACTORS_OF_A_CYCS := List([1,2,4,12,112,156,256],
+                          n->Cycle(FactorsOfa[1],n) mod 288);
+
+InvolutionFactorsOfa := Concatenation(
+  [ t_rm(  0,288), t_rm(  0,288) * nu_rm(  0,288)^-1,
+    t_rm(  1,288), t_rm(  1,288) * nu_rm(  1,288)^-1,
+    t_rm(  2,288), t_rm(  2,288) * nu_rm(  2,288)^-1,
+    t_rm(  3,288), t_rm(  3,288) * nu_rm(  3,288)^-1,
+    t_rm(237,288), t_rm(237,288) * nu_rm(237,288),
+    t_rm(252,288), t_rm(252,288) * nu_rm(252,288),
+    t_rm(271,288), t_rm(271,288) * nu_rm(271,288),
+    t_rm(277,288), t_rm(277,288) * nu_rm(277,288) ],
+  Concatenation(List(FACTORS_OF_A_CYCS,cyc->List([2..Length(cyc)],
+                     i->RcwaMapping([[rc(cyc[1],288),rc(cyc[i],288)]])))),
+  [ RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]), t,
+    RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]), t ],
+  FactorsOfa{[3..15]},
+  [ f1, f2, f3, t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
+    t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
+    f1, f2, f3, f1, f2, f3, f1, f2, f3, f1, f2, f3 ] );
 
 #############################################################################
 ##
