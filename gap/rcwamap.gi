@@ -1263,9 +1263,8 @@ InstallMethod( Modulus,
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( Multiplier,
-               "for rcwa mappings",
-               true, [ IsRcwaMapping ], 0,
-               f -> Lcm( List( f!.coeffs, c -> c[ 1 ] ) ) );
+               "for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
 
 #############################################################################
 ##
@@ -1432,24 +1431,13 @@ InstallMethod( ImagesElm,
 ##
 InstallMethod( ImagesSet,
                "for integral rcwa mapping and integers", true, 
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                 IsIntegers ], 0, 
+               [ IsRationalBasedRcwaMapping, IsRing ], 0, 
 
-  function ( f, ints )
+  function ( f, R )
 
-    local  c, m, image, residue, r, t;
-
-    c := f!.coeffs; m := f!.modulus; image := [];
-    for r in [0..m-1] do
-      if c[r+1][1] <> 0 then
-        t        := c[r+1];
-        residue  := t[2]/t[3] mod t[1];
-        image    := Union(image,ResidueClass(Integers,t[1],residue));
-      else image := Union(image,[c[r+1][2]]);
-      fi;
-      if IsIntegers(image) then break; fi;
-    od;
-    return image;
+    if R <> Source( f ) then TryNextMethod( ); fi;
+    return Union( ImagesSet( f, ResidueClass( R, 2, 0 ) ),
+                  ImagesSet( f, ResidueClass( R, 2, 1 ) ) );
   end );
 
 #############################################################################
@@ -1464,14 +1452,25 @@ InstallMethod( ImagesSet,
 
   function ( f, S )
 
-    local  image, immod, imres, rump, im, im2, pre, diff, excluded, n;
+    local  image, immod, imres, rump, c, m, mult, preim, r, excluded, im, n;
 
+    c := Coefficients(f); m := Modulus(f);
+    if   ForAll( c, t -> t[1] = 0 )
+    then mult := 0;
+    else mult := Lcm( List( Filtered( c, t1 -> t1[1]<>0 ), t2 -> t2[1] ) );
+    fi;
     rump  := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
-    immod := Modulus(f) * Multiplier(f) * Modulus(S);
-    imres := Set( List( Intersection( rump, [ 0 .. immod*Divisor(f) - 1 ] ),
-                        n -> n^f mod immod ) );
+    immod := m * mult * Modulus(S);
+    preim := Filtered( [0..immod*Divisor(f)-1], n -> c[n mod m + 1][1]<>0 );
+    imres := Set( List( Intersection( rump, preim ), n -> n^f mod immod ) );
     image := Union( ResidueClassUnion( Integers, immod, imres ),
                     List( IncludedElements(S), n -> n^f ) );
+    for r in [ 0 .. m - 1 ] do
+      if c[ r + 1 ][ 1 ] = 0 then
+        if   Intersection( S, ResidueClass( Integers, m, r ) ) <> [ ]
+        then image := Union( image, [ c[ r + 1 ][ 2 ] ] ); fi;
+      fi;
+    od;
     excluded := ExcludedElements(S);
     for n in excluded do
       im := n^f;
@@ -1594,14 +1593,15 @@ InstallMethod( PreImagesSet,
 
   function ( f, S )
 
-    local  preimage, premod, preres, rump, pre, pre2, im, diff, excluded, n;
+    local  preimage, parts, premod, preres, rump,
+           pre, pre2, im, diff, excluded, n;
 
     rump := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
     premod := Modulus(f) * Divisor(f) * Modulus(S);
     preres := Filtered( [ 0 .. premod ], n -> n^f in rump );
-    preimage := Union( ResidueClassUnion( Integers, premod, preres ),
-                       Flat( List( IncludedElements(S),
-                                   n -> PreImagesElm( f, n ) ) ) );
+    parts := [ ResidueClassUnion( Integers, premod, preres ) ];
+    Append( parts, List( IncludedElements(S), n -> PreImagesElm( f, n ) ) );
+    preimage := Union( parts );
     excluded := ExcludedElements(S);
     for n in excluded do
       pre  := PreImagesElm( f, n );
@@ -2136,8 +2136,8 @@ InstallMethod( Order,
 
     local  R, mult, div;
 
-    R := Source(f);
-    mult := Multiplier(f); div := Divisor(f);
+    if not IsBijective(f) then TryNextMethod(); fi;
+    R := Source(f); mult := Multiplier(f); div := Divisor(f);
     if Set(Factors(R,mult)) <> Set(Factors(R,div))
     then return infinity; else TryNextMethod(); fi;
   end );
@@ -2297,7 +2297,7 @@ InstallMethod( IsTame,
     local  R, mult, div;
 
     if not IsBijective(f) then TryNextMethod(); fi;
-    R := Source(f); mult := Multiplier(f); div := Divisor(f);
+    R := Source(f); mult := Multiplier(f:NonZero); div := Divisor(f);
     if Set(Factors(R,mult)) <> Set(Factors(R,div))
     then return false; else TryNextMethod(); fi;
   end );
