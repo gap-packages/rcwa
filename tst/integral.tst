@@ -918,10 +918,19 @@ gap> List([-2..2],k->Multpk(a,3,k));
 [ [  ], [  ], [  ], Integers, [  ] ]
 gap> List([-2..2],k->Multpk(a,5,k));
 [ [  ], [  ], Integers, [  ], [  ] ]
+gap> rc := function(r,m) return ResidueClass(Integers,m,r); end;;
+gap> md := f -> [Multiplier(f),Divisor(f)];;
+gap> c1 := Restriction(a^-1,RcwaMapping([[2,0,1]]));;
+gap> c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);;
+gap> md(Comm(c1,c2));
+[ 4, 3 ]
+gap> Order(RcwaMapping([rc(1,2),rc(36,72)]));
+2
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
