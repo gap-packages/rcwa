@@ -44,7 +44,7 @@ PackageDoc       := rec(
                          PDFFile   := "doc/manual.pdf",
                          SixFile   := "doc/manual.six",
                          LongTitle := "[R]esidue [C]lass-[W]ise [A]ffine representations of groups",
-                         AutoLoad  := false
+                         Autoload  := false
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
@@ -57,7 +57,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue [C]lass-[W]ise [A]ffine mappings and groups)",
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
-AutoLoad         := false,
+Autoload         := false,
 TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings" ]
 
