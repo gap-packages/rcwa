@@ -35,54 +35,32 @@
     </Display>
   </Alt>
   for some coefficients <M>a_r, b_r, c_r \in R</M>.
-  In this case, we say that <M>f</M> is an <E>rcwa mapping</E>. <P/>
-
+  In this case, we say that <M>f</M> is an <E>rcwa mapping</E>.
   We always assume that all fractions are reduced, i.e. that
   <M>\gcd( a_r, b_r, c_r ) = 1</M>, and that <M>I_f</M> is the largest ideal
-  having the described property. <P/>
-
+  having the described property.
   <Index Key="rcwa mapping" Subkey="modulus"></Index>
   We define the <E>modulus</E> Mod(<M>f</M>) of <M>f</M> as the
   (up to multiplication by units uniquely determined) element <M>m_f</M>
-  generating the ideal <M>I_f</M>. <P/>
-
+  generating the ideal <M>I_f</M>,
   <Index Key="rcwa mapping" Subkey="multiplier"></Index>
-  We define the <E>multiplier</E> Mult(<M>f</M>) of <M>f</M> as the standard
+  the <E>multiplier</E> Mult(<M>f</M>) of <M>f</M> as the standard
   associate of the least common multiple of the coefficients <M>a_r</M> in the
-  numerators. <P/>
- 
+  numerators,
   <Index Key="rcwa mapping" Subkey="divisor"></Index>
-  We define the <E>divisor</E> Div(<M>f</M>) of <M>f</M> as the standard
+  the <E>divisor</E> Div(<M>f</M>) of <M>f</M> as the standard
   associate of the least common multiple of the coefficients <M>c_r</M> in the
-  denominators. <P/>
-
+  denominators and
   <Index Key="rcwa mapping" Subkey="flat"></Index>
-  We say that an rcwa mapping is <E>flat</E> in case its multiplier
-  and divisor are both equal to 1. <P/>
-
-  <Index Key="rcwa mapping" Subkey="integral"></Index>
-  <Index Key="rcwa mapping" Subkey="semilocal integral"></Index>
-  <Index Key="rcwa mapping" Subkey="modular"></Index>
-  <Index Key="rcwa mapping" Subkey="rational-based"></Index>
-  In case that the underlying ring <M>R</M> is the ring of integers, we call an
-  rcwa mapping <M>f</M> an <E>integral rcwa mapping</E>, in case
-  <M>R = \Z_\pi</M> for a set of primes <M>\pi</M> we call <M>f</M>
-  a <E>semilocal integral rcwa mapping</E> and in case <M>R</M> is a polynomial
-  ring in one variable over a finite field we call <M>f</M> a <E>modular rcwa
-  mapping</E>. Since integral and semilocal integral rcwa mappings share many
-  important properties, we make use of the generic term <E>rational-based rcwa
-  mapping</E>. <P/>
-
-  <Index Key="rcwa mapping" Subkey="class-wise order-preserving"></Index>
-  We call a rational-based rcwa mapping <E>class-wise order-preserving</E> if
-  its restriction to any residue class modulo its modulus is
-  order-preserving. <P/>
-
+  we say that an rcwa mapping is <E>flat</E> in case its multiplier
+  and divisor are both equal to 1.
+  <Index Key="rcwa mapping" Subkey="prime set"></Index>
+  We call the set of all prime divisors of the modulus, the multiplier and the divisor
+  of an rcwa mapping <M>f</M> the <E>prime set</E> of <M>f</M>.
   <Index Key="rcwa mapping" Subkey="graph"></Index>
   We define the <E>transition graph</E> <Alt Only="LaTeX"><M>\Gamma_f</M></Alt>
   <Alt Not="LaTeX"><M>G_f</M></Alt> for modulus <M>m</M> of an rcwa mapping <M>f</M>
   as follows:
-
   <Enum>
     <Item>
       The vertices are the residue classes (mod <M>m</M>).
@@ -93,7 +71,6 @@
       <M>n_1^f \in r_2(m)</M>.
     </Item>
   </Enum>
-
   <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
   <Index Key="rcwa mapping" Subkey="transitional rank"></Index>
   <Index Key="rcwa mapping" Subkey="transitional determinant"></Index>
@@ -106,40 +83,52 @@
   accordingly, we can define the <E>transitional rank</E>, the <E>transitional trace</E>
   resp. the <E>transitional determinant</E> of <M>f</M> of degree <M>d</M> for any
   rcwa mapping. <P/>
-
-  <Index Key="rcwa mapping" Subkey="prime set"></Index>
-  We define the <E>prime set</E> of an rcwa mapping <M>f</M> as the set of all
-  prime elements dividing the modulus of <M>f</M> or some coefficient <M>a_r</M>
-  or <M>c_r</M> (in the notation used above). <P/>
  
   We set
   RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>) <M>\ | \ g</M>
-  is residue class-wise affine <M>\}</M> }. <P/>
-
+  is residue class-wise affine <M>\}</M> }.
   The set RCWA(<M>R</M>) is closed under multiplication and taking
   inverses (this can be verified easily), hence forms a subgroup of
   Sym(<M>R</M>).
   Since <M>R</M> contains no zero-divisors and the quotients <M>R/I</M> are
-  all finite, this subgroup is proper. <P/>
-
+  all finite, this subgroup is proper.
   <Index Key="rcwa group">rcwa group</Index>
   <Index Key="rcwa group" Subkey="definition"></Index>
   We call a subgroup of RCWA(<M>R</M>) a residue class-wise
   affine group, or shortly, an <E>rcwa group</E>. <P/>
-
   <Index Key="rcwa group" Subkey="flat"></Index>
   We call an rcwa group <E>flat</E> if all of its elements are. <P/>
 
+  <Index Key="rcwa mapping" Subkey="integral"></Index>
+  <Index Key="rcwa mapping" Subkey="semilocal integral"></Index>
+  <Index Key="rcwa mapping" Subkey="modular"></Index>
+  <Index Key="rcwa mapping" Subkey="rational-based"></Index>
+  <Index Key="rcwa group" Subkey="integral"></Index>
+  <Index Key="rcwa group" Subkey="semilocal integral"></Index>
+  <Index Key="rcwa group" Subkey="modular"></Index>
+  <Index Key="rcwa group" Subkey="rational-based"></Index>
+  In case that the underlying ring <M>R</M> is the ring of integers, we call an
+  rcwa mapping <M>f</M> an <E>integral rcwa mapping</E>, in case
+  <M>R = \Z_\pi</M> for a set of primes <M>\pi</M> we call <M>f</M>
+  a <E>semilocal integral rcwa mapping</E> and in case <M>R</M> is a polynomial
+  ring in one variable over a finite field we call <M>f</M> a <E>modular rcwa
+  mapping</E>. Since integral and semilocal integral rcwa mappings share many
+  important properties, we make use of the generic term <E>rational-based rcwa
+  mapping</E>. In the same way we define integral, semilocal integral, modular
+  and rational-based rcwa groups.
+  <Index Key="rcwa mapping" Subkey="class-wise order-preserving"></Index>
+  We call a rational-based rcwa mapping <E>class-wise order-preserving</E> if
+  its restriction to any residue class modulo its modulus is
+  order-preserving, and
   <Index Key="rcwa group" Subkey="class-wise order-preserving"></Index>
-  We call an integral rcwa group <E>class-wise order-preserving</E> if all of
+  we call a rational-based rcwa group <E>class-wise order-preserving</E> if all of
   its elements are. <P/>
 
   <Index Key="rcwa group" Subkey="prime set"></Index>
   We define the <E>prime set</E> of an rcwa group as the union of the prime
-  sets of its elements. <P/>
-
+  sets of its elements, and
   <Index Key="rcwa group" Subkey="modulus"></Index>
-  We define the <E>modulus</E> of an rcwa group <M>G</M> as the least common
+  the <E>modulus</E> of an rcwa group <M>G</M> as the least common
   multiple of the moduli of its elements in case this is finite, and
   zero otherwise. <P/>
 
