@@ -3680,6 +3680,7 @@ InstallMethod( FactorizationIntoGenerators,
             if Union(P) = Integers then break; fi;
           fi;
         od;
+        if Union(P) <> Integers then P := RespectedPartition(g); fi;
       else P := AllResidueClassesModulo(Modulus(g)); fi;
 
       if InfoLevel(InfoRCWA) >= 1 then
