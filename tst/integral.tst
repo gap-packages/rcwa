@@ -1078,19 +1078,34 @@ gap> DecreasingOn(a^2);
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
 gap> FactorizationIntoGenerators(ab);
-[ ClassShift(16,18), ClassShift(1,18)^-1, ClassTransposition(1,18,33,36),
-  ClassTransposition(1,18,14,18), ClassTransposition(1,18,24,36),
-  ClassTransposition(1,18,13,18), ClassTransposition(1,18,16,18),
-  ClassTransposition(4,18,7,18), ClassTransposition(4,18,10,18),
-  ClassTransposition(4,18,15,36), ClassTransposition(4,18,5,18),
-  ClassTransposition(4,18,6,36) ]
+[ ClassShift(7,9), ClassShift(1,9)^-1, ClassTransposition(1,9,4,9),
+  ClassTransposition(1,9,7,9), ClassTransposition(6,18,15,18),
+  ClassTransposition(5,9,15,18), ClassTransposition(4,9,15,18),
+  ClassTransposition(5,9,6,18), ClassTransposition(4,9,6,18) ]
 gap> Product(last) = ab;
 true
 gap> FactorizationIntoGenerators(Comm(g,h));
-[ ClassShift(5,6)^-1, ClassShift(3,6)^2, ClassShift(2,6)^-1,
-  ClassTransposition(0,6,3,6) ]
+[ ClassShift(3,6)^2, ClassShift(2,3)^-2, ClassTransposition(0,6,3,6) ]
 gap> Product(last) = Comm(g,h);
 true
+gap> FactorizationIntoGenerators(nu*nu^a);
+[ ClassShift(5,6), ClassShift(4,6), ClassTransposition(0,6,1,6),
+  ClassTransposition(0,6,5,6), ClassTransposition(0,6,3,6),
+  ClassTransposition(0,6,4,6), ClassTransposition(0,6,2,6),
+  ClassTransposition(2,3,3,6), ClassTransposition(1,3,3,6),
+  ClassTransposition(2,3,0,6), ClassTransposition(1,3,0,6) ]
+gap> List([t,nu,tau,nu^2,nu^-1,t*nu],FactorizationIntoGenerators);
+[ [ ClassReflection(0,1) ], [ ClassShift(0,1) ],
+  [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,1)^2 ],
+  [ ClassShift(0,1)^-1 ], [ ClassShift(0,1)^-1, ClassReflection(0,1) ] ]
+gap> FactorizationIntoGenerators(g^ClassReflection(0,4));
+[ ClassShift(8,12), ClassShift(3,6), ClassTransposition(1,6,5,6),
+  ClassTransposition(1,6,3,6), ClassTransposition(0,12,10,12),
+  ClassTransposition(0,12,6,12), ClassTransposition(0,12,8,12),
+  ClassTransposition(10,12,16,24), ClassTransposition(8,12,16,24),
+  ClassTransposition(10,12,4,24), ClassTransposition(8,12,4,24),
+  ClassTransposition(1,6,4,12), ClassTransposition(1,6,2,12),
+  ClassReflection(4,6), ClassReflection(2,24) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
