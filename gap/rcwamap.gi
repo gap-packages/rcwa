@@ -3592,8 +3592,8 @@ InstallMethod( FactorizationIntoGenerators,
            affsrc, P, h, cycs, cyc, gfixP, cl, rest, c, m, r,
            multfacts, divfacts, p, q, Smult, Sdiv, clSmult, clSdiv,
            pairs, pair, diffs, largeprimes, splitpair, splittedpairs,
-           splittedpair, d, dpos, disjoint, multswitches, divswitches,
-           kmult, kdiv, i, j, k;
+           splittedpair, d, dpos, disjoint, ctchunk,
+           multswitches, divswitches, kmult, kdiv, i, j, k;
 
     StateInfo := function ( )
       Info(InfoRCWA,1,"Modulus(<g>) = ",Modulus(g),
@@ -3617,14 +3617,20 @@ InstallMethod( FactorizationIntoGenerators,
       k[Maximum(p,q)] := k[Maximum(p,q)] + 1;
     end;
 
-    DivideBy := function ( elm )
-      Info(InfoRCWA,1,"Dividing by ",Name(elm)," ",direction,".");
+    DivideBy := function ( l )
+
+      local  fact;
+
+      if not IsList(l) then l := [l]; fi;
+      for fact in l do # Factors in divisors list must commute.
+        Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
+      od;
       if direction = "from the right" then
-        g          := g * elm^-1;
-        rightfacts := Concatenation([elm],rightfacts);
+        g          := g * Product(Reversed(l))^-1;
+        rightfacts := Concatenation(Reversed(l),rightfacts);
       else
-        g         := elm^-1 * g;
-        leftfacts := Concatenation(leftfacts,[elm]);
+        g         := Product(l)^-1 * g;
+        leftfacts := Concatenation(leftfacts,l);
       fi;
       StateInfo();
     end;
@@ -3637,19 +3643,28 @@ InstallMethod( FactorizationIntoGenerators,
     if direction <> "from the left" then direction := "from the right"; fi;
     multswitches := []; divswitches := []; log := []; loop := false;
 
-    if not IsClassWiseOrderPreserving(g) then # First make <g> cwop.
+    if not IsClassWiseOrderPreserving(g) then
+
+      Info(InfoRCWA,1,"Making the mapping class-wise order-preserving.");
+
       rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
       revert := [List(AsUnionOfFewClasses(rev  ),ClassReflection),
                  List(AsUnionOfFewClasses(rev^g),ClassReflection)];
       if   Length(revert[1]) <= Length(revert[2])
       then g := Product(revert[1])^-1 * g;
       else g := g * Product(revert[2])^-1; fi;
+
     else revert := [[],[]]; fi;
 
     if IsIntegral(g) then
 
+      Info(InfoRCWA,1,"Determining largest sources of affine mappings.");
+
       affsrc := Union(List(LargestSourcesOfAffineMappings(g),
                            AsUnionOfFewClasses));
+
+      Info(InfoRCWA,1,"Computing respected partition.");
+
       P := [];
       for cl in affsrc do
         cyc := [cl];
@@ -3665,10 +3680,12 @@ InstallMethod( FactorizationIntoGenerators,
         fi;
       od;
 
-      if   Union(P) <> Integers
-      then P := RespectedPartition(g); fi;
-      if   InfoLevel(InfoRCWA) >= 1
-      then Print("#I Use respected partition "); View(P); Print(".\n"); fi;
+      if Union(P) <> Integers then P := RespectedPartition(g); fi;
+
+      if InfoLevel(InfoRCWA) >= 1 then
+        Print("#I  Computing induced permutation on respected partition ");
+        View(P); Print(".\n");
+      fi;
 
       h := Permutation(g,P);
       cycs := Orbits(Group(h),MovedPoints(h));
@@ -3677,6 +3694,8 @@ InstallMethod( FactorizationIntoGenerators,
           Add(facts,ClassTransposition(P[cyc[1]],P[cyc[i]]));
         od;
       od;
+
+      Info(InfoRCWA,1,"Factoring the rest into class shifts.");
 
       gfixP := g/Product(facts); # gfixP stabilizes the partition P.
       for cl in P do
@@ -3740,12 +3759,12 @@ InstallMethod( FactorizationIntoGenerators,
 
         if InfoLevel(InfoRCWA) >= 1 then
           if   direction = "from the right"
-          then Print("#I Image of c"); else Print("#I C"); fi;
-          Print("lasses being multiplied by q*p^kmult:\n#I ");
+          then Print("#I  Image of c"); else Print("#I  C"); fi;
+          Print("lasses being multiplied by q*p^kmult:\n#I  ");
           ViewObj(clSmult);
           if   direction = "from the right"
-          then Print("\n#I Image of c"); else Print("\n#I C"); fi;
-          Print("lasses being divided by q*p^kdiv:\n#I ");
+          then Print("\n#I  Image of c"); else Print("\n#I  C"); fi;
+          Print("lasses being divided by q*p^kdiv:\n#I  ");
           ViewObj(clSdiv); Print("\n");
         fi;
 
@@ -3813,7 +3832,7 @@ InstallMethod( FactorizationIntoGenerators,
             if   Sum(List(Flat(disjoint),Density))
                > Density(Union(Flat(disjoint)))
             then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
-            for pair in disjoint do DivideBy(ClassTransposition(pair)); od;
+            DivideBy(List(disjoint,ClassTransposition));
             pairs := Difference(pairs,disjoint);
           until pairs = [];
 
@@ -3836,7 +3855,7 @@ InstallMethod( FactorizationIntoGenerators,
       until IsIntegral(g);
 
       facts := Concatenation(leftfacts,
-                             FactorizationIntoGenerators(g),
+                             FactorizationIntoGenerators(g:Slave),
                              rightfacts);
 
       if ValueOption("ExpandPrimeSwitches") = true then
@@ -3851,9 +3870,13 @@ InstallMethod( FactorizationIntoGenerators,
 
     facts := Filtered(facts,fact->not IsOne(fact));
 
-    if   Product(facts) <> elm
-    then Error("FactorizationIntoGenerators: Internal error!");
-    else return facts; fi;
+    if ValueOption("Slave") <> true and ValueOption("NC") <> true then
+      Info(InfoRCWA,1,"Checking the result.");
+      if   Product(facts) <> elm
+      then Error("FactorizationIntoGenerators: Internal error!"); fi;
+    fi;
+
+    return facts;
 
   end );
 
