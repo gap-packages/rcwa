@@ -4,7 +4,7 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
 #Y  Universit\"at Stuttgart, Germany
 ##
 ##  This file contains implementations of methods dealing with unions of
@@ -292,6 +292,38 @@ InstallMethod( IncludedElements,
 InstallMethod( ExcludedElements,
                "for residue class unions", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.excluded );
+
+#############################################################################
+##
+#M  AsUnionOfFewClasses( <U> ) . . . . . . . . . for residue class union of Z
+##
+InstallMethod( AsUnionOfFewClasses,
+               "for residue class unions of Z", true,
+               [ IsUnionOfResidueClassesOfZ ], 0,
+
+  function ( U )
+
+    local  S, Si, remaining, m, res, div, d, pos;
+
+    m := Modulus(U); res := Residues(U);
+    S := []; remaining := U;
+    div := DivisorsInt(m);
+    for d in div do
+      if m mod d <> 0 then continue; fi; pos := 1;
+      while pos <= Length(res) do
+        if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
+          Si := ResidueClass(Integers,d,res[pos]);
+          Add(S,Si); remaining := Difference(remaining,Si);
+          if remaining = [] then break; fi;
+          m := Modulus(remaining); res := Residues(remaining); pos := 0;
+          if m mod d <> 0 then break; fi;
+        fi;
+        pos := pos + 1;
+      od;
+      if remaining = [] then break; fi;
+    od;
+    return S;
+  end );
 
 #############################################################################
 ##

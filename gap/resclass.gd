@@ -4,7 +4,7 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
 #Y  Universit\"at Stuttgart, Germany
 ##
 ##  This file contains declarations needed for dealing with unions of
@@ -157,6 +157,12 @@ DeclareOperation( "IncludedElements", [ IsUnionOfResidueClasses ] );
 #O  ExcludedElements( <U> ) . excluded single elements of residue class union
 ##
 DeclareOperation( "ExcludedElements", [ IsUnionOfResidueClasses ] );
+
+#############################################################################
+##
+#O  AsUnionOfFewClasses( <U> ) . . . . .  write <U> as a union of few classes
+##
+DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );
 
 #############################################################################
 ##
