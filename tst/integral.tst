@@ -1011,22 +1011,29 @@ gap> ImageDensity(u);
 1
 gap> ImageDensity(RcwaMapping([[2,0,1]]));
 1/2
+gap> f0 := RcwaMapping([[2,0,1]]);;
+gap> f1 := RcwaMapping([[2,1,1]]);
+Integral rcwa mapping: n -> 2n + 1
+gap> f0 := RcwaMapping([[2,0,1]]);
+Integral rcwa mapping: n -> 2n
+gap> f1 := RcwaMapping([[2,1,1]]);
+Integral rcwa mapping: n -> 2n + 1
+gap> f := Restriction(g,f0)*Restriction(h,f1);
+<integral rcwa mapping with modulus 12>
+gap> Order(f);
+84
+gap> RestrictedPerm(f,ResidueClass(Integers,2,0));
+<integral rcwa mapping with modulus 12>
+gap> Order(last);
+7
+gap> RestrictedPerm(f,ResidueClass(Integers,2,1));
+<integral rcwa mapping with modulus 12>
+gap> Order(last);
+12
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
-
-
-
-
-
-
-
-
 
