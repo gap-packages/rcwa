@@ -237,6 +237,10 @@ gap> f := RcwaMapping([[rc(Zero(R),x^2),rc(One(R),x^3),rc(x,x^2)]]);
 <rcwa mapping of GF(2)[x] with modulus x^3>
 gap> Order(f);
 3
+gap> G := Group(r);
+<rcwa group over GF(2)[x] with 1 generator>
+gap> IsTransitive(G,R);
+false
 gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;
@@ -253,3 +257,4 @@ gap> STOP_TEST( "modular.tst", 1500000000 );
 #############################################################################
 ##
 #E  modular.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+

@@ -956,11 +956,30 @@ gap> Divergence(a);
 1.06066
 gap> Divergence(u);
 1.15991
+gap> G := Group(g,h);
+<integral rcwa group with 2 generators>
+gap> IsTransitive(G,Integers);
+true
+gap> H := Restriction(G,RcwaMapping([[3,2,1]]));
+<integral rcwa group with 2 generators>
+gap> MovedPoints(H);
+The residue class 2(3)
+gap> IsTransitive(H,MovedPoints(H));
+true
+gap> G := Group(a,b);
+<integral rcwa group with 2 generators>
+gap> IsTransitive(G,Integers);
+false
+gap> H := Restriction(G,RcwaMapping([[3,2,1]]));
+<integral rcwa group with 2 generators>
+gap> IsTransitive(H,MovedPoints(H));
+false
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
