@@ -288,6 +288,9 @@ Some kinds of very simple-structured rcwa mappings are of particular interest:
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping of
     <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
     and fixes <M>\mathbb{Z} \setminus r(m)</M> pointwise.
+    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
+    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
 gap> Display(ClassShift(5,12));    
@@ -310,7 +313,10 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and fixes <M>\mathbb{Z} \setminus r(m)</M> pointwise.
+    and fixes <M>\mathbb{Z}&nbsp;\setminus&nbsp;r(m)</M> pointwise.
+    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
+    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
 gap> Display(ClassReflection(5,9));
@@ -340,6 +346,11 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     rcwa mapping of <M>\mathbb{Z}</M> of order&nbsp;2 which interchanges
     the disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of
     <M>\mathbb{\Z}</M> and fixes the complement of their union pointwise.
+    The residue classes <C>ResidueClass(<A>r1</A>,<A>m1</A>)</C>
+    and <C>ResidueClass(<A>r2</A>,<A>m2</A>)</C> themselves
+    can be given in place of the arguments <A>r1</A>, <A>m1</A>,
+    <A>r2</A> and <A>m2</A>. Enclosing the argument list in list brackets
+    is permitted.
 <Example>
 <![CDATA[
 gap> Display(ClassTransposition(1,2,8,10));
