@@ -1638,8 +1638,7 @@ gap> List(S,Si->Float(Density(Si)));
 <Section Label="sec:CollatzMapping">
 <Heading>Replacing the Collatz mapping by conjugates</Heading>
 
-This is probably not the most interesting application of this package,
-but we can turn the Collatz problem into an equivalent question by
+We can turn the Collatz problem into an equivalent question by
 replacing the Collatz mapping&nbsp;<A>T</A> by one of its conjugates under
 an element of the pointwise stabilizer of&nbsp;1 in the setwise stabilizer
 of the positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:

@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Mappings and Groups",
 Version          := "0.0",
-Date             := "03/06/2004",
+Date             := "11/06/2004",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.0",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
@@ -48,7 +48,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4",
-                         NeededOtherPackages    := [ ["ResClasses", ">=1.0"], ["GRAPE",">=4.0"],
+                         NeededOtherPackages    := [ ["ResClasses", ">=2.0"], ["GRAPE",">=4.0"],
                                                      ["GAPDoc",">=0.99"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
