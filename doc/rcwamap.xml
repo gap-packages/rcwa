@@ -633,7 +633,8 @@ gap> PreImagesElm(ZeroOne,1);
   </ManSection>
 
   <ManSection>
-    <Meth Name="PreImagesRepresentative" Arg="f, x"/>
+    <Meth Name ="PreImagesRepresentative" Arg="f, x"
+          Label="PreImagesRepresentative for rcwa mapping"/>
     <Returns>
       a representative of the set of preimages of <A>x</A> under <A>f</A>.
     </Returns>
@@ -1416,3 +1417,4 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+

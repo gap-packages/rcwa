@@ -240,6 +240,19 @@ We proceed with a list briefly giving some results and remarks
 
   <Mark>-</Mark>
   <Item>
+    Even in wild groups we can often factor elements into generators --
+    <Q>often</Q> in this context means something like <Q>if the element
+    is a product of not more than 15 or 20 generators or inverses of
+    generators</Q> -- of course this depends very much on the particular
+    group and on the particular generators. Note that using the
+    <Q>naive</Q> approach this would be far from being possible.
+    <M>\rightarrow</M>
+    <Ref Meth ="PreImagesRepresentative"
+         Label="PreImagesRepresentative (element factorization)"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
     Choosing the set of all residue classes of <M>R</M> as a basis for a
     topology turns RCWA(<M>R</M>) into a group of homoeomorphisms.
     Such a topology has already been introduced on the integers by Harry
@@ -449,6 +462,3 @@ We end this chapter by giving a few open problems (in arbitrary order).
 </Chapter>
 
 <!-- #################################################################### -->
-
-
-

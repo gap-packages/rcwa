@@ -409,7 +409,8 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
   </ManSection>
 
   <ManSection>
-    <Meth Name="PreImagesRepresentative" Arg="phi, g"/>
+    <Meth Name ="PreImagesRepresentative" Arg="phi, g"
+          Label="PreImagesRepresentative (element factorization)"/>
     <Returns>
       a representative of the set of preimages of <A>g</A> under the
       homomorphism <A>phi</A> from a free group to an rcwa group over
@@ -1374,3 +1375,4 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
