@@ -926,11 +926,18 @@ gap> md(Comm(c1,c2));
 [ 4, 3 ]
 gap> Order(RcwaMapping([rc(1,2),rc(36,72)]));
 2
+gap> f1 := RcwaMapping([rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]);
+<integral rcwa mapping with modulus 12>
+gap> Cycle(f1,rc(0,4));
+[ The residue class 0(4), The residue class 1(6) ]
+gap> Cycle(f1,rc(5,6));
+[ The residue class 5(6), The residue class 2(4) ]
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
