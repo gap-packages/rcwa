@@ -29,7 +29,7 @@
 ##  is an arbitrary (possibly infinite) group, an $R$-*rcwa-representation*
 ##  of $G$.
 ##
-##  Caution: The zero mapping multiplicatively is only a right zero element 
+##  Caution: The zero mapping multiplicatively is only a right zero element
 ##           ($a*0 = 0$ for all $a$, but $0*a = 0$ if and only if
 ##           $0^a = 0$), and it holds only the left distributive law
 ##           ($a*(b+c) = a*b+a*c$, but not necessary $(a+b)*c = a*c+b*c$).
@@ -2173,7 +2173,7 @@ InstallMethod( Order,
 
   function ( f )
 
-    local  g, c, m1, m2, exp, e, n, one;
+    local  g, c, m1, m2, exp, e, n, r, one;
 
     one := One(f);
     if f = one then return 1; fi;
@@ -2184,12 +2184,13 @@ InstallMethod( Order,
     for n in exp do
       c := g!.coeffs; m2 := g!.modulus;
       if m2 > m1 or IsOne(g) then TryNextMethod(); fi;
-      if   ForAny([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
-                                and c[n][2] mod m2 = 0)
-      then Info(InfoRCWA,1,"The ",Ordinal(e)," power of ",f," is ",g,
-                           "; this mapping shifts a residue class ",
-                           "(modulo ",m2," (its modulus)) non-identically ",
-                           "onto itself, hence its order is infinite.");
+      r := First([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
+                               and c[n][2] mod m2 = 0);
+      if   r <> fail
+      then Info(InfoRCWA,1,"Order: the ",Ordinal(e)," power of the argument",
+                           " is ",g,"; this mapping shifts the residue ",
+                           "class ",r-1," mod ",m2," non-identically ",
+                           "onto itself, hence its order is infinity.");
            return infinity;
       fi;
       g := g^n; e := e * n; if g = one then break; fi;
@@ -2227,10 +2228,10 @@ InstallMethod( Order,
         m := m^f; CycLng := CycLng + 1;
       until m = n or CycLng > MaxFiniteCycleLength;
       if CycLng > MaxFiniteCycleLength then
-        Info(InfoRCWA,1,"The mapping ",f," has a cycle longer than 2 times ",
-                        "the square of its modulus, hence we claim its ",
-                        "order is infinite, although the validity of this ",
-                        "criterium has not been proved so far.");
+        Info(InfoRCWA,1,"Order: the mapping ",f," has a cycle longer than ",
+                        "2 times the square of its modulus, hence we claim ",
+                        "its order is infinity, although the validity of ",
+                        "this criterium has not been proved so far.");
         return infinity;
       fi;
       Add(CycLngs,CycLng);
@@ -2239,7 +2240,7 @@ InstallMethod( Order,
     then return Lcm(CycLngs); else TryNextMethod(); fi;
   end );
 
-############################################################################# 
+#############################################################################
 ##
 #F  TransitionMatrix( <f>, <deg> ) . . <deg>x<deg>-`Transition matrix' of <f>
 ##
@@ -2337,11 +2338,11 @@ InstallMethod( IsTame,
       pow := pow * pow; m := Modulus(pow); exp := exp * 2;
     until exp > maxexp or m > maxmod;
     if m > maxmod then
-      Info(InfoRCWA,1,"The ",Ordinal(exp)," power of ",f," has Modulus ",m,
-                      "; this is larger than the square of the modulus of ",
-                      "the base, so we claim the mapping is wild, although ",
-                      "the validity of this criterium has not yet been ",
-                      "proved.");
+      Info(InfoRCWA,1,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
+                      "Modulus ",m,"; this is larger than the square of the",
+                      " modulus of the base, so we claim the mapping is ",
+                      "wild, although the validity of this criterium has ",
+                      "not yet been proved.");
     fi;
     return m <= maxmod;
   end );
