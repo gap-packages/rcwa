@@ -137,81 +137,60 @@ DeclareRepresentation( "IsModularRcwaDenseRep",
 
 #############################################################################
 ##
-#F  IntegralRcwaMapping( <coeffs> )
-#F  IntegralRcwaMapping( <perm>, <range> )
-#F  IntegralRcwaMapping( <modulus>, <val> )
-#F  IntegralRcwaMappingNC( <coeffs> )
-#F  IntegralRcwaMappingNC( <perm>, <range> )
-#F  IntegralRcwaMappingNC( <modulus>, <val> )
+#F  RcwaMapping( <R>, <modulus>, <coeffs> )
+#F  RcwaMapping( <R>, <coeffs> )
+#F  RcwaMapping( <coeffs> )
+#F  RcwaMapping( <perm>, <range> )
+#F  RcwaMapping( <modulus>, <values> )
+#F  RcwaMapping( <pi>, <coeffs> )
+#F  RcwaMapping( <q>, <modulus>, <coeffs> )
+#F  RcwaMapping( <cycles> )
+#F  RcwaMappingNC( <R>, <modulus>, <coeffs> )
+#F  RcwaMappingNC( <R>, <coeffs> )
+#F  RcwaMappingNC( <coeffs> )
+#F  RcwaMappingNC( <perm>, <range> )
+#F  RcwaMappingNC( <modulus>, <values> )
+#F  RcwaMappingNC( <pi>, <coeffs> )
+#F  RcwaMappingNC( <q>, <modulus>, <coeffs> )
+#F  RcwaMappingNC( <cycles> )
 ##
-##  Construction of the integral rcwa mapping 
+##  Construction of the rcwa mapping 
 ##
 ##  \beginlist
 ##  \item{(a)}
-##    with coefficients <coeffs> resp.
+##    with modulus <modulus> and coefficients <coeffs> over the ring <R>
+##    resp.
 ##  \item{(b)}
+##    with coefficients <coeffs> over the ring <R>, if this information is
+##    sufficient resp.
+##  \item{(c)}
+##    with coefficients <coeffs>, if already this information is sufficient
+##    resp.
+##  \item{(d)}
 ##    acting on the translates of <range> by integral multiples
 ##    of the length of <range> as the translates of the finite permutation
 ##    <perm> to the respective intervals resp.
-##  \item{(c)}
-##    with modulus <modulus> with values prescribed by the list <val>, which
-##    consists of 2 * <modulus> pairs giving preimage and image for 2 points
-##    per residue class (mod <modulus>).
+##  \item{(e)}
+##    with modulus <modulus> with values prescribed by the list <values>,
+##    which consists of 2 * <modulus> pairs giving preimage and image for
+##    2 points per residue class (mod <modulus>) resp.
+##  \item{(f)}
+##    with coefficients <coeffs> over $\Z_{<pi>}$ resp.
+##  \item{(g)}
+##    with modulus <modulus> and coefficients <coeffs> over GF(<q>)[<x>]
+##    resp.
+##  \item{(h)}
+##    an arbitrary rcwa mapping with residue class cycles as given by
+##    <cycles>.
 ##  \endlist
 ##
-##  The difference between `IntegralRcwaMapping' and `IntegralRcwaMappingNC'
+##  The difference between `RcwaMapping' and `RcwaMappingNC'
 ##  is that the former performs some argument checks which are omitted in the
 ##  latter, where just anything may happen if wrong or inconsistent arguments
 ##  are given.
 ##
-DeclareGlobalFunction( "IntegralRcwaMapping" );
-DeclareGlobalFunction( "IntegralRcwaMappingNC" );
-
-#############################################################################
-##
-#F  SemilocalIntegralRcwaMapping( <fam>, <coeffs> )
-#F  SemilocalIntegralRcwaMappingNC( <fam>, <coeffs> )
-##
-##  Construction of the semilocal integral rcwa mapping with coefficients
-##  <coeffs> in the family <fam>.
-##
-##  The difference between `SemilocalIntegralRcwaMapping' and
-##  `SemilocalIntegralRcwaMappingNC' is that the former performs some
-##  argument checks which are omitted in the latter, where just anything may
-##  happen if wrong or inconsistent arguments are given.
-##
-DeclareGlobalFunction( "SemilocalIntegralRcwaMapping" );
-DeclareGlobalFunction( "SemilocalIntegralRcwaMappingNC" );
-
-#############################################################################
-##
-#F  ModularRcwaMapping( <fam>, <modulus>, <coeffs> )
-#F  ModularRcwaMappingNC( <fam>, <modulus>, <coeffs> )
-##
-##  Construction of the modular rcwa mapping with modulus <modulus> and
-##  coefficients <coeffs> in the family <fam>.
-##
-##  The difference between `ModularRcwaMapping' and `ModularRcwaMappingNC'
-##  is that the former performs some argument checks which are omitted in the
-##  latter, where just anything may happen if wrong or inconsistent arguments
-##  are given.
-##
-DeclareGlobalFunction( "ModularRcwaMapping" );
-DeclareGlobalFunction( "ModularRcwaMappingNC" );
-
-#############################################################################
-##
-#F  RcwaMapping( <coeffs> )
-#F  RcwaMapping( <perm>, <range> )
-#F  RcwaMapping( <modulus>, <val> )
-#F  RcwaMapping( <fam>, <coeffs> )
-#F  RcwaMapping( <fam>, <modulus>, <coeffs> )
-##
-##  Shorthand for `IntegralRcwaMapping' (first 3 cases),
-##  `SemilocalIntegralRcwaMapping' (4th case) resp.
-##  `ModularRcwaMapping' (last case).
-##
-DeclareGlobalFunction( "RcwaMapping" );
+DeclareOperation( "RcwaMapping", [ IsObject ] );
+DeclareOperation( "RcwaMappingNC", [ IsObject ] );
 
 #############################################################################
 ##

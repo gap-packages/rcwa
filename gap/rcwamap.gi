@@ -168,10 +168,9 @@ InstallGlobalFunction( RcwaMappingsFamily,
 
     if   IsIntegers( R ) then return IntegralRcwaMappingsFamily;
     elif IsZ_pi( R )
-    then return SemilocalIntegralRcwaMappingsFamily(NoninvertiblePrimes(R));
+    then return SemilocalIntegralRcwaMappingsFamily( R );
     elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
-    then return ModularRcwaMappingsFamily( Size( CoefficientsRing( R ) ),
-                IndeterminateNumberOfLaurentPolynomial(Representative(R)) );
+    then return ModularRcwaMappingsFamily( R );
     else Error("Sorry, rcwa mappings over ",R," are not yet implemented.\n");
     fi;
   end );
@@ -275,59 +274,55 @@ ReduceModularRcwaMapping := function ( f )
 end;
 MakeReadOnlyGlobal( "ReduceModularRcwaMapping" );
 
-CoeffsOfIntegralRcwaMappingByClassCycles := function ( cycles )
+CheckClassCycles := function ( R, cycles )
 
-  local  m, c, cyc, pre, im, pos, res, r1, r2, m1, m2, r;
+  if not (    ForAll(cycles,IsList)
+          and ForAll(Flat(cycles),S->    IsUnionOfResidueClasses(S)
+                                     and Length(Residues(S))=1
+                                     and IsSubset(R,S)))
+     or  ForAny(Combinations(Flat(cycles),2),
+                s->Intersection(s[1],s[2]) <> [])
+  then Error("there is no rcwa mapping of ",R," having the class ",
+             "cycles ",cycles,".\n"); 
+  fi;
+end;
+MakeReadOnlyGlobal( "CheckClassCycles" );
 
-  m := Lcm(List(Union(cycles),Modulus));
-  c := List([1..m],r->[1,0,1]);
+CoeffsOfRcwaMappingByClassCycles := function ( R, cycles )
+
+  local  m, c, res, cyc, pre, im, affectedpos, pos, r1, r2, m1, m2, r, i;
+
+  m   := Lcm(List(Union(cycles),Modulus));
+  res := AllResidues(R,m);
+  c   := List(res,r->[1,0,1]*One(R));
   for cyc in cycles do
     if Length(cyc) <= 1 then continue; fi;
     for pos in [1..Length(cyc)] do
       pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
       r1 := Residues(pre)[1]; m1 := Modulus(pre);
       r2 := Residues(im )[1]; m2 := Modulus(im);
-      res := Filtered([0..m-1],r->r mod m1 = r1);
-      for r in res do c[r+1] := [m2,m1*r2-m2*r1,m1]; od;
+      affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
+      for i in affectedpos do c[i] := [m2,m1*r2-m2*r1,m1]; od;
     od;
   od;
   return c;
 end;
-MakeReadOnlyGlobal( "CoeffsOfIntegralRcwaMappingByClassCycles" );
+MakeReadOnlyGlobal( "CoeffsOfRcwaMappingByClassCycles" );
 
 #############################################################################
 ##
-#F  IntegralRcwaMappingNC( <coeffs> )
-#F  IntegralRcwaMappingNC( <perm>, <range> )
-#F  IntegralRcwaMappingNC( <modulus>, <val> )
+#F  RcwaMappingNC( <coeffs> )
 ##
-InstallGlobalFunction( IntegralRcwaMappingNC,
+InstallOtherMethod( RcwaMappingNC,
+                    "integral rcwa mapping by coefficients (RCWA)",
+                    true, [ IsList ], 0,
 
-  function ( arg )
+  function ( coeffs )
 
-    local coeffs, perm, range, val, min, max, m, n, r, pts, Result;
+    local Result;
 
-    if   Length(arg) = 1 and IsList(arg[1][1])
-    then coeffs := arg[1];
-    elif IsPerm(arg[1]) and IsRange(arg[2])
-    then perm := arg[1]; range := arg[2];
-         min := Minimum(range); max := Maximum(range);
-         m := max - min + 1; coeffs := [];
-         for n in [min..max] do
-           r := n mod m + 1;
-           coeffs[r] := [1, n^perm - n, 1];
-         od;
-    elif IsInt(arg[1])
-    then m := arg[1]; val := Set(arg[2]); coeffs := [];
-         for r in [1..m] do
-           pts := Filtered(val, pt -> pt[1] mod m = r - 1);
-           coeffs[r] := [  pts[1][2] - pts[2][2],
-                           pts[1][2] * (pts[1][1] - pts[2][1])
-                         - pts[1][1] * (pts[1][2] - pts[2][2]),
-                           pts[1][1] - pts[2][1]];
-         od;
-    else coeffs := CoeffsOfIntegralRcwaMappingByClassCycles(arg);
-    fi;
+    if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
+    then TryNextMethod( ); fi;
     Result := Objectify( NewType(    IntegralRcwaMappingsFamily,
                                      IsIntegralRcwaMapping
                                  and IsRationalBasedRcwaDenseRep ),
@@ -336,178 +331,274 @@ InstallGlobalFunction( IntegralRcwaMappingNC,
     SetSource(Result, Integers);
     SetRange (Result, Integers);
     ReduceIntegralRcwaMapping(Result);
-
     return Result;
   end );
 
 #############################################################################
 ##
-#F  IntegralRcwaMapping( <coeffs> )
-#F  IntegralRcwaMapping( <perm>, <range> )
-#F  IntegralRcwaMapping( <modulus>, <val> )
-#F  IntegralRcwaMapping( <class cycle> [, <class cycle> [, ... ] ] )
+#F  RcwaMapping( <coeffs> )
 ##
-InstallGlobalFunction( IntegralRcwaMapping,
+InstallOtherMethod( RcwaMapping,
+                    "integral rcwa mapping by coefficients (RCWA)",
+                    true, [ IsList ], 0,
 
-  function ( arg )
+  function ( coeffs )
 
-    local coeffs, perm, range, val, min, max, m, n, r, pts, Result,
-          quiet;
+    local quiet;
+
+    if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
+    then TryNextMethod( ); fi;
+    quiet := ValueOption("BeQuiet") = true;
+    if not (     ForAll(Flat(coeffs),IsInt)
+             and ForAll(coeffs, IsList)
+             and ForAll(coeffs, c -> Length(c) = 3)
+             and ForAll([0..Length(coeffs) - 1],
+                        n -> coeffs[n + 1][3] <> 0 and
+                             (n * coeffs[n + 1][1] + coeffs[n + 1][2])
+                             mod coeffs[n + 1][3] = 0 and
+                             (  (n + Length(coeffs)) * coeffs[n + 1][1] 
+                              +  coeffs[n + 1][2])
+                             mod coeffs[n + 1][3] = 0))
+    then if quiet then return fail; fi;
+         Error("the coefficients ",coeffs," do not define a proper ",
+               "integral rcwa mapping.\n");
+    fi;
+    return RcwaMappingNC( coeffs );
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingNC( <perm>, <range> )
+##
+InstallOtherMethod( RcwaMappingNC,
+                    "integral rcwa mapping by permutation and range (RCWA)",
+                    true, [ IsPerm, IsRange ], 0,
+
+  function ( perm, range )
+
+    local coeffs, min, max, m, n, r;
+
+    min := Minimum(range); max := Maximum(range);
+    m := max - min + 1; coeffs := [];
+    for n in [min..max] do
+      r := n mod m + 1;
+      coeffs[r] := [1, n^perm - n, 1];
+    od;
+    return RcwaMappingNC( coeffs );
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <perm>, <range> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "integral rcwa mapping by permutation and range (RCWA)",
+                    true, [ IsPerm, IsRange ], 0,
+
+  function ( perm, range )
+
+    local quiet;
 
     quiet := ValueOption("BeQuiet") = true;
-    if       Length(arg) = 1 and IsList(arg[1])
-         and IsList(arg[1][1]) and IsInt(arg[1][1][1])
-    then coeffs := arg[1];
-         if not (IsList(coeffs) and ForAll(Flat(coeffs),IsInt)
-                 and ForAll(coeffs, IsList)
-                 and ForAll(coeffs, c -> Length(c) = 3)
-                 and ForAll([0..Length(coeffs) - 1],
-                            n -> coeffs[n + 1][3] <> 0 and
-                                 (n * coeffs[n + 1][1] + coeffs[n + 1][2])
-                                 mod coeffs[n + 1][3] = 0 and
-                                 (  (n + Length(coeffs)) * coeffs[n + 1][1] 
-                                  +  coeffs[n + 1][2])
-                                 mod coeffs[n + 1][3] = 0))
-         then if quiet then return fail; fi;
-              Error("the coefficients ",coeffs," do not define a proper ",
-                    "integral rcwa mapping.\n");
-         fi;
-    elif IsPerm(arg[1]) and IsRange(arg[2])
-    then perm := arg[1]; range := arg[2];
-         if   Permutation(perm,range) = fail
-         then if quiet then return fail; fi;
-              Error("the permutation ",perm," does not act on the range ",
-                    range,".\n");
-         fi;
-    elif IsPosInt(arg[1]) and IsList(arg[2])
-         and Set(List(arg[2],Length)) = [2] and ForAll(Flat(arg[2]),IsInt)
-    then
-      m := arg[1]; val := Set(arg[2]); coeffs := [];
-      for r in [1..m] do
-        pts := Filtered(val, pt -> pt[1] mod m = r - 1);
-        if   Length(pts) < 2 
-        then if quiet then return fail; fi;
-             Error("the mapping is not given at at least 2 points <n> ",
-                   "with <n> mod ",m," = ",r - 1,".\n");
-        fi;
-      od;
-    elif IsList(arg[1]) and IsUnionOfResidueClasses(arg[1][1])
-    then if not (    ForAll(arg,IsList)
-                 and ForAll(Flat(arg),S->    IsUnionOfResidueClasses(S)
-                                         and Length(Residues(S))=1))
-            or  ForAny(Combinations(Flat(arg),2),
-                       s->Intersection(s[1],s[2]) <> [])
-         then Error("there is no integral rcwa mapping having the class ",
-                    "cycles ",arg,".\n"); 
-         fi;
-    else if quiet then return fail; fi;
-         Error("see RCWA Manual for usage of IntegralRcwaMapping.\n");
+    if   Permutation(perm,range) = fail
+    then if quiet then return fail; fi;
+         Error("the permutation ",perm," does not act on the range ",
+               range,".\n");
     fi;
-
-    Result := CallFuncList( IntegralRcwaMappingNC, arg );
-
-    if   IsBound(val)
-    then if not ForAll(val, t -> t[1]^Result = t[2])
-         then if quiet then return fail; fi;
-              Error("the values ",val," do not define a proper integral ",
-                    "rcwa mapping.\n"); 
-         fi;
-    fi;
-
-    return Result;
+    return RcwaMappingNC( perm, range );
   end );
 
 #############################################################################
 ##
-#F  SemilocalIntegralRcwaMappingNC( <pi>, <coeffs> )
+#F  RcwaMappingNC( <modulus>, <values> )
 ##
-InstallGlobalFunction( SemilocalIntegralRcwaMappingNC,
+InstallOtherMethod( RcwaMappingNC,
+                    "integral rcwa mapping by modulus and values (RCWA)",
+                    true, [ IsInt, IsList ], 0,
+
+  function ( modulus, values )
+
+    local  coeffs, pts, r;
+
+    coeffs := [];
+    for r in [1..modulus] do
+      pts := Filtered(values, pt -> pt[1] mod modulus = r - 1);
+      coeffs[r] := [  pts[1][2] - pts[2][2],
+                      pts[1][2] * (pts[1][1] - pts[2][1])
+                    - pts[1][1] * (pts[1][2] - pts[2][2]),
+                      pts[1][1] - pts[2][1]];
+    od;
+    return RcwaMappingNC( coeffs );
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <modulus>, <values> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "integral rcwa mapping by modulus and values (RCWA)",
+                    true, [ IsInt, IsList ], 0,
+
+  function ( modulus, values )
+
+    local  f, coeffs, pts, r, quiet;
+
+    quiet := ValueOption("BeQuiet") = true;
+    coeffs := [];
+    for r in [1..modulus] do
+      pts := Filtered(values, pt -> pt[1] mod modulus = r - 1);
+      if   Length(pts) < 2
+      then if quiet then return fail; fi;
+           Error("the mapping is not given at at least 2 points <n> ",
+                 "with <n> mod ",modulus," = ",r - 1,".\n");
+      fi;
+    od;
+    f := RcwaMappingNC( modulus, values );
+    if not ForAll(values,t -> t[1]^f = t[2])
+    then if quiet then return fail; fi;
+         Error("the values ",values," do not define a proper integral ",
+               "rcwa mapping.\n"); 
+    fi;
+    return f;
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingNC( <cycles> )
+##
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by class cycles (RCWA)",
+                    true, [ IsList ], 0,
+
+  function ( cycles )
+
+    local R, coeffs;
+
+    if not IsUnionOfResidueClasses(cycles[1][1]) then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(cycles[1][1]));
+    coeffs := CoeffsOfRcwaMappingByClassCycles(R,cycles);
+    if   IsIntegers(R)
+    then return RcwaMappingNC(coeffs);
+    elif IsZ_pi(R)
+    then return RcwaMappingNC(R,coeffs);
+    elif IsPolynomialRing(R)
+    then return RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs); fi;
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <cycles> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by class cycles (RCWA)",
+                    true, [ IsList ], 0,
+
+  function ( cycles )
+
+    local R;
+
+    if not IsList(cycles[1]) or
+       not IsUnionOfResidueClasses(cycles[1][1])
+    then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(cycles[1][1]));
+    CheckClassCycles(R,cycles);
+    return RcwaMappingNC(cycles);
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingNC( <pi>, <coeffs> )
+##
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by prime ideals and coefficients (RCWA)",
+                    true, [ IsObject, IsList ], 0,
 
   function ( pi, coeffs )
 
-    local Result, R, fam;
+    local  f, R, fam;
 
     if IsInt(pi) then pi := [pi]; fi;
-    R   := Z_pi( pi );
-    fam := SemilocalIntegralRcwaMappingsFamily( R );
-    Result := Objectify( NewType(    fam,
-                                     IsSemilocalIntegralRcwaMapping
-                                 and IsRationalBasedRcwaDenseRep ),
-                         rec( coeffs  := coeffs,
-                              modulus := Length(coeffs) ) );
-    SetSource(Result, R ); SetRange (Result, R );
-    ReduceSemilocalIntegralRcwaMapping(Result);
-
-    return Result;
+    if   not IsList(pi) or not ForAll(pi,IsInt) or not ForAll(coeffs,IsList)
+    then TryNextMethod(); fi;
+    R := Z_pi(pi); fam := RcwaMappingsFamily( R );
+    f := Objectify( NewType(    fam,
+                                IsSemilocalIntegralRcwaMapping
+                            and IsRationalBasedRcwaDenseRep ),
+                    rec( coeffs  := coeffs,
+                         modulus := Length(coeffs) ) );
+    SetSource(f,R); SetRange(f,R);
+    ReduceSemilocalIntegralRcwaMapping(f);
+    return f;
   end );
 
 #############################################################################
 ##
-#F  SemilocalIntegralRcwaMapping( <pi>, <coeffs> )
+#F  RcwaMapping( <pi>, <coeffs> )
 ##
-InstallGlobalFunction( SemilocalIntegralRcwaMapping,
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by prime ideals and coefficients (RCWA)",
+                    true, [ IsObject, IsList ], 0,
 
   function ( pi, coeffs )
 
-    local  R, n, r, pts, Result, quiet;
+    local  R, quiet;
 
     quiet := ValueOption("BeQuiet") = true;
-    R := Z_pi(pi);
-    if not (    IsList(coeffs)
-            and IsSubset(Union(pi,[1]),Set(Factors(Length(coeffs))))
-            and ForAll(Flat(coeffs),
-                       x -> IsRat(x) and Intersection(pi,
-                                         Set(Factors(DenominatorRat(x))))=[])
-            and ForAll(coeffs, IsList)
-            and ForAll(coeffs, c -> Length(c) = 3)
-            and ForAll([0..Length(coeffs) - 1],
-                       n -> coeffs[n + 1][3] <> 0 and
-                            NumeratorRat(n * coeffs[n + 1][1]
+    if IsInt(pi) then pi := [pi]; fi; R := Z_pi(pi);
+    if not (     IsList(pi) and ForAll(pi,IsInt)
+             and IsSubset(Union(pi,[1]),Set(Factors(Length(coeffs))))
+             and ForAll(Flat(coeffs), x -> IsRat(x) and Intersection(pi,
+                                        Set(Factors(DenominatorRat(x))))=[])
+             and ForAll(coeffs, IsList)
+             and ForAll(coeffs, c -> Length(c) = 3)
+             and ForAll([0..Length(coeffs) - 1],
+                        n -> coeffs[n + 1][3] <> 0 and
+                             NumeratorRat(n * coeffs[n + 1][1]
+                                            + coeffs[n + 1][2])
+                             mod StandardAssociate(R,coeffs[n + 1][3]) = 0
+                         and NumeratorRat(  (n + Length(coeffs))
+                                           * coeffs[n + 1][1]
                                            + coeffs[n + 1][2])
-                            mod StandardAssociate(R,coeffs[n + 1][3]) = 0 and
-                            NumeratorRat(  (n + Length(coeffs))
-                                          * coeffs[n + 1][1]
-                                          + coeffs[n + 1][2])
-                            mod StandardAssociate(R,coeffs[n + 1][3]) = 0))
+                             mod StandardAssociate(R,coeffs[n + 1][3]) = 0))
     then if quiet then return fail; fi;
          Error("the coefficients ",coeffs," do not define a proper ",
                pi," - semilocal integral rcwa mapping.\n");
     fi;
-
-    Result := SemilocalIntegralRcwaMappingNC( pi, coeffs );
-
-    return Result;
+    return RcwaMappingNC(pi,coeffs);
   end );
 
 #############################################################################
 ##
-#F  ModularRcwaMappingNC( <q>, <modulus>, <coeffs> )
+#F  RcwaMappingNC( <q>, <modulus>, <coeffs> )
 ##
-InstallGlobalFunction( ModularRcwaMappingNC,
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by prime ideals and coefficients (RCWA)",
+                    true, [ IsInt, IsPolynomial, IsList ], 0,
 
   function ( q, modulus, coeffs )
 
-    local  Result, R, fam, ind;
+    local  f, R, fam, ind;
 
     ind := IndeterminateNumberOfLaurentPolynomial( coeffs[1][1] );
     R   := PolynomialRing( GF( q ), [ ind ] );
-    fam := ModularRcwaMappingsFamily( R );
-    Result := Objectify( NewType( fam, IsModularRcwaMapping
-                                   and IsModularRcwaDenseRep ),
-                         rec( coeffs  := coeffs,
-                              modulus := modulus ) );
-    SetUnderlyingField( Result, CoefficientsRing( R ) );
-    SetSource( Result, R ); SetRange( Result, R );
-    ReduceModularRcwaMapping(Result);
-
-    return Result;
+    fam := RcwaMappingsFamily( R );
+    f   := Objectify( NewType( fam, IsModularRcwaMapping
+                               and IsModularRcwaDenseRep ),
+                      rec( coeffs  := coeffs,
+                           modulus := modulus ) );
+    SetUnderlyingField( f, CoefficientsRing( R ) );
+    SetSource( f, R ); SetRange( f, R );
+    ReduceModularRcwaMapping( f );
+    return f;
   end );
 
 #############################################################################
 ##
-#F  ModularRcwaMapping( <q>, <modulus>, <coeffs> )
+#F  RcwaMapping( <q>, <modulus>, <coeffs> )
 ##
-InstallGlobalFunction( ModularRcwaMapping,
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by prime ideals and coefficients (RCWA)",
+                    true, [ IsInt, IsPolynomial, IsList ], 0,
 
   function ( q, modulus, coeffs )
 
@@ -515,53 +606,95 @@ InstallGlobalFunction( ModularRcwaMapping,
 
     quiet := ValueOption("BeQuiet") = true;
     if not (    IsPosInt(q) and IsPrimePowerInt(q) 
-            and IsPolynomial(modulus) and IsList(coeffs)
+            and ForAll(coeffs, IsList)
             and ForAll(coeffs, c -> Length(c) = 3) 
             and ForAll(Flat(coeffs), IsPolynomial)
             and Length(Set(List(Flat(coeffs),
                                 IndeterminateNumberOfLaurentPolynomial)))=1)
     then if quiet then return fail; fi;
-         Error("usage: ModularRcwaMapping( <q>, <modulus>, <coeffs> )\n",
-               "where <q> is the size of the coefficients field, ",
-               "<modulus> is an element of\nits underlying ring and ",
-               "<coeffs> is a suitable coefficients list.\n");
+         Error("see RCWA manual for information on how to construct\n",
+               "an rcwa mapping of a polynomial ring.\n");
     fi;
-    d   := DegreeOfLaurentPolynomial(modulus);
-    x   := IndeterminateOfLaurentPolynomial(coeffs[1][1]);
+    d := DegreeOfLaurentPolynomial(modulus);
+    x := IndeterminateOfLaurentPolynomial(coeffs[1][1]);
     P := AllGFqPolynomialsModDegree(q,d,x);
     if not ForAll([1..Length(P)],
                   i -> IsZero(   (coeffs[i][1]*P[i] + coeffs[i][2])
                               mod coeffs[i][3]))
     then Error("the coefficients ",coeffs," do not define a proper ",
-               "modular rcwa mapping.\n");
+               "rcwa mapping.\n");
     fi;
-
-    return ModularRcwaMappingNC( q, modulus, coeffs );
+    return RcwaMappingNC( q, modulus, coeffs );
   end );
 
 #############################################################################
 ##
-#F  RcwaMapping( <coeffs> )
-#F  RcwaMapping( <perm>, <range> )
-#F  RcwaMapping( <modulus>, <val> )
-#F  RcwaMapping( <class cycle> [, <class cycle> [, ... ] ] )
-#F  RcwaMapping( <pi>, <coeffs> )
-#F  RcwaMapping( <q>, <modulus>, <coeffs> )
+#F  RcwaMappingNC( <R>, <coeffs> )
 ##
-InstallGlobalFunction( RcwaMapping,
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by ring and coefficients (RCWA)",
+                    ReturnTrue, [ IsRing, IsList ], 0,
 
-  function ( arg )
+  function ( R, coeffs )
 
-    if   arg = []
-    then Error("see RCWA manual for usage of RcwaMapping.\n"); fi;
-    if   Length( arg ) = 2 and ( IsInt( arg[1] ) or IsList( arg[1] ) )
-      and IsList( arg[2] ) and IsList( arg[2][1] )
-      and Set( List( arg[2], Length ) ) = [ 3 ]
-    then return CallFuncList( SemilocalIntegralRcwaMapping, arg );
-    elif Length( arg ) = 3 and IsInt( arg[1] ) and IsPrimePowerInt( arg[1] )
-    then return CallFuncList( ModularRcwaMapping, arg );
-    else return CallFuncList( IntegralRcwaMapping, arg );
-    fi;
+    if   IsIntegers(R)
+    then return RcwaMappingNC(coeffs);
+    elif IsZ_pi(R)
+    then return RcwaMappingNC(NoninvertiblePrimes(R),coeffs);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <R>, <coeffs> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by ring and coefficients (RCWA)",
+                    ReturnTrue, [ IsRing, IsList ], 0,
+
+  function ( R, coeffs )
+
+    if   IsIntegers(R)
+    then return RcwaMapping(coeffs);
+    elif IsZ_pi(R)
+    then return RcwaMapping(NoninvertiblePrimes(R),coeffs);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingNC( <R>, <modulus>, <coeffs> )
+##
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by ring, modulus and coefficients (RCWA)",
+                    ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
+
+  function ( R, modulus, coeffs )
+
+    if not modulus in R then TryNextMethod(); fi;
+    if   IsIntegers(R) or IsZ_pi(R)
+    then return RcwaMappingNC(R,coeffs);
+    elif IsPolynomialRing(R)
+    then return RcwaMappingNC(Size(UnderlyingField(R)),modulus,coeffs);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <R>, <modulus>, <coeffs> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by ring, modulus and coefficients (RCWA)",
+                    ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
+
+  function ( R, modulus, coeffs )
+
+    if not modulus in R then TryNextMethod(); fi;
+    if   IsIntegers(R) or IsZ_pi(R)
+    then return RcwaMapping(R,coeffs);
+    elif IsPolynomialRing(R)
+    then return RcwaMapping(Size(UnderlyingField(R)),modulus,coeffs);
+    else TryNextMethod(); fi;
   end );
 
 IdChars := function ( n, ch )
@@ -722,7 +855,7 @@ MakeReadOnlyGlobal( "LaTeXIntegralAffineMapping" );
 #M  String( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( String,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
 
   function ( arg )
@@ -730,7 +863,7 @@ InstallMethod( String,
     local f, lng, s;
 
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
-    s := Concatenation( "IntegralRcwaMapping( ", String( f!.coeffs ), " )" );
+    s := Concatenation( "RcwaMapping( ", String( f!.coeffs ), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
     return s;
   end );
@@ -740,7 +873,7 @@ InstallMethod( String,
 #M  String( <f> ) . . . . . . . . . . . . for semilocal integral rcwa mapping
 ##
 InstallMethod( String,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping
                        and IsRationalBasedRcwaDenseRep ], 0,
 
@@ -749,7 +882,7 @@ InstallMethod( String,
     local  f, lng, s;
 
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
-    s := Concatenation( "SemilocalIntegralRcwaMapping( ",
+    s := Concatenation( "RcwaMapping( ",
                         String(NoninvertiblePrimes(Source(f))), ", ",
                         String(f!.coeffs), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
@@ -761,7 +894,7 @@ InstallMethod( String,
 #M  String( <f> ) . . . . . . . . . . . . . . . . .  for modular rcwa mapping
 ##
 InstallMethod( String,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
   function ( arg )
@@ -769,7 +902,7 @@ InstallMethod( String,
     local  f, lng, s;
 
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
-    s := Concatenation( "ModularRcwaMapping( ",
+    s := Concatenation( "RcwaMapping( ",
                         String(Size(UnderlyingField(f))), ", ",
                         String(f!.modulus), ", ", String(f!.coeffs), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
@@ -781,11 +914,11 @@ InstallMethod( String,
 #M  PrintObj( <f> ) . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( PrintObj,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
 
   function ( f )
-    Print( "IntegralRcwaMapping( ", f!.coeffs, " )" );
+    Print( "RcwaMapping( ", f!.coeffs, " )" );
   end );
 
 #############################################################################
@@ -793,12 +926,12 @@ InstallMethod( PrintObj,
 #M  PrintObj( <f> ) . . . . . . . . . . . for semilocal integral rcwa mapping
 ##
 InstallMethod( PrintObj,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
 
   function ( f )
-    Print( "SemilocalIntegralRcwaMapping( ",
+    Print( "RcwaMapping( ",
            NoninvertiblePrimes(Source(f)), ", ", f!.coeffs, " )" );
   end );
 
@@ -807,11 +940,11 @@ InstallMethod( PrintObj,
 #M  PrintObj( <f> ) . . . . . . . . . . . . . . . .  for modular rcwa mapping
 ##
 InstallMethod( PrintObj,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
   function ( f )
-    Print( "ModularRcwaMapping( ", Size(UnderlyingField(f)),
+    Print( "RcwaMapping( ", Size(UnderlyingField(f)),
            ", ", f!.modulus, ", ", f!.coeffs, " )" );
   end );
 
@@ -820,7 +953,7 @@ InstallMethod( PrintObj,
 #M  ViewObj( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 InstallMethod( ViewObj,
-               "RCWA: for rational-based and modular rcwa mappings",
+               "for rational-based and modular rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
 
   function ( f )
@@ -852,7 +985,7 @@ InstallMethod( ViewObj,
 ##  Display the rcwa mapping <f> as a nice, human-readable table.
 ##
 InstallMethod( Display,
-               "RCWA: for rational-based and modular rcwa mappings",
+               "for rational-based and modular rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
 
   function ( f )
@@ -961,7 +1094,7 @@ InstallMethod( Display,
 #M  LaTeXObj( <f> ) . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( LaTeXObj,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping ], 0,
 
   function ( f )
@@ -1015,7 +1148,7 @@ InstallMethod( LaTeXObj,
 #M  \=( <f>, <g> ) . . . . . . . . . . . . for "rational-based" rcwa mappings
 ##
 InstallMethod( \=,
-               "RCWA: for two rational-based rcwa mappings",
+               "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
                [     IsRationalBasedRcwaMapping
                  and IsRationalBasedRcwaDenseRep,
@@ -1031,7 +1164,7 @@ InstallMethod( \=,
 #M  \=( <f>, <g> ) . . . . . . . . . . . . . . . .  for modular rcwa mappings
 ##
 InstallMethod( \=,
-               "RCWA: for two modular rcwa mappings",
+               "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
                [ IsModularRcwaMapping and IsModularRcwaDenseRep,
                  IsModularRcwaMapping and IsModularRcwaDenseRep ],
@@ -1050,7 +1183,7 @@ InstallMethod( \=,
 ##  rcwa mappings than by modulus <modulus> and coefficients list <coeffs>.
 ##
 InstallMethod( \<,
-               "RCWA: for two rcwa mappings",
+               "for two rcwa mappings (RCWA)",
                IsIdenticalObj, [ IsRcwaMapping, IsRcwaMapping ], 0,
 
   function ( f, g )
@@ -1063,16 +1196,14 @@ InstallMethod( \<,
 ##
 #V  ZeroIntegralRcwaMapping . . . . . . . . . . .  zero integral rcwa mapping
 ##
-InstallValue( ZeroIntegralRcwaMapping,
-              IntegralRcwaMapping( [ [ 0, 0, 1 ] ] ) );
+InstallValue( ZeroIntegralRcwaMapping, RcwaMapping( [ [ 0, 0, 1 ] ] ) );
 SetIsZero( ZeroIntegralRcwaMapping, true );
 
 #############################################################################
 ##
 #V  IdentityIntegralRcwaMapping . . . . . . .  identity integral rcwa mapping
 ##
-InstallValue( IdentityIntegralRcwaMapping,
-              IntegralRcwaMapping( [ [ 1, 0, 1 ] ] ) );
+InstallValue( IdentityIntegralRcwaMapping, RcwaMapping( [ [ 1, 0, 1 ] ] ) );
 SetIsOne( IdentityIntegralRcwaMapping, true );
 
 #############################################################################
@@ -1082,7 +1213,7 @@ SetIsOne( IdentityIntegralRcwaMapping, true );
 ##  Zero rcwa mapping.
 ##
 InstallMethod( ZeroOp,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
                f -> ZeroIntegralRcwaMapping );
 
@@ -1093,15 +1224,14 @@ InstallMethod( ZeroOp,
 ##  Zero rcwa mapping.
 ##
 InstallMethod( ZeroOp,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
   function ( f )
 
     local  zero;
 
-    zero := SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                                            [[0,0,1]] );
+    zero := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[0,0,1]] );
     SetIsZero( zero, true ); return zero;
   end );
 
@@ -1112,15 +1242,15 @@ InstallMethod( ZeroOp,
 ##  Zero rcwa mapping.
 ##
 InstallMethod( ZeroOp,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
   function ( f )
 
     local  zero;
 
-    zero := ModularRcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
-                                  [[0,0,1]] * One(Source(f)) );
+    zero := RcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
+                           [[0,0,1]] * One(Source(f)) );
     SetIsZero( zero, true ); return zero;
   end );
 
@@ -1131,7 +1261,7 @@ InstallMethod( ZeroOp,
 ##  <f> = zero rcwa mapping ? 
 ## 
 InstallMethod( IsZero, 
-               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                f -> f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) ) );  
 
 #############################################################################
@@ -1141,7 +1271,7 @@ InstallMethod( IsZero,
 ##  Identity rcwa mapping.
 ##
 InstallMethod( OneOp,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
                f -> IdentityIntegralRcwaMapping );
 
@@ -1152,15 +1282,14 @@ InstallMethod( OneOp,
 ##  Identity rcwa mapping.
 ##
 InstallMethod( OneOp,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
   function ( f )
 
     local  one;
  
-    one := SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                                           [[1,0,1]] );
+    one := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[1,0,1]] );
     SetIsOne( one, true ); return one;
   end );
 
@@ -1172,15 +1301,15 @@ InstallMethod( OneOp,
 ##  Identity rcwa mapping.
 ##
 InstallMethod( OneOp,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
   function ( f )
 
     local  one;
  
-    one := ModularRcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
-                                 [[1,0,1]] * One(Source(f)) );
+    one := RcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
+                          [[1,0,1]] * One(Source(f)) );
     SetIsOne( one, true ); return one;
   end );
 
@@ -1191,7 +1320,7 @@ InstallMethod( OneOp,
 ##  <f> = identity rcwa mapping ? 
 ## 
 InstallMethod( IsOne, 
-               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                f -> f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) ) );  
 
 #############################################################################
@@ -1208,7 +1337,7 @@ InstallMethod( IsOne,
 #M  Coefficients( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallOtherMethod( Coefficients,
-                    "RCWA: for rcwa mappings",
+                    "for rcwa mappings (RCWA)",
                     true, [ IsRcwaMapping ], 0, f -> f!.coeffs );
 
 #############################################################################
@@ -1216,7 +1345,7 @@ InstallOtherMethod( Coefficients,
 #M  Modulus( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 InstallMethod( Modulus,
-               "RCWA: for rcwa mappings",
+               "for rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0, f -> f!.modulus );
 
 #############################################################################
@@ -1224,7 +1353,7 @@ InstallMethod( Modulus,
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( Multiplier,
-               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
 
 #############################################################################
@@ -1232,7 +1361,7 @@ InstallMethod( Multiplier,
 #M  Multiplier( <f> ) . . . . . . . . . . for semilocal integral rcwa mapping
 ##
 InstallMethod( Multiplier,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping
                        and IsRationalBasedRcwaDenseRep ], 10,
 
@@ -1244,7 +1373,7 @@ InstallMethod( Multiplier,
 #M  Divisor( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 InstallMethod( Divisor,
-               "RCWA: for rcwa mappings",
+               "for rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
                f -> Lcm( List( f!.coeffs, c -> c[ 3 ] ) ) );
 
@@ -1253,7 +1382,7 @@ InstallMethod( Divisor,
 #M  Multpk( <f>, <p>, <k> ) . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( Multpk,
-               "RCWA: for integral rcwa mappings",
+               "for integral rcwa mappings (RCWA)",
                true, [ IsIntegralRcwaMapping, IsInt, IsInt ], 0,
 
   function ( f, p, k )
@@ -1278,7 +1407,7 @@ InstallMethod( Multpk,
 #M  IsFlat( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( IsFlat,
-               "RCWA: for integral rcwa mappings",
+               "for integral rcwa mappings (RCWA)",
                true, [     IsIntegralRcwaMapping
                        and IsRationalBasedRcwaDenseRep ], 0,
 
@@ -1289,7 +1418,7 @@ InstallMethod( IsFlat,
 #M  IsFlat( <f> ) . . . . . . . . . . . . for semilocal integral rcwa mapping
 ##
 InstallMethod( IsFlat,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [ IsSemilocalIntegralRcwaMapping ], 10,
                f -> [ Multiplier(f), Divisor(f) ] = [ 1, 1 ] );
 
@@ -1298,7 +1427,7 @@ InstallMethod( IsFlat,
 #M  IsFlat( <f> ) . . . . . . . . . . . . . . . . .  for modular rcwa mapping
 ##
 InstallMethod( IsFlat,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
                f ->  ForAll( Flat( List( f!.coeffs, c -> c{ [ 1, 3 ] } ) ),
                              p -> DegreeOfLaurentPolynomial( p ) = 0 ) );
@@ -1308,7 +1437,7 @@ InstallMethod( IsFlat,
 #M  IsBalanced( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( IsBalanced,
-               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   f -> Set( Factors( Multiplier( f ) ) ) = Set( Factors( Divisor( f ) ) ) );
 
@@ -1317,7 +1446,7 @@ InstallMethod( IsBalanced,
 #M  IsClassWiseOrderPreserving( <f> ) . . . for "rational-based" rcwa mapping
 ##
 InstallMethod( IsClassWiseOrderPreserving,
-               "RCWA: for rational-based rcwa mappings",
+               "for rational-based rcwa mappings (RCWA)",
                true, [     IsRationalBasedRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] >= 0 ) );
@@ -1329,7 +1458,7 @@ InstallMethod( IsClassWiseOrderPreserving,
 ##  The set of moved points (support) of the bijective rcwa mapping <f>.
 ##
 InstallOtherMethod( MovedPoints,
-                    "RCWA: for bijective rcwa mapping", true,
+                    "for bijective rcwa mapping (RCWA)", true,
                     [ IsRcwaMapping ], 0,
 
   function ( f )
@@ -1366,7 +1495,7 @@ InstallOtherMethod( MovedPoints,
 ##  Image of the integer <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               "RCWA: for integral rcwa mapping and integer",
+               "for integral rcwa mapping and integer (RCWA)",
                true, [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
                        IsInt ], 0,
 
@@ -1386,7 +1515,7 @@ InstallMethod( ImageElm,
 ##  the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               "RCWA: for semilocal integral rcwa mapping and el. of Z_pi",
+               "for semilocal integral rcwa mapping and el. of Z_pi (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep, IsRat ], 0,
 
@@ -1406,7 +1535,7 @@ InstallMethod( ImageElm,
 ##  Image of the polynomial <p> under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               "RCWA: for modular rcwa mapping and polynomial",
+               "for modular rcwa mapping and polynomial (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep,
                        IsPolynomial ], 0,
 
@@ -1434,7 +1563,7 @@ InstallMethod( ImageElm,
 ##  Image of the ring element <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( \^,
-               "RCWA: for ring element and rcwa mapping",
+               "for ring element and rcwa mapping (RCWA)",
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
 
   function ( n, f )
@@ -1449,7 +1578,7 @@ InstallMethod( \^,
 ##  For technical purposes, only.
 ##
 InstallMethod( ImagesElm,
-               "RCWA: for rcwa mapping and ring element",
+               "for rcwa mapping and ring element (RCWA)",
                true, [ IsRcwaMapping, IsRingElement ], 0,
 
   function ( f, n )
@@ -1463,7 +1592,7 @@ InstallMethod( ImagesElm,
 ##  Image of the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSet,
-               "RCWA: for integral rcwa mapping and integers", true, 
+               "for integral rcwa mapping and integers (RCWA)", true, 
                [ IsRationalBasedRcwaMapping, IsRing ], 0, 
 
   function ( f, R )
@@ -1480,7 +1609,7 @@ InstallMethod( ImagesSet,
 ##  Image of the set <S> under the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSet,
-               "RCWA: for rcwa mapping and residue class union",
+               "for rcwa mapping and residue class union (RCWA)",
                true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
 
   function ( f, S )
@@ -1503,7 +1632,7 @@ InstallMethod( ImagesSet,
 ##  In particular, <S> can be a union of residue classes.
 ##
 InstallOtherMethod( \^,
-                    "RCWA: for set and rcwa mapping",
+                    "for set and rcwa mapping (RCWA)",
                     ReturnTrue, [ IsListOrCollection, IsRcwaMapping ], 0,
 
   function ( S, f )
@@ -1517,7 +1646,7 @@ InstallOtherMethod( \^,
 ##  Preimage of the ring element <n> under the bijective rcwa mapping <f>.
 ##
 InstallMethod( PreImageElm,
-               "RCWA: for bijective rcwa mapping and ring element",
+               "for bijective rcwa mapping and ring element (RCWA)",
                true, [ IsRcwaMapping and IsBijective, IsRingElement ], 0,
 
   function ( f, n )
@@ -1531,7 +1660,7 @@ InstallMethod( PreImageElm,
 ##  Preimages of the integer <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesElm,
-               "RCWA: for integral rcwa mapping and integer", true, 
+               "for integral rcwa mapping and integer (RCWA)", true, 
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
                  IsInt ], 0,
 
@@ -1564,7 +1693,7 @@ InstallMethod( PreImagesElm,
 ##  integral rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesRepresentative,
-               "RCWA: for integral rcwa mapping and integer", true, 
+               "for integral rcwa mapping and integer (RCWA)", true, 
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
                  IsInt ], 0,
 
@@ -1591,7 +1720,7 @@ InstallMethod( PreImagesRepresentative,
 ##  Preimage of the rcwa mapping <f>. For technical purposes, only.
 ##
 InstallMethod( PreImagesSet,
-               "RCWA: for rcwa mapping and underlying ring", true, 
+               "for rcwa mapping and underlying ring (RCWA)", true, 
                [ IsRcwaMapping, IsRing ], 0,
 
   function ( f, R )
@@ -1604,7 +1733,7 @@ InstallMethod( PreImagesSet,
 #M  PreImagesSet( <f>, <l> ) . for rcwa mapping and list of el's of its range
 ##
 InstallOtherMethod( PreImagesSet,
-                    "RCWA: for rcwa map. and list of elements of its range",
+                    "for rcwa map. and list of elements of its range (RCWA)",
                     true, [ IsRcwaMapping, IsList ], 0,
 
   function ( f, l )
@@ -1618,7 +1747,7 @@ InstallOtherMethod( PreImagesSet,
 ##  Preimage of the set <S> under the rcwa mapping <f>.
 ##
 InstallMethod( PreImagesSet,
-               "RCWA: for integral rcwa mapping and residue class union",
+               "for integral rcwa mapping and residue class union (RCWA)",
                true, [ IsIntegralRcwaMapping, IsUnionOfResidueClassesOfZ ],
                0,
 
@@ -1652,7 +1781,7 @@ InstallMethod( PreImagesSet,
 ##  Pointwise sum of the rcwa mappings <f> and <g>.
 ##
 InstallMethod( \+,
-               "RCWA: for two rational-based rcwa mappings",
+               "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
                [IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep,
                 IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep],
@@ -1676,9 +1805,9 @@ InstallMethod( \+,
     od;
 
     if   IsIntegralRcwaMapping( f )
-    then return IntegralRcwaMappingNC( c3 );
+    then return RcwaMappingNC( c3 );
     else pi := NoninvertiblePrimes( Source( f ) );
-         return SemilocalIntegralRcwaMappingNC( pi, c3 );
+         return RcwaMappingNC( pi, c3 );
     fi;
   end );
 
@@ -1689,7 +1818,7 @@ InstallMethod( \+,
 ##  Pointwise sum of the rcwa mappings <f> and <g>.
 ##
 InstallMethod( \+,
-               "RCWA: for two modular rcwa mappings",
+               "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
                [ IsModularRcwaMapping and IsModularRcwaDenseRep,
                  IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
@@ -1714,7 +1843,7 @@ InstallMethod( \+,
                   c[1][n1][3] * c[2][n2][3] ]);
     od;
 
-    return ModularRcwaMappingNC( q, m[3], c[3] );
+    return RcwaMappingNC( q, m[3], c[3] );
   end );
 
 #############################################################################
@@ -1724,11 +1853,10 @@ InstallMethod( \+,
 ##  Pointwise additive inverse of rcwa mapping <f>.
 ##
 InstallMethod( AdditiveInverseOp,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
 
-  f -> IntegralRcwaMappingNC( List( f!.coeffs,
-                                    c -> [ -c[1], -c[2], c[3] ] ) ) );
+  f -> RcwaMappingNC( List( f!.coeffs, c -> [ -c[1], -c[2], c[3] ] ) ) );
 
 #############################################################################
 ##
@@ -1737,13 +1865,12 @@ InstallMethod( AdditiveInverseOp,
 ##  Pointwise additive inverse of rcwa mapping <f>.
 ##
 InstallMethod( AdditiveInverseOp,
-               "RCWA: for semilocal integral rcwa mappings",
+               "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
 
-  f -> SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                                       List(f!.coeffs,
-                                            c -> [ -c[1], -c[2], c[3] ]) ) );
+  f -> RcwaMappingNC( NoninvertiblePrimes(Source(f)),
+                      List(f!.coeffs, c -> [ -c[1], -c[2], c[3] ]) ) );
 
 #############################################################################
 ##
@@ -1752,11 +1879,11 @@ InstallMethod( AdditiveInverseOp,
 ##  Pointwise additive inverse of rcwa mapping <f>.
 ##
 InstallMethod( AdditiveInverseOp,
-               "RCWA: for modular rcwa mappings",
+               "for modular rcwa mappings (RCWA)",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
   
-  f -> ModularRcwaMappingNC( Size(UnderlyingField(f)), f!.modulus,
-                             List(f!.coeffs, c -> [-c[1],-c[2],c[3]]) ) );
+  f -> RcwaMappingNC( Size(UnderlyingField(f)), f!.modulus,
+                      List(f!.coeffs, c -> [-c[1],-c[2],c[3]]) ) );
 
 #############################################################################
 ##
@@ -1766,7 +1893,7 @@ InstallMethod( AdditiveInverseOp,
 ##  The mapping <f> is applied first.
 ##
 InstallMethod( CompositionMapping2,
-               "RCWA: for two rational-based rcwa mappings",
+               "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
                [IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep,
                 IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep],
@@ -1790,9 +1917,9 @@ InstallMethod( CompositionMapping2,
     od;
 
     if   IsIntegralRcwaMapping( f ) 
-    then return IntegralRcwaMappingNC( c3 );
+    then return RcwaMappingNC( c3 );
     else pi := NoninvertiblePrimes( Source( f ) );
-         return SemilocalIntegralRcwaMappingNC( pi, c3 );
+         return RcwaMappingNC( pi, c3 );
     fi;
   end );
 
@@ -1804,7 +1931,7 @@ InstallMethod( CompositionMapping2,
 ##  The mapping <f> is applied first.
 ##
 InstallMethod( CompositionMapping2,
-               "RCWA: for two modular rcwa mappings",
+               "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
                [IsModularRcwaMapping and IsModularRcwaDenseRep,
                 IsModularRcwaMapping and IsModularRcwaDenseRep], SUM_FLAGS,
@@ -1831,7 +1958,7 @@ InstallMethod( CompositionMapping2,
                   c[1][n1][3] * c[2][n2][3] ]);
     od;
 
-    return ModularRcwaMappingNC( q, m[3], c[3] );
+    return RcwaMappingNC( q, m[3], c[3] );
   end );
 
 #############################################################################
@@ -1842,7 +1969,7 @@ InstallMethod( CompositionMapping2,
 ##  The mapping <f> is applied first.
 ##
 InstallMethod( \*,
-               "RCWA: for two rcwa mappings",
+               "for two rcwa mappings (RCWA)",
                IsIdenticalObj, [ IsRcwaMapping, IsRcwaMapping ], 0,
 
   function ( f, g )
@@ -1856,7 +1983,7 @@ InstallMethod( \*,
 ##  Inverse mapping of bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseOp,
-               "RCWA: for rational-based rcwa mappings", true,
+               "for rational-based rcwa mappings (RCWA)", true,
                [     IsRationalBasedRcwaMapping 
                  and IsRationalBasedRcwaDenseRep ], 0,
                
@@ -1881,9 +2008,9 @@ InstallMethod( InverseOp,
     if not ForAll([1..mInv], i -> IsBound(cInv[i])) then return fail; fi;
 
     if   IsIntegralRcwaMapping( f )
-    then Result := IntegralRcwaMappingNC( cInv );
+    then Result := RcwaMappingNC( cInv );
     else pi := NoninvertiblePrimes( Source( f ) );
-         Result := SemilocalIntegralRcwaMappingNC( pi, cInv );
+         Result := RcwaMappingNC( pi, cInv );
     fi;
     SetInverse(f, Result); SetInverse(Result, f);
     if HasOrder(f) then SetOrder(Result, Order(f)); fi;
@@ -1898,7 +2025,7 @@ InstallMethod( InverseOp,
 ##  Inverse mapping of bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseOp,
-               "RCWA: for modular rcwa mappings", true,
+               "for modular rcwa mappings (RCWA)", true,
                [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
                
   function ( f )
@@ -1937,7 +2064,7 @@ InstallMethod( InverseOp,
     if   not ForAll([1..Length(resInv)], i -> IsBound(cInv[i]))
     then return fail; fi;
 
-    Result := ModularRcwaMappingNC( q, mInv, cInv );
+    Result := RcwaMappingNC( q, mInv, cInv );
     SetInverse(f, Result); SetInverse(Result, f);
     if HasOrder(f) then SetOrder(Result, Order(f)); fi;
 
@@ -1951,7 +2078,7 @@ InstallMethod( InverseOp,
 ##  Inverse mapping of bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseGeneralMapping,
-               "RCWA: for rcwa mappings",
+               "for rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
               
   function ( f )
@@ -1965,7 +2092,7 @@ InstallMethod( InverseGeneralMapping,
 ##  Conjugate of the rcwa mapping <g> under <h>.
 ##
 InstallMethod( \^,
-               "RCWA: for two rcwa mappings",
+               "for two rcwa mappings (RCWA)",
                IsIdenticalObj, [ IsRcwaMapping, IsRcwaMapping ], 0,
 
   function ( g, h )
@@ -1991,7 +2118,7 @@ InstallMethod( \^,
 ##  if the inverse of <f> already has been computed.
 ##
 InstallMethod( \^,
-               "RCWA: for rcwa mapping and integer",
+               "for rcwa mapping and integer (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsInt ], 0,
 
   function ( f, n )
@@ -2007,7 +2134,7 @@ InstallMethod( \^,
 #M  IsInjective( <f> ) . . . . . . . . . . .  for rational-based rcwa mapping
 ##
 InstallMethod( IsInjective,
-               "RCWA: for rational-based rcwa mappings", true,
+               "for rational-based rcwa mappings (RCWA)", true,
                [     IsRationalBasedRcwaMapping 
                  and IsRationalBasedRcwaDenseRep ], 0,
 
@@ -2036,7 +2163,7 @@ InstallMethod( IsInjective,
 #M  IsInjective( <f> ) . . . . . . . . . . . . . . . for modular rcwa mapping
 ##
 InstallMethod( IsInjective,
-               "RCWA: for modular rcwa mappings", true,
+               "for modular rcwa mappings (RCWA)", true,
                [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
                
   function ( f )
@@ -2079,7 +2206,7 @@ InstallMethod( IsInjective,
 #M  IsSurjective( <f> ) . . . . . . . . . . . for rational-based rcwa mapping
 ##
 InstallMethod( IsSurjective,
-               "RCWA: for rational-based rcwa mappings", true,
+               "for rational-based rcwa mappings (RCWA)", true,
                [     IsRationalBasedRcwaMapping 
                  and IsRationalBasedRcwaDenseRep ], 0,
 
@@ -2110,7 +2237,7 @@ InstallMethod( IsSurjective,
 #M  IsSurjective( <f> ) . . . . . . . . . . . . . .  for modular rcwa mapping
 ##
 InstallMethod( IsSurjective,
-               "RCWA: for modular rcwa mappings", true,
+               "for modular rcwa mappings (RCWA)", true,
                [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
                
   function ( f )
@@ -2151,7 +2278,7 @@ InstallMethod( IsSurjective,
 #M  IsUnit( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallOtherMethod( IsUnit,
-                    "RCWA: for rcwa mappings",
+                    "for rcwa mappings (RCWA)",
                     true, [ IsRcwaMapping ], 0, IsBijective );
 
 #############################################################################
@@ -2161,7 +2288,7 @@ InstallOtherMethod( IsUnit,
 ##  The `factors of multiplier and divisor' criterion.
 ##
 InstallMethod( Order,
-               "RCWA: for rcwa mappings, factors of mult. and div. - crit.",
+               "for rcwa mappings, factors of mult. and div. - crit. (RCWA)",
                true, [ IsRcwaMapping ], 50,
 
   function ( f )
@@ -2184,7 +2311,7 @@ InstallMethod( Order,
 ##  non-identically onto itself; in case <f> does not, it gives up.
 ##
 InstallMethod( Order,
-               "RCWA: for rat.-based rcwa map's, arith. progression method",
+               "for rat.-based rcwa map's, arith. progression method (RCWA)",
                true, [     IsRationalBasedRcwaMapping
                        and IsRationalBasedRcwaDenseRep ], 20,
 
@@ -2227,7 +2354,7 @@ InstallMethod( Order,
 ##  infinite order has not yet been proved.
 ##
 InstallMethod( Order,
-               "RCWA: for integral rcwa mappings, cycle method",
+               "for integral rcwa mappings, cycle method (RCWA)",
                true, [ IsIntegralRcwaMapping ], 0,
 
   function ( f )
@@ -2291,7 +2418,7 @@ InstallGlobalFunction( TransitionMatrix,
 ##  The result is returned as a GRAPE graph.
 ##
 InstallMethod( TransitionGraph,
-               "RCWA: for rational-based rcwa mappings",
+               "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
 
   function ( f, m )
@@ -2308,7 +2435,7 @@ InstallMethod( TransitionGraph,
 #M  OrbitsModulo( <f>, <m> ) . . . . . . . .  for rational-based rcwa mapping
 ##
 InstallMethod( OrbitsModulo,
-               "RCWA: for rational-based rcwa mappings", true,
+               "for rational-based rcwa mappings (RCWA)", true,
                [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
 
   function ( f, m )
@@ -2327,7 +2454,7 @@ InstallMethod( OrbitsModulo,
 #M  FactorizationOnConnectedComponents( <f>, <m> )
 ##
 InstallMethod( FactorizationOnConnectedComponents,
-               "RCWA: for rational-based rcwa mappings", true,
+               "for rational-based rcwa mappings (RCWA)", true,
                [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
 
   function ( f, m )
@@ -2446,7 +2573,7 @@ InstallGlobalFunction( CoefficientsOnTrajectory,
 #M  PrimeSet( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( PrimeSet,
-               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
     if   IsZero(Multiplier(f))
@@ -2466,7 +2593,7 @@ InstallMethod( PrimeSet,
 ##  certainly isn't wild.
 ##
 InstallMethod( IsTame,
-               "RCWA: for bijective rcwa mappings", true, [ IsRcwaMapping ],
+               "for bijective rcwa mappings (RCWA)", true, [ IsRcwaMapping ],
                100,
 
   function ( f )
@@ -2491,7 +2618,7 @@ InstallMethod( IsTame,
 ##  This is only applicable for bijective mappings.
 ##
 InstallMethod( IsTame,
-               "RCWA: for bijective rcwa mappings", true,
+               "for bijective rcwa mappings (RCWA)", true,
                [ IsRcwaMapping ], 50,
 
   function ( f )
@@ -2516,7 +2643,7 @@ InstallMethod( IsTame,
 ##  The `finite order or flat power' criterion.
 ##
 InstallMethod( IsTame,
-               "RCWA: for rcwa mappings", true,
+               "for rcwa mappings (RCWA)", true,
                [ IsRcwaMapping ], 30,
 
   function ( f )
@@ -2544,7 +2671,7 @@ InstallMethod( IsTame,
 ##  This is a probabilistic method.
 ##
 InstallMethod( IsTame,
-               "RCWA: for rational-based rcwa mappings",
+               "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
                
   function ( f )
@@ -2600,7 +2727,8 @@ MakeReadOnlyGlobal( "FixedClassesOfRcwaMapping" );
 #M  CycleOp( <sigma>, <n> ) . .  for rat.-based rcwa mapping and ring element
 ##
 InstallOtherMethod( CycleOp,
-                    "RCWA: for rational-based rcwa mapping and ring element",
+                    Concatenation("for rational-based rcwa mapping ",
+                                  "and ring element (RCWA)"),
                     true, [ IsRationalBasedRcwaMapping, IsRingElement ], 0,
 
   function ( sigma, n )
@@ -2624,7 +2752,7 @@ InstallOtherMethod( CycleOp,
 #M  ShortCycles( <f>, <maxlng> ) . .  for rat.-based rcwa mapping and integer
 ##
 InstallMethod( ShortCycles,
-               "RCWA: for rational-based rcwa mappings",
+               "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
 
   function ( f, maxlng )
@@ -2658,7 +2786,7 @@ InstallMethod( ShortCycles,
 #M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
 ##
 InstallMethod( RespectedClassPartition,
-               "RCWA: for tame bijective rcwa mappings", true,
+               "for tame bijective rcwa mappings (RCWA)", true,
                [ IsRcwaMapping ], 0,
 
   function ( sigma )
@@ -2694,7 +2822,7 @@ InstallMethod( RespectedClassPartition,
 #M  FlateningConjugator( <sigma> ) . for tame bijective integral rcwa mapping
 ##
 InstallMethod( FlateningConjugator,
-               "RCWA: for tame bijective integral rcwa mappings", true,
+               "for tame bijective integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping ], 0,
 
   function ( sigma )
@@ -2721,7 +2849,7 @@ InstallMethod( FlateningConjugator,
 #M  FlatConjugate( <f> ) . . . . . . . . . . . . . . .  for tame rcwa mapping
 ##
 InstallMethod( FlatConjugate,
-               "RCWA: for tame rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                f -> f^FlateningConjugator( f ) );
 
 #############################################################################
@@ -2729,7 +2857,7 @@ InstallMethod( FlatConjugate,
 #M  StandardizingConjugator( <sigma> ) .  for tame bij. integral rcwa mapping
 ##
 InstallMethod( StandardizingConjugator,
-               "RCWA: for tame bijective integral rcwa mappings", true,
+               "for tame bijective integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping ], 0,
 
   function ( sigma )
@@ -2769,7 +2897,7 @@ InstallMethod( StandardizingConjugator,
 #M  StandardConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
 ##
 InstallMethod( StandardConjugate,
-               "RCWA: for tame rcwa mappings", true, [ IsRcwaMapping ], 0,
+               "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                f -> f^StandardizingConjugator( f ) );
 
 #############################################################################
@@ -2777,7 +2905,7 @@ InstallMethod( StandardConjugate,
 #M  CycleType( <f> ) . . . . . . . . . . . . . for tame integral rcwa mapping
 ##
 InstallMethod( CycleType,
-               "RCWA: for tame integral rcwa mappings",
+               "for tame integral rcwa mappings (RCWA)",
                true, [ IsIntegralRcwaMapping ], 0,
                
   function ( f )
@@ -2797,7 +2925,7 @@ InstallMethod( CycleType,
 ##  otherwise (the latter will not terminate if <f> and <g> are conjugate).
 ##
 InstallOtherMethod( IsConjugate,
-                    "RCWA: for two integral rcwa mappings, in RCWA(Z)",
+                    "for two integral rcwa mappings, in RCWA(Z) (RCWA)",
                     true, 
                     [ IsNaturalRCWA_Z, 
                       IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
@@ -2829,7 +2957,8 @@ InstallOtherMethod( IsConjugate,
 ##  `RCWA( Z_pi( <pi> ) )'. Probabilistic method.
 ##
 InstallOtherMethod( IsConjugate,
-                   "RCWA: for two semiloc. int. rcwa mappings in RCWA(Z_pi)",
+                    Concatenation("for two semilocal integral rcwa ",
+                                  "mappings in RCWA(Z_pi) (RCWA)"),
                     ReturnTrue, 
                     [ IsNaturalRCWA_Z_pi,
                       IsSemilocalIntegralRcwaMapping,
@@ -2856,7 +2985,7 @@ InstallOtherMethod( IsConjugate,
 #M  ContractionCentre( <f>, <maxn>, <maxlng> ) . .  for integral rcwa mapping
 ##
 InstallMethod( ContractionCentre,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping, IsPosInt, IsPosInt ], 0,
 
   function ( f, maxn, maxlng )
@@ -2886,7 +3015,7 @@ InstallMethod( ContractionCentre,
 #M  Restriction( <g>, <f> ) . . . . . . . . . . .  for integral rcwa mappings
 ##
 InstallMethod( Restriction,
-               "RCWA: for integral rcwa mappings", true,
+               "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
 
   function ( g, f )

@@ -26,7 +26,7 @@ InstallTrueMethod( IsRcwaGroup, IsModularRcwaGroup );
 ##  family and are bijective, hence generate a group.
 ##
 InstallMethod( IsGeneratorsOfMagmaWithInverses,
-               "RCWA: for lists of rcwa mappings", true,
+               "for lists of rcwa mappings (RCWA)", true,
                [ IsListOrCollection ], 0,
 
   function ( l )
@@ -41,7 +41,7 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
 ## 
 #M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups
 ## 
-InstallMethod( IsCyclic, "RCWA: generic method for groups", true,
+InstallMethod( IsCyclic, "generic method for groups (RCWA)", true,
                [ IsGroup ], 50,
 
   function ( G )
@@ -64,7 +64,7 @@ InstallValue( TrivialIntegralRcwaGroup,
 #M  TrivialSubmagmaWithOne( <G> ). . . . . . . . . . . . . . . for rcwa group
 ##
 InstallMethod( TrivialSubmagmaWithOne,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -89,7 +89,8 @@ BindGlobal( "IntegralRcwaGroupsFamily",
 ##  Group formed by all bijective integral rcwa mappings.
 ##
 InstallMethod( RCWACons,
-               "RCWA: natural RCWA(Z)", true, [ IsRcwaGroup, IsIntegers ], 0,
+               "natural RCWA(Z) (RCWA)", true,
+               [ IsRcwaGroup, IsIntegers ], 0,
 
   function ( filter, R )
 
@@ -103,7 +104,7 @@ InstallMethod( RCWACons,
     SetOne( G, IdentityIntegralRcwaMapping );
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
-    SetRepresentative( G, IntegralRcwaMapping( [ [ -1, 0, 1 ] ] ) );
+    SetRepresentative( G, RcwaMapping( [ [ -1, 0, 1 ] ] ) );
     SetName( G, "RCWA(Z)" );
     return G;
   end );
@@ -115,14 +116,14 @@ InstallMethod( RCWACons,
 ##  Group formed by all bijective rcwa mappings over $\Z_{(\pi)}$.
 ##
 InstallMethod( RCWACons,
-               "RCWA: natural RCWA(Z_pi)", true, [ IsRcwaGroup, IsZ_pi ], 0,
+               "natural RCWA(Z_pi) (RCWA)", true, [ IsRcwaGroup, IsZ_pi ], 0,
 
   function ( filter, R )
 
     local  G, pi, id;
 
     pi := NoninvertiblePrimes( R );
-    id := SemilocalIntegralRcwaMapping( pi, [ [1,0,1] ] );
+    id := RcwaMapping( pi, [ [1,0,1] ] );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsSemilocalIntegralRcwaGroup
                               and IsAttributeStoringRep ),
@@ -144,15 +145,15 @@ InstallMethod( RCWACons,
 ##  Group formed by all bijective rcwa mappings over GF(q)[x].
 ##
 InstallMethod( RCWACons,
-               "RCWA: natural RCWA(Z_pi)", true, 
+               "natural RCWA(Z_pi) (RCWA)", true, 
                [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
 
   function ( filter, R )
 
     local  G, q, id;
 
-    q := Size( CoefficientsRing( R ) );
-    id := ModularRcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
+    q  := Size( CoefficientsRing( R ) );
+    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsModularRcwaGroup
                               and IsAttributeStoringRep ),
@@ -180,8 +181,8 @@ InstallGlobalFunction( RCWA, R -> RCWACons( IsRcwaGroup, R ) );
 ##  The group RCWA(Z) can only be obtained by the above constructor.
 ##
 InstallMethod( IsNaturalRCWA_Z,
-               "RCWA: for rcwa groups", true,
-               [ IsRcwaGroup ], 0, ReturnFalse );
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               ReturnFalse );
 
 #############################################################################
 ##
@@ -191,8 +192,8 @@ InstallMethod( IsNaturalRCWA_Z,
 ##  constructor.
 ##
 InstallMethod( IsNaturalRCWA_Z_pi,
-               "RCWA: for rcwa groups", true,
-               [ IsRcwaGroup ], 0, ReturnFalse );
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               ReturnFalse );
 
 #############################################################################
 ##
@@ -201,15 +202,15 @@ InstallMethod( IsNaturalRCWA_Z_pi,
 ##  The groups RCWA(GF(q)[x]) can only be obtained by the above constructor.
 ##
 InstallMethod( IsNaturalRCWA_GF_q_x,
-               "RCWA: for rcwa groups", true,
-               [ IsRcwaGroup ], 0, ReturnFalse );
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               ReturnFalse );
 
 #############################################################################
 ##
 #M  \in( <g>, RCWA( Integers ) ) . . .  for integral rcwa mapping and RCWA(Z)
 ##
 InstallMethod( \in,
-               "RCWA: for integral rcwa mapping and RCWA(Z)", ReturnTrue,
+               "for integral rcwa mapping and RCWA(Z) (RCWA)", ReturnTrue,
                [ IsIntegralRcwaMapping, IsNaturalRCWA_Z ], 100,
 
   function ( g, G )
@@ -221,7 +222,7 @@ InstallMethod( \in,
 #M  \in( <g>, RCWA( Z_pi( <pi> ) ) ) . . . .  for rcwa mapping and RCWA(Z_pi)
 ##
 InstallMethod( \in,
-               "RCWA: for semilocal integral rcwa mapping and RCWA(Z_pi)",
+               "for semilocal integral rcwa mapping and RCWA(Z_pi) (RCWA)",
                ReturnTrue,
                [ IsSemilocalIntegralRcwaMapping, IsNaturalRCWA_Z_pi ], 100,
 
@@ -234,7 +235,7 @@ InstallMethod( \in,
 #M  \in( <g>, RCWA( GF(q)[x] ) ) . . . .  for rcwa mapping and RCWA(GF(q)[x])
 ##
 InstallMethod( \in,
-               "RCWA: for modular rcwa mapping and RCWA(GF(q)[x])",
+               "for modular rcwa mapping and RCWA(GF(q)[x]) (RCWA)",
                ReturnTrue, [ IsModularRcwaMapping, IsNaturalRCWA_GF_q_x ],
                100,
 
@@ -247,7 +248,7 @@ InstallMethod( \in,
 #M  IsSubset( RCWA( Integers ), G ) . . . for RCWA(Z) and integral rcwa group
 ## 
 InstallMethod( IsSubset,
-               "RCWA: for RCWA(Z) and integral rcwa group", ReturnTrue,
+               "for RCWA(Z) and integral rcwa group (RCWA)", ReturnTrue,
                [ IsNaturalRCWA_Z, IsIntegralRcwaGroup ], 0, ReturnTrue );
 
 #############################################################################
@@ -255,7 +256,7 @@ InstallMethod( IsSubset,
 #M  IsSubset( RCWA( Z_pi( <pi> ) ), G ) . . . . for RCWA(Z_pi) and rcwa group
 ##
 InstallMethod( IsSubset,
-               "RCWA: for RCWA(Z_pi) and semilocal integral rcwa group",
+               "for RCWA(Z_pi) and semilocal integral rcwa group (RCWA)",
                ReturnTrue,
                [ IsNaturalRCWA_Z_pi, IsSemilocalIntegralRcwaGroup ], 0,
 
@@ -268,8 +269,8 @@ InstallMethod( IsSubset,
 #M  IsSubset( RCWA( GF(q)[x] ), G ) . . . . for RCWA(GF(q)[x]) and rcwa group
 ##
 InstallMethod( IsSubset,
-               "RCWA: for RCWA(GF(q)[x]) and modular rcwa group", ReturnTrue,
-               [ IsNaturalRCWA_GF_q_x, IsModularRcwaGroup ], 0,
+               "for RCWA(GF(q)[x]) and modular rcwa group (RCWA)",
+               ReturnTrue, [ IsNaturalRCWA_GF_q_x, IsModularRcwaGroup ], 0,
 
   function ( RCWA_GF_q_x, G )
     return FamilyObj(One(RCWA_GF_q_x)) = FamilyObj(One(G));
@@ -280,7 +281,7 @@ InstallMethod( IsSubset,
 #M  Display( RCWA( <R> ) ) . . . . . . . . . . . . . . . .  for whole RCWA(R)
 ##
 InstallMethod( Display,
-               "RCWA: for whole RCWA(R)", true,
+               "for whole RCWA(R) (RCWA)", true,
                [ IsRcwaGroup and HasName ], 0,
 
   function ( G )
@@ -294,7 +295,7 @@ InstallMethod( Display,
 #M  ViewObj( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
 InstallMethod( ViewObj,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -323,7 +324,7 @@ InstallMethod( ViewObj,
 #M  Display( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
 InstallMethod( Display,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -357,7 +358,7 @@ InstallMethod( Display,
 ##  The set of moved points (support) of the rcwa group <G>.
 ##
 InstallOtherMethod( MovedPoints,
-                    "RCWA: for rcwa group", true, [ IsRcwaGroup ], 0,
+                    "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -374,7 +375,7 @@ InstallOtherMethod( MovedPoints,
 ##  This is a rather simple-minded method.
 ##
 InstallMethod( IsomorphismIntegralRcwaGroup,
-               "RCWA: generic method for finite groups", true,
+               "generic method for finite groups (RCWA)", true,
                [ IsGroup and IsFinite ], 0,
 
   function ( G )
@@ -388,7 +389,7 @@ InstallMethod( IsomorphismIntegralRcwaGroup,
     fi;
     n := LargestMovedPoint(G2);
     H := GroupWithGenerators(List(GeneratorsOfGroup(G2),
-                                  g -> IntegralRcwaMapping(g,[1..n])));
+                                  g -> RcwaMapping(g,[1..n])));
     phi2 := GroupHomomorphismByImagesNC(G2,H,GeneratorsOfGroup(G2),
                                              GeneratorsOfGroup(H));
     return Immutable(CompositionMapping(phi2,phi1));
@@ -423,7 +424,8 @@ InstallGlobalFunction( IntegralRcwaGroupByPermGroup,
 #M  \in( <g>, <G> ) .  for integral rcwa mapping and tame integral rcwa group
 ##
 InstallMethod( \in,
-               "RCWA: for integral rcwa mapping and tame int. rcwa group",
+               Concatenation("for integral rcwa mapping and ",
+                             "tame integral rcwa group (RCWA)"),
                ReturnTrue, [ IsIntegralRcwaMapping, IsIntegralRcwaGroup ], 0,
 
   function ( g, G )
@@ -503,7 +505,7 @@ InstallMethod( \in,
 ##  element of <G>.
 ##
 InstallMethod( \in,
-               "RCWA: for rcwa mapping and rcwa group",
+               "for rcwa mapping and rcwa group (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsRcwaGroup ], 0,
 
   function ( g, G )
@@ -537,7 +539,7 @@ InstallMethod( \in,
 ##  Caution: this is a highly probabilistic and experimental method !
 ##
 InstallMethod( Modulus,
-               "RCWA: for rcwa groups", true, [ IsIntegralRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
 
@@ -586,7 +588,7 @@ InstallMethod( Modulus,
 #M  ModulusOfRcwaGroup( <G> ) . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( ModulusOfRcwaGroup,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> Modulus( G ) );
 
 #############################################################################
@@ -594,7 +596,7 @@ InstallMethod( ModulusOfRcwaGroup,
 #M  PrimeSet( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( PrimeSet,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> Union( List( GeneratorsOfGroup( G ), PrimeSet ) ) );
 
 #############################################################################
@@ -602,7 +604,7 @@ InstallMethod( PrimeSet,
 #M  IsFlat( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( IsFlat,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0, 
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0, 
                G -> ForAll( GeneratorsOfGroup( G ), IsFlat ) );
 
 #############################################################################
@@ -613,7 +615,7 @@ InstallMethod( IsFlat,
 ##  if all of its elements are.
 ##
 InstallOtherMethod( IsClassWiseOrderPreserving,
-                    "RCWA: for rational-based rcwa groups",
+                    "for rational-based rcwa groups (RCWA)",
                     true, [ IsRationalBasedRcwaGroup ], 0,
                     G -> ForAll( GeneratorsOfGroup( G ),
                                  IsClassWiseOrderPreserving ) );
@@ -623,7 +625,7 @@ InstallOtherMethod( IsClassWiseOrderPreserving,
 #M  IsTame( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( IsTame,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> Modulus( G ) <> Zero( Source( One( G ) ) ) );
 
 #############################################################################
@@ -637,7 +639,7 @@ InstallMethod( IsTame,
 ##  into an infinite loop.
 ##
 InstallMethod( RcwaBase,
-               "RCWA: for integral rcwa groups", true,
+               "for integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -674,7 +676,7 @@ InstallMethod( RcwaBase,
 #M  IsomorphismPermGroup( <G> ) . . . . . . .  for finite integral rcwa group
 ##
 InstallMethod( IsomorphismPermGroup,
-               "RCWA: for finite integral rcwa groups",
+               "for finite integral rcwa groups (RCWA)",
                true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -700,7 +702,7 @@ InstallMethod( IsomorphismPermGroup,
 #M  IsomorphismMatrixGroup( <G> ) . . . . . . . . . . . . for tame rcwa group
 ##
 InstallMethod( IsomorphismMatrixGroup,
-               "RCWA: for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -743,7 +745,7 @@ InstallMethod( IsomorphismMatrixGroup,
 #M  NiceMonomorphism( <G> ) . . . . . . . . . . . . . . . for tame rcwa group
 ##
 InstallMethod( NiceMonomorphism,
-               "RCWA: for tame rcwa groups", true,
+               "for tame rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -758,7 +760,7 @@ InstallMethod( NiceMonomorphism,
 #M  NiceObject( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa group
 ##
 InstallMethod( NiceObject,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> Image( NiceMonomorphism( G ) ) );
 
 #############################################################################
@@ -772,7 +774,7 @@ InstallMethod( NiceObject,
 ##  into an infinite loop.
 ##
 InstallMethod( Size,
-               "RCWA: for integral rcwa groups", true,
+               "for integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -798,7 +800,7 @@ InstallMethod( Size,
 ##  In case this search is not successful, it gives up.
 ##
 InstallMethod( Size,
-               "RCWA: for rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -820,7 +822,7 @@ InstallMethod( Size,
 #M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . . . . . .  for rcwa group
 ## 
 InstallMethod( ShortOrbits,
-               "RCWA: for rcwa groups", true,
+               "for rcwa groups (RCWA)", true,
                [ IsRcwaGroup, IsList, IsPosInt ], 0,
 
   function ( G, S, maxlng )
@@ -846,7 +848,7 @@ InstallMethod( ShortOrbits,
 #M  OrbitsModulo( <G>, <m> ) . . . . . . . . .  for rational-based rcwa group
 ##
 InstallOtherMethod( OrbitsModulo,
-                    "RCWA: for rational-based rcwa groups", true,
+                    "for rational-based rcwa groups (RCWA)", true,
                     [ IsRationalBasedRcwaGroup, IsPosInt ], 0,
 
   function ( G, m )
@@ -877,7 +879,7 @@ InstallOtherMethod( OrbitsModulo,
 ##  This method might run into an infinite loop.
 ## 
 InstallMethod( OrbitUnion,
-               "RCWA: for rcwa group and set", ReturnTrue,
+               "for rcwa group and set (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsListOrCollection ], 0,
 
   function ( G, S )
@@ -901,7 +903,7 @@ InstallMethod( OrbitUnion,
 #M  RespectedClassPartition( <G> ) . . . . . . . . . . .  for tame rcwa group
 ##
 InstallOtherMethod( RespectedClassPartition,
-                    "RCWA: for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+                    "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -934,7 +936,7 @@ InstallOtherMethod( RespectedClassPartition,
 #M  ActionOnClassPartition( <G> ) . . . . . . . . . . . . for tame rcwa group
 ##
 InstallMethod( ActionOnClassPartition,
-               "RCWA: for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> Action( G, RespectedClassPartition( G ) ) );
 
 #############################################################################
@@ -942,7 +944,7 @@ InstallMethod( ActionOnClassPartition,
 #M  RankOfKernelOfActionOnClassPartition( <G> )  for tame integral rcwa group
 ##
 InstallMethod( RankOfKernelOfActionOnClassPartition,
-               "RCWA: for tame integral rcwa groups", true,
+               "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -966,7 +968,7 @@ InstallMethod( RankOfKernelOfActionOnClassPartition,
 #M  KernelOfActionOnClassPartition( <G> ) . . .  for tame integral rcwa group
 ##
 InstallMethod( KernelOfActionOnClassPartition,
-               "RCWA: for tame integral rcwa groups", true,
+               "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -994,8 +996,8 @@ InstallMethod( KernelOfActionOnClassPartition,
       elH := elH * h[i];
       elG := elG * g[i];
     until rank = RankOfKernelOfActionOnClassPartition(G)
-          and nr - lasthit > 100; # lasthit check just as a confirmation ...
-    erg := HermiteNormalFormIntegerMatTransform(L{[1..rank]});
+          and nr - lasthit > 100; # lasthit check just as a confirmation ... 
+    erg := HermiteNormalFormIntegerMatTransforms(L{[1..rank]});
     LHNF := erg.normal; T := erg.rowtrans;
     genKHNF := List([1..rank],
                     i->Product(List([1..rank],j->genK[j]^T[i][j])));
@@ -1009,7 +1011,7 @@ InstallMethod( KernelOfActionOnClassPartition,
 #M  KernelOfActionOnClassPartitionHNFMat( <G> )  for tame integral rcwa group
 ##
 InstallMethod( KernelOfActionOnClassPartitionHNFMat,
-               "RCWA: for tame integral rcwa groups", true,
+               "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -1022,7 +1024,7 @@ InstallMethod( KernelOfActionOnClassPartitionHNFMat,
 #M  FlateningConjugator( <G> ) . . . . . . . . . for tame integral rcwa group
 ##
 InstallOtherMethod( FlateningConjugator,
-                    "RCWA: for tame integral rcwa groups", true,
+                    "for tame integral rcwa groups (RCWA)", true,
                     [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -1049,7 +1051,7 @@ InstallOtherMethod( FlateningConjugator,
 #M  FlatConjugate( <G> ) . . . . . . . . . . . . . . . .  for tame rcwa group
 ##
 InstallOtherMethod( FlatConjugate,
-                    "RCWA: for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+                    "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                     G -> G^FlateningConjugator( G ) );
 
 #############################################################################
@@ -1059,8 +1061,8 @@ InstallOtherMethod( FlatConjugate,
 ##  This method might fail or run into an infinite loop.
 ##
 InstallOtherMethod( IsTransitive,
-                    "RCWA: for integral rcwa group and Integers", ReturnTrue,
-                    [ IsIntegralRcwaGroup, IsIntegers ], 0,
+                    "for integral rcwa group and Integers (RCWA)",
+                    ReturnTrue, [ IsIntegralRcwaGroup, IsIntegers ], 0,
 
   function ( G, ints )
 
@@ -1166,5 +1168,19 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 
 #############################################################################
 ##
-#E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+#M  Restriction( <G>, <f> ) . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallOtherMethod( Restriction,
+                    "RCWA: for rcwa groups (RCWA)", ReturnTrue,
+                    [ IsRcwaGroup, IsRcwaMapping ], 0,
 
+  function ( G, f )
+
+    if   Source(One(G)) <> Source(f) or not IsInjective(f)
+    then return fail; fi;
+    return GroupByGenerators(List(GeneratorsOfGroup(G),g->Restriction(g,f)));
+  end );
+
+#############################################################################
+##
+#E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

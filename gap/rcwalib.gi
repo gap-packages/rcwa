@@ -16,7 +16,7 @@ Revision.rcwalib_gi :=
 #M  CyclicGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( CyclicGroupCons,
-               "RCWA: integral rcwa group with size",
+               "integral rcwa group with size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -29,7 +29,7 @@ InstallMethod( CyclicGroupCons,
 #M  AbelianGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( AbelianGroupCons,
-               "RCWA: integral rcwa group with abelian invariants",
+               "integral rcwa group with abelian invariants (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsList ], 0,
 
   function( filter, abinv )
@@ -43,7 +43,7 @@ InstallMethod( AbelianGroupCons,
 #M  ElementaryAbelianGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( ElementaryAbelianGroupCons,
-               "RCWA: integral rcwa group with size",
+               "integral rcwa group with size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -57,7 +57,8 @@ InstallMethod( ElementaryAbelianGroupCons,
 #M  ExtraspecialGroupCons( IsIntegralRcwaGroup, <order>, <exp> )
 ##
 InstallMethod( ExtraspecialGroupCons,
-               "RCWA: integral rcwa group with degree and finite field size",
+               Concatenation("integral rcwa group with degree ",
+                             "and finite field size (RCWA)"),
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -72,7 +73,7 @@ InstallMethod( ExtraspecialGroupCons,
 #M  DihedralGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( DihedralGroupCons,
-               "RCWA: integral rcwa group with size",
+               "integral rcwa group with size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -85,7 +86,7 @@ InstallMethod( DihedralGroupCons,
 #M  SymmetricGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( SymmetricGroupCons,
-               "RCWA: integral rcwa group by degree",
+               "integral rcwa group by degree (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -98,7 +99,7 @@ InstallMethod( SymmetricGroupCons,
 #M  AlternatingGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( AlternatingGroupCons,
-               "RCWA: integral rcwa group by degree",
+               "integral rcwa group by degree (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -108,10 +109,10 @@ InstallMethod( AlternatingGroupCons,
 
 #############################################################################
 ##
-#M  GeneralLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
+#M  GeneralLinearGroupCons( IsIntegralRcwaGroup, <d>, <F> )
 ##
 InstallMethod( GeneralLinearGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "RCWA: integral rcwa group by degree and finite field",
                true, [ IsIntegralRcwaGroup, IsPosInt, IsField and IsFinite ],
                0,
 
@@ -123,10 +124,10 @@ InstallMethod( GeneralLinearGroupCons,
 
 #############################################################################
 ##
-#M  SpecialLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
+#M  SpecialLinearGroupCons( IsIntegralRcwaGroup, <d>, <F> )
 ##
 InstallMethod( SpecialLinearGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "RCWA: integral rcwa group by degree and finite field",
                true, [ IsIntegralRcwaGroup, IsPosInt, IsField and IsFinite ],
                0,
 
@@ -141,7 +142,7 @@ InstallMethod( SpecialLinearGroupCons,
 #M  ProjectiveGeneralLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( ProjectiveGeneralLinearGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -155,7 +156,7 @@ InstallMethod( ProjectiveGeneralLinearGroupCons,
 #M  ProjectiveSpecialLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( ProjectiveSpecialLinearGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -169,7 +170,7 @@ InstallMethod( ProjectiveSpecialLinearGroupCons,
 #M  GeneralOrthogonalGroupCons( IsIntegralRcwaGroup, <e>, <d>, <q> )
 ##
 InstallMethod( GeneralOrthogonalGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt, IsPosInt ], 0,
 
@@ -184,7 +185,7 @@ InstallMethod( GeneralOrthogonalGroupCons,
 #M  SpecialOrthogonalGroupCons( IsIntegralRcwaGroup, <e>, <d>, <q> )
 ##
 InstallMethod( SpecialOrthogonalGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt, IsPosInt ], 0,
 
@@ -199,7 +200,7 @@ InstallMethod( SpecialOrthogonalGroupCons,
 #M  GeneralUnitaryGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( GeneralUnitaryGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -214,7 +215,7 @@ InstallMethod( GeneralUnitaryGroupCons,
 #M  SpecialUnitaryGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( SpecialUnitaryGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -229,7 +230,7 @@ InstallMethod( SpecialUnitaryGroupCons,
 #M  ProjectiveGeneralUnitaryGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( ProjectiveGeneralUnitaryGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -243,7 +244,7 @@ InstallMethod( ProjectiveGeneralUnitaryGroupCons,
 #M  ProjectiveSpecialUnitaryGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( ProjectiveSpecialUnitaryGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -257,7 +258,7 @@ InstallMethod( ProjectiveSpecialUnitaryGroupCons,
 #M  SymplecticGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( SymplecticGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -272,7 +273,7 @@ InstallMethod( SymplecticGroupCons,
 #M  ProjectiveSymplecticGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
 InstallMethod( ProjectiveSymplecticGroupCons,
-               "RCWA: integral rcwa group by degree and finite field size",
+               "integral rcwa group by degree and finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite,
                        IsPosInt, IsPosInt ], 0,
 
@@ -286,7 +287,7 @@ InstallMethod( ProjectiveSymplecticGroupCons,
 #M  MathieuGroupCons( IsIntegralRcwaGroup, <n> )
 ##
 InstallMethod( MathieuGroupCons,
-               "RCWA: integral rcwa group by degree",
+               "integral rcwa group by degree (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, n )
@@ -299,7 +300,7 @@ InstallMethod( MathieuGroupCons,
 #M  SuzukiGroupCons( IsIntegralRcwaGroup, <q> )
 ##
 InstallMethod( SuzukiGroupCons,
-               "RCWA: integral rcwa group by finite field size",
+               "integral rcwa group by finite field size (RCWA)",
                true, [ IsIntegralRcwaGroup and IsFinite, IsPosInt ], 0,
 
   function( filter, q )
