@@ -3665,29 +3665,32 @@ InstallMethod( FactorizationIntoGenerators,
 
       Info(InfoRCWA,1,"Computing respected partition.");
 
-      P := [];
-      for cl in affsrc do
-        cyc := [cl];
-        repeat
-          Add(cyc,cyc[Length(cyc)]^g);
-        until    cyc[Length(cyc)] = cl
-              or Length(Residues(cyc[Length(cyc)])) > 1;
-        if    cyc[Length(cyc)] = cl
-          and ForAll(cyc,cl2->ForAny(affsrc,cl3->IsSubset(cl3,cl2)))
-        then
-          P := Union(P,cyc{[1..Length(cyc)-1]});
-          if Union(P) = Integers then break; fi;
-        fi;
-      od;
-
-      if Union(P) <> Integers then P := RespectedPartition(g); fi;
+      if ValueOption("ShortenPartition") <> false then
+        P := [];
+        for cl in affsrc do
+          cyc := [cl];
+          repeat
+            Add(cyc,cyc[Length(cyc)]^g);
+          until    cyc[Length(cyc)] = cl
+                or Length(Residues(cyc[Length(cyc)])) > 1;
+          if    cyc[Length(cyc)] = cl
+            and ForAll(cyc,cl2->ForAny(affsrc,cl3->IsSubset(cl3,cl2)))
+          then
+            P := Union(P,cyc{[1..Length(cyc)-1]});
+            if Union(P) = Integers then break; fi;
+          fi;
+        od;
+      else P := AllResidueClassesModulo(Modulus(g)); fi;
 
       if InfoLevel(InfoRCWA) >= 1 then
         Print("#I  Computing induced permutation on respected partition ");
         View(P); Print(".\n");
       fi;
 
-      h := Permutation(g,P);
+      if   ValueOption("ShortenPartition") <> false
+      then h := Permutation(g,P);
+      else h := PermList(List([0..Modulus(g)-1],i->i^g mod Modulus(g) + 1));
+      fi;
       cycs := Orbits(Group(h),MovedPoints(h));
       for cyc in cycs do
         for i in [2..Length(cyc)] do
