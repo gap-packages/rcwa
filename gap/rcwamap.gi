@@ -1262,8 +1262,11 @@ InstallMethod( LaTeXObj,
       gens := List(FactorizationIntoGenerators(f),LaTeXName);
       for pos in [1..Length(gens)] do
         append(gens[pos]);
-        if pos mod 5 = 0 then append("\\\\\n"); fi;
-        if pos < Length(gens) then append(" \\cdot "); fi;
+        if pos < Length(gens) then
+          if pos mod 5 = 0 then append("\\\\\n"); fi;
+          if pos mod 5 = 3 then append("\n"); fi;
+          append(" \\cdot ");
+        else append("\n"); fi;
       od;
       return str;
     fi;
@@ -3690,9 +3693,9 @@ InstallMethod( FactorizationIntoGenerators,
         clSmult := AsUnionOfFewClasses(Smult);
         clSdiv  := AsUnionOfFewClasses(Sdiv);
         if InfoLevel(InfoRCWA) >= 1 then
-          Print("#I Image of classes which are multiplied by q*p^k:\n#I ");
+          Print("#I Image of classes being multiplied by q*p^kmult:\n#I ");
           ViewObj(clSmult);
-          Print("\n#I Image of classes which are divided by q*p^k:\n#I ");
+          Print("\n#I Image of classes being divided by q*p^kdiv:\n#I ");
           ViewObj(clSdiv); Print("\n");
         fi;
         repeat
