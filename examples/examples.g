@@ -137,6 +137,12 @@ f9 := RcwaMapping([[ 5, 0,9],[16, 2,9],[10,-2,9],
                    [11,-3,9],[10, 2,9],[16,-2,9]]);
 SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
 
+# A probably very quickly contracting mapping -- proving this seems to be
+# difficult anyway ...
+
+f6q := RcwaMapping([[1,0,6],[1,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,6]]);
+SetName(f6q,"f6q");
+
 #############################################################################
 ##
 ##  `The examples by Matthews and Leigh'
