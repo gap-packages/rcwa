@@ -106,7 +106,7 @@ Bijective rcwa mapping of Z with modulus 36
 <Example>
 <![CDATA[
 gap> MovedPoints(sigma);
-<union of 29 residue classes (mod 36) of Z, +0/-2 elements>
+<union of 29 residue classes (mod 36)> \ [ -6, 3 ]
 gap> Intersection(last,[-20..20]);
 [ -19, -18, -17, -15, -14, -13, -12, -11, -10, -9, -7, -5, -3, -2, -1, 1, 2, 
   5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19 ]
@@ -438,7 +438,7 @@ Bijective rcwa mapping of Z with modulus 9
 gap> Order(Comm(u,nu^13));
 7
 gap> u2 := u^2;
-<bijective rcwa mapping of Z with modulus 25>
+<wild bijective rcwa mapping of Z with modulus 25>
 gap> Filtered([1..16],k->IsTame(Comm(u2,nu^k))); # k < 15 -> commutator wild!
 [ 15 ]
 gap> Order(Comm(u2,nu^15));
@@ -475,6 +475,274 @@ gap> Order(Comm(u2,nu^30));
 We conclude that even this rather simple-minded approach reveals
 various different orders of torsion elements, and the involved primes
 are also not all quite <Q>small</Q>.
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:WildProductOfInvolutions">
+<Heading>
+  Three involutions whose product has coprime multiplier and divisor
+</Heading>
+
+We investigate an example of 3 involutions whose product is not only wild,
+but even has coprime multiplier and divisor.
+
+<Example>
+<![CDATA[
+gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
+gap> f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);;
+gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);;
+gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);;
+gap> SetName(f1,"f1"); SetName(f2,"f2"); SetName(f3,"f3");
+gap> List([f1,f2,f3],Order);
+[ 2, 2, 2 ]
+gap> Display(f1);
+
+Bijective rcwa mapping of Z with modulus 24, of order 2
+
+               n mod 24                |                 n^f1
+---------------------------------------+--------------------------------------
+   0  8 16                             | (3n + 4)/4
+   1  7 13 19                          | (4n - 4)/3
+   2  3  6  9 10 14 15 18 21 22        | n
+   4 12 20                             | (3n + 8)/4
+   5 11 17 23                          | (4n - 8)/3
+
+gap> Display(f2);
+
+Bijective rcwa mapping of Z with modulus 12, of order 2
+
+               n mod 12                |                 n^f2
+---------------------------------------+--------------------------------------
+   0  4  8                             | (3n + 2)/2
+   1  7                                | (2n - 2)/3
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   5 11                                | (2n - 4)/3
+
+gap> Display(f3);
+
+Bijective rcwa mapping of Z with modulus 12, of order 2
+
+               n mod 12                |                 n^f3
+---------------------------------------+--------------------------------------
+   0  3  5  6  9 11                    | n
+   1                                   | (n + 3)/2
+   2  8                                | 2n - 3
+   4 10                                | 2n - 1
+   7                                   | (n + 1)/2
+
+gap> f := f1*f2*f3;
+<bijective rcwa mapping of Z with modulus 12>
+gap> IsTame(f);
+false
+gap> Display(f);
+
+Wild bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |                 n^f
+---------------------------------------+--------------------------------------
+   0                                   | n/2
+   1  7                                | n + 1
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   4                                   | n - 3
+   5  8 11                             | n - 1
+
+gap> List([1..8],k->Modulus(f^k));
+[ 12, 24, 48, 96, 192, 384, 768, 1536 ]
+gap> List([1..8],k->[Multiplier(f^k),Divisor(f^k)]);
+[ [ 3, 2 ], [ 3, 4 ], [ 9, 8 ], [ 9, 16 ], [ 27, 32 ], [ 27, 64 ], 
+  [ 81, 128 ], [ 81, 256 ] ]
+gap> List([1..8],k->Length(Set(Coefficients(f^k))));
+[ 6, 8, 12, 14, 20, 24, 32, 40 ]
+gap> support := List([1..8],k->MovedPoints(f^k));;
+gap> for k in [1..8] do ViewObj(support[k]); Print("\n"); od;
+0(2) U 1(6) U 5(6) \ [ 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0 ]
+0(2) U 1(6) U 5(6) \ [ 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0, 1, 2, 4, 5 ]
+0(2) U 1(6) U 5(6) \ [ 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0 ]
+0(2) U 1(6) U 5(6) \ [ 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0, 1, 2, 4, 5 ]
+gap> List(support,Density);
+[ 5/6, 2/3, 5/6, 2/3, 5/6, 2/3, 5/6, 2/3 ]
+gap> for S in Set(support) do ViewObj(S); Print("\n"); od;
+0(2) U 1(6) U 5(6) \ [ 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0 ]
+2(4) U 5(6) U 0(12) U 1(12) U 4(12) \ [ -2, -1, 0, 1, 2, 4, 5 ]
+gap> G := Group(f1,f2,f3);
+<rcwa group over Z with 3 generators>
+gap> MovedPoints(G);
+0(2) U 1(6) U 5(6)
+gap> phi := ProjectionFromFreeGroupByGenerators(G);
+[ f1, f2, f3 ] -> [ f1, f2, f3 ]
+]]>
+</Example>
+
+The involutions <C>f1</C>, <C>f2</C> and <C>f3</C> are conjugate
+in RCWA(<M>\mathbb{Z}</M>):
+
+<Example>
+<![CDATA[
+gap> IsConjugate(RCWA(Integers),f1,f2);
+true
+gap> IsConjugate(RCWA(Integers),f2,f3);
+true
+gap> g12 := RepresentativeAction(RCWA(Integers),f1,f2);
+<bijective rcwa mapping of Z with modulus 1440>
+gap> g23 := RepresentativeAction(RCWA(Integers),f2,f3);
+<bijective rcwa mapping of Z with modulus 216>
+gap> g13 := RepresentativeAction(RCWA(Integers),f1,f3);
+<bijective rcwa mapping of Z with modulus 288>
+gap> SetName(g12,"g12"); SetName(g23,"g23"); SetName(g13,"g13");
+gap> List([g12,g23,g13],g->[Multiplier(g),Divisor(g)]);
+[ [ 540, 80 ], [ 40, 18 ], [ 60, 12 ] ]
+gap> List([g12,g23,g13],IsTame);
+[ false, false, false ]
+gap> f1^g13=f3;    # A verification one of the conjugators.
+true
+gap> List([g12,g23,g13],g->Length(Set(Coefficients(g))));
+[ 95, 57, 27 ]
+gap> Display(g13); # Display the `shortest' one of the mappings g12, g23, g13.
+
+Wild bijective rcwa mapping of Z with modulus 288
+
+               n mod 288               |                n^g13
+---------------------------------------+--------------------------------------
+    0  24  48  72  96 120 144 168 192  | 
+  216 240 264                          | 3n + 1
+    1  19  37  55  73  91 109 127 145  | 
+  163 181 199 217 235 253 271          | 2n
+    2  38  74 110 146 182 218 254      | (5n - 10)/6
+    3  27  39  63  75  99 111 135 147  | 
+  171 183 207 219 243 255 279          | (5n + 3)/6
+    4  28  52  76 100 124 148 172 196  | 
+  220 244 268                          | 6n - 17
+    5  23  41  59  77  95 113 131 149  | 
+  167 185 203 221 239 257 275          | 4n - 16
+    6  18  42  54  78  90 114 126 150  | 
+  162 186 198 222 234 258 270          | 5n/6
+    7  13  31  79  85 103 151 157 175  | 
+  223 229 247                          | n + 3
+    8  16  40 104 112 136 200 208 232  | (3n + 14)/2
+    9  45  81 117 153 189 225 261      | (5n - 9)/6
+   10  34  46  70  82 106 118 142 154  | 
+  178 190 214 226 250 262 286          | (5n + 4)/6
+   11  35  83 107 155 179 227 251      | (n + 5)/2
+   12  44 108 140 204 236              | (3n + 16)/4
+   14  26  50  62  86  98 122 134 158  | 
+  170 194 206 230 242 266 278          | (5n - 4)/6
+   15  21  33  51  57  69  87  93 105  | 
+  123 129 141 159 165 177 195 201 213  | 
+  231 237 249 267 273 285              | (5n - 3)/6
+   17  89 161 233                      | n + 5
+   20 116 212                          | (3n + 26)/2
+   22  58  94 130 166 202 238 274      | (5n - 2)/6
+   25  49  97 121 169 193 241 265      | (n + 3)/2
+   29  47  53  71 101 119 125 143 173  | 
+  191 197 215 245 263 269 287          | n - 1
+   30  66 102 138 174 210 246 282      | (5n - 6)/6
+   32  64 128 160 224 256              | (3n + 4)/4
+   36  60  68  92 132 156 164 188 228  | 
+  252 260 284                          | (3n + 2)/2
+   43  61  67 115 133 139 187 205 211  | 
+  259 277 283                          | n - 3
+   56  80  88 152 176 184 248 272 280  | (3n - 10)/2
+   65 137 209 281                      | (n - 1)/2
+   84 180 276                          | (3n - 8)/4
+
+gap> List([g12,g23,g13],MovedPoints);
+[ Integers, Z \ [ -23, -2, 1, 25 ], Z \ [ -6, -3, 3 ] ]
+]]>
+</Example>
+
+The products <C>f1*f3</C> and <C>f2*f3</C> seem to have the property
+of having only finite cycles in common with the mapping <C>sigma</C> from
+our first example, but <C>f1*f2</C> doesn't:
+
+<Example>
+<![CDATA[
+gap> f12 := f1*f2;
+<bijective rcwa mapping of Z with modulus 12>
+gap> f23 := f2*f3;
+<bijective rcwa mapping of Z with modulus 72>
+gap> f13 := f1*f3;
+<bijective rcwa mapping of Z with modulus 144>
+gap> List([1..4],k->Maximum(List([-10^k..10^k],n->Length(Cycle(f13,n)))));
+[ 14, 20, 42, 46 ]
+gap> List([1..4],k->Maximum(List([-10^k..10^k],n->Length(Cycle(f23,n)))));
+[ 8, 20, 32, 38 ]
+gap> Set(List([-1000..1000],n->Length(Cycle(f13,n))));
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
+  22, 23, 24, 25, 26, 27, 30, 42 ]
+gap> Set(List([-1000..1000],n->Length(Cycle(f23,n))));
+[ 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 28, 32 ]
+gap> Trajectory(f12,2,30,"length");
+[ 2, 5, 7, 13, 25, 49, 97, 193, 385, 769, 1537, 3073, 6145, 12289, 24577, 
+  49153, 98305, 196609, 393217, 786433, 1572865, 3145729, 6291457, 12582913, 
+  25165825, 50331649, 100663297, 201326593, 402653185, 805306369 ]
+gap> LogInt(Trajectory(f12,2,1000,"length")[1000],10);
+300
+gap> Trajectory(f12,2,20,"length") mod 12;
+[ 2, 5, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> Display(f12); # Once a trajectory enters 1(12), it gets stuck there:
+
+Bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |                 n^f
+---------------------------------------+--------------------------------------
+   0  4  8                             | n/2
+   1  7                                | 2n - 1
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   5 11                                | 2n - 3
+
+gap> S := [ResidueClass(Integers,12,1)];; # Compute preimages of 1(12):
+gap> for i in [1..10] do Add(S,PreImage(f12,S[i])); od;
+gap> for i in [1..11] do View(S[i]); Print("\n"); od;
+1(12)
+1(6)
+1(6) U 5(6)
+2(4) U 1(6) U 5(6)
+2(4) U 1(6) U 5(6) U 4(8)
+<union of 37 residue classes (mod 48)>
+<union of 77 residue classes (mod 96)>
+<union of 157 residue classes (mod 192)>
+<union of 317 residue classes (mod 384)>
+<union of 637 residue classes (mod 768)>
+<union of 1277 residue classes (mod 1536)>
+gap> List(S,Si->Float(Density(Si)));
+[ 0.0833333, 0.166667, 0.333333, 0.583333, 0.708333, 0.770833, 0.802083, 
+  0.817708, 0.825521, 0.829427, 0.83138 ]
+gap> Clmod12 := List([0..11],r->ResidueClass(Integers,12,r));
+[ 0(12), 1(12), 2(12), 3(12), 4(12), 5(12), 6(12), 7(12), 8(12), 9(12), 
+  10(12), 11(12) ]
+gap> List(Clmod12,cl->Intersection(cl,S[2]));
+[ [  ], 1(12), [  ], [  ], [  ], [  ], [  ], 7(12), [  ], [  ], [  ], [  ] ]
+gap> List(Clmod12,cl->Intersection(cl,S[5]));
+[ 12(24), 1(12), 2(12), [  ], 4(24), 5(12), 6(12), 7(12), 20(24), [  ], 
+  10(12), 11(12) ]
+gap> List(Clmod12,cl->Intersection(cl,S[6]));
+[ 12(24) U 24(48), 1(12), 2(12), [  ], 4(24) U 40(48), 5(12), 6(12), 7(12), 
+  20(24) U 8(48), [  ], 10(12), 11(12) ]
+gap> List(Clmod12,cl->Intersection(cl,S[8]));
+[ 12(24) U 24(48) U 48(96) U 96(192), 1(12), 2(12), [  ], 
+  4(24) U 40(48) U 16(96) U 160(192), 5(12), 6(12), 7(12), 
+  20(24) U 8(48) U 80(96) U 32(192), [  ], 10(12), 11(12) ]
+]]>
+</Example>
+
+We see that except of the fixed points <M>n \equiv 3</M> mod 6 and
+<M>n = 0</M>, <Q>everything is eventually mapped to 1(12)</Q> --
+thus any non-constant trajectory is divergent.
+
+<Example>
+<![CDATA[
+]]>
+</Example>
 
 </Section>
 
@@ -525,7 +793,7 @@ gap> G := Group(r,s);
 gap> H := SylowSubgroup(SymmetricGroup(9),3);
 Group([ (1,2,3), (4,5,6), (7,8,9), (1,4,7)(2,5,8)(3,6,9) ])
 gap> phi := InverseGeneralMapping(IsomorphismGroups(G,H));
-[ (1,8,6)(2,9,4)(3,7,5), (1,9,6,2,7,4,3,8,5) ] -> [ r, s ]
+[ (1,5,9)(2,6,7)(3,4,8), (1,5,9,3,4,8,2,6,7) ] -> [ r, s ]
 gap> (1,2,3)^phi;
 <bijective rcwa mapping of Z with modulus 27>
 ]]>
@@ -1058,11 +1326,11 @@ gap> S7 := S6^T;
 gap> U := ResidueClass(Integers,3,1);;
 gap> for i in [1..6] do U := PreImage(T,U); od;
 gap> U := Intersection(U,S0);
-<union of 11 residue classes (mod 64) of Z>
+<union of 11 residue classes (mod 64)>
 gap> V := ResidueClass(Integers,3,2);;
 gap> for i in [1..6] do V := PreImage(T,V); od;
 gap> V := Intersection(V,S0);
-<union of 21 residue classes (mod 64) of Z>
+<union of 21 residue classes (mod 64)>
 gap> Display(U);
 
 The union of the residue classes r ( mod 64 ) of Z for r =
@@ -1092,11 +1360,11 @@ gap> S1 := S0^T;
 gap> S2 := S1^T;
 0(3) U 5(9) U 7(9) U 8(27)
 gap> S3 := S2^T;
-<union of 20 residue classes (mod 27) of Z>
+<union of 20 residue classes (mod 27)>
 gap> S4 := S3^T;
-<union of 73 residue classes (mod 81) of Z>
+<union of 73 residue classes (mod 81)>
 gap> S5 := S4^T;
-<union of 79 residue classes (mod 81) of Z>
+<union of 79 residue classes (mod 81)>
 gap> S6 := S5^T;
 Integers
 gap> S7 := S6^T;
@@ -1119,18 +1387,18 @@ gap> for s in S do View(s); Print("\n"); od;
 0(5) U 8(15)
 0(5) U 4(15) U 8(15)
 0(5) U 2(15) U 4(15) U 8(15) U 29(45)
-<union of 73 residue classes (mod 135) of Z>
-<union of 244 residue classes (mod 405) of Z>
-<union of 784 residue classes (mod 1215) of Z>
-<union of 824 residue classes (mod 1215) of Z>
-<union of 2593 residue classes (mod 3645) of Z>
-<union of 2647 residue classes (mod 3645) of Z>
-<union of 2665 residue classes (mod 3645) of Z>
-<union of 2671 residue classes (mod 3645) of Z>
+<union of 73 residue classes (mod 135)>
+<union of 244 residue classes (mod 405)>
+<union of 784 residue classes (mod 1215)>
+<union of 824 residue classes (mod 1215)>
+<union of 2593 residue classes (mod 3645)>
+<union of 2647 residue classes (mod 3645)>
+<union of 2665 residue classes (mod 3645)>
+<union of 2671 residue classes (mod 3645)>
 1(3) U 2(3) U 0(15)
 gap> Union(S[13],ResidueClass(Integers,3,0));
 Integers
-gap> List(S,Si->Float(Length(Residues(Si))/Modulus(Si)));
+gap> List(S,Si->Float(Density(Si)));
 [ 0.2, 0.266667, 0.333333, 0.422222, 0.540741, 0.602469, 0.645267, 0.678189, 
   0.711385, 0.7262, 0.731139, 0.732785, 0.733333 ]
 ]]>

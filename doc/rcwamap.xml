@@ -1163,7 +1163,7 @@ gap> fact := FactorizationOnConnectedComponents(sigma,36);
   <rcwa mapping of Z with modulus 36> ]
 gap> List(fact,MovedPoints);
 [ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36), 
-  <union of 23 residue classes (mod 36) of Z, +0/-2 elements> ]
+  <union of 23 residue classes (mod 36)> \ [ -6, 3 ] ]
 ]]>
 </Example>
     </Description>
@@ -1417,4 +1417,5 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
 

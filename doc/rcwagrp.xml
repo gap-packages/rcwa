@@ -484,6 +484,8 @@ gap> IsTame(G);
 false
 gap> phi := ProjectionFromFreeGroupByGenerators(G);
 [ a, nu ] -> [ a, nu ]
+gap> F := Source(phi);
+<free group on the generators [ a, nu ]>
 gap> w := Comm(F.1,Comm(F.1,F.2^2));
 a^-1*nu^-2*a^-1*nu^2*a*nu^-2*a*nu^2
 gap> f := w^phi;
@@ -1424,7 +1426,7 @@ gap> Projection(G,2);
 [ IdentityMapping( Integers ), IdentityMapping( Integers ), a, b, 
   IdentityMapping( Integers ) ]
 gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
-[ 0(3), 1(3), 2(3), +0/-2 elements ]
+[ 0(3), 1(3), 2(3) \ [ -1, 2 ] ]
 ]]>
 </Example>
     </Description>
@@ -1488,5 +1490,6 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
