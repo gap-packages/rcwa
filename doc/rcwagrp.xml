@@ -17,11 +17,11 @@ rcwa groups. <P/>
 <Section Label="sec:ContructingRcwaGroups">
 <Heading>Constructing rcwa groups</Heading>
 
-  Rcwa groups can be constructed using either <C>Group</C>,
-  <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
-  (see the reference manual).
-  Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C>
-  only finitely generated rcwa groups are supported.
+Rcwa groups can be constructed using either <C>Group</C>,
+<C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
+(see the reference manual).
+Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C>
+only finitely generated rcwa groups are supported.
 
 <Example>
 <![CDATA[
@@ -42,18 +42,18 @@ infinity
 ]]>
 </Example>
 
-  Another possible way to get an rcwa group is by <Q>translating</Q> a
-  permutation group, or by taking the image of an rcwa representation.
+Another possible way to get an rcwa group is by <Q>translating</Q> a
+permutation group, or by taking the image of an rcwa representation.
 
-  <ManSection>
-    <Func Name="IntegralRcwaGroupByPermGroup" Arg="G"/>
-    <Func Name="RcwaGroupByPermGroup" Arg="G"/>
-    <Returns>
-      An integral rcwa group isomorphic to the (finite) permutation
-      group&nbsp;<A>G</A>, which acts on the range
-      <C>[ 1 .. LargestMovedPoint( </C><A>G</A><C> ) ]</C> as <A>G</A> does.
-    </Returns>
-    <Description>
+<ManSection>
+  <Func Name="IntegralRcwaGroupByPermGroup" Arg="G"/>
+  <Func Name="RcwaGroupByPermGroup" Arg="G"/>
+  <Returns>
+    An integral rcwa group isomorphic to the (finite) permutation
+    group&nbsp;<A>G</A>, which acts on the range
+    <C>[1..LargestMovedPoint(</C><A>G</A><C>)]</C> as <A>G</A> does.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> H := RcwaGroupByPermGroup(Group((1,2),(3,4),(5,6),(7,8),
@@ -67,18 +67,18 @@ gap> List(DerivedSeries(H),Size);
 [ 384, 96, 32, 2, 1 ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="IsomorphismIntegralRcwaGroup" Arg="G"/>
-    <Attr Name="IsomorphismRcwaGroup" Arg="G"/>
-    <Returns>
-      A faithful integral rcwa representation of the group&nbsp;<A>G</A>,
-      thus a monomorphism from <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
-    </Returns>
-    <Description>
-      Currently this is only supported for finite groups.
+<ManSection>
+  <Attr Name="IsomorphismIntegralRcwaGroup" Arg="G"/>
+  <Attr Name="IsomorphismRcwaGroup" Arg="G"/>
+  <Returns>
+    A faithful integral rcwa representation of the group&nbsp;<A>G</A>,
+    thus a monomorphism from <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
+  </Returns>
+  <Description>
+    Currently this is only supported for finite groups.
 <Example>
 <![CDATA[
 gap> G := GL(2,5);
@@ -91,22 +91,22 @@ CompositionMapping(
     24> ], <action isomorphism> )
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  The whole group RCWA(<M>R</M>) of all bijective rcwa mappings of the ring
-  <M>R</M> is not finitely generated, thus cannot be constructed in one of
-  the ways described above, but has to be handled as a special case:
+The whole group RCWA(<M>R</M>) of all bijective rcwa mappings of the ring
+<M>R</M> is not finitely generated, thus cannot be constructed in one of
+the ways described above, but has to be handled as a special case:
 
-  <ManSection>
-    <Func Name="RCWA" Arg="R"/>
-    <Returns>
-      The group RCWA(<A>R</A>) of all bijective rcwa mappings
-      of the ring&nbsp;<A>R</A>.
-    </Returns>
-    <Description>
-      This group is (at least in general) not finitely generated,
-      hence no generators are stored.
+<ManSection>
+  <Func Name="RCWA" Arg="R"/>
+  <Returns>
+    The group RCWA(<A>R</A>) of all bijective rcwa mappings
+    of the ring&nbsp;<A>R</A>.
+  </Returns>
+  <Description>
+    This group is (at least in general) not finitely generated,
+    hence no generators are stored.
 <Example>
 <![CDATA[
 gap> RCWA_Z := RCWA(Integers);
@@ -123,16 +123,16 @@ gap> IsSubgroup(RCWA_Z, Group(RcwaMapping([[-1,0,1]]),
 true
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  Once having constructed an rcwa group we can easily take a look at it:
+Once having constructed an rcwa group we can easily take a look at it:
 
-  <ManSection>
-    <Meth Name="Display" Arg="G"/>
-    <Returns> Nothing. </Returns>
-    <Description>
-      Displays the rcwa group&nbsp;<A>G</A> in a human-readable form.
+<ManSection>
+  <Meth Name="Display" Arg="G"/>
+  <Returns> Nothing. </Returns>
+  <Description>
+    Displays the rcwa group&nbsp;<A>G</A> in a human-readable form.
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);; SetName(a,"a");
@@ -167,8 +167,8 @@ Bijective rcwa mapping of Z with modulus 4
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -177,19 +177,19 @@ Bijective rcwa mapping of Z with modulus 4
 <Section Label="sec:AttributesAndProperties">
 <Heading>Attributes and properties of rcwa groups</Heading>
 
-  <ManSection>
-    <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
-    <Returns> The modulus of the rcwa group&nbsp;<A>G</A>. </Returns>
-    <Description>
-      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+<ManSection>
+  <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
+  <Returns> The modulus of the rcwa group&nbsp;<A>G</A>. </Returns>
+  <Description>
+    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 
-      This can be probabilistic, increase the Info level of <C>InfoRCWA</C>
-      (see <Ref Label="sec:TheInfoClass"/>) to get information about the
-      methods used in your particular case. In any case if the returned
-      modulus is not equal to zero the result is certain.
+    This can be probabilistic, increase the Info level of <C>InfoRCWA</C>
+    (see <Ref Label="sec:TheInfoClass"/>) to get information about the
+    methods used in your particular case. In any case if the returned
+    modulus is not equal to zero the result is certain.
 
-      See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
-      for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
+    See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
+    for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
 <Example>
 <![CDATA[
 gap> g1 := RcwaMapping((1,2),[1..2]);
@@ -206,27 +206,27 @@ gap> Modulus(Group(a,b));
 0
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> is tame and <C>false</C>
-      otherwise.
-    </Returns>
-    <Description>
-      For the definition when an rcwa group is called <E>tame</E>
-      see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+<ManSection>
+  <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> is tame and <C>false</C>
+    otherwise.
+  </Returns>
+  <Description>
+    For the definition when an rcwa group is called <E>tame</E>
+    see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 
-      Methods for determining whether an rcwa group is tame can be
-      probabilistic -- increase the Info level of <C>InfoRCWA</C>
-      (see <Ref Label="sec:TheInfoClass"/>) to get information about
-      the methods used in your particular case. A positive result
-      (return value is <C>true</C>) is correct in any case.
+    Methods for determining whether an rcwa group is tame can be
+    probabilistic -- increase the Info level of <C>InfoRCWA</C>
+    (see <Ref Label="sec:TheInfoClass"/>) to get information about
+    the methods used in your particular case. A positive result
+    (return value is <C>true</C>) is correct in any case.
 
-      See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
-      for rcwa mappings.
+    See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> IsTame(G);
@@ -237,17 +237,17 @@ gap> IsTame(Group(Comm(a,b),Comm(a,c)));
 true
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
-    <Returns> The prime set of the rcwa group&nbsp;<A>G</A>. </Returns>
-    <Description>
-      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-      See also&nbsp;<Ref Oper="PrimeSet"
-                         Label="Prime set of an rcwa mapping"/>
-      for rcwa mappings.
+<ManSection>
+  <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
+  <Returns> The prime set of the rcwa group&nbsp;<A>G</A>. </Returns>
+  <Description>
+    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+    See also&nbsp;<Ref Oper="PrimeSet"
+                       Label="Prime set of an rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> PrimeSet(G);
@@ -256,36 +256,36 @@ gap> PrimeSet(H);
 [ 2, 3 ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> is integral and
-      <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-      See also&nbsp;<Ref Prop="IsIntegral" Label="Integral mapping"/>
-      for rcwa mappings.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> is integral and
+    <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+    See also&nbsp;<Ref Prop="IsIntegral" Label="Integral mapping"/>
+    for rcwa mappings.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Prop Name ="IsClassWiseOrderPreserving" Arg="G"
-          Label="Class-wise order-preserving rcwa group"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> is class-wise
-      order-preserving and <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      Of course the term <E>class-wise order-preserving</E> is defined only
-      for rcwa groups over ordered rings, e.g. over&nbsp;<M>\ZZ</M>. <P/>
+<ManSection>
+  <Prop Name ="IsClassWiseOrderPreserving" Arg="G"
+        Label="Class-wise order-preserving rcwa group"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> is class-wise
+    order-preserving and <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    Of course the term <E>class-wise order-preserving</E> is defined only
+    for rcwa groups over ordered rings, e.g. over&nbsp;<M>\ZZ</M>. <P/>
 
-      See also <Ref Prop ="IsClassWiseOrderPreserving"
-                    Label="Class-wise order-preserving rcwa mapping"/>
-      for rcwa mappings.
+    See also <Ref Prop ="IsClassWiseOrderPreserving"
+                  Label="Class-wise order-preserving rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> IsClassWiseOrderPreserving(Group(a,b));
@@ -297,8 +297,8 @@ gap> IsClassWiseOrderPreserving(Group(t,g,h));
 false
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -310,19 +310,19 @@ false
   matrix- / permutation representations
 </Heading>
 
-  <Index Key="rcwa group" Subkey="element testing"></Index>
-  <ManSection>
-    <Meth Name="\in" Arg="g, G"/>
-    <Returns>
-      <C>true</C> if the rcwa mapping&nbsp;<A>g</A> is an element of the
-      rcwa group&nbsp;<A>G</A> and <C>false</C> if not.
-    </Returns>
-    <Description>
-      Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
-      This will be successful if <A>G</A> is tame. For wild groups only a
-      number of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C>
-      the method will give information about reasons why <A>g</A> is an
-      element of <A>G</A> or not.
+<Index Key="rcwa group" Subkey="element testing"></Index>
+<ManSection>
+  <Meth Name="\in" Arg="g, G"/>
+  <Returns>
+    <C>true</C> if the rcwa mapping&nbsp;<A>g</A> is an element of the
+    rcwa group&nbsp;<A>G</A> and <C>false</C> if not.
+  </Returns>
+  <Description>
+    Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
+    This will be successful if <A>G</A> is tame. For wild groups only a
+    number of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C>
+    the method will give information about reasons why <A>g</A> is an
+    element of <A>G</A> or not.
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
@@ -330,32 +330,32 @@ gap> u in H;
 false
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="Size" Arg="G"/>
-    <Returns> The order of the rcwa group&nbsp;<A>G</A>. </Returns>
-    <Description>
-      In rare cases this can be probabilistic, increase the Info level of
-      <C>InfoRCWA</C> ( see <Ref Label="sec:TheInfoClass"/> ) to get
-      information about the methods used in the particular case.
+<ManSection>
+  <Meth Name="Size" Arg="G"/>
+  <Returns> The order of the rcwa group&nbsp;<A>G</A>. </Returns>
+  <Description>
+    In rare cases this can be probabilistic, increase the Info level of
+    <C>InfoRCWA</C> ( see <Ref Label="sec:TheInfoClass"/> ) to get
+    information about the methods used in the particular case.
 <Example>
 <![CDATA[
 gap> Size(G);
 265252859812191058636308480000000
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="IsomorphismPermGroup" Arg="G"/>
-    <Returns>
-      An isomorphism from the finite rcwa group&nbsp;<A>G</A> to some
-      permutation group.
-    </Returns>
-    <Description>
+<ManSection>
+  <Meth Name="IsomorphismPermGroup" Arg="G"/>
+  <Returns>
+    An isomorphism from the finite rcwa group&nbsp;<A>G</A> to some
+    permutation group.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> H := Group(g1,g2);
@@ -366,18 +366,18 @@ gap> phi := IsomorphismPermGroup(H);
 [ (1,6)(2,3)(4,5), (1,5,6)(2,3,4) ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="IsomorphismMatrixGroup" Arg="G"/>
-    <Returns>
-      An isomorphism from the rcwa group&nbsp;<A>G</A> to some matrix group.
-    </Returns>
-    <Description>
-      The group <A>G</A> must be tame.
-      The implemented algorithm uses the classification of groups having
-      faithful tame <M>R</M>-rcwa representations.
+<ManSection>
+  <Attr Name="IsomorphismMatrixGroup" Arg="G"/>
+  <Returns>
+    An isomorphism from the rcwa group&nbsp;<A>G</A> to some matrix group.
+  </Returns>
+  <Description>
+    The group <A>G</A> must be tame.
+    The implemented algorithm uses the classification of groups having
+    faithful tame <M>R</M>-rcwa representations.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
@@ -423,8 +423,8 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
  . . . . . . . . . . . . . . . 1 . . . . . . . . . . . .
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -435,24 +435,24 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
   Factoring elements into generators
 </Heading>
 
-  <ManSection>
-    <Meth Name ="PreImagesRepresentative" Arg="phi, g"
-          Label="PreImagesRepresentative (element factorization)"/>
-    <Returns>
-      A representative of the set of preimages of&nbsp;<A>g</A> under
-      the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group
-      over&nbsp;<M>\mathbb{Z}</M>.
-    </Returns>
-    <Description>
-      This method can be used for factoring elements of rcwa groups
-      over <M>\mathbb{Z}</M> into generators and for finding non-trivial
-      relations among the generators if the respective group is not free
-      and the method returns a factorization which does not happen to be
-      equal to one which is known a priori.
-      The homomorphism <A>phi</A> must map the generators of the free
-      group to the generators of the rcwa group one-by-one.
-      This method is also suitable for wild groups. The implementation
-      is based on <Ref Oper="RepresentativeActionPreImage"/>.
+<ManSection>
+  <Meth Name ="PreImagesRepresentative" Arg="phi, g"
+        Label="PreImagesRepresentative (element factorization)"/>
+  <Returns>
+    A representative of the set of preimages of&nbsp;<A>g</A> under
+    the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group
+    over&nbsp;<M>\mathbb{Z}</M>.
+  </Returns>
+  <Description>
+    This method can be used for factoring elements of rcwa groups
+    over <M>\mathbb{Z}</M> into generators and for finding non-trivial
+    relations among the generators if the respective group is not free
+    and the method returns a factorization which does not happen to be
+    equal to one which is known a priori.
+    The homomorphism <A>phi</A> must map the generators of the free
+    group to the generators of the rcwa group one-by-one.
+    This method is also suitable for wild groups. The implementation
+    is based on <Ref Oper="RepresentativeActionPreImage"/>.
 <Example>
 <![CDATA[
 gap> G := Group(g,h);
@@ -486,24 +486,24 @@ gap> one^phi;
 IdentityMapping( Integers )
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name ="PreImagesRepresentatives" Arg="phi, g"/>
-    <Returns>
-      A list of representatives of the set of preimages of&nbsp;<A>g</A>
-      under the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa
-      group over&nbsp;<M>\mathbb{Z}</M>.
-    </Returns>
-    <Description>
-      Quite frequently, computing several preimages is not harder than
-      computing just one, i.e. often several preimages are found
-      simultaneously. This operation is called by
-      <Ref Meth ="PreImagesRepresentative"
-           Label="PreImagesRepresentative (element factorization)"/>,
-      which simply chooses the shortest representative -- for a slightly
-      more concise description see there.
+<ManSection>
+  <Oper Name ="PreImagesRepresentatives" Arg="phi, g"/>
+  <Returns>
+    A list of representatives of the set of preimages of&nbsp;<A>g</A>
+    under the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa
+    group over&nbsp;<M>\mathbb{Z}</M>.
+  </Returns>
+  <Description>
+    Quite frequently, computing several preimages is not harder than
+    computing just one, i.e. often several preimages are found
+    simultaneously. This operation is called by
+    <Ref Meth ="PreImagesRepresentative"
+         Label="PreImagesRepresentative (element factorization)"/>,
+    which simply chooses the shortest representative -- for a slightly
+    more concise description see there.
 <Example>
 <![CDATA[
 gap> G := Group(g,h);
@@ -557,17 +557,17 @@ IdentityMapping( Integers )
 <Section Label="sec:ActionOnR">
 <Heading>The action of an rcwa group on the underlying ring R</Heading>
 
-  In some cases -- in particular in the case that the group in question is
-  tame -- we can test for transitivity on the underlying ring. We can also
-  determine group elements which map a given tuple of elements of the
-  underlying ring to a given other tuple, in case such elements exist.
+In some cases -- in particular in the case that the group in question is
+tame -- we can test for transitivity on the underlying ring. We can also
+determine group elements which map a given tuple of elements of the
+underlying ring to a given other tuple, in case such elements exist.
 
-  <ManSection>
-    <Meth Name="MovedPoints" Arg="G"/>
-    <Returns>
-      The set of moved points (support) of the rcwa group&nbsp;<A>G</A>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Meth Name="MovedPoints" Arg="G"/>
+  <Returns>
+    The set of moved points (support) of the rcwa group&nbsp;<A>G</A>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
@@ -575,18 +575,18 @@ gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
 1(3) U 2(3) U 3(9) U 6(9)
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="IsTransitive" Arg="G, Integers"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> acts transitive
-      on&nbsp;<M>\Z</M> and <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      Depending on the particular group this might fail or run into an
-      infinite loop, but for tame groups things should work.
+<ManSection>
+  <Meth Name="IsTransitive" Arg="G, Integers"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> acts transitive
+    on&nbsp;<M>\Z</M> and <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    Depending on the particular group this might fail or run into an
+    infinite loop, but for tame groups things should work.
 <Log>
 <![CDATA[
 gap> G := Group(g,h);;
@@ -609,26 +609,26 @@ true
 gap> RCWAInfo(0);
 ]]>
 </Log>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="RepresentativeAction" Arg="G, src, dest, act"/>
-    <Returns>
-      An element of <A>G</A> that maps <A>src</A> to&nbsp;<A>dest</A>
-      under the action given by&nbsp;<A>act</A>.
-    </Returns>
-    <Description>
-      If an element satisfying this condition does not exist, this method
-      either returns <C>fail</C> or runs into an infinite loop.
-      The problem of whether <A>src</A> and <A>dest</A> lie in the same
-      orbit under the action of <A>G</A> in general is likely to be
-      computationally undecidable. The given method is based on
-      <Ref Oper="RepresentativeActionPreImage"/>, and it basically just
-      computes an image under an homomorphism. As this involves
-      multiplications of rcwa mappings, this can be quite expensive if
-      the group <A>G</A> is wild, the preimage is a rather long word and
-      coefficient explosion occurs.
+<ManSection>
+  <Meth Name="RepresentativeAction" Arg="G, src, dest, act"/>
+  <Returns>
+    An element of <A>G</A> that maps <A>src</A> to&nbsp;<A>dest</A>
+    under the action given by&nbsp;<A>act</A>.
+  </Returns>
+  <Description>
+    If an element satisfying this condition does not exist, this method
+    either returns <C>fail</C> or runs into an infinite loop.
+    The problem of whether <A>src</A> and <A>dest</A> lie in the same
+    orbit under the action of <A>G</A> in general is likely to be
+    computationally undecidable. The given method is based on
+    <Ref Oper="RepresentativeActionPreImage"/>, and it basically just
+    computes an image under an homomorphism. As this involves
+    multiplications of rcwa mappings, this can be quite expensive if
+    the group <A>G</A> is wild, the preimage is a rather long word and
+    coefficient explosion occurs.
 <Example>
 <![CDATA[
 gap> G := Group(a,b);
@@ -674,30 +674,30 @@ gap> List([7,4,9],n->n^g);
 [ 4, 5, 8 ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name="RepresentativeActionPreImage" Arg="G, src, dest, act, F"/>
-    <Returns>
-      The result of <C>RepresentativeAction( <A>G</A>, <A>src</A>,
-      <A>dest</A>, <A>act</A> )</C> as a word in the generators.
-    </Returns>
-    <Description>
-      The argument <A>F</A> is a free group to be used to express the
-      resulting word. Note that the dependency is just the other way round
-      than suggested above (<C>RepresentativeAction</C> calls
-      <C>RepresentativeActionPreImage</C>) and that the evaluation of the
-      word sometimes takes much more time than its determination (the latter
-      however depends very much on the particular case and is hard to
-      predict). This causes <C>RepresentativeActionPreImage</C> sometimes to
-      be much faster than <C>RepresentativeAction</C>.
-      The employed algorithm is not inefficient, as the last two of the
-      examples below suggest -- it is based on separate progressive
-      computations of the orbits of <A>src</A> and <A>dest</A> until they
-      intersect non-trivially. It avoids multiplying rcwa mappings.
-      Of course the other warnings given in the description of
-      <Ref Meth="RepresentativeAction"/> apply to this operation, too.
+<ManSection>
+  <Oper Name="RepresentativeActionPreImage" Arg="G, src, dest, act, F"/>
+  <Returns>
+    The result of <C>RepresentativeAction( <A>G</A>, <A>src</A>,
+    <A>dest</A>, <A>act</A> )</C> as a word in the generators.
+  </Returns>
+  <Description>
+    The argument <A>F</A> is a free group to be used to express the
+    resulting word. Note that the dependency is just the other way round
+    than suggested above (<C>RepresentativeAction</C> calls
+    <C>RepresentativeActionPreImage</C>) and that the evaluation of the
+    word sometimes takes much more time than its determination (the latter
+    however depends very much on the particular case and is hard to
+    predict). This causes <C>RepresentativeActionPreImage</C> sometimes to
+    be much faster than <C>RepresentativeAction</C>.
+    The employed algorithm is not inefficient, as the last two of the
+    examples below suggest -- it is based on separate progressive
+    computations of the orbits of <A>src</A> and <A>dest</A> until they
+    intersect non-trivially. It avoids multiplying rcwa mappings.
+    Of course the other warnings given in the description of
+    <Ref Meth="RepresentativeAction"/> apply to this operation, too.
 <Example>
 <![CDATA[
 gap> F := FreeGroup("a","b");;
@@ -725,24 +725,24 @@ gap> w := RepresentativeActionPreImage(G,[17,14,9],[4,51,8],OnPoints,F);
 a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="RepresentativeAction" Arg="G, P1, P2"/>
-    <Returns>
-      An element of <A>G</A> which maps the partition&nbsp;<A>P1</A>
-      to&nbsp;<A>P2</A>.
-    </Returns>
-    <Description>
-      The arguments <A>P1</A> and <A>P2</A> must be partitions of the
-      underlying ring <M>R</M> into the same number of disjoint
-      residue classes.
-      This method covers the case <M>R = \mathbb{Z}</M> and
-      <C><A>G</A> = RCWA( Integers )</C>.
-      It recognizes the option <C>IsTame</C> -- if this option is set,
-      the returned mapping is tame provided that there is a tame
-      mapping satisfying the required condition.
+<ManSection>
+  <Meth Name="RepresentativeAction" Arg="G, P1, P2"/>
+  <Returns>
+    An element of <A>G</A> which maps the partition&nbsp;<A>P1</A>
+    to&nbsp;<A>P2</A>.
+  </Returns>
+  <Description>
+    The arguments <A>P1</A> and <A>P2</A> must be partitions of the
+    underlying ring <M>R</M> into the same number of disjoint
+    residue classes.
+    This method covers the case <M>R = \mathbb{Z}</M> and
+    <C><A>G</A> = RCWA( Integers )</C>.
+    It recognizes the option <C>IsTame</C> -- if this option is set,
+    the returned mapping is tame provided that there is a tame
+    mapping satisfying the required condition.
 <Example>
 <![CDATA[
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
@@ -773,17 +773,17 @@ gap> Length(P);
 313
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name="ShortOrbits" Arg="G, S, maxlng"/>
-    <Returns>
-      A list of all finite orbits of the rcwa group&nbsp;<A>G</A> of maximal
-      length&nbsp;<A>maxlng</A>, which intersect non-trivially with the
-      set&nbsp;<A>S</A>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Oper Name="ShortOrbits" Arg="G, S, maxlng"/>
+  <Returns>
+    A list of all finite orbits of the rcwa group&nbsp;<A>G</A> of maximal
+    length&nbsp;<A>maxlng</A>, which intersect non-trivially with the
+    set&nbsp;<A>S</A>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> A5 := IntegralRcwaGroupByPermGroup(AlternatingGroup(5));;
@@ -809,27 +809,27 @@ gap> ShortOrbits(Group(u),[-30..30],100);
       128, 138, 155, 167, 187, 230, 248, 312, 446, 520, 803, 867, 1445 ] ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name ="OrbitsModulo" Arg="G, m"
-          Label="OrbitsModulo for rcwa group"/>
-    <Returns>
-      `The set of orbits on the set of residue classes (mod&nbsp;<A>m</A>)
-      under the action of&nbsp;<A>G</A>'.
-    </Returns>
-    <Description>
-      This method computes a partition of <C>AllResidues( R, <A>m</A> )</C>
-      such that <M>i</M> and <M>j</M> lie in the same subset if and only if
-      there is an element <M>g</M> in <A>G</A> such that
-      <M>M_{i,j} \neq 0</M>, where <M>M</M> is the transition matrix of
-      <M>g</M> for modulus <A>m</A> (see <Ref Func="TransitionMatrix"/>)
-      and <C>R</C> is the ring the group <A>G</A> acts on. <P/>
+<ManSection>
+  <Meth Name ="OrbitsModulo" Arg="G, m"
+        Label="OrbitsModulo for rcwa group"/>
+  <Returns>
+    `The set of orbits on the set of residue classes (mod&nbsp;<A>m</A>)
+    under the action of&nbsp;<A>G</A>'.
+  </Returns>
+  <Description>
+    This method computes a partition of <C>AllResidues( R, <A>m</A> )</C>
+    such that <M>i</M> and <M>j</M> lie in the same subset if and only if
+    there is an element <M>g</M> in <A>G</A> such that
+    <M>M_{i,j} \neq 0</M>, where <M>M</M> is the transition matrix of
+    <M>g</M> for modulus <A>m</A> (see <Ref Func="TransitionMatrix"/>)
+    and <C>R</C> is the ring the group <A>G</A> acts on. <P/>
 
-      See also <Ref Oper ="OrbitsModulo"
-                    Label="OrbitsModulo for rcwa mapping"/>
-      for rcwa mappings.
+    See also <Ref Oper ="OrbitsModulo"
+                  Label="OrbitsModulo for rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(G,72);
@@ -840,8 +840,8 @@ gap> OrbitsModulo(G,72);
   [ 36 ], [ 45 ], [ 54 ], [ 63 ] ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -850,20 +850,20 @@ gap> OrbitsModulo(G,72);
 <Section Label="sec:MethodsForTameGroups">
 <Heading>Special features for tame rcwa groups</Heading>
 
-  <ManSection>
-    <Attr Name ="RespectedClassPartition" Arg="sigma"
-          Label="Respected class partition of rcwa mapping"/>
-    <Returns>
-      A <E>respected partition</E> of <A>sigma</A>, i.e. a partition of the
-      base ring&nbsp;<M>R</M> into a finite number of residue classes on
-      which the bijective mapping&nbsp;<A>sigma</A> acts as a permutation,
-      and on those elements&nbsp;<A>sigma</A> is affine.
-    </Returns>
-    <Description>
-      Such a partition exists if and only if <A>sigma</A>&nbsp;is tame.
-      See also <Ref Attr="RespectedClassPartition"
-                    Label="Respected class partition of rcwa group"/>
-      for rcwa groups.
+<ManSection>
+  <Attr Name ="RespectedClassPartition" Arg="sigma"
+        Label="Respected class partition of rcwa mapping"/>
+  <Returns>
+    A <E>respected partition</E> of <A>sigma</A>, i.e. a partition of the
+    base ring&nbsp;<M>R</M> into a finite number of residue classes on
+    which the bijective mapping&nbsp;<A>sigma</A> acts as a permutation,
+    and on those elements&nbsp;<A>sigma</A> is affine.
+  </Returns>
+  <Description>
+    Such a partition exists if and only if <A>sigma</A>&nbsp;is tame.
+    See also <Ref Attr="RespectedClassPartition"
+                  Label="Respected class partition of rcwa group"/>
+    for rcwa groups.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
@@ -874,25 +874,25 @@ gap> Permutation(g,rcp);
 (1,11,2,5,3,12,4)(6,13,7,10,8,14,9)
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name ="RespectedClassPartition" Arg="G"
-          Label="Respected class partition of rcwa group"/>
-    <Returns>
-      A <E>respected partition</E> of <A>G</A>, i.e. a partition of the
-      base ring&nbsp;<M>R</M> into a finite number of residue classes on
-      which the group&nbsp;<A>G</A> acts as a permutation group, and on
-      those elements all elements of&nbsp;<A>G</A> are affine.
-    </Returns>
-    <Description>
-      The partition is non-trivial provided that the modulus of&nbsp;<A>G</A>
-      is not equal to&nbsp;1. Such a partition exists if and only
-      if&nbsp;<A>G</A> is tame.
-      See also <Ref Attr ="RespectedClassPartition"
-                    Label="Respected class partition of rcwa mapping"/>
-      for rcwa mappings.
+<ManSection>
+  <Attr Name ="RespectedClassPartition" Arg="G"
+        Label="Respected class partition of rcwa group"/>
+  <Returns>
+    A <E>respected partition</E> of <A>G</A>, i.e. a partition of the
+    base ring&nbsp;<M>R</M> into a finite number of residue classes on
+    which the group&nbsp;<A>G</A> acts as a permutation group, and on
+    those elements all elements of&nbsp;<A>G</A> are affine.
+  </Returns>
+  <Description>
+    The partition is non-trivial provided that the modulus of&nbsp;<A>G</A>
+    is not equal to&nbsp;1. Such a partition exists if and only
+    if&nbsp;<A>G</A> is tame.
+    See also <Ref Attr ="RespectedClassPartition"
+                  Label="Respected class partition of rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
@@ -935,16 +935,16 @@ Bijective rcwa mapping of Z with modulus 6, of order 12
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="ActionOnClassPartition" Arg="G"/>
-    <Returns>
-      The action of the tame rcwa group&nbsp;<A>G</A> on
-      <C>RespectedClassPartition( <A>G</A> )</C>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Attr Name="ActionOnClassPartition" Arg="G"/>
+  <Returns>
+    The action of the tame rcwa group&nbsp;<A>G</A> on
+    <C>RespectedClassPartition( <A>G</A> )</C>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> H := ActionOnClassPartition(G);
@@ -961,33 +961,33 @@ gap> IsPerfect(D);
 true
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
-    <Returns>
-      The rank of the largest free abelian subgroup of the kernel of the
-      action of the tame rcwa group&nbsp;<A>G</A> on the set of residue
-      classes <C>RespectedClassPartition( <A>G</A> )</C>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
+  <Returns>
+    The rank of the largest free abelian subgroup of the kernel of the
+    action of the tame rcwa group&nbsp;<A>G</A> on the set of residue
+    classes <C>RespectedClassPartition(<A>G</A>)</C>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> RankOfKernelOfActionOnClassPartition(G);
 6
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="KernelOfActionOnClassPartition" Arg="G"/>
-    <Returns>
-      The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
-      <C>RespectedClassPartition( <A>G</A> )</C>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Attr Name="KernelOfActionOnClassPartition" Arg="G"/>
+  <Returns>
+    The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
+    <C>RespectedClassPartition(<A>G</A>)</C>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> K := KernelOfActionOnClassPartition(G);
@@ -1002,17 +1002,17 @@ gap> List(GeneratorsOfGroup(K),k->Factorization(G,k));
   h^-3*g^3*h^-2*g^-1*h*g^2, g^2*h^-1*g^-1*h*g*h^-2 ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G"/>
-    <Returns>
-      A matrix of vectors in Hermite Normal Form spanning the lattice
-      corresponding to the kernel of the action of the tame rcwa
-      group&nbsp;<A>G</A> on <C>RespectedClassPartition( <A>G</A> )</C>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G"/>
+  <Returns>
+    A matrix of vectors in Hermite Normal Form spanning the lattice
+    corresponding to the kernel of the action of the tame rcwa
+    group&nbsp;<A>G</A> on <C>RespectedClassPartition(<A>G</A>)</C>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> L := KernelOfActionOnClassPartitionHNFMat(G);
@@ -1024,16 +1024,16 @@ gap> L := KernelOfActionOnClassPartitionHNFMat(G);
   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, -24, 24, -24 ] ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="IsSolvable" Arg="G"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> is solvable, and
-      <C>false</C> otherwise.
-    </Returns>
-    <Description>
+<ManSection>
+  <Meth Name="IsSolvable" Arg="G"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> is solvable, and
+    <C>false</C> otherwise.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> IsSolvable(G);
@@ -1042,16 +1042,16 @@ gap> Size(G);
 infinity
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="IsPerfect" Arg="G"/>
-    <Returns>
-      <C>true</C> if the rcwa group&nbsp;<A>G</A> is perfect, and
-      <C>false</C> otherwise.
-    </Returns>
-    <Description>
+<ManSection>
+  <Meth Name="IsPerfect" Arg="G"/>
+  <Returns>
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> is perfect, and
+    <C>false</C> otherwise.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> IsPerfect(G);
@@ -1064,8 +1064,8 @@ gap> Size(D);
 infinity
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -1074,19 +1074,19 @@ infinity
 <Section Label="sec:ConjugacyInRCWA_R">
 <Heading>Conjugacy in RCWA(R)</Heading>
 
-  <ManSection>
-    <Meth Name="IsConjugate" Arg="G, f, g"/>
-    <Returns>
-      <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
-      are conjugate in the rcwa group&nbsp;<A>G</A>, and <C>false</C>
-      otherwise.
-    </Returns>
-    <Description>
-      Currently there are methods only for very few cases, e.g. for
-      determining conjugacy of tame mappings in the whole group
-      <C>RCWA( Integers )</C> and for handling other <Q>easy</Q> cases. <P/>
+<ManSection>
+  <Meth Name="IsConjugate" Arg="G, f, g"/>
+  <Returns>
+    <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
+    are conjugate in the rcwa group&nbsp;<A>G</A>, and <C>false</C>
+    otherwise.
+  </Returns>
+  <Description>
+    Currently there are methods only for very few cases, e.g. for
+    determining conjugacy of tame mappings in the whole group
+    <C>RCWA(Integers)</C> and for handling other <Q>easy</Q> cases. <P/>
 
-      This may fail or run into an infinite loop.
+    This may fail or run into an infinite loop.
 <Example>
 <![CDATA[
 gap> IsConjugate(RCWA(Integers),g,g^a);
@@ -1095,19 +1095,19 @@ gap> IsConjugate(RCWA(Integers),a,b);
 false
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Meth Name="RepresentativeAction" Arg="G, f, g"/>
-    <Returns>
-      An rcwa mapping&nbsp;<C>x</C> such that
-      <C><A>f</A>&circum;x = <A>g</A></C>, if such an <C>x</C>
-      exists and <C>fail</C> otherwise.
-    </Returns>
-    <Description>
-      This method covers the case that <C><A>G</A> = RCWA( Integers )</C>
-      and <A>f</A> and <A>g</A> are tame rcwa mappings of&nbsp;<M>\Z</M>.
+<ManSection>
+  <Meth Name="RepresentativeAction" Arg="G, f, g"/>
+  <Returns>
+    An rcwa mapping&nbsp;<C>x</C> such that
+    <C><A>f</A>&circum;x = <A>g</A></C>, if such an <C>x</C>
+    exists and <C>fail</C> otherwise.
+  </Returns>
+  <Description>
+    This method covers the case that <C><A>G</A> = RCWA(Integers)</C>
+    and <A>f</A> and&nbsp;<A>g</A> are tame rcwa mappings of&nbsp;<M>\Z</M>.
 <Example>
 <![CDATA[
 gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
@@ -1138,24 +1138,24 @@ Bijective rcwa mapping of Z with modulus 24, of order 12
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name ="IntegralConjugate" Arg="f"
-          Label="Integral conjugate of rcwa mapping"/>
-    <Returns>
-      Some integral representative of the conjugacy class of the tame
-      bijective rcwa mapping&nbsp;<A>f</A> in the whole group RCWA(<M>R</M>).
-    </Returns>
-    <Description>
-      Such a representative exists if the ring&nbsp;<M>R</M> has residue
-      class rings of any finite cardinality.
-      Since the result is not defined uniquely, methods for this
-      operation will just choose one such mapping.
-      See also <Ref Attr ="IntegralConjugate"
-                    Label="Integral conjugate of rcwa group"/>
-      for rcwa groups.
+<ManSection>
+  <Attr Name ="IntegralConjugate" Arg="f"
+        Label="Integral conjugate of rcwa mapping"/>
+  <Returns>
+    Some integral representative of the conjugacy class of the tame
+    bijective rcwa mapping&nbsp;<A>f</A> in the whole group RCWA(<M>R</M>).
+  </Returns>
+  <Description>
+    Such a representative exists if the ring&nbsp;<M>R</M> has residue
+    class rings of any finite cardinality.
+    Since the result is not defined uniquely, methods for this
+    operation will just choose one such mapping.
+    See also <Ref Attr ="IntegralConjugate"
+                  Label="Integral conjugate of rcwa group"/>
+    for rcwa groups.
 <Example>
 <![CDATA[
 gap> g_int := IntegralConjugate(g);;
@@ -1179,22 +1179,22 @@ Bijective rcwa mapping of Z with modulus 14, of order 7
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name ="IntegralConjugate" Arg="G"
-          Label="Integral conjugate of rcwa group"/>
-    <Returns>
-      Some integral conjugate of the tame rcwa group&nbsp;<A>G</A>
-      in the whole group RCWA(<M>R</M>).
-    </Returns>
-    <Description>
-      Since this is not defined uniquely, methods
-      for this operation will just choose one such group.
-      See also <Ref Attr ="IntegralConjugate"
-                    Label="Integral conjugate of rcwa mapping"/>
-      for rcwa mappings.
+<ManSection>
+  <Attr Name ="IntegralConjugate" Arg="G"
+        Label="Integral conjugate of rcwa group"/>
+  <Returns>
+    Some integral conjugate of the tame rcwa group&nbsp;<A>G</A>
+    in the whole group RCWA(<M>R</M>).
+  </Returns>
+  <Description>
+    Since this is not defined uniquely, methods
+    for this operation will just choose one such group.
+    See also <Ref Attr ="IntegralConjugate"
+                  Label="Integral conjugate of rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> F := IntegralConjugate(G);
@@ -1243,23 +1243,23 @@ Bijective rcwa mapping of Z with modulus 14, of order 12
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name ="IntegralizingConjugator" Arg="f"
-          Label="Integralizing conjugator of rcwa mapping"/>
-    <Returns>
-      An rcwa mapping mapping&nbsp;<A>x</A> such that
-      <A>f</A>&circum;<A>x</A> is integral. 
-    </Returns>
-    <Description>
-      This is of course not defined uniquely, but it holds that
-      <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
-      IntegralConjugate(<A>f</A>)</C>.
-      See also <Ref Attr ="IntegralizingConjugator"
-                    Label="Integralizing conjugator of rcwa group"/>
-      for rcwa groups.
+<ManSection>
+  <Attr Name ="IntegralizingConjugator" Arg="f"
+        Label="Integralizing conjugator of rcwa mapping"/>
+  <Returns>
+    An rcwa mapping mapping&nbsp;<A>x</A> such that
+    <A>f</A>&circum;<A>x</A> is integral. 
+  </Returns>
+  <Description>
+    This is of course not defined uniquely, but it holds that
+    <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
+    IntegralConjugate(<A>f</A>)</C>.
+    See also <Ref Attr ="IntegralizingConjugator"
+                  Label="Integralizing conjugator of rcwa group"/>
+    for rcwa groups.
 <Example>
 <![CDATA[
 gap> g_to_int := IntegralizingConjugator(g);;
@@ -1288,23 +1288,23 @@ gap> g^g_to_int = g_int;
 true
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Attr Name ="IntegralizingConjugator" Arg="G"
-          Label="Integralizing conjugator of rcwa group"/>
-    <Returns>
-      An rcwa mapping mapping&nbsp;<A>x</A> such that
-      <A>G</A>&circum;<A>x</A> is integral.
-    </Returns>
-    <Description>
-      This is of course not defined uniquely, but it holds
-      that <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
-              IntegralConjugate(<A>G</A>)</C>.
-      See also <Ref Attr ="IntegralizingConjugator"
-                    Label="Integralizing conjugator of rcwa mapping"/>
-      for rcwa mappings.
+<ManSection>
+  <Attr Name ="IntegralizingConjugator" Arg="G"
+        Label="Integralizing conjugator of rcwa group"/>
+  <Returns>
+    An rcwa mapping mapping&nbsp;<A>x</A> such that
+    <A>G</A>&circum;<A>x</A> is integral.
+  </Returns>
+  <Description>
+    This is of course not defined uniquely, but it holds
+    that <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
+            IntegralConjugate(<A>G</A>)</C>.
+    See also <Ref Attr ="IntegralizingConjugator"
+                  Label="Integralizing conjugator of rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> fl := IntegralizingConjugator(G);
@@ -1334,26 +1334,26 @@ Bijective rcwa mapping of Z with modulus 24
 
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name="ShortCycles" Arg="f, maxlng"/>
-    <Returns>
-      All <Q>single</Q> finite cycles of the rcwa mapping&nbsp;<A>f</A>
-      of length at most <A>maxlng</A>.
-    </Returns>
-    <Description>
-      By <Q>single</Q> finite cycles we denote finite cycles not belonging
-      to an infinite series (i.e. there is no constant <M>m</M> such that
-      adding any multiple of <M>m</M> to the elements of the cycle always
-      yields a new cycle). <P/>
+<ManSection>
+  <Oper Name="ShortCycles" Arg="f, maxlng"/>
+  <Returns>
+    All <Q>single</Q> finite cycles of the rcwa mapping&nbsp;<A>f</A>
+    of length at most <A>maxlng</A>.
+  </Returns>
+  <Description>
+    By <Q>single</Q> finite cycles we denote finite cycles not belonging
+    to an infinite series (i.e. there is no constant <M>m</M> such that
+    adding any multiple of <M>m</M> to the elements of the cycle always
+    yields a new cycle). <P/>
 
-      Since &GAP;-permutations cannot move negative integers, rationals
-      or even polynomials, the cycles are returned as lists, for example
-      the list <C>[-3,1,2,-2]</C> denotes the cycle <C>(-3,1,2,-2)</C>.
-      Mappings having different sets of finite cycle lengths are obviously
-      not conjugate in RCWA(<M>R</M>).
+    Since &GAP;-permutations cannot move negative integers, rationals
+    or even polynomials, the cycles are returned as lists, for example
+    the list <C>[-3,1,2,-2]</C> denotes the cycle <C>(-3,1,2,-2)</C>.
+    Mappings having different sets of finite cycle lengths are obviously
+    not conjugate in RCWA(<M>R</M>).
 <Example>
 <![CDATA[
 gap> ShortCycles(a,2);
@@ -1379,16 +1379,16 @@ gap> ShortCycles(w,10);
 [ [ 0, 3, 2, 1 ] ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord"/>
-    <Returns>
-      The number of conjugacy classes of RCWA(<M>\Z</M>) of elements
-      of order&nbsp;<A>ord</A>.
-    </Returns>
-    <Description>
+<ManSection>
+  <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord"/>
+  <Returns>
+    The number of conjugacy classes of RCWA(<M>\Z</M>) of elements
+    of order&nbsp;<A>ord</A>.
+  </Returns>
+  <Description>
 <Example>
 <![CDATA[
 gap> NrConjugacyClassesOfRCWAZOfOrder(2);
@@ -1397,8 +1397,8 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 218
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -1407,20 +1407,20 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 <Section Label="sec:RestrictionMonomorphisms">
 <Heading>Images under restriction monomorphisms</Heading>
 
-  <ManSection>
-    <Oper Name ="Restriction" Arg="g, f"
-          Label="Restriction of an rcwa mapping"/>
-    <Returns> The <E>restriction</E> of <A>g</A> by&nbsp;<A>f</A>. </Returns>
-    <Description>
-      By definition, the restriction <M>g_f</M> of <A>g</A> by <A>f</A>
-      is the uniquely-determined rcwa mapping satisfying
-      <M>f \cdot g_f = g \cdot f</M> and fixing the complement of
-      the image of <A>f</A>. The mapping <A>f</A> has to be injective and
-      its multiplier must not be zero. If <A>f</A> is bijective the
-      returned mapping is just the conjugate of <A>g</A> by <A>f</A>. <P/>
+<ManSection>
+  <Oper Name ="Restriction" Arg="g, f"
+        Label="Restriction of an rcwa mapping"/>
+  <Returns> The <E>restriction</E> of <A>g</A> by&nbsp;<A>f</A>. </Returns>
+  <Description>
+    By definition, the restriction <M>g_f</M> of <A>g</A> by <A>f</A>
+    is the uniquely-determined rcwa mapping satisfying
+    <M>f \cdot g_f = g \cdot f</M> and fixing the complement of
+    the image of <A>f</A>. The mapping <A>f</A> has to be injective and
+    its multiplier must not be zero. If <A>f</A> is bijective the
+    returned mapping is just the conjugate of <A>g</A> by <A>f</A>. <P/>
 
-      See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
-      for rcwa groups.
+    See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
+    for rcwa groups.
 <Example>
 <![CDATA[
 gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
@@ -1428,22 +1428,22 @@ gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
 IdentityMapping( Integers )
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Oper Name ="Restriction" Arg="G, f"
-          Label="Restriction of an rcwa group"/>
-    <Returns> The restriction of <A>G</A> by&nbsp;<A>f</A>. </Returns>
-    <Description>
-      The mapping <A>f</A> has to be injective.
-      The returned group acts on the image of <A>f</A> and fixes its
-      complement pointwise. If <A>f</A> is bijective the returned
-      group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
-      The elements of the restricted group are just the restrictions
-      of the elements of <A>G</A> by <A>f</A>. For a definition see
-      <Ref Oper="Restriction" Label="Restriction of an rcwa mapping"/>
-      for rcwa mappings.
+<ManSection>
+  <Oper Name ="Restriction" Arg="G, f"
+        Label="Restriction of an rcwa group"/>
+  <Returns> The restriction of <A>G</A> by&nbsp;<A>f</A>. </Returns>
+  <Description>
+    The mapping <A>f</A> has to be injective.
+    The returned group acts on the image of <A>f</A> and fixes its
+    complement pointwise. If <A>f</A> is bijective the returned
+    group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
+    The elements of the restricted group are just the restrictions
+    of the elements of <A>G</A> by <A>f</A>. For a definition see
+    <Ref Oper="Restriction" Label="Restriction of an rcwa mapping"/>
+    for rcwa mappings.
 <Example>
 <![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
@@ -1452,22 +1452,22 @@ gap> MovedPoints(G);
 3(5)
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
-  Restriction monomorphisms allow us to form direct products of any
-  rcwa groups (regardless of whether they are tame or not):
+Restriction monomorphisms allow us to form direct products of any
+rcwa groups (regardless of whether they are tame or not):
 
-  <ManSection>
-    <Oper Name ="DirectProduct" Arg="G1, G2, ..."/>
-    <Returns>
-      The direct product of the rcwa groups over&nbsp;<M>\Z</M>
-      given as arguments.
-    </Returns>
-    <Description>
-      As there is no unique or canonical way to embed a direct product
-      of rcwa groups into RCWA(<M>R</M>), this method may choose any
-      such embedding.
+<ManSection>
+  <Oper Name ="DirectProduct" Arg="G1, G2, ..."/>
+  <Returns>
+    The direct product of the rcwa groups over&nbsp;<M>\Z</M>
+    given as arguments.
+  </Returns>
+  <Description>
+    As there is no unique or canonical way to embed a direct product
+    of rcwa groups into RCWA(<M>R</M>), this method may choose any
+    such embedding.
 <Example>
 <![CDATA[
 gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));
@@ -1489,8 +1489,8 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 [ 0(3), 1(3), 2(3) \ [ -1, 2 ] ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 
 </Section>
 
@@ -1499,65 +1499,65 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 <Section Label="sec:CategoriesOfRcwaGroups">
 <Heading>The categories of rcwa groups</Heading>
 
-  <ManSection>
-    <Filt Name="IsRcwaGroup" Arg="G"/>
-    <Returns>
-      <C>true</C> if <A>G</A> is an rcwa group and
-      <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      The category of all rcwa groups.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Filt Name="IsRcwaGroup" Arg="G"/>
+  <Returns>
+    <C>true</C> if <A>G</A> is an rcwa group and
+    <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    The category of all rcwa groups.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Filt Name="IsIntegralRcwaGroup" Arg="G"/>
-    <Returns>
-      <C>true</C> if <A>G</A> is an rcwa group over the ring of integers
-      and <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      The category of all rcwa groups over the ring of integers.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Filt Name="IsIntegralRcwaGroup" Arg="G"/>
+  <Returns>
+    <C>true</C> if <A>G</A> is an rcwa group over the ring of integers
+    and <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    The category of all rcwa groups over the ring of integers.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Fam Name="IntegralRcwaGroupsFamily"/>
-    <Description>
-      The family of all rcwa groups over the ring of integers.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Fam Name="IntegralRcwaGroupsFamily"/>
+  <Description>
+    The family of all rcwa groups over the ring of integers.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Var Name="TrivialIntegralRcwaGroup"/>
-    <Description>
-      The trivial rcwa group over the ring of integers.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Var Name="TrivialIntegralRcwaGroup"/>
+  <Description>
+    The trivial rcwa group over the ring of integers.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G"/>
-    <Returns>
-      <C>true</C> if <A>G</A> is an rcwa group over a semilocalization
-      of the ring of integers and <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      The category of all rcwa groups over semilocalizations of the
-      ring of integers.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G"/>
+  <Returns>
+    <C>true</C> if <A>G</A> is an rcwa group over a semilocalization
+    of the ring of integers and <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    The category of all rcwa groups over semilocalizations of the
+    ring of integers.
+  </Description>
+</ManSection>
 
-  <ManSection>
-    <Filt Name="IsModularRcwaGroup" Arg="G"/>
-    <Returns>
-      <C>true</C> if <A>G</A> is an rcwa group over a polynomial ring in
-      one variable over a finite field and <C>false</C> otherwise.
-    </Returns>
-    <Description>
-      The category of all rcwa groups over polynomial rings in one variable
-      over some finite field.
-    </Description>
-  </ManSection>
+<ManSection>
+  <Filt Name="IsModularRcwaGroup" Arg="G"/>
+  <Returns>
+    <C>true</C> if <A>G</A> is an rcwa group over a polynomial ring in
+    one variable over a finite field and <C>false</C> otherwise.
+  </Returns>
+  <Description>
+    The category of all rcwa groups over polynomial rings in one variable
+    over some finite field.
+  </Description>
+</ManSection>
 
 </Section>
 

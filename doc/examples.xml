@@ -23,11 +23,11 @@ type in the whole path name - see <Ref Func="RCWAReadExamples"/>.
   An rcwa mapping which seems to be contracting, but very slow
 </Heading>
 
-  The iterates of an integer under the Collatz mapping <M>T</M> seem to
-  approach its contraction centre -- this is the finite set where all
-  trajectories end up after a finite number of steps -- rather quickly and
-  do not get very large before doing so (of course this is a purely heuristic
-  statement as the Collatz conjecture has not been proved so far!):
+The iterates of an integer under the Collatz mapping <M>T</M> seem to
+approach its contraction centre -- this is the finite set where all
+trajectories end up after a finite number of steps -- rather quickly and
+do not get very large before doing so (of course this is a purely heuristic
+statement as the Collatz conjecture has not been proved so far!):
 
 <Example>
 <![CDATA[
@@ -59,8 +59,8 @@ gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0,"stop"))));
 ]]>
 </Example>
 
-  We can give an example of another mapping which is probably also
-  contracting, but yields much longer trajectories:
+We can give an example of another mapping which is probably also
+contracting, but yields much longer trajectories:
 
 <Log>
 <![CDATA[
@@ -106,15 +106,15 @@ gap> 2^f6;
 ]]>
 </Log>
 
-  The computation of the trajectory starting at 3224 is a test whether your
-  computer is well-equipped with main memory -- as the trajectory ascends to
-  about <M>3 \cdot 10^{2197}</M> before descending again this might require
-  roughly 10GB (of course when I computed this sequence I did not store all
-  the iterates ...).
+The computation of the trajectory starting at 3224 is a test whether your
+computer is well-equipped with main memory -- as the trajectory ascends to
+about <M>3 \cdot 10^{2197}</M> before descending again this might require
+roughly 10GB (of course when I computed this sequence I did not store all
+the iterates ...).
 
-  An heuristic <Q>explanation</Q> of this behaviour is that the divergence
-  of <C>f6</C> is much closer to 1 than the one of the Collatz mapping
-  <M>T</M> is:
+An heuristic <Q>explanation</Q> of this behaviour is that the divergence
+of <C>f6</C> is much closer to 1 than the one of the Collatz mapping
+<M>T</M> is:
 
 <Log>
 <![CDATA[
@@ -125,11 +125,11 @@ gap> Divergence(f6);
 ]]>
 </Log>
 
-  In order to construct the mapping <C>f6</C> we have chosen the denominators
-  of the partial mappings to be equal and the numerators to be numbers
-  coprime to the common denominator whose product is just a little bit
-  smaller than the <C>Modulus(f6)</C>th power of the denominator -- in our
-  example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M> and <M>6^6 = 46656</M>.
+In order to construct the mapping <C>f6</C> we have chosen the denominators
+of the partial mappings to be equal and the numerators to be numbers
+coprime to the common denominator whose product is just a little bit
+smaller than the <C>Modulus(f6)</C>th power of the denominator -- in our
+example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M> and <M>6^6 = 46656</M>.
 
 </Section>
 
@@ -197,8 +197,8 @@ gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),20,"length");
 </Example>
 
 We can easily recognize the pattern which Matthews and Leigh used
-to show the divergence of the above trajectories -- in some sense
-we have a look at the corresponding Markov chains with the two states
+to show the divergence of the above trajectories when we have a look
+at the corresponding Markov chains with the two states
 0&nbsp;mod&nbsp;<M>x</M> and 1&nbsp;mod&nbsp;<M>x</M>:
 
 <Example>
@@ -251,6 +251,11 @@ gap> Diffs(ChangePoints(last)); # Make this a bit more obvious.
 ]]>
 </Example>
 
+This looks clearly acyclic, thus the trajectories diverge.
+Needless to say however that this computational evidence does not replace
+the proof along these lines given in the article cited above, but just
+sheds a light on the idea behind it.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -261,16 +266,17 @@ gap> Diffs(ChangePoints(last)); # Make this a bit more obvious.
 </Heading>
 
 It is not easy to find tame mappings whose product is not balanced, i.e.
-has primes dividing only the multiplier and not the divisor or vice versa --
-but however it is even possible to find such mappings of finite order
-whose product has furthermore even coprime multiplier and divisor.
+there are primes dividing only the multiplier and not the divisor or vice
+versa -- but however it is even possible to find such mappings of finite
+order whose product has furthermore even coprime multiplier and divisor.
 This is interesting in the context of the question how a non-trivial normal
 subgroup of RCWA(<M>\Z</M>) would have to look like provided that it exists.
 From the existence of mappings having the mentioned properties we can
 conclude that the mappings having non-coprime multiplier and divisor do not
-even form a subgroup and that furthermore it is unlikely that a normal
-subgroup is characterized by certain divisibility criteria of multiplier and
-divisor. We also would like to emphasize that all steps in the direction of
+even form a subgroup and together with some bits of knowledge we get
+elsewhere that furthermore it is unlikely that a normal subgroup is
+characterized by certain divisibility criteria of multiplier and divisor.
+We also would like to emphasize that all steps in the direction of
 determining necessary conditions which a normal subgroup must satisfy are
 not very large, regardless of whether they are based on theoretical or
 computational investigations, but that altogether we already have a
@@ -592,6 +598,9 @@ It seems quite likely that this way we can continue successively splitting
 off mappings of larger and larger finite order, and that this yields a
 decomposition of <C>f23</C> into an infinite number of disjoint <Q>residue
 class cycles</Q> like <C>cyc1</C> and <C>cyc2</C> above.
+We will continue our investigations of the <Q>phenomenon</Q> of
+wild mappings having only finite cycles in
+Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
 
 </Section>
 
@@ -706,19 +715,19 @@ are also not all quite <Q>small</Q>.
 <Section Label="sec:WildButFiniteCycles">
 <Heading>A wild rcwa mapping which has only finite cycles</Heading>
 
-  In Section <Ref Label="sec:WildProductOfInvolutions"/> we have seen
-  examples of wild rcwa mappings of <M>\mathbb{Z}</M> which seem to have
-  only finite cycles. In this section we give and examine a mapping which
-  can be shown to have these properties and is likely to be something like
-  a <Q>minimal</Q> example.
-  In the Introduction (<Ref Label="ch:Introduction"/>) we have seen an
-  example of such an element of RCWA(GF(2)[<M>x</M>]).
-  It was easy to explain this <Q>phenomenon</Q> by pointing out that
-  the degree function gives rise to a partition of GF(2)[<M>x</M>] into
-  finite sets which is left invariant by the given permutation.
-  Regarding <M>\mathbb{Z}</M> however the situation looks completely
-  different -- we do not have a <Q>natural</Q> partition into finite sets
-  which might be fixed by a wild rcwa mapping.
+In Section <Ref Label="sec:WildProductOfInvolutions"/> we have seen
+examples of wild rcwa mappings of <M>\mathbb{Z}</M> which seem to have
+only finite cycles. In this section we give and examine a mapping which
+can be shown to have these properties and is likely to be something like
+a <Q>minimal</Q> example.
+In the Introduction (<Ref Label="ch:Introduction"/>) we have seen an
+example of such an element of RCWA(GF(2)[<M>x</M>]).
+It was easy to explain this <Q>phenomenon</Q> by pointing out that
+the degree function gives rise to a partition of GF(2)[<M>x</M>] into
+finite sets which is left invariant by the given permutation.
+Regarding <M>\mathbb{Z}</M> however the situation looks completely
+different -- we do not have a <Q>natural</Q> partition into finite sets
+which might be fixed by a wild rcwa mapping.
 
 <Example>
 <![CDATA[
@@ -952,10 +961,10 @@ thereof acting transitively, but not primitively on 512 points.
 <Section Label="sec:SubgroupOfS9">
 <Heading>An rcwa representation of a small group</Heading>
 
-  We give an rcwa representation of the 3-Sylow-subgroup of the symmetric
-  group on 9 points. Certainly this group has a very nice permutation
-  representation, hence for computational purposes we do not gain anything
-  here.
+We give an rcwa representation of the 3-Sylow-subgroup of the symmetric
+group on 9 points. Certainly this group has a very nice permutation
+representation, hence for computational purposes we do not gain anything
+here.
 
 <Example>
 <![CDATA[
@@ -1008,9 +1017,9 @@ gap> (1,2,3)^phi;
   An rcwa representation of the symmetric group on 10 points
 </Heading>
 
-  We start by defining some bijections of infinite order and computing
-  commutators (the mapping <M>a</M> has already been discussed briefly
-  in the Introduction (<Ref Label="ch:Introduction"/>)):
+We start by defining some bijections of infinite order and computing
+commutators (the mapping&nbsp;<M>a</M> has already been discussed briefly
+in the Introduction&nbsp;(<Ref Label="ch:Introduction"/>)):
 
 <Example>
 <![CDATA[
@@ -1047,8 +1056,8 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
 ]]>
 </Example>
 
-  ... form the group generated by [ <A>a</A>, <A>b</A> ]
-  and [ <A>a</A>, <A>c</A> ] and compute its action on one of its orbits:
+... form the group generated by [ <A>a</A>, <A>b</A> ]
+and [ <A>a</A>, <A>c</A> ] and compute its action on one of its orbits:
 
 <Example>
 <![CDATA[
@@ -1065,12 +1074,12 @@ gap> Size(G); # G acts faithful on orb.
 ]]>
 </Example>
 
-  Hence the group <A>G</A> is isomorphic to the symmetric group on 10 points
-  and acts faithfully on the orbit containing 1.
+Hence the group <A>G</A> is isomorphic to the symmetric group on 10 points
+and acts faithfully on the orbit containing 1.
 
-  We also would like to know which groups arise if we take as generators
-  either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping <A>t</A>, which
-  maps each integer to its additive inverse:
+We also would like to know which groups arise if we take as generators
+either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping <A>t</A>, which
+maps each integer to its additive inverse:
 
 <Example>
 <![CDATA[
@@ -1089,10 +1098,10 @@ true
 ]]>
 </Example>
 
-  Thus the group generated by <A>ab</A> and <A>t</A> is isomorphic to 
-  <Alt Only="LaTeX"><M>{\rm C}_2 \times {\rm S}_{10}</M></Alt>
-  <Alt Not="LaTeX"><M>C_2 x S_{10}</M></Alt>.
-  The next group is an extension of a perfect group of order 960:
+Thus the group generated by <A>ab</A> and <A>t</A> is isomorphic to 
+<Alt Only="LaTeX"><M>{\rm C}_2 \times {\rm S}_{10}</M></Alt>
+<Alt Not="LaTeX"><M>C_2 x S_{10}</M></Alt>.
+The next group is an extension of a perfect group of order 960:
 
 <Example>
 <![CDATA[
@@ -1112,7 +1121,7 @@ A5 2^4'
 ]]>
 </Example>
 
-  The last group is infinite:
+The last group is infinite:
 
 <Example>
 <![CDATA[
@@ -1320,9 +1329,9 @@ Bijective rcwa mapping of Z_( 2 ) with modulus 8
   Twisting 257-cycles into an rcwa mapping with modulus 32
 </Heading>
 
-  We define an rcwa mapping <A>x</A> of order 257 with modulus 32
-  (the easiest way to construct such a mapping is to prescribe the
-  graph and then to assign suitable affine mappings to its vertices).
+We define an rcwa mapping <A>x</A> of order&nbsp;257 with modulus&nbsp;32
+(the easiest way to construct such a mapping is to prescribe the
+graph and then to assign suitable affine mappings to its vertices).
 
 <Example>
 <![CDATA[
@@ -1401,9 +1410,9 @@ gap> Length(last);
 <Section Label="sec:ModuliOfPowers">
 <Heading> The behaviour of the moduli of powers </Heading>
 
-  In this section we give some examples illustrating how different the
-  series of the moduli of powers of a given rcwa mapping of the integers
-  can look like.
+In this section we give some examples illustrating how different the
+series of the moduli of powers of a given rcwa mapping of the integers
+can look like.
 
 <Example>
 <![CDATA[
@@ -1488,8 +1497,8 @@ true
 <Section Label="sec:CollatzImagesAndPreImages">
 <Heading> Images and preimages under the Collatz mapping </Heading>
 
-  We would like to have a look at the images of the residue class 1(2)
-  under powers of the Collatz mapping.
+We would like to have a look at the images of the residue class 1(2)
+under powers of the Collatz mapping.
 
 <Example>
 <![CDATA[
@@ -1513,13 +1522,13 @@ gap> S7 := S6^T;
 ]]>
 </Example>
 
-  We see that the image gets stable after applying the mapping <M>T</M> for
-  the 6th time, hence that <M>T^6</M> maps the residue class 1(2)
-  surjectively onto the union of the residue classes 1(3) and 2(3), which is
-  setwisely stabilized by <M>T</M>.
-  Now we would like to determine the preimages of 1(3) resp. 2(3) in 1(2)
-  under <M>T^6</M>. The residue class 1(2) has to be the disjoint union of
-  these sets.
+We see that the image gets stable after applying the mapping <M>T</M> for
+the 6th time, hence that <M>T^6</M> maps the residue class 1(2)
+surjectively onto the union of the residue classes 1(3) and 2(3), which is
+setwisely stabilized by <M>T</M>.
+Now we would like to determine the preimages of 1(3) resp. 2(3) in 1(2)
+under <M>T^6</M>. The residue class 1(2) has to be the disjoint union of
+these sets.
 
 <Example>
 <![CDATA[
@@ -1548,8 +1557,8 @@ true
 ]]>
 </Example>
 
-  Now we want to determine the images of the residue class 0(3) under
-  powers of <M>T</M>:
+Now we want to determine the images of the residue class 0(3) under
+powers of&nbsp;<M>T</M>:
 
 <Example>
 <![CDATA[
@@ -1572,10 +1581,10 @@ Integers
 ]]>
 </Example>
 
-  Thus, every integer is the image of a multiple of 3 under <M>T^6</M>.
-  This means that it would be sufficient to prove the Collatz conjecture
-  for multiples of 3.
-  We can obtain the corresponding result for multiples of 5 as follows:
+Thus, every integer is the image of a multiple of&nbsp;3
+under&nbsp;<M>T^6</M>. This means that it would be sufficient to prove the
+Collatz conjecture for multiples of&nbsp;3.
+We can obtain the corresponding result for multiples of&nbsp;5 as follows:
 
 <Example>
 <![CDATA[
@@ -1611,11 +1620,11 @@ gap> List(S,Si->Float(Density(Si)));
 <Section Label="sec:CollatzMapping">
 <Heading>Replacing the Collatz mapping by conjugates</Heading>
 
-  This is probably not the most interesting application of this package,
-  but we can turn the Collatz-problem into an equivalent question by
-  replacing the Collatz mapping <A>T</A> by one of its conjugates under an
-  element of the pointwise stabilizer of 1 in the setwise stabilizer of the
-  positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:
+This is probably not the most interesting application of this package,
+but we can turn the Collatz-problem into an equivalent question by
+replacing the Collatz mapping <A>T</A> by one of its conjugates under an
+element of the pointwise stabilizer of 1 in the setwise stabilizer of the
+positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:
 
 <Example>
 <![CDATA[
@@ -1624,7 +1633,7 @@ gap> T := RcwaMapping([[1,0,2],[3,1,2]]);
 ]]>
 </Example>
 
-  A suitable bijection:
+A suitable bijection:
 
 <Example>
 <![CDATA[
@@ -1637,8 +1646,8 @@ gap> 1^a; # The mapping a stabilizes 1
 ]]>
 </Example>
 
-  Some evidence that <A>a</A> stabilizes the set of positive integers (this
-  certainly can be proved easily ...):
+Some evidence that <A>a</A> stabilizes the set of positive integers
+(of course this can be proved easily ...):
 
 <Example>
 <![CDATA[
@@ -1649,7 +1658,7 @@ gap> List([1..50],n->n^a);
 ]]>
 </Example>
 
-  Compute <M>T^a</M>:
+Compute <M>T^a</M>:
 
 <Example>
 <![CDATA[
@@ -1670,7 +1679,7 @@ Rcwa mapping of Z with modulus 12
 ]]>
 </Example>
 
-  Have a look at resulting integer sequences:
+Have a look at resulting integer sequences:
 
 <Example>
 <![CDATA[
@@ -1697,4 +1706,3 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
-
