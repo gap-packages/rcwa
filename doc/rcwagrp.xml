@@ -73,9 +73,12 @@ gap> List(DerivedSeries(H),Size);
   <ManSection>
     <Attr Name="IsomorphismIntegralRcwaGroup" Arg="G"/>
     <Attr Name="IsomorphismRcwaGroup" Arg="G"/>
+    <Returns>
+      a faithful integral rcwa representation of the group&nbsp;<A>G</A>,
+      thus a monomorphism from <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
+    </Returns>
     <Description>
-      A faithful integral rcwa representation of the group <A>G</A>.
-      Currently only supported for finite groups.
+      Currently this is only supported for finite groups.
 <Example>
 <![CDATA[
 gap> G := GL(2,5);
@@ -127,6 +130,7 @@ true
 
   <ManSection>
     <Meth Name="Display" Arg="G"/>
+    <Returns> nothing. </Returns>
     <Description>
       Displays the rcwa group <A>G</A> in a human-readable form.
 <Example>
@@ -238,11 +242,11 @@ true
 
   <ManSection>
     <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
-    <Returns>the prime set of the rcwa group <A>G</A>.</Returns>
+    <Returns> the prime set of the rcwa group <A>G</A>. </Returns>
     <Description>
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
-
-      See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa mapping"/>
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+      See also&nbsp;<Ref Oper="PrimeSet"
+                         Label="Prime set of an rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
@@ -257,10 +261,13 @@ gap> PrimeSet(H);
 
   <ManSection>
     <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
+    <Returns>
+      <C>true</C> if the rcwa group&nbsp;<A>G</A> is integral and
+      <C>false</C> otherwise.
+    </Returns>
     <Description>
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
-
-      See also <Ref Prop="IsIntegral" Label="Integral mapping"/>
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+      See also&nbsp;<Ref Prop="IsIntegral" Label="Integral mapping"/>
       for rcwa mappings.
     </Description>
   </ManSection>
@@ -268,10 +275,13 @@ gap> PrimeSet(H);
   <ManSection>
     <Prop Name ="IsClassWiseOrderPreserving" Arg="G"
           Label="Class-wise order-preserving rcwa group"/>
+    <Returns>
+      <C>true</C> if the rcwa group&nbsp;<A>G</A> is class-wise
+      order-preserving and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Indicates whether the rcwa group <A>G</A> is class-wise
-      order-preserving or not. Of course this term is defined only
-      if the underlying ring is ordered. <P/>
+      Of course the term <E>class-wise order-preserving</E> is defined
+      only for rcwa groups over ordered rings, e.g. over <M>\ZZ</M>. <P/>
 
       See also <Ref Prop ="IsClassWiseOrderPreserving"
                     Label="Class-wise order-preserving rcwa mapping"/>
@@ -303,6 +313,10 @@ false
   <Index Key="rcwa group" Subkey="element testing"></Index>
   <ManSection>
     <Meth Name="\in" Arg="g, G"/>
+    <Returns>
+      <C>true</C> if the rcwa mapping&nbsp;<A>g</A> is an element of the
+      rcwa group&nbsp;<A>G</A> and <C>false</C> if not.
+    </Returns>
     <Description>
       Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
       This will be successful if <A>G</A> is tame. For wild groups only a
@@ -321,7 +335,7 @@ false
 
   <ManSection>
     <Meth Name="Size" Arg="G"/>
-    <Returns> the order of the rcwa group <A>G</A>. </Returns>
+    <Returns> the order of the rcwa group&nbsp;<A>G</A>. </Returns>
     <Description>
       In rare cases this can be probabilistic, increase the Info level of
       <C>InfoRCWA</C> ( see <Ref Label="sec:TheInfoClass"/> ) to get
@@ -338,7 +352,7 @@ gap> Size(G);
   <ManSection>
     <Meth Name="IsomorphismPermGroup" Arg="G"/>
     <Returns>
-      an isomorphism from the finite rcwa group <A>G</A> to some
+      an isomorphism from the finite rcwa group&nbsp;<A>G</A> to some
       permutation group.
     </Returns>
     <Description>
@@ -358,7 +372,7 @@ gap> phi := IsomorphismPermGroup(H);
   <ManSection>
     <Attr Name="IsomorphismMatrixGroup" Arg="G"/>
     <Returns>
-      an isomorphism from the rcwa group <A>G</A> to some matrix group.
+      an isomorphism from the rcwa group&nbsp;<A>G</A> to some matrix group.
     </Returns>
     <Description>
       The group <A>G</A> must be tame.
@@ -425,9 +439,9 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
     <Meth Name ="PreImagesRepresentative" Arg="phi, g"
           Label="PreImagesRepresentative (element factorization)"/>
     <Returns>
-      a representative of the set of preimages of <A>g</A> under the
-      homomorphism <A>phi</A> from a free group to an rcwa group over
-      <M>\mathbb{Z}</M>.
+      a representative of the set of preimages of&nbsp;<A>g</A> under
+      the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group
+      over&nbsp;<M>\mathbb{Z}</M>.
     </Returns>
     <Description>
       This method can be used for factoring elements of rcwa groups
@@ -478,9 +492,9 @@ IdentityMapping( Integers )
   <ManSection>
     <Oper Name ="PreImagesRepresentatives" Arg="phi, g"/>
     <Returns>
-      a list of representatives of the set of preimages of <A>g</A> under
-      the homomorphism <A>phi</A> from a free group to an rcwa group over
-      <M>\mathbb{Z}</M>.
+      a list of representatives of the set of preimages of&nbsp;<A>g</A>
+      under the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa
+      group over&nbsp;<M>\mathbb{Z}</M>.
     </Returns>
     <Description>
       Quite frequently, computing several preimages is not harder than
@@ -551,7 +565,7 @@ IdentityMapping( Integers )
   <ManSection>
     <Meth Name="MovedPoints" Arg="G"/>
     <Returns>
-      the set of moved points (support) of the rcwa group <A>G</A>.
+      the set of moved points (support) of the rcwa group&nbsp;<A>G</A>.
     </Returns>
     <Description>
 <Example>
@@ -566,10 +580,13 @@ gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
 
   <ManSection>
     <Meth Name="IsTransitive" Arg="G, Integers"/>
+    <Returns>
+      <C>true</C> if the rcwa group&nbsp;<A>G</A> acts transitive
+      on&nbsp;<M>\Z</M> and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Tries to determine whether the rcwa group <A>G</A> acts transitive on
-      the integers. Depending on the particular group this might fail or
-      run into an infinite loop, but for tame groups things should work.
+      Depending on the particular group this might fail or run into an
+      infinite loop, but for tame groups things should work.
 <Log>
 <![CDATA[
 gap> G := Group(g,h);;
@@ -598,8 +615,8 @@ gap> RCWAInfo(0);
   <ManSection>
     <Meth Name="RepresentativeAction" Arg="G, src, dest, act"/>
     <Returns>
-      an element of <A>G</A> that maps <A>src</A> to <A>dest</A>
-      under the action given by <A>act</A>.
+      an element of <A>G</A> that maps <A>src</A> to&nbsp;<A>dest</A>
+      under the action given by&nbsp;<A>act</A>.
     </Returns>
     <Description>
       If an element satisfying this condition does not exist, this method
@@ -714,7 +731,8 @@ a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
   <ManSection>
     <Meth Name="RepresentativeAction" Arg="G, P1, P2"/>
     <Returns>
-      an element of <A>G</A> which maps the partition <A>P1</A> to <A>P2</A>.
+      an element of <A>G</A> which maps the partition&nbsp;<A>P1</A>
+      to&nbsp;<A>P2</A>.
     </Returns>
     <Description>
       The arguments <A>P1</A> and <A>P2</A> must be partitions of the
@@ -761,9 +779,9 @@ gap> Length(P);
   <ManSection>
     <Oper Name="ShortOrbits" Arg="G, S, maxlng"/>
     <Returns>
-      a list of all finite orbits of the rcwa group <A>G</A> of maximal
-      length <A>maxlng</A>, which intersect non-trivially with the set
-      <A>S</A>.
+      a list of all finite orbits of the rcwa group&nbsp;<A>G</A> of maximal
+      length&nbsp;<A>maxlng</A>, which intersect non-trivially with the
+      set&nbsp;<A>S</A>.
     </Returns>
     <Description>
 <Example>
@@ -798,8 +816,8 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     <Meth Name ="OrbitsModulo" Arg="G, m"
           Label="OrbitsModulo for rcwa group"/>
     <Returns>
-      `the set of orbits on the set of residue classes (mod <A>m</A>)
-      under the action of <A>G</A>'.
+      `the set of orbits on the set of residue classes (mod&nbsp;<A>m</A>)
+      under the action of&nbsp;<A>G</A>'.
     </Returns>
     <Description>
       This method computes a partition of <C>AllResidues( R, <A>m</A> )</C>
@@ -835,13 +853,15 @@ gap> OrbitsModulo(G,72);
   <ManSection>
     <Attr Name ="RespectedClassPartition" Arg="sigma"
           Label="Respected class partition of rcwa mapping"/>
+    <Returns>
+      a <E>respected partition</E> of <A>sigma</A>, i.e. a partition of the
+      base ring&nbsp;<M>R</M> into a finite number of residue classes on
+      which the bijective mapping&nbsp;<A>sigma</A> acts as a permutation,
+      and on those elements&nbsp;<A>sigma</A> is affine.
+    </Returns>
     <Description>
-      A partition of the base ring <M>R</M> into a finite number of residue
-      classes on which the bijective mapping <A>sigma</A> acts as a
-      permutation, and on those elements <A>sigma</A> is affine.
-      Such a partition exists if and only if <A>sigma</A> is tame. <P/>
-
-      See also <Ref Attr="RespectedClassPartition"
+      Such a partition exists if and only if <A>sigma</A> is tame.
+      See also&nbsp;<Ref Attr="RespectedClassPartition"
       Label="Respected class partition of rcwa group"/>
       for rcwa groups.
 <Example>
@@ -860,15 +880,18 @@ gap> Permutation(g,rcp);
   <ManSection>
     <Attr Name ="RespectedClassPartition" Arg="G"
           Label="Respected class partition of rcwa group"/>
+    <Returns>
+      a <E>respected partition</E> of <A>G</A>, i.e. a partition of the
+      base ring&nbsp;<M>R</M> into a finite number of residue classes on
+      which the group&nbsp;<A>G</A> acts as a permutation group, and on
+      those elements all elements of&nbsp;<A>G</A> are affine.
+    </Returns>
     <Description>
-      A partition of the base ring <M>R</M> into a finite number of residue
-      classes, on which the group <A>G</A> acts as a permutation group, and
-      on those elements all elements of <A>G</A> are affine.
-      The partition is non-trivial as long as the modulus of <A>G</A> is not
-      equal to 1. Such a partition exists if and only if <A>G</A> is tame.
-
-      See also <Ref Attr ="RespectedClassPartition"
-                    Label="Respected class partition of rcwa mapping"/>
+      The partition is non-trivial provided that the modulus of&nbsp;<A>G</A>
+      is not equal to&nbsp;1. Such a partition exists if and only
+      if&nbsp;<A>G</A> is tame.
+      See also&nbsp;<Ref Attr ="RespectedClassPartition"
+                         Label="Respected class partition of rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[

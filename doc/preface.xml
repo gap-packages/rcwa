@@ -82,7 +82,7 @@ We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
 affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
 modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
 there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
-the restriction of <M>f</M> to <M>r(m)</M> is given by <P/>
+the restriction of <M>f</M> to the set&nbsp;<M>r(m)</M> is given by <P/>
 <Alt Only="Text"> 
   <![CDATA[
 
@@ -120,8 +120,8 @@ we mean its inverse mapping. <P/>
 The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>)
 <M>\ | \ g</M> is residue class-wise affine <M>\}</M> } is closed under
 multiplication and taking inverses (this can be verified easily), hence
-forms a subgroup of Sym(<M>R</M>). For reasons of cardinality this
-subgroup is proper.
+forms a subgroup of Sym(<M>R</M>). By comparing cardinalities we find that
+this subgroup is proper.
 <Index Key="rcwa group" Subkey="definition"></Index>
 We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
 group, or in short an <E>rcwa</E> group. <P/>
