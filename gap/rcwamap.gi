@@ -1268,6 +1268,15 @@ InstallMethod( IsFlat,
 
 #############################################################################
 ##
+#M  IsBalanced( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( IsBalanced,
+               "RCWA: for rcwa mappings", true, [ IsRcwaMapping ], 0,
+
+  f -> Set( Factors( Multiplier( f ) ) ) = Set( Factors( Divisor( f ) ) ) );
+
+#############################################################################
+##
 #M  IsClassWiseOrderPreserving( <f> ) . . . for "rational-based" rcwa mapping
 ##
 InstallMethod( IsClassWiseOrderPreserving,
@@ -2882,6 +2891,7 @@ InstallMethod( Restriction,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 

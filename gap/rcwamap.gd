@@ -278,6 +278,15 @@ DeclareProperty( "IsFlat", IsRcwaMapping );
 
 #############################################################################
 ##
+#P  IsBalanced( <f> ) . .  indicates whether or not <f> is a balanced mapping
+##
+##  We say that an rcwa mapping is *balanced* if and only if its multiplier
+##  and its divisor have the same prime divisors.
+##
+DeclareProperty( "IsBalanced", IsRcwaMapping );
+
+#############################################################################
+##
 #P  IsClassWiseOrderPreserving( <f> ) .  is <f> class-wise order-preserving ?
 ##
 ##  Indicates whether or not the rational-based rcwa mapping <f> is
@@ -489,6 +498,7 @@ DeclareOperation( "Restriction",
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
