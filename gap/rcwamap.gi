@@ -1544,17 +1544,27 @@ InstallOtherMethod( ImagesSet,
 
 #############################################################################
 ##
-#M  \^( <S>, <f> ) . . . . . . . . . . . . . . . . . for set and rcwa mapping
+#M  \^( <S>, <f> ) . . . . . . .  for set or class partition and rcwa mapping
 ##
-##  Image of the set <S> under the rcwa mapping <f>.
-##  In particular, <S> can be a union of residue classes.
+##  Image of the set or class partition <S> under the rcwa mapping <f>.
+##
+##  The argument <S> can be: 
+##
+##  - A finite set of elements of the source of <f>.
+##  - A union of residue classes of the source of <f>.
+##  - A partition of the source of <f> into (unions of) residue classes (in
+##    this case the <i>th element of the result is the image of <S>[<i>]).
 ##
 InstallOtherMethod( \^,
-                    "for set and rcwa mapping (RCWA)",
+                    "for set or class partition and rcwa mapping (RCWA)",
                     ReturnTrue, [ IsListOrCollection, IsRcwaMapping ], 0,
 
   function ( S, f )
-    return ImagesSet( f, S );
+    if   IsSubset(Source(f),S)
+    then return ImagesSet( f, S );
+    elif IsList(S) and ForAll(S,set->IsSubset(Source(f),set))
+    then return List(S,set->set^f);
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
