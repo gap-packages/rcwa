@@ -22,9 +22,9 @@ In order to define an rcwa mapping we need to know about the following:
 
   <Mark>Underlying Ring</Mark>
   <Item>
-    The underlying ring <M>R</M> is stored as the <C>UnderlyingRing</C> of
-    the family the rcwa mapping object belongs to, and as the value of the
-    attribute <C>Source</C>.
+    The underlying ring&nbsp;<M>R</M> is stored as the <C>UnderlyingRing</C>
+    of the family the rcwa mapping object belongs to, and as the value of
+    the attribute <C>Source</C>.
   </Item>
 
   <Mark>Modulus</Mark>
@@ -37,14 +37,14 @@ In order to define an rcwa mapping we need to know about the following:
   <Item>
     The list of coefficients is stored as a component <A>coeffs</A>
     in any rcwa mapping object. The component <A>coeffs</A> is a list of
-    <M>|R</M>/<A>modulus</A><M>R|</M> lists of three elements of <A>R</A>,
-    each, giving the coefficients <M>a_r</M>, <M>b_r</M> and <M>c_r</M>
-    (cp. the definition of an rcwa mapping in the Preface
-    (<Ref Label="ch:preface"/>)) for <M>r</M> running through a set of
-    representatives for the residue classes (mod <A>modulus</A>).
+    <M>|R</M>/<A>modulus</A><M>R|</M> lists of three elements
+    of&nbsp;<A>R</A>, each, giving the coefficients <M>a_r</M>, <M>b_r</M>
+    and&nbsp;<M>c_r</M> (cp. the definition of an rcwa mapping in the
+    Preface&nbsp;(<Ref Label="ch:preface"/>)) for <M>r</M> running through a
+    set of representatives for the residue classes (mod&nbsp;<A>modulus</A>).
     The ordering of these triples is defined by the ordering of the
-    residues <M>r</M> mod <A>modulus</A> in the return value of
-    <C>AllResidues( <A>R</A>, <A>modulus</A> )</C>
+    residues <M>r</M>&nbsp;mod&nbsp;<A>modulus</A> in the return value of
+    <C>AllResidues(<A>R</A>,<A>modulus</A>)</C>
     (see <Ref Func="AllResidues"/>).
   </Item>
 
@@ -59,13 +59,13 @@ In order to define an rcwa mapping we need to know about the following:
   <Description>
     The list returned by this function defines the ordering in which the
     coefficients of an rcwa mapping are stored,
-    cp. <Ref Meth="RcwaMapping"/>. 
-    Thus if <A>f</A> is an rcwa mapping of <A>R</A> with modulus <A>m</A>
-    and coefficients list <A>c</A>, then <A>f</A> maps an element <A>n</A>
-    of <A>R</A> satisfying <A>n</A> mod <A>m</A> = <A>r</A> to
-    <C>(c[Position(res,r)][1]*n + c[Position(res,r)][2]) /
-        c[Position(res,r)][3]</C>,
-    where <C>res = AllResidues( <A>R</A>, <A>m</A> )</C> denotes the list
+    cp. <Ref Meth="RcwaMapping"/>.  Thus if <A>f</A> is an rcwa mapping
+    of&nbsp;<A>R</A> with modulus&nbsp;<A>m</A> and coefficients
+    list&nbsp;<A>c</A>, then <A>f</A> maps an element <A>n</A> of
+    <A>R</A> satisfying <A>n</A>&nbsp;mod&nbsp;<A>m</A>&nbsp;=&nbsp;<A>r</A>
+    to <C>(c[Position(res,r)][1]*n + c[Position(res,r)][2]) /
+           c[Position(res,r)][3]</C>,
+    where <C>res = AllResidues(<A>R</A>,<A>m</A>)</C> denotes the list
     of residues returned by this function. <P/>
 
     Remark: This function is part of the &ResClasses; package, but is
@@ -100,9 +100,8 @@ gap> AllResidues(R,x^4+x^2);
   <Meth Name="RcwaMapping" Arg="cycles"/>
   <Returns> An rcwa mapping. </Returns>
   <Description>
-    Construction of an rcwa mapping.<P/>
-
-    In all cases the arguments <A>R</A> (the underlying ring),
+    Construction of an rcwa mapping.
+    In all cases the arguments&nbsp;<A>R</A> (the underlying ring),
     <A>modulus</A> and <A>coeffs</A>, as far as they occur, have the
     meaning described above. In case one or several of these arguments
     are omitted or replaced by other arguments, they are either derived
@@ -540,13 +539,13 @@ true
 </ManSection>
 
 <ManSection>
-  <Attr Name="SetOnWhichMappingIsClassWiseOrderReversing" Arg="f"/>
-  <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
   <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
+  <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
+  <Attr Name="SetOnWhichMappingIsClassWiseOrderReversing" Arg="f"/>
   <Returns>
     The union of the residue classes (mod&nbsp;<C>Modulus(<A>f</A>)</C>)
-    on which the rcwa mapping&nbsp;<A>f</A> is class-wise order-reversing,
-    class-wise constant resp. class-wise order-preserving.
+    on which the rcwa mapping&nbsp;<A>f</A> is class-wise order-preserving,
+    class-wise constant resp. class-wise order-reversing.
   </Returns>
   <Description>
     The source of the rcwa mapping&nbsp;<A>f</A> must be ordered.
@@ -676,11 +675,11 @@ x^3+Z(2)^0
 <ManSection>
   <Meth Name="ImagesSet" Arg="f, S"/>
   <Meth Name="Image" Arg="f, S"/>
-  <Meth Name="Image" Arg="f"/>
   <Meth Name="\^" Arg="f, S"/>
+  <Meth Name="Image" Arg="f"/>
   <Returns>
-    In the first two forms the image of the set&nbsp;<A>S</A> under the
-    rcwa mapping&nbsp;<A>f</A>, and in the third form the image of the
+    In the first three forms the image of the set&nbsp;<A>S</A> under the
+    rcwa mapping&nbsp;<A>f</A>, and in the fourth form the image of the
     rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
@@ -720,7 +719,7 @@ gap> AsOrdinaryUnionOfResidueClasses(last);
 <ManSection>
   <Meth Name="\^" Arg="f, P"/>
   <Returns>
-    The image of the partition <A>P</A> of <C>Source( <A>f</A> )</C>
+    The image of the partition <A>P</A> of <C>Source(<A>f</A>)</C>
     under the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
@@ -1617,3 +1616,4 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+

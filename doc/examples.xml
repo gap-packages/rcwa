@@ -113,8 +113,8 @@ roughly 10GB (of course when I computed this sequence I did not store all
 the iterates ...).
 
 An heuristic <Q>explanation</Q> of this behaviour is that the divergence
-of <C>f6</C> is much closer to 1 than the one of the Collatz mapping
-<M>T</M> is:
+of <C>f6</C> is much closer to&nbsp;1 than the one of the Collatz
+mapping&nbsp;<M>T</M>:
 
 <Log>
 <![CDATA[
@@ -130,6 +130,14 @@ of the partial mappings to be equal and the numerators to be numbers
 coprime to the common denominator whose product is just a little bit
 smaller than the <C>Modulus(f6)</C>th power of the denominator -- in our
 example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M> and <M>6^6 = 46656</M>.
+<P/>
+Although the trajectories of <C>T</C> are much shorter than those of
+<C>f6</C>, it seems likely that this does not make the problem of deciding
+whether the mapping&nbsp;<C>T</C> is contracting essentially easier --
+even for mappings with much shorter trajectories than&nbsp;<C>T</C>
+the problem seems to be equally hard, provided that it is not trivial,
+i.e. that there is no <M>k</M> such that applying the <M>k</M>th power of
+the respective mapping to any integer decreases its absolute value.
 
 </Section>
 
@@ -138,9 +146,10 @@ example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M> and <M>6^6 = 46656</M>.
 <Section Label="sec:MatthewsLeighExamples">
 <Heading>Two examples by Matthews and Leigh</Heading>
 
-In <Cite Key="MatthewsLeigh87"/>, K.~R.~Matthews and G.~M.~Leigh have shown
-that two trajectories of the following (surjective, but not injective)
-mappings are acyclic (mod <M>x</M>) and divergent:
+In <Cite Key="MatthewsLeigh87"/>, K.&nbsp;R.&nbsp;Matthews and
+G.&nbsp;M.&nbsp;Leigh have shown that two trajectories of the following
+(surjective, but not injective) mappings are acyclic (mod&nbsp;<M>x</M>)
+and divergent:
 
 <Example>
 <![CDATA[
@@ -276,8 +285,8 @@ conclude that the mappings having non-coprime multiplier and divisor do not
 even form a subgroup and together with some bits of knowledge we get
 elsewhere that furthermore it is unlikely that a normal subgroup is
 characterized by certain divisibility criteria of multiplier and divisor.
-We also would like to emphasize that all steps in the direction of
-determining necessary conditions which a normal subgroup must satisfy are
+We also would like to emphasize that all steps made so far in the direction
+of determining necessary conditions which a normal subgroup must satisfy are
 not very large, regardless of whether they are based on theoretical or
 computational investigations, but that altogether we already have a
 considerable knowledge in this direction. <P/>
@@ -454,9 +463,8 @@ gap> List([g12,g23,g13],MovedPoints);
 ]]>
 </Example>
 
-The products <C>f1*f3</C> and <C>f2*f3</C> seem to have the property
-of having only finite cycles in common with the mapping <C>sigma</C> from
-our first example, but <C>f1*f2</C> doesn't:
+The products <C>f1*f3</C> and <C>f2*f3</C> seem to have only finite cycles,
+but <C>f1*f2</C> has also infinite ones:
 
 <Example>
 <![CDATA[
@@ -530,7 +538,7 @@ gap> List(Clmod12,cl->Intersection(cl,S[8]));
 ]]>
 </Example>
 
-We see that except of the fixed points <M>n \equiv 3</M> mod 6 and
+We see that except of the fixed points <M>n \equiv 3</M>&nbsp;mod&nbsp;6 and
 <M>n = 0</M>, <Q>everything is eventually mapped to 1(12)</Q> --
 thus that any non-constant trajectory is divergent.
 
@@ -611,7 +619,10 @@ Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
 
 In this example we make a simple attempt to investigate the structure of
 a given wild group by finding orders of torsion elements.
-First of all we define our group:
+In general, determining the structure of a given wild group computationally
+seems to be a very hard task -- i.e. so far I have not been successful in
+trying to determine a finite presentation for a finitely generated wild
+rcwa group in any non-trivial case. First of all we define our group:
 
 <Example>
 <![CDATA[
@@ -639,7 +650,7 @@ false
 ]]>
 </Example>
 
-Now we would like to know which orders torsion elements of <C>G</C>
+Now we would like to know which orders torsion elements of&nbsp;<C>G</C>
 can have -- taking a look at the above generators it seems to make sense
 to try commutators:
 
@@ -776,6 +787,14 @@ gap> lengthstatistics := Collected(List(ShortOrbits(Group(kappa),
 [ [ 1, 6912 ], [ 4, 1728 ], [ 7, 864 ], [ 10, 432 ], [ 13, 216 ], 
   [ 16, 108 ], [ 19, 54 ], [ 22, 27 ], [ 25, 13 ], [ 28, 7 ], [ 31, 3 ], 
   [ 34, 2 ], [ 37, 1 ], [ 40, 1 ] ]
+]]>
+</Example>
+
+We would like to determine a partition of&nbsp;<M>\Z</M> into unions of
+cycles of equal length:
+
+<Example>
+<![CDATA[
 gap> C := [Difference(Integers,MovedPoints(kappa))];; pow := [kappa^0];;
 gap> for i in [1..3] do
 >      Add(pow,kappa^i);
@@ -892,7 +911,7 @@ true
 
 Now we compute the action of the group <C>G</C> on one of its orbits, and
 make some statistics of the orbits of <C>G</C> containing polynomials of
-degree less than 4:
+degree less than&nbsp;4:
 
 <Example>
 <![CDATA[
@@ -951,8 +970,8 @@ Group([ (1,2)(3,4), (1,3)(2,4) ])
 </Example>
 
 Thus the modified group has a quotient isomorphic to the alternating group
-of degree 87, and a quotient isomorphic to some wreath product or a subgroup
-thereof acting transitively, but not primitively on 512 points.
+of degree&nbsp;87, and a quotient isomorphic to some wreath product or a
+subgroup thereof acting transitively, but not primitively on 512 points.
 
 </Section>
 
@@ -962,7 +981,7 @@ thereof acting transitively, but not primitively on 512 points.
 <Heading>An rcwa representation of a small group</Heading>
 
 We give an rcwa representation of the 3-Sylow-subgroup of the symmetric
-group on 9 points. Certainly this group has a very nice permutation
+group on 9 points. Of course this group has a very nice permutation
 representation, hence for computational purposes we do not gain anything
 here.
 
@@ -1036,7 +1055,7 @@ gap> List([ab,ac,bc],Order);
 ]]>
 </Example>
 
-  Now we would like to have a look at [ <A>a</A>, <A>b</A> ] ...
+Now we would like to have a look at [<A>a</A>,<A>b</A>] ...
 
 <Example>
 <![CDATA[
@@ -1056,8 +1075,8 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
 ]]>
 </Example>
 
-... form the group generated by [ <A>a</A>, <A>b</A> ]
-and [ <A>a</A>, <A>c</A> ] and compute its action on one of its orbits:
+... form the group generated by [<A>a</A>,<A>b</A>]
+and [<A>a</A>,<A>c</A>] and compute its action on one of its orbits:
 
 <Example>
 <![CDATA[
@@ -1075,11 +1094,11 @@ gap> Size(G); # G acts faithful on orb.
 </Example>
 
 Hence the group <A>G</A> is isomorphic to the symmetric group on 10 points
-and acts faithfully on the orbit containing 1.
+and acts faithfully on the orbit containing&nbsp;1.
 
 We also would like to know which groups arise if we take as generators
-either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping <A>t</A>, which
-maps each integer to its additive inverse:
+either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping&nbsp;<A>t</A>,
+which maps each integer to its additive inverse:
 
 <Example>
 <![CDATA[
@@ -1101,7 +1120,7 @@ true
 Thus the group generated by <A>ab</A> and <A>t</A> is isomorphic to 
 <Alt Only="LaTeX"><M>{\rm C}_2 \times {\rm S}_{10}</M></Alt>
 <Alt Not="LaTeX"><M>C_2 x S_{10}</M></Alt>.
-The next group is an extension of a perfect group of order 960:
+The next group is an extension of a perfect group of order&nbsp;960:
 
 <Example>
 <![CDATA[
@@ -1221,9 +1240,8 @@ gap> List(last,Length);
 ]]>
 </Example>
 
-But the group structure remains invariant under the <Q>transfer</Q>
-of a group with prime set <M>\{2,3\}</M> from <M>\mathbb{Z}</M> to
-<M>\mathbb{Z}_{(2,3)}</M>:
+But the group structure remains invariant under the <Q>transfer</Q> of
+a group with prime set <M>\{2,3\}</M> from <M>\Z</M> to <M>\Z_{(2,3)}</M>:
 
 <Example>
 <![CDATA[
@@ -1375,8 +1393,8 @@ gap> List([-20..20],n->n^x);
 ]]>
 </Example>
 
-  Certainly we would like to know how a cycle of this permutation looks
-  like:
+Of course we would like to know how a cycle of this permutation looks
+like:
 
 <Example>
 <![CDATA[
@@ -1621,10 +1639,10 @@ gap> List(S,Si->Float(Density(Si)));
 <Heading>Replacing the Collatz mapping by conjugates</Heading>
 
 This is probably not the most interesting application of this package,
-but we can turn the Collatz-problem into an equivalent question by
-replacing the Collatz mapping <A>T</A> by one of its conjugates under an
-element of the pointwise stabilizer of 1 in the setwise stabilizer of the
-positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:
+but we can turn the Collatz problem into an equivalent question by
+replacing the Collatz mapping&nbsp;<A>T</A> by one of its conjugates under
+an element of the pointwise stabilizer of&nbsp;1 in the setwise stabilizer
+of the positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:
 
 <Example>
 <![CDATA[

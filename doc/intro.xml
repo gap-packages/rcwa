@@ -16,12 +16,12 @@ properties of the defined objects, several examples, a very brief statement
 of a few results and finally a few open questions in this chapter. <P/>
 
 For everything not included in this manual -- most theorems and lemmata,
-all proofs, ... -- the reader is referred to the author's thesis
-<Cite Key="Kohl04" />. <P/>
+all proofs, ... -- the reader is referred to the author's
+Thesis&nbsp;<Cite Key="Kohl04"/>. <P/>
 
-We assume that on our underlying ring <M>R</M> we have defined a function
-which maps each element to some <E>standard associate</E>. For the rings
-treated in this package we have chosen the following:
+We assume that on our underlying ring&nbsp;<M>R</M> we have defined
+a function which maps each element to some <E>standard associate</E>.
+For the rings treated in this package we have chosen the following:
 <List>
 
   <Mark><M>\mathbb{Z}</M></Mark>
@@ -32,7 +32,7 @@ treated in this package we have chosen the following:
   <Mark><M>\mathbb{Z}_{(\pi)}</M></Mark>
   <Item>
     The standard associate of <M>n</M> is the largest product of
-    non-invertible primes dividing <M>n</M>.
+    non-invertible primes dividing&nbsp;<M>n</M>.
   </Item>
 
   <Mark>GF(<M>q</M>)[<M>x</M>]</Mark>
@@ -57,10 +57,10 @@ We proceed with the definitions concerning rcwa mappings.
 
   <Mark>Modulus</Mark>
   <Item>
-    The <E>Modulus</E> of an rcwa mapping <M>f</M> is the standard associate
-    of a multiplicatively smallest ring element <M>m</M> such that the
-    restriction of <M>f</M> to any residue class (mod&nbsp;<M>m</M>) is
-    affine.
+    The <E>Modulus</E> of an rcwa mapping&nbsp;<M>f</M> is the standard
+    associate of a multiplicatively smallest ring element <M>m</M> such
+    that the restriction of <M>f</M> to any residue class
+    (mod&nbsp;<M>m</M>) is affine.
     <M>\rightarrow</M> <Ref Oper ="Modulus"
                             Label="Modulus of an rcwa mapping"/>.
   </Item>
@@ -68,8 +68,8 @@ We proceed with the definitions concerning rcwa mappings.
   <Mark>Multiplier</Mark>
   <Item>
     In the notation we used in the definition of an rcwa mapping in the
-    Preface (<Ref Label="ch:preface"/>), the <E>multiplier</E> is the
-    lcm of the coefficients <M>a_{r(m)}</M> in the numerators.
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>multiplier</E> is
+    the lcm of the coefficients <M>a_{r(m)}</M> in the numerators.
     <M>\rightarrow</M> <Ref Attr ="Multiplier"
                             Label="Multiplier of an rcwa mapping"/>.
   </Item>
@@ -77,15 +77,15 @@ We proceed with the definitions concerning rcwa mappings.
   <Mark>Divisor</Mark>
   <Item>
     In the notation we used in the definition of an rcwa mapping in the
-    Preface (<Ref Label="ch:preface"/>), the <E>divisor</E> is the lcm
-    of the coefficients <M>c_{r(m)}</M> in the denominators.
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>divisor</E> is the
+    lcm of the coefficients <M>c_{r(m)}</M> in the denominators.
     <M>\rightarrow</M> <Ref Attr ="Divisor"
                             Label="Divisor of an rcwa mapping"/>.
   </Item>
 
   <Mark>integral</Mark>
   <Item>
-    An rcwa mapping is called <E>integral</E> if its divisor equals 1,
+    An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1,
     thus <Q>if no proper divisions occur</Q>.
     Be careful not to confuse this with the term <E>integral rcwa mapping</E>
     for rcwa mappings of the integers; normally it should be rather clear
@@ -122,8 +122,8 @@ We proceed with the definitions concerning rcwa mappings.
     to determinants of rcwa mappings and those restrictions to
     unions of residue classes.
     Then, using the notation from the definition of an rcwa mapping in the
-    Preface (<Ref Label="ch:preface"/>), the <E>determinant</E> of an rcwa
-    mapping is given by
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>determinant</E> of an
+    rcwa mapping is given by
     <Alt Not="LaTeX">
       (see LaTeX version of the manual).
     </Alt> 
@@ -159,7 +159,8 @@ Now the definitions concerning rcwa groups.
 
   <Mark>tame</Mark>
   <Item>
-    An rcwa group is called <E>tame</E> if its modulus is not equal to 0.
+    An rcwa group is called <E>tame</E> if its modulus is not equal
+    to&nbsp;0.
     <M>\rightarrow</M> <Ref Prop="IsTame" Label="Tame rcwa group"/>.
   </Item>
 
@@ -171,7 +172,7 @@ Now the definitions concerning rcwa groups.
   <Mark>Rcwa Representation</Mark>
   <Item>
     An homomorphism from some group into the group RCWA(<M>R</M>)
-    of all bijective rcwa mappings of the ring <M>R</M>.
+    of all bijective rcwa mappings of the ring&nbsp;<M>R</M>.
   </Item>
 
   <Mark>integral</Mark>
@@ -210,7 +211,7 @@ left out in this context:
     The product of the modulus and the multiplier of a bijective rcwa mapping
     is a multiple of the modulus of its inverse, which in turn is a multiple
     of the multiplier of the mapping we started with. The multiplier of an
-    integral bijective rcwa mapping equals 1. Inversion leaves the prime
+    integral bijective rcwa mapping equals&nbsp;1. Inversion leaves the prime
     set invariant.
   </Item>
 
@@ -240,10 +241,11 @@ left out in this context:
     \end{cases}
     ]]>
   </Display>
-  The modulus of this mapping is 2, its multiplier is 3 and its divisor is 2,
-  thus its prime set is <M>\{2,3\}</M>. The mapping <M>T</M> is surjective
-  but not injective, as it bijectively maps the residue class 0(2) onto
-  <M>\mathbb{Z}</M> and the residue class 1(2) onto 2(3). <P/>
+  The modulus of this mapping is&nbsp;2, its multiplier is&nbsp;3 and its
+  divisor is&nbsp;2, thus its prime set is <M>\{2,3\}</M>.
+  The mapping <M>T</M> is surjective but not injective, as it bijectively
+  maps the residue class 0(2) onto&nbsp;<M>\mathbb{Z}</M> and the residue
+  class 1(2) onto&nbsp;2(3). <P/>
 
   A bijective rcwa mapping of the integers, thus an element of
   RCWA(<M>\mathbb{Z}</M>), which has already been investigated by several
@@ -323,21 +325,21 @@ in arbitrary order.
     The group RCWA(<M>R</M>) acts highly transitive (i.e. <M>k</M>-fold
     transitive for any <M>k</M>) on <M>R</M>. It follows immediately that
     its centre is trivial, and from <Cite Key="DixonMortimer96"/>,
-    Corollary 7.2A we know that any non-trivial normal subgroup must
-    also act highly transitive on <M>R</M>.
+    Corollary&nbsp;7.2A we know that any non-trivial normal subgroup must
+    also act highly transitive on&nbsp;<M>R</M>.
   </Item>
 
   <Mark>-</Mark>
   <Item>
     A group can faithfully be represented as a tame rcwa group over the
-    ring <M>R</M> if and only if it is isomorphic to a subgroup of the
+    ring&nbsp;<M>R</M> if and only if it is isomorphic to a subgroup of the
     wreath product of the affine group of <M>R</M> with some large enough
     finite symmetric group.
   </Item>
 
   <Mark>-</Mark>
   <Item>
-    The action of a tame group on the underlying ring <M>R</M> is
+    The action of a tame group on the underlying ring&nbsp;<M>R</M> is
     imprimitive and there is a block system which consists of finitely many
     single residue classes, the so-called <E>respected class partition</E>.
     <M>\rightarrow</M>
@@ -348,7 +350,7 @@ in arbitrary order.
   <Mark>-</Mark>
   <Item>
     Any tame rcwa group is conjugate to an integral group provided that
-    the underlying ring <M>R</M> has residue class rings of any finite
+    the underlying ring&nbsp;<M>R</M> has residue class rings of any finite
     cardinality.
     <M>\rightarrow</M> <Ref Attr="IntegralConjugate"
                             Label="Integral conjugate of rcwa group"/>
@@ -391,7 +393,8 @@ in arbitrary order.
   <Item>
     The group RCWA(<M>R</M>) acts transitive on the set of unions of
     finitely many residue classes distinct from the empty set and <M>R</M>
-    itself, provided that <M>R</M> has a residue class ring of cardinality 2.
+    itself, provided that <M>R</M> has a residue class ring of
+    cardinality&nbsp;2.
   </Item>
 
   <Mark>-</Mark>
@@ -412,7 +415,7 @@ in arbitrary order.
   <Item>
     If <M>k</M> is coprime to the order of any torsion element of the
     group of units of <M>R</M>, the group RCWA(<M>R</M>) has only finitely
-    many conjugacy classes of elements of order <M>k</M> --
+    many conjugacy classes of elements of order&nbsp;<M>k</M> --
     otherwise it has infinitely many such conjugacy classes.
     In the former case the number of such classes can be computed easily.
     <M>\rightarrow</M> <Ref Func="NrConjugacyClassesOfRCWAZOfOrder"/>.
@@ -424,7 +427,7 @@ in arbitrary order.
     cycles. Of course in these cases the set of cycle lengths cannot be
     bounded to the above. The existence of such mappings can be observed
     relatively easy for rings like GF(<M>q</M>)[<M>x</M>] (see above), but
-    e.g. on <M>\mathbb{Z}</M>, constructing examples is more difficult.
+    e.g. on&nbsp;<M>\mathbb{Z}</M>, constructing examples is more difficult.
     <M>\rightarrow</M> Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
   </Item>
 
@@ -441,7 +444,7 @@ in arbitrary order.
   <Mark>-</Mark>
   <Item>
     There is no bijective rcwa mapping <M>g</M> such that the conjugate
-    of the Collatz mapping under <M>g</M> maps all but finitely many
+    of the Collatz mapping under&nbsp;<M>g</M> maps all but finitely many
     positive integers to smaller ones. However, if the Collatz conjecture
     is true there must be some other permutation of the integers which
     serves this purpose.
@@ -450,16 +453,17 @@ in arbitrary order.
   <Mark>-</Mark>
   <Item>
     Let <M>S</M> be a set of integers.
-    Then the properties <Q><M>S</M> contains arbitrarily long arithmetic
-    progressions</Q>&nbsp;(1) and <Q>the series <M>\sum_{n \in S} 1/n</M>
+    Then the properties <Q><M>S</M>&nbsp;contains arbitrarily long arithmetic
+    progressions</Q>&nbsp;(1) and <Q>The series <M>\sum_{n \in S} |1/n|</M>
     diverges</Q>&nbsp;(2) are both invariant under the natural action of
-    RCWA(<M>\Z</M>) on the power set of <M>\Z</M>.
+    RCWA(<M>\Z</M>) on the power set of&nbsp;<M>\Z</M>.
     In this context we would like to mention a recent preprint of
     Ben&nbsp;Green and Terence&nbsp;Tao&nbsp;<Cite Key="GreenTao04"/>
     where the authors show that the set of prime numbers has
     Property&nbsp;(1) and state that the more general problem whether
     Property&nbsp;(2) implies Property&nbsp;(1) which has been posed by
-    Erdös and Turan is still unsolved.
+    Erdös and Turan&nbsp;<Cite Key="ErdosTuran36"/> in&nbsp;1936 is still
+    unsolved.
   </Item>
 
 </List>

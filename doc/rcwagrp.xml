@@ -281,8 +281,7 @@ gap> PrimeSet(H);
   </Returns>
   <Description>
     Of course the term <E>class-wise order-preserving</E> is defined only
-    for rcwa groups over ordered rings, e.g. over&nbsp;<M>\ZZ</M>. <P/>
-
+    for rcwa groups over ordered rings, e.g. over&nbsp;<M>\Z</M>.
     See also <Ref Prop ="IsClassWiseOrderPreserving"
                   Label="Class-wise order-preserving rcwa mapping"/>
     for rcwa mappings.
@@ -820,11 +819,11 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     under the action of&nbsp;<A>G</A>'.
   </Returns>
   <Description>
-    This method computes a partition of <C>AllResidues( R, <A>m</A> )</C>
+    This method computes a partition of <C>AllResidues(R,<A>m</A>)</C>
     such that <M>i</M> and <M>j</M> lie in the same subset if and only if
-    there is an element <M>g</M> in <A>G</A> such that
-    <M>M_{i,j} \neq 0</M>, where <M>M</M> is the transition matrix of
-    <M>g</M> for modulus <A>m</A> (see <Ref Func="TransitionMatrix"/>)
+    there is an element <M>g</M> in <A>G</A> such that <M>M_{i,j} \neq 0</M>,
+    where <M>M</M> is the transition matrix of&nbsp;<M>g</M>
+    for modulus&nbsp;<A>m</A> (see <Ref Func="TransitionMatrix"/>)
     and <C>R</C> is the ring the group <A>G</A> acts on. <P/>
 
     See also <Ref Oper ="OrbitsModulo"
@@ -942,7 +941,7 @@ Bijective rcwa mapping of Z with modulus 6, of order 12
   <Attr Name="ActionOnClassPartition" Arg="G"/>
   <Returns>
     The action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedClassPartition( <A>G</A> )</C>.
+    <C>RespectedClassPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
 <Example>
@@ -1566,3 +1565,4 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
