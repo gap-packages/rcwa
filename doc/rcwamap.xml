@@ -319,6 +319,58 @@ Rcwa mapping of Z with modulus 10
   </Description>
 </ManSection>
 
+In most cases an rcwa mapping is not determined uniquely by the output of
+the <C>ViewObj</C> method -- in these cases the output is enclosed in
+brackets. There are methods installed for <C>Display</C>, <C>Print</C>
+and <C>String</C>. The printed representation of an rcwa mapping is &GAP; -
+readable if and only if the printed representation of the elements of the
+underlying ring is so. There is also a method for <C>LaTeXObj<C>:
+
+<ManSection>
+  <Meth Name="LaTeXObj" Arg="f" Label="f"/>
+  <Returns>
+    A &LaTeX; representation of the integral rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    The output makes use of the &LaTeX; macro package
+    <Package>amsmath</Package>.
+    An indentation by <A>Indentation</A> characters can be specified by
+    setting this option value accordingly.
+    This only applies to rcwa mappings with modulus larger than 1.
+<Example>
+<![CDATA[
+gap> Print(LaTeXObj(u^-1));
+n \ \longmapsto \
+\begin{cases}
+  \frac{5n}{3}     & \text{if} \ n \equiv 0 \ (3), \\
+  \frac{5n + 1}{3} & \text{if} \ n \equiv 1 \ (3), \\
+  \frac{5n - 1}{9} & \text{if} \ n \equiv 2 \ (9), \\
+  \frac{5n + 2}{9} & \text{if} \ n \equiv 5 \ (9), \\
+  \frac{5n - 4}{9} & \text{if} \ n \equiv 8 \ (9).
+\end{cases}
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
+Bijective rcwa mappings can also be inverted, thus there is a method for
+<C>Inverse</C>. The latter method is usually accessed by raising a mapping
+to some power with negative exponent. There are also methods installed for
+<C>IsInjective</C>, <C>IsSurjective</C>, <C>IsBijective</C> and <C>Image</C>.
+Images of elements, finite sets of elements and of unions of finitely
+many residue classes of the source of an rcwa mapping can be computed with
+<C>^</C> (the same symbol as used for exponentiation and conjugation).
+The same works for partitions of the source into a finite number of residue
+classes. For computing preimages of elements under rcwa mappings, there are
+methods for <C>PreImageElm</C> and <C>PreImagesElm</C>. The preimage of a
+finite set of ring elements or of a union of finitely many residue classes
+under an rcwa mapping can be computed using <C>PreImage</C>.
+
+For rcwa mappings of rings other than <M>\mathbb{Z}</M>, not all methods
+might be available. The documentation for the mentioned operations can be
+found in the &GAP; reference manual.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -415,32 +467,7 @@ gap> String(d);
 The following method makes it unnecessary to typeset rcwa mappings of
 <M>\mathbb{Z}</M> in &LaTeX; manually:
 
-<ManSection>
-  <Meth Name="LaTeXObj" Arg="f" Label="f"/>
-  <Returns>
-    A &LaTeX; representation of the integral rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    The output makes use of the &LaTeX; macro package
-    <Package>amsmath</Package>.
-    An indentation by <A>Indentation</A> characters can be specified by
-    setting this option value accordingly.
-    This only applies to rcwa mappings with modulus larger than 1.
-<Example>
-<![CDATA[
-gap> Print(LaTeXObj(u^-1));
-n \ \longmapsto \
-\begin{cases}
-  \frac{5n}{3}     & \text{if} \ n \equiv 0 \ (3), \\
-  \frac{5n + 1}{3} & \text{if} \ n \equiv 1 \ (3), \\
-  \frac{5n - 1}{9} & \text{if} \ n \equiv 2 \ (9), \\
-  \frac{5n + 2}{9} & \text{if} \ n \equiv 5 \ (9), \\
-  \frac{5n - 4}{9} & \text{if} \ n \equiv 8 \ (9).
-\end{cases}
-]]>
-</Example>
-  </Description>
-</ManSection>
+
 
 </Section>
 
