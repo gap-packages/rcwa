@@ -83,8 +83,8 @@ SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
 x := Indeterminate(GF(2),1); SetName(x,"x");
 R := PolynomialRing(GF(2),1); 
 
-ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R));
-ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R));
+ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R)); SetName(ML1,"ML1");
+ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R)); SetName(ML2,"ML2");
 
 ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);
 Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
@@ -190,13 +190,19 @@ kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
                                     [3, 4,2],[1, 0,3],[1,0,1],[6, 142,1]]);
 SetName(kappa24_onesixthcyc,"kappa24_onesixthcyc");
 
-# A few other related examples.
+# The mappings <sigma1> and <sigma2> generate a non-cyclic wild group all of
+# whose orbits on Z seem to be finite.
 
 sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);
 sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
                        [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
                        [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
-sigma  := sigma1 * sigma2;
+SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
+
+sigma := sigma1 * sigma2; SetName(sigma,"sigma");
+
+# A `simplification' of <sigma>.
+
 sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
                         [1, 0,1], [1, 1,3], [3, 6,2], [1, 0,1],
                         [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1],
@@ -206,14 +212,15 @@ sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
                         [1,-9,3], [1, 0,1], [1, 1,1], [3,-3,2],
                         [1, 0,1], [2, 2,1], [3, 6,2], [1, 0,1],
                         [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1]]);
+SetName(sigma_r,"sigma_r");
+
+# The mapping <comm> is another `only finite cycles' example.
+
 sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
                         [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]);
-sigmas := sigma1 * sigmas2;
+SetName(sigmas2,"sigmas2");
+sigmas := sigma1 * sigmas2; SetName(sigmas,"sigmas");
 comm := Comm(sigmas,sigma1); SetName(comm,"comm");
-
-SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
-SetName(sigma,"sigma");   SetName(sigma_r,"sigma_r");
-SetName(sigmas,"sigmas"); SetName(sigmas2,"sigmas2");
 
 #############################################################################
 ##
