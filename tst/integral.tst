@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 
 gap> START_TEST("$Id$");
 gap> IdentityIntegralRcwaMapping;
@@ -47,6 +50,41 @@ Surjective integral rcwa mapping with modulus 8
   6                                    | (9n + 10)/8
   7                                    | (27n + 19)/8
 
+gap> A := ResidueClass(Integers,3,2);
+The residue class 2(3)
+gap> Image(T,A);
+Union of the residue classes 1(9), 4(9), 7(9) and 8(9)
+gap> PreImage(T,A);
+Union of the residue classes 1(6), 3(6), 4(6) and 5(6)
+gap> B := ResidueClass(Integers,3,1);;
+gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
+The residue class 1(3), +3/-3 elements
+gap> Display(Image(T,M));
+ 
+The residue class 2 ( mod 3 )
+ 
+and the elements
+ 
+ 1 7
+ 
+without the elements
+ 
+ 2 5
+
+gap> PreImage(T,M);
+The residue class 2(6), +6/-3 elements
+gap> Display(last);
+ 
+The residue class 2 ( mod 6 )
+ 
+and the elements
+ 
+  1  3  4  9 10 28
+ 
+without the elements
+ 
+  2  8 20
+
 gap> t := RcwaMapping([[-1,0,1]]);
 Integral rcwa mapping: n -> -n
 gap> Order(t);
@@ -54,6 +92,11 @@ gap> Order(t);
 gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> IsBijective(k);
 false
+gap> Image(k);
+The residue class 0(4)
+gap> C := Difference(Integers,Union(A,B));;
+gap> Image(k,C);
+The residue class 4(12)
 gap> k := RcwaMapping([[-2,0,1]]);
 Integral rcwa mapping: n -> -2n
 gap> Display(k);
@@ -84,6 +127,13 @@ gap> k := RcwaMapping([[-1,3,1]]);
 Integral rcwa mapping: n -> -n + 3
 gap> k := RcwaMapping([[-1,-3,1]]);
 Integral rcwa mapping: n -> -n - 3
+gap> ZeroOne := RcwaMapping([[0,0,1],[0,1,1]]);;
+gap> PreImagesElm(ZeroOne,6);
+[  ]
+gap> PreImagesElm(ZeroOne,1);
+The residue class 1(2)
+gap> Image(ZeroOne);
+[ 0, 1 ]
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> IsBijective(u);
 true
@@ -112,7 +162,7 @@ gap> 15^T;
 gap> PreImageElm(u,8);
 4
 gap> PreImagesElm(T,8);
-[ 16, 5 ]
+[ 5, 16 ]
 gap> PreImagesElm(ZeroIntegralRcwaMapping,0);
 Integers
 gap> d := RcwaMapping([[0,0,1],[0,1,1]]);;
