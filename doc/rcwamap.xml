@@ -1600,7 +1600,7 @@ gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
 >         Restriction(u,RcwaMapping([[2,1,1]])));
 IdentityMapping( Integers )
 ]]>
-</Example>      
+</Example>
     </Description>
   </ManSection>
 
