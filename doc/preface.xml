@@ -186,11 +186,14 @@ see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
 
 One of the major questions in this context is whether the groups
 RCWA(<M>R</M>) are simple or not. In fact there is some evidence that they
-are so (normal subgroups must be <Q>quite large</Q>, etc.), but also some
-evidence that they are not (e.g. there is an interesting epimorphism from
-the large subgroup RCWA<M>^+(\Z)</M> of all class-wise order-preserving
-rcwa mappings onto <M>(\Z,+)</M>, which can be evaluated for a given
-mapping using this package -- see &nbsp;<Ref Meth="Determinant"/>). <P/>
+are so (normal subgroups must be <Q>quite large</Q>, etc. --
+for an example of computational investigations in this direction see
+Section&nbsp;<Ref Label="sec:WildProductOfInvolutions"/>),
+but also some evidence that they are not (e.g. there is an interesting
+epimorphism from the large subgroup RCWA<M>^+(\Z)</M> of all class-wise
+order-preserving rcwa mappings onto <M>(\Z,+)</M>, which can be evaluated for
+a given mapping using this package -- see &nbsp;<Ref Meth="Determinant"/>).
+<P/>
 
 The main reason for me to develop this package was the desire to get a
 suitable tool for investigating a large number of examples and getting deep

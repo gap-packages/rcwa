@@ -24,9 +24,10 @@ type in the whole path name - see <Ref Func="RCWAReadExamples"/>.
 </Heading>
 
   The iterates of an integer under the Collatz mapping <M>T</M> seem to
-  approach its contraction centre rather quickly and do not get very large
-  before doing so (of course this is a purely heuristic statement as the
-  Collatz conjecture has not been proved so far!):
+  approach its contraction centre -- this is the finite set where all
+  trajectories end up after a finite number of steps -- rather quickly and
+  do not get very large before doing so (of course this is a purely heuristic
+  statement as the Collatz conjecture has not been proved so far!):
 
 <Example>
 <![CDATA[
@@ -196,7 +197,9 @@ gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),20,"length");
 </Example>
 
 We can easily recognize the pattern which Matthews and Leigh used
-to show the divergence of the above trajectories:
+to show the divergence of the above trajectories -- in some sense
+we have a look at the corresponding Markov chains with the two states
+0&nbsp;mod&nbsp;<M>x</M> and 1&nbsp;mod&nbsp;<M>x</M>:
 
 <Example>
 <![CDATA[
@@ -220,6 +223,14 @@ gap> List(traj2modx{[1..200]},val->Position([Zero(R),One(R)],val)-1);
   1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
   0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+]]>
+</Example>
+
+We are interested in the lengths of the intervals between two changes
+from one state to the other:
+
+<Example>
+<![CDATA[
 gap> ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);;
 gap> Diffs := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);;
 gap> Diffs(ChangePoints(traj1modx)); # The pattern in the first ...
@@ -248,6 +259,22 @@ gap> Diffs(ChangePoints(last)); # Make this a bit more obvious.
 <Heading>
   Three involutions whose product has coprime multiplier and divisor
 </Heading>
+
+It is not easy to find tame mappings whose product is not balanced, i.e.
+has primes dividing only the multiplier and not the divisor or vice versa --
+but however it is even possible to find such mappings of finite order
+whose product has furthermore even coprime multiplier and divisor.
+This is interesting in the context of the question how a non-trivial normal
+subgroup of RCWA(<M>\Z</M>) would have to look like provided that it exists.
+From the existence of mappings having the mentioned properties we can
+conclude that the mappings having non-coprime multiplier and divisor do not
+even form a subgroup and that furthermore it is unlikely that a normal
+subgroup is characterized by certain divisibility criteria of multiplier and
+divisor. We also would like to emphasize that all steps in the direction of
+determining necessary conditions which a normal subgroup must satisfy are
+not very large, regardless of whether they are based on theoretical or
+computational investigations, but that altogether we already have a
+considerable knowledge in this direction. <P/>
 
 We investigate an example of 3 conjugate involutions whose product is not
 only wild, but even has coprime multiplier and divisor.
@@ -1670,3 +1697,4 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
+
