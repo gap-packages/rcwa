@@ -293,6 +293,16 @@ We proceed with a list briefly giving some results and remarks
 
   <Mark>-</Mark>
   <Item>
+    <Q>Suitable</Q> rings admit wild rcwa mappings having only finite
+    cycles. Of course in these cases the set of cycle lengths cannot be
+    bounded to the above. The existence of such mappings can be observed
+    relatively easy for rings like GF(<M>q</M>)[<M>x</M>] (see below), but
+    e.g. on <M>\mathbb{Z}</M>, constructing examples is more difficult.
+    <M>\rightarrow</M> <Ref Label="sec:WildButFiniteCycles"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
     For better understanding given rcwa mappings as well as for constructing
     new ones with given properties, it is often helpful to associate directed
     graphs to them which reflect from which residue classes elements are
@@ -437,11 +447,6 @@ We end this chapter by giving a few open problems (in arbitrary order).
     computational evidence suggesting a negative answer.
     <M>\rightarrow</M> <Ref Meth="RepresentativeAction"/> and
                        <Ref Oper="RepresentativeActionPreImage"/>.
-    Can all orbits under the action of a wild group on the underlying ring
-    <M>R</M> be finite? -- For <M>R</M> = GF(<M>q</M>)[<M>x</M>] this is
-    possible (see the example given above) and there are examples
-    suggesting that the same holds for <M>R = \mathbb{Z}</M>
-    (see <Ref Label="sec:WildButFiniteCycles"/>), but this is not clear.
     Are point stabilizers of finitely generated rcwa groups always
     finitely generated, also?
   </Item>
