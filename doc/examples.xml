@@ -709,6 +709,124 @@ Integral rcwa mapping with modulus 4
 
 <!-- ################################################################################# -->
 
+<Section Label="sec:CollatzImagesAndPreImages">
+<Heading> Images and preimages under the Collatz mapping </Heading>
+
+  We would like to have a look at the images of the residue class 1 (mod 2) under powers
+  of the Collatz mapping.
+
+<Example>
+<![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> S0 := ResidueClass(Integers,2,1);
+The residue class 1(2)
+gap> S1 := S0^T;
+The residue class 2(3)
+gap> S2 := S1^T;
+Union of the residue classes 1(9), 4(9), 7(9) and 8(9)
+gap> S3 := S2^T;
+Union of the residue classes 2(9), 4(9), 5(9) and 8(9)
+gap> S4 := S3^T;
+Union of the residue classes 1(9), 2(9), 4(9), 7(9) and 8(9)
+gap> S5 := S4^T;
+Union of the residue classes 1(9), 2(9), 4(9), 5(9) and 8(9)
+gap> S6 := S5^T;
+Union of the residue classes 1(3) and 2(3)
+gap> S7 := S6^T;
+Union of the residue classes 1(3) and 2(3)
+]]>
+</Example>
+
+  We see that the image gets stable after applying the mapping <M>T</M> for the 6th time,
+  hence that <M>T^6</M> maps the residue class 1(2) surjectively onto the union of the
+  residue classes 1(3) and 2(3), which is setwisely stabilized by <M>T</M>.
+  Now we would like to determine the preimages of 1(3) resp. 2(3) in 1(2) under
+  <M>T^6</M>. The residue class 1(2) has to be the disjoint union of these sets.
+
+<Example>
+<![CDATA[
+gap> U := ResidueClass(Integers,3,1);;
+gap> for i in [1..6] do U := PreImage(T,U); od;
+gap> U := Intersection(U,S0);
+<union of 11 residue classes (mod 64)>
+gap> V := ResidueClass(Integers,3,2);;
+gap> for i in [1..6] do V := PreImage(T,V); od;
+gap> V := Intersection(V,S0);
+<union of 21 residue classes (mod 64)>
+gap> Display(U);
+
+The union of the residue classes r ( mod 64 )  for r =
+
+  1  5  7  9 21 23 29 31 49 51 59
+
+gap> Display(V);
+
+The union of the residue classes r ( mod 64 )  for r =
+
+  3 11 13 15 17 19 25 27 33 35 37 39 41 43 45 47 53 55 57 61 63
+
+gap> Union(U,V) = S0 and Intersection(U,V) = [];  # consistency check
+true
+]]>
+</Example>
+
+  Now we want to determine the images of the residue class 0(3) under
+  powers of <M>T</M>:
+
+<Example>
+<![CDATA[
+gap> S0 := ResidueClass(Integers,3,0);
+The residue class 0(3)
+gap> S1 := S0^T;
+Union of the residue classes 0(9), 3(9), 5(9) and 6(9)
+gap> S2 := S1^T;
+<union of 16 residue classes (mod 27)>
+gap> S3 := S2^T;
+<union of 20 residue classes (mod 27)>
+gap> S4 := S3^T;
+<union of 73 residue classes (mod 81)>
+gap> S5 := S4^T;
+<union of 79 residue classes (mod 81)>
+gap> S6 := S5^T;
+Integers
+]]>
+</Example>
+
+  Thus, every integer is the image of a multiple of 3 under <M>T^6</M>.
+  This means that it would be sufficient to prove the Collatz conjecture for
+  multiples of 3.
+  We can obtain the corresponding result for multiples of 5 as follows:
+
+<Example>
+<![CDATA[
+gap> S := [ResidueClass(Integers,5,0)];
+[ The residue class 0(5) ]
+gap> for i in [1..12] do Add(S,S[i]^T); od;
+gap> for s in S do View(s); Print("\n"); od;
+The residue class 0(5)
+Union of the residue classes 0(15), 5(15), 8(15) and 10(15)
+Union of the residue classes 0(15), 4(15), 5(15), 8(15) and 10(15)
+<union of 19 residue classes (mod 45)>
+<union of 73 residue classes (mod 135)>
+<union of 244 residue classes (mod 405)>
+<union of 784 residue classes (mod 1215)>
+<union of 824 residue classes (mod 1215)>
+<union of 2593 residue classes (mod 3645)>
+<union of 2647 residue classes (mod 3645)>
+<union of 2665 residue classes (mod 3645)>
+<union of 2671 residue classes (mod 3645)>
+<union of 11 residue classes (mod 15)>
+gap> Union(S[13],ResidueClass(Integers,3,0));
+Integers
+]]>
+</Example>
+
+  <Alt Only="HTML">&nbsp;</Alt>
+
+</Section>
+
+<!-- ################################################################################# -->
+
 </Chapter>
 
 <!-- ################################################################################# -->
