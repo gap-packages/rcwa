@@ -358,6 +358,36 @@ false
   </ManSection>
 
   <ManSection>
+    <Prop Name="IsIntegral" Arg="f" Label="Integral mapping"/>
+    <Description>
+      Indicates whether the rcwa mapping <A>f</A> is integral or not.
+      We call an rcwa mapping <A>f</A> <E>integral</E> if its divisor is
+      equal to 1.
+      Be careful not to confuse this with the term <E>integral rcwa
+      mapping</E> for rcwa mappings of the integers. <P/>
+
+      See also <Ref Prop="IsIntegral" Label="Integral group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> IsIntegral(g);
+true
+gap> IsIntegral(u);
+false
+gap> IsIntegral(t);
+true
+gap> IsIntegral(RcwaMapping([[2,0,1]]));
+true
+gap> IsIntegral(RcwaMapping([[2,0,1],[3,5,1]]));
+true
+gap> IsIntegral(RcwaMapping([[1,0,2],[3,5,1]]));
+false
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Prop Name="IsClassWiseOrderPreserving" Arg="f"
           Label="Class-wise order-preserving rcwa mapping"/>
     <Description>
@@ -1541,6 +1571,15 @@ true
     </Description>
   </ManSection>
 
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:NonBijectiveMappings">
+<Heading>
+  Special functions for non-bijective mappings and miscellanea
+</Heading>
+
   <ManSection>
     <Oper Name="ContractionCentre" Arg="f, maxn, bound"/>
     <Description>
@@ -1564,28 +1603,6 @@ gap> S0 := ContractionCentre(T,100,1000);
   1, 2 ]
 ]]>
 </Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Oper Name="Restriction" Arg="g, f"
-          Label="Restriction of an rcwa mapping"/>
-    <Returns> the restriction of <A>g</A> by <A>f</A>. </Returns>
-    <Description>
-      The mapping <A>f</A> has to be injective. The support of the returned
-      mapping is a subset of the image of <A>f</A>. If <A>f</A> is bijective
-      the returned mapping is just the conjugate of <A>g</A> by <A>f</A>.
-      <P/>
-
-      See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
-      for rcwa groups.
-<Example>
-<![CDATA[
-gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
->         Restriction(u,RcwaMapping([[2,1,1]])));
-IdentityMapping( Integers )
-]]>
-</Example>      
     </Description>
   </ManSection>
 
@@ -1627,6 +1644,51 @@ gap> Divergence(a*u);
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Attr Name="ImageDensity" Arg="f"/>
+    <Description>
+      We define the <E>image density</E> of an rcwa mapping <A>f</A> of
+      a ring <M>R</M> as the sum of the densities of the images of the affine
+      partial mappings of <A>f</A>, where we set the density
+      of a residue class <M>r(m)</M> equal to <M>1/|R/mR|</M>.
+      Injective rcwa mappings have an image density of at most 1, and the
+      image density of a surjective rcwa mapping is at least 1 -- thus in
+      particular the image density of a bijective mapping equals 1.
+<Example>
+<![CDATA[
+gap> ImageDensity(T);
+4/3
+gap> ImageDensity(a);
+1
+gap> ImageDensity(RcwaMapping([[2,0,1]]));
+1/2
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Oper Name="Restriction" Arg="g, f"
+          Label="Restriction of an rcwa mapping"/>
+    <Returns> the restriction of <A>g</A> by <A>f</A>. </Returns>
+    <Description>
+      The mapping <A>f</A> has to be injective. The support of the returned
+      mapping is a subset of the image of <A>f</A>. If <A>f</A> is bijective
+      the returned mapping is just the conjugate of <A>g</A> by <A>f</A>.
+      <P/>
+
+      See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
+>         Restriction(u,RcwaMapping([[2,1,1]])));
+IdentityMapping( Integers )
+]]>
+</Example>      
+    </Description>
+  </ManSection>
+
   <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
@@ -1636,6 +1698,4 @@ gap> Divergence(a*u);
 </Chapter>
 
 <!-- #################################################################### -->
-
-
 

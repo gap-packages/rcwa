@@ -401,15 +401,30 @@ false
   </ManSection>
 
   <ManSection>
+    <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
+    <Description>
+      Indicates whether the rcwa group <A>G</A> is integral or not.
+      We call an rcwa monoid <E>integral</E> if its divisor is equal to 1.
+      Be careful not to confuse this with the term <E>integral rcwa
+      group</E> for rcwa groups over the integers.
+      An rcwa group is integral if and only if it is flat.
+      This equivalence does not hold for rcwa monoids in general. <P/>
+
+      See also <Ref Prop="IsIntegral" Label="Integral mapping"/>
+      for rcwa mappings.
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Prop Name="IsClassWiseOrderPreserving" Arg="G"
           Label="Class-wise order-preserving rcwa group"/>
     <Description>
       Indicates whether the integral rcwa group <A>G</A> is class-wise
       order-preserving or not. <P/>
 
-     See also <Ref Prop="IsClassWiseOrderPreserving"
-     Label="Class-wise order-preserving rcwa mapping"/>
-     for rcwa mappings.
+      See also <Ref Prop="IsClassWiseOrderPreserving"
+      Label="Class-wise order-preserving rcwa mapping"/>
+      for rcwa mappings.
 <Example>
 <![CDATA[
 gap> IsClassWiseOrderPreserving(Group(a,b));
@@ -899,3 +914,4 @@ gap> Size(G);
 </Chapter>
 
 <!-- #################################################################### -->
+
