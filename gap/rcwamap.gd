@@ -322,16 +322,6 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping );
 
 #############################################################################
 ##
-#O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
-##
-##  The set of elements $n$ of the base ring $R$, which are mapped to
-##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
-##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
-##
-DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
-
-#############################################################################
-##
 #A  SetOnWhichMappingIsClassWiseOrderReversing( <f> )
 #A  SetOnWhichMappingIsClassWiseConstant( <f> )
 #A  SetOnWhichMappingIsClassWiseOrderPreserving( <f> )
@@ -346,6 +336,16 @@ DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
                   IsRationalBasedRcwaMapping );
 DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
                   IsRationalBasedRcwaMapping );
+
+#############################################################################
+##
+#O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
+##
+##  The set of elements $n$ of the base ring $R$, which are mapped to
+##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
+##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
+##
+DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
@@ -583,4 +583,3 @@ DeclareOperation( "Restriction",
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
