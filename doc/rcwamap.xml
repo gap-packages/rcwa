@@ -9,7 +9,7 @@
 <Chapter Label="ch:RcwaMappings">
 <Heading>Residue Class-Wise Affine Mappings</Heading>
 
-This chapter describes the functionality available for calculating with
+This chapter describes the functionality available for computing with
 rcwa mappings. <P/>
 
 <!-- #################################################################### -->
@@ -40,25 +40,10 @@ rcwa mappings. <P/>
   </ManSection>
 
   <ManSection>
-    <Fam Name="IntegralRcwaMappingsFamily"/>
-    <Description>
-      The family of all integral rcwa mappings.
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Filt Name="IsSemilocalIntegralRcwaMapping" Arg="f"/>
     <Description>
       The category of all semilocal integral rcwa mappings.
     </Description>
-  </ManSection>
-
-  <ManSection>
-    <Func Name="SemilocalIntegralRcwaMappingsFamily" Arg="primes"/>
-    <Returns>
-      the family of rcwa mappings over <M>\Z_{(\pi)}</M>, where <M>\pi</M>
-      is the set of primes given as argument <A>primes</A>.
-    </Returns>
   </ManSection>
 
   <ManSection>
@@ -69,9 +54,9 @@ rcwa mappings. <P/>
   </ManSection>
 
   <ManSection>
-    <Func Name="ModularRcwaMappingsFamily" Arg="q"/>
+    <Func Name="RcwaMappingsFamily" Arg="R"/>
     <Returns>
-      the family of rcwa mappings over the ring GF( <A>q</A> )[ <M>x</M> ].
+      the family of rcwa mappings over the ring <A>R</A>.
     </Returns>
   </ManSection>
 
@@ -83,20 +68,33 @@ rcwa mappings. <P/>
 <Heading>Constructing rcwa mappings</Heading>
 
   <ManSection>
-    <Func Name="IntegralRcwaMapping" Arg="coeffs"/>
-    <Func Name="IntegralRcwaMapping" Arg="perm, range"/>
-    <Func Name="IntegralRcwaMapping" Arg="modulus, val"/>
-    <Func Name="RcwaMapping" Arg="coeffs"/>
-    <Func Name="RcwaMapping" Arg="perm, range"/>
-    <Func Name="RcwaMapping" Arg="modulus, val"/>
+    <Meth Name="RcwaMapping" Arg="R, modulus, coeffs"/>
+    <Meth Name="RcwaMapping" Arg="R, coeffs"/>
+    <Meth Name="RcwaMapping" Arg="coeffs"/>
+    <Meth Name="RcwaMapping" Arg="perm, range"/>
+    <Meth Name="RcwaMapping" Arg="modulus, values"/>
+    <Meth Name="RcwaMapping" Arg="pi, coeffs"/>
+    <Meth Name="RcwaMapping" Arg="q, modulus, coeffs"/>
+    <Meth Name="RcwaMapping" Arg="cycles"/>
     <Description>
-      Returns the integral rcwa mapping 
+      Returns the rcwa mapping
       <List>
         <Mark>(a)</Mark>
         <Item>
-          with coefficients <A>coeffs</A> resp.
+          with modulus <A>modulus</A> and coefficients <A>coeffs</A>
+          over the ring <A>R</A>, resp.
         </Item>
         <Mark>(b)</Mark>
+        <Item>
+          with coefficients <A>coeffs</A> over the ring <A>R</A>,
+          if this information is sufficient, resp.
+        </Item>
+        <Mark>(c)</Mark>
+        <Item>
+          with coefficients <A>coeffs</A>, if already this
+          information is sufficient, resp.
+        </Item>
+        <Mark>(d)</Mark>
         <Item>
           acting on the translates of <A>range</A> by integral multiples
           of the length of <A>range</A> as the translates of the action of
@@ -106,18 +104,36 @@ rcwa mappings. <P/>
           of positive integers less than <M>2^{28}</M>, since &GAP;
           permutations can only move these), resp.
         </Item>
-        <Mark>(c)</Mark>
+        <Mark>(e)</Mark>
         <Item>
           with modulus <A>modulus</A> and with values prescribed by the list
           <A>val</A>, which consists of 2<M>\cdot</M><A>modulus</A> pairs
           giving preimage and image for 2 points per residue class
-          (mod <A>modulus</A>).
+          (mod <A>modulus</A>), resp.
+        </Item>
+        <Mark>(f)</Mark>
+        <Item>
+          of <M>\Z_{(\pi)}</M> with coefficients
+          <A>coeffs</A>, where the set of primes <M>\pi</M> 
+          is given as argument <A>pi</A>, resp.
+        </Item>
+        <Mark>(g)</Mark>
+        <Item>
+          of GF( <A>q</A> )[ <A>x</A> ] with modulus
+          <A>modulus</A> and coefficients <A>coeffs</A>, resp.
+        </Item>
+        <Mark>(h)</Mark>
+        <Item>
+          an arbitrary rcwa mapping with residue class cycles as given by
+          <A>cycles</A>.
         </Item>
       </List>
-      In case (a), <A>coeffs</A> is a list of <A>m</A> lists of 3 integers
-      each (where <A>m</A> is the modulus of the mapping), giving the
-      coefficients <M>a_r</M>, <M>b_r</M> and <M>c_r</M> for <M>r = 0,
-      \ldots, m - 1</M> as described in the introduction.
+      The argument <A>coeffs</A> is a list of <M>R/mR</M> lists of 3
+      elements of <A>R</A>, each (where <A>m</A> is the modulus of the
+      mapping), giving the coefficients <M>a_r</M>, <M>b_r</M> and
+      <M>c_r</M> for <M>r</M> running through a set of representatives
+      for the residue classes (mod <A>m</A>), as described in the
+      introduction.
 <Example>
 <![CDATA[
 gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
@@ -134,41 +150,10 @@ gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
 true
 gap> t := RcwaMapping(1,[[-1,1],[1,-1]]); # The involution n -> -n.
 Integral rcwa mapping: n -> -n
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Func Name="SemilocalIntegralRcwaMapping" Arg="primes, coeffs"/>
-    <Func Name="RcwaMapping" Arg="pi, coeffs"/>
-    <Returns>
-      the rcwa mapping of <M>\Z_{(\pi)}</M> with coefficients
-      <A>coeffs</A>, where the set of primes <M>\pi</M> is given as argument
-      <A>primes</A>.
-    </Returns>
-    <Description>
-<Example>
-<![CDATA[
 gap> d := RcwaMapping([2],[[1/3,0,1]]);
 Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
 <rcwa mapping of Z_( 2, 3 ) with modulus 2>
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Func Name="ModularRcwaMapping" Arg="q, modulus, coeffs"/>
-    <Func Name="RcwaMapping" Arg="q, modulus, coeffs"/>
-    <Returns>
-      the rcwa mapping of GF( <A>q</A> )[ <A>x</A> ] with modulus
-      <A>modulus</A> and coefficients <A>coeffs</A>.
-    </Returns>
-    <Description>
-<Example>
-<![CDATA[
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(2));; z := Zero(R);;
@@ -178,6 +163,16 @@ gap> r := ModularRcwaMapping( 2, x^2 + e,
 >                               [ x^2 + x + e, x^2    , x^2 + e ],
 >                               [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
 <rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0>
+gap> f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);;
+gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);;
+gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);;
+gap> List([f1,f2,f3],Order);
+[ 2, 2, 2 ]
+gap> f  := f1*f2*f3;
+gap> Order(f);
+infinity
+gap> [Multiplier(f),Divisor(f)];
+[ 3, 2 ]
 ]]>
 </Example>
     </Description>
@@ -189,27 +184,28 @@ gap> r := ModularRcwaMapping( 2, x^2 + e,
   &ResClasses;, it is only used for internal purposes):
 
   <ManSection>
-    <Func Name="AllGFqPolynomialsModDegree" Arg="q, d, x"/>
+    <Func Name="AllResidues" Arg="R, m"/>
     <Returns>
-      a sorted list of all residues modulo a polynomial of degree <A>d</A>
-      over GF( <A>q</A> ) in the variable <A>x</A>.
+      a sorted list of all residues modulo <A>m</A> in the ring <A>R</A>.
     </Returns>
     <Description>
-      This gives also the ordering in which the coefficients of a modular
-      rcwa mapping are stored; thus, if <A>f</A> is a modular rcwa mapping
-      over GF( <A>q</A> )[ <A>x</A> ] with coefficients list <A>c</A>,
-      whose modulus <A>m</A> has degree <A>d</A>, then <A>f</A> maps a
-      polynomial <A>P</A> with <A>P</A> mod <A>m</A> = <A>r</A> to <P/>
+      This gives also the ordering in which the coefficients of an
+      rcwa mapping are stored; thus, if <A>f</A> is an rcwa mapping
+      of <A>R</A> with coefficients list <A>c</A> and modulus <A>m</A>,
+      then <A>f</A> maps an element <A>n</A> of <A>R</A>
+      with <A>n</A> mod <A>m</A> = <A>r</A> to <P/>
       <Log>
         <![CDATA[
-        ( c[ Position( res, r ) ][ 1 ] * P + c[ Position( res, r ) ][ 2 ] ) /
+        ( c[ Position( res, r ) ][ 1 ] * n + c[ Position( res, r ) ][ 2 ] ) /
           c[ Position( res, r ) ][ 3 ]]]>
       </Log>
       where <A>res</A> denotes the list of residues returned
       by this function.
 <Example>
 <![CDATA[
-gap> AllGFqPolynomialsModDegree(2,4,x);
+gap> AllResidues(Integers,6);
+[ 0 .. 5 ]
+gap> AllResidues(R,x^4+x^2);
 [ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3, 
   x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x, 
   x^3+x^2+x+Z(2)^0 ]
@@ -1563,6 +1559,28 @@ gap> S0 := ContractionCentre(T,100,1000);
   1, 2 ]
 ]]>
 </Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Oper Name="Restriction" Arg="g, f"
+          Label="Restriction of an rcwa mapping"/>
+    <Returns> the restriction of <A>g</A> by <A>f</A>. </Returns>
+    <Description>
+      The mapping <A>f</A> has to be injective. The support of the returned
+      mapping is a subset of the image of <A>f</A>. If <A>f</A> is bijective
+      the returned mapping is just the conjugate of <A>g</A> by <A>f</A>.
+      <P/>
+
+      See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
+>         Restriction(u,RcwaMapping([[2,1,1]])));
+IdentityMapping( Integers )
+]]>
+</Example>      
     </Description>
   </ManSection>
 

@@ -796,6 +796,30 @@ gap> RCWAInfo(0);
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Oper Name="Restriction" Arg="G, f"
+          Label="Restriction of an rcwa group"/>
+    <Returns> the restriction of <A>G</A> by <A>f</A>. </Returns>
+    <Description>
+      The mapping <A>f</A> has to be injective.
+      The returned group acts on the image of <A>f</A> and fixes its
+      complement pointwise. If <A>f</A> is bijective the returned
+      group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
+
+      See also <Ref Oper="Restriction"
+                    Label="Restriction of an rcwa mapping"/>
+      for rcwa mappings.
+<Example>
+<![CDATA[
+gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
+<integral rcwa group with 2 generators>
+gap> MovedPoints(G);
+The residue class 3(5)
+]]>
+</Example>      
+    </Description>
+  </ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
