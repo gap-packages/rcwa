@@ -614,7 +614,7 @@ true
     <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
     <Description>
       The rank of the largest free abelian subgroup of the kernel of the
-      action of the tame rcwa group <A>G</A> on
+      action of the tame rcwa group <A>G</A> on the set of residue classes
       <C>RespectedClassPartition( <A>G</A> )</C>.
 <Example>
 <![CDATA[

@@ -369,7 +369,7 @@ false
           Label="Class-wise order-preserving rcwa mapping"/>
     <Description>
       Indicates whether the rational-based rcwa mapping <A>f</A> is
-      class-wise order-preserving or not.
+      class-wise order-preserving or not. <P/>
       See also <Ref Prop="IsClassWiseOrderPreserving"
       Label="Class-wise order-preserving rcwa group"/>
       for rcwa groups.
