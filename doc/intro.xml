@@ -68,7 +68,7 @@ We proceed with the definitions concerning rcwa mappings.
   <Item>
     In the notation we used in the definition of an rcwa mapping in the
     Preface (<Ref Label="ch:preface"/>), the <E>multiplier</E> is the
-    lcm of the coefficients <M>a_r</M> in the numerators.
+    lcm of the coefficients <M>a_{r(m)}</M> in the numerators.
     <M>\rightarrow</M> <Ref Attr ="Multiplier"
                             Label="Multiplier of an rcwa mapping"/>.
   </Item>
@@ -77,7 +77,7 @@ We proceed with the definitions concerning rcwa mappings.
   <Item>
     In the notation we used in the definition of an rcwa mapping in the
     Preface (<Ref Label="ch:preface"/>), the <E>divisor</E> is the lcm
-    of the coefficients <M>c_r</M> in the denominators.
+    of the coefficients <M>c_{r(m)}</M> in the denominators.
     <M>\rightarrow</M> <Ref Attr ="Divisor"
                             Label="Divisor of an rcwa mapping"/>.
   </Item>
@@ -111,6 +111,21 @@ We proceed with the definitions concerning rcwa mappings.
   <Mark>wild</Mark>
   <Item>
     An rcwa mapping is called <E>wild</E> if it is not tame.
+  </Item>
+
+  <Mark>trace</Mark>
+  <Item>
+    Using the notation from the definition of an rcwa mapping in the
+    Preface (<Ref Label="ch:preface"/>), the <E>trace</E> is defined by
+    <Alt Not="LaTeX">
+      (see LaTeX version of the manual).
+    </Alt> 
+    <Alt Only="LaTeX">
+      <Display>
+        \frac{1}{m} \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{a_{r(m)}} \right).
+      </Display>
+    </Alt>
+    <M>\rightarrow</M> <Ref Oper="Trace"/>.
   </Item>
 
 </List>

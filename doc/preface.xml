@@ -81,12 +81,12 @@ of whose proper residue class rings are finite.
 We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
 affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
 modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
-there are coefficients <M>a_r, b_r, c_r \in R</M> such that the restriction
-of <M>f</M> to <M>r(m)</M> is given by <P/>
+there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
+the restriction of <M>f</M> to <M>r(m)</M> is given by <P/>
 <Alt Only="Text"> 
   <![CDATA[
 
-                      n  -->  ( a_r * n + b_r ) / c_r.
+                      n  -->  ( a_r(m) * n + b_r(m) ) / c_r(m).
 
   ]]>
 </Alt>
@@ -96,20 +96,20 @@ of <M>f</M> to <M>r(m)</M> is given by <P/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    n  -->  ( a_r * n + b_r ) / c_r.
+    n  -->  ( a_r(m) * n + b_r(m) ) / c_r(m).
   ]]>
 </Alt>
 <Alt Only="LaTeX">
   <Display>
-    n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r}.
+    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
   </Display>
 </Alt>
 We always assume that all fractions are reduced, i.e. that
-<M>\gcd( a_r, b_r, c_r ) = 1</M>, and that <M>m</M> is minimal w.r.t. the
-given property. Apart from the restrictions imposed by the condition that
-the image of any residue class <M>r(m)</M> under <M>f</M> must be a subset
-of <M>R</M> and that we cannot divide by 0, the coefficients <M>a_r</M>,
-<M>b_r</M> and <M>c_r</M> can be any ring elements.
+<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that no proper divisor
+of <M>m</M> shares the given property. Apart from the restrictions imposed by
+the condition that the image of any residue class <M>r(m)</M> under <M>f</M>
+must be a subset of <M>R</M> and that we cannot divide by 0, the coefficients
+<M>a_{r(m)}</M>, <M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements.
 <Index Key="rcwa mapping" Subkey="modulus"></Index>
 We call <M>m</M> the <E>modulus</E> of <M>f</M>.
 When talking about the <E>product</E> of some rcwa mappings we always mean
@@ -207,6 +207,3 @@ I would be grateful for any bug reports, comments or suggestions.
 </Chapter>
 
 <!-- #################################################################### -->
-
-
-
