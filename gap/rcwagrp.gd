@@ -192,12 +192,21 @@ DeclareAttribute( "RcwaBase", IsRcwaGroup );
 
 ############################################################################# 
 ## 
-#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . . short orbits of perm.-group <G>
+#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
 ## 
-##  Computes all finite orbits of the permutation group <G> of maximal length
+##  Computes all finite orbits of the rcwa group <G> of maximal length
 ##  <maxlng>, which intersect non-trivially with the set <S>.
 ##
 DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
+
+############################################################################# 
+## 
+#O  OrbitUnion( <G>, <S> ) . . . . . . .  union of the orbit of <S> under <G>
+## 
+##  Computes the union of the elements of the orbit of the set <S> under
+##  the rcwa group <G>. In particular, <S> can be a union of residue classes.
+##
+DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
