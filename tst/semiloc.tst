@@ -4,7 +4,7 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
 #Y  Universit\"at Stuttgart, Germany
 ##
 

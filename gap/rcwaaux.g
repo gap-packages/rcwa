@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains auxiliary functions for the RCWA package.
 ##
 Revision.rcwaaux_g :=
