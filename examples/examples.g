@@ -172,6 +172,11 @@ g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
                    [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
 
 
+# The trajectory of 3224 under the following mapping has length 19949562.
+
+f6 := RcwaMapping([[1,0,6],[5,1,6],[7,-2,6],[11,3,6],[11,-2,6],[11,-1,6]]);
+
+
 # Some other rcwa mappings.
 
 nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
