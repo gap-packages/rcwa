@@ -109,34 +109,39 @@ InstallMethod( AlternatingGroupCons,
     return IntegralRcwaGroupByPermGroup( AlternatingGroup( n ) );
   end );
 
+if   CompareVersionNumbers( VERSION, "4r4" )
+then InstallGLSLMethod := InstallMethod; 
+     GLSLCond := IsField and IsFinite; GLSLParSize := Size;
+else InstallGLSLMethod := InstallOtherMethod;
+     GLSLCond := IsPosInt; GLSLParSize := x -> x;
+fi;
+
 #############################################################################
 ##
 #M  GeneralLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
-InstallMethod( GeneralLinearGroupCons,
-               "integral rcwa group by degree and finite field size",
-               true, [ IsIntegralRcwaGroup,
-                       IsPosInt, IsField and IsFinite ], 0,
+InstallGLSLMethod( GeneralLinearGroupCons,
+                   "integral rcwa group by degree and finite field size",
+                   true, [ IsIntegralRcwaGroup, IsPosInt, GLSLCond ], 0,
 
   function( filter, d, F )
 
     return IntegralRcwaGroupByPermGroup(
-            Image( IsomorphismPermGroup( GL ( d, Size( F ) ) ) ) );
+            Image( IsomorphismPermGroup( GL ( d, GLSLParSize( F ) ) ) ) );
   end );
 
 #############################################################################
 ##
 #M  SpecialLinearGroupCons( IsIntegralRcwaGroup, <d>, <q> )
 ##
-InstallMethod( SpecialLinearGroupCons,
-               "integral rcwa group by degree and finite field size",
-               true, [ IsIntegralRcwaGroup,
-                       IsPosInt, IsField and IsFinite ], 0,
+InstallGLSLMethod( SpecialLinearGroupCons,
+                   "integral rcwa group by degree and finite field size",
+                   true, [ IsIntegralRcwaGroup, IsPosInt, GLSLCond ], 0,
 
   function( filter, d, F )
 
     return IntegralRcwaGroupByPermGroup(
-             Image(IsomorphismPermGroup( SL( d, Size( F ) ) ) ) );
+             Image(IsomorphismPermGroup( SL( d, GLSLParSize( F ) ) ) ) );
   end );
 
 #############################################################################
