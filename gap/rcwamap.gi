@@ -2655,6 +2655,7 @@ InstallMethod( IsTame,
                > DegreeOfLaurentPolynomial(Modulus(f)) + 2
       then TryNextMethod(); fi;
     od;
+    TryNextMethod();
   end );
 
 #############################################################################
@@ -3086,6 +3087,7 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
