@@ -844,7 +844,7 @@ InstallMethod( \in,
 
   function ( g, G )
 
-    local  P, H, h, K, k, L, l, F, phi, c, gens, gensinv;
+    local  P, H, h, K, k, L, l, F, phi, factors, head, c, gens, gensinv;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -867,8 +867,7 @@ InstallMethod( \in,
     fi;
     if not IsTame(G) then
       Info(InfoRCWA,3,"<G> is wild -- trying to factor <g> into gen's ...");
-      F   := FreeGroup(Length(gens));
-      phi := GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),gens);
+      phi := ProjectionFromFreeGroupByGenerators(G);
       return PreImagesRepresentative(phi,g) <> fail;
     else
       if   Modulus(G) mod Modulus(g) <> 0 then
@@ -895,13 +894,21 @@ InstallMethod( \in,
                         "is not an element of the one of <G>.");
         return false;
       fi;
-      Info(InfoRCWA,3,"Checking membership of <g>^Order(<h>) in ",
-                      "the kernel of RespectedClassPartition(<G>).");  
+      if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
+      Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
+      Info(InfoRCWA,3,"on RespectedClassPartition(<G>).");
+      phi     := ProjectionFromFreeGroupByGenerators(H);
+      factors := List(LetterRepAssocWord(PreImagesRepresentative(phi,h)),
+                      id->gens[AbsInt(id)]^SignInt(id));
+      head    := Product(factors);
+      k       := g/head;
+      Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
+      Info(InfoRCWA,3,"the action of <g> on RespectedClassPartition(<G>).");
       K := KernelOfActionOnClassPartition(G);
       L := KernelOfActionOnClassPartitionHNFMat(G);
-      k := g^Order(h); c := Coefficients(k);
       if L = [] then return IsOne(k); fi;
       Info(InfoRCWA,3,"The kernel has rank ",RankMat(L),".");
+      c := Coefficients(k);
       l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
       return RankMat(L) = RankMat(Concatenation(L,[l]));
     fi;
@@ -1730,3 +1737,4 @@ InstallMethod( DirectProductOp,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
