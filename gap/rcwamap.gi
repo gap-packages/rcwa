@@ -3590,11 +3590,12 @@ InstallMethod( FactorizationIntoGenerators,
 
   function ( g )
 
-    local  facts, StateInfo, elm, rev, revert, affsrc, P, h, cycs, cyc,
-           gfixP, cl, rest, c, m, cr, multfacts, divfacts, p, q,
-           Smult, Sdiv, clSmult, clSdiv, pairs, pair, diffs, largeprimes,
-           splitpair, splittedpairs, splittedpair, d, dpos, disjoint,
-           switch, expandswitches, ct, i, j, k, kmult, kdiv, r;
+    local  DivideBy, StateInfo, facts, elm, log, loop, rnd, rev, revert,
+           affsrc, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr,
+           multfacts, divfacts, p, q, Smult, Sdiv, clSmult, clSdiv,
+           pairs, pair, diffs, largeprimes, splitpair, splittedpairs,
+           splittedpair, d, dpos, disjoint, switch, expandswitches,
+           ct, i, j, k, kmult, kdiv, r;
 
     StateInfo := function ( )
       Info(InfoRCWA,1,"Modulus(<g>) = ",Modulus(g),
@@ -3602,10 +3603,16 @@ InstallMethod( FactorizationIntoGenerators,
                       ", Divisor(<g>) = ",Divisor(g));
     end;
 
+    DivideBy := function ( elm )
+      g     := g/elm;
+      facts := Concatenation([elm],facts);
+      Info(InfoRCWA,1,"Dividing by ",Name(elm)); StateInfo();
+    end;
+
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
 
-    facts := []; elm := g;
+    facts := []; elm := g; log := []; loop := false;
 
     if not IsClassWiseOrderPreserving(g) then # First make <g> cwop.
       rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
@@ -3674,8 +3681,8 @@ InstallMethod( FactorizationIntoGenerators,
           if   not IsSubset(multfacts,divfacts)
           then q := Maximum(Difference(divfacts,multfacts)); fi;
 
-          if [p,q] <> [1,1] then
-            if p > q then # Additional prime in multiplier.
+          if Maximum(p,q) >= 3 then
+            if p > q then # Additional prime p in multiplier.
               switch := PrimeSwitch(p);
               if expandswitches then
                 facts := Concatenation(FactorizationIntoGenerators(switch),
@@ -3683,7 +3690,10 @@ InstallMethod( FactorizationIntoGenerators,
               else facts := Concatenation([switch],facts); fi;
               g := g/switch;
               Info(InfoRCWA,1,"Dividing by ",Name(switch));
-            else          # Additional prime in divisor.
+              if Multiplier(g) mod p <> 0 then # p removed from multiplier.
+                DivideBy(ClassTransposition(0,2,1,2*p));
+              fi;
+            else          # Additional prime q in divisor.
               switch := PrimeSwitch(q);
               if expandswitches then
                 facts  := Concatenation(
@@ -3692,8 +3702,11 @@ InstallMethod( FactorizationIntoGenerators,
               else facts := Concatenation([switch^-1],facts); fi;
               g := g*switch;
               Info(InfoRCWA,1,"Multiplying by ",Name(switch));
+              if Divisor(g) mod q <> 0 then    # q removed from divisor.
+                DivideBy(ClassTransposition(0,2,1,2*q));
+              fi;
             fi;
-          fi;
+          elif 2 in [p,q] then DivideBy(ClassTransposition(0,2,1,4)); fi;
 
           StateInfo();
 
@@ -3722,71 +3735,81 @@ InstallMethod( FactorizationIntoGenerators,
           ViewObj(clSdiv); Print("\n");
         fi;
 
-        repeat
-          pairs := Filtered(Cartesian(clSmult,clSdiv),
-                   pair->PadicValue(Modulus(pair[1])/Modulus(pair[2]),p)=k);
-          pairs := Set(pairs);
-          if pairs = [] then
-            diffs := List(Cartesian(clSmult,clSdiv),
-                     pair->PadicValue(Modulus(pair[1])/Modulus(pair[2]),p));
-            if Maximum(diffs) < k then
-              Info(InfoRCWA,2,"Split classes in clSmult.");
-              clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
-            fi;
-            if Maximum(diffs) > k then
-              Info(InfoRCWA,2,"Split classes in clSdiv.");
-              clSdiv := Flat(List(clSdiv,cl->SplittedClass(cl,p)));
-            fi;
-          fi;
-        until pairs <> [];
+        if not [p,kmult,kdiv,clSmult,clSdiv] in log then
 
-        Info(InfoRCWA,1,"Found ",Length(pairs)," pairs.");
+          Add(log,[p,kmult,kdiv,clSmult,clSdiv]);
 
-        splittedpairs := [];
-        for i in [1..Length(pairs)] do
-          largeprimes := List(pairs[i],
-                              cl->Filtered(Factors(Modulus(cl)),q->q>p));
-          largeprimes := List(largeprimes,Product);
-          splitpair   := largeprimes/Gcd(largeprimes);
-          if 1 in splitpair then # Omit non-disjoint split.
-            if splitpair = [1,1] then Add(splittedpairs,pairs[i]); else
-              d := Maximum(splitpair); dpos := 3-Position(splitpair,d);
-              if dpos = 1 then
-                splittedpair := List(SplittedClass(pairs[i][1],d),
-                                     cl->[cl,pairs[i][2]]);
-              else
-                splittedpair := List(SplittedClass(pairs[i][2],d),
-                                     cl->[pairs[i][1],cl]);
+          repeat
+            pairs := Filtered(Cartesian(clSmult,clSdiv),
+                     pair->PadicValue(Mod(pair[1])/Mod(pair[2]),p)=k);
+            pairs := Set(pairs);
+            if pairs = [] then
+              diffs := List(Cartesian(clSmult,clSdiv),
+                       pair->PadicValue(Mod(pair[1])/Mod(pair[2]),p));
+              if Maximum(diffs) < k then
+                Info(InfoRCWA,2,"Split classes in clSmult.");
+                clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
               fi;
-              splittedpairs := Concatenation(splittedpairs,splittedpair);
+              if Maximum(diffs) > k then
+                Info(InfoRCWA,2,"Split classes in clSdiv.");
+                clSdiv := Flat(List(clSdiv,cl->SplittedClass(cl,p)));
+              fi;
             fi;
-          fi;
-        od;
+          until pairs <> [];
 
-        pairs := splittedpairs;
-        Info(InfoRCWA,1,"After filtering and splitting: ",
-                        Length(pairs)," pairs.");
+          Info(InfoRCWA,1,"Found ",Length(pairs)," pairs.");
 
-        repeat
-          disjoint := [pairs[1]]; i := 1;
-          while i < Length(pairs)
-                and Sum(List(Flat(disjoint),Density))
-                  = Density(Union(Flat(disjoint)))
-          do
-            i := i + 1;
-            Add(disjoint,pairs[i]); 
+          splittedpairs := [];
+          for i in [1..Length(pairs)] do
+            largeprimes := List(pairs[i],
+                                cl->Filtered(Factors(Modulus(cl)),q->q>p));
+            largeprimes := List(largeprimes,Product);
+            splitpair   := largeprimes/Gcd(largeprimes);
+            if 1 in splitpair then # Omit non-disjoint split.
+              if splitpair = [1,1] then Add(splittedpairs,pairs[i]); else
+                d := Maximum(splitpair); dpos := 3-Position(splitpair,d);
+                if dpos = 1 then
+                  splittedpair := List(SplittedClass(pairs[i][1],d),
+                                       cl->[cl,pairs[i][2]]);
+                else
+                  splittedpair := List(SplittedClass(pairs[i][2],d),
+                                       cl->[pairs[i][1],cl]);
+                fi;
+                splittedpairs := Concatenation(splittedpairs,splittedpair);
+              fi;
+            fi;
           od;
-          if   Sum(List(Flat(disjoint),Density))
-             > Density(Union(Flat(disjoint)))
-          then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
-          for pair in disjoint do
-            ct    := ClassTransposition(pair);
-            g     := g/ct;
-            facts := Concatenation([ct],facts);
-            Info(InfoRCWA,1,"Dividing by ",Name(ct)); StateInfo();
-          od;
-          pairs := Difference(pairs,disjoint);
-        until pairs = [];
+
+          pairs := splittedpairs;
+          Info(InfoRCWA,1,"After filtering and splitting: ",
+                          Length(pairs)," pairs.");
+
+          repeat
+            disjoint := [pairs[1]]; i := 1;
+            while i < Length(pairs)
+                  and Sum(List(Flat(disjoint),Density))
+                    = Density(Union(Flat(disjoint)))
+            do
+              i := i + 1;
+              Add(disjoint,pairs[i]); 
+            od;
+            if   Sum(List(Flat(disjoint),Density))
+               > Density(Union(Flat(disjoint)))
+            then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
+            for pair in disjoint do DivideBy(ClassTransposition(pair)); od;
+            pairs := Difference(pairs,disjoint);
+          until pairs = [];
+
+        else
+          Info(InfoRCWA,1,"A loop has been detected - trying to break out.");
+          repeat
+            rnd := Random(RCWA(Integers));
+          until Modulus(rnd) <= 30 and IsClassWiseOrderPreserving(rnd)
+                and not IsOne(rnd);
+          Perform(FactorizationIntoGenerators(rnd),DivideBy);
+          Info(InfoRCWA,1,"Finished random `break out' phase.");
+          loop := false;
+        fi;
 
       until IsIntegral(g);
 
