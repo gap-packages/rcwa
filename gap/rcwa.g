@@ -9,34 +9,6 @@
 Revision.rcwa_g :=
   "@(#)$Id$";
 
-# For circumventing bugs and deficiencies in 4.2
- 
-if not CompareVersionNumbers( VERSION, "4r3" ) then 
-
-InstallMethod( GcdOp, "for zero polynomials", IsCollsElmsElms,
-               [ IsEuclideanRing, IsPolynomial, IsPolynomial ], 100,
-
-  function ( R, f, g )
-    if   f = Zero(f) and g = Zero(f)
-    then return Zero(f);
-    else TryNextMethod(); fi;
-  end );
-
-InstallMethod( DefaultRingByGenerators, "for zero polynomials",
-               true, [ IsCollection ], 100,
-
-  function ( gens )
-    if   not ForAll( gens, IsPolynomial )
-      or not ForAll( gens, g -> g = Zero( gens[1] ) )
-    then TryNextMethod(); fi;
-    return PolynomialRing(GF(Characteristic(gens[1])),
-                          [IndeterminateNumberOfLaurentPolynomial(gens[1])]);
-  end );
-
-MakeGAPDocDoc := ReturnFail;
-
-fi;
-
 #############################################################################
 ##
 #F  BuildRCWAManual( ) . . . . . . . . . . . . . . . . . . . build the manual
@@ -44,7 +16,7 @@ fi;
 ##  This function builds the manual of the RCWA package in the file formats
 ##  &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank L¸beck and Max Neunhˆffer.
+##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunh˜ffer.
 ##
 BuildRCWAManual := function ( )
 
