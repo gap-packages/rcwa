@@ -576,9 +576,10 @@ IdentityMapping( Z_( 2 ) )
 ]]>
 </Example>
 
-There are operations <C>Modulus</C> and <C>Coefficients</C> for extracting
-the modulus resp. the coefficient list of a given rcwa mapping.
-The meaning of the return values is as described in the previous section.
+There are operations <C>Modulus</C> (abbreviated <C>Mod</C>) and
+<C>Coefficients</C> for extracting the modulus resp. the coefficient list
+of a given rcwa mapping. The meaning of the return values is as described
+in the previous section.
 
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
