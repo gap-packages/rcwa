@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 
 DeclarePackage( "rcwa", "1.0",
   
@@ -44,6 +47,7 @@ SetInfoLevel( InfoWarning, OLD_WARNINGLEVEL );
 
 ReadPkg( "rcwa", "banner.g" );
 ReadPkg( "rcwa", "gap/z_pi.gd" );
+ReadPkg( "rcwa", "gap/resclass.gd" );
 ReadPkg( "rcwa", "gap/rcwamap.gd" );
 ReadPkg( "rcwa", "gap/rcwagrp.gd" );
 

@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 
 if not QUIET and BANNER then
   Print("\nLoading RCWA 1.0 (Residue Class-Wise Affine representations),");
