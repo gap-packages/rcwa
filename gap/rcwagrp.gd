@@ -289,7 +289,8 @@ DeclareSynonym( "RcwaGroupByPermGroup", IntegralRcwaGroupByPermGroup );
 
 #############################################################################
 ##
-#A  IntegralizingConjugator( <f> | <G> ) . . mapping <x>: <f>^<x> is integral
+#A  IntegralizingConjugator( <f> ) . . . . . mapping <x>: <f>^<x> is integral
+#A  IntegralizingConjugator( <G> ) . . . . . mapping <x>: <G>^<x> is integral
 ##
 ##  A mapping <x> such that <f>^<x> resp. <G>^<x> is integral. Exists always
 ##  if <f> is a tame bijective rcwa mapping resp. if <G> is a tame rcwa
@@ -300,7 +301,8 @@ DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  IntegralConjugate( <f> | <G> ) . . .  integral conjugate of <f> resp. <G>
+#A  IntegralConjugate( <f> ) . . . . . . . . . . .  integral conjugate of <f>
+#A  IntegralConjugate( <G> ) . . . . . . . . . . .  integral conjugate of <G>
 ##
 ##  Some integral conjugate of the rcwa mapping <f> resp. rcwa group <G>
 ##  in RCWA(<R>). This is certainly not defined uniquely, and exists only
@@ -310,7 +312,8 @@ DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  StandardizingConjugator( <f> | <G> ) . . mapping <x>: <f>^<x> is standard
+#A  StandardizingConjugator( <f> ) . . . . . mapping <x>: <f>^<x> is standard
+#A  StandardizingConjugator( <G> ) . . . . . mapping <x>: <G>^<x> is standard
 ##
 ##  A mapping <x> such that <f>^<x> resp. <G>^<x> is the ``standard''
 ##  representative of the conjugacy class resp. conjugacy class of subgroups
@@ -321,7 +324,8 @@ DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  StandardConjugate( <f> | <G> ) . . . standard rep. of the conjugacy class
+#A  StandardConjugate( <f> ) . .  standard rep. of the conjugacy class of <f>
+#A  StandardConjugate( <G> ) . .  standard rep. of the conjugacy class of <G>
 ##
 ##  Some ``nice'' canonical representative of the conjugacy class of the
 ##  bijective rcwa mapping <f> / rcwa group <G> in the whole group RCWA(<R>).
@@ -333,4 +337,3 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-

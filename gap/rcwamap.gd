@@ -634,7 +634,7 @@ DeclareAttribute( "ImageDensity", IsRcwaMapping );
 
 #############################################################################
 ##
-#F  InjectiveAsMappingFrom( <f ) . . . . . some set on which <f> is injective
+#F  InjectiveAsMappingFrom( <f> ) . . . .  some set on which <f> is injective
 ##
 ##  Returns some subset <S> of `Source'(<f>) such that the restriction of <f>
 ##  to <S> is injective.
