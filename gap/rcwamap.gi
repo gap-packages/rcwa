@@ -2465,7 +2465,8 @@ InstallGlobalFunction( Trajectory,
 
     local  seq, step;
 
-    if not (    IsRcwaMapping(f) and n in Source(f)
+    if not (     IsRcwaMapping(f)
+            and (n in Source(f) or IsSubset(Source(f),n))
             and (     cond = "stop"
                   and (val in Source(f) or IsSubset(Source(f),val))
                   or  cond = "length" and IsPosInt(val)))
@@ -2474,7 +2475,8 @@ InstallGlobalFunction( Trajectory,
     if cond = "length" then
       for step in [1..val-1] do Add(seq,seq[step]^f); od;
     elif cond = "stop" then
-      if not IsListOrCollection(val) then val := [val]; fi;
+      if   IsListOrCollection(n) or not IsListOrCollection(val)
+      then val := [val]; fi;
       while not seq[Length(seq)] in val do Add(seq,seq[Length(seq)]^f); od;
     fi;
     return seq;
