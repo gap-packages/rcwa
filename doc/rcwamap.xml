@@ -496,13 +496,17 @@ Z(2)^0+x^3
     <Meth Name="ImagesSet" Arg="f, S"/>
     <Meth Name="Image" Arg="f, S"/>
     <Meth Name="Image" Arg="f"/>
+    <Meth Name="\^" Arg="f, S"/>
     <Returns>
       the image of the set <A>S</A> under the rcwa mapping <A>f</A>,
       resp. the image of the rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      In particular, <A>S</A> can be a union of residue classes.
+      In particular, <A>S</A> can be a union of residue classes;
+      thus, rcwa mappings resp. rcwa groups act on sets of residue class unions
+      as well as on sets of single ring elements.
 <Example>
+<![CDATA[
 gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3)
 gap> Image(T,A);
@@ -510,6 +514,9 @@ Union of the residue classes 1(9), 4(9), 7(9) and 8(9)
 gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> Image(k);
 The residue class 0(4)
+gap> A^u;
+<union of 9 residue classes (mod 27)>
+]]>
 </Example>
     </Description>
   </ManSection>
