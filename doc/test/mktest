@@ -57,6 +57,7 @@ $mkxtest $options -r rcwa preface
 $mkxtest $options -r rcwa intro
 $mkxtest $options -r rcwa rcwamap
 $mkxtest $options -r rcwa rcwagrp
-$mkxtest $options rcwaaux
+$mkxtest $options -r rcwa rcwaaux
 $mkxtest $options -r rcwa examples
+
 
