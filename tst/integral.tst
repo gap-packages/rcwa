@@ -887,8 +887,12 @@ gap> u in G;
 #I  <g> and <G> have incompatible prime sets.
 false
 gap> RCWAInfo(0);
+gap> S0 := ContractionCentre(T,100,1000);
+[ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0,
+  1, 2 ]
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
