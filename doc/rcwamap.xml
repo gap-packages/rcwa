@@ -128,6 +128,8 @@ reader may find it easier to look first at the functions for constructing
 some kinds of particularly simple-structured bijective rcwa mappings of
 <M>\mathbb{Z}</M> described afterwards.
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Meth Name="RcwaMapping" Arg="R, m, coeffs"
         Label="R, m, coeffs"/>
@@ -218,6 +220,9 @@ some kinds of particularly simple-structured bijective rcwa mappings of
     The methods for the operation <C>RcwaMapping</C> perform a number of
     argument checks, which can be skipped by using <C>RcwaMappingNC</C>
     instead.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
@@ -266,6 +271,8 @@ gap> Cycle(a,44);
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 Some kinds of very simple-structured rcwa mappings are of particular
 interest:
@@ -438,7 +445,7 @@ gap> Image(RcwaMapping([[-4,-8,1]]));
 
 Images of elements, of finite sets of elements and of unions of finitely
 many residue classes of the source of an rcwa mapping can be computed with
-<C>^</C> (the same symbol as used for exponentiation and conjugation).
+<C>&circum;</C> (the same symbol as used for exponentiation and conjugation).
 The same works for partitions of the source into a finite number of
 residue classes.
 
@@ -546,7 +553,7 @@ be available.<P/>
     In the author's forthcoming PhD Thesis, it will be proved that
     the determinant induces an epimorphism from the group of all
     class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
-    onto the additive group <M>(\Z,+)</M>. <P/>
+    onto <M>(\Z,+)</M>. <P/>
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
@@ -576,7 +583,7 @@ gap> Determinant(u^2*b^-3);
   <Returns> The sign of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
     Using the notation from the definition of an rcwa mapping,
-    the <E>sign</E> of a bijective rcwa mapping <M>\sigma</M>
+    the <E>sign</E> of a bijective rcwa mapping&nbsp;<M>\sigma</M>
     of&nbsp;<M>\Z</M> is defined by
     <Alt Not="LaTeX">
       (see LaTeX version of the manual).
