@@ -702,11 +702,6 @@ IdChars := function ( n, ch )
 end;
 MakeReadOnlyGlobal( "IdChars" );
 
-RingToString := function ( R )
-  if IsIntegers(R) then return "Z"; else return String(R); fi;
-end;
-MakeReadOnlyGlobal( "RingToString");
-
 DisplayIntegralAffineMapping := function ( t )
 
   local  a, b, c;
@@ -3029,4 +3024,5 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 

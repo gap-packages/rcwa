@@ -1510,6 +1510,33 @@ InstallOtherMethod( RepresentativeActionOp,
 
 ############################################################################# 
 ##
+#M  PreImagesRepresentative( <phi>, <g> )
+##
+InstallMethod( PreImagesRepresentative,
+               "for hom's from free groups to integral rcwa groups (RCWA)",
+               ReturnTrue, [ IsGroupHomomorphism, IsIntegralRcwaMapping ], 0,
+
+  function ( phi, g )
+
+    local  F, G, cand, preimage, image, lng;
+
+    F := Source(phi); G := Range(phi);
+    if   not IsFreeGroup(F) or not IsIntegralRcwaGroup(G)
+      or not MappingGeneratorsImages(phi) = List([F,G],GeneratorsOfGroup)
+    then TryNextMethod(); fi;
+    lng := 1;
+    repeat
+      lng      := lng + 1;
+      preimage := [1..lng];
+      image    := List(preimage,n->n^g);
+      cand     := RepresentativeActionPreImage(G,preimage,image,OnTuples,F);
+      if cand = fail then return fail; fi;
+    until cand^phi = g;
+    return cand;
+  end );
+
+############################################################################# 
+##
 #M  IsSolvable( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( IsSolvable,
@@ -1617,4 +1644,5 @@ InstallMethod( DirectProductOp,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
