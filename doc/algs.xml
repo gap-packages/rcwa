@@ -509,6 +509,13 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
+    <C>PrimeSwitch(<A>p</A>)</C>
+  </Mark>
+  <Item>
+    Multiplication of rcwa mappings as indicated.
+  </Item>
+
+  <Mark>
     <C>Print(<A>f</A>)</C>
   </Mark>
   <Item>
