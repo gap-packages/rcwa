@@ -1010,42 +1010,46 @@ true
 <Heading>Transition matrix, transition graph and trajectory</Heading>
 
   <ManSection>
-    <Func Name="TransitionMatrix" Arg="f, deg"/>
+    <Func Name="TransitionMatrix" Arg="f, m"/>
     <Returns>
-      the transition matrix of degree <A>deg</A>
-      of the rcwa mapping <A>f</A>.
+      the transition matrix of the rcwa mapping <A>f</A>
+      for modulus <A>m</A>.
     </Returns>
     <Description>
 <Example>
 <![CDATA[
 gap> M := TransitionMatrix(a,7);;
 gap> Display(M);
-[ [  1,  0,  1,  0,  0,  1,  0 ],
-  [  0,  1,  0,  0,  1,  1,  0 ],
-  [  1,  0,  0,  1,  0,  0,  0 ],
-  [  0,  1,  1,  0,  0,  0,  1 ],
-  [  0,  1,  0,  0,  0,  1,  1 ],
-  [  1,  0,  0,  0,  1,  0,  0 ],
-  [  0,  0,  1,  1,  0,  0,  1 ] ]
+[ [  1/2,    0,  1/4,    0,    0,  1/4,    0 ],
+  [    0,  1/4,    0,    0,  1/4,  1/2,    0 ],
+  [  1/4,    0,    0,  3/4,    0,    0,    0 ],
+  [    0,  1/2,  1/4,    0,    0,    0,  1/4 ],
+  [    0,  1/4,    0,    0,    0,  1/4,  1/2 ],
+  [  1/4,    0,    0,    0,  3/4,    0,    0 ],
+  [    0,    0,  1/2,  1/4,    0,    0,  1/4 ] ]
 gap> DeterminantMat(M);
--5
-gap> M := TransitionMatrix(T,13);;
-gap> Display(M*One(GF(2)));
- 1 . . . . . . 1 . . . . .
- . . 1 . . . . 1 . . . . .
- . 1 . . . . . . . . 1 . .
- . . . . . 1 . . 1 . . . .
- 1 . 1 . . . . . . . . . .
- . . . . . . . . 1 1 . . .
- . . . 1 . . . . . . . . .
- . . . . . . . . . . 1 1 .
- . . . . 1 . 1 . . . . . .
- . 1 . . . . . . . . . 1 .
- . . . . . 1 . . . 1 . . .
- . . . . 1 . . . . . . . 1
- . . . . . . 1 . . . . . 1
-gap> DeterminantMat(M);
--16
+-81/4096
+gap> M := TransitionMatrix(T,19);;
+gap> Display(M*One(GF(7)));
+ 4 . . . . . . . . . 4 . . . . . . . .
+ . . 4 . . . . . . . 4 . . . . . . . .
+ . 4 . . . . . . . . . . . 4 . . . . .
+ . . . . . 4 . . . . . 4 . . . . . . .
+ . . 4 . . . . . . . . . . . . . 4 . .
+ . . . . . . . . 4 . . . 4 . . . . . .
+ 4 . . 4 . . . . . . . . . . . . . . .
+ . . . . . . . . . . . 4 . 4 . . . . .
+ . . . 4 4 . . . . . . . . . . . . . .
+ . . . . . . . . . . . . . . 1 . . . .
+ . . . . . 4 4 . . . . . . . . . . . .
+ . . . . . . . . . . . . . . . 4 . 4 .
+ . . . . . . 4 . . 4 . . . . . . . . .
+ . 4 . . . . . . . . . . . . . . 4 . .
+ . . . . . . . 4 . . . . 4 . . . . . .
+ . . . . 4 . . . . . . . . . . . . 4 .
+ . . . . . . . . 4 . . . . . . 4 . . .
+ . . . . . . . 4 . . . . . . . . . . 4
+ . . . . . . . . . 4 . . . . . . . . 4
 ]]>
 </Example>
     </Description>
@@ -1585,6 +1589,44 @@ IdentityMapping( Integers )
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Attr Name="Divergence" Arg="f"/>
+    <Description>
+      The divergence of the rcwa mapping <A>f</A>.
+      This is conjectured to be a measure for how fast an rcwa mapping
+      contracts (if its divergence is smaller than 1) or how fast its
+      trajectories diverge (if its divergence is larger than 1),
+      provided that its transition graph for modulus
+      <C>Modulus(<A>f</A>)</C> is weakly-connected.
+<Example>
+<![CDATA[
+gap> Divergence(T);
+0.866025
+gap> Rat(last^2);
+3/4
+gap> Divergence(g);
+1
+gap> Divergence(a);
+1.06066
+gap> Rat(last^2);
+9/8
+gap> Divergence(a^-1);
+1.05827
+gap> Rat(last^3);
+32/27
+gap> Divergence(u);
+1.15991
+gap> Rat(last^5);
+6561/3125
+gap> Divergence(a)*Divergence(u);
+1.23027
+gap> Divergence(a*u);
+1.23027
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
   <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
@@ -1594,5 +1636,6 @@ IdentityMapping( Integers )
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
