@@ -9,7 +9,7 @@
 
 # First of all a few useful abbreviations.
 
-rc := function(r,m) return ResidueClass(Integers,m,r); end;
+rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 md := f -> [Multiplier(f),Divisor(f)];
 
 
@@ -102,18 +102,18 @@ R := PolynomialRing(GF(2),1);
 x := IndeterminatesOfPolynomialRing(R)[1]; SetName(x,"x");
 e := One(GF(2)); zero := Zero(R);
 
-r_2mod := ModularRcwaMapping( 2, x^2 + e,
-                              [ [ x^2 + x + e, zero   , x^2 + e ],
-                                [ x^2 + x + e, x      , x^2 + e ],
-                                [ x^2 + x + e, x^2    , x^2 + e ],
-                                [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
+r_2mod := RcwaMapping( 2, x^2 + e,
+                       [ [ x^2 + x + e, zero   , x^2 + e ],
+                         [ x^2 + x + e, x      , x^2 + e ],
+                         [ x^2 + x + e, x^2    , x^2 + e ],
+                         [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
 SetName(r_2mod,"r");
 
 
 # A factorization of a (see above) into two balanced mappings,
 # where one of them is an involution.
 
-a2 := RcwaMapping([rc(1,2),rc(36,72)]); a1 := a/a2;
+a2 := RcwaMapping([[rc(1,2),rc(36,72)]]); a1 := a/a2;
 SetName(a1,"a1"); SetName(a2,"a2");
 
 
