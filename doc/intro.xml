@@ -115,14 +115,21 @@ We proceed with the definitions concerning rcwa mappings.
 
   <Mark>determinant</Mark>
   <Item>
-    Using the notation from the definition of an rcwa mapping in the
-    Preface (<Ref Label="ch:preface"/>), the <E>determinant</E> is defined by
+    We define the <E>determinant</E> of an affine mapping
+    <M>n \mapsto (an+b)/c</M> whose source is a residue class
+    <M>r(m)</M> by <M>b/am</M> and extend this definition additively
+    to determinants of rcwa mappings and those restrictions to
+    unions of residue classes.
+    Then, using the notation from the definition of an rcwa mapping in the
+    Preface (<Ref Label="ch:preface"/>), the <E>determinant</E> of an rcwa
+    mapping is given by
     <Alt Not="LaTeX">
       (see LaTeX version of the manual).
     </Alt> 
     <Alt Only="LaTeX">
       <Display>
-        \frac{1}{m} \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{a_{r(m)}} \right).
+        \frac{1}{m}
+        \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{a_{r(m)}} \right).
       </Display>
     </Alt>
     <M>\rightarrow</M> <Ref Meth="Determinant"/>.
@@ -264,6 +271,15 @@ We proceed with a list briefly giving some results and remarks
     <M>\rightarrow</M>
     <Ref Meth ="PreImagesRepresentative"
          Label="PreImagesRepresentative (element factorization)"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    The determinant induces an epimorphism from the group
+    RCWA<M>^+(\Z)</M> of all class-wise order-preserving rcwa mappings
+    of <M>\Z</M> onto <M>(\Z,+)</M>. An immediate consequence is that
+    this large subgroup of RCWA(<M>\Z</M>) is not simple.    
+    <M>\rightarrow</M> <Ref Meth="Determinant"/>
   </Item>
 
   <Mark>-</Mark>
@@ -429,18 +445,19 @@ We proceed with a list briefly giving some results and remarks
 
 </Alt>
 
-We end this chapter by giving a few open problems (in arbitrary order).
+We end this chapter by listing a few open problems (in arbitrary order).
 
 <List>
 
   <Mark>-</Mark>
   <Item>
     Find out whether the groups RCWA(<M>R</M>) are simple or not.
-    There is indeed some evidence that they are simple, in fact even
-    more than that given above, but I would consider this problem to be
-    <Q>wide open</Q> anyway.
     In case that they are not simple, determine a non-trivial normal
     subgroup and the structure of the factor group.
+    Despite of the result concerning RCWA<M>^+(\Z)</M> I would consider
+    this problem to be <Q>wide open</Q>, as the determinant mapping
+    does not seem to have nice properties outside that large subgroup
+    or for rings other than&nbsp;<M>\Z</M>.
     Do the groups RCWA(<M>R</M>) have non-trivial outer automorphisms?
   </Item>
 
@@ -482,4 +499,3 @@ We end this chapter by giving a few open problems (in arbitrary order).
 </Chapter>
 
 <!-- #################################################################### -->
-
