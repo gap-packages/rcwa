@@ -17,6 +17,7 @@ a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 SetName(T,"T"); SetName(a,"a"); SetName(u,"u");
 
+
 # Rcwa mappings used in the Syl_3(S_9) - example.
 
 r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
@@ -66,11 +67,13 @@ g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);
 h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);
 SetName(g,"g"); SetName(h,"h");
 
+
 # Rcwa mappings used in the free abelian normal subgroup example.
 
 v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);
 w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);
 SetName(v,"v"); SetName(w,"w");
+
 
 # Rcwa mappings used in the ``behaviour of the moduli of powers'' - example.
 
@@ -83,6 +86,7 @@ SetName(z,"z");
 e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]); SetName(e1,"e1");
 e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
                    [1,4,1],[2,0,1],[1,0,1],[1,0,1]]); SetName(e2,"e2");
+
 
 # A wild 2-local integral rcwa mapping.
 
@@ -101,6 +105,12 @@ r_2mod := ModularRcwaMapping( 2, x^2 + e,
                                 [ x^2 + x + e, x^2    , x^2 + e ],
                                 [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
 SetName(r_2mod,"r");
+
+
+# Some other rcwa mappings.
+
+nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
+t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 
 #############################################################################
 ##
