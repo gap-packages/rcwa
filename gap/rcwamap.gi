@@ -1213,6 +1213,31 @@ InstallMethod( Divisor,
 
 #############################################################################
 ##
+#M  Multpk( <f>, <p>, <k> ) . . . . . . . . . . . . for integral rcwa mapping
+##
+InstallMethod( Multpk,
+               "RCWA: for integral rcwa mappings",
+               true, [ IsIntegralRcwaMapping, IsInt, IsInt ], 0,
+
+  function ( f, p, k )
+
+    local  m, c, res;
+
+    m := Modulus(f); c := Coefficients(f);
+    if k > 0
+    then res := Filtered([0..m-1],r ->     c[r+1][1] mod p^k=0
+                                       and c[r+1][1] mod p^(k+1)<>0);
+    elif k < 0
+    then res := Filtered([0..m-1],r ->     c[r+1][3] mod p^(-k)=0
+                                       and c[r+1][3] mod p^(-k+1)<>0);
+    else res := Filtered([0..m-1],r ->     c[r+1][1] mod p<>0
+                                       and c[r+1][3] mod p<>0);
+    fi;
+    return ResidueClassUnion(Integers,m,res);
+  end );
+
+#############################################################################
+##
 #M  IsFlat( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( IsFlat,
@@ -2857,6 +2882,7 @@ InstallMethod( Restriction,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 

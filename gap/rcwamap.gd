@@ -259,6 +259,16 @@ DeclareAttribute( "PrimeSet", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
+##
+##  The set of elements $n$ of the base ring $R$, which are mapped to
+##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
+##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
+##
+DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
+
+#############################################################################
+##
 #P  IsFlat( <f> ) . . . . indicates whether or not <f> is a flat rcwa mapping
 ##
 ##  We say that an rcwa mapping is *flat* if and only if its multiplier
@@ -468,5 +478,17 @@ DeclareSynonym( "ContractionCenter", ContractionCentre );
 
 #############################################################################
 ##
+#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
+##
+##  Computes the restriction of the rcwa mapping <g> by (i.e. to the image
+##  of) the rcwa mapping <f>.
+##
+DeclareOperation( "Restriction",
+                  [IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
