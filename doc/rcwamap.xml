@@ -615,12 +615,16 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     If the option <A>ExpandPrimeSwitches</A> is set, they are each
     decomposed into the 6 class transpositions given in
     the definition (see <Ref Func="PrimeSwitch" Label="p"/>).
+    By default, the factoring process begins with splitting off factors
+    from the right. This can be changed by setting the option
+    <A>Direction</A> to <C>"from the left"</C>. By default, the
+    coarsest possible respected partition of the integral mapping
+    occuring in the final stage of the algorithm is computed.
+    This can be suppressed by setting the option <A>ShortenPartition</A>
+    equal to <C>false</C>.
     By default, at the end it is checked whether the product of the
     determined factors indeed equals <A>g</A>. This check can be
-    suppressed by setting the option <A>NC</A>. By default, the factoring
-    process begins with splitting off factors from the right. This
-    can be changed by setting the option <A>Direction</A> to
-    <C>"from the left"</C>. <P/>
+    suppressed by setting the option <A>NC</A>.<P/>
     
     The problem of obtaining a factorization as desired is algorithmically
     difficult, and this factorization routine is currently perhaps the most
@@ -629,14 +633,11 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
 <Example>
 <![CDATA[
-gap> FactorizationIntoGenerators(Comm(a,ClassShift(0,4)));
-[ ClassShift(8,12), ClassShift(0,12)^-1, ClassTransposition(0,12,6,12), 
-  ClassTransposition(0,12,4,12), ClassTransposition(0,12,8,12) ]
-gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
-[ ClassShift(15,18), ClassTransposition(1,9,5,9), 
-  ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18), 
-  ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18), 
-  ClassReflection(0,3) ]
+gap> FactorizationIntoGenerators(Comm(a,b));
+[ ClassShift(7,9), ClassShift(1,9)^-1, ClassTransposition(1,9,4,9), 
+  ClassTransposition(1,9,7,9), ClassTransposition(6,18,15,18), 
+  ClassTransposition(5,9,15,18), ClassTransposition(4,9,15,18), 
+  ClassTransposition(5,9,6,18), ClassTransposition(4,9,6,18) ]
 ]]>
 </Example>
   </Description>
