@@ -4,10 +4,13 @@
 <!-- ##                                                                             ## -->
 <!-- ##  $Id$                    ## -->
 <!-- ##                                                                             ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
+<!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
 
 <Chapter Label="ch:SemilocalizationsOfTheIntegers">
-<Heading>Semilocalizations of the integers</Heading>
+<Heading>Semilocalizations of the Integers</Heading>
 
 Since in the following we need the semilocalizations <M>\Z_\pi</M> of
 the ring of integers (which are not already implemented as domains in the

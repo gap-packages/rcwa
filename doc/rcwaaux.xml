@@ -4,6 +4,9 @@
 <!-- ##                                                                             ## -->
 <!-- ##  $Id$                    ## -->
 <!-- ##                                                                             ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
+<!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
 
 <Chapter Label="ch:AuxiliaryFunctions">
@@ -21,7 +24,7 @@
       This function builds the manual of the RCWA package in the file formats
       &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
 
-      This is done using the &GAPDoc; package by Frank LÅbeck and Max Neunh˜ffer.
+      This is done using the &GAPDoc; package by Frank L\"ubeck and Max Neunh\"offer.
     </Description>
   </ManSection>
 
@@ -46,6 +49,10 @@
         <Mark><C>"z&uscore;pi"</C></Mark>
         <Item>
           Arithmetic in the rings <M>\Z_\pi</M>.
+        </Item>
+        <Mark><C>"resclasses"</C></Mark>
+        <Item>
+          Computations with residue classes.
         </Item>
         <Mark><C>"integral"</C></Mark>
         <Item>

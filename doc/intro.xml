@@ -4,6 +4,9 @@
 <!-- ##                                                                             ## -->
 <!-- ##  $Id$                      ## -->
 <!-- ##                                                                             ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
+<!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
 
 <Chapter Label="ch:Introduction"><Heading>Introduction</Heading>
@@ -154,7 +157,7 @@
   We define an (<M>R</M>-) <E>rcwa representation</E> of a group <M>G</M> as an
   homomorphism from <M>G</M> to RCWA(<M>R</M>). <P/>
 
-  For an introduction to this topic, see <Cite Key="Kohl02" />. <P/>
+  For an introduction to this topic, see <Cite Key="Kohl02" />.
 
 </Section>
 

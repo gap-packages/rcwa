@@ -4,6 +4,9 @@
 <!-- ##                                                                             ## -->
 <!-- ##  $Id$                    ## -->
 <!-- ##                                                                             ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
+<!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
 
 <Chapter Label="ch:preface"><Heading>Preface</Heading>
@@ -19,7 +22,7 @@ In the introduction, I will give brief definitions. <P/>
 
 It seems that there is just no literature concerning this topic,
 but nevertheless I would like to mention the article of Hans
-Läuchli and  Peter M. Neumann <Cite Key="LaeuchliNeumann88"/>, which
+L„uchli and  Peter M. Neumann <Cite Key="LaeuchliNeumann88"/>, which
 is a little bit related to the subject (but does not deal with any kind
 of permutation groups over rings or of countable permutation groups). <P/>
 <Index Key="permutation groups">permutation groups</Index>

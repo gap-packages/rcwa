@@ -9,6 +9,9 @@
 <!-- ##                                                                             ## -->
 <!-- ##  $Id$                       ## -->
 <!-- ##                                                                             ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
+<!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
      
 <Book Name="RCWA"> 
@@ -16,7 +19,7 @@
 <!-- ################################################################################# -->
 
 <TitlePage>
-  <Title>&GAP; 4 Package &RCWA;</Title>
+  <Title>RCWA</Title>
   <Subtitle>Residue Class-Wise Affine Representations of Groups</Subtitle>
   <Version>
     ( Version <#Include SYSTEM "../version"> )
@@ -25,7 +28,7 @@
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
     <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
   </Author>
-  <Date>May 6, 2002</Date>
+  <Date>May 24, 2002</Date>
   <Copyright> &copyright; 2002 by Stefan Kohl <P/>
               After an official release, we adopt the copyright regulations of &GAP;
               as detailed in the copyright notice in the &GAP; manual.
@@ -44,6 +47,7 @@
 <#Include SYSTEM "preface.xml">
 <#Include SYSTEM "intro.xml">
 <#Include SYSTEM "semiloc.xml">
+<#Include SYSTEM "resclass.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
 <#Include SYSTEM "rcwainfo.xml">
