@@ -46,8 +46,8 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
-                         NeededOtherPackages    := [ "GAPDoc" ],
-                         SuggestedOtherPackages := [ "GRAPE" ],
+                         NeededOtherPackages    := [ "GAPDoc", "GRAPE" ],
+                         SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,

@@ -16,6 +16,10 @@ DeclarePackage( "rcwa", "1.0",
          then Info( InfoWarning, 1, 
                     "Package `RCWA' needs the GAPDoc package." );
               return false;
+         elif TestPackageAvailability( "grape", "4.0" ) = fail
+         then Info( InfoWarning, 1, 
+                    "Package `RCWA' needs the GRAPE package." );
+              return false;
          else return true; fi;
     else Info( InfoWarning, 1, "Package `RCWA' needs at least GAP 4.3.");
          return false;
@@ -32,16 +36,13 @@ fi;
 
 DeclarePackageAutoDocumentation( "rcwa", "doc" );
 
-# Load the package GRAPE, if available
-# (this is currently only used by the function `RcwaGraph').
+# Load the GRAPE package, if this has not been done so far.
 
-OLD_WARNINGLEVEL := InfoLevel( InfoWarning ); SetInfoLevel( InfoWarning, 0 );
 if IsList( TestPackageAvailability( "grape", "4.0" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
   RequirePackage( "grape" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
-SetInfoLevel( InfoWarning, OLD_WARNINGLEVEL );
 
 # Read the declaration part of the package.
 
