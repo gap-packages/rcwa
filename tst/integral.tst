@@ -1087,7 +1087,7 @@ gap> FactorizationIntoGenerators(ab);
 gap> Product(last) = ab;
 true
 gap> FactorizationIntoGenerators(Comm(g,h));
-[ ClassShift(5,6)^-1, ClassShift(3,6), ClassShift(3,6), ClassShift(2,6)^-1,
+[ ClassShift(5,6)^-1, ClassShift(3,6)^2, ClassShift(2,6)^-1,
   ClassTransposition(0,6,3,6) ]
 gap> Product(last) = Comm(g,h);
 true

@@ -3558,9 +3558,7 @@ InstallMethod( FactorizationIntoGenerators,
         fi;
         if IsOne(rest) then continue; fi;        
         c := Coefficients(rest)[r+1];
-        facts := Concatenation(ListWithIdenticalEntries(
-                               AbsInt(c[2]/m),
-                               ClassShift(r,m)^SignInt(c[2])),facts);
+        facts := Concatenation([ClassShift(r,m)^(c[2]/m)],facts);
       od;
     else
       repeat
