@@ -21,82 +21,73 @@ nu  := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
 t   := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 tau := RcwaMapping([[1,1,1],[1,-1,1]]);
 
-# Class shifts, class reflections and class transpositions given as images of
-# these basic generators under restriction monomorphisms.
-
-nu_rm := function(r,m)
-
-  local  coeff;
-
-  coeff := List([1..m],r->[1,0,1]);
-  coeff[r+1] := [1,m,1];
-  return RcwaMapping(coeff);
-end;
-
-t_rm := function(r,m)
-
-  local  coeff;
-
-  coeff := List([1..m],r->[1,0,1]);
-  coeff[r+1] := [-1,2*r,1];
-  return RcwaMapping(coeff);
-end;
-
-ct := function(r1,m1,r2,m2)
-        return Restriction(tau,RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-      end;
-
-# A class transposition ct(r1,m1,r2,m2) is the commutator of the following
-# mappings ct1(r1,m1,r2,m2) und ct2(r1,m1,r2,m2):
-
-tau1 := RcwaMapping([[1,1,1],[1,1,1],[1,-2,1],[1,0,1]]);
-tau2 := RcwaMapping([[1,1,1],[1,2,1],[1,0,1],[1,-3,1]]);
-
-ct1   := function(r1,m1,r2,m2)
-           return Restriction(tau1,
-                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-         end;
-ct2   := function(r1,m1,r2,m2)
-           return Restriction(tau2,
-                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-         end;
-
-# `Class switches': Involutions which interchange two residue classes which
-# are not necessarily disjoint (of course there must not be a proper subset
-# relation between them!):
-
-cs := function(r1,m1,r2,m2)
-
-  local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
-
-  cl := [rc(r1,m1),rc(r2,m2)];
-  int := Intersection(cl);
-  if int = [] then return ct(r1,m1,r2,m2); fi;
-  diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
-  if [] in diff then return fail; fi; # Subset relation --> no class switch!
-  diff := List(diff,AsUnionOfFewClasses); lng := List(diff,Length);
-  if lng[1] <> lng[2] then
-    if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
-    for i in [1..AbsInt(lng[1]-lng[2])] do
-      clsp := diff[pos][1];
-      sp   := [rc(Residues(clsp)[1],              2*Modulus(clsp)),
-               rc(Residues(clsp)[1]+Modulus(clsp),2*Modulus(clsp))];
-      diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
-    od;
-  fi;
-  lng := Maximum(lng); m := 2*lng; c := [];
-  for r in [0..m-1] do
-    rti := Residues(diff[r mod 2 + 1][Int(r/2)+1])[1];
-    mti := Modulus (diff[r mod 2 + 1][Int(r/2)+1]);
-    c[r+1] := [mti,m*rti-mti*r,m];
-  od;
-  rest := RcwaMapping(c);
-  return Restriction(tau,rest);
-end;
+#############################################################################
+##
+##  Section 4.1: Factoring Collatz' permutation of the integers
+##
+Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);
+SetName(Collatz,"Collatz");
 
 #############################################################################
 ##
-##  `Three involutions whose product has coprime multiplier and divisor'
+##  Section 4.2: An rcwa mapping which seems to be contracting, but very slow
+##
+##  The trajectory of 3224 under f6 has length 19949562.
+##
+f6 := RcwaMapping([[1,0,6],[5,1,6],[7,-2,6],[11,3,6],[11,-2,6],[11,-1,6]]);
+SetName(f6,"f6");
+
+# A mapping still having long, but less extreme trajectories:
+
+T7 := RcwaMapping([[1,0,6],[7,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,2]]);
+SetName(T7,"T7");
+
+# Some other probably contracting mappings with divergence very close to 1.
+
+f5 := RcwaMapping([[7,0,5],[7,-2,5],[3,-1,5],[3,1,5],[7,2,5]]);
+f7 := RcwaMapping([[5,0,7],[9,-2,7],[9,3,7],
+                           [5,-1,7],[5,1,7],
+                           [9,-3,7],[9,2,7]]);
+f9 := RcwaMapping([[ 5, 0,9],[16, 2,9],[10,-2,9],
+                   [11, 3,9],[ 5,-2,9],[ 5, 2,9],
+                   [11,-3,9],[10, 2,9],[16,-2,9]]);
+SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
+
+# A probably very quickly contracting mapping -- proving this seems to be
+# difficult anyway ...
+
+f6q := RcwaMapping([[1,0,6],[1,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,6]]);
+SetName(f6q,"f6q");
+
+#############################################################################
+##
+##  Section 4.3: Checking a result by P. Andaloro
+##
+T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
+
+#############################################################################
+##
+##  Section 4.4: Two examples by Matthews and Leigh
+##
+##  The Matthews-Leigh examples -- the trajectories of 1 resp. x^3+x+1 can be
+##  shown to be divergent, and their iterates can be shown to be non-cyclic
+##  (mod x).
+##
+x := Indeterminate(GF(2),1); SetName(x,"x");
+R := PolynomialRing(GF(2),1); 
+
+ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R)); SetName(ML1,"ML1");
+ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R)); SetName(ML2,"ML2");
+
+ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);
+Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
+
+#############################################################################
+##
+##  Involutions whose product has coprime multiplier and divisor
+##
+##  This has been removed from the manual, since PrimeSwitch'es can now
+##  be generated easily by just a function call.
 ##
 f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]); SetName(f1,"f1");
 f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]); SetName(f2,"f2");
@@ -130,92 +121,7 @@ SetName(c1,"c1"); SetName(c2,"c2");
 
 #############################################################################
 ##
-##  `An rcwa mapping which seems to be contracting, but very slow'
-##
-##  The trajectory of 3224 under f6 has length 19949562.
-##
-f6 := RcwaMapping([[1,0,6],[5,1,6],[7,-2,6],[11,3,6],[11,-2,6],[11,-1,6]]);
-SetName(f6,"f6");
-
-# A mapping still having long, but less extreme trajectories:
-
-T7 := RcwaMapping([[1,0,6],[7,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,2]]);
-SetName(T7,"T7");
-
-# Some other probably contracting mappings with divergence very close to 1.
-
-f5 := RcwaMapping([[7,0,5],[7,-2,5],[3,-1,5],[3,1,5],[7,2,5]]);
-f7 := RcwaMapping([[5,0,7],[9,-2,7],[9,3,7],
-                           [5,-1,7],[5,1,7],
-                           [9,-3,7],[9,2,7]]);
-f9 := RcwaMapping([[ 5, 0,9],[16, 2,9],[10,-2,9],
-                   [11, 3,9],[ 5,-2,9],[ 5, 2,9],
-                   [11,-3,9],[10, 2,9],[16,-2,9]]);
-SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
-
-# A probably very quickly contracting mapping -- proving this seems to be
-# difficult anyway ...
-
-f6q := RcwaMapping([[1,0,6],[1,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,6]]);
-SetName(f6q,"f6q");
-
-#############################################################################
-##
-##  `The examples by Matthews and Leigh'
-##
-##  The Matthews-Leigh examples -- the trajectories of 1 resp. x^3+x+1 can be
-##  shown to be divergent, and their iterates can be shown to be non-cyclic
-##  (mod x).
-##
-x := Indeterminate(GF(2),1); SetName(x,"x");
-R := PolynomialRing(GF(2),1); 
-
-ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R)); SetName(ML1,"ML1");
-ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R)); SetName(ML2,"ML2");
-
-ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);
-Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
-
-#############################################################################
-##
-##  `An abelian rcwa group over a polynomial ring'
-##
-##  As the mappings <g> and <h> are modified within the example, we denote
-##  the unmodified versions by <gu> and <hu> and the modified ones by
-##  <gm> and <hm>, respectively. The temporary variables have been renamed
-##  to avoid name clashes.
-##
-x := Indeterminate(GF(4),1); SetName(x,"x");
-R := PolynomialRing(GF(4),1); e := One(GF(4));
-pp := x^2 + x + e;;    qq := x^2 + e;;
-rr := x^2 + x + Z(4);; ss := x^2 + x + Z(4)^2;;
-cg := List( AllResidues(R,x^2), pol -> [ pp, pp * pol mod qq, qq ] );;
-ch := List( AllResidues(R,x^2), pol -> [ rr, rr * pol mod ss, ss ] );;
-gu := RcwaMapping( R, qq, cg );
-hu := RcwaMapping( R, ss, ch );
-cg[1][2] := cg[1][2] + (x^2 + e) * pp * qq;;
-ch[7][2] := ch[7][2] + x * rr * ss;;
-gm := RcwaMapping( R, qq, cg );
-hm := RcwaMapping( R, ss, ch );
-
-# An rcwa mapping of GF(2)[x] of infinite order which has only finite cycles.
-# This is the example of an rcwa mapping of a polynomial ring we gave in the
-# introduction in the manual.
-
-R := PolynomialRing(GF(2),1);
-x := IndeterminatesOfPolynomialRing(R)[1]; SetName(x,"x");
-e := One(GF(2)); zero := Zero(R);
-
-r_2mod := RcwaMapping( 2, x^2 + e,
-                       [ [ x^2 + x + e, zero   , x^2 + e ],
-                         [ x^2 + x + e, x      , x^2 + e ],
-                         [ x^2 + x + e, x^2    , x^2 + e ],
-                         [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
-SetName(r_2mod,"r");
-
-#############################################################################
-##
-##  `Exploring the structure of a wild rcwa group'
+##  Section 4.5: Exploring the structure of a wild rcwa group
 ##
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 SetName(u,"u");
@@ -236,7 +142,7 @@ SetName(Mod5Mult16,"Mod5Mult16");
 
 #############################################################################
 ##
-##  `A wild rcwa mapping which has only finite cycles'
+##  Section 4.6: A wild rcwa mapping which has only finite cycles
 ##
 kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
                       [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
@@ -356,7 +262,44 @@ comm := Comm(sigmas,sigma1); SetName(comm,"comm");
 
 #############################################################################
 ##
-##  `An rcwa representation of a small group'
+##  Section 4.7: An abelian rcwa group over a polynomial ring
+##
+##  As the mappings <g> and <h> are modified within the example, we denote
+##  the unmodified versions by <gu> and <hu> and the modified ones by
+##  <gm> and <hm>, respectively. The temporary variables have been renamed
+##  to avoid name clashes.
+##
+x := Indeterminate(GF(4),1); SetName(x,"x");
+R := PolynomialRing(GF(4),1); e := One(GF(4));
+pp := x^2 + x + e;;    qq := x^2 + e;;
+rr := x^2 + x + Z(4);; ss := x^2 + x + Z(4)^2;;
+cg := List( AllResidues(R,x^2), pol -> [ pp, pp * pol mod qq, qq ] );;
+ch := List( AllResidues(R,x^2), pol -> [ rr, rr * pol mod ss, ss ] );;
+gu := RcwaMapping( R, qq, cg );
+hu := RcwaMapping( R, ss, ch );
+cg[1][2] := cg[1][2] + (x^2 + e) * pp * qq;;
+ch[7][2] := ch[7][2] + x * rr * ss;;
+gm := RcwaMapping( R, qq, cg );
+hm := RcwaMapping( R, ss, ch );
+
+# An rcwa mapping of GF(2)[x] of infinite order which has only finite cycles.
+# This is the example of an rcwa mapping of a polynomial ring we gave in the
+# introduction in the manual.
+
+R := PolynomialRing(GF(2),1);
+x := IndeterminatesOfPolynomialRing(R)[1]; SetName(x,"x");
+e := One(GF(2)); zero := Zero(R);
+
+r_2mod := RcwaMapping( 2, x^2 + e,
+                       [ [ x^2 + x + e, zero   , x^2 + e ],
+                         [ x^2 + x + e, x      , x^2 + e ],
+                         [ x^2 + x + e, x^2    , x^2 + e ],
+                         [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
+SetName(r_2mod,"r");
+
+#############################################################################
+##
+##  Section 4.8: An rcwa representation of a small group
 ##
 r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
                   [1,0,3],[1,1,1],[3, -3,1],
@@ -367,7 +310,7 @@ s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
 
 #############################################################################
 ##
-##  `An rcwa representation of the symmetric group on 10 point'
+##  Section 4.9: An rcwa representation of the symmetric group on 10 points
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]); SetName(b,"b");
@@ -394,7 +337,14 @@ SetName(a_1,"a_1"); SetName(a_2,"a_2");
 
 #############################################################################
 ##
-##  `Some examples over (semi)localizations of the integers'
+##  Section 4.10: Checking for solvability
+##
+a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
+b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]); SetName(b,"b");
+
+#############################################################################
+##
+##  Section 4.11: Some examples over (semi)localizations of the integers
 ##
 a2  := RcwaMapping(Z_pi(2),    ShallowCopy(Coefficients(a)));
 
@@ -419,7 +369,7 @@ v2w2 := Comm(v2,w2); SetName(v2w2,"[v2,w2]");
 
 #############################################################################
 ##
-##  `Twisting 257-cycles into an rcwa mapping with modulus 32'
+##  Section 4.12: Twisting 257-cycles into an rcwa mapping with modulus 32
 ##
 ##  In order to avoid a name clash we call the mapping `x_257' instead
 ##  of `x'.
@@ -444,7 +394,7 @@ SetName(x_257,"x");
 
 #############################################################################
 ##
-##  `The behaviour of the moduli of powers'
+##  Section 4.13: The behaviour of the moduli of powers
 ##
 ##  We only list mappings here which are used exclusively in this example.
 ##
@@ -464,7 +414,7 @@ e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
 
 #############################################################################
 ##
-##  `Images and preimages under the Collatz mapping'
+##  Section 4.14: Images and preimages under the Collatz mapping
 ##
 T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
 
@@ -472,9 +422,12 @@ T5 := RcwaMapping([[1,0,2],[5,-1,2]]); SetName(T5,"T5");
 
 #############################################################################
 ##
-##  `Replacing the Collatz mapping by conjugates'
+##  Replacing the Collatz mapping by conjugates
 ##
-##  (All mappings used in this example have already been defined above.)
+##  This example has been removed from the manual (too trivial).
+##
+T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
+a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 
 #############################################################################
 ##
@@ -547,6 +500,11 @@ SetName(Farkas,"Farkas");
 ##
 ##  A factorization of `a' into involutions. 
 ##
+##  The following factorization has been determined interactively, before
+##  the general factorization routine `FactorizationIntoGenerators' has been
+##  implemented. In fact the determination of this factorization gave the
+##  necessary insights to develop a general method.
+##
 INTEGRAL_PART_COEFFS :=
 [ -3, -26, -47, -40, 47, -1, 0, 17, 0, -4, 0, 28, 19, 12, 0, 2, -7, 20, 0,
   -3, 0, 12, 0, 37, -3, 4, 0, 13, -9, -1, 0, 17, 0, 2, 0, 70, 38, 12, 0, 2,
@@ -591,6 +549,8 @@ FactorsOfa := [
 FACTORS_OF_A_CYCS := List([1,2,4,12,112,156,256],
                           n->Cycle(FactorsOfa[1],n) mod 288);
 
+nu_rm := ClassShift; t_rm := ClassReflection;
+
 InvolutionFactorsOfa := Concatenation(
   [ t_rm(  0,288), t_rm(  0,288) * nu_rm(  0,288)^-1,
     t_rm(  1,288), t_rm(  1,288) * nu_rm(  1,288)^-1,
@@ -608,6 +568,59 @@ InvolutionFactorsOfa := Concatenation(
   [ f1, f2, f3, t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     f1, f2, f3, f1, f2, f3, f1, f2, f3, f1, f2, f3 ] );
+
+
+#############################################################################
+##
+##  A class transposition ct(r1,m1,r2,m2) is the commutator of the following
+##  mappings ct1(r1,m1,r2,m2) und ct2(r1,m1,r2,m2):
+##
+tau1 := RcwaMapping([[1,1,1],[1,1,1],[1,-2,1],[1,0,1]]);
+tau2 := RcwaMapping([[1,1,1],[1,2,1],[1,0,1],[1,-3,1]]);
+
+ct1   := function(r1,m1,r2,m2)
+           return Restriction(tau1,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end;
+ct2   := function(r1,m1,r2,m2)
+           return Restriction(tau2,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end;
+
+#############################################################################
+##
+##  `Class switches': Involutions which interchange two residue classes which
+##  are not necessarily disjoint (of course there must not be a proper subset
+##  relation between them!):
+##
+cs := function(r1,m1,r2,m2)
+
+  local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
+
+  cl := [rc(r1,m1),rc(r2,m2)];
+  int := Intersection(cl);
+  if int = [] then return ClassTransposition(r1,m1,r2,m2); fi;
+  diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
+  if [] in diff then return fail; fi; # Subset relation --> no class switch!
+  diff := List(diff,AsUnionOfFewClasses); lng := List(diff,Length);
+  if lng[1] <> lng[2] then
+    if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
+    for i in [1..AbsInt(lng[1]-lng[2])] do
+      clsp := diff[pos][1];
+      sp   := [rc(Residues(clsp)[1],              2*Modulus(clsp)),
+               rc(Residues(clsp)[1]+Modulus(clsp),2*Modulus(clsp))];
+      diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
+    od;
+  fi;
+  lng := Maximum(lng); m := 2*lng; c := [];
+  for r in [0..m-1] do
+    rti := Residues(diff[r mod 2 + 1][Int(r/2)+1])[1];
+    mti := Modulus (diff[r mod 2 + 1][Int(r/2)+1]);
+    c[r+1] := [mti,m*rti-mti*r,m];
+  od;
+  rest := RcwaMapping(c);
+  return Restriction(tau,rest);
+end;
 
 #############################################################################
 ##
