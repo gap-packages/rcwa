@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Mappings and Groups",
 Version          := "1.0",
-Date             := "24/06/2003",
+Date             := "26/06/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -47,7 +47,7 @@ PackageDoc       := rec(
                          Autoload  := false
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.3",
+                         GAP                    := ">=4.4",
                          NeededOtherPackages    := [ ["ResClasses", ">=1.0"], ["GRAPE",">=4.0"],
                                                      ["GAPDoc",">=0.99"] ],
                          SuggestedOtherPackages := [ ],
@@ -66,5 +66,6 @@ Keywords         := [ "infinite permutation groups", "permutation groups over ri
 ####################################################################################################
 ##
 #E  PackageInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
 
 

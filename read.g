@@ -7,15 +7,12 @@
 
 # Read the implementation part of the package.
 
-SetInfoLevel( InfoWarning, 0 );
-
-ReadPkg( "rcwa", "gap/rcwaaux.g" );
-ReadPkg( "rcwa", "gap/rcwamap.gi" );
-ReadPkg( "rcwa", "gap/rcwagrp.gi" );
-ReadPkg( "rcwa", "gap/rcwalib.gi" );
-
-SetInfoLevel( InfoWarning, 1 );
+ReadPackage( "rcwa", "gap/rcwaaux.g" );
+ReadPackage( "rcwa", "gap/rcwamap.gi" );
+ReadPackage( "rcwa", "gap/rcwagrp.gi" );
+ReadPackage( "rcwa", "gap/rcwalib.gi" );
 
 #############################################################################
 ##
 #E  read.g . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
