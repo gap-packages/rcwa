@@ -1330,7 +1330,6 @@ InstallMethod( Multiplier,
                "for semilocal integral rcwa mappings (RCWA)",
                true, [ IsSemilocalIntegralRcwaMappingInStandardRep ], 10,
 
-
   f -> Lcm( List( f!.coeffs,
                   c -> StandardAssociate( Source( f ), c[1] ) ) ) );
 
@@ -1393,6 +1392,15 @@ InstallMethod( IsClassWiseOrderPreserving,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMappingInStandardRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] >= 0 ) );
+
+#############################################################################
+##
+#M  Trace( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
+##
+InstallMethod( Trace,
+               "for rcwa mappings (RCWA)",
+               true, [ IsRcwaMapping ], 0,
+               f -> Sum( List( Coefficients( f ), c -> c[ 2 ] ) ) );
 
 #############################################################################
 ##

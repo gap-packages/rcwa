@@ -19,11 +19,11 @@ GeneratorsAndInverses :=
   G->Concatenation(GeneratorsOfGroup(G),List(GeneratorsOfGroup(G),g->g^-1));
 MakeReadOnlyGlobal( "GeneratorsAndInverses" );
 
-ProjectionByGenerators := function ( F, G )
+EpimorphismByGenerators := function ( F, G )
   return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
                                        GeneratorsOfGroup(G));
 end;
-MakeReadOnlyGlobal( "ProjectionByGenerators" );
+MakeReadOnlyGlobal( "EpimorphismByGenerators" );
 
 # Some implications.
 
@@ -1538,7 +1538,7 @@ InstallMethod( EpimorphismFromFreeGroup,
       else Add(gensnames,Concatenation("f",String(i))); fi;
     od;
     F := FreeGroup(gensnames);
-    return ProjectionByGenerators(F,G);
+    return EpimorphismByGenerators(F,G);
   end );
 
 #############################################################################
