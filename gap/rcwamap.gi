@@ -2607,6 +2607,30 @@ MakeReadOnlyGlobal( "FixedClassesOfRcwaMapping" );
 
 #############################################################################
 ##
+#M  CycleOp( <sigma>, <n> ) . .  for rat.-based rcwa mapping and ring element
+##
+InstallOtherMethod( CycleOp,
+                    "for rational-based rcwa mapping and ring element",
+                    true, [ IsRationalBasedRcwaMapping, IsRingElement ], 0,
+
+  function ( sigma, n )
+
+    local  cyc, n_i, lng, m, img;
+
+    if not (n in Source(sigma) and IsBijective(sigma)) then return fail; fi;
+    cyc := [n]; n_i := n; lng := 1; m := Modulus(Group(sigma));
+    repeat
+      img := n^sigma;
+      if img <> n then Add(cyc,img); n_i := img; lng := lng + 1; fi; 
+    until img = n or lng > m;
+    if   lng > m
+    then Info(InfoRCWA,1,"CycleOp: cycle is infinite."); return fail;
+    fi;
+    return cyc;
+  end );
+
+#############################################################################
+##
 #M  ShortCycles( <f>, <maxlng> ) . .  for rat.-based rcwa mapping and integer
 ##
 InstallMethod( ShortCycles,
@@ -2641,6 +2665,125 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
+#M  PermutedClassPartition( <sigma> ) . . . . for tame bijective rcwa mapping
+##
+InstallMethod( PermutedClassPartition,
+               "for tame bijective rcwa mappings", true,
+               [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  R, m, moved, fixed, G, pcp, untouched, cls, cl, orb, r, i;
+
+    if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
+    R := Source(sigma); m := Modulus(sigma);
+    moved := MovedPoints(sigma);
+    if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
+    then fixed := Residues(Complement(moved));
+    elif moved <> [] then fixed := []; else fixed := [0]; fi;
+    pcp := List(fixed,i->ResidueClass(R,m,i));
+    untouched := Difference(AllResidues(R,m),fixed);
+    G := Group(sigma);
+    while untouched <> [] do
+      i := untouched[1]; RemoveSet(untouched,i);
+      cls := Difference(ResidueClass(R,m,i),Union(pcp));
+      if cls <> [] then
+        for r in Residues(cls) do
+          cl := ResidueClass(R,Modulus(cls),r);
+          orb := Orbit(G,cl); pcp := Union(pcp,orb);
+        od;
+      fi;
+    od;
+    Assert(1,Union(pcp)=R);
+    Assert(2,Action(G,pcp)<>fail);
+    return pcp;
+  end );
+
+#############################################################################
+##
+#M  FlateningConjugator( <sigma> ) . for tame bijective integral rcwa mapping
+##
+InstallMethod( FlateningConjugator,
+               "for tame bijective integral rcwa mappings", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
+
+    if IsFlat(sigma) then return One(sigma); fi;
+    pcp := PermutedClassPartition(sigma); 
+    if pcp = fail then return fail; fi;
+    m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
+    c := List([1..m],i->[1,0,1]);
+    for rtilde in [0..mtilde-1] do
+      cl := pcp[rtilde+1];
+      r := Residues(cl)[1]; m_cl := Modulus(cl);
+      for j in [0..m/m_cl-1] do
+        c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
+      od;
+    od;
+    return RcwaMapping(c);
+  end );
+
+#############################################################################
+##
+#M  FlatConjugate( <f> ) . . . . . . . . . . . . . . .  for tame rcwa mapping
+##
+InstallMethod( FlatConjugate,
+               "for tame rcwa mappings", true, [ IsRcwaMapping ], 0,
+               f -> f^FlateningConjugator( f ) );
+
+#############################################################################
+##
+#M  StandardizingConjugator( <sigma> ) .  for tame bij. integral rcwa mapping
+##
+InstallMethod( StandardizingConjugator,
+               "for tame bijective integral rcwa mappings", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  toflat, flat, m, mtilde, mTilde, r, rtilde, c, pcp, cycs, lngs,
+           cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
+
+    if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
+    if not IsFlat(sigma) then
+      toflat := FlateningConjugator(sigma);
+      flat   := sigma^toflat;
+    else toflat := One(sigma); flat := sigma; fi;
+    m := Modulus(flat); pcp := PermutedClassPartition(flat);
+    cycs := Cycles(flat,pcp); lngs := Set(List(cycs,Length));
+    cohorts := List(lngs,l->Filtered(cycs,cyc->Length(cyc)=l));
+    mtilde := Sum(lngs); c := List([1..m],i->[1,0,1]); rtilde := 0;
+    for cohort in cohorts do
+      nrcycs := Length(cohort); l := Length(cohort[1]);
+      res := List([1..l],i->List([1..nrcycs],j->Residues(cohort[j][i])[1]));
+      cyc := List([1..nrcycs],j->Cycle(flat,res[1][j]));
+      mTilde := nrcycs * mtilde;
+      for i in [1..l] do
+        for r in res[i] do
+          j := Position(res[i],r);
+          n := cyc[j][i]; ntilde := (j-1)*mtilde+rtilde;
+          k := (ntilde*m-mTilde*n-m*rtilde+mtilde*r)/(m*mtilde);
+          c[r+1] := [mTilde,k*m*mtilde+m*rtilde-mtilde*r,m];
+        od;
+        rtilde := rtilde + 1;
+      od;
+    od; 
+    return toflat * RcwaMapping(c);
+  end );
+
+#############################################################################
+##
+#M  StandardConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
+##
+InstallMethod( StandardConjugate,
+               "for tame rcwa mappings", true, [ IsRcwaMapping ], 0,
+               f -> f^StandardizingConjugator( f ) );
+
+#############################################################################
+##
 #M  CycleType( <f> ) . . . . . . . . . . . . . for tame integral rcwa mapping
 ##
 InstallMethod( CycleType,
@@ -2652,182 +2795,6 @@ InstallMethod( CycleType,
     if not IsTame(f) then TryNextMethod(); fi;
     StandardConjugate(f);
     return CycleType(f);
-  end );
-
-#############################################################################
-##
-#M  StandardConjugate( <f> ) . . .  for integral rcwa mapping of finite order
-##
-InstallMethod( StandardConjugate,
-               "for integral rcwa mappings of finite order", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
-
-  function ( f )
-
-    local  IncreasingLength, CycleSet, RcwaCycles,
-           Halved, NonHalved, HalvedLng, NonHalvedLng, NonHalvedByLng, 
-           c, m, mf, mStd, d, StdCoeffs, Std, ToStdVals, ToStd,
-           ord, pow, cyc, cycs, cyclng, nrcycs, branchpts, branchpos,
-           halfcyclng, halfpow, halfpoint, halfpoints,
-           cycpreimage1, cycpreimage2, cycimage1, cycimage2, cycimage,
-           rescount, imagestart, sigma, l, n, i, j;
-
-    IncreasingLength := function(cyc1,cyc2) 
-                          return     Length(cyc1.pts) < Length(cyc2.pts)
-                                 or (     Length(cyc1.pts) = Length(cyc2.pts)
-                                      and cyc1.pts < cyc2.pts );
-                        end;
-
-    CycleSet := function ( cycs )
-
-      local  cycsbuf, cyc;
-
-      cycsbuf := ShallowCopy(cycs); cycs := [];
-      for cyc in cycsbuf do
-        if   not    Set(List(cyc.pts, n -> n mod m)) 
-                 in List(cycs, cyc -> Set(List(cyc.pts, n -> n mod m)))
-        then Add(cycs,cyc); fi;
-      od;
-      return cycs;
-    end;
-
-    if   IsOne(f) 
-    then SetStandardizingConjugator(f,One(f));
-         SetCycleType(f,[[],[]]);
-         return f;
-    fi;
-    if not IsBijective(f) then TryNextMethod(); fi;
-    ord := Order(f); if ord = infinity then TryNextMethod(); fi;
-    Info(InfoRCWA,2,"StandardConjugate for ",f);
-    c := Coefficients(f);
-    d := Divisor(f); mf := Modulus(Group(f)); m := d * mf;
-    RcwaCycles := [];
-    for cyclng in DivisorsInt(ord) do
-      pow  := f^cyclng;
-      cycs := List(FixedClassesOfRcwaMapping(pow,m), n -> Cycle(f,n));
-      for i in [1..Length(cycs)] do
-        if   Length(cycs[i]) < cyclng 
-        then cycs[i] := Cycle(f,cycs[i][1] + m); fi;
-      od;
-      RcwaCycles := Concatenation(RcwaCycles,
-                                  List(cycs,cyc->rec(pts      := cyc,
-                                                     HalvedAt := fail)));
-      if cyclng mod 2 = 0 then
-        halfcyclng := cyclng/2;
-        halfpow    := f^halfcyclng;
-        halfpoints := FixedPointsOfRcwaMapping(halfpow,m);
-        for i in [1..Length(cycs)] do
-          halfpoint := Filtered(halfpoints,
-                                n1 -> n1 mod m in List(cycs[i],
-                                                       n2 -> n2 mod m));
-          Assert(1,Length(halfpoint) <= 1);
-          if   halfpoint <> []
-          then RcwaCycles[   Length(RcwaCycles)
-                           - Length(cycs) + i].HalvedAt := halfpoint[1];
-          fi;
-        od;
-      fi;
-    od;
-    RcwaCycles := CycleSet(RcwaCycles);
-    Halved     := Filtered(RcwaCycles, cyc -> cyc.HalvedAt <> fail);
-    NonHalved  := Difference(RcwaCycles,Halved);
-    Sort(Halved,IncreasingLength); Sort(NonHalved,IncreasingLength);
-    NonHalved := List(NonHalved, cyc -> cyc.pts);
-    Info(InfoRCWA,2,"A set of representatives for the series of ",
-                    "`halved' cycles is ",Halved,".");
-    Info(InfoRCWA,2,"A set of representatives for the series of ",
-                    "`non-halved' cycles is ",NonHalved,".");
-    HalvedLng      := List(Halved, cyc -> Length(cyc.pts));
-    NonHalvedLng   := Set(List(NonHalved,Length));
-    NonHalvedByLng := List(NonHalvedLng,
-                           l -> Filtered(NonHalved, cyc -> Length(cyc) = l));
-    SetCycleType(f,[HalvedLng,NonHalvedLng]);
-    Info(InfoRCWA,2,"The cycle type is ",CycleType(f),".");
-    StdCoeffs := []; rescount := 0;
-    for cyc in Halved do
-      l := Length(cyc.pts);
-      for i in [1..l/2 - 1] do Add(StdCoeffs,[1,1,1]); od;
-      Add(StdCoeffs,[-1, 2 * rescount + l/2 - 1, 1]); 
-      rescount := rescount + l/2;
-    od;
-    for cyc in NonHalvedByLng do
-      l := Length(cyc[1]);
-      for j in [1..l - 1] do Add(StdCoeffs,[1,1,1]); od;
-      Add(StdCoeffs,[1,-l + 1,1]);
-    od;
-    Std := RcwaMapping(StdCoeffs);
-    if Std = f then
-      Info(InfoRCWA,2,"The mapping is already in standard form.");
-      SetStandardizingConjugator(f,IdentityIntegralRcwaMapping);
-      return Std;
-    fi;
-    mStd := Modulus(Std); ToStdVals := []; rescount := 0;
-    for cyc in Halved do
-      l := Length(cyc.pts);
-      cycimage1 := [rescount..rescount + l/2 - 1];
-      cycimage2 := Concatenation([rescount-mStd..rescount-mStd + l/2 - 1],
-                                 [rescount+mStd..rescount+mStd + l/2 - 1]);
-      cycpreimage1 := Cycle(f,cyc.HalvedAt);
-      cycpreimage2 := cyc.pts;
-      ToStdVals := Concatenation(ToStdVals,
-                     List([1..l/2],i->[cycpreimage1[i],cycimage1[i]]),
-                     List([1..l  ],i->[cycpreimage2[i],cycimage2[i]]));
-      rescount := rescount + l/2;
-    od;
-    for i in [1..Length(NonHalvedByLng)] do
-      branchpts := Filtered([0..mf - 1],
-                            k -> c[k mod Modulus(f) + 1][3] > 1);
-      branchpos := List(NonHalvedByLng[i],
-                        cyc -> List(cyc, n -> n mod mf in branchpts));
-      for j in [2..Length(NonHalvedByLng[i])] do
-        if branchpos[j] <> branchpos[1] then
-          cyc   := NonHalvedByLng[i][j];
-          sigma := SortingPerm(Concatenation([2..Length(cyc)],[1]));
-          while List(cyc, n -> n mod mf in branchpts) <> branchpos[1] do
-            cyc := Permuted(cyc,sigma);
-            if cyc = NonHalvedByLng[i][j] then break; fi;
-          od;
-          NonHalvedByLng[i][j] := cyc;
-        fi;
-      od;
-    od;
-    Info(InfoRCWA,3,"The `non-halved' cycles as they are mapped to ",
-                    "cycles of\nthe standard conjugate:\n",
-                    NonHalvedByLng,".");
-    for cycs in NonHalvedByLng do
-      l := Length(cycs[1]); nrcycs := Length(cycs);
-      cycimage := [rescount..rescount + l - 1];
-      for i in [1..nrcycs] do
-        cycpreimage1 := cycs[i];
-        cycpreimage2 := Cycle(f,cycs[i][1] + m);
-        ToStdVals := Concatenation(ToStdVals,
-                       List([1..l],j->[cycpreimage1[j], cycimage[j] 
-                                    + (i - 1) * mStd]),
-                       List([1..l],j->[cycpreimage2[j], cycimage[j] 
-                                    + (i + nrcycs - 1) * mStd]));
-      od;
-      rescount := rescount + l;
-    od;
-    Info(InfoRCWA,2,"[Preimage, image] - pairs defining a standardizing ",
-                    "conjugator are ",ToStdVals,".");
-    ToStd := RcwaMapping(m,ToStdVals);
-    Assert(1,f^ToStd = Std);
-    SetStandardizingConjugator(f,ToStd);
-    return Std;
-  end );
-
-#############################################################################
-##
-#M  StandardizingConjugator( <f> ) . . . . . . . .  for integral rcwa mapping
-##
-InstallMethod( StandardizingConjugator,
-               "for integral rcwa mappings of finite order",
-               true, [ IsIntegralRcwaMapping ], 0,
-
-  function ( f )
-
-    StandardConjugate(f);
-    return StandardizingConjugator(f);
   end );
 
 #############################################################################

@@ -417,43 +417,78 @@ InstallGlobalFunction( IntegralRcwaGroupByPermGroup,
 
 #############################################################################
 ##
-#M  \in( <g>, <G> ) . . . . for integral rcwa mapping and integral rcwa group
-##
-##  This may run into an infinite loop if <G> is infinite and <g> is not an
-##  element of <G>.
+#M  \in( <g>, <G> ) .  for integral rcwa mapping and tame integral rcwa group
 ##
 InstallMethod( \in,
-               "for integral rcwa mapping and integral rcwa group",
+               "for integral rcwa mapping and tame integral rcwa group",
                ReturnTrue, [ IsIntegralRcwaMapping, IsIntegralRcwaGroup ], 0,
 
   function ( g, G )
 
-    local  H, gens, actson, gimage, k;
+    local  P, H, h, K, k, L, l, c, gens, gensinv;
 
+    Info(InfoRCWA,2,"\\in for integral rcwa mapping and -rcwa group");
+    if not IsBijective(g)
+    then Info(InfoRCWA,3,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);
-    if IsOne(g) or g in gens or g^-1 in gens then return true; fi;
-    if not IsSubset(PrimeSet(G),PrimeSet(g)) then return false; fi;
-    if   g in List(Combinations(gens,2), t -> Product(t)) 
-    then return true; fi;
-    if IsFinite(G) then
-      if   Modulus(G) mod Modulus(g) <> 0 or Order(g) = infinity
-      then return false; fi;
-      if   HasParent(G)
-      then H := Image(IsomorphismPermGroup(G));
-      else H := NiceObject(G); fi;
-      actson := Union(List(RcwaBase(G), rep -> Orbit(G,rep)));
-      if   ForAll(actson, n -> n^g in actson)
-      then gimage := Permutation(g,actson); 
-           return gimage in H;
-      else return false; fi;
+    if IsOne(g) or g in gens or g^-1 in gens then
+      Info(InfoRCWA,3,"<g> = 1 or one of <g> or <g>^-1 ",
+                      "in generator list of <G>.");
+      return true;
+    fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(g)) then
+      Info(InfoRCWA,3,"<g> and <G> have incompatible prime sets.");
+      return false;
+    fi;
+    if        IsClassWiseOrderPreserving(G)
+      and not IsClassWiseOrderPreserving(g) then
+      Info(InfoRCWA,3,"<G> is class-wise order-preserving, <g> is not.");
+      return false;
+    fi;
+    if not IsTame(G) then
+      Info(InfoRCWA,3,"<G> is wild, trying some short products of gen's...");
+      gensinv := Union(gens,List(gens,g->g^-1));
+      if   g in List(Combinations(gensinv,2), t -> Product(t))
+        or g in List(Combinations(gens,2), t -> Comm(t[1],t[2]))
+      then
+        Info(InfoRCWA,3,"<g> identified as some short gen.-product.");
+        return true;
+      fi;
+      TryNextMethod();
     else
-      gens := Union(gens,List(gens, g -> g^-1));
-      k := 2;
-      repeat
-        if   g in List(Tuples(gens,k), t -> Product(t)) 
-        then return true; fi;
-        k := k + 1;
-      until false;
+      if   Modulus(G) mod Modulus(g) <> 0 then
+        Info(InfoRCWA,3,"Mod(<g>) does not divide Mod(<G>).");
+        return false;
+      fi;
+      if   IsFinite(G) and Order(g) = infinity then
+        Info(InfoRCWA,3,"<G> is finite, but <g> has infinite order.");
+        return false;
+      fi;
+      if not IsTame(g) then
+        Info(InfoRCWA,3,"<G> is tame, but <g> is wild.");
+        return false;
+      fi;
+      P := PermutedClassPartition(G);
+      H := PermutationAction(G);
+      h := Permutation(g,P);
+      if h = fail then
+        Info(InfoRCWA,3,"<g> does not act on PermutedClassPartition(<G>).");
+        return false;
+      fi;
+      if not h in H then
+        Info(InfoRCWA,3,"The action of <g> on PermutedClassPartition(<G>) ",
+                        "is not an element of the one of <G>.");
+        return false;
+      fi;
+      Info(InfoRCWA,3,"Checking membership of <g>^Order(<h>) in ",
+                      "the kernel of PermutedClassPartition(<G>).");  
+      K := KernelOfPermutationAction(G);
+      L := KernelOfPermutationActionHNFMat(G);
+      k := g^Order(h); c := Coefficients(k);
+      if L = [] then return IsOne(k); fi;
+      Info(InfoRCWA,3,"The kernel has rank ",RankMat(L),".");
+      l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
+      return RankMat(L) = RankMat(Concatenation(L,[l]));
     fi;
   end );
 
@@ -506,7 +541,7 @@ InstallMethod( Modulus,
     local  m, oldm, maxfinmod, g, gens, step, maxstep;
 
     if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
-    if   IsCyclic(G)
+    if   Length(GeneratorsOfGroup(G)) = 1
     then gens := GeneratorsOfGroup(G);
     else gens := Union(List(GeneratorsOfGroup(G), g -> [g, g^-1])); fi;
     m := 1;
@@ -583,8 +618,7 @@ InstallMethod( IsTame,
 ##  into an infinite loop.
 ##
 InstallMethod( RcwaBase,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for integral rcwa groups", true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
 
@@ -617,10 +651,10 @@ InstallMethod( RcwaBase,
 
 #############################################################################
 ##
-#M  IsomorphismPermGroup( <G> ) . . . . . . . . . . . for integral rcwa group
+#M  IsomorphismPermGroup( <G> ) . . . . . . .  for finite integral rcwa group
 ##
 InstallMethod( IsomorphismPermGroup,
-               "for integral residue class-wise affine groups",
+               "for finite integral rcwa groups",
                true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -637,23 +671,65 @@ InstallMethod( IsomorphismPermGroup,
       SetNiceMonomorphism(G,phi);
       SetNiceObject(G,H);
     fi;
-    # SetIsHandledByNiceMonomorphism(G,true);
 
     return phi;
   end );
 
 #############################################################################
 ##
-#M  NiceMonomorphism( <G> ) . . . . . . . . . . . . . for integral rcwa group
+#M  IsomorphismMatrixGroup( <G> ) . . . . . . . . . . . . for tame rcwa group
 ##
-InstallMethod( NiceMonomorphism,
-               "for integral residue class-wise affine groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+InstallMethod( IsomorphismMatrixGroup,
+               "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    if IsFinite(G) then return IsomorphismPermGroup(G);
-                   else return IdentityMapping(G); fi;
+    local  R, res, q, x, d, P, H, M, ModG, g, h, m, deg, r, b, c, pos, i, j;
+
+    if not IsTame(G) then TryNextMethod(); fi;
+    R := Source(One(G)); ModG := Modulus(G);
+    if IsModularRcwaGroup(G) then
+      q := Size(CoefficientsRing(R));
+      x := IndeterminatesOfPolynomialRing(R)[1];
+      res := [];
+      for d in [1..DegreeOfLaurentPolynomial(ModG)] do
+        res[d] := AllGFqPolynomialsModDegree(q,d,x);
+      od;
+    fi;
+    g := GeneratorsOfGroup(G);
+    P := PermutedClassPartition(G);
+    deg := 2 * Length(P);
+    H := Action(G,P); h := GeneratorsOfGroup(H);
+    m := [];
+    for i in [1..Length(g)] do
+      m[i] := MutableNullMat(deg,deg,R);
+      for j in [1..deg/2] do
+        b := [[0,0],[0,1]] * One(R);
+        r := Residues(P[j])[1] mod Modulus(g[i]);
+        if   IsRationalBasedRcwaGroup(G)
+        then pos := r+1;
+        else pos := Position(res[DegreeOfLaurentPolynomial(g[i])],r); fi;
+        c := Coefficients(g[i])[pos];
+        b[1] := [c[1]/c[3],c[2]/c[3]];
+        m[i]{[2*j^h[i]-1..2*j^h[i]]}{[2*j-1..2*j]} := b;
+      od;
+    od;
+    M := Group(m);
+    return GroupHomomorphismByImagesNC(G,M,g,m);
+  end );
+
+#############################################################################
+##
+#M  NiceMonomorphism( <G> ) . . . . . . . . . . . . . . . for tame rcwa group
+##
+InstallMethod( NiceMonomorphism,
+               "for tame rcwa groups", true, [ IsIntegralRcwaGroup ], 0,
+
+  function ( G )
+
+    if   IsTame(G)
+    then return IsomorphismMatrixGroup(G);
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -797,6 +873,137 @@ InstallMethod( OrbitUnion,
     until image = R or image = oldimage;
     return image;
   end );
+
+#############################################################################
+##
+#M  PermutedClassPartition( <G> ) . . . . . . . . . . . . for tame rcwa group
+##
+InstallOtherMethod( PermutedClassPartition,
+                    "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  R, m, moved, fixed, pcp, untouched, cls, cl, orb, r, i;
+
+    if not IsTame(G) then return fail; fi;
+    R := Source(One(G)); m := Modulus(G); moved := MovedPoints(G);
+    if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
+    then fixed := Residues(Complement(moved));
+    elif moved <> [] then fixed := []; else fixed := [0]; fi;
+    pcp := List(fixed,i->ResidueClass(R,m,i));
+    untouched := Difference(AllResidues(R,m),fixed);
+    while untouched <> [] do
+      i := untouched[1]; RemoveSet(untouched,i);
+      cls := Difference(ResidueClass(R,m,i),Union(pcp));
+      if cls <> [] then
+        for r in Residues(cls) do
+          cl := ResidueClass(R,Modulus(cls),r);
+          orb := Orbit(G,cl); pcp := Union(pcp,orb);
+        od;
+      fi;
+    od;
+    Assert(1,Union(pcp)=R);
+    Assert(2,Action(G,pcp)<>fail);
+    return pcp;
+  end );
+
+#############################################################################
+##
+#M  PermutationAction( <G> ) . . . . . . . . . . . . . .  for tame rcwa group
+##
+InstallMethod( PermutationAction,
+               "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+               G -> Action( G, PermutedClassPartition( G ) ) );
+
+#############################################################################
+##
+#M  KernelOfPermutationAction( <G> ) . . . . . . for tame integral rcwa group
+##
+InstallMethod( KernelOfPermutationAction,
+               "for tame integral rcwa groups", true,
+               [ IsIntegralRcwaGroup ], 0,
+
+  function ( G )
+
+    local  P, H, M, L, LHNF, T, rank, ModG, g, h, nrgens,
+           genK, genKHNF, elH, elG, elK, c, nr, lasthit, erg, i;
+
+    ModG := Modulus(G);
+    P := PermutedClassPartition(G);
+    H := PermutationAction(G);
+    g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
+    nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
+    rank := 0; nr := 1; lasthit := 1; genK := [];
+    repeat
+      elK := elG^Order(elH);
+      c   := Coefficients(elK);
+      L[rank+1] := List([1..Length(P)],
+                        i -> c[Residues(P[i])[1] mod Modulus(elK) + 1][2]);
+      if RankMat(L) > rank then
+        rank := rank + 1; Add(genK,elK); lasthit := nr;
+        Info(InfoRCWA,2,"KernelOfPermutationAction: gen. #",nr,
+                        ", rank = ",rank);
+      fi;
+      i := Random([1..nrgens]); nr := nr + 1;
+      elH := elH * h[i];
+      elG := elG * g[i];
+    until rank = Length(P) or nr - lasthit > 100;
+    erg := HermiteNormalFormIntegerMatTransforms(L{[1..rank]});
+    LHNF := erg.normal; T := erg.rowtrans;
+    genKHNF := List([1..rank],
+                    i->Product(List([1..rank],j->genK[j]^T[i][j])));
+    SetKernelOfPermutationActionHNFMat(G,LHNF);
+    if genKHNF <> [] then return Group(genKHNF);
+                     else return TrivialSubgroup(G); fi;
+  end );
+
+#############################################################################
+##
+#M  KernelOfPermutationActionHNFMat( <G> ) . . . for tame integral rcwa group
+##
+InstallMethod( KernelOfPermutationActionHNFMat,
+               "for tame integral rcwa groups", true,
+               [ IsIntegralRcwaGroup ], 0,
+
+  function ( G )
+    KernelOfPermutationAction(G);
+    return KernelOfPermutationActionHNFMat(G);
+  end );
+
+#############################################################################
+##
+#M  FlateningConjugator( <G> ) . . . . . . . . . for tame integral rcwa group
+##
+InstallOtherMethod( FlateningConjugator,
+                    "for tame integral rcwa groups", true,
+                    [ IsIntegralRcwaGroup ], 0,
+
+  function ( G )
+
+    local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
+
+    if IsFlat(G) then return One(G); fi;
+    pcp := PermutedClassPartition(G); 
+    if pcp = fail then return fail; fi;
+    m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
+    c := List([1..m],i->[1,0,1]);
+    for rtilde in [0..mtilde-1] do
+      cl := pcp[rtilde+1];
+      r := Residues(cl)[1]; m_cl := Modulus(cl);
+      for j in [0..m/m_cl-1] do
+        c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
+      od;
+    od;
+    return RcwaMapping(c);
+  end );
+
+#############################################################################
+##
+#M  FlatConjugate( <G> ) . . . . . . . . . . . . . . . .  for tame rcwa group
+##
+InstallOtherMethod( FlatConjugate,
+                    "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
+                    G -> G^FlateningConjugator( G ) );
 
 #############################################################################
 ##

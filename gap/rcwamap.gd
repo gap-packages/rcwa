@@ -430,15 +430,43 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
-#A  CycleType( <f> ) . . . . . . . . . . . . . . . . . . .  cycle type of <f>
+#A  PermutedClassPartition( <sigma> ) . . . . . . .  permuted class partition
 ##
-##  The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
-##  lists, where the first list is the set of the cycle lengths which occur
-##  infinitely often, and the second list contains the cycle lengths which
-##  occur only finitely often, with the respective multiplicities and sorted
-##  by increasing length.
+##  A partition of the base ring <R> into a finite number of residue classes,
+##  on which the bijective mapping <sigma> acts as a permutation. 
+##  The partition is non-trivial as long as Modulus( <sigma> ) <> One( <R> ).
+##  Such a partition exists always if <sigma> is tame and <R> has the
+##  `class halving property'. 
 ##
-DeclareAttribute( "CycleType", IsRcwaMapping );
+DeclareAttribute( "PermutedClassPartition", IsRcwaMapping );
+
+#############################################################################
+##
+#A  FlateningConjugator( <f> ) . . . . . .  mapping <x> s.th. <f>^<x> is flat
+##
+##  A mapping <x> such that <f>^<x> is flat. Exists always if <f> is a tame
+##  bijection and <R> has the `class halving property'.
+##
+DeclareAttribute( "FlateningConjugator", IsRcwaMapping );
+
+#############################################################################
+##
+#A  FlatConjugate( <f> ) . . . . . . . . . . . . . . .  flat conjugate of <f>
+##
+##  Some flat conjugate of the rcwa mapping <f>.
+##  This is certainly not defined uniquely, and exists only if <f> is tame.
+##  
+DeclareAttribute( "FlatConjugate", IsRcwaMapping );
+
+#############################################################################
+##
+#A  StandardizingConjugator( <f> ) . .  mapping <x> s.th. <f>^<x> is standard
+##
+##  A mapping <x> such that <f>^<x> is the ``standard'' representative of
+##  the conjugacy class of the bijective integral rcwa mapping <f> in the
+##  whole group RCWA(Z).
+##
+DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -453,13 +481,15 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  StandardizingConjugator( <f> ) . . mapping <x>, s.th. <f>^<x> is standard
+#A  CycleType( <f> ) . . . . . . . . . . . . . . . . . . .  cycle type of <f>
 ##
-##  A mapping <x>, such that <f>^<x> is the ``standard'' representative of
-##  the conjugacy class of the bijective integral rcwa mapping <f> in the
-##  whole group RCWA(Z).
+##  The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
+##  lists, where the first list is the set of the cycle lengths which occur
+##  infinitely often, and the second list contains the cycle lengths which
+##  occur only finitely often, with the respective multiplicities and sorted
+##  by increasing length.
 ##
-DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
+DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##

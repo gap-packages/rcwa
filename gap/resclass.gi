@@ -271,11 +271,35 @@ InstallMethod( Modulus,
 
 #############################################################################
 ##
+#M  Modulus( <R> ) . . . . . . . . . . . . . . . . . . . . . .  for base ring
+##
+InstallOtherMethod( Modulus,
+                    "for base ring", true,
+                    [ IsRing ], 0, R -> One( R ) );
+
+#############################################################################
+##
 #M  Residues( <U> ) . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( Residues,
                "for residue class unions", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.r );
+
+#############################################################################
+##
+#M  Residues( <R> ) . . . . . . . . . . . . . . . . . . . . . . for base ring
+##
+InstallOtherMethod( Residues,
+                    "for base ring", true,
+                    [ IsRing ], 0, R -> [ Zero( R ) ] );
+
+#############################################################################
+##
+#M  Residues( <l> ) . . . . . . . . . . . . . . . for finite list of elements
+##
+InstallOtherMethod( Residues,
+                    "for finite list of elements", true,
+                    [ IsList ], 0, l -> [  ] );
 
 #############################################################################
 ##
@@ -287,11 +311,41 @@ InstallMethod( IncludedElements,
 
 #############################################################################
 ##
+#M  IncludedElements( <R> ) . . . . . . . . . . . . . . . . . . for base ring
+##
+InstallOtherMethod( IncludedElements,
+                    "for base ring", true, [ IsRing ], 0, R -> [ ] );
+
+#############################################################################
+##
+#M  IncludedElements( <l> ) . . . . . . . . . . . for finite list of elements
+##
+InstallOtherMethod( IncludedElements,
+                    "for finite list of elements", true,
+                    [ IsList ], 0, l -> l );
+
+#############################################################################
+##
 #M  ExcludedElements( <U> ) . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( ExcludedElements,
                "for residue class unions", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.excluded );
+
+#############################################################################
+##
+#M  ExcludedElements( <R> ) . . . . . . . . . . . . . . . . . . for base ring
+##
+InstallOtherMethod( ExcludedElements,
+                    "for base ring", true, [ IsRing ], 0, R -> [ ] );
+
+#############################################################################
+##
+#M  ExcludedElements( <l> ) . . . . . . . . . . . for finite list of elements
+##
+InstallOtherMethod( ExcludedElements,
+                    "for finite list of elements", true,
+                    [ IsList ], 0, l -> [ ] );
 
 #############################################################################
 ##
@@ -822,7 +876,7 @@ InstallMethod( Intersection2,
 ##
 InstallMethod( Difference,
                "for residue class union and finite set", ReturnTrue,
-               [ IsResidueClassUnionInSparseRep, IsList ], 0,
+               [ IsResidueClassUnionInSparseRep, IsList ], 100,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
