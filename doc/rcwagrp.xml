@@ -9,7 +9,7 @@
 <Chapter Label="ch:RcwaGroups">
 <Heading>Residue Class-Wise Affine Groups</Heading>
 
-This chapter describes the functionality available for calculating with
+This chapter describes the functionality available for computing with
 rcwa groups. <P/>
 
 <!-- #################################################################### -->
@@ -25,57 +25,47 @@ rcwa groups. <P/>
   </ManSection>
 
   <ManSection>
-    <Filt Name="IsRationalBasedRcwaGroup" Arg="G"/>
-    <Description>
-      The category of all <Q>rational-based</Q> (hence all integral
-      and all semilocal integral) rcwa groups.
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Filt Name="IsIntegralRcwaGroup" Arg="G"/>
     <Description>
-      The category of all integral rcwa groups.
+      The category of all rcwa groups over the ring of integers.
     </Description>
   </ManSection>
 
   <ManSection>
     <Fam Name="IntegralRcwaGroupsFamily"/>
     <Description>
-      The family of all integral rcwa groups.
+      The family of all rcwa groups over the ring of integers.
     </Description>
   </ManSection>
-
-  All integral rcwa groups are supergroups of
 
   <ManSection>
     <Var Name="TrivialIntegralRcwaGroup"/>
     <Description>
-      The trivial integral rcwa group.
+      The trivial rcwa group over the ring of integers.
     </Description>
   </ManSection>
 
   <ManSection>
     <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G"/>
     <Description>
-      The category of all semilocal integral rcwa groups.
+      The category of all rcwa groups over semilocalizations of the
+      ring of integers.
     </Description>
   </ManSection>
 
   <ManSection>
     <Filt Name="IsModularRcwaGroup" Arg="G"/>
     <Description>
-      The category of all modular rcwa groups.
+      The category of all rcwa groups over polynomial rings in one variable
+      over some finite field.
     </Description>
   </ManSection>
-
-  All rcwa groups over the ring <A>R</A> are subgroups of
 
   <ManSection>
     <Func Name="RCWA" Arg="R"/>
     <Returns>
       the group RCWA(<A>R</A>) of all bijective rcwa mappings
-      over the ring <A>R</A>.
+      of the ring <A>R</A>.
     </Returns>
     <Description>
       This group is (at least in general) not finitely generated,
@@ -108,7 +98,7 @@ true
 
   Rcwa groups can be constructed using either <C>Group</C>,
   <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
-  (see reference manual).
+  (see the reference manual).
   Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C>
   only finitely generated rcwa groups are supported.
 
@@ -171,8 +161,8 @@ gap> G := GL(2,5);
 GL(2,5)
 gap> IsomorphismRcwaGroup(G);
 CompositionMapping( 
-[ (1,2,4,8)(3,6,12,18)(5,10,17,22)(9,15,21,24)(13,14,19,23), 
-  (1,3,7)(2,5,11)(4,9,16)(6,13,12)(8,14,20)(10,18,17)(15,22,21)(19,24,23) 
+[ (2,3,5,8)(4,7,12,18)(6,10,17,22)(9,15,21,24)(13,14,19,23), 
+  (1,2,4)(3,6,11)(5,9,16)(7,13,12)(8,14,20)(10,18,17)(15,22,21)(19,24,23) 
  ] -> [ <integral rcwa mapping with modulus 24>, 
   <integral rcwa mapping with modulus 24> ], <action isomorphism> )
 ]]>
@@ -183,7 +173,7 @@ CompositionMapping(
   <ManSection>
     <Meth Name="Display" Arg="G"/>
     <Description>
-      Displays the rcwa group <A>G</A>.
+      Displays the rcwa group <A>G</A> in a human-readable form.
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
@@ -303,7 +293,7 @@ gap> phi := IsomorphismPermGroup(H);
     <Description>
       An isomorphism from a tame rcwa group <A>G</A> to
       some matrix group. The implemented algorithm uses the classification
-      of groups having tame <M>R</M>-rcwa representations.
+      of groups having faithful tame <M>R</M>-rcwa representations.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
@@ -325,7 +315,9 @@ gap> List(GeneratorsOfGroup(Image(phi)),Order);
   <ManSection>
     <Meth Name="NiceMonomorphism" Arg="G"/>
     <Returns>
-      the result of <C>IsomorphismMatrixGroup</C> in case the group is tame.
+      the result of <C>IsomorphismPermGroup</C> in case <A>G</A> is known to
+      be finite, and the result of <C>IsomorphismMatrixGroup</C> if this is
+      not the case, but <A>G</A> is tame.
     </Returns>
   </ManSection>
 
@@ -350,6 +342,9 @@ Group([ (1,2)(3,4)(5,6)(7,8)(9,10)(11,12)(13,14)(15,16)(17,18)(19,20)(21,
     <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
     <Returns>the modulus of the rcwa group <A>G</A>.</Returns>
     <Description>
+      For the definition see section
+      <Ref Label="sec:FurtherBasicDefinitions"/>. <P/>
+
       See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
       for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
 <Example>
@@ -367,6 +362,10 @@ gap> Modulus(Group(a,b));
     <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
     <Returns>the prime set of the rcwa group <A>G</A>.</Returns>
     <Description>
+      <Index Key="rcwa group" Subkey="prime set"></Index>
+      We define the <E>prime set</E> of an rcwa group by the union of the
+      prime sets of its elements. <P/>
+
       See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa mapping"/>
       for rcwa mappings.
 <Example>
@@ -381,34 +380,13 @@ gap> PrimeSet(H);
   </ManSection>
 
   <ManSection>
-    <Prop Name="IsFlat" Arg="G" Label="Flat rcwa group"/>
-    <Description>
-      Indicates whether or not the rcwa group <A>G</A> is flat. <P/>
-
-      See also <Ref Prop="IsFlat" Label="Flat rcwa mapping"/>
-      for rcwa mappings.
-<Example>
-<![CDATA[
-gap> IsFlat(AlternatingGroup(IsIntegralRcwaGroup,5));
-true
-gap> IsFlat(Group(a,b));
-false
-gap> IsFlat(Group(g));
-false
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
     <Description>
+      <Index Key="rcwa group" Subkey="integral"></Index>
       Indicates whether the rcwa group <A>G</A> is integral or not.
-      We call an rcwa monoid <E>integral</E> if its divisor is equal to 1.
+      We call an rcwa group <E>integral</E> if all of its elements are.
       Be careful not to confuse this with the term <E>integral rcwa
-      group</E> for rcwa groups over the integers.
-      An rcwa group is integral if and only if it is flat.
-      This equivalence does not hold for rcwa monoids in general. <P/>
+      group</E> for rcwa groups over the integers. <P/>
 
       See also <Ref Prop="IsIntegral" Label="Integral mapping"/>
       for rcwa mappings.
@@ -420,7 +398,8 @@ false
           Label="Class-wise order-preserving rcwa group"/>
     <Description>
       Indicates whether the integral rcwa group <A>G</A> is class-wise
-      order-preserving or not. <P/>
+      order-preserving or not. Of course this term is
+      defined only if the underlying ring is ordered. <P/>
 
       See also <Ref Prop="IsClassWiseOrderPreserving"
       Label="Class-wise order-preserving rcwa mapping"/>
@@ -443,6 +422,8 @@ false
     <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
     <Description>
       Indicates whether or not the rcwa group <A>G</A> is tame. <P/>
+      For the definition see section
+      <Ref Label="sec:FurtherBasicDefinitions"/>. <P/>
 
       See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
       for rcwa mappings.
@@ -467,8 +448,9 @@ true
     <Description>
 <Example>
 <![CDATA[
+gap> ResidueClassUnionViewingFormat("short");
 gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
-<union of 8 residue classes (mod 9)>
+1(3) U 2(3) U 3(9) U 6(9)
 ]]>
 </Example>
     </Description>
@@ -484,7 +466,7 @@ gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
     <Description>
 <Example>
 <![CDATA[
-gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);;
+gap> A5 := IntegralRcwaGroupByPermGroup(AlternatingGroup(5));;
 gap> ShortOrbits(A5,[-10..10],100);
 [ [ -14, -13, -12, -11, -10 ], [ -9, -8, -7, -6, -5 ], [ -4, -3, -2, -1, 0 ], 
   [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]
@@ -518,10 +500,11 @@ gap> ShortOrbits(Group(u),[-30..30],100);
       under the action of <A>G</A>'.
     </Returns>
     <Description>
-      This method computes a partition of <C>[0..<A>m</A>-1]</C>, such that
-      <M>i</M> and <M>j</M> lie in the same subset if and only if there is an
-      element <M>g</M> in <A>G</A> such that <M>M_{i,j} = 1</M>, where
-      <M>M</M> is the transition matrix of degree <A>m</A> of <M>g</M>. <P/>
+      This method computes a partition of <C>AllResidues(<A>m</A>)</C> such
+      that <M>i</M> and <M>j</M> lie in the same subset if and only if there
+      is an element <M>g</M> in <A>G</A> such that <M>M_{i,j} \neq 0</M>,
+      where <M>M</M> is the transition matrix of <M>g</M> for modulus
+      <A>m</A> (see <Ref Func="TransitionMatrix"/>). <P/>
 
       See also <Ref Oper="OrbitsModulo" Label="OrbitsModulo for rcwa mapping"/>
       for rcwa mappings.
@@ -544,9 +527,9 @@ gap> OrbitsModulo(G,72);
     <Description>
       A partition of the base ring <M>R</M> into a finite number of residue
       classes, on which the group <A>G</A> acts as a permutation group, and
-      on those elements all elements of <A>G</A> are affine. 
+      on those elements all elements of <A>G</A> are affine.
       The partition is non-trivial as long as the modulus of <A>G</A> is not
-      equal to 1. Such a partition exists always if <A>G</A> is tame.
+      equal to 1. Such a partition exists if and only if <A>G</A> is tame.
 
       See also <Ref Attr="RespectedClassPartition"
       Label="Respected class partition for rcwa mapping"/>
@@ -587,12 +570,10 @@ Bijective integral rcwa mapping with modulus 6, of order 12
   5                                    | n + 1
 
 ]
+
 gap> pcp := RespectedClassPartition(G);
-[ The residue class 0(12), The residue class 1(12), The residue class 3(12), 
-  The residue class 4(12), The residue class 5(12), The residue class 6(12), 
-  The residue class 7(12), The residue class 9(12), The residue class 10(12), 
-  The residue class 11(12), The residue class 2(24), The residue class 8(24), 
-  The residue class 14(24), The residue class 20(24) ]
+[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
+  2(24), 8(24), 14(24), 20(24) ]
 ]]>
 </Example>
     </Description>
@@ -676,20 +657,20 @@ gap> L := KernelOfActionOnClassPartitionHNFMat(G);
   </ManSection>
 
   <ManSection>
-    <Attr Name="FlatConjugate" Arg="G"
-          Label="Flat conjugate for rcwa group"/>
+    <Attr Name="IntegralConjugate" Arg="G"
+          Label="Integral conjugate for rcwa group"/>
     <Description>
-      Some flat conjugate of the tame rcwa group <A>G</A> in the whole group
+      Some integral conjugate of the tame rcwa group <A>G</A> in the whole group
       RCWA(<M>R</M>).
       Since this is not defined uniquely, methods for this operation
       will just choose one such group. <P/>
 
-      See also <Ref Attr="FlatConjugate"
-                    Label="Flat conjugate for rcwa mapping"/>
+      See also <Ref Attr ="IntegralConjugate"
+                    Label="Integral conjugate for rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
-gap> F := FlatConjugate(G);
+gap> F := IntegralConjugate(G);
 <integral rcwa group with 2 generators, of size infinity>
 gap> Display(F);
 
@@ -731,25 +712,28 @@ Bijective integral rcwa mapping with modulus 14, of order 12
   11                                   | n - 8
   13                                   | n - 5
 
+]
+
 ]]>
 </Example>
     </Description>
   </ManSection>
 
   <ManSection>
-    <Attr Name="FlateningConjugator" Arg="G"
-          Label="Flatening conjugator for rcwa group"/>
+    <Attr Name="IntegralizingConjugator" Arg="G"
+          Label="Integralizing conjugator for rcwa group"/>
     <Description>
       An rcwa mapping mapping <A>x</A> such that <A>G</A>&circum;<A>x</A>
-      is flat. This is certainly not defined uniquely, but it holds
-      that <C>G&circum;FlateningConjugator(G) = FlatConjugate(G)</C>. <P/>
+      is integral. This is certainly not defined uniquely, but it holds
+      that <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
+              IntegralConjugate(<A>G</A>)</C>. <P/>
 
-      See also <Ref Attr="FlateningConjugator"
-                    Label="Flatening conjugator for rcwa mapping"/>
+      See also <Ref Attr ="IntegralizingConjugator"
+                    Label="Integralizing conjugator for rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
-gap> fl := FlateningConjugator(G);
+gap> fl := IntegralizingConjugator(G);
 <bijective integral rcwa mapping with modulus 24>
 gap> G^fl = F;
 true
@@ -782,10 +766,9 @@ Bijective integral rcwa mapping with modulus 24
   <ManSection>
     <Meth Name="IsTransitive" Arg="G, Integers"/>
     <Description>
-      Tries to determine whether the integral rcwa group <A>G</A> acts
-      transitively on the integers.
-      Depending on the particular group, this might fail or run into an
-      infinite loop.
+      Tries to determine whether the rcwa group <A>G</A> acts transitive on
+      the integers. Depending on the particular group, this might fail or
+      run into an infinite loop, but for tame groups things should work.
 <Log>
 <![CDATA[
 gap> G := Group(g,h);;
@@ -794,14 +777,14 @@ gap> IsTransitive(G,Integers);
 #I  IsTransitive: testing for finiteness and searching short orbits ...
 #I  Order: the 1st power of the argument is IntegralRcwaMapping( 
 [ [ 1, -9, 1 ], [ 1, 0, 1 ], [ 1, 6, 1 ], [ 1, -3, 1 ], [ 1, 0, 1 ], 
-  [ 1, 6, 1 ] ] ); this mapping shifts the residue class 2 mod 
-6 non-identically onto itself, hence its order is infinity.
+  [ 1, 6, 1 ] ] ); this mapping maps the residue class 2(6) 
+non-identically onto itself, hence its order is infinity.
 #I  Searching for class shifts ...
 #I  ... in generators
 #I  ... in commutators of the generators
 #I  The cyclic group generated by IntegralRcwaMapping( 
 [ [ 1, -9, 1 ], [ 1, 0, 1 ], [ 1, 6, 1 ], [ 1, -3, 1 ], [ 1, 0, 1 ], 
-  [ 1, 6, 1 ] ] ) acts transitively on the residue class 2 mod 6.
+  [ 1, 6, 1 ] ] ) acts transitively on the residue class 2(6).
 #I  OrbitUnion: initial set = ResidueClassUnion( Integers, 6, [ 2 ] )
 #I  Image = Integers
 true
@@ -820,18 +803,18 @@ gap> RCWAInfo(0);
       The returned group acts on the image of <A>f</A> and fixes its
       complement pointwise. If <A>f</A> is bijective the returned
       group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
-
-      See also <Ref Oper="Restriction"
-                    Label="Restriction of an rcwa mapping"/>
+      The elements of the restricted group are just the restrictions
+      of the elements of <A>G</A> by <A>f</A>. For a definition see
+      <Ref Oper="Restriction" Label="Restriction of an rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 <integral rcwa group with 2 generators>
 gap> MovedPoints(G);
-The residue class 3(5)
+3(5)
 ]]>
-</Example>      
+</Example>
     </Description>
   </ManSection>
 
@@ -845,8 +828,8 @@ The residue class 3(5)
   <ManSection>
     <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord"/>
     <Returns>
-      the number of conjugacy classes of the whole group
-      RCWA(<M>\Z</M>) of elements of order <A>ord</A>.
+      the number of conjugacy classes of RCWA(<M>\Z</M>) of elements
+      of order <A>ord</A>.
     </Returns>
     <Description>
 <Example>
@@ -864,54 +847,9 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 
 <!-- #################################################################### -->
 
-<Section Label="sec:PredefinedRcwaGroups">
-<Heading>Predefined rcwa groups</Heading>
-
-  There are methods for constructing various types of groups as integral
-  rcwa groups. They are just using the ad hoc-translation provided by 
-  <C>IntegralRcwaGroupByPermGroup</C>, for the matrix groups after turning to
-  the image under <C>IsomorphismPermGroup</C>. So far, the provided methods
-  cover all groups listed in the sections concerning basic groups and
-  classical groups in the chapter describing the group libraries in the
-  reference manual.
-
-<Example>
-<![CDATA[
-gap> C2 := CyclicGroup(IsIntegralRcwaGroup,2);
-<integral rcwa group with 1 generator>
-gap> G := ExtraspecialGroup(IsIntegralRcwaGroup,27,3);
-<integral rcwa group with 3 generators>
-gap> IsAbelian(G);
-false
-gap> Exponent(G);
-3
-gap> S4 := SymmetricGroup(IsIntegralRcwaGroup,4);
-<integral rcwa group with 2 generators>
-gap> Size(S4);
-24
-gap> G := SylowSubgroup(S4,2);;
-gap> IdGroup(G);
-[ 8, 3 ]
-gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);
-<integral rcwa group with 2 generators>
-gap> Size(A5);
-60
-gap> IsSimple(A5);
-true
-gap> G := GL(IsIntegralRcwaGroup,2,3);
-<integral rcwa group with 2 generators>
-gap> Size(G);
-48
-]]>
-</Example>
-
-  <Alt Only="HTML">&nbsp;</Alt>
-
-</Section>
-
-<!-- #################################################################### -->
-
 </Chapter>
 
 <!-- #################################################################### -->
+
+
 

@@ -1404,36 +1404,6 @@ InstallMethod( Multpk,
 
 #############################################################################
 ##
-#M  IsFlat( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
-##
-InstallMethod( IsFlat,
-               "for integral rcwa mappings (RCWA)",
-               true, [     IsIntegralRcwaMapping
-                       and IsRationalBasedRcwaDenseRep ], 0,
-
-  f -> IsSubset( [-1,1], Set( Flat( List( f!.coeffs, c -> c{[1,3]} ) ) ) ) );
-
-#############################################################################
-##
-#M  IsFlat( <f> ) . . . . . . . . . . . . for semilocal integral rcwa mapping
-##
-InstallMethod( IsFlat,
-               "for semilocal integral rcwa mappings (RCWA)",
-               true, [ IsSemilocalIntegralRcwaMapping ], 10,
-               f -> [ Multiplier(f), Divisor(f) ] = [ 1, 1 ] );
-
-#############################################################################
-##
-#M  IsFlat( <f> ) . . . . . . . . . . . . . . . . .  for modular rcwa mapping
-##
-InstallMethod( IsFlat,
-               "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
-               f ->  ForAll( Flat( List( f!.coeffs, c -> c{ [ 1, 3 ] } ) ),
-                             p -> DegreeOfLaurentPolynomial( p ) = 0 ) );
-
-#############################################################################
-##
 #M  IsIntegral( <f> ) . . . . . . . . . . . . . . . .. . . . for rcwa mapping
 ##
 InstallMethod( IsIntegral,
@@ -2329,8 +2299,8 @@ InstallMethod( Order,
                                and c[n][2] mod m2 = 0);
       if   r <> fail
       then Info(InfoRCWA,1,"Order: the ",Ordinal(e)," power of the argument",
-                           " is ",g,"; this mapping shifts the residue ",
-                           "class ",r-1," mod ",m2," non-identically ",
+                           " is ",g,"; this mapping maps the residue ",
+                           "class ",r-1,"(",m2,") non-identically ",
                            "onto itself, hence its order is infinity.");
            return infinity;
       fi;
@@ -2426,32 +2396,6 @@ InstallGlobalFunction( TransitionSets,
       M[i] := List([1..Length(res)],j->Intersection(im,cl[j]));
     od;
     return M;
-  end );
-
-#############################################################################
-##
-#M  \*( <A>, <B> ) . . . . . . . . . . . . . . . . . . . . for `set matrices'
-##
-InstallOtherMethod( \*,
-                    "for `set matrices' (RCWA)", ReturnTrue,
-                    [ IsListOrCollection, IsListOrCollection ], 100,
-
-  function ( A, B )
-
-    local  C, n;
-
-    if   not IsList(A) or not IsList(A[1])
-      or not IsListOrCollection(A[1][1])
-      or not ForAll(A,l->ForAll(l,IsListOrCollection))
-      or not ForAll(B,l->ForAll(l,IsListOrCollection))
-      or Length(Set(List(A,Length))) > 1 or Length(Set(List(B,Length))) > 1
-      or Length(A[1]) <> Length(B)
-    then TryNextMethod( ); fi;
-    C := List([1..Length(A)],
-              i->List([1..Length(B[1])],
-                      j->Union(List([1..Length(A[1])],
-                                    k->Intersection(A[i][k],B[k][j])))));
-    return C;
   end );
 
 #############################################################################
@@ -2648,8 +2592,8 @@ InstallMethod( IsTame,
 
     local  R, mult, div;
 
-    if IsFlat(f)
-    then Info(InfoRCWA,4,"IsTame: mapping is flat, hence tame.");
+    if   IsIntegral(f)
+    then Info(InfoRCWA,4,"IsTame: mapping is integral, hence tame.");
          return true; fi;
     if not IsBijective(f) then TryNextMethod(); fi;
     Info(InfoRCWA,1,"IsTame:`factors of multiplier and divisor' criterion.");
@@ -2698,12 +2642,12 @@ InstallMethod( IsTame,
 
     local  pow, exp, e;
 
-    Info(InfoRCWA,2,"IsTame:`finite order or flat power' criterion.");
+    Info(InfoRCWA,2,"IsTame:`finite order or integral power' criterion.");
     if IsBijective(f) and Order(f) <> infinity then return true; fi;
     pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
     for e in exp do
       pow := pow^e;
-      if IsFlat(pow) then return true; fi;
+      if IsIntegral(pow) then return true; fi;
       if   IsRationalBasedRcwaMapping(f) and Modulus(pow) > 6 * Modulus(f)
         or     IsModularRcwaMapping(f)
            and   DegreeOfLaurentPolynomial(Modulus(pow))
@@ -2845,9 +2789,9 @@ InstallMethod( RespectedClassPartition,
 
 #############################################################################
 ##
-#M  FlateningConjugator( <sigma> ) . for tame bijective integral rcwa mapping
+#M  IntegralizingConjugator( <sigma> ) .  for tame bij. integral rcwa mapping
 ##
-InstallMethod( FlateningConjugator,
+InstallMethod( IntegralizingConjugator,
                "for tame bijective integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping ], 0,
 
@@ -2855,7 +2799,7 @@ InstallMethod( FlateningConjugator,
 
     local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
-    if IsFlat(sigma) then return One(sigma); fi;
+    if IsIntegral(sigma) then return One(sigma); fi;
     pcp := RespectedClassPartition(sigma); 
     if pcp = fail then return fail; fi;
     m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
@@ -2872,11 +2816,11 @@ InstallMethod( FlateningConjugator,
 
 #############################################################################
 ##
-#M  FlatConjugate( <f> ) . . . . . . . . . . . . . . .  for tame rcwa mapping
+#M  IntegralConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
 ##
-InstallMethod( FlatConjugate,
+InstallMethod( IntegralConjugate,
                "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               f -> f^FlateningConjugator( f ) );
+               f -> f^IntegralizingConjugator( f ) );
 
 #############################################################################
 ##
@@ -2892,8 +2836,8 @@ InstallMethod( StandardizingConjugator,
            cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
 
     if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
-    if not IsFlat(sigma) then
-      toflat := FlateningConjugator(sigma);
+    if not IsIntegral(sigma) then
+      toflat := IntegralizingConjugator(sigma);
       flat   := sigma^toflat;
     else toflat := One(sigma); flat := sigma; fi;
     m := Modulus(flat); pcp := RespectedClassPartition(flat);
@@ -3216,6 +3160,7 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 

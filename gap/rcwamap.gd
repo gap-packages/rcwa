@@ -248,15 +248,6 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
-#P  IsFlat( <f> ) . . . . indicates whether or not <f> is a flat rcwa mapping
-##
-##  We say that an rcwa mapping is *flat* if and only if its multiplier
-##  and its divisor are equal to 1.
-##
-DeclareProperty( "IsFlat", IsRcwaMapping );
-
-#############################################################################
-##
 #P  IsIntegral( <f> ) . . . . . . .  indicates whether or not <f> is integral
 ##
 ##  We say that an rcwa mapping is *integral* if and only if its divisor is
@@ -419,21 +410,21 @@ DeclareAttribute( "RespectedClassPartition", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  FlateningConjugator( <f> ) . . . . . .  mapping <x> s.th. <f>^<x> is flat
+#A  IntegralizingConjugator( <f> ) . .  mapping <x> s.th. <f>^<x> is integral
 ##
-##  A mapping <x> such that <f>^<x> is flat. Exists always if <f> is a tame
-##  bijection and <R> has the `class halving property'.
+##  A mapping <x> such that <f>^<x> is integral. Exists always if <f> is a
+##  tame bijection and <R> has residue class rings of any finite cardinality.
 ##
-DeclareAttribute( "FlateningConjugator", IsRcwaMapping );
+DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  FlatConjugate( <f> ) . . . . . . . . . . . . . . .  flat conjugate of <f>
+#A  IntegralConjugate( <f> ) . . . . . . . . . . .  integral conjugate of <f>
 ##
-##  Some flat conjugate of the rcwa mapping <f>.
+##  Some integral conjugate of the rcwa mapping <f>.
 ##  This is certainly not defined uniquely, and exists only if <f> is tame.
 ##  
-DeclareAttribute( "FlatConjugate", IsRcwaMapping );
+DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -534,4 +525,5 @@ DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 

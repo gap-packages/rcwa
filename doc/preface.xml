@@ -10,33 +10,69 @@
 
 <!-- #################################################################### -->
 
-This package deals with a certain kind of infinite permutations,
-namely the <Q>residue class-wise affine</Q> ones.
-In particular, it provides functionality for doing computations with such
-mappings over the ring of integers, its semilocalizations and over
-polynomial rings in one variable over a finite field.
-In the introduction, I will give brief definitions. <P/>
+This package deals with a certain kind of mappings of euclidean rings onto
+themselves, namely those which are affine on any residue class modulo
+<M>m</M>, where <M>m</M> is some modulus depending on the particular mapping.
+It provides functionality for doing computations with such mappings over
+the ring of integers, its semilocalizations and over polynomial rings in
+one variable over a finite field.
+In the introduction I will give brief definitions of the basic terms. <P/>
 
-It seems that there is just no literature concerning this topic,
-but nevertheless I would like to mention the article of Hans
-Läuchli and  Peter M. Neumann <Cite Key="LaeuchliNeumann88"/>, which
-is a little bit related to the subject (but does not deal with any kind
-of permutation groups over rings or of countable permutation groups). <P/>
+<Index Key="dynamical systems">dynamical systems</Index>
+<Index Key="Markov chains">Markov chains</Index>
+It seems that so far nobody has studied the mentioned mappings from an
+algebraic point of view, although there have been some publications which
+shed light on the topic by investigating related dynamical systems and
+Markov chains. In this context I would like to mention a monograph by
+Günther J. Wirsching <Cite Key="Wirsching98"/> and an article by
+G. Venturini <Cite Key="Venturini92"/>.
+Permutation group-theoretic work which might be considered to be weakly
+related to this topic has been done by Hans Läuchli and  Peter M. Neumann
+<Cite Key="LaeuchliNeumann88"/>, but this does not deal with any kind
+of permutation groups over rings or of countable permutation groups,
+and doesn't seem to help anything in the given context.
 <Index Key="permutation groups">permutation groups</Index>
 <Index Key="permutation groups" Subkey="over rings"></Index> 
 <Index Key="permutation groups" Subkey="countable"></Index>
+For a general survey of results concerning infinite permutation groups
+see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>.
 
-I got the idea of introducing this kind of permutations resp.
-representations of groups originally from my investigations concerning
-the Collatz- (<M>3n+1</M>-) conjecture (for an annotated bibliography,
-see <Cite Key="Lagarias98"/>), but now, residue class-wise affine
-representations of groups seem to be an interesting topic of its own. <P/>
 <Index Key="Collatz conjecture">Collatz conjecture</Index>
+<Index Key="Collatz conjecture">Collatz mapping</Index>
+Introducing the given kind of mappings, permutations and representations
+of groups was originally motivated by my investigations concerning the
+Collatz- (<M>3n+1</M>-) conjecture (which claims that iterated application
+of the <E>Collatz mapping</E> <M>T</M> which maps even <M>n</M> to <M>n/2</M>
+and odd <M>n</M> to <M>(3n+1)/2</M> eventually would take any positive
+integer to 1; for an annotated bibliography listing about 100 publications
+on this problem see <Cite Key="Lagarias98"/>), but now, residue class-wise
+affine representations of groups seem to be an interesting topic of its own.
+<P/>
+
+I developed this package as a crucial tool for investigating a large number
+of examples and getting deep enough insight into the structure of residue
+class-wise affine mappings and groups to be able to start building a theory
+of them from the bottom in my thesis <Cite Key="Kohl04"/>. <P/>
 
 I would be grateful for any bug reports, comments or suggestions.
+
+<Alt Only="Text">
+                                                                 Stefan Kohl
+</Alt>
+<Alt Only="HTML">
+  <![CDATA[
+    <P align = right> Stefan Kohl </P>
+  ]]>
+</Alt>
+<Alt Only="LaTeX">
+  <![CDATA[
+    \vfill \hfill Stefan Kohl
+  ]]>
+</Alt>
 
 <!-- #################################################################### -->
 
 </Chapter>
 
 <!-- #################################################################### -->
+

@@ -202,12 +202,12 @@ DeclareProperty( "IsTame", IsRcwaGroup );
 
 ############################################################################# 
 ##
-#P  IsFlat( <G> ) . . . . . indicates whether or not <G> is a flat rcwa group 
+#P  IsIntegral( <G> ) . . . . . . .  indicates whether or not <G> is integral 
 ##
-##  We say that an $R$-rcwa group is *flat* if and only if all of its
-##  elements are flat.
+##  We say that an $R$-rcwa group is *integral* if and only if all of its
+##  elements are integral.
 ##
-DeclareProperty( "IsFlat", IsRcwaGroup ); 
+DeclareProperty( "IsIntegral", IsRcwaGroup ); 
 
 ############################################################################# 
 ##
@@ -272,4 +272,5 @@ DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 

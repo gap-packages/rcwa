@@ -27,8 +27,8 @@ RCWABuildManual := function ( )
   MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
                  [ "../gap/rcwaaux.g",
                    "../gap/rcwamap.gd", "../gap/rcwamap.gi",
-                   "../gap/rcwagrp.gd", "../gap/rcwagrp.gi",
-                   "../gap/rcwalib.gi" ], "RCWA", "../../../" );
+                   "../gap/rcwagrp.gd", "../gap/rcwagrp.gi" ],
+                   "RCWA", "../../../" );
 end;
 MakeReadOnlyGlobal( "RCWABuildManual" );
 
@@ -99,5 +99,4 @@ MakeReadOnlyGlobal( "RCWAReadExamples" );
 #############################################################################
 ##
 #E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
 

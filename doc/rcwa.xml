@@ -33,9 +33,9 @@
        Germany
     </Address>
   </Author>
-  <Date>February 28, 2003</Date>
+  <Date>December 12, 2003</Date>
   <Copyright> &copyright; 2003 by Stefan Kohl <P/>
-              After an official release, we adopt the copyright regulations
+              After an official release we adopt the copyright regulations
               of &GAP; as detailed in the copyright notice in the
               &GAP; manual.
   </Copyright>
@@ -54,7 +54,6 @@
 <#Include SYSTEM "intro.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
-<#Include SYSTEM "rcwainfo.xml">
 <#Include SYSTEM "rcwaaux.xml">
 <#Include SYSTEM "examples.xml">
 
@@ -71,3 +70,5 @@
 </Book>
 
 <!-- #################################################################### -->
+
+
