@@ -238,6 +238,9 @@ Bijective integral rcwa mapping with modulus 4
       This will be successful if <A>G</A> is tame. For wild groups only a number
       of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C> the method will
       give information about reasons why <A>g</A> is an element of <A>G</A> or not.
+      The algorithm is probabilistic; in principle it may happen that not the
+      whole kernel is picked up by <C>KernelOfActionOnClassPartition</C>, and that
+      the answer is wrongly negative, although this is very unlikely.
 <Example>
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> u in H;
@@ -324,9 +327,7 @@ gap> List(GeneratorsOfGroup(Image(phi)),Order);
   <ManSection>
     <Meth Name="NiceMonomorphism" Arg="G"/>
     <Returns>
-      the result of <C>IsomorphismPermGroup</C> in case the
-      group is supposed to be finite by <C>Size</C>, and
-      <C>IdentityMapping</C>( <A>G</A> ) otherwise.
+      the result of <C>IsomorphismMatrixGroup</C> in case the group is tame.
     </Returns>
   </ManSection>
 
@@ -559,9 +560,23 @@ gap> pcp := PermutedClassPartition(G);
   The residue class 7(12), The residue class 9(12), The residue class 10(12),
   The residue class 11(12), The residue class 2(24), The residue class 8(24),
   The residue class 14(24), The residue class 20(24) ]
-gap> H := Action(G,pcp);
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Attr Name="ActionOnClassPartition" Arg="G"/>
+    <Description>
+      The action of the tame rcwa group <A>G</A> on
+      <C>PermutedClassPartition( <A>G</A> )</C>.
+<Example>
+<![CDATA[
+gap> H := ActionOnClassPartition(G);
 Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
     14,9) ])
+gap> H = Action(G,pcp);
+true
 gap> Size(H);
 322560
 gap> D := DerivedSubgroup(H);;
@@ -575,28 +590,15 @@ true
   </ManSection>
 
   <ManSection>
-    <Attr Name="PermutationAction" Arg="G"/>
-    <Description>
-      The action of the tame rcwa group <A>G</A> on
-      <C>PermutedClassPartition( <A>G</A> )</C>.
-<Example>
-<![CDATA[
-gap> PermutationAction(G);
-Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
-    14,9) ])
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Attr Name="KernelOfPermutationAction" Arg="G"/>
+    <Attr Name="KernelOfActionOnClassPartition" Arg="G"/>
     <Description>
       The kernel of the action of the tame rcwa group <A>G</A> on
       <C>PermutedClassPartition( <A>G</A> )</C>.
+      The algorithm is probabilistic; in principle it may happen that not the
+      whole kernel is picked up, although this is unlikely.
 <Example>
 <![CDATA[
-gap> K := KernelOfPermutationAction(G);
+gap> K := KernelOfActionOnClassPartition(G);
 <integral rcwa group with 6 generators>
 gap> Modulus(K);
 12
@@ -608,14 +610,16 @@ true
   </ManSection>
 
   <ManSection>
-    <Attr Name="KernelOfPermutationActionHNFMat" Arg="G"/>
+    <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G"/>
     <Description>
       A matrix of vectors in Hermite Normal Form spanning the lattice
       corresponding to the kernel of the action of the tame rcwa group <A>G</A>
       on <C>PermutedClassPartition( <A>G</A> )</C>.
+      The algorithm is probabilistic; in principle it may happen that not the
+      whole kernel is picked up, although this is unlikely.
 <Log>
 <![CDATA[
-gap> L := KernelOfPermutationActionHNFMat(G);
+gap> L := KernelOfActionOnClassPartitionHNFMat(G);
 [ [ 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, 336, -360, 336, -360 ],
   [ 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, 480, -504, 480, -504 ],
   [ 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, 888, -912, 888, -912 ],

@@ -803,7 +803,7 @@ gap> M := Image(phi);
 <matrix group with 2 generators>
 gap> M = NiceObject(G);
 true
-gap> H := PermutationAction(G);
+gap> H := ActionOnClassPartition(G);
 Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
     14,9) ])
 gap> Size(H);
@@ -813,9 +813,9 @@ gap> Size(D);
 161280
 gap> IsPerfect(D);
 true
-gap> K := KernelOfPermutationAction(G);
+gap> K := KernelOfActionOnClassPartition(G);
 <integral rcwa group with 6 generators>
-gap> RankMat(KernelOfPermutationActionHNFMat(G));
+gap> RankMat(KernelOfActionOnClassPartitionHNFMat(G));
 6
 gap> IsAbelian(K);
 true

@@ -121,29 +121,30 @@ DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
 
 #############################################################################
 ##
-#A  PermutationAction( <G> ) . . .  action of <G> on permuted class partition
+#A  ActionOnClassPartition( <G> ) . action of <G> on permuted class partition
 ##
 ##  Action of the tame group <G> on its permuted class partition.
 ##
-DeclareAttribute( "PermutationAction", IsRcwaGroup );
+DeclareAttribute( "ActionOnClassPartition", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  KernelOfPermutationAction( <G> )
+#A  KernelOfActionOnClassPartition( <G> )
 ##
 ##  Kernel of the action of <G> on its permuted class partition.
 ##  The group <G> has to be tame.
 ##
-DeclareAttribute( "KernelOfPermutationAction", IsRcwaGroup );
+DeclareAttribute( "KernelOfActionOnClassPartition", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  KernelOfPermutationActionHNFMat( <G> )
+#A  KernelOfActionOnClassPartitionHNFMat( <G> )
 ##
 ##  Matrix of row vectors spanning the lattice corresponding to
-##  KernelOfPermutationAction( <G> ), in Hermite normal form.
+##  KernelOfActionOnClassPartition( <G> ), in Hermite normal form.
 ##
-DeclareAttribute( "KernelOfPermutationActionHNFMat", IsIntegralRcwaGroup );
+DeclareAttribute( "KernelOfActionOnClassPartitionHNFMat",
+                  IsIntegralRcwaGroup );
 
 #############################################################################
 ##

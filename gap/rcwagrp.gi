@@ -239,7 +239,7 @@ InstallMethod( \in,
     return FamilyObj(g) = FamilyObj(One(G)) and IsBijective(g);
   end );
 
-############################################################################# 
+#############################################################################
 ## 
 #M  IsSubset( RCWA( Integers ), G ) . . . for RCWA(Z) and integral rcwa group
 ## 
@@ -469,7 +469,7 @@ InstallMethod( \in,
         return false;
       fi;
       P := PermutedClassPartition(G);
-      H := PermutationAction(G);
+      H := ActionOnClassPartition(G);
       h := Permutation(g,P);
       if h = fail then
         Info(InfoRCWA,3,"<g> does not act on PermutedClassPartition(<G>).");
@@ -482,8 +482,8 @@ InstallMethod( \in,
       fi;
       Info(InfoRCWA,3,"Checking membership of <g>^Order(<h>) in ",
                       "the kernel of PermutedClassPartition(<G>).");  
-      K := KernelOfPermutationAction(G);
-      L := KernelOfPermutationActionHNFMat(G);
+      K := KernelOfActionOnClassPartition(G);
+      L := KernelOfActionOnClassPartitionHNFMat(G);
       k := g^Order(h); c := Coefficients(k);
       if L = [] then return IsOne(k); fi;
       Info(InfoRCWA,3,"The kernel has rank ",RankMat(L),".");
@@ -794,7 +794,7 @@ InstallMethod( Size,
     TryNextMethod();
   end );
 
-############################################################################# 
+#############################################################################
 ## 
 #M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . . . . . .  for rcwa group
 ## 
@@ -848,7 +848,7 @@ InstallOtherMethod( OrbitsModulo,
     return result;
   end );
 
-############################################################################# 
+#############################################################################
 ## 
 #M  OrbitUnion( <G>, <S> ) . . . . . . . . . . . . . . for rcwa group and set
 ##
@@ -909,17 +909,17 @@ InstallOtherMethod( PermutedClassPartition,
 
 #############################################################################
 ##
-#M  PermutationAction( <G> ) . . . . . . . . . . . . . .  for tame rcwa group
+#M  ActionOnClassPartition( <G> ) . . . . . . . . . . . . for tame rcwa group
 ##
-InstallMethod( PermutationAction,
+InstallMethod( ActionOnClassPartition,
                "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
                G -> Action( G, PermutedClassPartition( G ) ) );
 
 #############################################################################
 ##
-#M  KernelOfPermutationAction( <G> ) . . . . . . for tame integral rcwa group
+#M  KernelOfActionOnClassPartition( <G> ) . . .  for tame integral rcwa group
 ##
-InstallMethod( KernelOfPermutationAction,
+InstallMethod( KernelOfActionOnClassPartition,
                "for tame integral rcwa groups", true,
                [ IsIntegralRcwaGroup ], 0,
 
@@ -930,7 +930,7 @@ InstallMethod( KernelOfPermutationAction,
 
     ModG := Modulus(G);
     P := PermutedClassPartition(G);
-    H := PermutationAction(G);
+    H := ActionOnClassPartition(G);
     g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
     nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
     rank := 0; nr := 1; lasthit := 1; genK := [];
@@ -941,7 +941,7 @@ InstallMethod( KernelOfPermutationAction,
                         i -> c[Residues(P[i])[1] mod Modulus(elK) + 1][2]);
       if RankMat(L) > rank then
         rank := rank + 1; Add(genK,elK); lasthit := nr;
-        Info(InfoRCWA,2,"KernelOfPermutationAction: gen. #",nr,
+        Info(InfoRCWA,2,"KernelOfActionOnClassPartition: gen. #",nr,
                         ", rank = ",rank);
       fi;
       i := Random([1..nrgens]); nr := nr + 1;
@@ -952,22 +952,22 @@ InstallMethod( KernelOfPermutationAction,
     LHNF := erg.normal; T := erg.rowtrans;
     genKHNF := List([1..rank],
                     i->Product(List([1..rank],j->genK[j]^T[i][j])));
-    SetKernelOfPermutationActionHNFMat(G,LHNF);
+    SetKernelOfActionOnClassPartitionHNFMat(G,LHNF);
     if genKHNF <> [] then return Group(genKHNF);
                      else return TrivialSubgroup(G); fi;
   end );
 
 #############################################################################
 ##
-#M  KernelOfPermutationActionHNFMat( <G> ) . . . for tame integral rcwa group
+#M  KernelOfActionOnClassPartitionHNFMat( <G> )  for tame integral rcwa group
 ##
-InstallMethod( KernelOfPermutationActionHNFMat,
+InstallMethod( KernelOfActionOnClassPartitionHNFMat,
                "for tame integral rcwa groups", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
-    KernelOfPermutationAction(G);
-    return KernelOfPermutationActionHNFMat(G);
+    KernelOfActionOnClassPartition(G);
+    return KernelOfActionOnClassPartitionHNFMat(G);
   end );
 
 #############################################################################
