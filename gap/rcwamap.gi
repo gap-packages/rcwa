@@ -2481,7 +2481,7 @@ InstallMethod( IsSurjective,
 
 #############################################################################
 ##
-#F  InjectiveAsMappingFrom( <f ) . . . . . some set on which <f> is injective
+#F  InjectiveAsMappingFrom( <f> ) . . . .  some set on which <f> is injective
 ##
 InstallGlobalFunction( InjectiveAsMappingFrom,
 
