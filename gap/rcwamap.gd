@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with residue class-wise affine mappings.
 ##
@@ -69,6 +72,12 @@ DeclareCategory( "IsRationalBasedRcwaMapping", IsRingElement );
 ##  The category of all modular rcwa mappings.
 ##
 DeclareCategory( "IsModularRcwaMapping", IsRingElement );
+
+#############################################################################
+##
+#F  RcwaMappingsFamily( <R> ) . . . family of rcwa mappings over the ring <R>
+##
+DeclareGlobalFunction( "RcwaMappingsFamily" );
 
 #############################################################################
 ##
@@ -256,9 +265,9 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 
 #############################################################################
 ##
-#O  Modulus( <f> ) . . . . . . . . . . . . .  modulus of the rcwa mapping <f>
+#O  Modulus( <obj> ) . . . . . . . . . . . . modulus of an rcwa mapping, etc.
 ##
-DeclareOperation( "Modulus", [ IsRcwaMapping ] );
+DeclareOperation( "Modulus", [ IsObject ] );
 
 ############################################################################# 
 ## 

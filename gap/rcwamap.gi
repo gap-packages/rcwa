@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains implementations of methods and functions for
 ##  computing with rcwa mappings.
 ##
@@ -97,25 +100,28 @@ BindGlobal( "MODULAR_RCWA_RESIDUE_CACHE", [] );
 
 #############################################################################
 ##
-#F  SemilocalIntegralRcwaMappingsFamily( <primes> )
+#F  SemilocalIntegralRcwaMappingsFamily( <R> )
 ##
-##  Family of <primes>-semilocal integral rcwa mappings.
+##  Family of semilocal integral rcwa mappings.
 ##
 InstallGlobalFunction( SemilocalIntegralRcwaMappingsFamily,
 
-  function ( primes )
+  function ( R )
 
     local  fam, name;
 
-    if   not IsSet(primes) or not ForAll(primes,IsPrimeInt)
-    then Error("usage: SemilocalIntegralRcwaMappingsFamily( <primes> )\n",
-               "for a set of primes <primes>.\n");
+    if   not IsZ_pi( R )
+    then Error("usage: SemilocalIntegralRcwaMappingsFamily( <R> )\n",
+               "where <R> = Z_pi( <pi> ) for a set of primes <pi>.\n");
     fi;
+    fam := First( Z_PI_RCWAMAPPING_FAMILIES,
+                  fam -> UnderlyingRing( fam ) = R );
+    if fam <> fail then return fam; fi;
     name := Concatenation( "RcwaMappingsFamily( ",
-                           String( Z_pi( primes ) )," )" );
+                           String( R ), " )" );
     fam := NewFamily( name, IsSemilocalIntegralRcwaMapping,
                       CanEasilySortElements, CanEasilySortElements );
-    SetUnderlyingRing( fam, Z_pi( primes ) );
+    SetUnderlyingRing( fam, R );
     SetFamilySource( fam, FamilyObj( 1 ) );
     SetFamilyRange ( fam, FamilyObj( 1 ) );
     MakeReadWriteGlobal( "Z_PI_RCWAMAPPING_FAMILIES" );
@@ -127,22 +133,23 @@ InstallGlobalFunction( SemilocalIntegralRcwaMappingsFamily,
 
 #############################################################################
 ##
-#F  ModularRcwaMappingsFamily( <q> ) . . . .  family of modular rcwa mappings
+#F  ModularRcwaMappingsFamily( <R> ) . . . .  family of modular rcwa mappings
 ##
 InstallGlobalFunction( ModularRcwaMappingsFamily,
 
-  function ( q )
+  function ( R )
 
-    local  fam, R, x;
+    local  fam, x;
 
-    if   not IsPrimePowerInt( q )
-    then Error("usage: ModularRcwaMappingsFamily( <q> ) for a ",
-               "prime power <q>.\n");
+    if   not (     IsUnivariatePolynomialRing( R )
+               and IsFiniteFieldPolynomialRing( R ) )
+    then Error("usage: ModularRcwaMappingsFamily( <R> ) for a ",
+               "univariate polynomial ring <R> over a finite field.\n");
     fi;
-    R := PolynomialRing( GF( q ), [ 1 ] );
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
-    if   not HasIndeterminateName( FamilyObj( x ), 1 )
-    then SetIndeterminateName( FamilyObj( x ), 1, "x" ); fi; 
+    fam := First( MODULAR_RCWAMAPPING_FAMILIES,
+                  fam -> UnderlyingRing( fam ) = R );
+    if fam <> fail then return fam; fi;
     fam := NewFamily( Concatenation( "RcwaMappingsFamily( ",
                                       String( R ), " )" ),
                       IsModularRcwaMapping, CanEasilySortElements,
@@ -157,6 +164,26 @@ InstallGlobalFunction( ModularRcwaMappingsFamily,
 
     return fam;
   end );
+
+#############################################################################
+##
+#F  RcwaMappingsFamily( <R> ) . . . family of rcwa mappings over the ring <R>
+##
+InstallGlobalFunction( RcwaMappingsFamily,
+
+  function ( R )
+
+    if   IsIntegers( R ) then return IntegralRcwaMappingsFamily;
+    elif IsZ_pi( R )
+    then return SemilocalIntegralRcwaMappingsFamily(NoninvertiblePrimes(R));
+    elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
+    then return ModularRcwaMappingsFamily( Size( CoefficientsRing( R ) ),
+                IndeterminateNumberOfLaurentPolynomial(Representative(R)) );
+    else Error("Sorry, rcwa mappings over ",R," are not yet implemented.\n");
+    fi;
+  end );
+
+# Implications between types of rcwa mappings.
 
 InstallTrueMethod( IsMapping,     IsRcwaMapping );
 InstallTrueMethod( IsRcwaMapping, IsRationalBasedRcwaMapping );
@@ -176,7 +203,7 @@ InstallGlobalFunction ( AllGFqPolynomialsModDegree,
     local  erg, mon, gflist;
 
     if   d = 0
-    then return [ 0 * One( x ) ];
+    then return [ Zero( x ) ];
     elif     IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ] )
          and IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] )
     then return ShallowCopy( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] );
@@ -402,19 +429,17 @@ InstallGlobalFunction( SemilocalIntegralRcwaMappingNC,
 
   function ( pi, coeffs )
 
-    local fam, Result;
+    local Result, R, fam;
 
     if IsInt(pi) then pi := [pi]; fi;
-    fam := First( Z_PI_RCWAMAPPING_FAMILIES,
-                  f -> NoninvertiblePrimes(UnderlyingRing(f)) = pi );
-    if fam = fail then fam := SemilocalIntegralRcwaMappingsFamily(pi); fi;
+    R   := Z_pi( pi );
+    fam := SemilocalIntegralRcwaMappingsFamily( R );
     Result := Objectify( NewType(    fam,
                                      IsSemilocalIntegralRcwaMapping
                                  and IsRationalBasedRcwaDenseRep ),
                          rec( coeffs  := coeffs,
                               modulus := Length(coeffs) ) );
-    SetSource(Result, UnderlyingRing( fam ) );
-    SetRange (Result, UnderlyingRing( fam ) );
+    SetSource(Result, R ); SetRange (Result, R );
     ReduceSemilocalIntegralRcwaMapping(Result);
 
     return Result;
@@ -466,16 +491,15 @@ InstallGlobalFunction( ModularRcwaMappingNC,
 
   function ( q, modulus, coeffs )
 
-    local  Result, R, fam;
+    local  Result, R, fam, ind;
 
-    fam := First( MODULAR_RCWAMAPPING_FAMILIES,
-                  f -> Size(CoefficientsRing(UnderlyingRing(f))) = q );
-    if fam = fail then fam := ModularRcwaMappingsFamily(q); fi;
+    ind := IndeterminateNumberOfLaurentPolynomial( coeffs[1][1] );
+    R   := PolynomialRing( GF( q ), [ ind ] );
+    fam := ModularRcwaMappingsFamily( R );
     Result := Objectify( NewType( fam, IsModularRcwaMapping
                                    and IsModularRcwaDenseRep ),
                          rec( coeffs  := coeffs,
                               modulus := modulus ) );
-    R := UnderlyingRing( fam );
     SetUnderlyingField( Result, CoefficientsRing( R ) );
     SetSource( Result, R ); SetRange( Result, R );
     ReduceModularRcwaMapping(Result);
@@ -491,23 +515,23 @@ InstallGlobalFunction( ModularRcwaMapping,
 
   function ( q, modulus, coeffs )
 
-    local  d, x, R, P, quiet;
+    local  d, x, P, p, quiet;
 
     quiet := ValueOption("BeQuiet") = true;
     if not (    IsPosInt(q) and IsPrimePowerInt(q) 
             and IsPolynomial(modulus) and IsList(coeffs)
             and ForAll(coeffs, c -> Length(c) = 3) 
-            and ForAll(Flat(coeffs), IsPolynomial))
+            and ForAll(Flat(coeffs), IsPolynomial)
+            and Length(Set(List(Flat(coeffs),
+                                IndeterminateNumberOfLaurentPolynomial)))=1)
     then if quiet then return fail; fi;
          Error("usage: ModularRcwaMapping( <q>, <modulus>, <coeffs> )\n",
                "where <q> is the size of the coefficients field, ",
                "<modulus> is an element of\nits underlying ring and ",
                "<coeffs> is a suitable coefficients list.\n");
     fi;
-    d := DegreeOfLaurentPolynomial(modulus);
-    x := IndeterminateOfLaurentPolynomial(coeffs[1][1]);
-    R := PolynomialRing(GF(q),
-           IndeterminateNumberOfLaurentPolynomial(coeffs[1][1]));
+    d   := DegreeOfLaurentPolynomial(modulus);
+    x   := IndeterminateOfLaurentPolynomial(coeffs[1][1]);
     P := AllGFqPolynomialsModDegree(q,d,x);
     if not ForAll([1..Length(P)],
                   i -> IsZero(   (coeffs[i][1]*P[i] + coeffs[i][2])
@@ -694,45 +718,6 @@ MakeReadOnlyGlobal( "DisplayModularAffineMapping" );
 
 #############################################################################
 ##
-#M  PrintObj( <f> ) . . . . . . . . . . . . . . . . for integral rcwa mapping
-##
-InstallMethod( PrintObj,
-               "for integral rcwa mappings", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
-
-  function ( f )
-    Print( "IntegralRcwaMapping( ", f!.coeffs, " )" );
-  end );
-
-#############################################################################
-##
-#M  PrintObj( <f> ) . . . . . . . . . . . for semilocal integral rcwa mapping
-##
-InstallMethod( PrintObj,
-               "for semilocal integral rcwa mappings",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
-
-  function ( f )
-    Print( "SemilocalIntegralRcwaMapping( ",
-           NoninvertiblePrimes(Source(f)), ", ", f!.coeffs, " )" );
-  end );
-
-#############################################################################
-##
-#M  PrintObj( <f> ) . . . . . . . . . . . . . . . .  for modular rcwa mapping
-##
-InstallMethod( PrintObj,
-               "for modular rcwa mappings",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
-
-  function ( f )
-    Print( "ModularRcwaMapping( ", Size(UnderlyingField(f)),
-           ", ", f!.modulus, ", ", f!.coeffs, " )" );
-  end );
-
-#############################################################################
-##
 #M  String( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
 ##
 InstallMethod( String,
@@ -788,6 +773,45 @@ InstallMethod( String,
                         String(f!.modulus), ", ", String(f!.coeffs), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
     return s;
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <f> ) . . . . . . . . . . . . . . . . for integral rcwa mapping
+##
+InstallMethod( PrintObj,
+               "for integral rcwa mappings", true,
+               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
+
+  function ( f )
+    Print( "IntegralRcwaMapping( ", f!.coeffs, " )" );
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <f> ) . . . . . . . . . . . for semilocal integral rcwa mapping
+##
+InstallMethod( PrintObj,
+               "for semilocal integral rcwa mappings",
+               true, [     IsSemilocalIntegralRcwaMapping 
+                       and IsRationalBasedRcwaDenseRep ], 0,
+
+  function ( f )
+    Print( "SemilocalIntegralRcwaMapping( ",
+           NoninvertiblePrimes(Source(f)), ", ", f!.coeffs, " )" );
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <f> ) . . . . . . . . . . . . . . . .  for modular rcwa mapping
+##
+InstallMethod( PrintObj,
+               "for modular rcwa mappings",
+               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+
+  function ( f )
+    Print( "ModularRcwaMapping( ", Size(UnderlyingField(f)),
+           ", ", f!.modulus, ", ", f!.coeffs, " )" );
   end );
 
 #############################################################################

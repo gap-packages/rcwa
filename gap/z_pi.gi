@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains implementations of methods for computing with the
 ##  semilocalizations Z_pi of the ring of integers.
 ##
@@ -50,6 +53,15 @@ InstallGlobalFunction( Z_pi,
     then Error("Z_pi( <pi> ): <pi> must be a set of primes.\n"); fi;
     return Z_piCons( IsRing, Set( pi ) );
   end );
+
+#############################################################################
+##
+#M  IsZ_pi( <obj> ) . . . . . . . . . . . . . . . . . . . . . . . . . .  Z_pi
+##
+##  Return false, if the converse is not known explicitly.
+##
+InstallOtherMethod( IsZ_pi, "for non-Z_pi", true,
+                    [ IsObject ], 0, ReturnFalse );
 
 #############################################################################
 ##

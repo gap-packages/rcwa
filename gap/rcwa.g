@@ -4,16 +4,24 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains auxiliary functions for the RCWA package.
 ##
 Revision.rcwa_g :=
   "@(#)$Id$";
 
+# Missing `String' method for Integers.
+
+InstallMethod( String, "for Integers", true, [ IsIntegers ], 0,
+               Ints -> "Integers" );
+
 #############################################################################
 ##
 #F  ColorPrompt( b ) . . . . . . . . . . . . . . . . . . . the coloring stuff
 ##
-##  This encloses Frank L¸beck's code for coloring GAP prompts, user input
+##  This encloses Frank L\"ubeck's code for coloring GAP prompts, user input
 ##  and online help texts.
 ##  Coloring can be switched off by setting the option `BlackAndWhite' when
 ##  loading RCWA.
@@ -76,7 +84,7 @@ fi;
 ##  This function builds the manual of the RCWA package in the file formats
 ##  &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank L¸beck and Max Neunhˆffer.
+##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunh˜ffer.
 ##
 BuildRCWAManual := function ( )
 
@@ -86,6 +94,7 @@ BuildRCWAManual := function ( )
   MakeGAPDocDoc( Concatenation( RcwaDir, "doc/" ), "rcwa.xml",
                  [ "../gap/rcwa.g",
                    "../gap/z_pi.gd", "../gap/z_pi.gi",
+                   "../gap/resclass.gd", "../gap/resclass.gi",
                    "../gap/rcwamap.gd", "../gap/rcwamap.gi",
                    "../gap/rcwagrp.gd", "../gap/rcwagrp.gi",
                    "../gap/rcwalib.gi" ], "RCWA", "../../../" );
@@ -103,18 +112,20 @@ MakeReadOnlyGlobal( "BuildRCWAManual" );
 ##  Available tests are:
 ##
 ##  \beginitems
-##    `"z_pi"'     & Arithmetic in the rings $\Z_\pi$.
+##    `"z_pi"'       & Arithmetic in the rings $\Z_\pi$.
 ##
-##    `"integral"' & Computations with integral rcwa mappings and
-##                   integral rcwa groups.
+##    `"resclasses"' & Computations with residue class unions.
 ##
-##    `"semilocal"'& Computations with semilocal integral rcwa
-##                   mappings and semilocal integral rcwa groups.
+##    `"integral"'   & Computations with integral rcwa mappings and
+##                     integral rcwa groups.
 ##
-##    `"modular"'  & Computations with modular rcwa mappings and
-##                   modular rcwa groups.
+##    `"semilocal"'  & Computations with semilocal integral rcwa
+##                     mappings and semilocal integral rcwa groups.
 ##
-##    `"all"'      & All tests.
+##    `"modular"'    & Computations with modular rcwa mappings and
+##                     modular rcwa groups.
+##
+##    `"all"'        & All tests.
 ##  \enditems
 ##
 ##  The default (if no argument is given) is `"all"'.
@@ -126,7 +137,7 @@ RCWATest := function ( arg )
 
   local  alltests, tests, test, dir;
 
-  alltests := [ "z_pi", "integral", "semilocal", "modular" ];
+  alltests := [ "z_pi", "resclasses", "integral", "semilocal", "modular" ];
   if   arg = [] or not IsSubset( alltests, arg )
   then tests := [ "all" ]; else tests := arg; fi;
   if IsString(tests) then tests := [ tests ]; fi;
@@ -135,6 +146,8 @@ RCWATest := function ( arg )
     if   test = "all" then Read( Concatenation( dir, "testall.g" ) );
     elif test = "z_pi"
     then ReadTest( Concatenation( dir, "z_pi.tst" ) );
+    elif test = "resclasses"
+    then ReadTest( Concatenation( dir, "resclass.tst" ) );
     elif test = "integral"
     then ReadTest( Concatenation( dir, "integral.tst" ) );
     elif test = "semilocal"

@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains a ``basic groups library'' for integral rcwa groups.
 ##  Presently, here are only ``trivial representations'' of some groups from
 ##  the library.

@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 ##  This file contains the declaration part for the semilocalizations Z_pi of
 ##  the ring of integers.
 ##
