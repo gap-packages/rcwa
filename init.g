@@ -8,6 +8,8 @@
 #Y  Universit\"at Stuttgart, Germany
 ##
 
+SetInfoLevel( InfoWarning, 0 );
+
 DeclarePackage( "rcwa", "1.0",
   
   function ()
@@ -51,6 +53,8 @@ ReadPkg( "rcwa", "gap/z_pi.gd" );
 ReadPkg( "rcwa", "gap/resclass.gd" );
 ReadPkg( "rcwa", "gap/rcwamap.gd" );
 ReadPkg( "rcwa", "gap/rcwagrp.gd" );
+
+SetInfoLevel( InfoWarning, 1 );
 
 #############################################################################
 ##

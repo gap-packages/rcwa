@@ -10,12 +10,16 @@
 
 # Read the implementation part of the package.
 
+SetInfoLevel( InfoWarning, 0 );
+
 ReadPkg( "rcwa", "gap/rcwaaux.g" );
 ReadPkg( "rcwa", "gap/z_pi.gi" );
 ReadPkg( "rcwa", "gap/resclass.gi" );
 ReadPkg( "rcwa", "gap/rcwamap.gi" );
 ReadPkg( "rcwa", "gap/rcwagrp.gi" );
 ReadPkg( "rcwa", "gap/rcwalib.gi" );
+
+SetInfoLevel( InfoWarning, 1 );
 
 #############################################################################
 ##

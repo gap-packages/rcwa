@@ -1,8 +1,11 @@
-########################################################################################################################################################################
+####################################################################################################
 ##
-##  PkgInfo.g                                                              GAP4 Package `RCWA'                                                               Stefan Kohl
+##  PkgInfo.g                           GAP4 Package `RCWA'                              Stefan Kohl
 ##  
 #H  @(#)$Id$
+##
+#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
+#Y  Universit\"at Stuttgart, Germany
 ##
 ##  Preliminary, not yet to be distributed !!!
 ##
@@ -13,7 +16,7 @@ SetPackageInfo( rec(
 
 PkgName          := "RCWA",
 Version          := "1.0",
-Date             := "10/06/2002",
+Date             := "21/12/2002",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -23,7 +26,12 @@ Persons          := [
                            IsMaintainer  := true,
                            Email         := "kohl@mathematik.uni-stuttgart.de",
                            WWWHome       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/",
-                           PostalAddress := "Stefan Kohl\nMathematisches Institut B, 2. Lehrstuhl\nPfaffenwaldring 57\nUniversität Stuttgart\n70550 Stuttgart\nGermany",
+                           PostalAddress := Concatenation("Stefan Kohl\n",
+                                                          "Institut für Geometrie und Topologie\n",
+                                                          "Pfaffenwaldring 57\n",
+                                                          "Universität Stuttgart\n",
+                                                          "70550 Stuttgart\n",
+                                                          "Germany"),
                            Place         := "Stuttgart / Germany",
                            Institution   := "University of Stuttgart"
                          )
@@ -37,7 +45,8 @@ AbstractHTML     := "This package deals with some kind of infinite permutation g
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.html",
 PackageDoc       := rec(
                          BookName  := "RCWA",
-                         Archive   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0doc-win.zip",
+                         Archive   := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
+                                                    "~kohlsn/rcwa/rcwa-1.0doc-win.zip"),
                          HTMLStart := "doc/manual.html",
                          PDFFile   := "doc/manual.pdf",
                          SixFile   := "doc/manual.six",
@@ -57,6 +66,6 @@ Keywords         := [ "Infinite permutation groups", "Permutation groups over ri
 
 ) );
 
-########################################################################################################################################################################
+####################################################################################################
 ##
-#E  PkgInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  PkgInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
