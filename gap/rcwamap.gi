@@ -2486,14 +2486,16 @@ InstallGlobalFunction( Trajectory,
     local  seq, step;
 
     if not (    IsRcwaMapping(f) and n in Source(f)
-            and (   val in Source(f) and cond = "stop"
-                 or IsPosInt(val) and cond = "length"))
+            and (     cond = "stop"
+                  and (val in Source(f) or IsSubset(Source(f),val))
+                  or  cond = "length" and IsPosInt(val)))
     then Error("for usage of `Trajectory' see manual.\n"); fi;
     seq := [n];
     if cond = "length" then
       for step in [1..val-1] do Add(seq,seq[step]^f); od;
     elif cond = "stop" then
-      repeat Add(seq,seq[Length(seq)]^f); until seq[Length(seq)] = val;
+      if not IsList(val) then val := [val]; fi;
+      repeat Add(seq,seq[Length(seq)]^f); until seq[Length(seq)] in val;
     fi;
     return seq;
   end );
