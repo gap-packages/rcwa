@@ -712,12 +712,15 @@ InstallGlobalFunction( ClassShift,
 
   function ( arg )
 
-    local  coeff, r, m;
+    local  result, coeff, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
     if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
     coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
-    return RcwaMapping(coeff);
+    result := RcwaMapping(coeff);
+    SetIsBijective(result,true);
+    SetOrder(result,infinity); SetIsTame(result,true);
+    return result;
   end );
 
 #############################################################################
@@ -729,13 +732,15 @@ InstallGlobalFunction( ClassReflection,
 
   function ( arg )
 
-    local  coeff, r, m;
+    local  result, coeff, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
     if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
-    return RcwaMapping(coeff);
+    result := RcwaMapping(coeff);
+    SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
+    return result;
   end );
 
 #############################################################################
@@ -747,14 +752,16 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  r1, m1, r2, m2;
+    local  result, r1, m1, r2, m2;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
     if Length(arg) <> 4 or not ForAll(arg,IsInt) then return fail; fi;
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
     if m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then return fail; fi;
-    return RcwaMapping([[ResidueClass(Integers,m1,r1),
-                         ResidueClass(Integers,m2,r2)]]);
+    result := RcwaMapping([[ResidueClass(Integers,m1,r1),
+                            ResidueClass(Integers,m2,r2)]]);
+    SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
+    return result;
   end );
 
 #############################################################################
