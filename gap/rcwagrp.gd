@@ -185,13 +185,47 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 ############################################################################# 
 ##
+#F  ProjectionFromFreeGroupByGenerators( <G> ) . . . .  projection <F> -> <G>
+##
+##  The projection <F> -> <G> from a free group <F> of suitable rank to <G>
+##  which maps the generators of <F> to those of <G> one-by-one.
+##  If generators of <G> have names, these are inherited by the corresponding
+##  generators of <F>.
+##
+DeclareGlobalFunction( "ProjectionFromFreeGroupByGenerators" );
+
+#############################################################################
+##
+#O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
+##
+##  An analogon to 'PreImagesRepresentative' which returns a list of possibly
+##  several representatives if computing these is not harder than computing
+##  just one representative.
+##
+DeclareOperation( "PreImagesRepresentatives",
+                  [ IsGeneralMapping, IsObject ] );
+
+############################################################################# 
+##
 #O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
 ##  Computes the preimage of an element of <G> which maps <src> to <dest>
-##  under the canonical group homomorphism from the free group <F> onto <G>.
+##  under the natural projection from the free group <F> onto <G>.
 ##  The rank of <F> must be equal to the number of generators of <G>.
 ##
 DeclareOperation( "RepresentativeActionPreImage",
+                  [ IsRcwaGroup, IsObject, IsObject,
+                    IsFunction, IsFreeGroup ] );
+
+############################################################################# 
+##
+#O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+##  An analogon to 'RepresentativeActionPreImage' which returns a list of
+##  possibly several representatives if computing these is not harder than
+##  computing just one representative.
+##
+DeclareOperation( "RepresentativesActionPreImage",
                   [ IsRcwaGroup, IsObject, IsObject,
                     IsFunction, IsFreeGroup ] );
 
@@ -305,4 +339,3 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
