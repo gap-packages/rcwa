@@ -3614,6 +3614,7 @@ InstallMethod( FactorizationIntoGenerators,
       Info(InfoRCWA,1,"Jumping back and retrying with divisions ",
                       direction,".");
       g := gbuf; leftfacts := leftfactsbuf; rightfacts := rightfactsbuf;
+      k[Maximum(p,q)] := k[Maximum(p,q)] + 1;
     end;
 
     DivideBy := function ( elm )
@@ -3692,6 +3693,8 @@ InstallMethod( FactorizationIntoGenerators,
 
       repeat
 
+        k := ListWithIdenticalEntries(Maximum(Union(Factors(Multiplier(g)),
+                                                    Factors(Divisor(g)))),1);
         while not IsBalanced(g) do
 
           p := 1; q := 1;
@@ -3706,17 +3709,11 @@ InstallMethod( FactorizationIntoGenerators,
             if p > q then # Additional prime p in multiplier.
               if p in multswitches then RevertDirectionAndJumpBack(); fi;
               Add(divswitches,p); SaveState();
-              DivideBy(PrimeSwitch(p));
-              if Multiplier(g) mod p <> 0 then # p removed from multiplier.
-                DivideBy(ClassTransposition(0,2,1,2*p));
-              fi;
+              DivideBy(PrimeSwitch(p,k[p]));
             else          # Additional prime q in divisor.
               if q in divswitches then RevertDirectionAndJumpBack(); fi;
               Add(multswitches,q); SaveState();
-              DivideBy(PrimeSwitch(q)^-1);
-              if Divisor(g) mod q <> 0 then # q removed from divisor.
-                DivideBy(ClassTransposition(0,2,1,2*q));
-              fi;
+              DivideBy(PrimeSwitch(q,k[q])^-1);
             fi;
           elif 2 in [p,q] then DivideBy(ClassTransposition(0,2,1,4)); fi;
 
