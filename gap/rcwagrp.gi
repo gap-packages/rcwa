@@ -1227,6 +1227,34 @@ MakeReadOnlyGlobal( "SetOfRepresentatives" );
 
 ############################################################################# 
 ##
+#M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> )
+##
+InstallOtherMethod( OrbitOp,
+                    "for tame integral rcwa groups (RCWA)", ReturnTrue,
+                    [ IsIntegralRcwaGroup, IsInt, IsList, IsList,
+                      IsFunction ], 0,
+
+  function ( G, pnt, gens, acts, act )
+
+    local  P, M, where, delta, S, orb;
+
+    if act <> OnPoints then TryNextMethod(); fi;
+    orb := ShortOrbits(G,[pnt],100);
+    if orb <> [] then return orb[1]; fi;
+    if IsFinite(G) or not IsTame(G) then TryNextMethod(); fi;
+    P := RespectedClassPartition(G);
+    M := KernelOfActionOnClassPartitionHNFMat(G);
+    if M <> [] then
+      where := First([1..Length(P)],pos->pnt in P[pos]);
+      delta := List(TransposedMat(M),Gcd)[where];
+      if delta <> 0 then S := ResidueClass(Integers,delta,pnt);
+                    else TryNextMethod(); fi;
+    else TryNextMethod(); fi;
+    return OrbitUnion(G,S);
+  end );
+
+############################################################################# 
+##
 #M  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
 InstallMethod( RepresentativeActionPreImage,
@@ -1397,6 +1425,7 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
