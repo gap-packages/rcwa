@@ -2784,31 +2784,8 @@ InstallMethod( RespectedClassPartition,
                [ IsRcwaMapping ], 0,
 
   function ( sigma )
-
-    local  R, m, moved, fixed, G, pcp, untouched, cls, cl, orb, r, i;
-
-    if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
-    R := Source(sigma); m := Modulus(sigma);
-    moved := MovedPoints(sigma);
-    if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
-    then fixed := Residues(Difference(R,moved));
-    elif moved <> [] then fixed := []; else fixed := [0]; fi;
-    pcp := List(fixed,i->ResidueClass(R,m,i));
-    untouched := Difference(AllResidues(R,m),fixed);
-    G := Group(sigma);
-    while untouched <> [] do
-      i := untouched[1]; RemoveSet(untouched,i);
-      cls := Difference(ResidueClass(R,m,i),Union(pcp));
-      if cls <> [] then
-        for r in Residues(cls) do
-          cl := ResidueClass(R,Modulus(cls),r);
-          orb := Orbit(G,cl); pcp := Union(pcp,orb);
-        od;
-      fi;
-    od;
-    Assert(1,Union(pcp)=R);
-    Assert(2,Action(G,pcp)<>fail);
-    return pcp;
+    if not IsBijective(sigma) then return fail; fi;
+    return RespectedClassPartition( Group( sigma ) );
   end );
 
 #############################################################################
@@ -3087,6 +3064,7 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
