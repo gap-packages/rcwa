@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Groups",
 Version          := "0.1",
-Date             := "10/02/2005",
+Date             := "11/02/2005",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.1",
 ArchiveFormats   := ".tar.gz",
 Persons          := [

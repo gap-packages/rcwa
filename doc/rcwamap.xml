@@ -376,11 +376,11 @@ underlying ring is so. There is also a method for <C>LaTeXObj</C>:
 gap> Print(LaTeXObj(u^-1));
 n \ \longmapsto \
 \begin{cases}
-  \frac{5n}{3}     & \text{if} \ n \equiv 0 \ (3), \\
-  \frac{5n + 1}{3} & \text{if} \ n \equiv 1 \ (3), \\
-  \frac{5n - 1}{9} & \text{if} \ n \equiv 2 \ (9), \\
-  \frac{5n + 2}{9} & \text{if} \ n \equiv 5 \ (9), \\
-  \frac{5n - 4}{9} & \text{if} \ n \equiv 8 \ (9).
+  \frac{5n}{3}     & \text{if} \ n \in 0(3), \\
+  \frac{5n + 1}{3} & \text{if} \ n \in 1(3), \\
+  \frac{5n - 1}{9} & \text{if} \ n \in 2(9), \\
+  \frac{5n + 2}{9} & \text{if} \ n \in 5(9), \\
+  \frac{5n - 4}{9} & \text{if} \ n \in 8(9).
 \end{cases}
 ]]>
 </Example>
@@ -452,6 +452,8 @@ many residue classes of the source of an rcwa mapping can be computed with
 <C>&circum;</C> (the same symbol as used for exponentiation and conjugation).
 The same works for partitions of the source into a finite number of
 residue classes.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -936,14 +938,19 @@ gap> List(fact,MovedPoints);
     The sums of the rows of a transition matrix are always equal to&nbsp;1.
 <Example>
 <![CDATA[
-gap> Display(TransitionMatrix(a,7));
-[ [  1/2,    0,  1/4,    0,    0,  1/4,    0 ],
-  [    0,  1/4,    0,    0,  1/4,  1/2,    0 ],
-  [  1/4,    0,    0,  3/4,    0,    0,    0 ],
-  [    0,  1/2,  1/4,    0,    0,    0,  1/4 ],
-  [    0,  1/4,    0,    0,    0,  1/4,  1/2 ],
-  [  1/4,    0,    0,    0,  3/4,    0,    0 ],
-  [    0,    0,  1/2,  1/4,    0,    0,  1/4 ] ]
+gap> Display(TransitionMatrix(a,5));
+[ [  1/2,  1/4,    0,    0,  1/4 ],
+  [    0,  1/4,    0,  1/4,  1/2 ],
+  [  1/4,    0,    0,  3/4,    0 ],
+  [  1/4,    0,  3/4,    0,    0 ],
+  [    0,  1/2,  1/4,    0,  1/4 ] ]
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> Display(TransitionMatrix(T,19)*One(GF(7)));
  4 . . . . . . . . . 4 . . . . . . . .
  . . 4 . . . . . . . 4 . . . . . . . .
@@ -992,9 +999,6 @@ gap> Display(TransitionMatrix(T,19)*One(GF(7)));
     classes is permitted, also.
 <Example>
 <![CDATA[
-gap> Trajectory(a,8,30,"length");
-[ 8, 12, 18, 27, 20, 30, 45, 34, 51, 38, 57, 43, 32, 48, 72, 108, 162, 243,
-  182, 273, 205, 154, 231, 173, 130, 195, 146, 219, 164, 246 ]
 gap> Trajectory(T,27,[1],"stop");
 [ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
   233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
@@ -1079,8 +1083,8 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
   <Func Name="DecreasingOn" Arg="f" Label="f"/>
   <Returns>
     The union of all residue classes <M>r(m)</M> such that
-    <M>|R/a_{r(m)}R| \gt |R/c_{r(m)R|}</M> resp.
-    <M>|R/a_{r(m)}R| \lt |R/c_{r(m)R|}</M>, where <M>R</M> denotes the
+    <M>|R/a_{r(m)}R| &gt; |R/c_{r(m)}R|</M> resp.
+    <M>|R/a_{r(m)}R| &lt; |R/c_{r(m)}R|</M>, where <M>R</M> denotes the
     source, <M>m</M> the modulus and <M>a_{r(m)}</M>, <M>b_{r(m)}</M>
     and <M>c_{r(m)}</M> the coefficients of&nbsp;<A>f</A> as
     introduced in the definition of an rcwa mapping.
