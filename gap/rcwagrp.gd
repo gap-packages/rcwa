@@ -204,7 +204,7 @@ DeclareGlobalFunction( "ProjectionFromFreeGroupByGenerators" );
 ##
 #O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
 ##
-##  An analogon to 'PreImagesRepresentative' which returns a list of possibly
+##  An analogon to `PreImagesRepresentative' which returns a list of possibly
 ##  several representatives if computing these is not harder than computing
 ##  just one representative.
 ##
@@ -227,7 +227,7 @@ DeclareOperation( "RepresentativeActionPreImage",
 ##
 #O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
-##  An analogon to 'RepresentativeActionPreImage' which returns a list of
+##  An analogon to `RepresentativeActionPreImage' which returns a list of
 ##  possibly several representatives if computing these is not harder than
 ##  computing just one representative.
 ##

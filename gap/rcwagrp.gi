@@ -1448,24 +1448,6 @@ InstallGlobalFunction( ProjectionFromFreeGroupByGenerators,
     return ProjectionByGenerators(F,G);
   end );
 
-SetOfRepresentatives := function ( S, rel, less, pref )
-
-  local  reps, elm, pos;
-
-  if IsEmpty(S) then return []; fi;
-  Sort(S,less); reps := [S[1]]; pos := 1;
-  for elm in S do
-    if rel(elm,reps[pos]) then
-      if pref(elm,reps[pos]) then reps[pos] := elm; fi;
-    else
-      pos := pos + 1;
-      reps[pos] := elm;
-    fi;
-  od;
-  return reps;
-end;
-MakeReadOnlyGlobal( "SetOfRepresentatives" );
-
 #############################################################################
 ##
 #M  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
@@ -1477,16 +1459,34 @@ InstallMethod( RepresentativesActionPreImage,
 
   function ( G, src, dest, act, F )
 
-    local  R, extended, gensG, gensF, orbsrc, orbdest, g,
-           extstep, oldorbsizes, inter, intersrc, interdest,
-           compatible, minlng, shortest;
+    local  SetOfRepresentatives, Extended, R, gensG, gensF, 
+           orbsrc, orbdest, g, extstep, oldorbsizes,
+           inter, intersrc, interdest, compatible;
 
-    extended := function ( orb, g )
+    SetOfRepresentatives := function ( S, rel, less, pref )
 
-      local  eq, lt, shorter;
+      local  reps, elm, pos;
 
-      orb := Union(orb,List(orb,t->[act(t[1],g),
-                                    t[2]*gensF[Position(gensG,g)]]));
+      if IsEmpty(S) then return []; fi;
+      Sort(S,less); reps := [S[1]]; pos := 1;
+      for elm in S do
+        if rel(elm,reps[pos]) then
+          if pref(elm,reps[pos]) then reps[pos] := elm; fi;
+        else
+          pos := pos + 1;
+          reps[pos] := elm;
+        fi;
+      od;
+      return reps;
+    end;
+
+    Extended := function ( orb, gens )
+
+      local  eq, lt, shorter, nextlayer, g;
+
+      nextlayer := List(gens,g->List(orb,t->[act(t[1],g),
+                                     t[2]*gensF[Position(gensG,g)]]));
+      orb := Union(Concatenation([orb],nextlayer));
       eq := function(t1,t2) return t1[1] = t2[1]; end;
       lt := function(t1,t2) return t1[1] < t2[1]; end;
       shorter := function(t1,t2) return Length(t1[2]) < Length(t2[2]); end;
@@ -1494,20 +1494,16 @@ InstallMethod( RepresentativesActionPreImage,
     end;
 
     R := Source(One(G));
-    if     not IsSubset(R,[src,dest])
-       and not (IsSubset(R,src) and IsSubset(R,dest))
-    then TryNextMethod(); fi;
-    if   Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
-    then TryNextMethod(); fi;
     if src in R then src := [src]; fi; if dest in R then dest := [dest]; fi;
+    if   not IsSubset(R,Union(src,dest))
+      or Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
+    then TryNextMethod(); fi;
     if Length(src) <> Length(dest) then return []; fi;
     gensF := GeneratorsAndInverses(F); gensG := GeneratorsAndInverses(G);
     orbsrc := [[src,One(F)]]; orbdest := [[dest,One(F)]]; extstep := 0;
     repeat
       oldorbsizes := [Length(orbsrc),Length(orbdest)];
-      for g in gensG do
-        orbsrc := extended(orbsrc,g); orbdest := extended(orbdest,g);
-      od;
+      orbsrc := Extended(orbsrc,gensG); orbdest := Extended(orbdest,gensG);
       extstep := extstep + 1;
       Info(InfoRCWA,2,"Orbit lengths after extension step ",extstep,": ",
                       [Length(orbsrc),Length(orbdest)]);
@@ -1557,10 +1553,8 @@ InstallOtherMethod( RepresentativeActionOp,
 
     local  F, phi, pre;
 
-     F := FreeGroup(Length(GeneratorsOfGroup(G)));
-     phi := GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
-                                          GeneratorsOfGroup(G));
-     pre := RepresentativeActionPreImage(G,src,dest,act,F);
+     phi := ProjectionFromFreeGroupByGenerators(G);
+     pre := RepresentativeActionPreImage(G,src,dest,act,Source(phi));
      if pre = fail then return fail; fi;
      return pre^phi;
   end );
