@@ -111,6 +111,8 @@ gap> IsInjective(b);
 true
 gap> IsSurjective(b);
 true
+gap> MovedPoints(b);
+Z_[ 2, 3 ] \ [ -1, 0, 1 ]
 gap> c := b^-1;
 <bijective rcwa mapping of Z_[ 2, 3 ] with modulus 3>
 gap> Display(c);

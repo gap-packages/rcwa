@@ -91,6 +91,8 @@ gap> Order(t);
 2
 gap> LaTeXObj(t);
 "n \\ \\mapsto \\ -n"
+gap> MovedPoints(t);
+Integers \ [ 0 ]
 gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> IsBijective(k);
 false
@@ -217,6 +219,8 @@ false
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
+gap> MovedPoints(a);
+Integers \ [ -1, 0, 1 ]
 gap> cl := ResidueClass(Integers,3,1);
 The residue class 1(3)
 gap> im := Image(a,cl);
@@ -326,6 +330,8 @@ gap> TrivialSubgroup(G);
 Trivial integral rcwa group
 gap> orb := Orbit(G,1);
 [ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
+gap> MovedPoints(G);
+<union of 8 residue classes (mod 9)>
 gap> H := Action(G,orb);;
 gap> H = Group([(1,2,3,4,6,8),(3,5,7,6,9,10)]);
 true
