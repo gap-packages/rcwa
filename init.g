@@ -32,6 +32,10 @@ DeclarePackage( "rcwa", "1.0",
     fi;
   end );
 
+# For 4.3 compatibility.
+
+if not IsBound( LoadPackage ) then LoadPackage := RequirePackage; fi;
+
 # Load the GAPDoc package, if this has not been done so far.
 
 if IsList( TestPackageAvailability( "gapdoc", "0.99" ) ) then
