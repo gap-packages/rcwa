@@ -127,16 +127,16 @@ They are listed in alphabetical order.
     <C>FactorizationIntoGenerators(<A>f</A>)</C>
   </Mark>
   <Item>
-    Check whether <A>f</A> is bijective. If not, return <C>fail</C>.
-    Check whether <A>f</A> is tame. If not, give up.
-    Compute a respected partition <C>P</C> of <A>f</A> by
-    <C>RespectedPartition</C>. Compute the permutation <C>g</C>
-    induced by <A>f</A> on <C>P</C>. Factor <C>g</C> into transpositions,
-    and store the corresponding class transpositions in a list <C>facts</C>.
-    Set <C><A>f</A> := <A>f</A>/Product(facts)</C>. Now, <A>f</A> fixes
-    <C>P</C>. Factor <A>f</A> -- one affine partial mapping after the other
-    -- into class shifts and class reflections. Prepend the list of these
-    factors to <C>facts</C>. Return <C>facts</C>.
+    This uses a rather sophisticated method which will perhaps
+    some time be published elsewhere. At the moment, termination is not
+    guaranteed. But if it terminates, the result is certain.
+    The strategy is roughly first to make the mapping class-wise
+    order-preserving and balanced, and then to remove all prime factors
+    from multiplier and divisor one after the other in decreasing order
+    by dividing by appropriate class transpositions.
+    The remaining integral mapping can be factored almost similarly
+    easy as a permutation of a finite set can be factored into
+    transpositions.
   </Item>
 
   <Mark>
