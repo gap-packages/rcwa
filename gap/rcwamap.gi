@@ -2534,24 +2534,34 @@ InstallMethod( Order,
 
   function ( f )
 
-    local  CycLng, CycLngs, LengthLimit, support, n, m, i, warning;
+    local  CycLng, CycLngs, LengthLimit, SizeLimit,
+           support, n, m, i, warning;
 
     if IsOne(f) then return 1; fi;
     if not IsBijective(f) 
     then Error("Order: <rcwa mapping> must be bijective\n"); fi;
-    LengthLimit := 2 * Modulus(f)^2; CycLngs := [];
+    LengthLimit := 2 * Modulus(f)^2;
+    SizeLimit   := Maximum(10^40,Maximum(Flat(Coefficients(f)))^3,
+                           Modulus(f)^10);
+    CycLngs     := [];
     for i in [1..25] do  # 25 trials ...
       repeat n := Random([1..2^27]); until n^f <> n;
       m := n; CycLng := 0;
       repeat
         m := m^f; CycLng := CycLng + 1;
-      until m = n or CycLng > LengthLimit;
+      until m = n or CycLng > LengthLimit or m > SizeLimit;
       if CycLng > LengthLimit then
         warning := Concatenation("Order: the mapping ",String(f),"\nhas a ",
                      "cycle longer than 2 times the square of its modulus,",
                      "\nhence we claim its order is infinity, although the",
                      " validity of this\ncriterium has not been proved so ",
                      "far.");
+        Info(InfoRCWA,1,warning); Info(InfoWarning,2,warning);
+        return infinity;
+      fi;
+      if m > SizeLimit then
+        warning := Concatenation("Order: cycle exceeds growth limit,\n",
+                                 "mapping has presumably infinite order.");
         Info(InfoRCWA,1,warning); Info(InfoWarning,2,warning);
         return infinity;
       fi;
