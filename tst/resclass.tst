@@ -113,6 +113,8 @@ gap> IsSubset(A,D);
 false
 gap> IsSubset(H,ResidueClass(Z_pi([2,3]),16,11));
 true
+gap> Difference([2,4,7,8],A);
+[ 4, 7 ]
 gap> Complement(A);
 Union of the residue classes 0(3) and 1(3)
 gap> Complement(B);
