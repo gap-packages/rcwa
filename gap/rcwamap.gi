@@ -1188,11 +1188,7 @@ InstallMethod( Modulus,
 ##
 InstallMethod( Multiplier,
                "for rcwa mappings", true, [ IsRcwaMapping ], 0,
-               f -> Lcm( List( f!.coeffs, function ( c )
-                                            if   IsZero(c[1])
-                                            then return One(c[1]);
-                                            else return c[1]; fi;
-                                          end ) ) ); 
+               f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
 
 #############################################################################
 ##
@@ -1204,7 +1200,7 @@ InstallMethod( Multiplier,
                        and IsRationalBasedRcwaDenseRep ], 10,
 
   f -> Lcm( List( f!.coeffs,
-                  c -> Maximum( StandardAssociate(Source(f),c[1]), 1 ) ) ) );
+                  c -> StandardAssociate( Source( f ), c[1] ) ) ) );
 
 #############################################################################
 ##
@@ -2397,10 +2393,14 @@ InstallGlobalFunction( CoefficientsOnTrajectory,
 InstallMethod( PrimeSet,
                "for rcwa mappings", true, [ IsRcwaMapping ], 0,
 
-  f -> Filtered( Union(Set(Factors(Source(f),Modulus(f))),
-                       Set(Factors(Source(f),Multiplier(f))),
-                       Set(Factors(Source(f),Divisor(f)))),
-                 x -> IsIrreducibleRingElement( Source( f ), x ) ) );
+  function ( f )
+    if   IsZero(Multiplier(f))
+    then Error("PrimeSet: Multiplier must not be zero.\n"); fi;
+    return Filtered( Union(Set(Factors(Source(f),Modulus(f))),
+                           Set(Factors(Source(f),Multiplier(f))),
+                           Set(Factors(Source(f),Divisor(f)))),
+                     x -> IsIrreducibleRingElement( Source( f ), x ) );
+  end );
 
 #############################################################################
 ##
