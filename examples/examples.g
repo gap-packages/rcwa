@@ -7,6 +7,12 @@
 ##  This file contains the rcwa mappings used in the examples in the manual.
 ##
 
+# First of all a few useful abbreviations.
+
+rc := function(r,m) return ResidueClass(Integers,m,r); end;
+md := f -> [Multiplier(f),Divisor(f)];
+
+
 # Rcwa mappings used in the Collatz problem example.
 
 T := RcwaMapping([[1,0,2],[3,1,2]]);
@@ -107,10 +113,7 @@ SetName(r_2mod,"r");
 # A factorization of a (see above) into two balanced mappings,
 # where one of them is an involution.
 
-Coeff_a2 := List([1..72],r->[1,0,1]);
-Coeff_a2{[2,4..72]} := List([1..36],r->[36,0,1]);
-Coeff_a2[37] := [1,0,36];
-a2 := RcwaMapping(Coeff_a2); a1 := a/a2;
+a2 := RcwaMapping([rc(1,2),rc(36,72)]); a1 := a/a2;
 SetName(a1,"a1"); SetName(a2,"a2");
 
 
@@ -177,6 +180,8 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
 
 
