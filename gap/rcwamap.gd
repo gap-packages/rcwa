@@ -344,6 +344,17 @@ then Graph := ReturnFail; fi;
 ##
 DeclareGlobalFunction( "TransitionMatrix" );
 
+############################################################################# 
+##
+#F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
+#F  TrajectoryModulo( <f>, <n>, <lng> )
+##
+##  Returns the sequence $(n_i), i = 0, \dots, lng-1$ with $n_i := n^(f^i)$
+##  mod <m> as a list. If <m> is not given, it defaults to the modulus
+##  of <f>.
+##
+DeclareGlobalFunction( "TrajectoryModulo" );
+
 #############################################################################
 ##
 #A  PrimeSet( <f> ) . . . . . . . . . . . . prime set of the rcwa mapping <f>

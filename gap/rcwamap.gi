@@ -2286,6 +2286,32 @@ InstallMethod( RcwaGraph,
                  function(i,j) return M[i][j] = 1; end, true);
   end );
 
+############################################################################# 
+##
+#F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
+#F  TrajectoryModulo( <f>, <n>, <lng> )
+##
+InstallGlobalFunction( TrajectoryModulo,
+
+  function ( arg )
+
+    local  usage, f, n, m, lng, seq, i;
+
+    usage := Concatenation("usage: TrajectoryModulo( <f>, <n>, [ <m> ], ",
+                           "<lng> ), where <f> is an rcwa mapping, <n> and ",
+                           "<m> are elements of its source and <lng> is a ",
+                           "positive integer.\n");
+    if not Length(arg) in [3,4] then Error(usage); fi;
+    f := arg[1]; n := arg[2];
+    if   Length(arg) = 3 then m := Modulus(f); lng := arg[3];
+                         else m := arg[3];     lng := arg[4]; fi;
+    seq := [];
+    for i in [1..lng] do
+      Add(seq,n mod m); n := n^f;
+    od;
+    return seq;
+  end );
+
 #############################################################################
 ##
 #M  PrimeSet( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
