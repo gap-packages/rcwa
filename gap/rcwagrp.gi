@@ -124,6 +124,7 @@ InstallMethod( RCWACons,
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
     SetCentre( G, TrivialIntegralRcwaGroup );
+    SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     SetIsPerfectGroup( G, false );
     SetIsSimpleGroup( G, false );
@@ -160,6 +161,7 @@ InstallMethod( RCWACons,
     SetIsFinite( G, false ); SetSize( G, infinity );
   # SetIsFinitelyGeneratedGroup( G, false ); ???
     SetCentre( G, Group( id ) );
+    SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
     SetName( G, Concatenation( "RCWA(", Name(R), ")" ) );
@@ -195,6 +197,7 @@ InstallMethod( RCWACons,
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
     SetCentre( G, Group( id ) );
+    SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
     SetName( G, Concatenation( "RCWA(GF(", String(q), ")[",
@@ -1895,6 +1898,12 @@ InstallMethod( IsPerfect,
   function ( G )
     if IsTrivial(G) then return true; fi;
     if IsAbelian(G) then return false; fi;
+    if IsIntegralRcwaGroup(G) then
+      if   ForAny(GeneratorsOfGroup(G),g->Sign(g)<>1)
+        or (     IsClassWiseOrderPreserving(G)
+             and ForAny(GeneratorsOfGroup(G),g->Determinant(g)<>0))
+      then return false; fi;
+    fi;
     if not IsTame(G) then TryNextMethod(); fi;
     return IsPerfect(ActionOnClassPartition(G));
   end );
