@@ -1555,15 +1555,7 @@ InstallMethod( Multpk,
     local  m, c, res;
 
     m := Modulus(f); c := Coefficients(f);
-    if k > 0
-    then res := Filtered([0..m-1],r ->     c[r+1][1] mod p^k=0
-                                       and c[r+1][1] mod p^(k+1)<>0);
-    elif k < 0
-    then res := Filtered([0..m-1],r ->     c[r+1][3] mod p^(-k)=0
-                                       and c[r+1][3] mod p^(-k+1)<>0);
-    else res := Filtered([0..m-1],r ->     c[r+1][1] mod p<>0
-                                       and c[r+1][3] mod p<>0);
-    fi;
+    res := Filtered([0..m-1],r->PadicValue(c[r+1][1]/c[r+1][3],p)=k);
     return ResidueClassUnion(Integers,m,res);
   end );
 
