@@ -275,6 +275,26 @@ ReduceModularRcwaMapping := function ( f )
 end;
 MakeReadOnlyGlobal( "ReduceModularRcwaMapping" );
 
+CoeffsOfIntegralRcwaMappingByClassCycles := function ( cycles )
+
+  local  m, c, cyc, pre, im, pos, res, r1, r2, m1, m2, r;
+
+  m := Lcm(List(Union(cycles),Modulus));
+  c := List([1..m],r->[1,0,1]);
+  for cyc in cycles do
+    if Length(cyc) <= 1 then continue; fi;
+    for pos in [1..Length(cyc)] do
+      pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
+      r1 := Residues(pre)[1]; m1 := Modulus(pre);
+      r2 := Residues(im )[1]; m2 := Modulus(im);
+      res := Filtered([0..m-1],r->r mod m1 = r1);
+      for r in res do c[r+1] := [m2,m1*r2-m2*r1,m1]; od;
+    od;
+  od;
+  return c;
+end;
+MakeReadOnlyGlobal( "CoeffsOfIntegralRcwaMappingByClassCycles" );
+
 #############################################################################
 ##
 #F  IntegralRcwaMappingNC( <coeffs> )
@@ -287,7 +307,7 @@ InstallGlobalFunction( IntegralRcwaMappingNC,
 
     local coeffs, perm, range, val, min, max, m, n, r, pts, Result;
 
-    if   Length(arg) = 1 
+    if   Length(arg) = 1 and IsList(arg[1][1])
     then coeffs := arg[1];
     elif IsPerm(arg[1]) and IsRange(arg[2])
     then perm := arg[1]; range := arg[2];
@@ -297,7 +317,8 @@ InstallGlobalFunction( IntegralRcwaMappingNC,
            r := n mod m + 1;
            coeffs[r] := [1, n^perm - n, 1];
          od;
-    else m := arg[1]; val := Set(arg[2]); coeffs := [];
+    elif IsInt(arg[1])
+    then m := arg[1]; val := Set(arg[2]); coeffs := [];
          for r in [1..m] do
            pts := Filtered(val, pt -> pt[1] mod m = r - 1);
            coeffs[r] := [  pts[1][2] - pts[2][2],
@@ -305,6 +326,7 @@ InstallGlobalFunction( IntegralRcwaMappingNC,
                          - pts[1][1] * (pts[1][2] - pts[2][2]),
                            pts[1][1] - pts[2][1]];
          od;
+    else coeffs := CoeffsOfIntegralRcwaMappingByClassCycles(arg);
     fi;
     Result := Objectify( NewType(    IntegralRcwaMappingsFamily,
                                      IsIntegralRcwaMapping
@@ -323,6 +345,7 @@ InstallGlobalFunction( IntegralRcwaMappingNC,
 #F  IntegralRcwaMapping( <coeffs> )
 #F  IntegralRcwaMapping( <perm>, <range> )
 #F  IntegralRcwaMapping( <modulus>, <val> )
+#F  IntegralRcwaMapping( <class cycle> [, <class cycle> [, ... ] ] )
 ##
 InstallGlobalFunction( IntegralRcwaMapping,
 
@@ -332,7 +355,8 @@ InstallGlobalFunction( IntegralRcwaMapping,
           quiet;
 
     quiet := ValueOption("BeQuiet") = true;
-    if   Length(arg) = 1 
+    if       Length(arg) = 1 and IsList(arg[1])
+         and IsList(arg[1][1]) and IsInt(arg[1][1][1])
     then coeffs := arg[1];
          if not (IsList(coeffs) and ForAll(Flat(coeffs),IsInt)
                  and ForAll(coeffs, IsList)
@@ -367,6 +391,15 @@ InstallGlobalFunction( IntegralRcwaMapping,
                    "with <n> mod ",m," = ",r - 1,".\n");
         fi;
       od;
+    elif IsList(arg[1]) and IsUnionOfResidueClasses(arg[1][1])
+    then if not (    ForAll(arg,IsList)
+                 and ForAll(Flat(arg),S->    IsUnionOfResidueClasses(S)
+                                         and Length(Residues(S))=1))
+            or  ForAny(Combinations(Flat(arg),2),
+                       s->Intersection(s[1],s[2]) <> [])
+         then Error("there is no integral rcwa mapping having the class ",
+                    "cycles ",arg,".\n"); 
+         fi;
     else if quiet then return fail; fi;
          Error("see RCWA Manual for usage of IntegralRcwaMapping.\n");
     fi;
@@ -511,6 +544,7 @@ InstallGlobalFunction( ModularRcwaMapping,
 #F  RcwaMapping( <coeffs> )
 #F  RcwaMapping( <perm>, <range> )
 #F  RcwaMapping( <modulus>, <val> )
+#F  RcwaMapping( <class cycle> [, <class cycle> [, ... ] ] )
 #F  RcwaMapping( <pi>, <coeffs> )
 #F  RcwaMapping( <q>, <modulus>, <coeffs> )
 ##
@@ -518,10 +552,12 @@ InstallGlobalFunction( RcwaMapping,
 
   function ( arg )
 
-    if    Length( arg ) = 2 and ( IsInt( arg[1] ) or IsList( arg[1] ) )
+    if   arg = []
+    then Error("see RCWA manual for usage of RcwaMapping.\n"); fi;
+    if   Length( arg ) = 2 and ( IsInt( arg[1] ) or IsList( arg[1] ) )
       and IsList( arg[2] ) and Set( List( arg[2], Length ) ) = [ 3 ]
     then return CallFuncList( SemilocalIntegralRcwaMapping, arg );
-    elif Length( arg ) = 3
+    elif Length( arg ) = 3 and IsPrimePowerInt( arg[1] )
     then return CallFuncList( ModularRcwaMapping, arg );
     else return CallFuncList( IntegralRcwaMapping, arg );
     fi;
@@ -2891,6 +2927,8 @@ InstallMethod( Restriction,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
 
 
