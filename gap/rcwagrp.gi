@@ -1235,6 +1235,102 @@ InstallOtherMethod( RepresentativeActionOp,
   end );
 
 #############################################################################
+##
+#M  RepresentativeActionOp( RCWA( Integers ), <P1>, <P2>, <act> ) 
+##
+##  An rcwa mapping <g> which maps <P1> to <P2> and is
+##
+##  - affine on the elements of <P1>, if the option `IsTame' is not set,
+##  - tame, if the option `IsTame' is set.
+##
+##  The arguments <P1> and <P2> must be partitions of $\Z$ into equally many
+##  disjoint residue classes, and the argument <act> is ignored.
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and two class partitions (RCWA)", true,
+                    [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
+
+  function ( RCWA_Z, P1, P2, act )
+
+    local  SplitClass, g, tame, m, c, P, Phat, Buckets, b,
+           k, ri, mi, rtildei, mtildei, ar, br, cr, r, i, j;
+
+    SplitClass := function ( i, j )
+
+      local  mods, pos, m, r, mtilde, r1, r2, j2, pos2;
+
+      mods := List(Buckets[i][j],Modulus);
+      m    := Minimum(mods);
+      pos  := Position(mods,m);
+      r    := Residues(Buckets[i][j][pos])[1];
+      mtilde := 2*m; r1 := r; r2 := r + m;
+      Buckets[i][j] := Union(Difference(Buckets[i][j],[Buckets[i][j][pos]]),
+                             [ResidueClass(Integers,mtilde,r1),
+                              ResidueClass(Integers,mtilde,r2)]);
+      j2  := Filtered([1..k],
+                      j->Position(Buckets[3-i][j],
+                                  ResidueClass(Integers,m,r))<>fail)[1];
+      pos2 := Position(Buckets[3-i][j2],ResidueClass(Integers,m,r));
+      Buckets[3-i][j2] := Union(Difference( Buckets[3-i][j2],
+                                           [Buckets[3-i][j2][pos2]]),
+                                [ResidueClass(Integers,mtilde,r1),
+                                 ResidueClass(Integers,mtilde,r2)]);
+    end;
+
+    if   ValueOption("NC") <> true
+      and (       Length(P1) <> Length(P2)
+            or not ForAll(Union(P1,P2),IsUnionOfResidueClasses)
+            or not ForAll(Union(P1,P2),cl->Length(Residues(cl)) = 1)
+            or Union(P1) <> Integers or Union(P2) <> Integers
+            or Sum(List(P1,Density)) <> 1 or Sum(List(P2,Density)) <> 1 )
+    then TryNextMethod(); fi;
+
+    k    := Length(P1);
+    tame := ValueOption("IsTame") = true;
+    if not tame then
+      m := Lcm(List(P1,Modulus));
+      c := List([0..m-1],r->[1,0,1]);
+      for i in [1..k] do
+        mi      := Modulus(P1[i]); ri      := Residues(P1[i])[1];
+        mtildei := Modulus(P2[i]); rtildei := Residues(P2[i])[1];
+        ar := mtildei; br := mi*rtildei-mtildei*ri; cr := mi;
+        r := ri + 1;
+        while r <= m do
+          c[r] := [ar,br,cr];
+          r := r + mi;
+        od;
+      od;
+      return RcwaMapping(c);
+    else
+      P       := [P1,P2];
+      m       := Lcm(List(Union(P1,P2),Modulus));
+      Phat    := List([0..m-1],r->ResidueClass(Integers,m,r));
+      Buckets := List([1..2],i->List([1..k],j->Filtered(Phat,
+                 cl->Residues(cl)[1] mod Modulus(P[i][j]) =
+                 Residues(P[i][j])[1])));
+      repeat
+        for i in [1..k] do
+          b := [Buckets[1][i],Buckets[2][i]];
+          if Length(b[2]) > Length(b[1]) then
+            for j in [1..Length(b[2])-Length(b[1])] do
+              SplitClass(1,i);
+            od;
+          elif Length(b[1]) > Length(b[2]) then
+            for j in [1..Length(b[1])-Length(b[2])] do
+              SplitClass(2,i);
+            od;
+          fi;
+        od;
+      until ForAll([1..k],i->Length(Buckets[1][i]) = Length(Buckets[2][i]));
+      g := RepresentativeAction(RCWA_Z,Flat(Buckets[1]),
+                                       Flat(Buckets[2]):NC,IsTame:=false);
+      SetIsTame(g,true);
+      SetRespectedClassPartition(g,Set(Flat(Buckets[1])));
+      return g;
+    fi;
+  end );
+
+#############################################################################
 ## 
 #M  OrbitUnion( <G>, <S> ) . . . . . . . . . . . . . . for rcwa group and set
 ##
@@ -1637,6 +1733,20 @@ InstallMethod( PreImagesRepresentative,
     shortest := Filtered(candidates,cand->Length(cand)=minlng)[1];
     return shortest;
   end );
+
+#############################################################################
+##
+#M  Factorization( <G>, <g> ) . . . . . . .  for rcwa mappings in rcwa groups
+##
+if IsOperation( Factorization ) then  # In GAP 4.5 or higher.
+  InstallMethod( Factorization,
+                 "for rcwa mappings in rcwa groups (RCWA)", true,
+                 [ IsRcwaGroup, IsRcwaMapping ], 0,
+
+    function ( G, g )
+      return PreImagesRepresentative(EpimorphismFromFreeGroup(G),g);
+    end );
+fi;
 
 #############################################################################
 ##
