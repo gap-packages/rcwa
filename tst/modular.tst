@@ -228,6 +228,11 @@ gap> t := RcwaMapping(2,One(R),[[1,x,1]]*One(R));
 Rcwa mapping of GF(2)[x]: P -> P + x
 gap> Order(t);
 2
+gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ], 
+  [ x^4+x^2+Z(2)^0, x^4+x, x^4+Z(2)^0 ], 
+  [ x^6+x^5+x^3+x+Z(2)^0, x^6+x^4+x^3+x^2, x^6+x^4+x^2+Z(2)^0 ], 
+  [ x^8+x^4+Z(2)^0, x^7+x^6, x^8+Z(2)^0 ] ]
 gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;

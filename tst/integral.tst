@@ -728,6 +728,29 @@ gap> Display(TransitionMatrix(ab,20)*One(GF(2)));
  1 . . . . . 1 . . 1 1 . . . . . 1 1 . .
  1 1 . . . . . . . . 1 1 1 . . . . . 1 .
  . . 1 . . . . 1 . . . . . 1 1 . . 1 . 1
+gap> sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],
+>                           [2, 0,1],[1,0,1],[1,0,1],
+>                           [1,-3,3],[3,3,2],[1,0,1],
+>                           [1, 0,1],[1,0,1],[1,0,1],
+>                           [2, 0,1],[3,3,2],[1,0,1],
+>                           [1, 0,1],[1,0,1],[1,0,1]]);;
+gap> sigma1 := StandardConjugate(sigma2);;
+gap> sigma := sigma1*sigma2;
+<integral rcwa mapping with modulus 36>
+gap> fact := FactorizationOnConnectedComponents(sigma,36);;
+gap> List(fact,MovedPoints);
+[ Union of the residue classes 33(36), 34(36) and 35(36), 
+  Union of the residue classes 9(36), 10(36) and 11(36), 
+  <union of 23 residue classes (mod 36), +0/-2 elements> ]
+gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
+[ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
+gap> List(CoefficientsOnTrajectory(sigma,37,37,"stop",true),
+>         c->(c[1]*37+c[2])/c[3]){[1..23]} = Cycle(sigma,37);
+true
+gap> CoefficientsOnTrajectory(a,8,10,"length",true);
+[ [ 1, 0, 1 ], [ 3, 0, 2 ], [ 9, 0, 4 ], [ 27, 0, 8 ], [ 81, -8, 32 ], 
+  [ 243, -24, 64 ], [ 729, -72, 128 ], [ 2187, -88, 512 ], 
+  [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
 gap> C2 := CyclicGroup(IsIntegralRcwaGroup,2);
 <integral rcwa group with 1 generator>
 gap> IdGroup(C2);
