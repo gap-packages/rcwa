@@ -255,6 +255,13 @@ DeclareGlobalFunction( "ClassTransposition" );
 
 #############################################################################
 ##
+#F  PrimeSwitch( <p> ) .  rcwa mapping of Z with multiplier <p> and divisor 2
+#F  PrimeSwitch( <p>, <k> )
+##
+DeclareGlobalFunction( "PrimeSwitch" );
+
+#############################################################################
+##
 #A  LaTeXName( obj ) . . . . . . . . . . . . .  LaTeX string for object <obj>
 ##
 DeclareAttribute( "LaTeXName", IsObject );
@@ -268,12 +275,6 @@ DeclareAttribute( "LaTeXName", IsObject );
 ##  class reflections and class transpositions.
 ##
 DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
-
-#############################################################################
-##
-#F  PrimeSwitch( <p> ) .  rcwa mapping of Z with multiplier <p> and divisor 2
-##
-DeclareGlobalFunction( "PrimeSwitch" );
 
 #############################################################################
 ##

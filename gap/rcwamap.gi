@@ -800,25 +800,29 @@ InstallGlobalFunction( ClassTransposition,
 #############################################################################
 ##
 #F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
+#F  PrimeSwitch( <p>, <k> )
 ##
 InstallGlobalFunction( PrimeSwitch,
 
-  function ( p )
+  function ( arg )
 
-    local  result, facts;
+    local  p, k, result, facts, kstr;
 
-    if   not IsPosInt(p) or not IsPrimeInt(p)
+    if not Length(arg) in [1,2] then return fail; fi;
+    p := arg[1]; if Length(arg) = 2 then k := arg[2]; else k := 1; fi;
+    if   not IsPosInt(p) or not IsPrimeInt(p) or not IsPosInt(k)
     then return fail; fi;
-    facts := [ ClassTransposition(1,2*p,0,8),
-               ClassTransposition(2*p-1,2*p,4,8),
-               ClassTransposition(0,4,1,2*p),
-               ClassTransposition(2,4,2*p-1,2*p),
-               ClassTransposition(2,2*p,1,4*p),
-               ClassTransposition(4,2*p,2*p+1,4*p) ];
+    facts := [ ClassTransposition(k,2*k*p,0,8*k),
+               ClassTransposition(2*k*p-k,2*k*p,4*k,8*k),
+               ClassTransposition(0,4*k,k,2*k*p),
+               ClassTransposition(2*k,4*k,2*k*p-k,2*k*p),
+               ClassTransposition(2*k,2*k*p,k,4*k*p),
+               ClassTransposition(4*k,2*k*p,2*k*p+k,4*k*p) ];
     result := Product(facts);
     SetIsTame(result,false); SetOrder(result,infinity);
-    SetName(result,Concatenation("PrimeSwitch(",String(p),")"));
-    SetLaTeXName(result,Concatenation("\\sigma_{",String(p),"}"));
+    if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
+    SetName(result,Concatenation("PrimeSwitch(",String(p),kstr,")"));
+    SetLaTeXName(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
     SetFactorizationIntoGenerators(result,facts);
     return result;
   end );
