@@ -532,6 +532,35 @@ true
   </ManSection>
 
   <ManSection>
+    <Attr Name="SetOnWhichMappingIsOrderReversing" Arg="f"/>
+    <Attr Name="SetOnWhichMappingIsConstant" Arg="f"/>
+    <Attr Name="SetOnWhichMappingIsOrderPreserving" Arg="f"/>
+    <Returns>
+      The union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
+      which the rcwa mapping <A>f</A> is class-wise order-reversing,
+      class-wise constant resp. class-wise order-preserving.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> SetOnWhichMappingIsOrderPreserving(T);
+Integers
+gap> SetOnWhichMappingIsOrderPreserving(u);
+Integers
+gap> SetOnWhichMappingIsOrderReversing(t);
+Integers
+gap> SetOnWhichMappingIsOrderPreserving(t);
+[  ]
+gap> SetOnWhichMappingIsConstant(RcwaMapping([[2,0,1],[0,4,1]]));
+1(2)
+gap> SetOnWhichMappingIsOrderPreserving(RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
+0(2)
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="Determinant" Arg="f"/>
     <Returns> the determinant of the rcwa mapping <A>f</A>. </Returns>
     <Description>
@@ -734,8 +763,7 @@ gap> l;
   <ManSection>
     <Meth Name="MovedPoints" Arg="f"/>
     <Returns>
-      the set of moved points (support) of the bijective
-      rcwa mapping <A>f</A>.
+      the set of moved points (support) of the rcwa mapping <A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -1483,6 +1511,7 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
