@@ -955,6 +955,35 @@ gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 <tame rcwa mapping of Z with modulus 24>
 gap> P1^elmt = P2;
 true
+gap> RCWAReadExamples();
+gap> List([-2..2],k->Trace(a^k));
+[ 0, 0, 0, 0, 0 ]
+gap> List([-2..2],k->Trace(b^k));
+[ -2, -1, 0, 1, 2 ]
+gap> Trace(a^g);
+0
+gap> Trace(b^g);
+1
+gap> Trace(b^u);
+1
+gap> Trace(a^kappa);
+0
+gap> Trace(b^kappa);
+1
+gap> Trace(b^kappatilde);
+1
+gap> Trace(b^2*b^kappatilde*g^-1);
+3
+gap> Trace(sigma);
+0
+gap> Trace(sigma*b^-1);
+-1
+gap> Trace(sigma*b^-1*nu);
+0
+gap> Trace(sigma*b^-1*nu^2);
+1
+gap> Trace(PseudoRandom(Group(g,h)));
+0
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
