@@ -9,7 +9,7 @@
 ##
 ##  mktest [-f] [-i] [-o] [-d] [-c]
 ##
-##  This procedure runs an automatic test of all examples given in the CRYST
+##  This procedure runs an automatic test of all examples given in the RCWA
 ##  documentation files.
 ##
 ##  More precisely: Let 'file.tex' be one of these files. Then the test
