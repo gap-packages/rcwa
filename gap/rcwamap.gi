@@ -127,27 +127,23 @@ InstallGlobalFunction( SemilocalIntegralRcwaMappingsFamily,
 ##
 InstallGlobalFunction( ModularRcwaMappingsFamily,
 
-  function ( R )
+  function ( q )
 
-    local  fam, q, x, varname, ind;
+    local  fam, R, x, IndName;
 
-    if   not IsPolynomialRing(R) or not IsField(CoefficientsRing(R))
-      or not IsFinite(CoefficientsRing(R))
-      or Length(IndeterminatesOfPolynomialRing(R)) > 1
-    then Error("usage: ModularRcwaMappingsFamily( <R> )\n for a ",
-               "univariate polynomial ring <R> over a finite field.\n");
+    if   not IsPrimePowerInt( q )
+    then Error("usage: ModularRcwaMappingsFamily( <q> ) for a ",
+               "prime power <q>.\n");
     fi;
-    q := Size(CoefficientsRing(R));
-    x := IndeterminatesOfPolynomialRing(R)[1];
-    ind := IndeterminateNumberOfLaurentPolynomial(x);
-    if   HasIndeterminateName(FamilyObj(x),ind) 
-    then varname := IndeterminateName(FamilyObj(x),ind); 
-    else varname := "x"; fi;
+    R := PolynomialRing( GF( q ), [ 1 ] );
+    x := IndeterminatesOfPolynomialRing( R )[ 1 ];
+    if   not HasIndeterminateName( FamilyObj( x ), 1 )
+    then SetIndeterminateName( FamilyObj( x ), 1, "x" ); fi; 
+    IndName := IndeterminateName( FamilyObj( x ), 1 ); 
     fam := NewFamily( Concatenation( "ModularRcwaMappingsFamily( GF( ",
-                                     String(q), " )[ ", varname, " ] )" ),
+                                     String(q), " )[ ", IndName, " ] )" ),
                       IsModularRcwaMapping, CanEasilySortElements,
                       CanEasilySortElements );
-    R := PolynomialRing(GF(q),[IndeterminateNumberOfLaurentPolynomial(x)]);
     SetUnderlyingIndeterminate( fam, x );
     SetUnderlyingRing( fam, R );
     SetFamilySource( fam, FamilyObj( x ) );
@@ -259,7 +255,7 @@ ReduceModularRcwaMapping := function ( f )
            r   := AllGFqPolynomialsModDegree(q,deg,x);
            c   := csorted{[1, 1 + numresd .. 1 + (numresred-1) * numresd]};
       fi;
-    until m <> mred or m mod d <> Zero(m);
+    until m <> mred or not IsZero(m mod d);
   od;
   f!.coeffs  := Immutable(c);
   f!.modulus := m;
@@ -451,9 +447,7 @@ InstallGlobalFunction( ModularRcwaMappingNC,
 
     fam := First( MODULAR_RCWAMAPPING_FAMILIES,
                   f -> Size(CoefficientsRing(UnderlyingRing(f))) = q );
-    if   fam = fail
-    then fam := ModularRcwaMappingsFamily(PolynomialRing(GF(q),1));
-    fi;
+    if fam = fail then fam := ModularRcwaMappingsFamily(q); fi;
     Result := Objectify( NewType( fam, IsModularRcwaMapping
                                    and IsModularRcwaDenseRep ),
                          rec( coeffs  := coeffs,
@@ -482,10 +476,10 @@ InstallGlobalFunction( ModularRcwaMapping,
             and ForAll(coeffs, c -> Length(c) = 3) 
             and ForAll(Flat(coeffs), IsPolynomial))
     then if quiet then return fail; fi;
-         Error("usage: ModularRcwaMapping( <fam>, <modulus>, <coeffs> )\n",
-               "where <fam> is a modular rcwa mappings family, <modulus> ",
-               "is an element of\nits underlying ring and <coeffs> is a ",
-               "suitable coefficients list.\n");
+         Error("usage: ModularRcwaMapping( <q>, <modulus>, <coeffs> )\n",
+               "where <q> is the size of the coefficients field, ",
+               "<modulus> is an element of\nits underlying ring and ",
+               "<coeffs> is a suitable coefficients list.\n");
     fi;
     d := DegreeOfLaurentPolynomial(modulus);
     x := IndeterminateOfLaurentPolynomial(coeffs[1][1]);
@@ -493,8 +487,8 @@ InstallGlobalFunction( ModularRcwaMapping,
            IndeterminateNumberOfLaurentPolynomial(coeffs[1][1]));
     P := AllGFqPolynomialsModDegree(q,d,x);
     if not ForAll([1..Length(P)],
-                  i ->   (coeffs[i][1]*P[i] + coeffs[i][2]) mod coeffs[i][3]
-                       = Zero(R))
+                  i -> IsZero(   (coeffs[i][1]*P[i] + coeffs[i][2])
+                              mod coeffs[i][3]))
     then Error("the coefficients ",coeffs," do not define a proper ",
                "modular rcwa mapping.\n");
     fi;
@@ -527,6 +521,45 @@ IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
 end;
 MakeReadOnlyGlobal( "IdChars" );
+
+#############################################################################
+##
+#M  String( <f> ) . . . . . for univariate polynomial ring over finite field
+##
+InstallMethod( String,
+               "for univariate polynomial rings over finite fields",
+               true, [ IsUnivariatePolynomialRing ], 0,
+
+  function ( R )
+
+    local  F, q, x, IndNr, IndName;
+
+    F := CoefficientsRing(R); q := Size(F);
+    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
+    x := IndeterminatesOfPolynomialRing(R)[1];
+    IndNr := IndeterminateNumberOfUnivariateLaurentPolynomial(x);
+    IndName := IndeterminateName(FamilyObj(x),IndNr);
+    if   IndName = fail
+    then IndName := Concatenation("x_",String(IndNr)); fi;
+    return Concatenation( "GF(", String(q), ")[", IndName, "]" );
+  end );
+
+#############################################################################
+##
+#M  ViewObj( <f> ) . . . . . for univariate polynomial ring over finite field
+##
+InstallMethod( ViewObj,
+               "for univariate polynomial rings over finite fields",
+               true, [ IsUnivariatePolynomialRing ], 100,
+
+  function ( R )
+
+    local  F, q;
+
+    F := CoefficientsRing(R); q := Size(F);
+    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
+    Print(String(R));
+  end );
 
 DisplayIntegralAffineMapping := function ( t )
 
@@ -596,34 +629,39 @@ MakeReadOnlyGlobal( "DisplaySemilocalIntegralAffineMapping" );
 
 DisplayModularAffineMapping := function ( t, maxlng )
 
-  local  append, str, a, b, c, one, zero;
+  local  append, factorstr, str, a, b, c, one, zero, x;
 
-  append := function ( arg ) 
+  append := function ( arg )
     str := CallFuncList(Concatenation,
                         Concatenation([str],List(arg,String)));
-  end; 
+  end;
 
-  a := t[1]; b := t[2]; c := t[3]; one := One(a); zero := Zero(a);
+  factorstr := function ( p )
+    if   Length(CoefficientsOfLaurentPolynomial(p)[1]) <= 1
+    then return String(p);
+    else return Concatenation("(",String(p),")"); fi;
+  end;
+
+  a := t[1]; b := t[2]; c := t[3];
+  one := One(a); zero := Zero(a);
+  x := IndeterminateOfLaurentPolynomial(a);
   str := "";
   if   c = one
   then if   a = zero
        then append(b);
-       else if   not a in [ -one, one ] then append("(",a,")*P");
-            elif a = one then append("P");
-            else append("-P");
-            fi;
+       else if   not a in [-one,one] then append(factorstr(a),"*P");
+            elif a = one then append("P"); else append("-P"); fi;
             if b <> zero then append(" + ",b); fi;
        fi;
-  elif b = zero then if   not a in [ -one, one ] then append("(",a,")*P");
-                     elif a <> one and a = -one  then append("-P");
-                     fi;
-                     append("/","(",c,")");
+  elif b = zero then if   not a in [-one,one] then append(factorstr(a),"*P");
+                     elif a = one then append("P"); else append("-P"); fi;
+                     append("/",factorstr(c));
   else append("(");
-       if   not a in [ -one, one ]
-       then append("(",a,")*P + ",b,")/","(",c,")");
+       if   not a in [-one,one]
+       then append(factorstr(a),"*P + ",b,")/",factorstr(c));
        elif a <> one and a = -one
-       then append("-P + ",b,")/","(",c,")");
-       else append("P + ",b,")/","(",c,")");
+       then append("-P + ",b,")/",factorstr(c));
+       else append("P + ",b,")/",factorstr(c));
        fi;
   fi;
   if Length(str) > maxlng then str := "< ... >"; fi;
@@ -739,63 +777,24 @@ InstallMethod( ViewObj,
 
   function ( f )
 
-    local  m, c, q, pi, LocString, RingString;
-
+    if IsZero(f) or IsOne(f) then View(f); return; fi;
+    if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
     if not (IsRationalBasedRcwaDenseRep(f) or IsModularRcwaDenseRep(f))
     then TryNextMethod(); fi;
-    m := f!.modulus; c := f!.coeffs;
-    if IsIntegralRcwaMapping(f) or IsModularRcwaMapping(f)
-    then LocString := ""; else
-      pi := NoninvertiblePrimes(Source(f));
-      LocString := String(pi){[3..Length(String(pi)) - 2]};
-      if   Length(pi) = 1
-      then LocString := Concatenation(LocString," - local ");
-      else LocString := Concatenation(LocString," - semilocal "); fi;
+    Print("<");
+    if   HasIsBijective(f) and IsBijective(f) 
+    then Print("bijective ");
+    elif HasIsInjective(f) and IsInjective(f)
+    then Print("injective ");
+    elif HasIsSurjective(f) and IsSurjective(f)
+    then Print("surjective ");
     fi;
-    if   IsModularRcwaMapping(f)
-    then q := Size(UnderlyingField(f));
-         RingString := Concatenation("GF(",String(q),")[x]");
-    fi;
-    if   f = One (f)
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("<identity ",LocString,"integral rcwa mapping>");
-         else Print("<identity rcwa mapping of ",RingString,">"); fi;  
-    elif f = Zero(f)
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("<zero ",LocString,"integral rcwa mapping>");
-         else Print("<zero rcwa mapping of ",RingString,">"); fi;
-    elif m = One(m) and c[1][1] = Zero(c[1][1])
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("<constant ",LocString,"integral rcwa mapping ",
-                    "with value ",c[1][2],">");
-         else Print("<constant rcwa mapping of ",RingString,
-                    ", with value ",c[1][2],">"); fi;
-    else Print("<");
-         if   HasIsBijective(f) and IsBijective(f) 
-         then Print("bijective ");
-         elif HasIsInjective(f) and IsInjective(f)
-         then Print("injective ");
-         elif HasIsSurjective(f) and IsSurjective(f)
-         then Print("surjective ");
-         fi;
-         if   IsRationalBasedRcwaMapping(f)
-         then Print(LocString,"integral rcwa mapping");
-         else Print("rcwa mapping of ",RingString); fi;
-         if m = One(m) then
-           if   IsRationalBasedRcwaMapping(f)
-           then Print(": n -> "); else Print(": P -> "); fi;
-           if   IsIntegralRcwaMapping(f)
-           then DisplayIntegralAffineMapping(c[1]);
-           elif IsSemilocalIntegralRcwaMapping(f)
-           then DisplaySemilocalIntegralAffineMapping(c[1]);
-           else DisplayModularAffineMapping(c[1],SizeScreen()[1]-48); fi;
-         else
-           if IsModularRcwaMapping(f) then Print(","); fi;
-           Print(" with modulus ",m);
-           if HasOrder(f) then Print(", of order ",Order(f)); fi;
-         fi;
-         Print(">");
-    fi;
+    if   IsIntegralRcwaMapping(f)
+    then Print("integral rcwa mapping");
+    else Print("rcwa mapping of ",String(Source(f))); fi;
+    Print(" with modulus ",f!.modulus);
+    if HasOrder(f) then Print(", of order ",Order(f)); fi;
+    Print(">");
   end );
 
 #############################################################################
@@ -810,7 +809,7 @@ InstallMethod( Display,
 
   function ( f )
 
-    local  m, c, pi, q, d, x, LocString, RingString, name, varname,
+    local  m, c, pi, q, d, x, RingString, name, VarName,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
@@ -818,38 +817,29 @@ InstallMethod( Display,
     then TryNextMethod(); fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then name := Name(f); else name := "f"; fi;
-    if IsIntegralRcwaMapping(f) or IsModularRcwaMapping(f)
-    then LocString := ""; prefix := false; else
-      pi := NoninvertiblePrimes(Source(f));
-      LocString := String(pi){[3..Length(String(pi)) - 2]};
-      if   Length(pi) = 1
-      then LocString := Concatenation(LocString," - local ");
-      else LocString := Concatenation(LocString," - semilocal "); fi;
-      prefix := true;
-    fi;
+    prefix := false;
+    if not IsIntegralRcwaMapping(f) then RingString := String(Source(f)); fi;
     if   IsModularRcwaMapping(f)
-    then varname := "P"; q := Size(UnderlyingField(f));
+    then VarName := "P"; q := Size(UnderlyingField(f));
          d := DegreeOfLaurentPolynomial(m); NrResidues := q^d;
          x := IndeterminatesOfPolynomialRing(Source(f))[1];
          r := AllGFqPolynomialsModDegree(q,d,x);
-         RingString := Concatenation("GF(",String(q),")[x]");
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
-    else varname := "n"; NrResidues := m; fi;
-    if   f = One (f)
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("Identity ",LocString,"integral rcwa mapping\n");
-         else Print("Identity rcwa mapping of ",RingString,"\n"); fi;  
-    elif f = Zero(f)
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("Zero ",LocString,"integral rcwa mapping\n");
-         else Print("Zero rcwa mapping of ",RingString,"\n"); fi;
-    elif m = One(m) and c[1][1] = Zero(c[1][1])
-    then if   IsRationalBasedRcwaMapping(f)
-         then Print("Constant ",LocString,"integral rcwa mapping ",
-                    "with value ",c[1][2],"\n");
+    else VarName := "n"; NrResidues := m; fi;
+    if   IsOne(f)
+    then if   IsIntegralRcwaMapping(f)
+         then Print("Identity integral rcwa mapping");
+         else Print("Identity rcwa mapping of ",RingString); fi;  
+    elif IsZero(f)
+    then if   IsIntegralRcwaMapping(f)
+         then Print("Zero integral rcwa mapping");
+         else Print("Zero rcwa mapping of ",RingString); fi;
+    elif IsOne(m) and IsZero(c[1][1])
+    then if   IsIntegralRcwaMapping(f)
+         then Print("Constant integral rcwa mapping with value ",c[1][2]);
          else Print("Constant rcwa mapping of ",RingString,
-                    ", with value ",c[1][2],"\n"); fi;
-    else if m <> One(m) then Print("\n"); fi;
+                    " with value ",c[1][2]); fi;
+    else if not IsOne(m) then Print("\n"); fi;
          if   HasIsBijective(f) and IsBijective(f)
          then Print("Bijective "); prefix := true;
          elif HasIsInjective(f) and IsInjective(f)
@@ -857,22 +847,21 @@ InstallMethod( Display,
          elif HasIsSurjective(f) and IsSurjective(f)
          then Print("Surjective "); prefix := true;
          fi;
-         if   IsRationalBasedRcwaMapping(f)
-         then if prefix then Print(LocString,"integral rcwa mapping");
-                        else Print("Integral rcwa mapping"); fi;
-         else if prefix then Print("rcwa"); else Print("Rcwa"); fi;
-              Print(" mapping of ",RingString);
+         if IsIntegralRcwaMapping(f) then
+           if prefix then Print("integral rcwa mapping");
+                     else Print("Integral rcwa mapping"); fi;
+         else
+           if prefix then Print("rcwa"); else Print("Rcwa"); fi;
+           Print(" mapping of ",RingString);
          fi;
-         if m = One(m) then
-           Print(": ",varname," -> ");
+         if IsOne(m) then
+           Print(": ",VarName," -> ");
            if   IsIntegralRcwaMapping(f)
            then DisplayIntegralAffineMapping(c[1]);
            elif IsSemilocalIntegralRcwaMapping(f)
            then DisplaySemilocalIntegralAffineMapping(c[1]);
            else DisplayModularAffineMapping(c[1],SizeScreen()[1]-48); fi;
-           Print("\n");
          else
-           if IsModularRcwaMapping(f) then Print(","); fi;
            Print(" with modulus ",m);
            if HasOrder(f) then Print(", of order ",Order(f)); fi;
            Print("\n\n");
@@ -886,8 +875,8 @@ InstallMethod( Display,
            l3 := Int((scr - l1 - Length(name) - 3)/2);
            if   IsRationalBasedRcwaMapping(f)
            then FlushLng := l1-mdec-1; else FlushLng := l1-MaxPolLng-1; fi;
-           Print(IdChars(l2," "),varname," mod ",mstr,
-                 IdChars(l1-l2-mdec-6," "),"|",IdChars(l3," "),varname,"^",
+           Print(IdChars(l2," "),VarName," mod ",mstr,
+                 IdChars(l1-l2-mdec-6," "),"|",IdChars(l3," "),VarName,"^",
                  name,"\n",IdChars(l1,"-"),"+",IdChars(scr-l1-1,"-"));
            poses := AsSortedList(List(Set(c),
                                       t -> Filtered([0..NrResidues-1],
@@ -913,9 +902,10 @@ InstallMethod( Display,
              then DisplaySemilocalIntegralAffineMapping(c[pos[1]+1]);
              else DisplayModularAffineMapping(c[pos[1]+1],scr-l1-4); fi;
            od;
-           Print("\n\n");
+           Print("\n");
          fi;
     fi;
+    if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
   end );
 
 #############################################################################
@@ -973,6 +963,7 @@ InstallMethod( \<,
 ##
 InstallValue( ZeroIntegralRcwaMapping,
               IntegralRcwaMapping( [ [ 0, 0, 1 ] ] ) );
+SetIsZero( ZeroIntegralRcwaMapping, true );
 
 #############################################################################
 ##
@@ -980,6 +971,7 @@ InstallValue( ZeroIntegralRcwaMapping,
 ##
 InstallValue( IdentityIntegralRcwaMapping,
               IntegralRcwaMapping( [ [ 1, 0, 1 ] ] ) );
+SetIsOne( IdentityIntegralRcwaMapping, true );
 
 #############################################################################
 ##
@@ -1002,9 +994,14 @@ InstallMethod( ZeroOp,
                "for semilocal integral rcwa mappings",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
+  function ( f )
 
-  f -> SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                                       [[0,0,1]] ) );
+    local  zero;
+
+    zero := SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
+                                            [[0,0,1]] );
+    SetIsZero( zero, true ); return zero;
+  end );
 
 #############################################################################
 ##
@@ -1016,8 +1013,24 @@ InstallMethod( ZeroOp,
                "for modular rcwa mappings",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
-  f -> ModularRcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
-                             [[0,0,1]] * One(Source(f)) ) );
+  function ( f )
+
+    local  zero;
+
+    zero := ModularRcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
+                                  [[0,0,1]] * One(Source(f)) );
+    SetIsZero( zero, true ); return zero;
+  end );
+
+############################################################################# 
+## 
+#M  IsZero( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping 
+## 
+##  <f> = zero rcwa mapping ? 
+## 
+InstallMethod( IsZero, 
+               "for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               f -> f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) ) );  
 
 #############################################################################
 ##
@@ -1032,7 +1045,7 @@ InstallMethod( OneOp,
 
 #############################################################################
 ##
-#M  OneOp( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
+#M  OneOp( <f> ) . . . . . . . . . . . .  for semilocal integral rcwa mapping
 ##
 ##  Identity rcwa mapping.
 ##
@@ -1040,9 +1053,14 @@ InstallMethod( OneOp,
                "for semilocal integral rcwa mappings",
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
+  function ( f )
 
-  f -> SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                                       [[1,0,1]] ) );
+    local  one;
+ 
+    one := SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
+                                           [[1,0,1]] );
+    SetIsOne( one, true ); return one;
+  end );
 
 
 #############################################################################
@@ -1055,8 +1073,14 @@ InstallMethod( OneOp,
                "for modular rcwa mappings",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
 
-  f -> ModularRcwaMapping( Size(UnderlyingField(f)), One(Source(f)),
-                           [[1,0,1]] * One(Source(f)) ) );
+  function ( f )
+
+    local  one;
+ 
+    one := ModularRcwaMapping( Size(UnderlyingField(f)), One(Source(f)),
+                               [[1,0,1]] * One(Source(f)) );
+    SetIsOne( one, true ); return one;
+  end );
 
 ############################################################################# 
 ## 
@@ -1065,8 +1089,8 @@ InstallMethod( OneOp,
 ##  <f> = identity rcwa mapping ? 
 ## 
 InstallMethod( IsOne, 
-               "for rcwa mappings", 
-               true, [ IsRcwaMapping ], 0, f -> f = One( f ) );  
+               "for rcwa mappings", true, [ IsRcwaMapping ], 0,
+               f -> f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) ) );  
 
 #############################################################################
 ##
@@ -1649,7 +1673,7 @@ InstallMethod( InverseOp,
     for n in [ 1 .. Length(res) ] do
       r := res[n];
       t := [c[n][3], -c[n][2], c[n][1]];
-      if t[3] = Zero(R) then return fail; fi;
+      if IsZero(t[3]) then return fail; fi;
       tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
       tr := (r * c[n][1] + c[n][2]) / c[n][3] mod tm;
       Classes := List(respols[DegreeOfLaurentPolynomial(mInv/tm) + 1],
@@ -1787,7 +1811,7 @@ InstallMethod( IsInjective,
     for n in [ 1 .. Length(res) ] do
       r := res[n];
       t := [c[n][3], -c[n][2], c[n][1]];
-      if t[3] = Zero(R) then return false; fi;
+      if IsZero(t[3]) then return false; fi;
       tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
       tr := (r * c[n][1] + c[n][2]) / c[n][3] mod tm;
       Classes := List(respols[DegreeOfLaurentPolynomial(mInv/tm) + 1],
@@ -1850,9 +1874,9 @@ InstallMethod( IsSurjective,
     x := IndeterminatesOfPolynomialRing(R)[1];
     c := f!.coeffs; m := f!.modulus;
     cInv := [];
-    if ForAll( c, t -> t[1] = Zero(R) ) then return false; fi;
+    if ForAll( c, t -> IsZero(t[1]) ) then return false; fi;
     mInv := Lcm(Filtered(List(c, t -> StandardAssociate(Source(f),t[1])),
-                         k -> k <> Zero(R) ))
+                         k -> not IsZero(k) ))
           * m / Gcd(m,Gcd(List(c,t->t[3])));
     d := DegreeOfLaurentPolynomial(m);
     dInv := DegreeOfLaurentPolynomial(mInv);
@@ -1862,7 +1886,7 @@ InstallMethod( IsSurjective,
     for n in [ 1 .. Length(res) ] do
       r := res[n];
       t := [c[n][3], -c[n][2], c[n][1]];
-      if t[3] <> Zero(R) then
+      if not IsZero(t[3]) then
         tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
         tr := (r * c[n][1] + c[n][2]) / c[n][3] mod tm;
         Classes := List(respols[DegreeOfLaurentPolynomial(mInv/tm) + 1],
@@ -1907,7 +1931,7 @@ InstallMethod( Order,
     exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
     for n in exp do
       c := g!.coeffs; m2 := g!.modulus;
-      if m2 > m1 or g = One(g) then TryNextMethod(); fi;
+      if m2 > m1 or IsOne(g) then TryNextMethod(); fi;
       if   ForAny([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
                                 and c[n][2] mod m2 = 0)
       then Info(RcwaInfo,1,"The ",Ordinal(e)," power of ",f," is ",g,
@@ -2163,7 +2187,7 @@ InstallMethod( StandardConjugate,
       return cycs;
     end;
 
-    if   f = One(f) 
+    if   IsOne(f) 
     then SetStandardizingConjugator(f,One(f));
          SetCycleType(f,[[],[]]);
          return f;

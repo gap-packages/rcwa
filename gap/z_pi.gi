@@ -32,6 +32,7 @@ InstallMethod( Z_piCons, "natural Z_pi", true,
     SetIsFinite( R, false ); SetSize( R, infinity );
     SetIsAssociative( R, true ); SetIsCommutative( R, true );
     SetRepresentative( R, 1/Minimum(Difference(List(pi,NextPrimeInt),pi)) );
+    SetElementsFamily( R, FamilyObj( 1 ) );
     SetNoninvertiblePrimes( R, R!.primes );
     SetName( R, Concatenation( "Z_", String(pi) ) );
     return R;
@@ -49,6 +50,13 @@ InstallGlobalFunction( Z_pi,
     then Error("Z_pi( <pi> ): <pi> must be a set of primes.\n"); fi;
     return Z_piCons( IsRing, Set( pi ) );
   end );
+
+#############################################################################
+##
+#M  String( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . .  for Z_pi
+##
+InstallMethod( String,
+               "for Z_pi", ReturnTrue, [ IsZ_pi ], 0, R -> Name( R ) );
 
 #############################################################################
 ##
@@ -144,6 +152,32 @@ InstallMethod( StandardAssociate,
     pi := NoninvertiblePrimes( R );
     return Product( Filtered( Factors( AbsInt( NumeratorRat( x ) ) ),
                               p -> p in pi ) );
+  end );
+
+#############################################################################
+##
+#M  GcdOp( <R>, <x>, <y> ) . . . . . . . .  for Z_pi and two elements thereof
+##
+InstallMethod( GcdOp,
+               "for Z_pi and two elements thereof", ReturnTrue,
+               [ IsZ_pi, IsRat, IsRat ], 0,
+
+  function ( R, x, y )
+    if not x in R or not y in R then return fail; fi;
+    return Gcd( StandardAssociate( R, x ), StandardAssociate( R, y ) );
+  end );
+
+#############################################################################
+##
+#M  LcmOp( <R>, <x>, <y> ) . . . . . . . .  for Z_pi and two elements thereof
+##
+InstallMethod( LcmOp,
+               "for Z_pi and two elements thereof", ReturnTrue,
+               [ IsZ_pi, IsRat, IsRat ], 0,
+
+  function ( R, x, y )
+    if not x in R or not y in R then return fail; fi;
+    return Lcm( StandardAssociate( R, x ), StandardAssociate( R, y ) );
   end );
 
 #############################################################################

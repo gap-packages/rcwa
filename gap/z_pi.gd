@@ -26,7 +26,7 @@ DeclareGlobalFunction( "Z_pi" );
 ##
 #P  IsZ_pi( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . .  Z_pi
 ##
-DeclareProperty( "IsZ_pi", IsRing );
+DeclareProperty( "IsZ_pi", IsEuclideanRing );
 
 #############################################################################
 ##
