@@ -1334,7 +1334,7 @@ InstallMethod( ImagesElm,
 ##
 #M  ImagesSet( <f>, Integers ) . . . . for integral rcwa mapping and integers
 ##
-##  Image of the rcwa mapping <f>. For classwise constant mappings, only.
+##  Image of the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSet,
                "for integral rcwa mapping and integers", true, 
@@ -1343,16 +1343,63 @@ InstallMethod( ImagesSet,
 
   function ( f, ints )
 
-    local  c;
+    local  c, m, image, residue, r, t;
 
-    c := f!.coeffs;
-    if   not ForAll(c, t -> t[1] = 0) 
-    then Info(InfoWarning,1,"The image of ",f," contains at least one full ",
-                            "residue class and is not representable as a ",
-                            "set in GAP.");
-         TryNextMethod();
-    else return Set(List([0..f!.modulus-1], n -> n^f));
-    fi;
+    c := f!.coeffs; m := f!.modulus; image := [];
+    for r in [0..m-1] do
+      if c[r+1][1] <> 0 then
+        t        := c[r+1];
+        residue  := t[2]/t[3] mod t[1];
+        image    := Union(image,ResidueClass(Integers,t[1],residue));
+      else image := Union(image,[c[r+1][2]]);
+      fi;
+      if image = Integers then break; fi;
+    od;
+    return image;
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <S> ) . . for integral rcwa map. and union of residue cl.
+##
+##  Image of the set <S> under the rcwa mapping <f>.
+##
+InstallMethod( ImagesSet,
+               "for integral rcwa mapping and residue class union", true,
+               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
+                 IsUnionOfResidueClassesOfZ ], 0, 
+
+  function ( f, S )
+
+    local  c, m, modulus, residues, excluded,
+           image, imagemod, val, residue, res, r, t, n, im;
+
+    c := f!.coeffs; m := f!.modulus;
+    image := List(IncludedElements(S),n->n^f);
+    modulus := Modulus(S); residues := Residues(S);
+    excluded := ExcludedElements(S);
+    for res in residues do
+      for r in [0..m-1] do
+        if c[r+1][1] <> 0 then
+          t        := c[r+1];
+          imagemod := (modulus*t[1])/Gcd(modulus,t[3]);
+          val      := (t[1]*res + t[2])/t[3];
+          if Gcd(DenominatorRat(val),imagemod) <> 1 then continue; fi;
+          residue  := val mod imagemod;
+          image    := Union(image,ResidueClass(Integers,imagemod,residue));
+        elif Intersection(S,ResidueClass(Integers,m,r)) <> []
+        then image := Union(image,[c[r+1][2]]);
+        fi;
+        if image = Integers then break; fi;
+      od;
+      if image = Integers then break; fi;
+    od;
+    for n in excluded do
+      im := n^f;
+      if   Intersection(S,PreImagesElm(f,im)) = []
+      then image := Difference(image,[im]); fi;
+    od;
+    return image;
   end );
 
 #############################################################################
@@ -1382,25 +1429,23 @@ InstallMethod( PreImagesElm,
 
   function ( f, n )
     
-    local  sol, c, m, n1, pre;
+    local  c, m, preimage, modulus, residues, singletons, n1, pre;
 
-    c := f!.coeffs; m := f!.modulus; sol := [];
+    c := f!.coeffs; m := f!.modulus;
+    preimage := []; singletons := [];
     for n1 in [1..m] do
       if c[n1][1] <> 0 then
-        pre := (n * c[n1][3] - c[n1][2])/c[n1][1];
-        if IsInt(pre) and pre mod m = n1 - 1 then Add(sol,pre); fi;
+        pre := (c[n1][3] * n - c[n1][2])/c[n1][1];
+        if IsInt(pre) and pre mod m = n1 - 1 then Add(singletons,pre); fi;
       else
         if c[n1][2] = n then
-          if m = 1 then return Integers; else
-            Info(InfoWarning,1,"The set of preimages of ",n," under ",f,
-                               " contains at least one full residue class ",
-                               "and is not representable as a set in GAP.");
-            TryNextMethod();
-          fi;
+          if   m = 1 then return Integers;
+          else preimage := Union(preimage,ResidueClass(Integers,m,n1-1)); fi;
         fi;
       fi;
     od;
-    return sol;
+    preimage := Union(preimage,singletons);
+    return preimage;
   end );
 
 #############################################################################
@@ -1444,6 +1489,54 @@ InstallMethod( PreImagesSet,
   function ( f, R )
     if   R = UnderlyingRing( FamilyObj( f ) )
     then return R; else TryNextMethod( ); fi;
+  end );
+
+#############################################################################
+##
+#M  PreImagesSet( <f>, <S> ) . . for integral rcwa map. and union of res. cl.
+##
+##  Preimage of the set <S> under the rcwa mapping <f>.
+##
+InstallMethod( PreImagesSet,
+               "for integral rcwa mapping and residue class union", true, 
+               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
+                 IsUnionOfResidueClassesOfZ ], 0, 
+
+  function ( f, S )
+
+    local  c, m, modulus, residues, excluded, preimage, premod, 
+           residue, res, r, t, n, pre, pre2, im, diff;
+
+    c := f!.coeffs; m := f!.modulus;
+    preimage := Union(List(IncludedElements(S),n->PreImagesElm(f,n)));
+    modulus := Modulus(S); residues := Residues(S);
+    excluded := ExcludedElements(S);
+    for res in residues do
+      for r in [0..m-1] do
+        if c[r+1][1] <> 0 then
+          t        := c[r+1];
+          premod   := (modulus*t[3])/Gcd(modulus,t[1]);
+          residue  := (t[3]*res - t[2])/t[1] mod premod;
+          if residue^f mod modulus in residues then
+            preimage := Union(preimage,
+                              ResidueClass(Integers,premod,residue));
+          fi;
+        elif c[r+1][2] in S
+        then preimage := Union(preimage,ResidueClass(Integers,m,r));
+        fi;
+        if preimage = Integers then break; fi;
+      od;
+      if preimage = Integers then break; fi;
+    od;
+    for n in excluded do
+      pre  := PreImagesElm(f,n);
+      im   := ImagesSet(f,pre);
+      pre2 := PreImagesSet(f,Difference(im,excluded));
+      diff := Difference(pre,pre2);
+      if   diff <> []
+      then preimage := Difference(preimage,diff); fi;
+    od;
+    return preimage;
   end );
 
 #############################################################################

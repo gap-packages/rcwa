@@ -19,7 +19,8 @@ Revision.resclass_gd :=
 ##
 ##  The category of all unions of residue classes and finite sets.
 ##
-DeclareCategory( "IsUnionOfResidueClasses", IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClasses",
+                 IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
@@ -28,7 +29,8 @@ DeclareCategory( "IsUnionOfResidueClasses", IsListOrCollection );
 ##  The category of unions of residue classes of the integers and finite sets
 ##  of integers.
 ##
-DeclareCategory( "IsUnionOfResidueClassesOfZ", IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZ",
+                 IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
@@ -37,7 +39,8 @@ DeclareCategory( "IsUnionOfResidueClassesOfZ", IsListOrCollection );
 ##  The category of unions of residue classes of some ring $\Z_\pi$ and
 ##  finite subsets of of this ring. 
 ##
-DeclareCategory( "IsUnionOfResidueClassesOfZ_pi", IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
+                 IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
@@ -46,7 +49,8 @@ DeclareCategory( "IsUnionOfResidueClassesOfZ_pi", IsListOrCollection );
 ##  The union of the categories `IsUnionOfResidueClassesOfZ' and
 ##  `IsUnionOfResidueClassesOfZ_pi'.
 ##
-DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi", IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi",
+                 IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
@@ -55,7 +59,8 @@ DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi", IsListOrCollection );
 ##  The category of unions of residue classes of some ring GF($q$)[$x$] and
 ##  finite subsets of of this ring. 
 ##
-DeclareCategory( "IsUnionOfResidueClassesOfGFqx", IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfGFqx",
+                 IsDomain and IsListOrCollection );
 
 #############################################################################
 ##

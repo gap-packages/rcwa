@@ -701,6 +701,20 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
+#M  Union2( <S1>, <S2> ) . . . . . . . . . . . . . . . . . for set and subset
+##
+InstallMethod( Union2,
+               "for set and subset", ReturnTrue,
+               [ IsListOrCollection, IsListOrCollection ], 0,
+
+  function ( S1, S2 )
+    if   IsSubset(S1,S2) then return S1;
+    elif IsSubset(S2,S1) then return S2;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  Intersection2( <U>, <S> ) . . . .  for residue class union and finite set
 ##
 InstallMethod( Intersection2,
@@ -721,6 +735,20 @@ InstallMethod( Intersection2,
                "for finite set and residue class union", ReturnTrue,
                [ IsList, IsUnionOfResidueClasses ], 0,
                function ( S, U ) return Intersection2( U, S ); end );
+
+#############################################################################
+##
+#M  Intersection2( <S1>, <S2> ) . . . . . . . . . . . . .  for set and subset
+##
+InstallMethod( Intersection2,
+               "for set and subset", ReturnTrue,
+               [ IsListOrCollection, IsListOrCollection ], 0,
+
+  function ( S1, S2 )
+    if   IsSubset(S1,S2) then return S2;
+    elif IsSubset(S2,S1) then return S1;
+    else TryNextMethod(); fi;
+  end );
 
 #############################################################################
 ##
@@ -820,6 +848,19 @@ InstallMethod( IsSubset,
   function ( R, U )
     if   R = UnderlyingRing(FamilyObj(U))
     then return true; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsSubset( <U>, <R> ) . . . . . . .  for residue class union and base ring
+##
+InstallMethod( IsSubset,
+               "for residue class union and base ring", ReturnTrue,
+               [ IsUnionOfResidueClasses, IsRing ], 0,
+
+  function ( U, R )
+    if   R = UnderlyingRing(FamilyObj(U))
+    then return U = R; else TryNextMethod(); fi;
   end );
 
 #############################################################################
