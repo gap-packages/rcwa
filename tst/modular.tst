@@ -84,6 +84,9 @@ gap> Divisor(r);
 Z(2)^0+x^2
 gap> IsOne(One(r));
 true
+gap> TrajectoryModulo(r,x^3,20);
+[ x, Z(2)^0+x, 0*Z(2), Z(2)^0, x, Z(2)^0+x, 0*Z(2), Z(2)^0, x, Z(2)^0+x,
+  0*Z(2), Z(2)^0, x, Z(2)^0+x, 0*Z(2), Z(2)^0, x, Z(2)^0+x, 0*Z(2), Z(2)^0 ]
 gap> G := Group(r);
 <rcwa group over GF(2)[x] with 1 generator>
 gap> T := TrivialSubgroup(G);

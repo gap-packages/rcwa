@@ -243,6 +243,13 @@ gap> Image(a,PreImage(a,cl)) = cl;
 true
 gap> PreImage(a,Image(a,cl)) = cl;
 true
+gap> TrajectoryModulo(a,8,20) = TrajectoryModulo(a,8,4,20);
+true
+gap> TrajectoryModulo(a,8,10,100);
+[ 8, 2, 8, 7, 0, 0, 5, 4, 1, 8, 7, 3, 2, 8, 2, 8, 2, 3, 2, 3, 5, 4, 1, 3, 0,
+  5, 6, 9, 4, 6, 9, 7, 8, 2, 8, 2, 3, 0, 5, 9, 7, 0, 0, 5, 4, 6, 9, 4, 6, 4,
+  6, 9, 7, 5, 1, 1, 1, 3, 2, 3, 2, 3, 7, 3, 5, 4, 1, 8, 7, 0, 5, 1, 8, 2, 3,
+  5, 4, 1, 1, 6, 9, 9, 4, 1, 6, 4, 1, 8, 7, 5, 1, 3, 5, 4, 1, 6, 4, 6, 9, 2 ]
 gap> ab := Comm(a,b);;
 gap> ac := Comm(a,c);;
 gap> bc := Comm(b,c);;
@@ -433,6 +440,27 @@ gap> im := Image(a,Image(a,F));
 <union of 18 residue classes (mod 45), +2/-2 elements>
 gap> pre := PreImage(a,PreImage(a,im));
 Union of the residue classes 1(5) and 2(5), +2/-2 elements
+gap> C7 := Group(g);; 
+gap> orb := Orbit(C7,F); 
+[ Union of the residue classes 1(5) and 2(5), +2/-2 elements,
+  <union of 12 residue classes (mod 30), +2/-2 elements>,
+  <union of 24 residue classes (mod 60), +2/-2 elements>,
+  <union of 24 residue classes (mod 60), +2/-2 elements>,
+  <union of 24 residue classes (mod 60), +2/-2 elements>,
+  <union of 24 residue classes (mod 60), +2/-2 elements>,
+  <union of 12 residue classes (mod 30), +2/-2 elements> ]
+gap> Union(orb{[1,2]});
+<union of 19 residue classes (mod 30), +3/-2 elements>
+gap> Union(orb{[1,2,3]});
+<union of 44 residue classes (mod 60), +3/-1 elements>
+gap> Union(orb{[1,2,3,4]});
+<union of 25 residue classes (mod 30), +2/-1 elements>
+gap> Union(orb{[1,2,3,4,5]});
+<union of 28 residue classes (mod 30), +1/-1 elements>
+gap> Union(orb{[1,2,3,4,5,6]});
+Integers \ [ -1 ]
+gap> Union(orb{[1,2,3,4,5,6,7]});
+Integers
 gap> z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
 >                      [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
 >                      [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
@@ -740,7 +768,7 @@ gap> G := PSL(IsIntegralRcwaGroup,2,3);
 <integral rcwa group with 2 generators>
 gap> Size(G);
 12
-gap> STOP_TEST( "rcwa.tst", 3100000000 );
+gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
