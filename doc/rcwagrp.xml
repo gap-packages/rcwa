@@ -10,7 +10,7 @@
 <Heading>Residue Class-Wise Affine Groups</Heading>
 
 This chapter describes the functionality provided by this package for
-computing with residue class-wise affine groups. <P/>
+computing with residue class-wise affine groups.
 
 <!-- #################################################################### -->
 
@@ -1283,65 +1283,26 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 <!-- #################################################################### -->
 
 <Section Label="sec:CategoriesOfRcwaGroups">
-<Heading>The categories of rcwa groups</Heading>
+<Heading>The categories and families of rcwa groups</Heading>
 
 <ManSection>
   <Filt Name="IsRcwaGroup" Arg="G" Label="G"/>
-  <Returns>
-    <C>true</C> if <A>G</A> is an rcwa group and
-    <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa groups.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsIntegralRcwaGroup" Arg="G" Label="G"/>
+  <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G" Label="G"/>
+  <Filt Name="IsModularRcwaGroup" Arg="G" Label="G"/>
   <Returns>
-    <C>true</C> if <A>G</A> is an rcwa group over the ring of integers
+    <C>true</C> if <A>G</A> is an rcwa group resp.
+    an rcwa group over the ring of integers resp.
+    an rcwa group over a semilocalization of the ring of integers resp.
+    an rcwa group over a polynomial ring in one variable over a finite field,
     and <C>false</C> otherwise.
   </Returns>
-  <Description>
-    The category of all rcwa groups over the ring of integers.
-  </Description>
 </ManSection>
 
 <ManSection>
   <Fam Name="IntegralRcwaGroupsFamily"/>
   <Description>
     The family of all rcwa groups over the ring of integers.
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Var Name="TrivialIntegralRcwaGroup"/>
-  <Description>
-    The trivial rcwa group over the ring of integers.
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G" Label="G"/>
-  <Returns>
-    <C>true</C> if <A>G</A> is an rcwa group over a semilocalization
-    of the ring of integers and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa groups over semilocalizations of the
-    ring of integers.
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Filt Name="IsModularRcwaGroup" Arg="G" Label="G"/>
-  <Returns>
-    <C>true</C> if <A>G</A> is an rcwa group over a polynomial ring in
-    one variable over a finite field and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa groups over polynomial rings in one variable
-    over some finite field.
   </Description>
 </ManSection>
 
