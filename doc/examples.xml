@@ -920,6 +920,69 @@ gap> Set(List(Intersection([1..12^4],Difference(Integers,Union(P))),
 ]]>
 </Example>
 
+Finally we would like to factor our mapping into involutions:
+
+<Example>
+<![CDATA[
+gap> elm1 := kappa;
+kappa
+gap> Multpk(elm1,2,1)^elm1;
+8(12)
+gap> Multpk(elm1,2,-1)^elm1;
+4(6)
+gap> Multpk(elm1,3,1)^elm1;
+4(6)
+gap> Multpk(elm1,3,-1)^elm1;
+3(4)
+gap> fact1 := RcwaMapping([[rc(4,6),rc(8,12)]]);
+<rcwa mapping of Z with modulus 12>
+gap> elm2 := elm/fact1;
+<rcwa mapping of Z with modulus 12>
+gap> Display(elm2);
+
+Rcwa mapping of Z with modulus 12
+
+               n mod 12                |                 n^f
+---------------------------------------+--------------------------------------
+   0  1  4  5  9                       | n
+   2  6 10                             | 3n + 2
+   3  7 11                             | n - 1
+   8                                   | (n + 1)/3
+
+gap> Multpk(elm2,3,1)^elm2;
+8(12)
+gap> Multpk(elm2,3,-1)^elm2;
+3(4)
+gap> fact2 := RcwaMapping([[rc(3,4),rc(8,12)]]);
+<rcwa mapping of Z with modulus 12>
+gap> elm3 := elm2/fact2;
+<rcwa mapping of Z with modulus 4>
+gap> Display(elm3);
+
+Rcwa mapping of Z with modulus 4
+
+                n mod 4                |                 n^f
+---------------------------------------+--------------------------------------
+  0 1                                  | n
+  2                                    | n + 1
+  3                                    | n - 1
+
+gap> fact3 := RcwaMapping([[rc(2,4),rc(3,4)]]);
+<rcwa mapping of Z with modulus 4>
+gap> elm4 := elm3/fact3;
+IdentityMapping( Integers )
+gap> kappafacts := [ RcwaMapping([[rc(2,4),rc(3,4)]]),
+>                    RcwaMapping([[rc(3,4),rc(8,12)]]),
+>                    RcwaMapping([[rc(4,6),rc(8,12)]]) ];
+[ <rcwa mapping of Z with modulus 4>, <rcwa mapping of Z with modulus 12>,
+  <rcwa mapping of Z with modulus 12> ]
+gap> List(kappafacts,Order);
+[ 2, 2, 2 ]
+gap> kappa = Product(kappafacts);
+true
+]]>
+</Example>
+
 </Section>
 
 <!-- #################################################################### -->
