@@ -458,6 +458,115 @@ gap> Divergence(f6);
 
 <!-- #################################################################### -->
 
+<Section Label="sec:MatthewsLeighExamples">
+<Heading>The examples by Matthews and Leigh</Heading>
+
+In <Cite Key="MatthewsLeigh87"/>, K.~R.~Matthews and G.~M.~Leigh have shown
+that two trajectories of the following (surjective, but not injective)
+mappings are acyclic (mod <M>x</M>) and divergent:
+
+<Example>
+<![CDATA[
+gap> x := Indeterminate(GF(4),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
+GF(2)[x]
+gap> ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R));;
+gap> ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R));;
+gap> Display(ML1);
+
+Rcwa mapping of GF(2)[x] with modulus x
+
+         P mod x          |                        P^f
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | P/x
+ Z(2)^0                   | ((x^3+x^2+x+Z(2)^0)*P + Z(2)^0)/x
+
+gap> Display(ML2);
+
+Rcwa mapping of GF(2)[x] with modulus x
+
+         P mod x          |                        P^f
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | P/x
+ Z(2)^0                   | ((x^2+Z(2)^0)*P + Z(2)^0)/x
+
+gap> List([ML1,ML2],IsSurjective);
+[ true, true ]
+gap> List([ML1,ML2],IsInjective);
+[ false, false ]
+gap> traj1 := Trajectory(ML1,One(R),20,"length");
+[ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x, 
+  x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0, 
+  x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2, 
+  x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0, 
+  x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4, 
+  x^12+x^11+x^10+x^7+x^6+x^5+x^3, x^11+x^10+x^9+x^6+x^5+x^4+x^2, 
+  x^10+x^9+x^8+x^5+x^4+x^3+x, x^9+x^8+x^7+x^4+x^3+x^2+Z(2)^0, 
+  x^11+x^9+x^8+x^4+x^3+x^2+Z(2)^0 ]
+gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),20,"length");
+[ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0, 
+  x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0, 
+  x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0, 
+  x^10+x^8+x^7+x^5+x^4+x+Z(2)^0, x^11+x^8+x^7+x^5+x^4+x^3+x^2+x+Z(2)^0, 
+  x^12+x^10+x^9+x^8+x^7+x^5+Z(2)^0, x^13+x^10+x^7+x^4+x, 
+  x^12+x^9+x^6+x^3+Z(2)^0, x^13+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x, 
+  x^12+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
+  x^13+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
+  x^14+x^12+x^11+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
+  x^15+x^12+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
+  x^16+x^14+x^13+x^11+x^10+x^7+x^6+x^4+x^3+x+Z(2)^0 ]
+]]>
+</Example>
+
+We can easily recognize the pattern which Matthews and Leigh used
+to show the divergence of the above trajectories:
+
+<Example>
+<![CDATA[
+gap> traj1modx := Trajectory(ML1,One(R),400,"length") mod x;;
+gap> traj2modx := Trajectory(ML2,(x^3+x+1)*One(R),600,"length") mod x;;
+gap> List(traj1modx{[1..200]},val->Position([Zero(R),One(R)],val)-1);
+[ 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 
+  1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> List(traj2modx{[1..200]},val->Position([Zero(R),One(R)],val)-1);
+[ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
+  0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);;
+gap> Diffs := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);;
+gap> Diffs(ChangePoints(traj1modx)); # The pattern in the first ...
+[ 1, 1, 2, 4, 2, 2, 4, 8, 4, 4, 8, 16, 8, 8, 16, 32, 16, 16, 32, 64, 32, 32, 
+  64 ]
+gap> Diffs(ChangePoints(traj2modx)); # ... and in the second example.
+[ 1, 7, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1, 1, 25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 49, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 97, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 193, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> Diffs(ChangePoints(last)); # Make this a bit more obvious.
+[ 1, 3, 1, 7, 1, 15, 1, 31, 1, 63, 1 ]
+]]>
+</Example>
+
+</Section>
+
+<!-- #################################################################### -->
+
 <Section Label="sec:AbelianModularGroup">
 <Heading>An abelian rcwa group over a polynomial ring</Heading>
 
@@ -1562,3 +1671,4 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
+
