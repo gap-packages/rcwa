@@ -879,4 +879,115 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#M  \+( <U>, <x> ) . . . . . . . . . for residue class union and ring element
+##
+InstallOtherMethod( \+,
+                    "for residue class union and ring element", ReturnTrue,
+                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    if not x in R then TryNextMethod(); fi;
+    return ResidueClassUnion(R,Modulus(U),
+                             List(Residues(U),r -> (r + x) mod Modulus(U)),
+                             List(IncludedElements(U),el -> el+x),
+                             List(ExcludedElements(U),el -> el+x));
+  end );
+
+#############################################################################
+##
+#M  \+( <x>, <U> ) . . . . . . . . . for ring element and residue class union
+##
+InstallOtherMethod( \+,
+                    "for ring element and residue class union", ReturnTrue,
+                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
+                    function ( x, U ) return U + x; end );
+
+#############################################################################
+##
+#M  \-( <U>, <x> ) . . . . . . . . . for residue class union and ring element
+##
+InstallOtherMethod( \-,
+                    "for residue class union and ring element", ReturnTrue,
+                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+                    function ( U, x ) return U + (-x); end );
+
+#############################################################################
+##
+#M  \-( <x>, <U> ) . . . . . . . . . for ring element and residue class union
+##
+InstallOtherMethod( \-,
+                    "for ring element and residue class union", ReturnTrue,
+                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
+                    function ( x, U ) return (-U) + x; end );
+
+#############################################################################
+##
+#M  AdditiveInverseOp( <U> ) . . . . . . . . . . . .  for residue class union
+##
+InstallOtherMethod( AdditiveInverseOp,
+                    "for residue class union", ReturnTrue,
+                    [ IsUnionOfResidueClasses ], 0,
+                    
+  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),Modulus(U),
+                         List(Residues(U),r -> (-r) mod Modulus(U)),
+                         List(IncludedElements(U),el -> -el),
+                         List(ExcludedElements(U),el -> -el)) );
+
+#############################################################################
+##
+#M  \*( <U>, <x> ) . . . . . . . . . for residue class union and ring element
+##
+InstallOtherMethod( \*,
+                    "for residue class union and ring element", ReturnTrue,
+                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    if not x in R then TryNextMethod(); fi;
+    return ResidueClassUnion(R,x*Modulus(U),
+                             List(Residues(U),r -> x*r),
+                             List(IncludedElements(U),el -> x*el),
+                             List(ExcludedElements(U),el -> x*el));
+  end );
+
+#############################################################################
+##
+#M  \*( <x>, <U> ) . . . . . . . . . for residue class union and ring element
+##
+InstallOtherMethod( \*,
+                    "for ring element and residue class union", ReturnTrue,
+                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
+                    function ( x, U ) return U * x; end );
+
+#############################################################################
+##
+#M  \/( <U>, <x> ) . . . . . . . . . for residue class union and ring element
+##
+InstallOtherMethod( \/,
+                    "for residue class union and ring element", ReturnTrue,
+                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R, m;
+
+    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
+    if not x in R or not m/x in R
+       or not ForAll(Residues(U),r -> r/x in R)
+       or not ForAll(IncludedElements(U),el -> el/x in R) 
+    then TryNextMethod(); fi;
+    return ResidueClassUnion(R,m/x,List(Residues(U),r -> r/x),
+                             List(IncludedElements(U),el -> el/x),
+                             List(ExcludedElements(U),el -> el/x));
+  end );
+
+#############################################################################
+##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
