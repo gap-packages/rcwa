@@ -659,6 +659,18 @@ gap> IsFlat(Group(a,b));
 false
 gap> IsFlat(Group(g));
 false
+gap> IsIntegral(u);
+false
+gap> IsIntegral(t);
+true
+gap> IsIntegral(T);
+false
+gap> IsIntegral(RcwaMapping([[2,0,1]]));
+true
+gap> IsIntegral(RcwaMapping([[2,0,1],[3,5,1]]));
+true
+gap> IsIntegral(RcwaMapping([[1,0,2],[3,5,1]]));
+false
 gap> IsBalanced(t);
 true
 gap> IsBalanced(a);
@@ -991,12 +1003,21 @@ gap> g1 := RcwaMapping([[1,0,1],[2,0,1],[1,0,2],[2,0,1]]);;
 gap> g2 := RcwaMapping([[1,0,1],[2,4,1],[1,0,2],[2,4,1]]);;
 gap> IsSolvable(Group(g1,g2));
 true
+gap> ImageDensity(T);
+4/3
+gap> ImageDensity(a);
+1
+gap> ImageDensity(u);
+1
+gap> ImageDensity(RcwaMapping([[2,0,1]]));
+1/2
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
