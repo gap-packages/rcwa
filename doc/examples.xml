@@ -68,11 +68,11 @@ afterwards):
 gap> RCWAInfo(2); # Switch Info output on.
 gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Modulus(<g>) = 4, Multiplier(<g>) = 3, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 16, Multiplier(<g>) = 3, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 6, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -81,17 +81,17 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 6(8) ]
 #I  Found 5 pairs.
 #I  After filtering and splitting: 5 pairs.
-#I  Dividing by ClassTransposition(3,6,6,8)
+#I  Dividing by ClassTransposition(3,6,6,8) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,5,12)
+#I  Dividing by ClassTransposition(6,8,5,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,7,12)
+#I  Dividing by ClassTransposition(6,8,7,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,8,12)
+#I  Dividing by ClassTransposition(6,8,8,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,0,48)
+#I  Dividing by ClassTransposition(6,8,0,48) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 6, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -100,13 +100,13 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 6(8) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 3 pairs.
-#I  Dividing by ClassTransposition(6,8,7,12)
+#I  Dividing by ClassTransposition(6,8,7,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,8,12)
+#I  Dividing by ClassTransposition(6,8,8,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,0,96)
+#I  Dividing by ClassTransposition(6,8,0,96) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -115,11 +115,11 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 2(4) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(2,4,7,12)
+#I  Dividing by ClassTransposition(2,4,7,12) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(2,4,0,192)
+#I  Dividing by ClassTransposition(2,4,0,192) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3)
+#I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 48, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -128,7 +128,7 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 2(4) ]
 #I  Found 1 pairs.
 #I  After filtering and splitting: 1 pairs.
-#I  Dividing by ClassTransposition(2,4,0,384)
+#I  Dividing by ClassTransposition(2,4,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 128, Divisor(<g>) = 4
 #I  p = 2, kmult = 7, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -137,15 +137,15 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 2(4), 3(6), 1(12), 11(12) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 5 pairs.
-#I  Dividing by ClassTransposition(2,12,384,1536)
+#I  Dividing by ClassTransposition(2,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(1,12,384,1536)
+#I  Dividing by ClassTransposition(1,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,12,384,1536)
+#I  Dividing by ClassTransposition(6,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,384,1536)
+#I  Dividing by ClassTransposition(10,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,384,1536)
+#I  Dividing by ClassTransposition(11,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
 #I  p = 2, kmult = 5, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -154,13 +154,13 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 3(6), 1(12), 6(12), 10(12), 11(12) ]
 #I  Found 4 pairs.
 #I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(1,12,0,384)
+#I  Dividing by ClassTransposition(1,12,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,12,0,384)
+#I  Dividing by ClassTransposition(6,12,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,0,384)
+#I  Dividing by ClassTransposition(10,12,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,0,384)
+#I  Dividing by ClassTransposition(11,12,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
 #I  p = 2, kmult = 4, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -169,11 +169,11 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 3(6), 6(12), 10(12), 11(12) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 3 pairs.
-#I  Dividing by ClassTransposition(6,12,48,192)
+#I  Dividing by ClassTransposition(6,12,48,192) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,48,192)
+#I  Dividing by ClassTransposition(10,12,48,192) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,48,192)
+#I  Dividing by ClassTransposition(11,12,48,192) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
 #I  p = 2, kmult = 4, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -183,13 +183,13 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Split classes in clSdiv.
 #I  Found 4 pairs.
 #I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(10,24,192,384)
+#I  Dividing by ClassTransposition(10,24,192,384) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,24,192,384)
+#I  Dividing by ClassTransposition(11,24,192,384) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(22,24,192,384)
+#I  Dividing by ClassTransposition(22,24,192,384) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(23,24,192,384)
+#I  Dividing by ClassTransposition(23,24,192,384) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
 #I  p = 2, kmult = 3, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -198,9 +198,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 3(6), 11(12), 22(24) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(11,12,72,96)
+#I  Dividing by ClassTransposition(11,12,72,96) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(22,24,96,192)
+#I  Dividing by ClassTransposition(22,24,96,192) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
 #I  p = 2, kmult = 3, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -212,21 +212,21 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Split classes in clSdiv.
 #I  Found 8 pairs.
 #I  After filtering and splitting: 8 pairs.
-#I  Dividing by ClassTransposition(3,48,0,384)
+#I  Dividing by ClassTransposition(3,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(9,48,0,384)
+#I  Dividing by ClassTransposition(9,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(15,48,0,384)
+#I  Dividing by ClassTransposition(15,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(21,48,0,384)
+#I  Dividing by ClassTransposition(21,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(27,48,0,384)
+#I  Dividing by ClassTransposition(27,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(33,48,0,384)
+#I  Dividing by ClassTransposition(33,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(39,48,0,384)
+#I  Dividing by ClassTransposition(39,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(45,48,0,384)
+#I  Dividing by ClassTransposition(45,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
 #I  p = 2, kmult = 2, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -235,9 +235,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 9(12), 15(24), 27(48) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(9,12,44,48)
+#I  Dividing by ClassTransposition(9,12,44,48) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(15,24,48,96)
+#I  Dividing by ClassTransposition(15,24,48,96) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
 #I  p = 2, kmult = 2, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -247,9 +247,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Split classes in clSdiv.
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(27,96,192,384)
+#I  Dividing by ClassTransposition(27,96,192,384) from the right.
 #I  Modulus(<g>) = 384, Multiplier(<g>) = 2, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(75,96,192,384)
+#I  Dividing by ClassTransposition(75,96,192,384) from the right.
 #I  Modulus(<g>) = 384, Multiplier(<g>) = 2, Divisor(<g>) = 4
 #I  p = 2, kmult = 1, kdiv = 2
 #I Image of classes being multiplied by q*p^kmult:
@@ -258,7 +258,7 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 75(96) ]
 #I  Found 1 pairs.
 #I  After filtering and splitting: 1 pairs.
-#I  Dividing by ClassTransposition(75,96,0,384)
+#I  Dividing by ClassTransposition(75,96,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
 #I  p = 2, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -267,17 +267,17 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I [ 7(12), 5(24), 12(24), 16(24), 75(96) ]
 #I  Found 6 pairs.
 #I  After filtering and splitting: 6 pairs.
-#I  Dividing by ClassTransposition(7,12,4,24)
+#I  Dividing by ClassTransposition(7,12,4,24) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(7,12,17,24)
+#I  Dividing by ClassTransposition(7,12,17,24) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(5,24,24,48)
+#I  Dividing by ClassTransposition(5,24,24,48) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(12,24,24,48)
+#I  Dividing by ClassTransposition(12,24,24,48) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,24,48)
+#I  Dividing by ClassTransposition(16,24,24,48) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(75,96,96,192)
+#I  Dividing by ClassTransposition(75,96,96,192) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
 #I  p = 2, kmult = 1, kdiv = 1
 #I Image of classes being multiplied by q*p^kmult:
@@ -287,13 +287,13 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Split classes in clSmult.
 #I  Found 4 pairs.
 #I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(12,24,17,48)
+#I  Dividing by ClassTransposition(12,24,17,48) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,17,48)
+#I  Dividing by ClassTransposition(16,24,17,48) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(12,24,41,48)
+#I  Dividing by ClassTransposition(12,24,41,48) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,41,48)
+#I  Dividing by ClassTransposition(16,24,41,48) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 1, Divisor(<g>) = 1
 #I Use respected partition [ 12(24), 14(24), 18(24), 13(48), 22(48), 23(48), 
   28(48), 31(48), 32(48), 33(48), 34(48), 35(48), 39(48), 44(48), 45(48), 
