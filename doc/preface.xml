@@ -45,7 +45,7 @@ To give an easy example: starting at 15, we get the sequence 15, 46, 23, 70,
 In fact, Collatz' problem is still unsolved today, despite the fact that
 there have been more than 100 publications treating aspects of it so far --
 for an annotated bibliography listing many of them see
-<Cite Key="Lagarias98"/>.
+<Cite Key="Lagarias04"/>.
 
 We look at the mapping introduced in step&nbsp;2 above and ask for
 generalizations. There are several obvious things we can do:

@@ -40,7 +40,9 @@ written in the GAP language and does neither contain nor require
 external binaries.
 
 Recent versions of the packages `ResClasses', `GRAPE' and `GAPDoc'
-are needed.
+are needed. The binaries of GRAPE are not needed, thus RCWA runs
+under Windows and on the MacIntosh as well. Warnings concerning
+missing binaries when GRAPE is loaded can savely be ignored.
 
 For further advice on questions of technical nature please see the
 chapter `Auxiliary functions' in the manual.
