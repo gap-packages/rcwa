@@ -654,6 +654,14 @@ gap> IsFlat(Group(a,b));
 false
 gap> IsFlat(Group(g));
 false
+gap> IsBalanced(t);
+true
+gap> IsBalanced(a);
+false
+gap> IsBalanced(nu*nu^a);
+true
+gap> IsBalanced(ab);
+true
 gap> IsClassWiseOrderPreserving(u);
 true
 gap> IsClassWiseOrderPreserving(T);
@@ -915,4 +923,5 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
