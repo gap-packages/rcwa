@@ -3287,7 +3287,7 @@ InstallMethod( ContractionCentre,
 #M  RestrictedPerm( <g>, <S> ) . . . . . . . . . . . . . .  for rcwa mappings
 ##
 InstallOtherMethod( RestrictedPerm,
-                    "for rcwa mappings (RCWA)", true,
+                    "for rcwa mapping and residue class union (RCWA)", true,
                     [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
 
   function ( g, S )
@@ -3313,6 +3313,18 @@ InstallOtherMethod( RestrictedPerm,
     return gS;
   end );
 
+#############################################################################
+##
+#M  RestrictedPerm( <g>, <R> ) . . . . . . . . . . . . . .  for rcwa mappings
+##
+InstallOtherMethod( RestrictedPerm,
+                    "for rcwa mapping and its full source (RCWA)", true,
+                    [ IsRcwaMapping, IsRing ], 0,
+
+  function ( g, R )
+    if R = Source(g) then return g; else TryNextMethod(); fi;
+  end );
+  
 #############################################################################
 ##
 #M  Restriction( <g>, <f> ) . . . . . . . . . . .  for integral rcwa mappings
@@ -3491,7 +3503,7 @@ InstallMethod( FactorizationIntoGenerators,
       TryNextMethod();
     fi;
     if   Product(facts) <> g
-    then Error("FactorizationIntoGenerators: internal error!");
+    then Error("FactorizationIntoGenerators: Internal error!");
     else return facts; fi;
   end );
 
