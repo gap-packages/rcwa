@@ -265,8 +265,6 @@ gap> f := f1*f2*f3;
 <bijective rcwa mapping of Z with modulus 12>
 gap> Order(f);
 infinity
-gap> [Multiplier(f),Divisor(f)];
-[ 3, 2 ]
 gap> a := RcwaMapping([rc(0,2),rc(1,4),rc(3,4)],[rc(0,3),rc(1,3),rc(2,3)]);
 <rcwa mapping of Z with modulus 4>
 gap> [rc(0,2),rc(1,4),rc(3,4)]^a;
@@ -605,7 +603,7 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     The problem of obtaining a factorization as desired is algorithmically
     difficult, and this factorization routine is currently perhaps the most
     sophisticated part of the &RCWA; package. Information about the
-    progress of the factorization progress can be obtained by setting
+    progress of the factorization process can be obtained by setting
     the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
 <Example>
 <![CDATA[

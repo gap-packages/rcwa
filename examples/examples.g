@@ -196,7 +196,7 @@ kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
 SetName(kappa24_onesixthcyc,"kappa24_onesixthcyc");
 
 # Apart from fixed points and three 2-cycles, the following permutation
-# apparently has only one(!) cycle, traversing the set (0(4) U 1(6) U 5(12)
+# apparently has only one cycle, traversing the set (0(4) U 1(6) U 5(12)
 # U 6(12) U 22(36) U 26(36) U 27(36)) \ {-45, -17, 4, 6, 8, 13, 17, 36, 48}
 # in some sense `chaotically':
 
@@ -321,9 +321,8 @@ ac := Comm(a,c); SetName(ac,"[a,c]");
 bc := Comm(b,c); SetName(bc,"[b,c]");
 
 # Two rcwa mappings of orders 7 and 12, respectively, which have isomorphic
-# transition graphs for modulus 6 and generate the infinite tame group we
-# have looked at in the example we gave in the chapter about rcwa groups
-# for the use of `RespectedClassPartition'.
+# transition graphs for modulus 6 and generate the infinite tame group taken
+# as an example for the use of `RespectedPartition'.
 
 g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);
 h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);
@@ -568,7 +567,6 @@ InvolutionFactorsOfa := Concatenation(
   [ f1, f2, f3, t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     f1, f2, f3, f1, f2, f3, f1, f2, f3, f1, f2, f3 ] );
-
 
 #############################################################################
 ##
