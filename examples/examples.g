@@ -74,9 +74,9 @@ SetName(g,"g"); SetName(h,"h");
 
 # Rcwa mappings used in the free abelian normal subgroup example.
 
-v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);
-w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);
-SetName(v,"v"); SetName(w,"w");
+v6 := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);
+w8 := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);
+SetName(v6,"v6"); SetName(w8,"w8");
 
 
 # Rcwa mappings used in the ``behaviour of the moduli of powers'' - example.
@@ -92,12 +92,16 @@ e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
                    [1,4,1],[2,0,1],[1,0,1],[1,0,1]]); SetName(e2,"e2");
 
 
-# A wild 2-local integral rcwa mapping.
+# Rcwa mappings used in the 2-local integral rcwa mapping example.
 
-w2 := RcwaMapping([2],[[1,0,2],[2,-1,1],[1,1,1],[2,-1,1]]);
+v := RcwaMapping([[6,0,1],[1,-7,2],[6,0,1],[1,-1,1],
+                  [6,0,1],[1, 1,2],[6,0,1],[1,-1,1]]);
+v2 := RcwaMapping(Z_pi(2),ShallowCopy(Coefficients(v)));
+w2 := RcwaMapping(Z_pi(2),[[1,0,2],[2,-1,1],[1,1,1],[2,-1,1]]);
+SetName(v,"v"); SetName(v2,"v2"); SetName(w2,"w2");
 
-# The 2-modular rcwa mapping of infinite order but finite orbits,
-# from the draft.
+
+# An rcwa mapping of GF(2)[x] of infinite order but only finite orbits.
 
 R := PolynomialRing(GF(2),1);
 x := IndeterminatesOfPolynomialRing(R)[1]; SetName(x,"x");
@@ -139,7 +143,12 @@ sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
 sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
                         [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]);
 sigmas := sigma1 * sigmas2;
-c := Comm(sigmas,sigma1);
+comm := Comm(sigmas,sigma1); SetName(comm,"comm");
+
+SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
+SetName(sigma,"sigma");
+SetName(sigma0,"sigma0"); SetName(sigma_r,"sigma_r");
+SetName(sigmas,"sigmas"); SetName(sigmas2,"sigmas2");
 
 
 # The following mapping is wild, but all cycles of integers |n| < 29 are
@@ -148,18 +157,18 @@ c := Comm(sigmas,sigma1);
 f5_12 := RcwaMapping([[5, 0,6],[5,3,4],[5,-4,6],[5,-3,4],
                       [5, 4,6],[5,3,4],[5, 0,6],[5,-3,4],
                       [5,-4,6],[5,3,4],[5, 4,6],[5,-3,4]]);
-
+SetName(f5_12,"f5_12");
 
 # An interesting probably contracting mapping (long trajectories ...).
 
 T7 := RcwaMapping([[1,0,6],[7,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,2]]);
-
+SetName(T7,"T7");
 
 # Two mappings with non-balanced commutator.
 
 c1 := Restriction(a^-1,RcwaMapping([[2,0,1]]));
 c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);
-
+SetName(c1,"c1"); SetName(c2,"c2");
 
 # Two tame mappings (of orders 3 and 2, respectively), whose product is not
 # balanced.
@@ -172,11 +181,12 @@ g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
                    [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
                    [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
 
+SetName(g1,"g1"); SetName(g2,"g2");
 
 # The trajectory of 3224 under the following mapping has length 19949562.
 
 f6 := RcwaMapping([[1,0,6],[5,1,6],[7,-2,6],[11,3,6],[11,-2,6],[11,-1,6]]);
-
+SetName(f6,"f6");
 
 # Some other probably contracting mappings with divergence very close to 1.
 
@@ -187,15 +197,16 @@ f7 := RcwaMapping([[5,0,7],[9,-2,7],[9,3,7],
 f9 := RcwaMapping([[ 5, 0,9],[16, 2,9],[10,-2,9],
                    [11, 3,9],[ 5,-2,9],[ 5, 2,9],
                    [11,-3,9],[10, 2,9],[16,-2,9]]);
+SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
 
 
 # Three involutions whose product has coprime multiplier and divisor.
 
-f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);
-f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);
-f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);
+f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]); SetName(f1,"f1");
+f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]); SetName(f2,"f2");
+f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]); SetName(f3,"f3");
 
-f  := f1*f2*f3;
+f := f1*f2*f3; SetName(f,"f");
 
 
 # Some other rcwa mappings.
@@ -206,4 +217,6 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
