@@ -11,12 +11,72 @@ Revision.rcwa_g :=
 
 #############################################################################
 ##
+#F  ColorPrompt( b ) . . . . . . . . . . . . . . . . . . . the coloring stuff
+##
+##  This encloses Frank L¸beck's code for coloring GAP prompts, user input
+##  and online help texts.
+##  Coloring can be switched off by setting the option `BlackAndWhite' when
+##  loading RCWA.
+##
+if ValueOption( "BlackAndWhite" ) <> true then
+  
+  STDOUT := OutputTextUser();;
+  PrintPromptHook:=CPROMPT;; EndLineHook:=function() end;;
+
+  if not IsBound( ColorPrompt ) then  
+
+    ColorPrompt := function( b )
+  
+      if b = false then
+        Unbind(PrintPromptHook); Unbind(EndLineHook); return;
+      fi;
+
+      # print the prompt
+
+      PrintPromptHook := function( )
+  
+        local cp;
+  
+        cp := CPROMPT();
+        if cp = "gap> " then cp := "gap> "; fi;
+        # different color for brk...> prompts
+        if Length(cp)>0 and cp[1] = 'b' then
+          WriteAll(STDOUT, "\033[1m\033[31m");
+        else
+          WriteAll(STDOUT, "\033[1m\033[34m");
+        fi;
+        # use this instead of Print such that the column counter for the 
+        # command line editor is correct
+        PRINT_CPROMPT(cp);
+        # another color for input
+        WriteAll(STDOUT, "\033[0m\033[31m");
+      end;
+
+      # reset attributes before going to the next line
+
+      EndLineHook := function()
+        WriteAll(STDOUT, "\033[0m");
+      end;
+    end;
+    MakeReadOnlyGlobal( "ColorPrompt" );
+
+  fi;
+
+  Unbind(PrintPromptHook); Unbind(EndLineHook);
+
+  ColorPrompt(true);
+  ANSI_COLORS := true; # switch on coloring of online help texts
+
+fi;
+
+#############################################################################
+##
 #F  BuildRCWAManual( ) . . . . . . . . . . . . . . . . . . . build the manual
 ##
 ##  This function builds the manual of the RCWA package in the file formats
 ##  &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunh˜ffer.
+##  This is done using the GAPDoc package by Frank L¸beck and Max Neunhˆffer.
 ##
 BuildRCWAManual := function ( )
 
