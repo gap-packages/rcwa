@@ -82,7 +82,8 @@ We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
 affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
 modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
 there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
-the restriction of <M>f</M> to <M>r(m)</M> is given by <P/>
+the restriction of <M>f</M> to <M>r(m)</M> (in this context we regard
+residue classes as sets) is given by <P/>
 <Alt Only="Text"> 
   <![CDATA[
 
@@ -183,10 +184,15 @@ related to this topic has been done by Hans Läuchli and  Peter M. Neumann
 For a general survey of results concerning infinite permutation groups
 see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
 
-I developed this package as a crucial tool for investigating a large number
-of examples and getting deep enough insight into the structure of residue
-class-wise affine mappings and groups to be able to start building a theory
-of them from the bottom in my thesis <Cite Key="Kohl04"/>. <P/>
+The main reason for me to develop this package was the desire to get a
+suitable tool for investigating a large number of examples and getting deep
+enough insight into the structure of residue class-wise affine mappings and
+groups to be able to start building a theory of them from the bottom in my
+thesis <Cite Key="Kohl04"/>. <P/>
+
+At this point I would like to thank Bettina Eick for her kind help in
+trying to make this package and in particular its documentation more
+useful and more interesting for a larger number of people. <P/>
 
 I would be grateful for any bug reports, comments or suggestions.
 
@@ -207,3 +213,4 @@ I would be grateful for any bug reports, comments or suggestions.
 </Chapter>
 
 <!-- #################################################################### -->
+
