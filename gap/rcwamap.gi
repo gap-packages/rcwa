@@ -840,17 +840,22 @@ InstallGlobalFunction( ClassUnionShift,
     return RcwaMapping(R,m,c);
   end );
 
-if not IsBound( PadicValue ) then
-PadicValue := function ( rat, p )
+#############################################################################
+##
+#F  PadicValuation( rat, p )  (taken from pkg/polycyclic/gap/action/dixon.gi)
+##
+BindGlobal( "PadicValuation",
 
-  local  a1, a2;
+  function ( rat, p )
 
-  a1 := AbsInt( NumeratorRat( rat ) );
-  a2 := DenominatorRat( rat );
-  a1 := Length( Filtered( FactorsInt( a1 ), x -> x = p ) );
-  a2 := Length( Filtered( FactorsInt( a2 ), x -> x = p ) );
-  return a1 - a2;
-end; fi;
+    local  a1, a2;
+
+    a1 := AbsInt( NumeratorRat( rat ) );
+    a2 := DenominatorRat( rat );
+    a1 := Length( Filtered( FactorsInt( a1 ), x -> x = p ) );
+    a2 := Length( Filtered( FactorsInt( a2 ), x -> x = p ) );
+    return a1 - a2;
+  end );
 
 IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
@@ -1555,7 +1560,7 @@ InstallMethod( Multpk,
     local  m, c, res;
 
     m := Modulus(f); c := Coefficients(f);
-    res := Filtered([0..m-1],r->PadicValue(c[r+1][1]/c[r+1][3],p)=k);
+    res := Filtered([0..m-1],r->PadicValuation(c[r+1][1]/c[r+1][3],p)=k);
     return ResidueClassUnion(Integers,m,res);
   end );
 
@@ -3745,11 +3750,11 @@ InstallMethod( FactorizationIntoGenerators,
 
           repeat
             pairs := Filtered(Cartesian(clSmult,clSdiv),
-                     pair->PadicValue(Mod(pair[1])/Mod(pair[2]),p)=k);
+                     pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p)=k);
             pairs := Set(pairs);
             if pairs = [] then
               diffs := List(Cartesian(clSmult,clSdiv),
-                       pair->PadicValue(Mod(pair[1])/Mod(pair[2]),p));
+                       pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p));
               if Maximum(diffs) < k then
                 Info(InfoRCWA,2,"Split classes in clSmult.");
                 clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
