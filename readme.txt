@@ -2,25 +2,28 @@ README file for `RCWA' package.
 
 This package for GAP 4 (at least version 4.3) provides routines
 for computations with [R]esidue [C]lass-[W]ise [A]ffine mappings
-of the integers, hence it can be used for computations in a
-certain type of infinite permutation groups.
+of the integers, of its semilocalizations as well as of univariate
+polynomial rings over finite fields, hence it can be used for
+computations in certain types of infinite permutation groups.
 
 It is completely written in the GAP language and contains /
 requires no external binaries.
 
-For the documentation, the package `GAPDoc' is needed.
-The package `GRAPE' is loaded for use by the function `RcwaGraph',
-if present.
+Recent versions of the packages `GAPDoc' and `GRAPE' are needed.
 
 The package `RCWA' must be installed in the pkg/ - subdirectory
 of the GAP distribution.
 
 After extracting the distribution file in the proper place,
 you can load the package via RequirePackage( "rcwa" );
-Then you can build the manual by issueing BuildRCWAManual( );.
+
+Then you can build the manual by issueing BuildRCWAManual( );
+(this works only under UNIX, but should not be necessary
+unless you got the package from CVS, since the distribution file
+already contains all files produced by this function).
 
 For further advice on questions of technical nature please see
-the chapter `Auxiliary functions' of the manual.
+the chapter `Auxiliary functions' in the manual.
 
 If you have problems with this package, wish to make comments
 or suggestions, or if you find bugs, please send e-mail to
