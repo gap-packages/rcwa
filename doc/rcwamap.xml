@@ -532,28 +532,30 @@ true
   </ManSection>
 
   <ManSection>
-    <Attr Name="SetOnWhichMappingIsOrderReversing" Arg="f"/>
-    <Attr Name="SetOnWhichMappingIsConstant" Arg="f"/>
-    <Attr Name="SetOnWhichMappingIsOrderPreserving" Arg="f"/>
+    <Attr Name="SetOnWhichMappingIsClassWiseOrderReversing" Arg="f"/>
+    <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
+    <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Returns>
       The union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
       which the rcwa mapping <A>f</A> is class-wise order-reversing,
       class-wise constant resp. class-wise order-preserving.
     </Returns>
     <Description>
+      The source of the rcwa mapping <A>f</A> must be ordered.
 <Example>
 <![CDATA[
-gap> SetOnWhichMappingIsOrderPreserving(T);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(T);
 Integers
-gap> SetOnWhichMappingIsOrderPreserving(u);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(u);
 Integers
-gap> SetOnWhichMappingIsOrderReversing(t);
+gap> SetOnWhichMappingIsClassWiseOrderReversing(t);
 Integers
-gap> SetOnWhichMappingIsOrderPreserving(t);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(t);
 [  ]
-gap> SetOnWhichMappingIsConstant(RcwaMapping([[2,0,1],[0,4,1]]));
+gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
-gap> SetOnWhichMappingIsOrderPreserving(RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(
+>      RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
 0(2)
 ]]>
 </Example>
@@ -1511,6 +1513,7 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 

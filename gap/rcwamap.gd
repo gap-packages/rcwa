@@ -332,19 +332,19 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
-#A  SetOnWhichMappingIsOrderReversing( <f> )
-#A  SetOnWhichMappingIsConstant( <f> )
-#A  SetOnWhichMappingIsOrderPreserving( <f> )
+#A  SetOnWhichMappingIsClassWiseOrderReversing( <f> )
+#A  SetOnWhichMappingIsClassWiseConstant( <f> )
+#A  SetOnWhichMappingIsClassWiseOrderPreserving( <f> )
 ##
 ##  The union of the residue classes (mod Mod(<f>)) on which the rcwa mapping
 ##  <f> is class-wise order-reversing, class-wise constant resp. class-wise
 ##  order-preserving.
 ##
-DeclareAttribute( "SetOnWhichMappingIsOrderReversing",
+DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderReversing",
                   IsRationalBasedRcwaMapping );
-DeclareAttribute( "SetOnWhichMappingIsConstant",
+DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
                   IsRationalBasedRcwaMapping );
-DeclareAttribute( "SetOnWhichMappingIsOrderPreserving",
+DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
                   IsRationalBasedRcwaMapping );
 
 #############################################################################
@@ -583,3 +583,4 @@ DeclareOperation( "Restriction",
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+

@@ -984,15 +984,15 @@ gap> Determinant(sigma*b^-1*nu^2);
 1
 gap> Determinant(PseudoRandom(Group(g,h)));
 0
-gap> SetOnWhichMappingIsOrderPreserving(T);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(T);
 Integers
-gap> SetOnWhichMappingIsOrderPreserving(u);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(u);
 Integers
-gap> SetOnWhichMappingIsOrderReversing(t);
+gap> SetOnWhichMappingIsClassWiseOrderReversing(t);
 Integers
-gap> SetOnWhichMappingIsOrderPreserving(t);
+gap> SetOnWhichMappingIsClassWiseOrderPreserving(t);
 [  ]
-gap> SetOnWhichMappingIsConstant(RcwaMapping([[2,0,1],[0,4,1]]));
+gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );

@@ -1369,23 +1369,23 @@ InstallMethod( Multpk,
 
 #############################################################################
 ##
-#M  SetOnWhichMappingIsOrderReversing . . . for "rational-based" rcwa mapping
-#M  SetOnWhichMappingIsConstant . . . . . . for "rational-based" rcwa mapping
-#M  SetOnWhichMappingIsOrderPreserving  . . for "rational-based" rcwa mapping
+#M  SetOnWhichMappingIsClassWiseOrderReversing . for rcwa mapping of Z / Z_pi
+#M  SetOnWhichMappingIsClassWiseConstant . . . . for rcwa mapping of Z / Z_pi
+#M  SetOnWhichMappingIsClassWiseOrderPreserving  for rcwa mapping of Z / Z_pi
 ##
-InstallMethod( SetOnWhichMappingIsOrderReversing,
+InstallMethod( SetOnWhichMappingIsClassWiseOrderReversing,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] < 0 ) ) );
-InstallMethod( SetOnWhichMappingIsConstant,
+InstallMethod( SetOnWhichMappingIsClassWiseConstant,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] = 0 ) ) );
-InstallMethod( SetOnWhichMappingIsOrderPreserving,
+InstallMethod( SetOnWhichMappingIsClassWiseOrderPreserving,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMapping ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
@@ -3155,4 +3155,5 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
