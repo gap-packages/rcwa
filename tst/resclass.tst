@@ -4,6 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
+##
 
 gap> START_TEST("$Id$");
 gap> A := ResidueClass(Integers,3,2);
@@ -149,6 +152,8 @@ The union of the residue classes r ( mod 30 )  for r =
 
 gap> Difference(Integers,[1,2,3]);
 Integers \ [ 1, 2, 3 ]
+gap> Display(last);
+Integers \ [ 1, 2, 3 ]
 gap> Difference(Z_pi([2,3,7]),[1/5,1/55]);
 Z_[ 2, 3, 7 ] \ [ 1/55, 1/5 ]
 gap> O := Difference(Union(A,[1,3]),[2,5,8]);
@@ -193,6 +198,30 @@ gap> Union(B,Complement(B));
 Z_[ 2, 5 ]
 gap> Union(C,Complement(C));
 GF(7)[x]
+gap> Q := ResidueClassUnion( Integers, 18, [ 2, 5, 8, 11, 14, 16, 17 ],
+>                            [ 1, 3, 4, 10 ], [ 2, 5, 8, 16 ] );;
+gap> IsSubset(Q,O);
+true
+gap> IsSubset(O,Q);
+false
+gap> U := ResidueClassUnion(Integers,3,[1],[0],[]);
+The residue class 1(3), +1/-0 elements
+gap> V := ResidueClassUnion(Integers,3,[2],[0],[]);
+The residue class 2(3), +1/-0 elements
+gap> Intersection(U,V);
+[ 0 ]
+gap> U := ResidueClassUnion(Integers,3,[1],[0],[1]);
+The residue class 1(3), +1/-1 elements
+gap> V := ResidueClassUnion(Integers,3,[1,2],[0],[]);
+Union of the residue classes 1(3) and 2(3), +1/-0 elements
+gap> Display(Difference(V,U));
+ 
+The residue class 2 ( mod 3 )
+ 
+and the element
+ 
+ 1
+
 gap> cl := List([1..25],i->ResidueClass(Integers,Primes[i],i));;
 gap> cl_int := Intersection(cl);
 The residue class 941584379775558526136539054851975983(
@@ -208,6 +237,14 @@ gap> it2 := ShallowCopy(it);
 <iterator of a residue class union of Z>
 gap> l := List([1..16],i->NextIterator(it2));
 [ 21, -24, 22, -23, 26, -29, 27, -28, 31, -34, 32, -33, 36, -39, 37, -38 ]
+gap> l := [];;
+gap> for n in F do Add(l,n); if Length(l) > 100 then break; fi; od;
+gap> Set(l) = Intersection(F,[-124..126]);
+true
+gap> l := [];;
+gap> for n in Complement(A) do Add(l,n); if Length(l)>100 then break; fi; od;
+gap> Set(l) = Intersection(Complement(A),[-75..75]);
+true
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################

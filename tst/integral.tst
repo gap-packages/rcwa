@@ -127,6 +127,20 @@ gap> k := RcwaMapping([[-1,3,1]]);
 Integral rcwa mapping: n -> -n + 3
 gap> k := RcwaMapping([[-1,-3,1]]);
 Integral rcwa mapping: n -> -n - 3
+gap> k := RcwaMapping([[2,0,1],[0,3,1]]);
+<integral rcwa mapping with modulus 2>
+gap> PreImage(k,[0,1,4,8,14]);
+[ 0, 2, 4 ]
+gap> PreImage(k,[0,1,3,4,8,14]);
+The residue class 1(2), +3/-0 elements
+gap> Display(last);
+ 
+The residue class 1 ( mod 2 )
+ 
+and the elements
+ 
+ 0 2 4
+
 gap> ZeroOne := RcwaMapping([[0,0,1],[0,1,1]]);;
 gap> PreImagesElm(ZeroOne,6);
 [  ]
@@ -134,6 +148,12 @@ gap> PreImagesElm(ZeroOne,1);
 The residue class 1(2)
 gap> Image(ZeroOne);
 [ 0, 1 ]
+gap> e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]);;
+gap> S := Difference(Integers,[1,2,3]);;
+gap> im := Image(e1,S);
+Integers \ [ 1, 2, 6 ]
+gap> pre := PreImage(e1,im);
+Integers \ [ 1, 2, 3 ]
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> IsBijective(u);
 true
@@ -195,6 +215,32 @@ false
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
+gap> cl := ResidueClass(Integers,3,1);
+The residue class 1(3)
+gap> im := Image(a,cl);
+Union of the residue classes 1(9), 5(9) and 6(9)
+gap> PreImage(a,im);
+The residue class 1(3)
+gap> pre := PreImage(a,cl);
+The residue class 1(4)
+gap> PreImage(a,last);
+Union of the residue classes 1(16), 6(16), 7(16) and 14(16)
+gap> Image(a,pre);
+The residue class 1(3)
+gap> cl := ResidueClass(Integers,2,0);;
+gap> Image(a,cl);
+The residue class 0(3)
+gap> PreImage(a,cl);
+Union of the residue classes 0(8), 3(8), 4(8) and 5(8)
+gap> Image(a,PreImage(a,cl)) = cl;
+true
+gap> PreImage(a,Image(a,cl)) = cl;
+true
+gap> cl := ResidueClass(Integers,5,3);;
+gap> Image(a,PreImage(a,cl)) = cl;
+true
+gap> PreImage(a,Image(a,cl)) = cl;
+true
 gap> ab := Comm(a,b);;
 gap> ac := Comm(a,c);;
 gap> bc := Comm(b,c);;
@@ -342,6 +388,41 @@ gap> k^tostd = std;
 true
 gap> Order(tostd);
 2
+gap> Image(k,ResidueClass(Integers,3,2));
+Union of the residue classes 1(15), 9(15), 10(15), 12(15) and 13(15)
+gap> PreImage(k,last);
+The residue class 2(3)
+gap> PreImage(k,last);
+Union of the residue classes 0(15), 6(15), 9(15), 12(15) and 13(15)
+gap> PreImage(k,last);
+Union of the residue classes 1(15), 5(15), 7(15), 8(15) and 14(15)
+gap> Image(k,last);
+Union of the residue classes 0(15), 6(15), 9(15), 12(15) and 13(15)
+gap> cls := List([0..2],r->ResidueClass(Integers,3,r));
+[ The residue class 0(3), The residue class 1(3), The residue class 2(3) ]
+gap> Union(List(cls,cl->Image(k,cl)));
+Integers
+gap> cls := List([0..6],r->ResidueClass(Integers,7,r));;
+gap> Union(List(cls,cl->Image(k,cl)));
+Integers
+gap> Union(List(cls,cl->Image(a,cl)));
+Integers
+gap> Union(List(cls,cl->Image(u,cl)));
+Integers
+gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);;
+gap> im := Image(a,Image(a,F));
+<union of 18 residue classes (mod 45), +2/-2 elements>
+gap> pre := PreImage(a,PreImage(a,im));
+Union of the residue classes 1(5) and 2(5), +2/-2 elements
+gap> z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
+>                      [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
+>                      [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
+>                      [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]);;
+gap> set := Image(a,PreImage(h,Image(z,F)));
+<union of 576 residue classes (mod 1440), +2/-2 elements>
+gap> control := PreImage(z,Image(h,PreImage(a,set)));;
+gap> control = F;
+true
 gap> CompositionMapping(a,b) = b*a;
 true
 gap> CompositionMapping(g,h) = h*g;
