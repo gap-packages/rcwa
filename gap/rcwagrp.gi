@@ -466,20 +466,20 @@ InstallMethod( \in,
         Info(InfoRCWA,3,"<G> is tame, but <g> is wild.");
         return false;
       fi;
-      P := PermutedClassPartition(G);
+      P := RespectedClassPartition(G);
       H := ActionOnClassPartition(G);
       h := Permutation(g,P);
       if h = fail then
-        Info(InfoRCWA,3,"<g> does not act on PermutedClassPartition(<G>).");
+        Info(InfoRCWA,3,"<g> does not act on RespectedClassPartition(<G>).");
         return false;
       fi;
       if not h in H then
-        Info(InfoRCWA,3,"The action of <g> on PermutedClassPartition(<G>) ",
+        Info(InfoRCWA,3,"The action of <g> on RespectedClassPartition(<G>) ",
                         "is not an element of the one of <G>.");
         return false;
       fi;
       Info(InfoRCWA,3,"Checking membership of <g>^Order(<h>) in ",
-                      "the kernel of PermutedClassPartition(<G>).");  
+                      "the kernel of RespectedClassPartition(<G>).");  
       K := KernelOfActionOnClassPartition(G);
       L := KernelOfActionOnClassPartitionHNFMat(G);
       k := g^Order(h); c := Coefficients(k);
@@ -695,7 +695,7 @@ InstallMethod( IsomorphismMatrixGroup,
       od;
     fi;
     g := GeneratorsOfGroup(G);
-    P := PermutedClassPartition(G);
+    P := RespectedClassPartition(G);
     deg := 2 * Length(P);
     H := Action(G,P); h := GeneratorsOfGroup(H);
     m := [];
@@ -873,9 +873,9 @@ InstallMethod( OrbitUnion,
 
 #############################################################################
 ##
-#M  PermutedClassPartition( <G> ) . . . . . . . . . . . . for tame rcwa group
+#M  RespectedClassPartition( <G> ) . . . . . . . . . . .  for tame rcwa group
 ##
-InstallOtherMethod( PermutedClassPartition,
+InstallOtherMethod( RespectedClassPartition,
                     "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
 
   function ( G )
@@ -910,7 +910,7 @@ InstallOtherMethod( PermutedClassPartition,
 ##
 InstallMethod( ActionOnClassPartition,
                "for tame rcwa groups", true, [ IsRcwaGroup ], 0,
-               G -> Action( G, PermutedClassPartition( G ) ) );
+               G -> Action( G, RespectedClassPartition( G ) ) );
 
 #############################################################################
 ##
@@ -924,7 +924,7 @@ InstallMethod( RankOfKernelOfActionOnClassPartition,
 
     local  P, P3, H, H3, orbs, orb, cl;
 
-    P  := PermutedClassPartition(G);
+    P  := RespectedClassPartition(G);
     P3 := Flat(List(P,cl->[ResidueClass(Integers,
                            3*Modulus(cl),Residues(cl)[1]),
                            ResidueClass(Integers,
@@ -950,7 +950,7 @@ InstallMethod( KernelOfActionOnClassPartition,
            genK, genKHNF, elH, elG, elK, c, nr, lasthit, erg, i;
 
     ModG := Modulus(G);
-    P := PermutedClassPartition(G);
+    P := RespectedClassPartition(G);
     H := ActionOnClassPartition(G);
     g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
     nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
@@ -1005,7 +1005,7 @@ InstallOtherMethod( FlateningConjugator,
     local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
     if IsFlat(G) then return One(G); fi;
-    pcp := PermutedClassPartition(G); 
+    pcp := RespectedClassPartition(G); 
     if pcp = fail then return fail; fi;
     m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
     c := List([1..m],i->[1,0,1]);

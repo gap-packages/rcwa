@@ -790,7 +790,7 @@ gap> G := PSL(IsIntegralRcwaGroup,2,3);
 gap> Size(G);
 12
 gap> G := Group(g,h);;
-gap> P := PermutedClassPartition(G);
+gap> P := RespectedClassPartition(G);
 [ The residue class 0(12), The residue class 1(12), The residue class 3(12),
   The residue class 4(12), The residue class 5(12), The residue class 6(12),
   The residue class 7(12), The residue class 9(12), The residue class 10(12),
@@ -854,8 +854,8 @@ gap> ab*bc^2*ac^-3 in G;
 #I  IsTame:`factors of multiplier and divisor' criterion.
 #I  IsTame:`dead end' criterion.
 #I  IsTame:`finite order or flat power' criterion.
-#I  Checking membership of <g>^Order(<h>) in the kernel of PermutedClassPartit\
-ion(<G>).
+#I  Checking membership of <g>^Order(<h>) in the kernel of RespectedClassParti\
+tion(<G>).
 true
 gap> a in G;
 #I  \in for integral rcwa mapping and -rcwa group
@@ -879,7 +879,7 @@ gap> nu^a in G;
 false
 gap> g in G;
 #I  \in for integral rcwa mapping and -rcwa group
-#I  <g> does not act on PermutedClassPartition(<G>).
+#I  <g> does not act on RespectedClassPartition(<G>).
 false
 gap> G := Group(a,b);
 <integral rcwa group with 2 generators>

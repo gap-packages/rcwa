@@ -1163,9 +1163,9 @@ InstallMethod( ZeroOp,
     SetIsZero( zero, true ); return zero;
   end );
 
-############################################################################# 
+#############################################################################
 ## 
-#M  IsZero( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping 
+#M  IsZero( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ## 
 ##  <f> = zero rcwa mapping ? 
 ## 
@@ -1223,9 +1223,9 @@ InstallMethod( OneOp,
     SetIsOne( one, true ); return one;
   end );
 
-############################################################################# 
+#############################################################################
 ## 
-#M  IsOne( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping 
+#M  IsOne( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ## 
 ##  <f> = identity rcwa mapping ? 
 ## 
@@ -2391,7 +2391,7 @@ InstallGlobalFunction( Trajectory,
     return seq;
   end );
 
-############################################################################# 
+#############################################################################
 ##
 #F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
 #F  TrajectoryModulo( <f>, <n>, <lng> )
@@ -2665,9 +2665,9 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
-#M  PermutedClassPartition( <sigma> ) . . . . for tame bijective rcwa mapping
+#M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
 ##
-InstallMethod( PermutedClassPartition,
+InstallMethod( RespectedClassPartition,
                "for tame bijective rcwa mappings", true,
                [ IsRcwaMapping ], 0,
 
@@ -2712,7 +2712,7 @@ InstallMethod( FlateningConjugator,
     local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
     if IsFlat(sigma) then return One(sigma); fi;
-    pcp := PermutedClassPartition(sigma); 
+    pcp := RespectedClassPartition(sigma); 
     if pcp = fail then return fail; fi;
     m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
     c := List([1..m],i->[1,0,1]);
@@ -2752,7 +2752,7 @@ InstallMethod( StandardizingConjugator,
       toflat := FlateningConjugator(sigma);
       flat   := sigma^toflat;
     else toflat := One(sigma); flat := sigma; fi;
-    m := Modulus(flat); pcp := PermutedClassPartition(flat);
+    m := Modulus(flat); pcp := RespectedClassPartition(flat);
     cycs := Cycles(flat,pcp); lngs := Set(List(cycs,Length));
     cohorts := List(lngs,l->Filtered(cycs,cyc->Length(cyc)=l));
     mtilde := Sum(lngs); c := List([1..m],i->[1,0,1]); rtilde := 0;

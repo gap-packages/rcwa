@@ -503,18 +503,17 @@ gap> OrbitsModulo(G,72);
   </ManSection>
 
   <ManSection>
-    <Attr Name="PermutedClassPartition" Arg="G"
-          Label="Permuted class partition for rcwa group"/>
+    <Attr Name="RespectedClassPartition" Arg="G"
+          Label="Respected class partition for rcwa group"/>
     <Description>
       A partition of the base ring <M>R</M> into a finite number of residue classes,
-      on which the group <A>G</A> acts as a permutation group. 
+      on which the group <A>G</A> acts as a permutation group, and on those elements
+      all elements of <A>G</A> are affine. 
       The partition is non-trivial as long as the modulus of <A>G</A> is not
-      equal to 1.
-      Such a partition exists always if <A>G</A> is tame and <M>R</M> has the
-      <Q>class halving property</Q>. <P/>
+      equal to 1. Such a partition exists always if <A>G</A> is tame.
 
-      See also <Ref Attr="PermutedClassPartition"
-      Label="Permuted class partition for rcwa mapping"/>
+      See also <Ref Attr="RespectedClassPartition"
+      Label="Respected class partition for rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
@@ -551,7 +550,7 @@ Bijective integral rcwa mapping with modulus 6, of order 12
   5                                    | n + 1
 
 ]
-gap> pcp := PermutedClassPartition(G);
+gap> pcp := RespectedClassPartition(G);
 [ The residue class 0(12), The residue class 1(12), The residue class 3(12),
   The residue class 4(12), The residue class 5(12), The residue class 6(12),
   The residue class 7(12), The residue class 9(12), The residue class 10(12),
@@ -566,7 +565,7 @@ gap> pcp := PermutedClassPartition(G);
     <Attr Name="ActionOnClassPartition" Arg="G"/>
     <Description>
       The action of the tame rcwa group <A>G</A> on
-      <C>PermutedClassPartition( <A>G</A> )</C>.
+      <C>RespectedClassPartition( <A>G</A> )</C>.
 <Example>
 <![CDATA[
 gap> H := ActionOnClassPartition(G);
@@ -590,7 +589,7 @@ true
     <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
     <Description>
       The rank of the largest free abelian subgroup of the kernel of the action
-      of the tame rcwa group <A>G</A> on <C>PermutedClassPartition( <A>G</A> )</C>.
+      of the tame rcwa group <A>G</A> on <C>RespectedClassPartition( <A>G</A> )</C>.
 <Example>
 <![CDATA[
 gap> RankOfKernelOfActionOnClassPartition(G);
@@ -604,7 +603,7 @@ gap> RankOfKernelOfActionOnClassPartition(G);
     <Attr Name="KernelOfActionOnClassPartition" Arg="G"/>
     <Description>
       The kernel of the action of the tame rcwa group <A>G</A> on
-      <C>PermutedClassPartition( <A>G</A> )</C>.
+      <C>RespectedClassPartition( <A>G</A> )</C>.
 <Example>
 <![CDATA[
 gap> K := KernelOfActionOnClassPartition(G);
@@ -623,7 +622,7 @@ true
     <Description>
       A matrix of vectors in Hermite Normal Form spanning the lattice
       corresponding to the kernel of the action of the tame rcwa group <A>G</A>
-      on <C>PermutedClassPartition( <A>G</A> )</C>.
+      on <C>RespectedClassPartition( <A>G</A> )</C>.
 <Log>
 <![CDATA[
 gap> L := KernelOfActionOnClassPartitionHNFMat(G);

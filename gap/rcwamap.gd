@@ -430,7 +430,7 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
-#A  PermutedClassPartition( <sigma> ) . . . . . . .  permuted class partition
+#A  RespectedClassPartition( <sigma> ) . . . . . . .  permuted class partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
 ##  on which the bijective mapping <sigma> acts as a permutation. 
@@ -438,7 +438,7 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 ##  Such a partition exists always if <sigma> is tame and <R> has the
 ##  `class halving property'. 
 ##
-DeclareAttribute( "PermutedClassPartition", IsRcwaMapping );
+DeclareAttribute( "RespectedClassPartition", IsRcwaMapping );
 
 #############################################################################
 ##

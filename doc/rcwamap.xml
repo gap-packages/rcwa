@@ -1165,24 +1165,23 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 <Heading>The action of an rcwa mapping on the set of residue classes</Heading>
 
   <ManSection>
-    <Attr Name="PermutedClassPartition" Arg="sigma"
-          Label="Permuted class partition for rcwa mapping"/>
+    <Attr Name="RespectedClassPartition" Arg="sigma"
+          Label="Respected class partition for rcwa mapping"/>
     <Description>
       A partition of the base ring <M>R</M> into a finite number of residue classes,
-      on which the bijective mapping <A>sigma</A> acts as a permutation. 
+      on which the bijective mapping <A>sigma</A> acts as a permutation,
+      and on those elements <A>sigma</A> acts as an affine mapping.
       The partition is non-trivial as long as the modulus of <A>sigma</A> is not
-      equal to 1.
-      Such a partition exists always if <A>sigma</A> is tame and <M>R</M> has the
-      <Q>class halving property</Q>. <P/>
+      equal to 1. Such a partition exists always if <A>sigma</A> is tame. <P/>
 
-      See also <Ref Attr="PermutedClassPartition"
-      Label="Permuted class partition for rcwa group"/>
+      See also <Ref Attr="RespectedClassPartition"
+      Label="Respected class partition for rcwa group"/>
       for rcwa groups.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
-gap> pcp := PermutedClassPartition(g);
+gap> pcp := RespectedClassPartition(g);
 [ The residue class 0(6), The residue class 1(6), The residue class 3(6),
   The residue class 4(6), The residue class 5(6), The residue class 2(12),
   The residue class 8(12) ]
