@@ -199,7 +199,7 @@ gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);;
 gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);;
 gap> List([f1,f2,f3],Order);
 [ 2, 2, 2 ]
-gap> f  := f1*f2*f3;
+gap> f := f1*f2*f3;
 <bijective rcwa mapping of Z with modulus 12>
 gap> Order(f);
 infinity
@@ -586,6 +586,30 @@ gap> Image(k);
 0(4)
 gap> A^u;
 1(9) U 3(9) U 14(27) U 20(27) U 26(27)
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\^" Arg="f, P"/>
+    <Returns>
+      the image of the partition <A>P</A> of <C>Source( <A>f</A> )</C>
+      under the rcwa mapping <A>f</A>.
+    </Returns>
+    <Description>
+      The argument <A>P</A> must be a partition of the source of the
+      rcwa mapping <A>f</A> into disjoint residue classes.
+<Example>
+<![CDATA[
+gap> P := [rc(0,2),rc(1,4),rc(3,4)];
+[ 0(2), 1(4), 3(4) ]
+gap> P^T;
+[ Integers, 2(6), 5(6) ]
+gap> P^f;
+[ 0(6) U 1(6) U 5(6), 2(12) U 4(12) U 9(12), 3(12) U 8(12) U 10(12) ]
+gap> last^(f^-1);
+[ 0(2), 1(4), 3(4) ]
 ]]>
 </Example>
     </Description>
@@ -1422,6 +1446,7 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
