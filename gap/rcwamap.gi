@@ -1396,7 +1396,7 @@ InstallMethod( ImageElm,
 
 #############################################################################
 ##
-#M  \^( <n>, <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
+#M  \^( <n>, <f> ) . . . . . . . . . . . .  for ring element and rcwa mapping
 ##
 ##  Image of the ring element <n> under the rcwa mapping <f>. 
 ##
@@ -1478,6 +1478,21 @@ InstallMethod( ImagesSet,
       then image := Difference( image, [ im ] ); fi;
     od;
     return image;
+  end );
+
+#############################################################################
+##
+#M  \^( <S>, <f> ) . . . . . . . . . . . . . . . . . for set and rcwa mapping
+##
+##  Image of the set <S> under the rcwa mapping <f>.
+##  In particular, <S> can be a union of residue classes.
+##
+InstallOtherMethod( \^,
+                    "for set and rcwa mapping",
+                    ReturnTrue, [ IsListOrCollection, IsRcwaMapping ], 0,
+
+  function ( S, f )
+    return ImagesSet( f, S );
   end );
 
 #############################################################################

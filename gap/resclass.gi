@@ -466,7 +466,7 @@ InstallMethod( \<,
 
   function ( U1, U2 )
     if   U1!.m <> U2!.m then return U1!.m < U2!.m;
-    elif U1!.r <> U2!.r then return U1!.m < U2!.m;
+    elif U1!.r <> U2!.r then return U1!.r < U2!.r;
     elif U1!.included <> U2!.included then return U1!.included < U2.included;
     else return U1!.excluded < U2!.excluded; fi;
   end );
