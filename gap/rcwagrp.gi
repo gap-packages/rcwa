@@ -116,13 +116,17 @@ InstallMethod( RCWACons,
                              IsIntegralRcwaGroup and IsAttributeStoringRep ),
                     rec( ) );
     SetIsTrivial( G, false );
-    SetIsNaturalRCWA_Z( G, true );
     SetOne( G, IdentityIntegralRcwaMapping );
+    SetIsNaturalRCWA_Z( G, true );
+    SetModulusOfRcwaGroup( G, 0 );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
     SetCentre( G, TrivialIntegralRcwaGroup );
     SetIsSolvableGroup( G, false );
     SetIsPerfectGroup( G, false );
+    SetIsSimpleGroup( G, false );
     SetRepresentative( G, RcwaMapping( [ [ -1, 0, 1 ] ] ) );
     SetName( G, "RCWA(Z)" );
     return G;
@@ -148,11 +152,14 @@ InstallMethod( RCWACons,
                               and IsAttributeStoringRep ),
                      rec( ) );
     SetIsTrivial( G, false );
-    SetIsNaturalRCWA_Z_pi( G, true );
     SetOne( G, id );
+    SetIsNaturalRCWA_Z_pi( G, true );
+    SetModulusOfRcwaGroup( G, 0 );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
     SetIsFinite( G, false ); SetSize( G, infinity );
   # SetIsFinitelyGeneratedGroup( G, false ); ???
-    SetCentre( G, TrivialIntegralRcwaGroup );
+    SetCentre( G, Group( id ) );
     SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
     SetName( G, Concatenation( "RCWA(", Name(R), ")" ) );
@@ -180,14 +187,18 @@ InstallMethod( RCWACons,
                               and IsAttributeStoringRep ),
                      rec( ) );
     SetIsTrivial( G, false );
-    SetIsNaturalRCWA_GF_q_x( G, true );
     SetOne( G, id );
+    SetIsNaturalRCWA_GF_q_x( G, true );
+    SetModulusOfRcwaGroup( G, Zero( R ) );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
-    SetCentre( G, TrivialIntegralRcwaGroup );
+    SetCentre( G, Group( id ) );
     SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
-    SetName( G, Concatenation( "RCWA(GF(", String(q), ")[x])" ) );
+    SetName( G, Concatenation( "RCWA(GF(", String(q), ")[",
+                String(IndeterminatesOfPolynomialRing(R)[1]),"])" ) );
     return G;
   end );
 
@@ -227,6 +238,116 @@ InstallMethod( IsNaturalRCWA_Z_pi,
 InstallMethod( IsNaturalRCWA_GF_q_x,
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                ReturnFalse );
+
+#############################################################################
+##
+#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . generic method for groups
+##
+InstallMethod( IsSolvable,
+               "generic method for groups (RCWA)", true, [ IsGroup ],
+               SUM_FLAGS,
+
+  function ( G )
+    if   HasIsSolvableGroup(G)
+    then return IsSolvableGroup(G);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsPerfect( <G> ) . . . . . . . . . . . . . . .  generic method for groups
+##
+InstallMethod( IsPerfect,
+               "generic method for groups (RCWA)", true, [ IsGroup ],
+               SUM_FLAGS,
+
+  function ( G )
+    if   HasIsPerfectGroup(G)
+    then return IsPerfectGroup(G);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsSimple( <G> ) . . . . . . . . . . . . . . . . generic method for groups
+##
+InstallMethod( IsSimple,
+               "generic method for groups (RCWA)", true, [ IsGroup ],
+               SUM_FLAGS,
+
+  function ( G )
+    if   HasIsSimpleGroup(G)
+    then return IsSimpleGroup(G);
+    else TryNextMethod(); fi;
+  end );
+
+# Auxiliary function for computing pairs of disjoint residue classes
+# with modulus at most m.
+
+ClassPairs := m -> Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
+                            t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
+                                 and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
+                                 and (t[2] <> t[4] or t[1] < t[3]));
+MakeReadOnlyGlobal( "ClassPairs" );
+
+BindGlobal( "CLASS_PAIRS", [ 6, ClassPairs(6) ] );
+BindGlobal( "CLASS_PAIRS_LARGE", CLASS_PAIRS );
+
+#############################################################################
+##
+#M  Random( RCWA( Integers ) ) . . . . . . . . . .  random element of RCWA(Z)
+##
+InstallMethod( Random,
+               "for RCWA(Z) (RCWA)", true, [ IsNaturalRCWA_Z ], 0,
+
+  function ( RCWA_Z )
+
+    local  Result, ClassTranspositions, ClassShifts, ClassReflections,
+           GenFactors, Classes, tame, maxmodcscr, maxmodct, noct, nocs, nocr,
+           deg, g, m, r, i;
+
+    tame       := ValueOption("IsTame") = true;
+    noct       := ValueOption("ClassTranspositions");
+    nocs       := ValueOption("ClassShifts");
+    nocr       := ValueOption("ClassReflections");
+    maxmodcscr := ValueOption("ModulusBoundCSCR");
+    maxmodct   := ValueOption("ModulusBoundCT");
+    if noct   = fail then noct := Random([0..2]); fi;
+    if nocs   = fail then nocs := Random([0..3]); fi;
+    if nocr   = fail then nocr := Random([0..3]); fi;
+    if maxmodcscr = fail then maxmodcscr :=  6; fi;
+    if maxmodct   = fail then maxmodct   := 14; fi;
+    if maxmodct <> CLASS_PAIRS_LARGE[1] then
+      MakeReadWriteGlobal("CLASS_PAIRS_LARGE");
+      CLASS_PAIRS_LARGE := [maxmodct,ClassPairs(maxmodct)];
+      MakeReadOnlyGlobal("CLASS_PAIRS_LARGE");
+    fi;
+    Classes             := Combinations([1..maxmodcscr],2)-1;
+    ClassTranspositions := List([1..noct],i->Random(CLASS_PAIRS[2]));
+    if   Random([1..4]) = 1 
+    then Add(ClassTranspositions,Random(CLASS_PAIRS_LARGE[2])); fi;
+    ClassShifts         := List([1..nocs],i->Random(Classes));
+    ClassReflections    := List([1..nocr],i->Random(Classes));
+    ClassTranspositions := List(ClassTranspositions,ClassTransposition);
+    ClassShifts         := List(ClassShifts,t->ClassShift(t)^Random([-1,1]));
+    ClassReflections    := List(ClassReflections,ClassReflection);
+    Result              :=   Product(ClassTranspositions)
+                           * Product(ClassShifts)
+                           * Product(ClassReflections);
+    if Result = 1 then Result := One(RCWA_Z); fi;
+    GenFactors := Concatenation(ClassTranspositions,ClassShifts,
+                                ClassReflections);
+    if not tame then SetFactorizationIntoGenerators(Result,GenFactors); fi;
+    if tame then
+      deg := Random([6,6,6,6,6,6,6,6,12,12,12,18]);
+      g := Random(SymmetricGroup(deg));
+      Result := RcwaMapping(g,[1..deg])^Result;
+      SetIsTame(Result,true);
+      SetOrder(Result,Order(g));
+    fi;
+    IsBijective(Result);
+    return Result;
+  end );
 
 #############################################################################
 ##
@@ -572,8 +693,6 @@ InstallMethod( Modulus,
 
     local  R, m, oldmod, maxfinmod, g, gens, els, step, maxstep;
 
-    Info(InfoWarning,1,"Warning: probabilistic method for computing\n",
-         "the modulus of an rcwa group may return wrong result.");
     if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
     R := Source(One(G)); gens := GeneratorsOfGroup(G);
     if IsIntegral(G) then
@@ -607,8 +726,11 @@ InstallMethod( Modulus,
       if not IsZero(m mod Modulus(g)) then
         m := Lcm(m,Modulus(g)); step := 1;
       fi;
-      if   Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod))
-      then SetModulusOfRcwaGroup(G,Zero(R)); return Zero(R); fi;
+      if Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod)) then
+        Info(InfoWarning,1,"Warning: probabilistic method for computing\n",
+             "the modulus of an rcwa group may return wrong result.");
+        SetModulusOfRcwaGroup(G,Zero(R)); return Zero(R);
+      fi;
     until step > maxstep;
     SetModulusOfRcwaGroup(G,m); CheckModulus(G,m); return m;
   end );
