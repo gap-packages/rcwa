@@ -63,7 +63,7 @@ gap> PreImage(T,A);
 1(2) U 4(6)
 gap> B := ResidueClass(Integers,3,1);;
 gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
-1(3), +3/-3 elements
+1(3) U [ 2, 5, 14 ] \ [ 1, 4, 10 ]
 gap> Display(Image(T,M));
  
 The residue class 2 ( mod 3 ) of Z
@@ -77,7 +77,7 @@ without the elements
  2 5
 
 gap> PreImage(T,M);
-2(6), +6/-3 elements
+2(6) U [ 1, 3, 4, 9, 10, 28 ] \ [ 2, 8, 20 ]
 gap> Display(last);
  
 The residue class 2 ( mod 6 ) of Z
@@ -141,7 +141,7 @@ gap> k := RcwaMapping([[2,0,1],[0,3,1]]);
 gap> PreImage(k,[0,1,4,8,14]);
 [ 0, 2, 4 ]
 gap> PreImage(k,[0,1,3,4,8,14]);
-1(2), +3/-0 elements
+1(2) U [ 0, 2, 4 ]
 gap> Display(last);
  
 The residue class 1 ( mod 2 ) of Z
@@ -438,25 +438,25 @@ gap> Union(List(cls,cl->Image(u,cl)));
 Integers
 gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);;
 gap> im := Image(a,Image(a,F));
-<union of 18 residue classes (mod 45) of Z, +2/-2 elements>
+<union of 18 residue classes (mod 45)> U [ 3, 18 ] \ [ -9, 1 ]
 gap> pre := PreImage(a,PreImage(a,im));
-1(5) U 2(5), +2/-2 elements
+1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ]
 gap> C7 := Group(g);; 
 gap> orb := Orbit(C7,F);
-[ 1(5) U 2(5), +2/-2 elements, <union of 12 residue classes (mod 30) of Z, +
-    2/-2 elements>, <union of 24 residue classes (mod 60) of Z, +2/-
-    2 elements>, <union of 24 residue classes (mod 60) of Z, +2/-2 elements>,
-  <union of 24 residue classes (mod 60) of Z, +2/-2 elements>,
-  <union of 24 residue classes (mod 60) of Z, +2/-2 elements>,
-  <union of 12 residue classes (mod 30) of Z, +2/-2 elements> ]
+[ 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ], <union of 12 residue classes (mod
+    30)> U [ 4, 8 ] \ [ -2, 5 ], <union of 24 residue classes (mod 60)> U
+    [ 0, 4 ] \ [ -6, 3 ], <union of 24 residue classes (mod 60)> U [ 0, 2 ] \
+    [ -10, 8 ], <union of 24 residue classes (mod 60)> U [ 1, 2 ] \ [ -5, 4 ],
+  <union of 24 residue classes (mod 60)> U [ 1, 5 ] \ [ -1, 0 ],
+  <union of 12 residue classes (mod 30)> U [ 3, 5 ] \ [ -3, 2 ] ]
 gap> Union(orb{[1,2]});
-<union of 19 residue classes (mod 30) of Z, +3/-2 elements>
+<union of 19 residue classes (mod 30)> U [ 3, 4, 8 ] \ [ -2, 5 ]
 gap> Union(orb{[1,2,3]});
-<union of 44 residue classes (mod 60) of Z, +3/-1 elements>
+<union of 44 residue classes (mod 60)> U [ 0, 4, 8 ] \ [ -6 ]
 gap> Union(orb{[1,2,3,4]});
-<union of 25 residue classes (mod 30) of Z, +2/-1 elements>
+<union of 25 residue classes (mod 30)> U [ 0, 4 ] \ [ -10 ]
 gap> Union(orb{[1,2,3,4,5]});
-<union of 28 residue classes (mod 30) of Z, +1/-1 elements>
+<union of 28 residue classes (mod 30)> U [ 0 ] \ [ -5 ]
 gap> Union(orb{[1,2,3,4,5,6]});
 Z \ [ -1 ]
 gap> Union(orb{[1,2,3,4,5,6,7]});
@@ -466,7 +466,7 @@ gap> z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
 >                      [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
 >                      [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]);;
 gap> set := Image(a,PreImage(h,Image(z,F)));
-<union of 576 residue classes (mod 1440) of Z, +2/-2 elements>
+<union of 576 residue classes (mod 1440)> U [ 12, 21 ] \ [ -2, 0 ]
 gap> control := PreImage(z,Image(h,PreImage(a,set)));;
 gap> control = F;
 true
@@ -475,7 +475,7 @@ gap> Difference(Integers,Image(nb));
 2(12) U 6(12)
 gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
 gap> im := Image(pc);
-1(3) U 3(6) U 0(12) U 8(12), +1/-0 elements
+1(3) U 3(6) U 0(12) U 8(12) U [ 2 ]
 gap> Display(im);
  
 The union of the residue classes r ( mod 12 ) of Z for r =
@@ -753,7 +753,7 @@ gap> sigma := sigma1*sigma2;
 gap> fact := FactorizationOnConnectedComponents(sigma,36);;
 gap> List(fact,MovedPoints);
 [ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36),
-  <union of 23 residue classes (mod 36) of Z, +0/-2 elements> ]
+  <union of 23 residue classes (mod 36)> \ [ -6, 3 ] ]
 gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
 gap> List(CoefficientsOnTrajectory(sigma,37,37,"stop",true),
@@ -944,5 +944,6 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
