@@ -142,7 +142,7 @@ infinity
     <Returns>
       an integral rcwa group isomorphic to the (finite) permutation
       group <A>G</A>, which acts on the range
-      <C>[ 1 .. LargestMovedPoint(</C><A>G</A><C> ) ]</C> as <A>G</A> does.
+      <C>[ 1 .. LargestMovedPoint( </C><A>G</A><C> ) ]</C> as <A>G</A> does.
     </Returns>
     <Description>
 <Example>
@@ -404,6 +404,21 @@ gap> IsTame(Group(a,b));
 false
 gap> IsTame(Group(Comm(a,b),Comm(a,c)));
 true
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="MovedPoints" Arg="G"/>
+    <Returns>
+      the set of moved points (support) of the rcwa group <A>G</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
+<union of 8 residue classes (mod 9)>
+]]>
 </Example>
     </Description>
   </ManSection>

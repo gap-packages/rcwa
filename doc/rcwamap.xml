@@ -593,6 +593,24 @@ gap> l;
 </Example>
     </Description>
   </ManSection>
+
+  <ManSection>
+    <Meth Name="MovedPoints" Arg="f"/>
+    <Returns>
+      the set of moved points (support) of the bijective rcwa mapping <A>f</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> MovedPoints(u);
+Integers \ [ -1, 0 ]
+gap> MovedPoints(r);
+GF(2)[x] \ [ 0*Z(2), Z(2)^0, x, x+Z(2)^0 ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
 </Section>
 
 <!-- ################################################################################# -->
