@@ -4,9 +4,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
 
 if not CompareVersionNumbers( VERSION, "4r4" ) and not QUIET and BANNER then
   Print("\nLoading RCWA ",PACKAGES_VERSIONS.rcwa);

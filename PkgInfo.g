@@ -4,8 +4,6 @@
 ##  
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik, Universit\"at Stuttgart, Germany
-##
 
 SetPackageInfo( rec(
 

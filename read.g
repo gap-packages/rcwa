@@ -4,9 +4,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
 
 # Read the implementation part of the package.
 
