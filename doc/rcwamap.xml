@@ -95,6 +95,33 @@ is determined by the ordering of the representatives of the residue classes
 triple for the residue class <M>0(m)</M> comes first, then comes the one for
 <M>1(m)</M>, the one for <M>2(m)</M> and so on. <P/>
 
+The most easy way to enter a given rcwa mapping is by <C>RcwaMapping(
+[ <A>R</A>, <A>m</A>, ] <A>coeffs</A> )</C>. If the arguments <A>R</A> and
+<A>m</A> are omitted, they default to <C>Integers</C> resp. the length of
+the coefficient list <A>coeffs</A>. If the given coefficients would enforce
+a division by zero or images of elements of <A>R</A> outside <A>R</A>,
+an error message is printed and a break loop is entered. For example, the
+coefficient triple <C>[1,1,3]</C> at the first position is not allowed
+if <A>R</A> is the ring of integers. The reason for this is that not all
+integers congruent to 0&nbsp;+&nbsp;1&nbsp;=&nbsp;1&nbsp;mod&nbsp;<A>m</A>
+are divisible by&nbsp;3.
+
+<Example>
+<![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
+<rcwa mapping of Z with modulus 2>
+gap> SetName(T,"T"); Display(T);
+
+Rcwa mapping of Z with modulus 2
+
+                n mod 2                |                 n^T
+---------------------------------------+--------------------------------------
+  0                                    | n/2
+  1                                    | (3n + 1)/2
+
+]]>
+</Example>
+
 In the sequel, the general-purpose constructor for rcwa mappings is given.
 This might look a bit technical on a first glance. For getting started, the
 reader may find it easier to look first at the functions for constructing
@@ -129,7 +156,7 @@ some kinds of particularly simple-structured bijective rcwa mappings of
     as described above. In case one or several of these arguments
     are omitted or replaced by other arguments, they are either derived
     from the latter or default values are taken. The meaning of the other
-    arguments is given in the detailed description of the particular
+    arguments is defined in the detailed description of the particular
     methods given in the sequel.
 
     The above methods return the rcwa mapping
@@ -201,8 +228,6 @@ gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
 <rcwa mapping of Z with modulus 17>
 gap> Action(Group(g),[4..20]);
 Group([ (5,6) ])
-gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
-<rcwa mapping of Z with modulus 2>
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
 true
 gap> t := RcwaMapping(1,[[-1,1],[1,-1]]); # The involution n -> -n.
@@ -364,7 +389,8 @@ Checking whether two rcwa mappings are equal is cheap.
 Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
 Bijective rcwa mappings can also be inverted, thus there is a method for
 <C>Inverse</C>. The latter method is usually accessed by raising a mapping
-to some power with negative exponent. Computing powers of wild mappings
+to some power with negative exponent. Multiplying, inverting and
+exponentiating tame rcwa mappings is cheap. Computing powers of wild mappings
 is usually expensive -- runtime and memory requirements normally grow
 approximately exponentially with the exponent. How expensive multiplying
 a couple of wild mappings is, varies very much. In any case, the amount of

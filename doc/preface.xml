@@ -61,8 +61,8 @@ form for the Collatz mapping&nbsp;<M>T</M>. <P/>
 Investigating arbitrary permutations of finite sets is both theoretically
 and computationally a hard problem. It is straightforward to restrict the
 considerations to permutations which are <Q>similar</Q> to the Collatz
-mapping. Probably the most natural class of such mappings is the class
-of residue class-wise affine permutations. <P/>
+mapping itself. Probably the most natural class of such mappings is the
+class of residue class-wise affine permutations. <P/>
 
 Jeffrey C. Lagarias has written and maintains a commented bibliography
 <Cite Key="Lagarias04"/>, which currently lists 193&nbsp;references
