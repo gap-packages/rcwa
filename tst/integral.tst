@@ -289,26 +289,26 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
 gap> Print(LaTeXObj(ab));
 n \ \longmapsto \
 \begin{cases}
-  n               & \text{if} \ n \equiv 0, 2, 3, 8 \ (9), \\
-  2n - 5          & \text{if} \ n \equiv 1 \ (9), \\
-  n + 3           & \text{if} \ n \equiv 4, 7 \ (9), \\
-  2n - 4          & \text{if} \ n \equiv 5 \ (9), \\
-  \frac{n + 2}{2} & \text{if} \ n \equiv 6 \ (18), \\
-  \frac{n - 5}{2} & \text{if} \ n \equiv 15 \ (18).
+  n               & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
+  2n - 5          & \text{if} \ n \in 1(9), \\
+  n + 3           & \text{if} \ n \in 4(9) \cup 7(9), \\
+  2n - 4          & \text{if} \ n \in 5(9), \\
+  \frac{n + 2}{2} & \text{if} \ n \in 6(18), \\
+  \frac{n - 5}{2} & \text{if} \ n \in 15(18).
 \end{cases}
 gap> Print(LaTeXObj(a:Indentation:=2));
   n \ \longmapsto \
   \begin{cases}
-    \frac{3n}{2}     & \text{if} \ n \equiv 0 \ (2), \\
-    \frac{3n + 1}{4} & \text{if} \ n \equiv 1 \ (4), \\
-    \frac{3n - 1}{4} & \text{if} \ n \equiv 3 \ (4).
+    \frac{3n}{2}     & \text{if} \ n \in 0(2), \\
+    \frac{3n + 1}{4} & \text{if} \ n \in 1(4), \\
+    \frac{3n - 1}{4} & \text{if} \ n \in 3(4).
   \end{cases}
 gap> Print(LaTeXObj(a:german));
 n \ \longmapsto \
 \begin{cases}
-  \linfrac{3n}{2}     & \falls n \equiv 0 \ (2), \\
-  \afffrac{3n + 1}{4} & \falls n \equiv 1 \ (4), \\
-  \afffrac{3n - 1}{4} & \falls n \equiv 3 \ (4).
+  \linfrac{3n}{2}     & \falls n \in 0(2), \\
+  \afffrac{3n + 1}{4} & \falls n \in 1(4), \\
+  \afffrac{3n - 1}{4} & \falls n \in 3(4).
 \end{cases}
 gap> OrbitsModulo(ab,9);
 [ [ 0 ], [ 1, 4, 5, 6, 7 ], [ 2 ], [ 3 ], [ 8 ] ]
@@ -380,6 +380,8 @@ gap> ShortOrbits(G,[-20..20],100) =
 >     [11,13,14,16,17,19,21,24,30,33], [18], 
 >     [20,22,23,25,26,28,39,42,48,51]];
 true
+gap> IsPerfect(Group(a,b));
+false
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> Order(g);
