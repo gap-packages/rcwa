@@ -7,7 +7,7 @@
 
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> ResidueClassUnionViewingFormat("long");;
+gap> ResidueClassUnionViewingFormat("short");
 gap> IdentityIntegralRcwaMapping;
 IdentityMapping( Integers )
 gap> ZeroIntegralRcwaMapping;
@@ -56,14 +56,14 @@ Surjective integral rcwa mapping with modulus 8
 gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,1,"stop"));
 307
 gap> A := ResidueClass(Integers,3,2);
-The residue class 2(3)
+2(3)
 gap> Image(T,A);
-Union of the residue classes 1(3) and 8(9)
+1(3) U 8(9)
 gap> PreImage(T,A);
-Union of the residue classes 1(2) and 4(6)
+1(2) U 4(6)
 gap> B := ResidueClass(Integers,3,1);;
 gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
-The residue class 1(3), +3/-3 elements
+1(3), +3/-3 elements
 gap> Display(Image(T,M));
  
 The residue class 2 ( mod 3 )
@@ -77,7 +77,7 @@ without the elements
  2 5
 
 gap> PreImage(T,M);
-The residue class 2(6), +6/-3 elements
+2(6), +6/-3 elements
 gap> Display(last);
  
 The residue class 2 ( mod 6 )
@@ -102,10 +102,10 @@ gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> IsBijective(k);
 false
 gap> Image(k);
-The residue class 0(4)
+0(4)
 gap> C := Difference(Integers,Union(A,B));;
 gap> Image(k,C);
-The residue class 4(12)
+4(12)
 gap> k := RcwaMapping([[-2,0,1]]);
 Integral rcwa mapping: n -> -2n
 gap> Display(k);
@@ -141,7 +141,7 @@ gap> k := RcwaMapping([[2,0,1],[0,3,1]]);
 gap> PreImage(k,[0,1,4,8,14]);
 [ 0, 2, 4 ]
 gap> PreImage(k,[0,1,3,4,8,14]);
-The residue class 1(2), +3/-0 elements
+1(2), +3/-0 elements
 gap> Display(last);
  
 The residue class 1 ( mod 2 )
@@ -154,7 +154,7 @@ gap> ZeroOne := RcwaMapping([[0,0,1],[0,1,1]]);;
 gap> PreImagesElm(ZeroOne,6);
 [  ]
 gap> PreImagesElm(ZeroOne,1);
-The residue class 1(2)
+1(2)
 gap> Image(ZeroOne);
 [ 0, 1 ]
 gap> e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]);;
@@ -227,22 +227,22 @@ gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
 gap> MovedPoints(a);
 Integers \ [ -1, 0, 1 ]
 gap> cl := ResidueClass(Integers,3,1);
-The residue class 1(3)
+1(3)
 gap> im := Image(a,cl);
-Union of the residue classes 1(9), 5(9) and 6(9)
+1(9) U 5(9) U 6(9)
 gap> PreImage(a,im);
-The residue class 1(3)
+1(3)
 gap> pre := PreImage(a,cl);
-The residue class 1(4)
+1(4)
 gap> PreImage(a,last);
-Union of the residue classes 6(8), 1(16) and 7(16)
+6(8) U 1(16) U 7(16)
 gap> Image(a,pre);
-The residue class 1(3)
+1(3)
 gap> cl := ResidueClass(Integers,2,0);;
 gap> Image(a,cl);
-The residue class 0(3)
+0(3)
 gap> PreImage(a,cl);
-Union of the residue classes 0(4), 3(8) and 5(8)
+0(4) U 3(8) U 5(8)
 gap> Image(a,PreImage(a,cl)) = cl;
 true
 gap> PreImage(a,Image(a,cl)) = cl;
@@ -338,7 +338,7 @@ Trivial integral rcwa group
 gap> orb := Orbit(G,1);
 [ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
 gap> MovedPoints(G);
-Union of the residue classes 1(3), 2(3), 3(9) and 6(9)
+1(3) U 2(3) U 3(9) U 6(9)
 gap> OrbitsModulo(G,9);
 [ [ 0 ], [ 1, 2, 3, 4, 5, 6, 7, 8 ] ]
 gap> H := Action(G,orb);;
@@ -416,17 +416,17 @@ true
 gap> Order(tostd);
 6
 gap> Image(k,ResidueClass(Integers,3,2));
-Union of the residue classes 1(15), 9(15), 10(15), 12(15) and 13(15)
+1(15) U 9(15) U 10(15) U 12(15) U 13(15)
 gap> PreImage(k,last);
-The residue class 2(3)
+2(3)
 gap> PreImage(k,last);
-Union of the residue classes 0(15), 6(15), 9(15), 12(15) and 13(15)
+0(15) U 6(15) U 9(15) U 12(15) U 13(15)
 gap> PreImage(k,last);
-Union of the residue classes 1(15), 5(15), 7(15), 8(15) and 14(15)
+1(15) U 5(15) U 7(15) U 8(15) U 14(15)
 gap> Image(k,last);
-Union of the residue classes 0(15), 6(15), 9(15), 12(15) and 13(15)
+0(15) U 6(15) U 9(15) U 12(15) U 13(15)
 gap> cls := List([0..2],r->ResidueClass(Integers,3,r));
-[ The residue class 0(3), The residue class 1(3), The residue class 2(3) ]
+[ 0(3), 1(3), 2(3) ]
 gap> Union(List(cls,cl->Image(k,cl)));
 Integers
 gap> cls := List([0..6],r->ResidueClass(Integers,7,r));;
@@ -440,12 +440,11 @@ gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);;
 gap> im := Image(a,Image(a,F));
 <union of 18 residue classes (mod 45), +2/-2 elements>
 gap> pre := PreImage(a,PreImage(a,im));
-Union of the residue classes 1(5) and 2(5), +2/-2 elements
+1(5) U 2(5), +2/-2 elements
 gap> C7 := Group(g);; 
-gap> orb := Orbit(C7,F); 
-[ Union of the residue classes 1(5) and 2(5), +2/-2 elements,
-  <union of 12 residue classes (mod 30), +2/-2 elements>,
-  <union of 24 residue classes (mod 60), +2/-2 elements>,
+gap> orb := Orbit(C7,F);
+[ 1(5) U 2(5), +2/-2 elements, <union of 12 residue classes (mod 30), +2/-
+    2 elements>, <union of 24 residue classes (mod 60), +2/-2 elements>,
   <union of 24 residue classes (mod 60), +2/-2 elements>,
   <union of 24 residue classes (mod 60), +2/-2 elements>,
   <union of 24 residue classes (mod 60), +2/-2 elements>,
@@ -473,10 +472,10 @@ gap> control = F;
 true
 gap> nb := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[1,0,1]]);;
 gap> Difference(Integers,Image(nb));
-Union of the residue classes 2(12) and 6(12)
+2(12) U 6(12)
 gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
 gap> im := Image(pc);
-Union of the residue classes 1(3), 3(6), 0(12) and 8(12), +1/-0 elements
+1(3) U 3(6) U 0(12) U 8(12), +1/-0 elements
 gap> Display(im);
  
 The union of the residue classes r ( mod 12 )  for r =
@@ -747,8 +746,7 @@ gap> sigma := sigma1*sigma2;
 <bijective integral rcwa mapping with modulus 36>
 gap> fact := FactorizationOnConnectedComponents(sigma,36);;
 gap> List(fact,MovedPoints);
-[ Union of the residue classes 33(36), 34(36) and 35(36), 
-  Union of the residue classes 9(36), 10(36) and 11(36), 
+[ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36),
   <union of 23 residue classes (mod 36), +0/-2 elements> ]
 gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
@@ -812,11 +810,8 @@ gap> Size(G);
 12
 gap> G := Group(g,h);;
 gap> P := RespectedClassPartition(G);
-[ The residue class 0(12), The residue class 1(12), The residue class 3(12),
-  The residue class 4(12), The residue class 5(12), The residue class 6(12),
-  The residue class 7(12), The residue class 9(12), The residue class 10(12),
-  The residue class 11(12), The residue class 2(24), The residue class 8(24),
-  The residue class 14(24), The residue class 20(24) ]
+[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12),
+  2(24), 8(24), 14(24), 20(24) ]
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> phi = NiceMonomorphism(G);
 true
@@ -929,7 +924,7 @@ true
 gap> Set(FactorizationOnConnectedComponents(a_1*a_2,2)) = Set([a_1,a_2]);
 true
 gap> List([-2..2],k->Multpk(a,2,k));
-[ The residue class 1(2), The residue class 0(2), [  ], [  ], [  ] ]
+[ 1(2), 0(2), [  ], [  ], [  ] ]
 gap> List([-2..2],k->Multpk(a,3,k));
 [ [  ], [  ], [  ], Integers, [  ] ]
 gap> List([-2..2],k->Multpk(a,5,k));
@@ -945,13 +940,13 @@ gap> Order(RcwaMapping([[rc(1,2),rc(36,72)]]));
 gap> f1 := RcwaMapping([[rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]]);
 <integral rcwa mapping with modulus 12>
 gap> Cycle(f1,rc(0,4));
-[ The residue class 0(4), The residue class 1(6) ]
+[ 0(4), 1(6) ]
 gap> Cycle(f1,rc(5,6));
-[ The residue class 5(6), The residue class 2(4) ]
+[ 5(6), 2(4) ]
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 <integral rcwa group with 2 generators>
 gap> MovedPoints(G);
-The residue class 3(5)
+3(5)
 gap> Divergence(g);
 1
 gap> Divergence(a);
@@ -965,7 +960,7 @@ true
 gap> H := Restriction(G,RcwaMapping([[3,2,1]]));
 <integral rcwa group with 2 generators>
 gap> MovedPoints(H);
-The residue class 2(3)
+2(3)
 gap> IsTransitive(H,MovedPoints(H));
 true
 gap> G := Group(a,b);
@@ -1002,6 +997,7 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
