@@ -917,6 +917,10 @@ gap> Modulus(K);
 12
 gap> IsAbelian(K);
 true
+gap> List(GeneratorsOfGroup(K),k->Factorization(G,k));
+[ h^-3*g^2*h^-1*g^-1*h*g*h, g^3*h^2*g^-1*h^-1*g*h*g^2, 
+  g^-1*h^-2*g^2*h^-1*g^-1*h*g^2, g^-3*h^-1*g*h*g^-2*h^2*g^2, 
+  h^-3*g^3*h^-2*g^-1*h*g^2, g^2*h^-1*g^-1*h*g*h^-2 ]
 ]]>
 </Example>
     </Description>
@@ -928,17 +932,17 @@ true
       A matrix of vectors in Hermite Normal Form spanning the lattice
       corresponding to the kernel of the action of the tame rcwa group
       <A>G</A> on <C>RespectedClassPartition( <A>G</A> )</C>.
-<Log>
+<Example>
 <![CDATA[
 gap> L := KernelOfActionOnClassPartitionHNFMat(G);
-[ [ 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, 336, -360, 336, -360 ],
-  [ 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, 480, -504, 480, -504 ],
-  [ 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, 888, -912, 888, -912 ],
-  [ 0, 0, 0, 12, 0, 0, 0, 0, 12, 0, 1128, -1152, 1128, -1152 ],
-  [ 0, 0, 0, 0, 12, 0, 0, 0, 0, 12, 48, -72, 48, -72 ],
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1560, -1560, 1560, -1560 ] ]
+[ [ 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, -24, 0, -24 ], 
+  [ 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, -24, 0, -24 ], 
+  [ 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, -24, 0, -24 ], 
+  [ 0, 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, -24, 0, -24 ], 
+  [ 0, 0, 0, 0, 12, 0, 0, 0, 0, 12, 0, -24, 0, -24 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, -24, 24, -24 ] ]
 ]]>
-</Log>
+</Example>
     </Description>
   </ManSection>
 
@@ -966,7 +970,7 @@ infinity
 gap> IsPerfect(G);
 false
 gap> D := DerivedSubgroup(G);
-<tame rcwa group over Z with 6 generators, of size infinity>
+<tame rcwa group over Z with 7 generators, of size infinity>
 gap> IsPerfect(D);
 true
 gap> Size(D);
@@ -1450,6 +1454,7 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
