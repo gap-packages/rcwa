@@ -956,33 +956,33 @@ gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 gap> P1^elmt = P2;
 true
 gap> RCWAReadExamples();
-gap> List([-2..2],k->Trace(a^k));
+gap> List([-2..2],k->Determinant(a^k));
 [ 0, 0, 0, 0, 0 ]
-gap> List([-2..2],k->Trace(b^k));
+gap> List([-2..2],k->Determinant(b^k));
 [ -2, -1, 0, 1, 2 ]
-gap> Trace(a^g);
+gap> Determinant(a^g);
 0
-gap> Trace(b^g);
+gap> Determinant(b^g);
 1
-gap> Trace(b^u);
+gap> Determinant(b^u);
 1
-gap> Trace(a^kappa);
+gap> Determinant(a^kappa);
 0
-gap> Trace(b^kappa);
+gap> Determinant(b^kappa);
 1
-gap> Trace(b^kappatilde);
+gap> Determinant(b^kappatilde);
 1
-gap> Trace(b^2*b^kappatilde*g^-1);
+gap> Determinant(b^2*b^kappatilde*g^-1);
 3
-gap> Trace(sigma);
+gap> Determinant(sigma);
 0
-gap> Trace(sigma*b^-1);
+gap> Determinant(sigma*b^-1);
 -1
-gap> Trace(sigma*b^-1*nu);
+gap> Determinant(sigma*b^-1*nu);
 0
-gap> Trace(sigma*b^-1*nu^2);
+gap> Determinant(sigma*b^-1*nu^2);
 1
-gap> Trace(PseudoRandom(Group(g,h)));
+gap> Determinant(PseudoRandom(Group(g,h)));
 0
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
