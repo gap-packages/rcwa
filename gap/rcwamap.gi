@@ -2385,6 +2385,21 @@ InstallOtherMethod( IsUnit,
 ##
 #M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
 ##
+##  The `wild --> infinite order' criterion.
+##
+InstallMethod( Order,
+               "for rcwa mappings, wild --> infinite order. (RCWA)",
+               true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+    if   HasIsTame(f) and not IsTame(f)
+    then return infinity; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
+##
 ##  The determinant criterion.
 ##
 InstallMethod( Order,
@@ -2392,9 +2407,6 @@ InstallMethod( Order,
                true, [ IsIntegralRcwaMapping ], 100,
 
   function ( f )
-
-    local  R, mult, div;
-
     if   not IsBijective(f) or not IsClassWiseOrderPreserving(f)
       or Determinant(f) = 0
     then TryNextMethod(); else return infinity; fi;
@@ -2464,11 +2476,8 @@ InstallMethod( Order,
 #M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
 ##
 ##  This method tries to enumerate cycles of the rcwa mapping <f>.
-##  In case <f> has finite order, it may determine it or give up.
-##  It also checks whether <f> has a cycle whose length exceeds two times
-##  the square of the modulus, and returns `infinity', if so.
-##  The validity of this probably sufficient criterium for <f> having
-##  infinite order has not yet been proved.
+##  In case <f> has finite order, the method may determine it or give up.
+##  In case <f> has infinite order, the method gives up.
 ##
 InstallMethod( Order,
                "for integral rcwa mappings, cycle method (RCWA)",
@@ -2476,28 +2485,21 @@ InstallMethod( Order,
 
   function ( f )
 
-    local  MaxFiniteCycleLength, CycLng, CycLngs, one, n, m, i;
+    local  CycLng, CycLngs, LengthLimit, n, m, i;
 
-    one := One(f); 
-    if f = one then return 1; fi;
+    if IsOne(f) then return 1; fi;
     if not IsBijective(f) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
-    MaxFiniteCycleLength := 2 * Modulus(f)^2;
+    LengthLimit := 2 * Modulus(f)^2;
     for i in [1..10] do  # 10 trials ...
       n := Random([1..2^27]); m := n; CycLng := 0; CycLngs := [];
       repeat
         m := m^f; CycLng := CycLng + 1;
-      until m = n or CycLng > MaxFiniteCycleLength;
-      if CycLng > MaxFiniteCycleLength then
-        Info(InfoRCWA,1,"Order: the mapping ",f," has a cycle longer than ",
-                        "2 times the square of its modulus, hence we claim ",
-                        "its order is infinity, although the validity of ",
-                        "this criterium has not been proved so far.");
-        return infinity;
-      fi;
+      until m = n or CycLng > LengthLimit;
+      if CycLng > LengthLimit then TryNextMethod(); fi;
       Add(CycLngs,CycLng);
     od;
-    if f^Lcm(CycLngs) = one 
+    if IsOne(f^Lcm(CycLngs)) 
     then return Lcm(CycLngs); else TryNextMethod(); fi;
   end );
 
@@ -3254,4 +3256,3 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
