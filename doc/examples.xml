@@ -618,7 +618,7 @@ gap> List(ord4,Order); # We can split off two mappings of order 4.
 It seems quite likely that this way one can continue successively splitting
 off mappings of larger and larger finite order, and that this yields a
 decomposition of <C>f23</C> into an infinite number of disjoint <Q>residue
-class cycles</Q> like <C>cyc1</C> and <C>cyc2</C> above. The investigations
+class cycles</Q> like <C>cyc1</C> and <C>cyc2</C> above. The investigation
 of the <Q>phenomenon</Q> of wild mappings having only finite cycles will be
 continued in Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
 
@@ -632,10 +632,8 @@ continued in Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
 In this example, a simple attempt to should be made to investigate the
 structure of a given wild group by finding orders of torsion elements.
 In general, determining the structure of a given wild group computationally
-seems to be a very hard task -- i.e. so far I have not been successful in
-trying to determine a finite presentation for a finitely generated wild
-rcwa group in any non-trivial case. First of all, the group in question
-has to be defineed:
+seems to be a very hard task. First of all, the group in question
+has to be defined:
 
 <Example>
 <![CDATA[
@@ -741,17 +739,16 @@ quite <Q>small</Q>.
 
 In Section <Ref Label="sec:WildProductOfInvolutions"/> we have seen
 examples of wild rcwa mappings of <M>\mathbb{Z}</M> which seem to have
-only finite cycles. In this section we give and examine a mapping which
+only finite cycles. In this section, a mapping is examined which
 can be shown to have these properties and is likely to be something like
-a <Q>minimal</Q> example.
-In the Introduction (<Ref Label="ch:Introduction"/>) we have seen an
-example of such an element of RCWA(GF(2)[<M>x</M>]).
-It was easy to explain this <Q>phenomenon</Q> by pointing out that
-the degree function gives rise to a partition of GF(2)[<M>x</M>] into
-finite sets which is left invariant by the given permutation.
-Regarding <M>\mathbb{Z}</M> however the situation looks completely
-different -- we do not have a <Q>natural</Q> partition into finite sets
-which might be fixed by a wild rcwa mapping.
+a <Q>minimal</Q> example. <P/>
+
+Over <M>R</M> = GF(<M>q</M>)[<M>x</M>], constructing such mappings is easy
+since the degree function gives rise to a partition of <M>R</M> into
+finite sets which is left invariant by suitable wild rcwa mappings.
+Over <M>R = \mathbb{Z}</M> however the situation looks completely
+different -- there is no such <Q>natural</Q> partition into finite sets
+which can be fixed by a wild rcwa mapping.
 
 <Example>
 <![CDATA[
@@ -885,7 +882,7 @@ gap> Set(List(Intersection([1..12^4],Difference(Integers,Union(P))),
 ]]>
 </Example>
 
-Finally we would like to factor our mapping into involutions:
+Finally, the permutation <C>kappa</C> should be factored into involutions:
 
 <Example>
 <![CDATA[
@@ -955,9 +952,9 @@ true
 <Section Label="sec:AbelianModularGroup">
 <Heading>An abelian rcwa group over a polynomial ring</Heading>
 
-We want to have a look at a wild rcwa group over GF(4)[<M>x</M>] which
-happens to be abelian (of course in general, rcwa groups also over this ring
-are usually far from being abelian -- see below).
+In this section, a wild rcwa group over GF(4)[<M>x</M>] should be
+invstigated, which happens to be abelian. Of course in general, rcwa groups
+also over this ring are usually far from being abelian (see below).
 We start by defining this group:
 
 <Example>
@@ -1056,10 +1053,10 @@ subgroup thereof acting transitively, but not primitively on 512 points.
 <Section Label="sec:SubgroupOfS9">
 <Heading>An rcwa representation of a small group</Heading>
 
-We give an rcwa representation of the 3-Sylow-subgroup of the symmetric
-group on 9 points. Of course this group has a very nice permutation
-representation, hence for computational purposes we do not gain anything
-here.
+In the sequel, an rcwa representation of the 3-Sylow-subgroup of the
+symmetric group on 9&nbsp;points is given. Of course this group has a very
+nice permutation representation, hence for computational purposes one does
+not gain anything here.
 
 <Example>
 <![CDATA[
@@ -1112,9 +1109,9 @@ gap> (1,2,3)^phi;
   An rcwa representation of the symmetric group on 10 points
 </Heading>
 
-We start by defining some bijections of infinite order and computing
-commutators (the mapping&nbsp;<M>a</M> has already been discussed briefly
-in the Introduction&nbsp;(<Ref Label="ch:Introduction"/>)):
+In this section, an rcwa representation of the symmetric group on
+10&nbsp;points should be investigated. We start by defining some
+bijections of infinite order and computing commutators:
 
 <Example>
 <![CDATA[
@@ -1169,10 +1166,10 @@ gap> Size(G); # G acts faithful on orb.
 ]]>
 </Example>
 
-Hence the group <A>G</A> is isomorphic to the symmetric group on 10 points
-and acts faithfully on the orbit containing&nbsp;1.
+Hence the group <A>G</A> is isomorphic to the symmetric group on
+10&nbsp;points and acts faithfully on the orbit containing&nbsp;1.
 
-We also would like to know which groups arise if we take as generators
+Another question is which groups arise if we take as generators
 either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping&nbsp;<A>t</A>,
 which maps each integer to its additive inverse:
 
@@ -1411,8 +1408,8 @@ Bijective rcwa mapping of Z_( 2 ) with modulus 8
 ]]>
 </Example>
 
-  Again, viewed as an rcwa mapping of the integers the commutator given at
-  the end of our example would not be surjective.
+Again, viewed as an rcwa mapping of the integers the commutator given at
+the end of the example would not be surjective.
 
 </Section>
 
@@ -1423,9 +1420,9 @@ Bijective rcwa mapping of Z_( 2 ) with modulus 8
   Twisting 257-cycles into an rcwa mapping with modulus 32
 </Heading>
 
-We define an rcwa mapping <A>x</A> of order&nbsp;257 with modulus&nbsp;32
-(the easiest way to construct such a mapping is to prescribe the
-graph and then to assign suitable affine mappings to its vertices).
+We define an rcwa mapping <A>x</A> of order&nbsp;257 with modulus&nbsp;32.
+The easiest way to construct such a mapping is to prescribe a transition
+graph and then to assign suitable affine mappings to its vertices.
 
 <Example>
 <![CDATA[
@@ -1469,8 +1466,7 @@ gap> List([-20..20],n->n^x);
 ]]>
 </Example>
 
-Of course we would like to know how a cycle of this permutation looks
-like:
+A cycle of this permutation looks as follows:
 
 <Example>
 <![CDATA[
@@ -1504,7 +1500,7 @@ gap> Length(last);
 <Section Label="sec:ModuliOfPowers">
 <Heading> The behaviour of the moduli of powers </Heading>
 
-In this section we give some examples illustrating how different the
+In this section some examples are given, which illustrate how different the
 series of the moduli of powers of a given rcwa mapping of the integers
 can look like.
 
@@ -1616,10 +1612,10 @@ gap> S7 := S6^T;
 ]]>
 </Example>
 
-We see that the image gets stable after applying the mapping <M>T</M> for
-the 6th time, hence that <M>T^6</M> maps the residue class 1(2)
-surjectively onto the union of the residue classes 1(3) and 2(3), which is
-setwisely stabilized by <M>T</M>.
+Thus the image gets stable after applying the mapping <M>T</M> for
+the 6th time. Hence <M>T^6</M> maps the residue class 1(2) surjectively
+onto the union of the residue classes 1(3) and 2(3), which is setwisely
+stabilized by <M>T</M>.
 Now we would like to determine the preimages of 1(3) resp. 2(3) in 1(2)
 under <M>T^6</M>. The residue class 1(2) has to be the disjoint union of
 these sets.
@@ -1651,8 +1647,8 @@ true
 ]]>
 </Example>
 
-Now we want to determine the images of the residue class 0(3) under
-powers of&nbsp;<M>T</M>:
+The images of the residue class 0(3) under powers of&nbsp;<M>T</M> look
+as follows:
 
 <Example>
 <![CDATA[
@@ -1714,10 +1710,11 @@ gap> List(S,Si->Float(Density(Si)));
 <Section Label="sec:CollatzMapping">
 <Heading>Replacing the Collatz mapping by conjugates</Heading>
 
-We can turn the Collatz problem into an equivalent question by
-replacing the Collatz mapping&nbsp;<A>T</A> by one of its conjugates under
-an element of the pointwise stabilizer of&nbsp;1 in the setwise stabilizer
-of the positive integers of RCWA(<M>\Z</M>). Define the Collatz mapping:
+As already mentioned in the Preface, the Collatz problem can be turned into
+an equivalent question by replacing the Collatz mapping&nbsp;<A>T</A> by one
+of its conjugates under an element of the pointwise stabilizer of&nbsp;1
+in the setwise stabilizer of the positive integers of RCWA(<M>\Z</M>).
+Define the Collatz mapping:
 
 <Example>
 <![CDATA[
