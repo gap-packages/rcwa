@@ -88,14 +88,14 @@ ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
 running over the residue classes (mod&nbsp;<M>m</M>). <P/>
 
 A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
-<M>|R/mR|</M> coefficient triples <C>[ a_rm, b_rm, c_rm ]</C>. Their ordering
-is determined by the ordering of the representatives of the residue classes
-(mod&nbsp;<M>m</M>) in the sorted list returned by <C>AllResidues(<M>R</M>,
-<M>m</M>)</C>. For <M>R = \mathbb{Z}</M>, this means that the coefficient
-triple for the residue class <M>0(m)</M> comes first, then comes the one for
-<M>1(m)</M>, the one for <M>2(m)</M> and so on. <P/>
+<M>|R/mR|</M> coefficient triples <![CDATA[\verb|[ a_rm, b_rm, c_rm ]|]]>.
+Their ordering is determined by the ordering of the representatives of the
+residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
+<C>AllResidues(<A>R</A>, <A>m</A>)</C>. For <M>R = \mathbb{Z}</M>, this means
+that the coefficient triple for the residue class <M>0(m)</M> comes first,
+then comes the one for <M>1(m)</M>, the one for <M>2(m)</M> and so on. <P/>
 
-The most easy way to enter a given rcwa mapping is by <C>RcwaMapping(
+The easiest way to enter a given rcwa mapping is by <C>RcwaMapping(
 [ <A>R</A>, <A>m</A>, ] <A>coeffs</A> )</C>. If the arguments <A>R</A> and
 <A>m</A> are omitted, they default to <C>Integers</C> resp. the length of
 the coefficient list <A>coeffs</A>. If the given coefficients would enforce
@@ -349,7 +349,7 @@ the <C>ViewObj</C> method -- in these cases the output is enclosed in
 brackets. There are methods installed for <C>Display</C>, <C>Print</C>
 and <C>String</C>. The printed representation of an rcwa mapping is &GAP; -
 readable if and only if the printed representation of the elements of the
-underlying ring is so. There is also a method for <C>LaTeXObj<C>:
+underlying ring is so. There is also a method for <C>LaTeXObj</C>:
 
 <ManSection>
   <Meth Name="LaTeXObj" Arg="f" Label="f"/>
@@ -513,6 +513,8 @@ General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
 than <M>\mathbb{Z}</M>, not for all operations applicable methods might
 be available.<P/>
+
+</Section>
 
 <!-- #################################################################### -->
 
@@ -905,10 +907,29 @@ gap> List(fact,MovedPoints);
   </Returns>
   <Description>
     <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
+    Let <M>M</M> be the returned matrix. Then by definition for any two
+    residue classes <M>r_1(m), r_2(m) \in R/mR</M> it holds that
+    <Alt Only="LaTeX">
+      <Display>
+        <![CDATA[
+          M_{r_1(m),r_2(m)} \ = \ \displaystyle{\frac{|R/mR|}{|R/\hat{m}R|}}
+          \cdot \left|\left\{r(\hat{m}) \in R/\hat{m}R | \ r \in r_1(m)
+          \wedge r^f \in r_2(m)\right\}\right|,
+        ]]>
+      </Display>
+      where <M>\hat{m}</M> is the product of <A>m</A> and the square of the
+      modulus of&nbsp;<A>f</A>.
+    </Alt>
+    <Alt Not="LaTeX">
+      (See LaTeX version of the manual.)
+    </Alt>
     The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
     columns of the matrix is given by the ordering of the residues
     in the return value of <C>AllResidues(<A>m</A>)</C>
-    (see <Ref Func="AllResidues"/>).
+    (see <Ref Func="AllResidues"/>). <P/>
+
+    The transition matrix is a weighted adjacency matrix of the corresponding
+    transition graph <C>TransitionGraph(<A>f</A>,<A>m</A>)</C>.
     The sums of the rows of a transition matrix are always equal to&nbsp;1.
 <Example>
 <![CDATA[
