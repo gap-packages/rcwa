@@ -515,7 +515,8 @@ be available.<P/>
         \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
       </Display>
     </Alt>
-    The determinant induces an epimorphism from the group of all
+    In the author's forthcoming PhD Thesis, it will be proved that
+    the determinant induces an epimorphism from the group of all
     class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
     onto the additive group <M>(\Z,+)</M>. <P/>
 
@@ -560,7 +561,8 @@ gap> Determinant(u^2*b^-3);
         \right)}}.
       </Display>
     </Alt>
-    The sign induces an epimorphism from RCWA(<M>\Z</M>) onto
+    In the author's forthcoming PhD Thesis, it will be proved that
+    the sign induces an epimorphism from RCWA(<M>\Z</M>) onto
     the group <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>. This means that
     the kernel of the sign mapping is a normal subgroup of
     RCWA(<M>\Z</M>) of index&nbsp;2.
@@ -787,8 +789,8 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
   </Returns>
   <Description>
     <Index Key="rcwa mapping" Subkey="transition graph"></Index>
-    We define the <E>transition graph</E> <M>\Gamma_{f,m}</M>
-    of <M>f</M> for modulus <M>m</M> as follows:
+    The <E>transition graph</E> <M>\Gamma_{f,m}</M> of&nbsp;<M>f</M> for
+    modulus&nbsp;<M>m</M> is defined as follows:
     <Enum>
       <Item>
         The vertices are the residue classes (mod&nbsp;<M>m</M>).
@@ -935,13 +937,12 @@ gap> Display(M*One(GF(7)));
     under the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    The parameter <A>val</A> can either specify the
-    length of the sequence to be computed or be a <Q>stopping set</Q>
-    such that the computation stops when some iterate
-    <C><A>n</A>&circum;(<A>f</A>&circum;k) in <A>val</A></C> is reached,
-    depending on whether <C><A>cond</A> = "length"</C> or
-    <C><A>cond</A> = "stop"</C>.
-    In the place of the ring element&nbsp;<A>n</A>, a union of residue
+    Depending on whether <C><A>cond</A> = "length"</C> or
+    <C><A>cond</A> = "stop"</C>, the parameter <A>val</A> either is the
+    length of the sequence to be computed or is a <Q>stopping set</Q> such
+    that the computation stops when some iterate
+    <C><A>n</A>&circum;(<A>f</A>&circum;k) in <A>val</A></C> is reached.
+    In place of the ring element&nbsp;<A>n</A>, a union of residue
     classes is permitted, also.
 <Example>
 <![CDATA[
@@ -1091,7 +1092,7 @@ gap> S0 := ContractionCentre(T,100,1000);
 </ManSection>
 
 <ManSection>
-  <Attr Name="Divergence" Arg="f"/>
+  <Oper Name="Divergence" Arg="f"/>
   <Returns>
     A floating point value, which should be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value

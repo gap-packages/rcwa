@@ -88,8 +88,11 @@ Perhaps the only sensible reason for using this package is being fascinated
 by the mathematical beauty of the objects it helps to investigate. <P/>
 
 This manual is pure software documentation, and as such it does not contain
-any theorems or proofs. The theoretical background for the subject can be
-found in the author's Thesis&nbsp;<Cite Key="Kohl05"/>.
+any theorems or proofs. In a few places, where this is absolutely necessary
+for understanding what some function is good for, corresponding mathematical
+assertions are made. Proofs for all of them as well as a detailed development
+of the theoretical background for the subject will be published in the
+author's forthcoming PhD Thesis&nbsp;<Cite Key="Kohl05"/>.
 
 </Section>
 
