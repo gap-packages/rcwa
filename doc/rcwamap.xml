@@ -620,11 +620,25 @@ GF(2)[x] \ [ 0*Z(2), Z(2)^0, x, x+Z(2)^0 ]
 
   <ManSection>
     <Meth Name="IsInjective" Arg="f"/>
+    <Description>
+      Indicates whether the rcwa mapping <A>f</A> is injective.
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="IsSurjective" Arg="f"/>
+    <Description>
+      Indicates whether the rcwa mapping <A>f</A> is surjective.
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="IsBijective" Arg="f"/>
     <Description>
-      Tests whether the rcwa mapping <A>f</A> is injective, surjective resp.
-      bijective.
+      Indicates whether the rcwa mapping <A>f</A> is bijective.
+    </Description>
+  </ManSection>
+
 <Example>
 <![CDATA[
 gap> IsInjective(T);
@@ -647,8 +661,6 @@ gap> IsBijective(r);
 true
 ]]>
 </Example>
-    </Description>
-  </ManSection>
 
 </Section>
 

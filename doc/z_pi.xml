@@ -12,10 +12,9 @@
 <Chapter Label="ch:SemilocalizationsOfTheIntegers">
 <Heading>Semilocalizations of the Integers</Heading>
 
-Since in the following we need the semilocalizations <M>\Z_\pi</M> of
-the ring of integers (which are not already implemented as domains in the
-&GAP; library) as sources and ranges of rcwa mappings, we have to do
-this here.
+In the following we need the semilocalizations <M>\Z_\pi</M> of the ring of integers
+as sources and ranges of rcwa mappings. Since these rings are not already implemented
+as domains in the &GAP; library, we had to implement them in this package. 
 
 <!-- ################################################################################# -->
 

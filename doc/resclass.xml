@@ -18,7 +18,7 @@ Moreover, we would like to compute images of residue classes under rcwa mappings
 unite and intersect them with each other, etc. <P/>
 
 Since these sets are not representable as sets or other objects
-currently available in the &GAP; library, we have to implement them here.
+currently available in the &GAP; library, we had to implement them here.
 
 <!-- ################################################################################# -->
 
