@@ -4,9 +4,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with residue class-wise affine mappings.
 ##

@@ -4,9 +4,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
 
 gap> START_TEST("$Id$");
 gap> f := RcwaMapping([2],[[1/3,0,1]]);
