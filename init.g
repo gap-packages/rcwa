@@ -36,7 +36,7 @@ DeclarePackage( "rcwa", "1.0",
 
 if IsList( TestPackageAvailability( "gapdoc", "0.99" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
-  RequirePackage( "gapdoc" );
+  LoadPackage( "gapdoc" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
 
@@ -46,7 +46,7 @@ DeclarePackageAutoDocumentation( "rcwa", "doc" );
 
 if IsList( TestPackageAvailability( "resclasses", "1.0" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
-  RequirePackage( "resclasses" );
+  LoadPackage( "resclasses" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
 
@@ -54,7 +54,7 @@ fi;
 
 if IsList( TestPackageAvailability( "grape", "4.0" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
-  RequirePackage( "grape" );
+  LoadPackage( "grape" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
 

@@ -16,7 +16,7 @@ The package `RCWA' must be installed in the pkg/ - subdirectory
 of the GAP distribution.
 
 After extracting the distribution file in the proper place,
-you can load the package via RequirePackage( "rcwa" );
+you can load the package via LoadPackage( "rcwa" );
 
 Then you can build the manual by issueing RCWABuildManual( );
 (this works only under UNIX, but should not be necessary
