@@ -2039,6 +2039,7 @@ InstallMethod( IsInjective,
 
     local  c, cInv, m, mInv, n, t, tm, tn, Classes, cl;
 
+    if IsZero(Multiplier(f)) then return false; fi;
     if Product(PrimeSet(f)) > 30 then
       if Length(Set(List([-100..100],n->n^f))) < 201
       then return false; fi;
@@ -2074,6 +2075,7 @@ InstallMethod( IsInjective,
     local  c, cInv, m, mInv, d, dInv, R, q, x, respols, res, resInv, r, n,
            t, tm, tr, tn, Classes, cl, pos;
 
+    if IsZero(Multiplier(f)) then return false; fi;
     R := UnderlyingRing(FamilyObj(f));
     q := Size(CoefficientsRing(R));
     x := IndeterminatesOfPolynomialRing(R)[1];
@@ -2953,3 +2955,4 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
