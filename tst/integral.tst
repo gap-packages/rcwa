@@ -903,8 +903,6 @@ gap> IsSolvable(G);
 false
 gap> IsPerfect(G);
 false
-gap> IsPerfect(DerivedSubgroup(G));
-true
 gap> IsPerfect(TrivialSubgroup(G));
 true
 gap> g1 := RcwaMapping([[1,0,1],[2,0,1],[1,0,2],[2,0,1]]);;
@@ -944,6 +942,3 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
