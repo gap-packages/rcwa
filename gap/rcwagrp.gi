@@ -11,6 +11,20 @@
 Revision.rcwagrp_gi :=
   "@(#)$Id$";
 
+# A few auxiliary functions.
+
+GeneratorsAndInverses :=
+  G->Concatenation(GeneratorsOfGroup(G),List(GeneratorsOfGroup(G),g->g^-1));
+MakeReadOnlyGlobal( "GeneratorsAndInverses" );
+
+ProjectionByGenerators := function ( F, G )
+  return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
+                                       GeneratorsOfGroup(G));
+end;
+MakeReadOnlyGlobal( "ProjectionByGenerators" );
+
+# Some implications.
+
 InstallTrueMethod( IsGroup,     IsRcwaGroup );
 InstallTrueMethod( IsRcwaGroup, IsRationalBasedRcwaGroup );
 InstallTrueMethod( IsRationalBasedRcwaGroup, IsIntegralRcwaGroup );
@@ -817,16 +831,18 @@ InstallMethod( NiceObject,
 
 #############################################################################
 ##
-#M  \in( <g>, <G> ) .  for integral rcwa mapping and tame integral rcwa group
+#M  \in( <g>, <G> ) . . . . for integral rcwa mapping and integral rcwa group
+##
+##  If <G> is wild this may run into an infinite loop if <g> is not an
+##  element of <G>.
 ##
 InstallMethod( \in,
-               Concatenation("for integral rcwa mapping and ",
-                             "tame integral rcwa group (RCWA)"),
+               "for integral rcwa mapping and integral rcwa group (RCWA)",
                ReturnTrue, [ IsIntegralRcwaMapping, IsIntegralRcwaGroup ], 0,
 
   function ( g, G )
 
-    local  P, H, h, K, k, L, l, c, gens, gensinv;
+    local  P, H, h, K, k, L, l, F, phi, c, gens, gensinv;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -848,15 +864,10 @@ InstallMethod( \in,
       return false;
     fi;
     if not IsTame(G) then
-      Info(InfoRCWA,3,"<G> is wild, trying some short products of gen's...");
-      gensinv := Union(gens,List(gens,g->g^-1));
-      if   g in List(Combinations(gensinv,2), t -> Product(t))
-        or g in List(Combinations(gens,2), t -> Comm(t[1],t[2]))
-      then
-        Info(InfoRCWA,3,"<g> identified as some short gen.-product.");
-        return true;
-      fi;
-      TryNextMethod();
+      Info(InfoRCWA,3,"<G> is wild -- trying to factor <g> into gen's ...");
+      F   := FreeGroup(Length(gens));
+      phi := GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),gens);
+      return PreImagesRepresentative(phi,g) <> fail;
     else
       if   Modulus(G) mod Modulus(g) <> 0 then
         Info(InfoRCWA,4,"Mod(<g>) does not divide Mod(<G>).");
@@ -1380,24 +1391,6 @@ InstallOtherMethod( IsPrimitive,
     return true;
   end );
 
-SetOfRepresentatives := function ( S, rel, less, pref )
-
-  local  reps, elm, pos;
-
-  if IsEmpty(S) then return []; fi;
-  Sort(S,less); reps := [S[1]]; pos := 1;
-  for elm in S do
-    if rel(elm,reps[pos]) then
-      if pref(elm,reps[pos]) then reps[pos] := elm; fi;
-    else
-      pos := pos + 1;
-      reps[pos] := elm;
-    fi;
-  od;
-  return reps;
-end;
-MakeReadOnlyGlobal( "SetOfRepresentatives" );
-
 ############################################################################# 
 ##
 #M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> )
@@ -1428,9 +1421,47 @@ InstallOtherMethod( OrbitOp,
 
 ############################################################################# 
 ##
-#M  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+#F  ProjectionFromFreeGroupByGenerators( <G> ) . . . .  projection <F> -> <G>
 ##
-InstallMethod( RepresentativeActionPreImage,
+InstallGlobalFunction( ProjectionFromFreeGroupByGenerators,
+
+  function ( G )
+
+    local  F, gens, gensnames, i;
+
+    gens := GeneratorsOfGroup(G); gensnames := [];
+    for i in [1..Length(gens)] do
+      if   HasName(gens[i])
+      then Add(gensnames,Name(gens[i]));
+      else Add(gensnames,Concatenation("f",String(i))); fi;
+    od;
+    F := FreeGroup(gensnames);
+    return ProjectionByGenerators(F,G);
+  end );
+
+SetOfRepresentatives := function ( S, rel, less, pref )
+
+  local  reps, elm, pos;
+
+  if IsEmpty(S) then return []; fi;
+  Sort(S,less); reps := [S[1]]; pos := 1;
+  for elm in S do
+    if rel(elm,reps[pos]) then
+      if pref(elm,reps[pos]) then reps[pos] := elm; fi;
+    else
+      pos := pos + 1;
+      reps[pos] := elm;
+    fi;
+  od;
+  return reps;
+end;
+MakeReadOnlyGlobal( "SetOfRepresentatives" );
+
+############################################################################# 
+##
+#M  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+InstallMethod( RepresentativesActionPreImage,
                "for rcwa groups (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
                0,
@@ -1454,16 +1485,14 @@ InstallMethod( RepresentativeActionPreImage,
     end;
 
     R := Source(One(G));
-    gensG := Concatenation(GeneratorsOfGroup(G),
-                           List(GeneratorsOfGroup(G),g->g^-1));
-    gensF := Concatenation(GeneratorsOfGroup(F),
-                           List(GeneratorsOfGroup(F),f->f^-1));
-    if not IsSubset(R,[src,dest])
+    if     not IsSubset(R,[src,dest])
        and not (IsSubset(R,src) and IsSubset(R,dest))
     then TryNextMethod(); fi;
     if   Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
     then TryNextMethod(); fi;
     if src in R then src := [src]; fi; if dest in R then dest := [dest]; fi;
+    if Length(src) <> Length(dest) then return []; fi;
+    gensF := GeneratorsAndInverses(F); gensG := GeneratorsAndInverses(G);
     orbsrc := [[src,One(F)]]; orbdest := [[dest,One(F)]]; extstep := 0;
     repeat
       oldorbsizes := [Length(orbsrc),Length(orbdest)];
@@ -1471,21 +1500,40 @@ InstallMethod( RepresentativeActionPreImage,
         orbsrc := extended(orbsrc,g); orbdest := extended(orbdest,g);
       od;
       extstep := extstep + 1;
-      Info(InfoRCWA,2,"Orbit lengths after extension step ",
-                      extstep,": ",[Length(orbsrc),Length(orbdest)]);
+      Info(InfoRCWA,2,"Orbit lengths after extension step ",extstep,": ",
+                      [Length(orbsrc),Length(orbdest)]);
       if Maximum(Length(orbsrc),Length(orbdest)) < 100 then
-        Info(InfoRCWA,3,"Orbits after extension step ",
-                        extstep,":\n",orbsrc,"\n",orbdest);
+        Info(InfoRCWA,3,"Orbits after extension step ",extstep,":\n",
+                        orbsrc,"\n",orbdest);
       fi;
       inter := Intersection(List(orbsrc,t->t[1]),List(orbdest,t->t[1]));
     until inter <> [] or oldorbsizes = [Length(orbsrc),Length(orbdest)];
-    if inter = [] then return fail; fi;
-    intersrc  := Filtered(orbsrc, t->t[1] in inter);
-    interdest := Filtered(orbdest,t->t[1] in inter);
+    if inter = [] then return []; fi;
+    intersrc   := Filtered(orbsrc, t->t[1] in inter);
+    interdest  := Filtered(orbdest,t->t[1] in inter);
     compatible := Filtered(Cartesian(intersrc,interdest),t->t[1][1]=t[2][1]);
-    minlng := Minimum(List(compatible,t->Length(t[1][2])+Length(t[2][2])));
-    shortest := Filtered(compatible,t->Length(t[1][2]*t[2][2]^-1)=minlng)[1];
-    return shortest[1][2]*shortest[2][2]^-1;
+    Info(InfoRCWA,2,"|Candidates| = ",Length(compatible));
+    return Set(List(compatible,t->t[1][2]*t[2][2]^-1));
+  end );
+
+############################################################################# 
+##
+#M  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+InstallMethod( RepresentativeActionPreImage,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
+               0,
+
+  function ( G, src, dest, act, F )
+
+    local  candidates, minlng, shortest;
+
+    candidates := RepresentativesActionPreImage(G,src,dest,act,F);
+    if candidates = [] then return fail; fi;
+    minlng   := Minimum(List(candidates,Length));
+    shortest := Filtered(candidates,cand->Length(cand)=minlng)[1];
+    return shortest;
   end );
 
 ############################################################################# 
@@ -1510,6 +1558,50 @@ InstallOtherMethod( RepresentativeActionOp,
 
 ############################################################################# 
 ##
+#M  PreImagesRepresentatives( <phi>, <g> )
+##
+InstallMethod( PreImagesRepresentatives,
+               "for hom's from free groups to integral rcwa groups (RCWA)",
+               ReturnTrue, [ IsGroupHomomorphism, IsIntegralRcwaMapping ], 0,
+
+  function ( phi, g )
+
+    local  F, G, IsCorrect, candidates, minlng, shortest,
+           preimage, image, lng;
+
+    IsCorrect := function ( cand )
+
+      local  gens, letters, factors, f, n, m;
+
+      gens    := GeneratorsOfGroup(G);
+      letters := LetterRepAssocWord(cand);
+      factors := List(letters,i->gens[AbsInt(i)]^SignInt(i));
+      for n in [1..3*Length(letters)] do
+        m := n; for f in factors do m := m^f; od;
+        if m <> n^g then return false; fi;
+      od;
+      return cand^phi = g;
+    end;
+
+    F := Source(phi); G := Range(phi);
+    if   not IsFreeGroup(F) or not IsIntegralRcwaGroup(G)
+      or not MappingGeneratorsImages(phi) = List([F,G],GeneratorsOfGroup)
+    then TryNextMethod(); fi;
+    lng := 1;
+    repeat
+      lng        := lng + 1;
+      preimage   := [1..lng];
+      image      := List(preimage,n->n^g);
+      candidates := RepresentativesActionPreImage(G,preimage,image,
+                                                  OnTuples,F);
+      if candidates = [] then return []; fi;
+      candidates := Filtered(candidates,IsCorrect);
+    until candidates <> [];
+    return candidates;
+  end );
+
+############################################################################# 
+##
 #M  PreImagesRepresentative( <phi>, <g> )
 ##
 InstallMethod( PreImagesRepresentative,
@@ -1518,21 +1610,13 @@ InstallMethod( PreImagesRepresentative,
 
   function ( phi, g )
 
-    local  F, G, cand, preimage, image, lng;
+    local  candidates, minlng, shortest;
 
-    F := Source(phi); G := Range(phi);
-    if   not IsFreeGroup(F) or not IsIntegralRcwaGroup(G)
-      or not MappingGeneratorsImages(phi) = List([F,G],GeneratorsOfGroup)
-    then TryNextMethod(); fi;
-    lng := 1;
-    repeat
-      lng      := lng + 1;
-      preimage := [1..lng];
-      image    := List(preimage,n->n^g);
-      cand     := RepresentativeActionPreImage(G,preimage,image,OnTuples,F);
-      if cand = fail then return fail; fi;
-    until cand^phi = g;
-    return cand;
+    candidates := PreImagesRepresentatives(phi,g);
+    if candidates = [] then return fail; fi;
+    minlng   := Minimum(List(candidates,Length));
+    shortest := Filtered(candidates,cand->Length(cand)=minlng)[1];
+    return shortest;
   end );
 
 ############################################################################# 
@@ -1644,5 +1728,3 @@ InstallMethod( DirectProductOp,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
