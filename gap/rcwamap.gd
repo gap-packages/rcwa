@@ -436,6 +436,30 @@ DeclareGlobalFunction( "CoefficientsOnTrajectory" );
 
 #############################################################################
 ##
+#F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
+##
+##  Traces the trajectories of the residue classes in the residue class union
+##  <classes> under the mapping <f>. All iterates are written as a list of
+##  single residue classes. This list is computed using the function
+##  `AsUnionOfFewClasses' from the `ResClasses' package.
+##
+##  The function stops once it detects a cycle or it detects that a timeout
+##  given as option "timeout" has expired.
+##
+##  Caution: All classes are traced separately, thus a cycle in the
+##           trajectory usually does only cause a cycle in the list of
+##           unions of the returned sets of residue classes!
+##
+DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
+
+#############################################################################
+##
+#F  SearchCycle( <l> ) . . . . . . . . . . . . a simple-minded cycle detector
+##
+DeclareGlobalFunction( "SearchCycle" );
+
+#############################################################################
+##
 #O  ShortCycles( <f>, <maxlng> ) . . . . short cycles of the rcwa mapping <f>
 ##
 ##  Computes all ``single'' finite cycles of the rcwa mapping <f>
@@ -519,6 +543,15 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 ##  is equal to 1.
 ##
 DeclareAttribute( "ImageDensity", IsRcwaMapping );
+
+#############################################################################
+##
+#F  InjectiveAsMappingFrom( <f ) . . . . . some set on which <f> is injective
+##
+##  Returns some subset <S> of `Source'(<f>) such that the restriction of <f>
+##  to <S> is injective.
+##
+DeclareGlobalFunction( "InjectiveAsMappingFrom" );
 
 #############################################################################
 ##

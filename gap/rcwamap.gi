@@ -2211,6 +2211,28 @@ InstallMethod( IsSurjective,
 
 #############################################################################
 ##
+#F  InjectiveAsMappingFrom( <f ) . . . . . some set on which <f> is injective
+##
+InstallGlobalFunction( InjectiveAsMappingFrom,
+
+  function ( f )
+
+    local  R, m, base, pre, im, cl, imcl, overlap;
+
+    R := Source(f); if IsBijective(f) then return R; fi;
+    m := Modulus(f); base := List(AllResidues(R,m),r->ResidueClass(R,m,r));
+    pre := R; im := [];
+    for cl in base do
+      imcl    := cl^f;
+      overlap := Intersection(im,imcl);
+      im      := Union(im,imcl);
+      pre     := Difference(pre,Intersection(PreImagesSet(f,overlap),cl));
+    od;
+    return [pre,im];
+  end );
+
+#############################################################################
+##
 #M  IsUnit( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallOtherMethod( IsUnit,
@@ -2526,6 +2548,49 @@ InstallGlobalFunction( CoefficientsOnTrajectory,
       coeff[pos+1] := coeff[pos+1]/d;
     od;
     if all then return coeff; else return coeff[Length(coeff)]; fi;
+  end );
+
+#############################################################################
+##
+#F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
+##
+InstallGlobalFunction( TraceTrajectoriesOfClasses,
+
+  function ( f, classes )
+
+    local  l, k, starttime, timeout;
+
+    l := [[classes]]; k := 1;
+    starttime := Runtime(); timeout := ValueOption("timeout");
+    if timeout = fail then timeout := infinity; fi;
+    repeat
+      Add(l,Flat(List(l[k],cl->AsUnionOfFewClasses(cl^f))));
+      k := k + 1;
+      Print("k = ",k,": "); View(l[k]); Print("\n");
+    until Runtime() - starttime >= timeout or l[k] in l{[1..k-1]};
+    return l;
+  end );
+
+#############################################################################
+##
+#F  SearchCycle( <l> ) . . . . . . . . . . . . a simple-minded cycle detector
+##
+InstallGlobalFunction( SearchCycle,
+
+  function ( l )
+
+    local  pos, incr, refine;
+
+    if Length(l) < 2 then return fail; fi;
+    pos := 1; incr := 1;
+    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
+                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
+      pos := pos + 1; incr := incr + 1;
+      if pos + 2*incr-1 > Length(l) then return fail; fi;
+    od;
+    refine := SearchCycle(l{[pos..pos+incr-1]});
+    if refine <> fail then return refine;
+                      else return l{[pos..pos+incr-1]}; fi;
   end );
 
 #############################################################################
