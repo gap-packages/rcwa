@@ -13,11 +13,19 @@
 rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 md := f -> [Multiplier(f),Divisor(f)];
 
-nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
-t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
+#############################################################################
+##
+##  Some basic `building blocks'.
+##
+nu  := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
+t   := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
+tau := RcwaMapping([[1,1,1],[1,-1,1]]);
 
 nu_rm := function(r,m) return Restriction(nu,RcwaMapping([[m,r,1]])); end;
 t_rm  := function(r,m) return Restriction(t, RcwaMapping([[m,r,1]])); end;
+ct    := function(r1,m1,r2,m2)
+           return Restriction(tau,RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end;
 
 #############################################################################
 ##
