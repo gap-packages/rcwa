@@ -912,7 +912,7 @@ InstallOtherMethod( RespectedClassPartition,
     if not IsTame(G) then return fail; fi;
     R := Source(One(G)); m := Modulus(G); moved := MovedPoints(G);
     if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
-    then fixed := Residues(Complement(moved));
+    then fixed := Residues(Difference(R,moved));
     elif moved <> [] then fixed := []; else fixed := [0]; fi;
     pcp := List(fixed,i->ResidueClass(R,m,i));
     untouched := Difference(AllResidues(R,m),fixed);
@@ -1184,3 +1184,4 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+

@@ -2807,7 +2807,7 @@ InstallMethod( RespectedClassPartition,
     R := Source(sigma); m := Modulus(sigma);
     moved := MovedPoints(sigma);
     if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
-    then fixed := Residues(Complement(moved));
+    then fixed := Residues(Difference(R,moved));
     elif moved <> [] then fixed := []; else fixed := [0]; fi;
     pcp := List(fixed,i->ResidueClass(R,m,i));
     untouched := Difference(AllResidues(R,m),fixed);
@@ -3103,5 +3103,6 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
