@@ -18,7 +18,7 @@ false
 gap> R := PolynomialRing(GF(7),1);;
 gap> x := Indeterminate(GF(7),1);; SetName(x,"x");
 gap> C := ResidueClass(R,x+One(R),3*One(R));
-The residue class Z(7) ( mod Z(7)^0+x ) of GF(7)[x]
+The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
 gap> D := ResidueClassUnion(Integers,6,[2,4]);
 Union of the residue classes 2(6) and 4(6)
 gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
@@ -54,13 +54,13 @@ gap> ExcludedElements(G);
 gap> ExcludedElements(H);
 [  ]
 gap> String(C);
-"ResidueClassUnion( GF(7)[x], Z(7)^0+x, [ Z(7) ] )"
+"ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )"
 gap> String(F);
 "ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
 gap> String(H);
 "ResidueClassUnion( Z_[ 2, 3 ], 8, [ 3, 5 ] )"
 gap> Print(C,"\n");
-ResidueClassUnion( GF(7)[x], Z(7)^0+x, [ Z(7) ] )
+ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )
 gap> Print(F,"\n");
 ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )
 gap> Print(H,"\n");
@@ -120,7 +120,7 @@ Union of the residue classes 0(3) and 1(3)
 gap> Complement(B);
 The residue class 0(2) of Z_[ 2, 5 ]
 gap> Complement(C);
-<union of 6 residue classes (mod Z(7)^0+x) of GF(7)[x]>
+<union of 6 residue classes (mod x+Z(7)^0) of GF(7)[x]>
 gap> Complement(F);
 Union of the residue classes 0(5), 3(5) and 4(5), +2/-2 elements
 gap> Complement(H);
