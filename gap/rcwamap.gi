@@ -1475,43 +1475,24 @@ InstallMethod( ImagesSet,
 
 #############################################################################
 ##
-#M  ImagesSet( <f>, <S> ) . . for integral rcwa map. and union of residue cl.
+#M  ImagesSet( <f>, <S> ) . . . for rcwa mapping and union of residue classes
 ##
 ##  Image of the set <S> under the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSet,
-               "RCWA: for integral rcwa mapping and residue class union",
-               true, [ IsIntegralRcwaMapping, IsUnionOfResidueClassesOfZ ],
-               0,
+               "RCWA: for rcwa mapping and residue class union",
+               true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
 
   function ( f, S )
 
-    local  image, immod, imres, rump, c, m, mult, preim, r, excluded, im, n;
+    local  R, c, m, rc, res, r;
 
-    c := Coefficients(f); m := Modulus(f);
-    if   ForAll( c, t -> t[1] = 0 )
-    then mult := 0;
-    else mult := Lcm( List( Filtered( c, t1 -> t1[1]<>0 ), t2 -> t2[1] ) );
-    fi;
-    rump  := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
-    immod := m * mult * Modulus(S);
-    preim := Filtered( [0..immod*Divisor(f)-1], n -> c[n mod m + 1][1]<>0 );
-    imres := Set( List( Intersection( rump, preim ), n -> n^f mod immod ) );
-    image := Union( ResidueClassUnion( Integers, immod, imres ),
-                    List( IncludedElements(S), n -> n^f ) );
-    for r in [ 0 .. m - 1 ] do
-      if c[ r + 1 ][ 1 ] = 0 then
-        if   Intersection( S, ResidueClass( Integers, m, r ) ) <> [ ]
-        then image := Union( image, [ c[ r + 1 ][ 2 ] ] ); fi;
-      fi;
-    od;
-    excluded := ExcludedElements(S);
-    for n in excluded do
-      im := n^f;
-      if   Intersection( S, PreImagesElm( f, im ) ) = []
-      then image := Difference( image, [ im ] ); fi;
-    od;
-    return image;
+    R := Source(f); if not IsSubset(R,S) then TryNextMethod(); fi;
+    c := Coefficients(f); m := Modulus(f); res := AllResidues(R,m);
+    rc := function(r,m) return ResidueClass(R,m,r); end;
+    return Union(List([1..Length(res)],
+                      r->(c[r][1]*Intersection(S,rc(res[r],m))+c[r][2])/
+                          c[r][3]));
   end );
 
 #############################################################################
@@ -2928,12 +2909,4 @@ InstallMethod( Restriction,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
-
-
-
-
 
