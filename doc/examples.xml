@@ -143,6 +143,51 @@ the respective mapping to any integer decreases its absolute value.
 
 <!-- #################################################################### -->
 
+<Section Label="sec:AndaloroResult">
+<Heading>Checking a result by P. Andaloro</Heading>
+
+In <Cite Key="Andaloro00"/>, P.&nbsp;Andaloro has shown that proving that
+trajectories of integers <M>n \in 1(16)</M> under the Collatz mapping always
+end up with&nbsp;1 would be sufficient for proving the Collatz conjecture.
+We would like to check this result with &RCWA;. It is obvious that checking
+that the image of any integer <M>n \notin 0(3)</M> under a suitable power
+of the Collatz mapping lies in the residue class&nbsp;1(16), thus we proceed
+by setting <M>S := 1(16)</M> and successively uniting the set <M>S</M>
+with its image under the Collatz mapping&nbsp;<M>T</M>:
+
+<Example>
+<![CDATA[
+gap> S := ResidueClass(Integers,16,1);
+1(16)
+gap> S := Union(S,S^T);
+1(16) U 2(24)
+gap> S := Union(S,S^T);
+1(12) U 2(24) U 17(48) U 33(48)
+gap> S := Union(S,S^T);
+<union of 30 residue classes (mod 144)>
+gap> S := Union(S,S^T);
+<union of 42 residue classes (mod 144)>
+gap> S := Union(S,S^T);
+<union of 172 residue classes (mod 432)>
+gap> S := Union(S,S^T);
+<union of 676 residue classes (mod 1296)>
+gap> S := Union(S,S^T);
+<union of 810 residue classes (mod 1296)>
+gap> S := Union(S,S^T);
+<union of 2638 residue classes (mod 3888)>
+gap> S := Union(S,S^T);
+<union of 33 residue classes (mod 48)>
+gap> S := Union(S,S^T);
+<union of 33 residue classes (mod 48)>
+gap> Union(S,ResidueClass(Integers,3,0)); # Et voila ...
+Integers
+]]>
+</Example>
+
+</Section>
+
+<!-- #################################################################### -->
+
 <Section Label="sec:MatthewsLeighExamples">
 <Heading>Two examples by Matthews and Leigh</Heading>
 
