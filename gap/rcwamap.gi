@@ -2409,11 +2409,11 @@ InstallGlobalFunction( TransitionMatrix,
     ResmTest := AllResidues(R,mTest);
     T := MutableNullMat(Length(Resm),Length(Resm));
     for n in ResmTest do
-      i := n   mod m;
-      j := n^f mod m;
-      T[Position(Resm,i)][Position(Resm,j)] := 1;
+      i := Position(Resm,n   mod m);
+      j := Position(Resm,n^f mod m);
+      T[i][j] := T[i][j] + 1;
     od;
-    return T;
+    return List(T,l->l/Sum(l));
   end );
 
 #############################################################################
@@ -2435,7 +2435,7 @@ InstallMethod( TransitionGraph,
 
     M := TransitionMatrix(f,m); 
     return Graph(Group(()), [1..m], OnPoints,
-                 function(i,j) return M[i][j] = 1; end, true);
+                 function(i,j) return M[i][j] <> 0; end, true);
   end );
 
 #############################################################################
@@ -3086,12 +3086,15 @@ InstallMethod( Divergence,
     repeat
       m := Modulus(pow); NrRes := Length(AllResidues(R,m));
       c := Coefficients(pow);
-      M := List(TransitionMatrix(pow,m),l->l/Sum(l));
       facts := List(c,t->Float(Length(AllResidues(R,t[1]))/
                                Length(AllResidues(R,t[3]))));
+      Info(InfoRCWA,4,"Factors = ",facts);
+      M := TransitionMatrix(pow,m);
       p := List(TransposedMat(M),l->Float(Sum(l)/NrRes));
+      Info(InfoRCWA,4,"p = ",p);
       prev := approx;
       approx := Product(List([1..NrRes],i->facts[i]^p[i]))^Float(1/exp);
+      Info(InfoRCWA,2,"Approximation = ",approx);
       pow := pow * f; exp := exp + 1;
     until AbsoluteValue(approx-prev) < eps;
     return approx;
