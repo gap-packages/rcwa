@@ -2443,7 +2443,7 @@ InstallGlobalFunction( Trajectory,
       for step in [1..val-1] do Add(seq,seq[step]^f); od;
     elif cond = "stop" then
       if not IsListOrCollection(val) then val := [val]; fi;
-      repeat Add(seq,seq[Length(seq)]^f); until seq[Length(seq)] in val;
+      while not seq[Length(seq)] in val do Add(seq,seq[Length(seq)]^f); od;
     fi;
     return seq;
   end );
@@ -2800,7 +2800,7 @@ InstallMethod( ContractionCentre,
       while AbsInt(n_i) <= bound do
         if n_i in S0 then break; fi;
         if n_i in seq then
-          S0 := Union(S0,Trajectory(f,n_i,n_i,"stop"));
+          S0 := Union(S0,Cycle(f,n_i));
           Info(InfoRCWA,1,"|S0| = ",Length(S0));
           break;
         fi;
@@ -2977,6 +2977,7 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
