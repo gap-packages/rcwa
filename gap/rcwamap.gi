@@ -3729,7 +3729,7 @@ InstallMethod( FactorizationIntoGenerators,
           if pairs = [] then
             diffs := List(Cartesian(clSmult,clSdiv),
                      pair->PadicValue(Modulus(pair[1])/Modulus(pair[2]),p));
-            if Minimum(diffs) < k then
+            if Maximum(diffs) < k then
               Info(InfoRCWA,2,"Split classes in clSmult.");
               clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
             fi;
