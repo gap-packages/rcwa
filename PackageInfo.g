@@ -1,13 +1,13 @@
 ####################################################################################################
 ##
-##  PkgInfo.g                           GAP4 Package `RCWA'                              Stefan Kohl
+##  PackageInfo.g                         GAP4 Package `RCWA'                            Stefan Kohl
 ##  
 #H  @(#)$Id$
 ##
 
 SetPackageInfo( rec(
 
-PkgName          := "RCWA",
+PackageName      := "RCWA",
 Version          := "1.0",
 Date             := "24/02/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0",
@@ -33,7 +33,7 @@ Status           := "dev",
 CommunicatedBy   := "",
 AcceptDate       := "",
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
-PkgInfoURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PkgInfo.g",
+PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PackageInfo.g",
 AbstractHTML     := "This package deals with some kind of infinite permutation groups over rings.",
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.html",
 PackageDoc       := rec(
@@ -65,4 +65,4 @@ Keywords         := [ "infinite permutation groups", "permutation groups over ri
 
 ####################################################################################################
 ##
-#E  PkgInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  PackageInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
