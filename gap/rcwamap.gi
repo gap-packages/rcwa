@@ -1115,7 +1115,11 @@ InstallMethod( Display,
 
     if not IsRcwaMappingStandardRep(f) then TryNextMethod(); fi;
     m := f!.modulus; c := f!.coeffs;
-    if HasName(f) then name := Name(f); else name := "f"; fi;
+    if HasName(f) then
+      name := Name(f);
+      if   Position(name,'^') <> fail
+      then name := Concatenation("(",name,")"); fi;
+    else name := "f"; fi;
     prefix := false; RingString := RingToString(Source(f));
     if   IsModularRcwaMapping(f)
     then VarName := "P"; q := Size(UnderlyingField(f));
@@ -2217,6 +2221,8 @@ InstallMethod( InverseOp,
 
     local  Result, c, cInv, m, mInv, n, t, tm, tn, Classes, cl, pi;
 
+    if HasOrder(f) and Order(f) = 2 then return f; fi;
+
     c := f!.coeffs; m := f!.modulus;
     cInv := [];
     mInv := Multiplier( f ) * m / Gcd( m, Gcd( List( c, t -> t[3] ) ) );
@@ -2260,6 +2266,8 @@ InstallMethod( InverseOp,
     local  Result, c, cInv, m, mInv, d, dInv, R, q, x,
            respols, res, resInv, r, n, t, tm, tr, tn, Classes, cl, pos;
 
+    if HasOrder(f) and Order(f) = 2 then return f; fi;
+
     R := UnderlyingRing(FamilyObj(f));
     q := Size(CoefficientsRing(R));
     x := IndeterminatesOfPolynomialRing(R)[1];
@@ -2292,8 +2300,9 @@ InstallMethod( InverseOp,
     then return fail; fi;
 
     Result := RcwaMappingNC( q, mInv, cInv );
-    SetInverse(f, Result); SetInverse(Result, f);
-    if HasOrder(f) then SetOrder(Result, Order(f)); fi;
+    SetInverse(f,Result); SetInverse(Result,f);
+    if HasOrder(f) then SetOrder(Result,Order(f)); fi;
+    if HasName(f)  then SetName(Result,Concatenation(Name(f),"^-1")); fi;
 
     return Result;
   end );
@@ -2365,6 +2374,15 @@ InstallMethod( \^,
     if HasOrder(f) then
       if Order(f) = infinity then SetOrder(pow,infinity); else
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
+      fi;
+      if HasName(f) and HasIsTame(f) and IsTame(f) then
+        if   Order(f) = infinity
+        then SetName(pow,Concatenation(Name(f),"^",String(n)));
+        elif not (n mod Order(f) in [0,1])
+        then SetName(pow,Concatenation(Name(f),"^",String(n mod Order(f))));
+        elif n mod Order(f) = 1
+        then SetName(pow,Name(f));
+        fi;
       fi;
     fi;
 
@@ -2690,8 +2708,10 @@ InstallMethod( Order,
       fi;
       Add(CycLngs,CycLng);
     od;
-    if IsOne(f^Lcm(CycLngs)) 
-    then return Lcm(CycLngs); else TryNextMethod(); fi;
+    if   IsOne(f^Lcm(CycLngs)) 
+    then SetIsTame(f,true);
+         return Lcm(CycLngs);
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
