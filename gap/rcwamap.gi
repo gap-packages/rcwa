@@ -1328,6 +1328,42 @@ InstallMethod( IsClassWiseOrderPreserving,
 
 #############################################################################
 ##
+#M  MovedPoints( <f> ) . . . . . . . . . . . . . . for bijective rcwa mapping
+##
+##  The set of moved points (support) of the bijective rcwa mapping <f>.
+##
+InstallOtherMethod( MovedPoints,
+                    "for bijective rcwa mapping", true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+
+    local  m, c, R, q, d, x, r, pols, residues, fixed, fixpoint;
+
+    if not IsBijective(f) then TryNextMethod(); fi;
+    m := Modulus(f); c := Coefficients(f); R := Source(f);
+    if   IsRationalBasedRcwaMapping(f)
+    then pols     := [0..m-1]; # just a dummy
+         residues := Filtered( [0..m-1], r -> c[r+1] <> [1,0,1] );
+    else q    := Size(CoefficientsRing(R));
+         d    := DegreeOfLaurentPolynomial(m);
+         x    := IndeterminatesOfPolynomialRing(R)[1];
+         pols := AllGFqPolynomialsModDegree(q,d,x);
+         residues := Filtered( [0..q^d-1], r -> c[r+1] <> [1,0,1] * One(R) );
+    fi;
+    fixed := [];
+    for r in residues do
+      if c[r+1]{[1,3]} <> [1,1] * One(R) then
+        fixpoint := c[r+1][2]/(c[r+1][3]-c[r+1][1]);
+        if   fixpoint in R and fixpoint mod m = pols[r+1]
+        then Add(fixed,fixpoint); fi;
+      fi;
+    od;
+    if IsModularRcwaMapping(f) then residues := pols{residues+1}; fi;
+    return ResidueClassUnion(R,m,residues,[],fixed);
+  end );
+
+#############################################################################
+##
 #M  ImageElm( <f>, <n> ) . . . . . . .  for integral rcwa mapping and integer
 ##
 ##  Image of the integer <n> under the rcwa mapping <f>. 

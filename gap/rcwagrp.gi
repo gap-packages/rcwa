@@ -349,6 +349,22 @@ InstallMethod( Display,
 
 #############################################################################
 ##
+#M  MovedPoints( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa group
+##
+##  The set of moved points (support) of the rcwa group <G>.
+##
+InstallOtherMethod( MovedPoints,
+                    "for rcwa group", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GF_q_x(G)
+    then return Source(One(G)); fi;
+    return Union(List(GeneratorsOfGroup(G),MovedPoints));
+  end );
+
+#############################################################################
+##
 #M  IsomorphismIntegralRcwaGroup( <G> ) . . . . .  rcwa representation of <G>
 #M  IsomorphismRcwaGroup( <G> )
 ##
