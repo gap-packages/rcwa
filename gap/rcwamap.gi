@@ -2142,6 +2142,12 @@ InstallMethod( IsInjective,
 
     local  c, cInv, m, mInv, n, t, tm, tn, Classes, cl;
 
+    if Product(PrimeSet(f)) > 30 then
+      if Length(Set(List([-100..100],n->n^f))) < 201
+      then return false; fi;
+      if Length(Set(List([-1000..1000],n->n^f))) < 2001
+      then return false; fi;
+    fi;
     c := f!.coeffs; m := f!.modulus;
     cInv := [];
     mInv := Multiplier( f ) * m / Gcd( m, Gcd( List( c, t -> t[3] ) ) );
