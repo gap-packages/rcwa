@@ -3454,7 +3454,7 @@ InstallMethod( FactorizationIntoGenerators,
 
   function ( g )
 
-    local  facts, P, h, cycs, cyc, gfixP, c, m, cr, i, j, r;
+    local  facts, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr, i, j, r;
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
@@ -3471,23 +3471,21 @@ InstallMethod( FactorizationIntoGenerators,
         od;
       od;
       gfixP := g/Product(facts); # gfixP stabilizes the partition P.
-      m := Modulus(gfixP); c := Coefficients(gfixP);
-      for r in [1..m] do
-        if c[r][1] < 0 then
-          cr := ClassReflection(r-1,m);
+      for cl in P do
+        rest := RestrictedPerm(gfixP,cl);
+        if IsOne(rest) then continue; fi;
+        m := Modulus(rest); r := Residues(cl)[1];
+        c := Coefficients(rest)[r+1];
+        if c[1] < 0 then
+          cr    := ClassReflection(r,m);
           facts := Concatenation([cr],facts);
-          gfixP := gfixP * cr;
+          rest := rest * cr;
         fi;
-      od;
-      m := Modulus(gfixP); c := Coefficients(gfixP);
-      for r in [1..m] do # Now gfixP is class-wise order-preserving.
-        if c[r][2] < 0 then
-          facts := Concatenation(ListWithIdenticalEntries(
-                                 -c[r][2]/m,ClassShift(r-1,m)^-1),facts);
-        elif c[r][2] > 0 then
-          facts := Concatenation(ListWithIdenticalEntries(
-                                 c[r][2]/m,ClassShift(r-1,m)),facts);
-        fi;
+        if IsOne(rest) then continue; fi;        
+        c := Coefficients(rest)[r+1];
+        facts := Concatenation(ListWithIdenticalEntries(
+                               AbsInt(c[2]/m),
+                               ClassShift(r,m)^SignInt(c[2])),facts);
       od;
     else
       TryNextMethod();
