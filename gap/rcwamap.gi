@@ -2239,9 +2239,9 @@ InstallMethod( Order,
 ##
 #M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
 ##
-##  This method tries to enumerate orbits of the rcwa mapping <f>.
+##  This method tries to enumerate cycles of the rcwa mapping <f>.
 ##  In case <f> has finite order, it may determine it or give up.
-##  It also checks whether <f> has an orbit whose length exceeds two times
+##  It also checks whether <f> has a cycle whose length exceeds two times
 ##  the square of the modulus, and returns `infinity', if so.
 ##  The validity of this probably sufficient criterium for <f> having
 ##  infinite order has not yet been proved.
@@ -2287,6 +2287,10 @@ InstallGlobalFunction( TransitionMatrix,
 
     local  T, m, n, i, j;
 
+    if   not IsRationalBasedRcwaMapping(f) or not IsPosInt(deg)
+    then Error("usage: TransitionMatrix( <f>, <deg> ),\nwhere <f> is a ",
+               "rational-based rcwa mapping and <deg> is an integer > 0.\n");
+    fi;
     m := Modulus(f) * Lcm(deg,Divisor(f));
     T := MutableNullMat(deg,deg);
     for n in [0..m-1] do
@@ -2299,27 +2303,41 @@ InstallGlobalFunction( TransitionMatrix,
 
 #############################################################################
 ##
-#M  RcwaGraph( <f> ) . . . . . . . . . . . . for rational-based rcwa mapping
+#M  TransitionGraph( <f>, <m> ) . . . . . . . for rational-based rcwa mapping
 ##
 ##  The vertices are labelled by 1..<m> instead of 0..<m>-1 (0 is identified
 ##  with 1, etc.) because in {\GAP}, permutations cannot move 0. 
 ##
-##  This requires the package `GRAPE' to be loaded.
-##
-InstallMethod( RcwaGraph,
+InstallMethod( TransitionGraph,
                "for rational-based rcwa mappings",
-               true, [ IsRationalBasedRcwaMapping ], 0,
+               true, [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
 
-  function ( f )
+  function ( f, m )
 
-    local  m, M;
+    local  M;
 
-    if   TestPackageAvailability("grape","4.0") <> true
-    then Info(InfoWarning,1,"Sorry, RcwaGraph( <f> ) requires the package ",
-                            "grape (4.0 or newer) to be loaded."); fi;
-    m := Modulus(f); M := TransitionMatrix(f,m); 
+    M := TransitionMatrix(f,m); 
     return Graph(Group(()), [1..m], OnPoints,
                  function(i,j) return M[i][j] = 1; end, true);
+  end );
+
+#############################################################################
+##
+#M  OrbitsModulo( <f>, <m> ) . . . . . . . .  for rational-based rcwa mapping
+##
+InstallMethod( OrbitsModulo,
+               "for rational-based rcwa mappings", true,
+               [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
+
+  function ( f, m )
+
+    local  gamma, delta, C, r;
+
+    gamma := TransitionGraph(f,m);
+    for r in [1..m] do RemoveSet(gamma.adjacencies[r],r); od;
+    delta := UnderlyingGraph(gamma);
+    C := ConnectedComponents(delta);
+    return Set(List(C,c->List(c,r->r-1)));
   end );
 
 ############################################################################# 
@@ -2341,6 +2359,8 @@ InstallGlobalFunction( TrajectoryModulo,
     f := arg[1]; n := arg[2];
     if   Length(arg) = 3 then m := Modulus(f); lng := arg[3];
                          else m := arg[3];     lng := arg[4]; fi;
+    if not (IsRcwaMapping(f) and IsSubset(Source(f),[m,n]) and IsPosInt(lng))
+    then Error(usage); fi;
     seq := [];
     for i in [1..lng] do
       Add(seq,n mod m); n := n^f;
@@ -2397,9 +2417,9 @@ InstallMethod( IsTame,
     local  gamma, delta, C, r;
 
     if   not IsRationalBasedRcwaMapping(f) or not IsBijective(f)
-    then TryNextMethod(); fi; # RcwaGraph for mod. mappings curr. not impl.
+    then TryNextMethod(); fi; # TransitionGraph f. mod. map's curr. not impl.
     Info(InfoRCWA,1,"IsTame:`dead end' criterion.");
-    gamma := RcwaGraph(f);
+    gamma := TransitionGraph(f,Modulus(f));
     for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
     delta := UnderlyingGraph(gamma);
     C := ConnectedComponents(delta);

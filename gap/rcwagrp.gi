@@ -743,6 +743,35 @@ InstallMethod( ShortOrbits,
     return orbs;
   end );
 
+#############################################################################
+##
+#M  OrbitsModulo( <G>, <m> ) . . . . . . . . .  for rational-based rcwa group
+##
+InstallOtherMethod( OrbitsModulo,
+                    "for rational-based rcwa groups", true,
+                    [ IsRationalBasedRcwaGroup, IsPosInt ], 0,
+
+  function ( G, m )
+
+    local  result, orbsgen, orbit, oldorbit, remaining;
+
+    orbsgen := Concatenation(List(GeneratorsOfGroup(G),
+                                  g->OrbitsModulo(g,m)));
+    remaining := [0..m-1]; result := [];
+    repeat
+      orbit := [remaining[1]];
+      repeat
+        oldorbit := ShallowCopy(orbit);
+        orbit := Union(orbit,
+                       Union(Filtered(orbsgen,
+                                      orb->Intersection(orbit,orb)<>[])));
+      until orbit = oldorbit;
+      Add(result,orbit);
+      remaining := Difference(remaining,orbit);
+    until remaining = [];
+    return result;
+  end );
+
 ############################################################################# 
 ## 
 #M  OrbitUnion( <G>, <S> ) . . . . . . . . . . . . . . for rcwa group and set

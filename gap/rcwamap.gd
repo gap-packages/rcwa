@@ -307,30 +307,6 @@ DeclareProperty( "IsFlat", IsRcwaMapping );
 ##
 DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping ); 
 
-#############################################################################
-##
-#O  RcwaGraph( <f> ) . . . . . . . . . . . . .  graph of the rcwa mapping <f>
-##
-##  Graph associated to rcwa mapping <f>.
-##
-##  We define the *graph* $\Gamma_f$ associated
-##  to an rcwa mapping $f$ with modulus $m$ as follows:
-##  \beginlist
-##
-##     \item{-} The vertices are the residue classes (mod $m$).
-##
-##     \item{-} There is an edge from $r_1(m)$ to $r_2(m)$ if and only if
-##              there is some $n_1 \in r_1(m)$ such that
-##	        $n_1^f \in r_2(m)$.
-##
-##  \endlist
-##
-##  This requires the package `grape' to be loaded.
-##
-DeclareOperation( "RcwaGraph", [ IsRcwaMapping ] );
-if   TestPackageAvailability( "grape", "4.0" ) = fail
-then Graph := ReturnFail; fi;
-
 ############################################################################# 
 ##
 #F  TransitionMatrix( <f>, <deg> ) . . <deg>x<deg>-`Transition matrix' of <f>
@@ -343,6 +319,35 @@ then Graph := ReturnFail; fi;
 ##  classes (mod <deg>) to rows / columns.
 ##
 DeclareGlobalFunction( "TransitionMatrix" );
+
+#############################################################################
+##
+#O  TransitionGraph( <f>, <m> ) . .  transition graph of the rcwa mapping <f>
+##
+##  Transition graph for modulus <m> of the rcwa mapping <f>.
+##
+##  We define the *transition graph* $\Gamma_{f,m}$ for modulus <m> of the
+##  rcwa mapping $f$ as follows:
+##  \beginlist
+##
+##     \item{-} The vertices are the residue classes (mod $m$).
+##
+##     \item{-} There is an edge from $r_1(m)$ to $r_2(m)$ if and only if
+##              there is some $n_1 \in r_1(m)$ such that
+##	        $n_1^f \in r_2(m)$.
+##
+##  \endlist
+##
+DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
+
+#############################################################################
+##
+#O  OrbitsModulo( <f>, <m> ) . . orbit partition of $R/mR$ under `Group(<f>)'
+##
+##  Returns the set of the sets of vertices of the weakly-connected
+##  components of the transition graph $\Gamma_{f,m}$.
+##
+DeclareOperation( "OrbitsModulo", [ IsRcwaMapping, IsRingElement ] );
 
 ############################################################################# 
 ##
