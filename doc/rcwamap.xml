@@ -90,16 +90,25 @@ gap> AllResidues(R,x^4+x^2);
 </ManSection>
 
 <ManSection>
-  <Meth Name="RcwaMapping" Arg="R, modulus, coeffs"/>
-  <Meth Name="RcwaMapping" Arg="R, coeffs"/>
-  <Meth Name="RcwaMapping" Arg="coeffs"/>
-  <Meth Name="RcwaMapping" Arg="perm, range"/>
-  <Meth Name="RcwaMapping" Arg="modulus, values"/>
-  <Meth Name="RcwaMapping" Arg="pi, coeffs"/>
-  <Meth Name="RcwaMapping" Arg="q, modulus, coeffs"/>
-  <Meth Name="RcwaMapping" Arg="P1, P2"/>
-  <Meth Name="RcwaMapping" Arg="cycles"/>
-   <Returns> An rcwa mapping. </Returns>
+  <Meth Name="RcwaMapping" Arg="R, modulus, coeffs"
+        Label="R, modulus, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="R, coeffs"
+        Label="R, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="coeffs"
+        Label="coeffs"/>
+  <Meth Name="RcwaMapping" Arg="perm, range"
+        Label="perm, range"/>
+  <Meth Name="RcwaMapping" Arg="modulus, values"
+        Label="modulus, values"/>
+  <Meth Name="RcwaMapping" Arg="pi, coeffs"
+        Label="pi, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="q, modulus, coeffs"
+        Label="q, modulus, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="P1, P2"
+        Label="P1, P2"/>
+  <Meth Name="RcwaMapping" Arg="cycles"
+        Label="cycles"/>
+  <Returns> An rcwa mapping. </Returns>
   <Description>
     Construction of an rcwa mapping.
     In all cases the arguments&nbsp;<A>R</A> (the underlying ring),
@@ -130,41 +139,30 @@ gap> AllResidues(R,x^4+x^2);
       </Item>
       <Mark>(d)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M>,
-        acting on the translates of <A>range</A> by integral multiples
-        of the length of <A>range</A> as the translates of the action of
-        the finite permutation <A>perm</A> on <A>range</A> to the
-        respective intervals, where moved points of <A>perm</A> outside
-        <A>range</A> are ignored (<A>range</A> must entirely consist out
-        of positive integers less than <M>2^{28}</M>, since &GAP;
-        permutations can only move these), resp.
-      </Item>
-      <Mark>(e)</Mark>
-      <Item>
         of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>modulus</A> and
         values prescribed by the list <A>val</A>, which consists of
         2<M>\cdot</M><A>modulus</A> pairs giving preimage and image for
         2 points per residue class (mod <A>modulus</A>), resp.
       </Item>
-      <Mark>(f)</Mark>
+      <Mark>(e)</Mark>
       <Item>
         of <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
         and coefficients <A>coeffs</A> (the set of primes <M>\pi</M> 
         denoting the underlying ring is given as argument <A>pi</A>), resp.
       </Item>
-      <Mark>(g)</Mark>
+      <Mark>(f)</Mark>
       <Item>
         of GF(<A>q</A>)[<A>x</A>] with modulus
         <A>modulus</A> and coefficients <A>coeffs</A>, resp.
       </Item>
-     <Mark>(h)</Mark>
+     <Mark>(g)</Mark>
       <Item>
         an arbitrary rcwa mapping which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of <A>R</A> into disjoint
         single residue classes and which is affine on the elements
         of <A>P1</A>, resp.
       </Item>
-      <Mark>(i)</Mark>
+      <Mark>(h)</Mark>
       <Item>
         an arbitrary rcwa mapping with <Q>residue class cycles</Q> as given
         by <A>cycles</A>. The latter is a list of lists of disjoint residue
@@ -178,12 +176,6 @@ gap> AllResidues(R,x^4+x^2);
 <![CDATA[
 gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
 <rcwa mapping of Z with modulus 2>
-gap> f = RcwaMapping((2,3),[2..3]);
-true
-gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
-<rcwa mapping of Z with modulus 17>
-gap> Action(Group(g),[4..20]);
-Group([ (5,6) ])
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 <rcwa mapping of Z with modulus 2>
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
