@@ -562,7 +562,7 @@ available. <P/>
         \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
       </Display>
     </Alt>
-    In the author's forthcoming PhD Thesis, it will be proved that
+    In the author's forthcoming PhD thesis, it will be proved that
     the determinant induces an epimorphism from the group of all
     class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
     onto <M>(\Z,+)</M>. <P/>
@@ -610,7 +610,7 @@ gap> Determinant(u^2*b^-3);
         \right)}}.
       </Display>
     </Alt>
-    In the author's forthcoming PhD Thesis, it will be proved that
+    In the author's forthcoming PhD thesis, it will be proved that
     the sign induces an epimorphism from RCWA(<M>\Z</M>) onto
     the group <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>. This means that
     the kernel of the sign mapping is a normal subgroup of
@@ -846,7 +846,7 @@ gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
     </Enum>
     The assignment of the residue classes (mod&nbsp;<M>m</M>) to the
     vertices of the graph is given by the ordering of the residues in
-    the return value of <C>AllResidues(<A>m</A>)</C>.
+    <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>.
     The result is returned as a <Package>GRAPE</Package>-graph.
 <Example>
 <![CDATA[
@@ -863,9 +863,9 @@ rec( isGraph := true, order := 4, group := Group(()),
 <ManSection>
   <Oper Name="OrbitsModulo" Arg="f, m" Label="f, m"/>
   <Returns>
-    The partition of <C>AllResidues(<A>m</A>)</C> corresponding to
-    the weakly-connected components of the transition graph for
-    modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
+    The partition of <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>
+    corresponding to the weakly-connected components of the transition
+    graph for modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
     See also <Ref Meth="OrbitsModulo" Label="G, m"/> for rcwa groups.
@@ -936,8 +936,8 @@ gap> List(fact,MovedPoints);
       (See LaTeX version of the manual.)
     </Alt>
     The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
-    columns of the matrix is given by the ordering of the residues
-    in the return value of <C>AllResidues(<A>m</A>)</C>. <P/>
+    columns of the matrix is given by the ordering of the residues in
+    <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>. <P/>
 
     The transition matrix is a weighted adjacency matrix of the corresponding
     transition graph <C>TransitionGraph(<A>f</A>,<A>m</A>)</C>.
@@ -1049,7 +1049,7 @@ gap> TrajectoryModulo(T,27,2,100);
   <Func Name="CoefficientsOnTrajectory"
         Arg="f, n, val, cond, all" Label="f, n, val, cond, all"/>
   <Returns>
-    A list <C>c</C> of coefficient triples such that for any&nbsp;<C>k</C>,
+    A list <C>c</C> of coefficient triples, such that for any&nbsp;<C>k</C>
     it holds that <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
     (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C>, or its last entry.
   </Returns>
