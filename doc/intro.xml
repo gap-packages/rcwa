@@ -403,6 +403,7 @@ We end this chapter by giving a few open problems (in arbitrary order).
     <Q>wide open</Q> anyway.
     In case that they are not simple, determine a non-trivial normal
     subgroup and the structure of the factor group.
+    Do the groups RCWA(<M>R</M>) have non-trivial outer automorphisms?
   </Item>
 
   <Mark>-</Mark>
@@ -428,6 +429,8 @@ We end this chapter by giving a few open problems (in arbitrary order).
     possible (see the example given above) and there are examples
     suggesting that the same holds for <M>R = \mathbb{Z}</M>
     (see <Ref Label="sec:WildButFiniteCycles"/>), but this is not clear.
+    Are point stabilizers of finitely generated rcwa groups always
+    finitely generated, also?
   </Item>
 
   <Mark>-</Mark>
@@ -446,5 +449,6 @@ We end this chapter by giving a few open problems (in arbitrary order).
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
