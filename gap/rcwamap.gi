@@ -32,7 +32,7 @@
 ##           ($a*(b+c) = a*b+a*c$, but not necessary $(a+b)*c = a*c+b*c$).
 ##
 ##  Some remarks concerning the implementation of rcwa mappings of
-##  the ring of integers:
+##  the ring of integers and its semilocalizations:
 ##
 ##  An integral rcwa mapping object <f> just stores the modulus <modulus>
 ##  and a coefficients list <coeffs>.
@@ -43,19 +43,19 @@
 ##    <n>^<f> = (<coeffs>[<a> + 1][1] * <n> + <coeffs>[<a> + 1][2]) /
 ##               <coeffs>[<a> + 1][3]>.
 ##  $$
-##  A semilocal integral rcwa mapping object (here, the underlying ring
-##  is $\Z_{\pi}$ for a set of primes $\pi$) stores the same information,
-##  the set of of non-invertible primes in the base ring is stored in its
-##  family object.
+##  A semilocal integral rcwa mapping object <f> (here, the underlying ring
+##  is $\Z_{\pi}$ for a set of primes $\pi$) stores the same information.
+##  The ring which <f> acts on can be accessed as `Source(<f>)'.
 ##
 ##  Some remarks concerning the implementation of rcwa mappings of
 ##  GF(<q>)[<x>] (modular rcwa mappings):
 ## 
-##  A modular rcwa mapping object stores the finite field size <q>, the
-##  modulus <modulus> and a coefficients list <coeffs>.
+##  A modular rcwa mapping object <f> also stores the modulus <modulus> and
+##  a coefficients list <coeffs>.
 ##  The meaning of <modulus> and <coeffs> is completely analogous to the
 ##  above, where the residue classes for <coeffs> are sorted according to
 ##  the default order of their smallest-degree representatives in {\GAP}.
+##  The ring which <f> acts on can again be accessed as `Source(<f>)'.
 ##
 ##  The following applies to all kinds of rcwa mappings:
 ##
@@ -78,7 +78,7 @@ InstallGlobalFunction( RCWAInfo,
 #V  IntegralRcwaMappingsFamily . . . the family of all integral rcwa mappings
 ##
 InstallValue( IntegralRcwaMappingsFamily,
-              NewFamily( "IntegralRcwaMappingsFamily",
+              NewFamily( "RcwaMappingsFamily( Integers )",
                          IsIntegralRcwaMapping,
                          CanEasilySortElements, CanEasilySortElements ) );
 SetFamilySource( IntegralRcwaMappingsFamily, FamilyObj( 1 ) );
@@ -107,8 +107,8 @@ InstallGlobalFunction( SemilocalIntegralRcwaMappingsFamily,
     then Error("usage: SemilocalIntegralRcwaMappingsFamily( <primes> )\n",
                "for a set of primes <primes>.\n");
     fi;
-    name := Concatenation( "SemilocalIntegralRcwaMappingsFamily( ",
-                           String(primes)," )" );
+    name := Concatenation( "RcwaMappingsFamily( ",
+                           String( Z_pi( primes ) )," )" );
     fam := NewFamily( name, IsSemilocalIntegralRcwaMapping,
                       CanEasilySortElements, CanEasilySortElements );
     SetUnderlyingRing( fam, Z_pi( primes ) );
@@ -123,13 +123,13 @@ InstallGlobalFunction( SemilocalIntegralRcwaMappingsFamily,
 
 #############################################################################
 ##
-#F  ModularRcwaMappingsFamily( <R> ) . . . .  family of modular rcwa mappings
+#F  ModularRcwaMappingsFamily( <q> ) . . . .  family of modular rcwa mappings
 ##
 InstallGlobalFunction( ModularRcwaMappingsFamily,
 
   function ( q )
 
-    local  fam, R, x, IndName;
+    local  fam, R, x;
 
     if   not IsPrimePowerInt( q )
     then Error("usage: ModularRcwaMappingsFamily( <q> ) for a ",
@@ -139,9 +139,8 @@ InstallGlobalFunction( ModularRcwaMappingsFamily,
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
     if   not HasIndeterminateName( FamilyObj( x ), 1 )
     then SetIndeterminateName( FamilyObj( x ), 1, "x" ); fi; 
-    IndName := IndeterminateName( FamilyObj( x ), 1 ); 
-    fam := NewFamily( Concatenation( "ModularRcwaMappingsFamily( GF( ",
-                                     String(q), " )[ ", IndName, " ] )" ),
+    fam := NewFamily( Concatenation( "RcwaMappingsFamily( ",
+                                      String( R ), " )" ),
                       IsModularRcwaMapping, CanEasilySortElements,
                       CanEasilySortElements );
     SetUnderlyingIndeterminate( fam, x );
