@@ -293,6 +293,8 @@ gap> Print(LaTeXObj(a:Indentation:=2));
     \frac{3n + 1}{4}  & \text{if} \ n \equiv 1 \ (4), \\
     \frac{3n - 1}{4}  & \text{if} \ n \equiv 3 \ (4).
   \end{cases}
+gap> OrbitsModulo(ab,9);
+[ [ 0 ], [ 1, 4, 5, 6, 7 ], [ 2 ], [ 3 ], [ 8 ] ]
 gap> G := Group(ab,ac);
 <integral rcwa group with 2 generators>
 gap> Display(G);
@@ -332,6 +334,8 @@ gap> orb := Orbit(G,1);
 [ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
 gap> MovedPoints(G);
 <union of 8 residue classes (mod 9)>
+gap> OrbitsModulo(G,9);
+[ [ 0 ], [ 1, 2, 3, 4, 5, 6, 7, 8 ] ]
 gap> H := Action(G,orb);;
 gap> H = Group([(1,2,3,4,6,8),(3,5,7,6,9,10)]);
 true
@@ -538,12 +542,13 @@ Integral rcwa mapping with modulus 4
   0 2 3                                | 0
   1                                    | -3
 
-gap> RcwaGraph(a) = rec( isGraph := true, order := 4, group := Group(()), 
->                        schreierVector := [ -1, -2, -3, -4 ], 
->                        adjacencies := [ [ 1, 3 ], [ 1, 2, 3, 4 ],
->                                         [ 2, 4 ], [ 1, 2, 3, 4 ] ], 
->                        representatives := [ 1, 2, 3, 4 ],
->                        names := [ 1, 2, 3, 4 ] );
+gap> TransitionGraph(a,4) 
+>  = rec( isGraph := true, order := 4, group := Group(()), 
+>         schreierVector := [ -1, -2, -3, -4 ], 
+>         adjacencies := [ [ 1, 3 ], [ 1, 2, 3, 4 ],
+>                          [ 2, 4 ], [ 1, 2, 3, 4 ] ], 
+>         representatives := [ 1, 2, 3, 4 ],
+>         names := [ 1, 2, 3, 4 ] );
 true
 gap> a*(bc*f) = (a*bc)*f;
 true
