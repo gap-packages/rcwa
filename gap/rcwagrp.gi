@@ -29,8 +29,7 @@ InstallTrueMethod( IsRcwaGroup, IsModularRcwaGroup );
 ##  family and are bijective, hence generate a group.
 ##
 InstallMethod( IsGeneratorsOfMagmaWithInverses,
-               "for lists of rcwa mappings", 
-               true, [ IsListOrCollection ], 0,
+               "for lists of rcwa mappings", true, [ IsListOrCollection ], 0,
 
   function ( l )
 
@@ -90,8 +89,8 @@ BindGlobal( "IntegralRcwaGroupsFamily",
 ##
 ##  Group formed by all bijective integral rcwa mappings.
 ##
-InstallMethod( RCWACons, "natural RCWA(Z)", true,
-               [ IsRcwaGroup, IsIntegers ], 0,
+InstallMethod( RCWACons,
+               "natural RCWA(Z)", true, [ IsRcwaGroup, IsIntegers ], 0,
 
   function ( filter, R )
 
@@ -116,8 +115,8 @@ InstallMethod( RCWACons, "natural RCWA(Z)", true,
 ##
 ##  Group formed by all bijective rcwa mappings over Z_pi.
 ##
-InstallMethod( RCWACons, "natural RCWA(Z_pi)", true, 
-               [ IsRcwaGroup, IsZ_pi ], 0,
+InstallMethod( RCWACons,
+               "natural RCWA(Z_pi)", true, [ IsRcwaGroup, IsZ_pi ], 0,
 
   function ( filter, R )
 
@@ -145,7 +144,8 @@ InstallMethod( RCWACons, "natural RCWA(Z_pi)", true,
 ##
 ##  Group formed by all bijective rcwa mappings over GF(q)[x].
 ##
-InstallMethod( RCWACons, "natural RCWA(Z_pi)", true, 
+InstallMethod( RCWACons,
+               "natural RCWA(Z_pi)", true, 
                [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
 
   function ( filter, R )
@@ -231,8 +231,7 @@ InstallMethod( \in,
 #M  \in( <g>, RCWA( GF(q)[x] ) ) . . . .  for rcwa mapping and RCWA(GF(q)[x])
 ##
 InstallMethod( \in,
-               "for modular rcwa mapping and RCWA(GF(q)[x])",
-               ReturnTrue,
+               "for modular rcwa mapping and RCWA(GF(q)[x])", ReturnTrue,
                [ IsModularRcwaMapping, IsNaturalRCWA_GF_q_x ], 100,
 
   function ( g, G )
@@ -265,8 +264,7 @@ InstallMethod( IsSubset,
 #M  IsSubset( RCWA( GF(q)[x] ), G ) . . . . for RCWA(GF(q)[x]) and rcwa group
 ##
 InstallMethod( IsSubset,
-               "for RCWA(GF(q)[x]) and modular rcwa group",
-               ReturnTrue,
+               "for RCWA(GF(q)[x]) and modular rcwa group", ReturnTrue,
                [ IsNaturalRCWA_GF_q_x, IsModularRcwaGroup ], 0,
 
   function ( RCWA_GF_q_x, G )
@@ -751,8 +749,7 @@ InstallMethod( NiceObject,
 ##  into an infinite loop.
 ##
 InstallMethod( Size,
-               "for integral rcwa groups",
-               true, [ IsIntegralRcwaGroup ], 0,
+               "for integral rcwa groups", true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
 
@@ -917,6 +914,30 @@ InstallMethod( ActionOnClassPartition,
 
 #############################################################################
 ##
+#M  RankOfKernelOfActionOnClassPartition( <G> )  for tame integral rcwa group
+##
+InstallMethod( RankOfKernelOfActionOnClassPartition,
+               "for tame integral rcwa groups", true,
+               [ IsIntegralRcwaGroup ], 0,
+
+  function ( G )
+
+    local  P, P3, H, H3, orbs, orb, cl;
+
+    P  := PermutedClassPartition(G);
+    P3 := Flat(List(P,cl->[ResidueClass(Integers,
+                           3*Modulus(cl),Residues(cl)[1]),
+                           ResidueClass(Integers,
+                           3*Modulus(cl),Residues(cl)[1]+Modulus(cl)),
+                           ResidueClass(Integers,
+                           3*Modulus(cl),Residues(cl)[1]+2*Modulus(cl))]));
+    H  := ActionOnClassPartition(G);
+    H3 := Action(G,P3);
+    return Number(Factors(Size(H3)/Size(H)),p->p=3);
+  end );
+
+#############################################################################
+##
 #M  KernelOfActionOnClassPartition( <G> ) . . .  for tame integral rcwa group
 ##
 InstallMethod( KernelOfActionOnClassPartition,
@@ -947,7 +968,8 @@ InstallMethod( KernelOfActionOnClassPartition,
       i := Random([1..nrgens]); nr := nr + 1;
       elH := elH * h[i];
       elG := elG * g[i];
-    until rank = Length(P) or nr - lasthit > 100;
+    until rank = RankOfKernelOfActionOnClassPartition(G)
+          and nr - lasthit > 100; # lasthit check just as a confirmation ... 
     erg := HermiteNormalFormIntegerMatTransforms(L{[1..rank]});
     LHNF := erg.normal; T := erg.rowtrans;
     genKHNF := List([1..rank],

@@ -813,6 +813,8 @@ gap> Size(D);
 161280
 gap> IsPerfect(D);
 true
+gap> RankOfKernelOfActionOnClassPartition(G);
+6
 gap> K := KernelOfActionOnClassPartition(G);
 <integral rcwa group with 6 generators>
 gap> RankMat(KernelOfActionOnClassPartitionHNFMat(G));

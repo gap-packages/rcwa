@@ -238,9 +238,6 @@ Bijective integral rcwa mapping with modulus 4
       This will be successful if <A>G</A> is tame. For wild groups only a number
       of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C> the method will
       give information about reasons why <A>g</A> is an element of <A>G</A> or not.
-      The algorithm is probabilistic; in principle it may happen that not the
-      whole kernel is picked up by <C>KernelOfActionOnClassPartition</C>, and that
-      the answer is wrongly negative, although this is very unlikely.
 <Example>
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> u in H;
@@ -590,12 +587,24 @@ true
   </ManSection>
 
   <ManSection>
+    <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
+    <Description>
+      The rank of the largest free abelian subgroup of the kernel of the action
+      of the tame rcwa group <A>G</A> on <C>PermutedClassPartition( <A>G</A> )</C>.
+<Example>
+<![CDATA[
+gap> RankOfKernelOfActionOnClassPartition(G);
+6
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Attr Name="KernelOfActionOnClassPartition" Arg="G"/>
     <Description>
       The kernel of the action of the tame rcwa group <A>G</A> on
       <C>PermutedClassPartition( <A>G</A> )</C>.
-      The algorithm is probabilistic; in principle it may happen that not the
-      whole kernel is picked up, although this is unlikely.
 <Example>
 <![CDATA[
 gap> K := KernelOfActionOnClassPartition(G);
@@ -615,8 +624,6 @@ true
       A matrix of vectors in Hermite Normal Form spanning the lattice
       corresponding to the kernel of the action of the tame rcwa group <A>G</A>
       on <C>PermutedClassPartition( <A>G</A> )</C>.
-      The algorithm is probabilistic; in principle it may happen that not the
-      whole kernel is picked up, although this is unlikely.
 <Log>
 <![CDATA[
 gap> L := KernelOfActionOnClassPartitionHNFMat(G);

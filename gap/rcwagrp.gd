@@ -129,6 +129,16 @@ DeclareAttribute( "ActionOnClassPartition", IsRcwaGroup );
 
 #############################################################################
 ##
+#A  RankOfKernelOfActionOnClassPartition( <G> )
+##
+##  Rank of the largest free abelian group fitting into the kernel of the
+##  action of <G> on its permuted class partition.
+##  The group <G> has to be tame.
+##
+DeclareAttribute( "RankOfKernelOfActionOnClassPartition", IsRcwaGroup );
+
+#############################################################################
+##
 #A  KernelOfActionOnClassPartition( <G> )
 ##
 ##  Kernel of the action of <G> on its permuted class partition.
