@@ -24,13 +24,13 @@ RCWABuildManual := function ( )
   local  Manual, RcwaDir;
 
   RcwaDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/" );
-  StefansManualLayout( "RCWA" );
+  # StefansManualLayout( "RCWA" );
   MyMakeGAPDocDoc( Concatenation( RcwaDir, "doc/" ), "rcwa.xml",
                    [ "../gap/rcwaaux.g",
                      "../gap/rcwamap.gd", "../gap/rcwamap.gi",
                      "../gap/rcwagrp.gd", "../gap/rcwagrp.gi",
                      "../gap/rcwalib.gi" ], "RCWA", "../../../" );
-  ResetManualLayout( );
+  # ResetManualLayout( );
 end;
 MakeReadOnlyGlobal( "RCWABuildManual" );
 
@@ -100,3 +100,4 @@ MakeReadOnlyGlobal( "RCWAReadExamples" );
 #############################################################################
 ##
 #E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
