@@ -121,8 +121,9 @@ It cannot be said in a few sentences what can be found out with this package
 about which mappings or groups. The best way to get an idea about this is to
 experiment yourself with the examples discussed in this manual and included
 in the file <File>pkg/rcwa/examples/examples.g</File>. Another useful source
-of examples is the <C>Random</C> - function. For many -- if not most --
-problems the package does not provide an out-of-the-box solution.
+of examples is the <Ref Meth="Random" Label="RCWA( Integers )"/> - function.
+For many -- if not most -- problems the package does not provide an
+out-of-the-box solution.
 At the beginning you will probably be bored by extremely long runtimes for
 seemingly trivial things. But with some experience you will learn to estimate
 in advance how long something will take and to see why raising some

@@ -1196,7 +1196,7 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 <!-- #################################################################### -->
 
 <Section Label="sec:RestrictionMonomorphisms">
-<Heading>Images under restriction monomorphisms</Heading>
+<Heading>Restriction monomorphisms</Heading>
 
 <ManSection>
   <Oper Name ="Restriction" Arg="g, f" Label = "g, f"/>
@@ -1204,7 +1204,7 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
   <Description>
     By definition, the restriction <M>g_f</M> of <A>g</A> by <A>f</A>
     is the uniquely-determined rcwa mapping satisfying
-    <M>f \cdot g_f = g \cdot f</M> and fixing the complement of
+    <M>f \cdot g_f = g \cdot f</M> and pointwisely fixing the complement of
     the image of <A>f</A>. The mapping <A>f</A> has to be injective.
     If <A>f</A> is bijective, the returned mapping is just the conjugate
     of <A>g</A> by <A>f</A>.

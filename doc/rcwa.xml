@@ -20,7 +20,7 @@
 
 <TitlePage>
   <Title>RCWA</Title>
-  <Subtitle>Residue Class-Wise Affine Representations of Groups</Subtitle>
+  <Subtitle>Residue Class-Wise Affine Groups</Subtitle>
   <Version>
     ( Version <#Include SYSTEM "../version"> )
   </Version>

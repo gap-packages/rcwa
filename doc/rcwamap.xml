@@ -122,11 +122,11 @@ Rcwa mapping of Z with modulus 2
 ]]>
 </Example>
 
-In the sequel, the general-purpose constructor for rcwa mappings is given.
-This might look a bit technical on a first glance. For getting started, the
-reader may find it easier to look first at the functions for constructing
-some kinds of particularly simple-structured bijective rcwa mappings of
-<M>\mathbb{Z}</M> described afterwards.
+In the sequel, a description of the general-purpose constructor for rcwa
+mappings is given. This might look a bit technical on a first glance.
+For getting started, the reader may find it easier to look first at the
+functions for constructing some kinds of particularly simple-structured
+bijective rcwa mappings of <M>\mathbb{Z}</M> described afterwards.
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
@@ -323,6 +323,8 @@ Rcwa mapping of Z with modulus 9
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
                                   Label="r1, m1, r2, m2"/>
@@ -386,6 +388,8 @@ n \ \longmapsto \
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -518,8 +522,8 @@ The meaning of the return values is as described in the last section.
 
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
-than <M>\mathbb{Z}</M>, not for all operations applicable methods might
-be available.<P/>
+than <M>\mathbb{Z}</M>, not for all operations applicable methods are
+available. <P/>
 
 </Section>
 
@@ -577,6 +581,8 @@ gap> Determinant(u^2*b^-3);
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Attr Name="Sign" Arg="f" Label="f"/>
@@ -684,8 +690,7 @@ gap> PrimeSet(r);
   <Description>
     An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1,
     thus <Q>if no proper divisions occur</Q>. Computing with such mappings
-    is particularly easy. See also&nbsp;<Ref Prop="IsIntegral" Label="G"/>
-    for rcwa groups.<P/>
+    is particularly easy. <P/>
 
     Be careful not to confuse this with the term <E>integral rcwa mapping</E>
     for rcwa mappings of the integers; normally it should be rather clear
@@ -707,9 +712,7 @@ gap> List( [ u, t, RcwaMapping([[2,0,1],[3,5,1]]) ], IsIntegral );
   </Returns>
   <Description>
     The term <E>class-wise order-preserving</E> is defined only
-    for rcwa mappings of ordered rings, e.g. of&nbsp;<M>\mathbb{Z}</M>.
-    See also&nbsp;<Ref Prop="IsClassWiseOrderPreserving" Label="G"/>
-    for rcwa groups.
+    for rcwa mappings of ordered rings, e.g.&nbsp;<M>\mathbb{Z}</M>.
 <Example>
 <![CDATA[
 gap> List( [ g, u, T, t, d ], IsClassWiseOrderPreserving );
@@ -720,6 +723,8 @@ gap> List( [ g, u, T, t, d ], IsClassWiseOrderPreserving );
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -737,10 +742,8 @@ gap> List( [ g, u, T, t, d ], IsClassWiseOrderPreserving );
 <![CDATA[
 gap> LargestSourcesOfAffineMappings(T);
 [ 0(2), 1(2) ]
-gap> LargestSourcesOfAffineMappings(u);
-[ 0(5), 1(5), 2(5), 3(5), 4(5) ]
-gap> LargestSourcesOfAffineMappings(u^-1);
-[ 0(3), 1(3), 2(9), 5(9), 8(9) ]
+gap> List( [ u, u^-1 ], LargestSourcesOfAffineMappings );
+[ [ 0(5), 1(5), 2(5), 3(5), 4(5) ], [ 0(3), 1(3), 2(9), 5(9), 8(9) ] ]
 gap> LargestSourcesOfAffineMappings(t);
 [ Integers ]
 gap> kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
@@ -779,6 +782,8 @@ gap> [ Multpk(kappa,2,1), Multpk(kappa,2,-1), Multpk(kappa,3,1),
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving"
         Arg="f" Label="f"/>
@@ -797,13 +802,8 @@ gap> [ Multpk(kappa,2,1), Multpk(kappa,2,-1), Multpk(kappa,3,1),
 <![CDATA[
 gap> List( [ T, u, t ], SetOnWhichMappingIsClassWiseOrderPreserving );
 [ Integers, Integers, [  ] ]
-gap> SetOnWhichMappingIsClassWiseOrderReversing(t);
-Integers
 gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
-gap> SetOnWhichMappingIsClassWiseOrderPreserving(
->      RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
-0(2)
 ]]>
 </Example>
   </Description>
@@ -838,9 +838,7 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
     </Enum>
     The assignment of the residue classes (mod&nbsp;<M>m</M>) to the
     vertices of the graph is given by the ordering of the residues in
-    the return value of <C>AllResidues(<A>m</A>)</C>
-    (see&nbsp;<Ref Func="AllResidues"/>). <P/>
-
+    the return value of <C>AllResidues(<A>m</A>)</C>.
     The result is returned as a <Package>GRAPE</Package>-graph.
 <Example>
 <![CDATA[
@@ -862,7 +860,7 @@ rec( isGraph := true, order := 4, group := Group(()),
     modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    See also <Ref Meth="OrbitsModulo" Label="G"/> for rcwa groups.
+    See also <Ref Meth="OrbitsModulo" Label="G, m"/> for rcwa groups.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(Comm(a,b),9);
@@ -908,18 +906,17 @@ gap> List(fact,MovedPoints);
 <ManSection>
   <Func Name="TransitionMatrix" Arg="f, m" Label="f, m"/>
   <Returns>
-    The transition matrix of the Markov chain associated to
-    the mapping&nbsp;<A>f</A> and the states <M>r</M>(<A>m</A>)
-    <M>\in</M> <M>R</M>/<A>m</A><M>R</M>.
+    The transition matrix of the rcwa mapping&nbsp;<A>f</A> for
+    modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
     <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
-    Let <M>M</M> be the returned matrix. Then by definition for any two
-    residue classes <M>r_1(m), r_2(m) \in R/mR</M> it holds that
+    Let <M>M</M> be this matrix. Then for any two residue classes <M>r_1(m),
+    r_2(m) \in R/mR</M>, the entry <M>M_{r_1(m),r_2(m)}</M> is defined by
     <Alt Only="LaTeX">
       <Display>
         <![CDATA[
-          M_{r_1(m),r_2(m)} \ = \ \displaystyle{\frac{|R/mR|}{|R/\hat{m}R|}}
+          M_{r_1(m),r_2(m)} \ := \ \displaystyle{\frac{|R/mR|}{|R/\hat{m}R|}}
           \cdot \left|\left\{r(\hat{m}) \in R/\hat{m}R | \ r \in r_1(m)
           \wedge r^f \in r_2(m)\right\}\right|,
         ]]>
@@ -932,16 +929,14 @@ gap> List(fact,MovedPoints);
     </Alt>
     The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
     columns of the matrix is given by the ordering of the residues
-    in the return value of <C>AllResidues(<A>m</A>)</C>
-    (see <Ref Func="AllResidues"/>). <P/>
+    in the return value of <C>AllResidues(<A>m</A>)</C>. <P/>
 
     The transition matrix is a weighted adjacency matrix of the corresponding
     transition graph <C>TransitionGraph(<A>f</A>,<A>m</A>)</C>.
     The sums of the rows of a transition matrix are always equal to&nbsp;1.
 <Example>
 <![CDATA[
-gap> M := TransitionMatrix(a,7);;
-gap> Display(M);
+gap> Display(TransitionMatrix(a,7));
 [ [  1/2,    0,  1/4,    0,    0,  1/4,    0 ],
   [    0,  1/4,    0,    0,  1/4,  1/2,    0 ],
   [  1/4,    0,    0,  3/4,    0,    0,    0 ],
@@ -949,10 +944,7 @@ gap> Display(M);
   [    0,  1/4,    0,    0,    0,  1/4,  1/2 ],
   [  1/4,    0,    0,    0,  3/4,    0,    0 ],
   [    0,    0,  1/2,  1/4,    0,    0,  1/4 ] ]
-gap> DeterminantMat(M);
--81/4096
-gap> M := TransitionMatrix(T,19);;
-gap> Display(M*One(GF(7)));
+gap> Display(TransitionMatrix(T,19)*One(GF(7)));
  4 . . . . . . . . . 4 . . . . . . . .
  . . 4 . . . . . . . 4 . . . . . . . .
  . 4 . . . . . . . . . . . 4 . . . . .
@@ -1053,9 +1045,9 @@ gap> TrajectoryModulo(T,27,2,100);
   </Returns>
   <Description>
     The meaning of the arguments <A>val</A> and <A>cond</A> is the same as
-    in <Ref Func="Trajectory"/>. If <C><A>all</A> = true</C>, the whole
-    sequence of coefficient triples is returned. Otherwise the result is
-    only the last triple.
+    in <Ref Func="Trajectory" Label="f, n, val, cond"/>.
+    If <C><A>all</A> = true</C>, the whole sequence of coefficient triples
+    is returned. Otherwise the result is only the last triple.
 <Example>
 <![CDATA[
 gap> CoefficientsOnTrajectory(T,27,1,"stop",false);

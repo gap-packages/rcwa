@@ -8,9 +8,9 @@
 SetPackageInfo( rec(
 
 PackageName      := "RCWA",
-Subtitle         := "Residue Class-Wise Affine Mappings and Groups",
+Subtitle         := "Residue Class-Wise Affine Groups",
 Version          := "0.1",
-Date             := "04/02/2005",
+Date             := "10/02/2005",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.1",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
@@ -55,7 +55,7 @@ Dependencies     := rec(
                        ),
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
-                                   " ([R]esidue [C]lass-[W]ise [A]ffine mappings and groups)",
+                                   " ([R]esidue [C]lass-[W]ise [A]ffine groups)",
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 Autoload         := false,
 TestFile         := "tst/testall.g",
