@@ -113,10 +113,10 @@ We proceed with the definitions concerning rcwa mappings.
     An rcwa mapping is called <E>wild</E> if it is not tame.
   </Item>
 
-  <Mark>trace</Mark>
+  <Mark>determinant</Mark>
   <Item>
     Using the notation from the definition of an rcwa mapping in the
-    Preface (<Ref Label="ch:preface"/>), the <E>trace</E> is defined by
+    Preface (<Ref Label="ch:preface"/>), the <E>determinant</E> is defined by
     <Alt Not="LaTeX">
       (see LaTeX version of the manual).
     </Alt> 
@@ -125,7 +125,7 @@ We proceed with the definitions concerning rcwa mappings.
         \frac{1}{m} \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{a_{r(m)}} \right).
       </Display>
     </Alt>
-    <M>\rightarrow</M> <Ref Oper="Trace"/>.
+    <M>\rightarrow</M> <Ref Meth="Determinant"/>.
   </Item>
 
 </List>
@@ -482,3 +482,4 @@ We end this chapter by giving a few open problems (in arbitrary order).
 </Chapter>
 
 <!-- #################################################################### -->
+

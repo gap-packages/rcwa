@@ -402,7 +402,7 @@ true
 <!-- #################################################################### -->
 
 <Section Label="sec:MultDiv">
-<Heading>Multiplier, divisor, prime set and trace</Heading>
+<Heading>Multiplier, divisor, prime set and determinant</Heading>
 
   <ManSection>
     <Attr Name="Multiplier" Arg="f" Label="Multiplier of an rcwa mapping"/>
@@ -532,10 +532,10 @@ true
   </ManSection>
 
   <ManSection>
-    <Oper Name="Trace" Arg="f"/>
-    <Returns> the trace of the rcwa mapping <A>f</A>. </Returns>
+    <Meth Name="Determinant" Arg="f"/>
+    <Returns> the determinant of the rcwa mapping <A>f</A>. </Returns>
     <Description>
-      The trace induces an epimorphism from the group of all class-wise
+      The determinant induces an epimorphism from the group of all class-wise
       order-preserving rcwa mappings of <M>\Z</M> onto the additive group
       <M>(\Z,+)</M>.
 
@@ -545,23 +545,23 @@ true
 gap> nu := RcwaMapping([[1,1,1]]);;
 gap> a  := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b  := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
-gap> Trace(nu);
+gap> Determinant(nu);
 1
-gap> Trace(a);
+gap> Determinant(a);
 0
-gap> Trace(b);
+gap> Determinant(b);
 1
-gap> Trace(a^2*b^-1);
+gap> Determinant(a^2*b^-1);
 -1
-gap> Trace(nu^7*a^2*nu^-1*b^-1*a^-3);
+gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
 5
-gap> Trace(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3);
+gap> Determinant(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3);
 0
-gap> Trace(u);
+gap> Determinant(u);
 0
-gap> Trace(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3*u);
+gap> Determinant(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3*u);
 0
-gap> Trace(u^2*b^-3);
+gap> Determinant(u^2*b^-3);
 -3
 ]]>
 </Example>
@@ -1483,6 +1483,7 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
