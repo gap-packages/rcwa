@@ -40,6 +40,8 @@ gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
 gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
 gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> IsTame(T);
+#I  IsTame:`finite order or flat power' criterion.
+#I  IsTame: probabilistic method.
 #I  IsTame: the 4th power of IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] 
  ] ) has Modulus 
 16; this is larger than the square of the modulus of the base, so we claim the\
