@@ -4,19 +4,14 @@
 ##  
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
-##  Preliminary, not yet to be distributed !!!
-##
-##  None of the files on my webpage referred to from here is currently existing.
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik, Universit\"at Stuttgart, Germany
 ##
 
 SetPackageInfo( rec(
 
 PkgName          := "RCWA",
 Version          := "1.0",
-Date             := "21/02/2003",
+Date             := "24/02/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -47,7 +42,7 @@ PackageDoc       := rec(
                          BookName  := "RCWA",
                          Archive   := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
                                                     "~kohlsn/rcwa/rcwa-1.0doc-win.zip"),
-                         HTMLStart := "doc/manual.html",
+                         HTMLStart := "doc/chap0.html",
                          PDFFile   := "doc/manual.pdf",
                          SixFile   := "doc/manual.six",
                          LongTitle := "[R]esidue [C]lass-[W]ise [A]ffine representations of groups",
@@ -66,7 +61,7 @@ BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 AutoLoad         := false,
 TestFile         := "tst/testall.g",
-Keywords         := [ "Infinite permutation groups", "Permutation groups over rings" ]
+Keywords         := [ "infinite permutation groups", "permutation groups over rings" ]
 
 ) );
 

@@ -4,7 +4,7 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
 #Y  Universit\"at Stuttgart, Germany
 ##
 
@@ -13,8 +13,6 @@
 SetInfoLevel( InfoWarning, 0 );
 
 ReadPkg( "rcwa", "gap/rcwaaux.g" );
-ReadPkg( "rcwa", "gap/z_pi.gi" );
-ReadPkg( "rcwa", "gap/resclass.gi" );
 ReadPkg( "rcwa", "gap/rcwamap.gi" );
 ReadPkg( "rcwa", "gap/rcwagrp.gi" );
 ReadPkg( "rcwa", "gap/rcwalib.gi" );

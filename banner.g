@@ -4,11 +4,11 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,
 #Y  Universit\"at Stuttgart, Germany
 ##
 
-if not QUIET and BANNER then
+if not CompareVersionNumbers( VERSION, "4r4" ) and not QUIET and BANNER then
   Print("\nLoading RCWA ",PACKAGES_VERSIONS.rcwa);
   Print(" ([R]esidue [C]lass-[W]ise [A]ffine mappings and groups)");
   Print("\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n");
