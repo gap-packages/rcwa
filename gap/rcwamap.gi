@@ -3133,6 +3133,24 @@ InstallMethod( RespectedClassPartition,
 
 #############################################################################
 ##
+#F  IncreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| >> |n|
+##
+InstallGlobalFunction( IncreasingOn,
+
+  function ( f )
+
+    local  R, m, c, numres;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    numres := Length(AllResidues(R,m));
+    return ResidueClassUnion(R,m,
+            AllResidues(R,m)
+              {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
+                                        < Length(AllResidues(R,c[r][1])))});
+  end );
+
+#############################################################################
+##
 #F  DecreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| << |n|
 ##
 InstallGlobalFunction( DecreasingOn,

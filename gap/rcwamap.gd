@@ -540,6 +540,16 @@ DeclareAttribute( "LargestSourcesOfAffineMappings", IsRcwaMapping );
 
 #############################################################################
 ##
+#F  IncreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| >> |n|
+##
+##  The union of all residue classes $r(m)$ such that
+##  $|R/a_{r(m)}R|>|R/c_{r(m)}R|$, where $R$ denotes the source of <f>
+##  and $m$ denotes the modulus of <f>.
+##
+DeclareGlobalFunction( "IncreasingOn" );
+
+#############################################################################
+##
 #F  DecreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| << |n|
 ##
 ##  The union of all residue classes $r(m)$ such that
