@@ -2279,6 +2279,25 @@ InstallOtherMethod( IsUnit,
 
 #############################################################################
 ##
+#M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
+##
+##  The trace criterion.
+##
+InstallMethod( Order,
+               "for integral rcwa mappings, trace criterion. (RCWA)",
+               true, [ IsIntegralRcwaMapping ], 100,
+
+  function ( f )
+
+    local  R, mult, div;
+
+    if   not IsBijective(f) or not IsClassWiseOrderPreserving(f)
+      or Trace(f) = 0
+    then TryNextMethod(); else return infinity; fi;
+  end );
+
+#############################################################################
+##
 #M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 ##  The `factors of multiplier and divisor' criterion.
