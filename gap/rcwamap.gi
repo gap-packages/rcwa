@@ -3787,11 +3787,13 @@ InstallMethod( FactorizationIntoGenerators,
               diffs := List(Cartesian(clSmult,clSdiv),
                        pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p));
               if Maximum(diffs) < sgn * k then
-                Info(InfoRCWA,2,"Split classes in clSmult.");
+                Info(InfoRCWA,2,"Splitting classes being multiplied by ",
+                                "q*p^kmult.");
                 clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
               fi;
               if Maximum(diffs) > sgn * k then
-                Info(InfoRCWA,2,"Split classes in clSdiv.");
+                Info(InfoRCWA,2,"Splitting classes being divided by ",
+                                "q*p^kdiv.");
                 clSdiv := Flat(List(clSdiv,cl->SplittedClass(cl,p)));
               fi;
             fi;
