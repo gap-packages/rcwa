@@ -74,6 +74,20 @@ gap> StandardAssociate(U,37/13);
 1
 gap> StandardAssociate(U,36/13);
 36
+gap> V := Z_pi([2,3,7]);
+Z_[ 2, 3, 7 ]
+gap> Gcd(V,2/5,6);
+2
+gap> Gcd(V,20/13,77/19);
+1
+gap> Gcd(V,21/13,77/19);
+7
+gap> Lcm(V,20,77);
+28
+gap> Lcm(V,2/5,77);
+14
+gap> Lcm(V,20/13,77/19);
+28
 gap> Factors(U,840);
 [ 2, 2, 2, 3, 5, 7 ]
 gap> Factors(R,840);

@@ -5,8 +5,6 @@
 ##
 #H  @(#)$Id$
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-##
 ##  This is an adaptation of the test file for the GAP library to the
 ##  `RCWA' - package.
 ##

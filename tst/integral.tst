@@ -7,9 +7,9 @@
 
 gap> START_TEST("$Id$");
 gap> IdentityIntegralRcwaMapping;
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> ZeroIntegralRcwaMapping;
-<zero integral rcwa mapping>
+ZeroMapping( Integers, Integers )
 gap> Order(IdentityIntegralRcwaMapping);
 1
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
@@ -44,14 +44,14 @@ Surjective integral rcwa mapping with modulus 8
   7                                    | (27n + 19)/8
 
 gap> t := RcwaMapping([[-1,0,1]]);
-<integral rcwa mapping: n -> -n>
+Integral rcwa mapping: n -> -n
 gap> Order(t);
 2
 gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> IsBijective(k);
 false
 gap> k := RcwaMapping([[-2,0,1]]);
-<integral rcwa mapping: n -> -2n>
+Integral rcwa mapping: n -> -2n
 gap> Display(k);
 Integral rcwa mapping: n -> -2n
 gap> IsInjective(k);
@@ -69,20 +69,16 @@ false
 gap> IsInjective(k);
 false
 gap> k := RcwaMapping([[2,3,1]]);
-<integral rcwa mapping: n -> 2n + 3>
+Integral rcwa mapping: n -> 2n + 3
 gap> Display(k);
 Integral rcwa mapping: n -> 2n + 3
 gap> k := RcwaMapping([[-2,3,1]]);
-<integral rcwa mapping: n -> -2n + 3>
+Integral rcwa mapping: n -> -2n + 3
 gap> Display(k);
 Integral rcwa mapping: n -> -2n + 3
 gap> k := RcwaMapping([[-1,3,1]]);
-<integral rcwa mapping: n -> -n + 3>
-gap> Display(k);
 Integral rcwa mapping: n -> -n + 3
 gap> k := RcwaMapping([[-1,-3,1]]);
-<integral rcwa mapping: n -> -n - 3>
-gap> Display(k);
 Integral rcwa mapping: n -> -n - 3
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> IsBijective(u);
@@ -131,9 +127,9 @@ true
 gap> IsNaturalRCWA_Z(G);
 true
 gap> One(G);
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> Representative(G);
-<integral rcwa mapping: n -> -n>
+Integral rcwa mapping: n -> -n
 gap> IsSubgroup(RCWA(Integers),TrivialIntegralRcwaGroup);
 true
 gap> u in G;
@@ -201,7 +197,7 @@ Bijective integral rcwa mapping with modulus 18, of order 6
 ]
 
 gap> TrivialSubgroup(G);
-<trivial integral rcwa group>
+Trivial integral rcwa group
 gap> orb := Orbit(G,1);
 [ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
 gap> H := Action(G,orb);;
@@ -216,7 +212,7 @@ gap> Modulus(G);
 gap> Order(a);
 infinity
 gap> Comm(a,t);
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> x := ab*ac*ab^2*ac^3;
 <bijective integral rcwa mapping with modulus 18>
 gap> x in G;
@@ -258,7 +254,7 @@ gap> r := g^ab;
 gap> HasStandardConjugate(r) and HasStandardizingConjugator(r);
 true
 gap> r^StandardizingConjugator(r)/StandardConjugate(r);
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> k := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
 >                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);;
 gap> std := StandardConjugate(k);
@@ -422,7 +418,7 @@ true
 gap> IsTame(Group(ab,ac));
 true
 gap> nu := RcwaMapping([[1,1,1]]);
-<integral rcwa mapping: n -> n + 1>
+Integral rcwa mapping: n -> n + 1
 gap> IsTame(nu);
 true
 gap> IsTame(Group(nu));
