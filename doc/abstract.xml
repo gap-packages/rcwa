@@ -1,0 +1,29 @@
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  abstract.xml                RCWA documentation                Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                   ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+
+<Abstract>
+
+  This package for &GAP; 4 (at least version 4.3) provides routines for 
+  computations with <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine mappings
+  of <M>\Z</M>, its semilocalizations <M>\Z_\pi</M> and the polynomial
+  rings GF(<M>q</M>)[<M>x</M>], hence it can be used for computations in certain
+  types of infinite permutation groups.
+
+  It is completely written in the &GAP; language and contains /
+  requires no external binaries.
+
+  For the documentation, the package &GAPDoc; <Cite Key="GAPDoc"/> is needed.
+
+  The package <Package>GRAPE</Package><Cite Key="GRAPE"/> is loaded for use by the
+  function <C>RcwaGraph</C>, if present.
+
+  &RCWA; must be installed in the <F>pkg</F> subdirectory of the &GAP; distribution.
+
+</Abstract>
+
+<!-- ################################################################################# -->

@@ -1,0 +1,77 @@
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  rcwainfo.xml                RCWA documentation                Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                   ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+
+<Chapter Label="ch:RcwaInfo">
+<Heading>Getting Information about Computations</Heading>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:TheInfoClass">
+<Heading>The Info class of the package</Heading>
+
+  <ManSection>
+    <InfoClass Name="RcwaInfo"/>
+    <Description>
+      This is the Info class of the <Package>RCWA</Package> package
+      (see section <E>Info Functions</E> in the &GAP;
+      Reference Manual for a description of the Info mechanism).
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Func Name="RCWAInfo" Arg="n"/>
+    <Returns> Nothing. </Returns>
+    <Description>
+      For convenience: <C>RCWAInfo(</C><A>n</A><C>)</C> is a shorthand for
+      <C>SetInfoLevel(RcwaInfo</C>,<A>n</A><C>)</C>.
+
+<Log>
+<![CDATA[
+gap> RCWAInfo(3);
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
+gap> Order(a);
+#I  The mapping IntegralRcwaMapping( [ [ 3, 0, 2 ], [ 3, 1, 4 ], [ 3, 0, 2 ], 
+  [ 3, -1, 4 ] 
+ ] ) has a cycle longer than 2 times the square of its modulus, hence we claim\
+ its order is infinite, although the validity of this criterium has not been p\
+roved so far.
+infinity
+gap> IsTame(T);
+#I  The 4th power of IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] 
+ ] ) has Modulus 
+16; this is larger than the square of the modulus of the base, so we claim the\
+ mapping is wild, although the validity of this criterium has not yet been pro\
+ved.
+false
+gap> StandardizingConjugator(v);
+#I  StandardConjugate for IntegralRcwaMapping( 
+[ [ -1, 2, 1 ], [ 1, -1, 1 ], [ 1, -1, 1 ] ] )
+#I  A set of representatives for the series of `halved' cycles is [ rec(
+      pts := [ 3, -1, -2, -3, 5, 4 ],
+      HalvedAt := 0 ) ].
+#I  A set of representatives for the series of `not halved' cycles is [  ].
+#I  The cycle type is [ [ 6 ], [  ] ].
+#I  [Preimage, image] - pairs defining a standardizing conjugator are 
+[ [ 0, 0 ], [ 2, 1 ], [ 1, 2 ], [ 0, 0 ], [ 2, 1 ], [ 1, 2 ], [ 3, -3 ], 
+  [ -1, -2 ], [ -2, -1 ], [ -3, 3 ], [ 5, 4 ], [ 4, 5 ] ].
+<integral rcwa mapping with modulus 3>
+]]>
+</Log>
+
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+</Chapter>
+
+<!-- ################################################################################# -->

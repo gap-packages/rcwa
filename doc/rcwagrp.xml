@@ -1,0 +1,525 @@
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  rcwagrp.xml                RCWA documentation                 Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                    ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+
+<Chapter Label="ch:RcwaGroups">
+<Heading>Residue Class-Wise Affine Groups</Heading>
+
+This chapter describes the functionality available for calculating with
+rcwa groups. <P/>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:CategoriesOfRcwaGroups">
+<Heading>The categories of rcwa groups</Heading>
+
+  <ManSection>
+    <Filt Name="IsRcwaGroup" Arg="G"/>
+    <Description>
+      The category of all rcwa groups.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsRationalBasedRcwaGroup" Arg="G"/>
+    <Description>
+      The category of all <Q>rational-based</Q> (hence all integral
+      and all semilocal integral) rcwa groups.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsIntegralRcwaGroup" Arg="G"/>
+    <Description>
+      The category of all integral rcwa groups.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Fam Name="IntegralRcwaGroupsFamily"/>
+    <Description>
+      The family of all integral rcwa groups.
+    </Description>
+  </ManSection>
+
+  All integral rcwa groups are supergroups of
+
+  <ManSection>
+    <Var Name="TrivialIntegralRcwaGroup"/>
+    <Description>
+      The trivial integral rcwa group.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsSemilocalIntegralRcwaGroup" Arg="G"/>
+    <Description>
+      The category of all semilocal integral rcwa groups.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsModularRcwaGroup" Arg="G"/>
+    <Description>
+      The category of all modular rcwa groups.
+    </Description>
+  </ManSection>
+
+  All rcwa groups over the ring <A>R</A> are subgroups of
+
+  <ManSection>
+    <Func Name="RCWA" Arg="R"/>
+    <Description>
+      The group RCWA(<A>R</A>) of all bijective rcwa mappings over the ring
+      <A>R</A>. This group is (at least in general) not finitely generated,
+      hence no generators are stored.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> RCWA_Z := RCWA(Integers);
+RCWA(Z)
+gap> Size(RCWA_Z);
+infinity
+gap> IsFinitelyGeneratedGroup(RCWA_Z);
+false
+gap> One(RCWA_Z);
+<identity integral rcwa mapping>
+gap> IsSubgroup(RCWA_Z, Group(RcwaMapping([[-1,0,1]]),
+>                             RcwaMapping((1,2,3),[1..4]),
+>                             RcwaMapping(2,[[0,1],[1,0],[2,3],[3,2]])));
+true 
+]]>
+</Example>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:ContructingRcwaGroups">
+<Heading>Constructing rcwa groups</Heading>
+
+  Rcwa groups can be constructed using either <C>Group</C>,
+  <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
+  (see reference manual).
+  Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C> only
+  finitely generated rcwa groups are supported.
+
+<Example>
+<![CDATA[
+gap> g := RcwaMapping([[1,0,1],[1,1,1],[3,6,1],
+>                      [1,0,3],[1,1,1],[3,6,1],
+>                      [1,0,1],[1,1,1],[3,-21,1]]);;
+gap> h := RcwaMapping([[1,0,1],[1,1,1],[3,6,1],
+>                      [1,0,3],[1,1,1],[3,-21,1],
+>                      [1,0,1],[1,1,1],[3,6,1]]);;
+gap> Order(g);
+9
+gap> Order(h);
+9
+gap> G := Group(g,h);
+<integral rcwa group with 2 generators>
+gap> Size(G);
+infinity
+]]>
+</Example>
+
+  Another possible way to get an rcwa group is by <Q>translating</Q> a
+  permutation group, or by taking the image of an rcwa representation.
+
+  <ManSection>
+    <Func Name="IntegralRcwaGroupByPermGroup" Arg="G"/>
+    <Func Name="RcwaGroupByPermGroup" Arg="G"/>
+    <Description>
+      Constructs an integral rcwa group isomorphic to the (finite) permutation
+      group <A>G</A>, which acts on the range
+      <C>[ 1 .. LargestMovedPoint(</C><A>G</A><C> ) ]</C> as <A>G</A> does.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> H := RcwaGroupByPermGroup(Group((1,2),(3,4),(5,6),(7,8),
+>                                    (1,3)(2,4),(1,3,5,7)(2,4,6,8)));
+<integral rcwa group with 6 generators>
+gap> Size(H);
+384
+gap> IsSolvable(H);
+true
+gap> List(DerivedSeries(H),Size);
+[ 384, 96, 32, 2, 1 ]
+]]>
+</Example>
+
+  <ManSection>
+    <Attr Name="IsomorphismIntegralRcwaGroup" Arg="G"/>
+    <Attr Name="IsomorphismRcwaGroup" Arg="G"/>
+    <Description>
+      A faithful integral rcwa representation of the group <A>G</A>.
+      Currently only supported for finite groups.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> G := GL(2,5);
+GL(2,5)
+gap> IsomorphismRcwaGroup(G);
+CompositionMapping(
+[ (1,2,4,8)(3,6,12,18)(5,10,17,22)(9,15,21,24)(13,14,19,23),
+  (1,3,7)(2,5,11)(4,9,16)(6,13,12)(8,14,20)(10,18,17)(15,22,21)(19,24,23)
+ ] -> [ <integral rcwa mapping with modulus 24>,
+  <integral rcwa mapping with modulus 24> ], <action isomorphism> )             
+]]>
+</Example>
+
+  <ManSection>
+    <Meth Name="Display" Arg="G"/>
+    <Description>
+      Displays the rcwa group <A>G</A>.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
+gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
+gap> H := Group(a,b);
+<integral rcwa group with 2 generators>
+gap> Display(H);
+
+Integral rcwa group, generated by
+ 
+[
+ 
+Bijective integral rcwa mapping with modulus 4
+ 
+                n mod 4                |                 n^f
+---------------------------------------+--------------------------------------
+  0 2                                  | 3n/2
+  1                                    | (3n + 1)/4
+  3                                    | (3n - 1)/4
+ 
+ 
+Bijective integral rcwa mapping with modulus 4
+ 
+                n mod 4                |                 n^f
+---------------------------------------+--------------------------------------
+  0 2                                  | 3n/2
+  1                                    | (3n + 13)/4
+  3                                    | (3n - 1)/4
+
+]
+
+]]>
+</Example>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:ComputingWithRcwaGroups">
+<Heading>Computing with rcwa groups</Heading>
+
+  <Index Key="rcwa group" Subkey="element testing"></Index>
+  <ManSection>
+    <Meth Name="\in" Arg="g, G"/>
+    <Description>
+      Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
+      In case <A>G</A> is finite, the result is correct provided that the result
+      given by <C>IsomorphismPermGroup</C>( <A>G</A> ) is.
+      If <A>G</A> is infinite and <A>g</A> is not in <A>G</A>, this method may
+      run into an infinite loop.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);; 
+gap> u in H;
+false
+</Example>
+
+  <ManSection>
+    <Meth Name="Size" Arg="G"/>
+    <Description>
+      Tries to compute the order of the rcwa group <A>G</A>. <P/>
+
+      This is a probabilistic method.
+      It may return the size of a proper factor group of <A>G</A>, or run in an
+      infinite loop. You can increase the option value <A>Steps</A> to decrease
+      the probability of getting a wrong result. The default value for
+      <A>Steps</A> is 10.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> g1 := RcwaMapping((1,2),[1..2]);
+<integral rcwa mapping with modulus 2>
+gap> g2 := RcwaMapping((1,2,3),[1..3]);
+<integral rcwa mapping with modulus 3>
+gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
+<integral rcwa mapping with modulus 5>
+gap> G := Group(g1,g2,g3);
+<integral rcwa group with 3 generators>
+gap> Size(G);
+265252859812191058636308480000000
+]]>
+</Example>
+
+  <ManSection>
+    <Meth Name="IsomorphismPermGroup" Arg="G"/>
+    <Description>
+      Tries to compute an isomorphism from a finite rcwa group <A>G</A> to
+      some permutation group. <P/>
+
+      This is a probabilistic method, also.
+      It may return a homomorphism to a permutation group isomorphic to a
+      proper factor group of <A>G</A>. You can increase the option value
+      <A>Steps</A> to decrease the probability of getting a wrong result.
+      The default value for <A>Steps</A> is 10.
+    </Description>
+  </ManSection>
+
+<Example>
+<![CDATA[
+gap> H := Group(g1,g2);
+<integral rcwa group with 2 generators>
+gap> phi := IsomorphismPermGroup(H);
+[ <bijective integral rcwa mapping with modulus 2, of order 2>,
+  <bijective integral rcwa mapping with modulus 3, of order 3> ] ->
+[ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ]                                             
+]]>
+</Example>
+
+  <ManSection>
+    <Meth Name="NiceMonomorphism" Arg="G"/>
+    <Description>
+      Returns the result of <C>IsomorphismPermGroup</C> in case the
+      group is supposed to be finite by <C>Size</C>, and
+      <C>IdentityMapping</C>( <A>G</A> ) otherwise.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="NiceObject" Arg="G"/>
+    <Description>
+      Returns the image of <C>NiceMonomorphism</C>( <A>G</A> ).
+    </Description>
+  </ManSection>
+
+<Example>
+gap> NiceObject(G);
+Group([ (1,2)(3,4)(5,6)(7,8)(9,10)(11,12)(13,14)(15,16)(17,18)(19,20)(21,
+    22)(23,24)(25,26)(27,28)(29,30), (1,2,3)(4,5,6)(7,8,9)(10,11,12)(13,14,
+    15)(16,17,18)(19,20,21)(22,23,24)(25,26,27)(28,29,30),
+  (1,2,3,4,5)(6,7,8,9,10)(11,12,13,14,15)(16,17,18,19,20)(21,22,23,24,25)(26,
+    27,28,29,30) ])                                                             
+</Example>
+
+  <ManSection>
+    <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
+    <Description>
+      Computes the modulus of the rcwa group <A>G</A>. <P/>
+
+      See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
+      for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> Modulus(G);
+30
+gap> Modulus(Group(a,b));
+0
+</Example>
+
+  <ManSection>
+    <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
+    <Description>
+      Computes the prime set of the rcwa group <A>G</A>. <P/>
+
+      See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa mapping"/>
+      for rcwa mappings.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> PrimeSet(G);
+[ 2, 3, 5 ]
+gap> PrimeSet(H);
+[ 2, 3 ]
+</Example>
+
+  <ManSection>
+    <Prop Name="IsFlat" Arg="G" Label="Flat rcwa group"/>
+    <Description>
+      Determines whether or not the rcwa group <A>G</A> is flat. <P/>
+
+      See also <Ref Prop="IsFlat" Label="Flat rcwa mapping"/> for rcwa mappings.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> IsFlat(AlternatingGroup(IsRcwaGroup,5));
+true
+gap> IsFlat(Group(a,b));
+false
+gap> IsFlat(Group(g));
+false
+</Example>
+
+  <ManSection>
+    <Prop Name="IsClassWiseOrderPreserving" Arg="G"
+          Label="Class-wise order-preserving rcwa group"/>
+    <Description>
+      Indicates whether the integral rcwa group <A>G</A> is class-wise
+      order-preserving or not. <P/>
+
+     See also <Ref Prop="IsClassWiseOrderPreserving"
+     Label="Class-wise order-preserving rcwa mapping"/>
+     for rcwa mappings.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> IsClassWiseOrderPreserving(Group(a,b));
+true
+gap> IsClassWiseOrderPreserving(G);
+true
+gap> t := RcwaMapping([[-1,0,1]]);;
+gap> IsClassWiseOrderPreserving(Group(t,g,h));
+false
+</Example>
+
+  <ManSection>
+    <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
+    <Description>
+      Determines whether or not the rcwa group <A>G</A> is tame. <P/>
+
+      See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/> for rcwa mappings.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> IsTame(G);
+true
+gap> IsTame(Group(a,b));
+false
+gap> IsTame(Group(Comm(a,b),Comm(a,c)));
+true
+</Example>
+
+  <ManSection>
+    <Func Name="ShortOrbits" Arg="G, S, maxlng"/>
+    <Description>
+      Computes all finite orbits of the rcwa group <A>G</A> of maximal length
+      <A>maxlng</A>, which intersect non-trivially with the set <A>S</A>.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);;
+gap> ShortOrbits(A5,[-10..10],100);
+[ [ -14, -13, -12, -11, -10 ], [ -9, -8, -7, -6, -5 ], [ -4, -3, -2, -1, 0 ], 
+  [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]
+gap> Action(A5,last[2]);
+Group([ (1,2,3,4,5), (3,4,5) ])
+gap> ab := Comm(a,b);; ac := Comm(a,c);;
+gap> G := Group(ab,ac);;
+gap> orb := ShortOrbits(G,[-20..20],100);
+[ [ -51, -48, -42, -39, -25, -23, -22, -20, -19, -17 ], [ -18 ], 
+  [ -33, -30, -24, -21, -16, -14, -13, -11, -10, -8 ], 
+  [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ], [ -9 ], [ 0 ], 
+  [ 2, 3, 4, 5, 6, 7, 8, 10, 12, 15 ], [ 9 ], 
+  [ 11, 13, 14, 16, 17, 19, 21, 24, 30, 33 ], [ 18 ], 
+  [ 20, 22, 23, 25, 26, 28, 39, 42, 48, 51 ] ]
+gap> Action(G,orb[1]);
+Group([ (2,6,8,10,4,7), (1,5,7,9,3,6) ])
+gap> ShortOrbits(Group(u),[-30..30],100);
+[ [ -13, -8, -7, -5, -4, -3, -2 ], [ -10, -6 ], [ -1 ], [ 0 ], [ 1, 2 ], 
+  [ 3, 5 ], [ 24, 36, 39, 40, 44, 48, 60, 65, 67, 71, 80, 86, 93, 100, 112, 
+      128, 138, 155, 167, 187, 230, 248, 312, 446, 520, 803, 867, 1445 ] ]
+</Example>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:PropertiesOfRCWA_Z">
+<Heading>Properties of RCWA(Z)</Heading>
+
+  <ManSection>
+    <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord"/>
+    <Description>
+      Computes the number of conjugacy classes of the whole group
+      RCWA(<M>\Z</M>) of elements of order <A>ord</A>.
+    </Description>
+  </ManSection>
+
+<Example>
+gap> NrConjugacyClassesOfRCWAZOfOrder(2);
+infinity
+gap> NrConjugacyClassesOfRCWAZOfOrder(105);
+218
+</Example>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:PredefinedRcwaGroups">
+<Heading>Predefined rcwa groups</Heading>
+
+  There are methods for constructing various types of groups as integral
+  rcwa groups. They are just using the ad hoc-translation provided by 
+  <C>IntegralRcwaGroupByPermGroup</C>, for the matrix groups after turning to
+  the image under <C>IsomorphismPermGroup</C>. So far, the provided methods
+  cover all groups listed in the sections concerning basic groups and
+  classical groups in the chapter describing the group libraries in the
+  reference manual.
+
+<Example>
+<![CDATA[
+gap> C2 := CyclicGroup(IsIntegralRcwaGroup,2);
+<integral rcwa group with 1 generator>
+gap> G := ExtraspecialGroup(IsIntegralRcwaGroup,27,3);
+<integral rcwa group with 3 generators>
+gap> IsAbelian(G);
+false
+gap> Exponent(G);
+3
+gap> S4 := SymmetricGroup(IsIntegralRcwaGroup,4);
+<integral rcwa group with 2 generators>
+gap> Size(S4);
+24
+gap> G := SylowSubgroup(S4,2);
+<integral rcwa group with 3 generators, of size 8>
+gap> IdGroup(G);
+[ 8, 3 ]
+gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);
+<integral rcwa group with 2 generators>
+gap> Size(A5);
+60
+gap> IsSimple(A5);
+true
+gap> G := GL(IsIntegralRcwaGroup,2,3);
+<integral rcwa group with 2 generators>
+gap> Size(G);
+48
+]]>
+</Example>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+</Chapter>
+
+<!-- ################################################################################# -->

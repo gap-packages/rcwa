@@ -1,0 +1,83 @@
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  rcwaaux.xml                RCWA documentation                 Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                    ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+
+<Chapter Label="ch:AuxiliaryFunctions">
+<Heading>Auxiliary functions</Heading>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:BuildingTheManual">
+<Heading>Building the manual</Heading>
+
+  <ManSection>
+    <Func Name="BuildRCWAManual" Arg=""/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      This function builds the manual of the RCWA package in the file formats
+      &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
+
+      This is done using the &GAPDoc; package by Frank Lübeck and Max Neunh”ffer.
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:TheTestingRoutine">
+<Heading>The testing routine</Heading>
+
+  <ManSection>
+    <Func Name="RCWATest" Arg="[ test1 [, test2 [, ... ]]]"/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      Performs tests of the <Package>RCWA</Package> package. <P/>
+
+      The arguments <A>test1</A>, <A>test2</A>, ..., if present,
+      are names of tests. <P/>
+
+      Available tests are:
+      <List>
+        <Mark><C>"z&uscore;pi"</C></Mark>
+        <Item>
+          Arithmetic in the rings <Math>\Z_\pi</Math>.
+        </Item>
+        <Mark><C>"integral"</C></Mark>
+        <Item>
+          Computations with integral rcwa mappings and
+          integral rcwa groups.
+        </Item>
+        <Mark><C>"semilocal"</C></Mark>
+        <Item>
+          Computations with semilocal integral rcwa
+          mappings and semilocal integral rcwa groups.
+        </Item>
+        <Mark><C>"modular"</C></Mark>
+        <Item>
+          Computations with modular rcwa mappings and
+          modular rcwa groups.
+        </Item>
+        <Mark><C>"all"</C></Mark>
+        <Item>
+          All tests.
+        </Item>
+      </List>
+      The default (if no argument is given) is <C>"all"</C>.
+      In case that all tests are to be performed, the function makes use of
+      an adaptation of the test file <F>tst/testall.g</F> of the &GAP;
+      library to this package.
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+</Chapter>
+
+<!-- ################################################################################# -->

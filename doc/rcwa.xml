@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
+ [ <!ENTITY RCWA "<Package>RCWA</Package>"> ] >
+
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  rcwa.xml                  RCWA documentation                  Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                       ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+     
+<Book Name="RCWA"> 
+
+<!-- ################################################################################# -->
+
+<TitlePage>
+  <Title>&RCWA;</Title>
+  <Subtitle>Residue Class-Wise Affine Representations of Groups</Subtitle>
+  <Version>
+    ( Version <#Include SYSTEM "../version"> )
+  </Version>
+  <Author> Stefan Kohl
+    <Email>kohl@mathematik.uni-stuttgart.de</Email>
+    <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
+  </Author>
+  <Date>April 17, 2002</Date>
+  <Copyright> &copyright; 2002 by Stefan Kohl <P/>
+              After an official release, we adopt the copyright regulations of &GAP;
+              as detailed in the copyright notice in the &GAP; manual.
+  </Copyright>
+  <#Include SYSTEM "abstract.xml">
+</TitlePage>
+
+<!-- ################################################################################# -->
+
+<TableOfContents/>
+
+<!-- ################################################################################# -->
+
+<Body>
+
+<#Include SYSTEM "preface.xml">
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "semiloc.xml">
+<#Include SYSTEM "rcwamap.xml">
+<#Include SYSTEM "rcwagrp.xml">
+<#Include SYSTEM "rcwainfo.xml">
+<#Include SYSTEM "rcwaaux.xml">
+<#Include SYSTEM "examples.xml">
+
+</Body>
+
+<!-- ################################################################################# -->
+
+<Bibliography Databases="rcwa.bib"/>
+
+<TheIndex/>
+
+<!-- ################################################################################# -->
+
+</Book>
+
+<!-- ################################################################################# -->

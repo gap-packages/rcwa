@@ -1,0 +1,42 @@
+<!-- ################################################################################# -->
+<!-- ##                                                                             ## -->
+<!-- ##  preface.xml                RCWA documentation                 Stefan Kohl  ## -->
+<!-- ##                                                                             ## -->
+<!-- ##  $Id$                    ## -->
+<!-- ##                                                                             ## -->
+<!-- ################################################################################# -->
+
+<Chapter Label="ch:preface"><Heading>Preface</Heading>
+
+<!-- ################################################################################# -->
+
+This package deals with a certain kind of infinite permutations,
+namely the <Q>residue class-wise affine</Q> ones.
+In particular, it provides functionality for doing computations with such
+mappings over the ring of integers, its semilocalizations and over polynomial
+rings in one variable over a finite field.
+In the introduction, I will give brief definitions. <P/>
+
+It seems that there is just no literature concerning this topic,
+but nevertheless I would like to mention the article of Hans
+Läuchli and  Peter M. Neumann <Cite Key="LaeuchliNeumann88"/>, which
+is a little bit related to the subject (but does not deal with any kind
+of permutation groups over rings or of countable permutation groups). <P/>
+<Index Key="permutation groups">permutation groups</Index>
+<Index Key="permutation groups" Subkey="over rings">over rings</Index> 
+<Index Key="permutation groups" Subkey="countable">countable</Index>
+
+I got the idea of introducing this kind of permutations resp.
+representations of groups originally from my investigations concerning
+the Collatz- (<M>3n+1</M>-) conjecture (for an annotated bibliography,
+see <Cite Key="Lagarias98"/>), but now, residue class-wise affine
+representations of groups seem to be an interesting topic of its own. <P/>
+<Index Key="Collatz conjecture">Collatz conjecture</Index>
+
+I would be grateful for any bug reports, comments or suggestions.
+
+<!-- ################################################################################# -->
+
+</Chapter>
+
+<!-- ################################################################################# -->
