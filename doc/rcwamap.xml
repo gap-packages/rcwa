@@ -90,8 +90,8 @@ ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
 running over the residue classes (mod&nbsp;<M>m</M>). <P/>
 
 A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
-<M>|R/mR|</M> coefficient triples <C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,
-&nbsp;c&uscore;rm&nbsp;]</C>.
+<M>|R/mR|</M> coefficient triples
+<C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,&nbsp;c&uscore;rm&nbsp;]</C>.
 Their ordering is determined by the ordering of the representatives of the
 residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
 <C>AllResidues(<A>R</A>, <A>m</A>)</C>. For <M>R = \mathbb{Z}</M>, this means
@@ -246,6 +246,9 @@ gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
 <rcwa mapping of Z_( 2, 3 ) with modulus 2>
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 <rcwa mapping of Z with modulus 5>
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
+GF(2)[x]
 gap> r := RcwaMapping( R, x^2 + e,
 >                      [ [ x^2 + x + e, z      , x^2 + e ],
 >                        [ x^2 + x + e, x      , x^2 + e ],
@@ -424,15 +427,15 @@ infinity
 gap> IsTame(f);
 false
 gap> f^2;           
-<bijective rcwa mapping of Z with modulus 24>
+<wild bijective rcwa mapping of Z with modulus 24>
 gap> f^2*u;         
-<bijective rcwa mapping of Z with modulus 120>
+<rcwa mapping of Z with modulus 120>
 gap> f^2*u*a;
-<bijective rcwa mapping of Z with modulus 240>
+<rcwa mapping of Z with modulus 240>
 gap> f^2*u*a^2;
-<bijective rcwa mapping of Z with modulus 960>
+<rcwa mapping of Z with modulus 960>
 gap> f^2*u*a^2*f^-1;
-<bijective rcwa mapping of Z with modulus 3840>
+<rcwa mapping of Z with modulus 3840>
 gap> Comm(f,ClassShift(6,12)*f)^1000;
 <rcwa mapping of Z with modulus 18>
 ]]>
@@ -1137,12 +1140,17 @@ gap> List([1..3],k->IncreasingOn(a^k));
 <Example>
 <![CDATA[
 gap> S0 := ContractionCentre(T,100,1000);
+#I  Warning: `ContractionCentre' is highly probabilistic.
+The returned result can only be regarded as a rough guess.
+ See ?ContractionCentre for information on how to improve this guess.
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
 ]]>
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Oper Name="Divergence" Arg="f"/>

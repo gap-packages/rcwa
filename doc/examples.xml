@@ -33,6 +33,7 @@ gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
 gap> S0 := ContractionCentre(T,100,1000);
 #I  Warning: `ContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
+ See ?ContractionCentre for information on how to improve this guess.
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
 gap> S0^T = S0; # This holds by definition of the contraction centre.
@@ -43,10 +44,9 @@ gap> Trajectory(T,27,S0,"stop");
   425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
   3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
   23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2 ]
-gap> List([1..50],n->Length(Trajectory(T,n,S0,"stop")));
-[ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11,
-  11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7, 69, 7,
-  20, 12, 12, 12, 66, 9, 17, 17 ]
+gap> List([1..40],n->Length(Trajectory(T,n,S0,"stop")));
+[ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11, 
+  11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7 ]
 gap> Maximum(List([1..1000],n->Length(Trajectory(T,n,S0,"stop"))));
 113
 gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0,"stop"))));
@@ -207,19 +207,19 @@ gap> List([ML1,ML2],IsSurjective);
 gap> List([ML1,ML2],IsInjective);
 [ false, false ]
 gap> traj1 := Trajectory(ML1,One(R),16,"length");
-[ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x,
-  x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0,
-  x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2,
-  x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0,
-  x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4,
+[ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x, 
+  x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0, 
+  x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2, 
+  x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0, 
+  x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4, 
   x^12+x^11+x^10+x^7+x^6+x^5+x^3 ]
 gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),16,"length");
-[ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0,
-  x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0,
-  x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0,
-  x^10+x^8+x^7+x^5+x^4+x+Z(2)^0, x^11+x^8+x^7+x^5+x^4+x^3+x^2+x+Z(2)^0,
-  x^12+x^10+x^9+x^8+x^7+x^5+Z(2)^0, x^13+x^10+x^7+x^4+x,
-  x^12+x^9+x^6+x^3+Z(2)^0, x^13+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x,
+[ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0, 
+  x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0, 
+  x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0, 
+  x^10+x^8+x^7+x^5+x^4+x+Z(2)^0, x^11+x^8+x^7+x^5+x^4+x^3+x^2+x+Z(2)^0, 
+  x^12+x^10+x^9+x^8+x^7+x^5+Z(2)^0, x^13+x^10+x^7+x^4+x, 
+  x^12+x^9+x^6+x^3+Z(2)^0, x^13+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x, 
   x^12+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0 ]
 ]]>
 </Example>
@@ -776,20 +776,20 @@ Bijective rcwa mapping of Z with modulus 12
   11                                   | 2n - 2
 
 gap> List([-32..32],n->Length(Cycle(kappa,n)));
-[ 4, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 7, 1, 10, 10, 4, 1, 7, 7, 1, 1, 7, 7,
-  4, 1, 4, 4, 2, 1, 1, 2, 1, 1, 4, 4, 4, 1, 7, 7, 4, 1, 7, 7, 1, 1, 10, 10,
+[ 4, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 7, 1, 10, 10, 4, 1, 7, 7, 1, 1, 7, 7, 
+  4, 1, 4, 4, 2, 1, 1, 2, 1, 1, 4, 4, 4, 1, 7, 7, 4, 1, 7, 7, 1, 1, 10, 10, 
   7, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 4, 1, 13, 13, 7 ]
 gap> List([2..14],k->Maximum(List([1..2^k],n->Length(Cycle(kappa,n)))));
 [ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
 gap> List([2..14],k->Length(Cycle(kappa,2^k-2)));
 [ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
 gap> Cycle(kappa,2^12-2);
-[ 4094, 6142, 9214, 13822, 20734, 31102, 46654, 69982, 104974, 157462,
-  236194, 354292, 708584, 236195, 472388, 157463, 314924, 104975, 209948,
-  69983, 139964, 46655, 93308, 31103, 62204, 20735, 41468, 13823, 27644,
+[ 4094, 6142, 9214, 13822, 20734, 31102, 46654, 69982, 104974, 157462, 
+  236194, 354292, 708584, 236195, 472388, 157463, 314924, 104975, 209948, 
+  69983, 139964, 46655, 93308, 31103, 62204, 20735, 41468, 13823, 27644, 
   9215, 18428, 6143, 12284, 4095 ]
 gap> last mod 12;
-[ 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 8, 11, 8, 11, 8, 11, 8, 11,
+[ 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 8, 11, 8, 11, 8, 11, 8, 11, 
   8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 3 ]
 gap> lengthstatistics := Collected(List(ShortOrbits(Group(kappa),
 >                                                   [1..12^4],100),Length));
@@ -912,10 +912,10 @@ gap> fact1 := RcwaMapping([[rc(4,6),rc(8,12)]]);
 <Example>
 <![CDATA[
 gap> elm2 := elm1/fact1;
-<rcwa mapping of Z with modulus 12>
+<bijective rcwa mapping of Z with modulus 12>
 gap> Display(elm2);
 
-Rcwa mapping of Z with modulus 12
+Bijective rcwa mapping of Z with modulus 12
 
                n mod 12                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -931,10 +931,10 @@ gap> Multpk(elm2,3,-1)^elm2;
 gap> fact2 := RcwaMapping([[rc(3,4),rc(8,12)]]);
 <rcwa mapping of Z with modulus 12>
 gap> elm3 := elm2/fact2;
-<rcwa mapping of Z with modulus 4>
+<bijective rcwa mapping of Z with modulus 4>
 gap> Display(elm3);
 
-Rcwa mapping of Z with modulus 4
+Bijective rcwa mapping of Z with modulus 4
 
                 n mod 4                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -947,8 +947,9 @@ gap> fact3 := RcwaMapping([[rc(2,4),rc(3,4)]]);
 gap> elm4 := elm3/fact3;
 IdentityMapping( Integers )
 gap> kappafacts := [ fact3, fact2, fact1 ];
-[ <rcwa mapping of Z with modulus 4>, <rcwa mapping of Z with modulus 12>,
-  <rcwa mapping of Z with modulus 12> ]
+[ <bijective rcwa mapping of Z with modulus 4>, 
+  <bijective rcwa mapping of Z with modulus 12>, 
+  <bijective rcwa mapping of Z with modulus 12> ]
 gap> List(kappafacts,Order);
 [ 2, 2, 2 ]
 gap> kappa = Product(kappafacts);
@@ -1222,7 +1223,7 @@ gap> Size(G);
 gap> H := Image(IsomorphismPermGroup(G));;
 gap> P := DerivedSubgroup(H);
 Group([ (2,15,3,5,16)(4,6,18,7,17)(9,19,10,12,20)(11,13,22,14,21), 
-  (2,3,5,7,16)(4,15,6,18,17)(9,10,12,14,20)(11,19,13,22,21) ])
+  (2,17,7,6,4)(3,15,16,5,18)(9,21,14,13,11)(10,19,20,12,22) ])
 gap> Size(P);
 960
 gap> IsPerfect(P);
@@ -1281,7 +1282,7 @@ and induces on <A>S</A> a non-solvable finite permutation group:
 <Example>
 <![CDATA[
 gap> G := Group(a,b);;
-gap> ShortOrbits(G,[-10..10],100);
+gap> ShortOrbits(Group(Comm(a,b)),[-10..10],100);
 [ [ -10 ], [ -9 ], [ -30, -21, -14, -13, -11, -8 ], [ -7 ], [ -6 ],
   [ -12, -5, -4, -3, -2, 1 ], [ -1 ], [ 0 ], [ 2 ], [ 3 ],
   [ 4, 5, 6, 7, 10, 15 ], [ 8 ], [ 9 ] ]
@@ -1296,12 +1297,8 @@ gap> U := Group(Comm(a,b),elm);
 <rcwa group over Z with 2 generators>
 gap> Action(U,S);
 Group([ (1,4,5,6,2,3), (1,4) ])
-gap> DisplayCompositionSeries(CompositionSeries(last));
-G (2 gens, size 720)
- | Z(2)
-S (4 gens, size 360)
- | A(6) ~ A(1,9) = L(2,9) ~ B(1,9) = O(3,9) ~ C(1,9) = S(2,9) ~ 2A(1,9) = U(2,9)
-1 (0 gens, size 1)
+gap> IsNaturalSymmetricGroup(last);
+true
 ]]>
 </Example>
 
@@ -1597,11 +1594,11 @@ gap> z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
 >                      [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
 >                      [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]);;
 gap> SetName(z,"z");
-gap> Order(z);
-infinity
+gap> IsBijective(z);
+true
 gap> Display(z);
 
-Bijective rcwa mapping of Z with modulus 16, of order infinity
+Bijective rcwa mapping of Z with modulus 16
 
                n mod 16                |                 n^z
 ---------------------------------------+--------------------------------------
@@ -1696,10 +1693,10 @@ gap> U := Intersection(PreImage(T^6,ResidueClass(Integers,3,1)),S0);
 gap> V := Intersection(PreImage(T^6,ResidueClass(Integers,3,2)),S0);
 <union of 21 residue classes (mod 64)>
 gap> AsUnionOfFewClasses(U);
-[ 1(64), 5(64), 7(64), 9(64), 21(64), 23(64), 29(64), 31(64), 49(64), 51(64),
+[ 1(64), 5(64), 7(64), 9(64), 21(64), 23(64), 29(64), 31(64), 49(64), 51(64), 
   59(64) ]
 gap> AsUnionOfFewClasses(V);
-[ 3(32), 11(32), 13(32), 15(32), 25(32), 17(64), 19(64), 27(64), 33(64),
+[ 3(32), 11(32), 13(32), 15(32), 25(32), 17(64), 19(64), 27(64), 33(64), 
   37(64), 39(64), 41(64), 53(64), 55(64), 61(64), 63(64) ]
 gap> Union(U,V) = S0 and Intersection(U,V) = [];  # consistency check
 true
