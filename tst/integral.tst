@@ -12,6 +12,10 @@ gap> ZeroIntegralRcwaMapping;
 ZeroMapping( Integers, Integers )
 gap> Order(IdentityIntegralRcwaMapping);
 1
+gap> RcwaMapping(Integers,[[2,0,1]]);
+Integral rcwa mapping: n -> 2n
+gap> RcwaMapping(Integers,1,[[2,0,1]]);
+Integral rcwa mapping: n -> 2n
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
 <integral rcwa mapping with modulus 17>
 gap> f * One(f) = f and One(f) * f = f;
@@ -25,7 +29,7 @@ true
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);
 <integral rcwa mapping with modulus 2>
 gap> Print(T,"\n");
-IntegralRcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] ] )
+RcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] ] )
 gap> IsInjective(T);
 false
 gap> IsSurjective(T);
@@ -924,14 +928,18 @@ gap> c1 := Restriction(a^-1,RcwaMapping([[2,0,1]]));;
 gap> c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);;
 gap> md(Comm(c1,c2));
 [ 4, 3 ]
-gap> Order(RcwaMapping([rc(1,2),rc(36,72)]));
+gap> Order(RcwaMapping([[rc(1,2),rc(36,72)]]));
 2
-gap> f1 := RcwaMapping([rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]);
+gap> f1 := RcwaMapping([[rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]]);
 <integral rcwa mapping with modulus 12>
 gap> Cycle(f1,rc(0,4));
 [ The residue class 0(4), The residue class 1(6) ]
 gap> Cycle(f1,rc(5,6));
 [ The residue class 5(6), The residue class 2(4) ]
+gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
+<integral rcwa group with 2 generators>
+gap> MovedPoints(G);
+The residue class 3(5)
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################

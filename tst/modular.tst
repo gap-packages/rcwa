@@ -9,7 +9,9 @@ gap> START_TEST("$Id$");
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(2));; z := Zero(R);;
-gap> r := ModularRcwaMapping( 2, x^2 + e,
+gap> RcwaMapping(R,One(R),[[x,x,One(R)]]);
+Rcwa mapping of GF(2)[x]: P -> x*P + x
+gap> r := RcwaMapping( 2, x^2 + e,
 >                             [ [ x^2 + x + e, z      , x^2 + e ],
 >                               [ x^2 + x + e, x      , x^2 + e ],
 >                               [ x^2 + x + e, x^2    , x^2 + e ],
@@ -47,7 +49,7 @@ Rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0
  x+Z(2)^0                 | ((x^2+x+Z(2)^0)*P + x^2+x)/(x^2+Z(2)^0)
 
 gap> Print(r,"\n");
-ModularRcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ],
+RcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ],
   [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ],
   [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ] ] )
 gap> IsBijective(r);
@@ -230,6 +232,11 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
   [ x^4+x^2+Z(2)^0, x^4+x, x^4+Z(2)^0 ], 
   [ x^6+x^5+x^3+x+Z(2)^0, x^6+x^4+x^3+x^2, x^6+x^4+x^2+Z(2)^0 ], 
   [ x^8+x^4+Z(2)^0, x^7+x^6, x^8+Z(2)^0 ] ]
+gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
+gap> f := RcwaMapping([[rc(Zero(R),x^2),rc(One(R),x^3),rc(x,x^2)]]);
+<rcwa mapping of GF(2)[x] with modulus x^3>
+gap> Order(f);
+3
 gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;
@@ -238,7 +245,7 @@ Constant rcwa mapping of GF(9)[x] with value x^2+Z(3)^0
 gap> Display(f);
 Constant rcwa mapping of GF(9)[x] with value x^2+Z(3)^0
 gap> String(f);
-"ModularRcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), x^2+Z(3)^0, Z(3)^0 ] ] )"
+"RcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), x^2+Z(3)^0, Z(3)^0 ] ] )"
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(9)[x]: P -> Z(3^2)*P
 gap> STOP_TEST( "modular.tst", 1500000000 );

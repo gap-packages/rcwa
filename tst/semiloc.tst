@@ -6,6 +6,10 @@
 ##
 
 gap> START_TEST("$Id$");
+gap> RcwaMapping(Z_pi(2),[[2,0,1]]);
+Rcwa mapping of Z_( 2 ): n -> 2 n
+gap> RcwaMapping(Z_pi(2),1,[[2,0,1]]);
+Rcwa mapping of Z_( 2 ): n -> 2 n
 gap> f := RcwaMapping([2],[[1/3,0,1]]);
 Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> f * One(f) = f and One(f) * f = f;
@@ -47,9 +51,9 @@ Rcwa mapping of Z_( 2 ): n -> 10/21 n + 1/17
 gap> IsBijective(f+g);
 false
 gap> Print(f,"\n");
-SemilocalIntegralRcwaMapping( [ 2 ], [ [ 1/3, 0, 1 ] ] )
+RcwaMapping( [ 2 ], [ [ 1/3, 0, 1 ] ] )
 gap> String(f);
-"SemilocalIntegralRcwaMapping( [ 2 ], [ [ 1/3, 0, 1 ] ] )"
+"RcwaMapping( [ 2 ], [ [ 1/3, 0, 1 ] ] )"
 gap> a := RcwaMapping([2],[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
 <rcwa mapping of Z_( 2 ) with modulus 4>
 gap> Display(a);
@@ -90,7 +94,7 @@ Surjective rcwa mapping of Z_( 2 ) with modulus 16
    9                                   | (9 n - 1)/16
   15                                   | (9 n - 7)/16
 
-gap> b := SemilocalIntegralRcwaMapping([2,3],ShallowCopy(Coefficients(a)));
+gap> b := RcwaMapping([2,3],ShallowCopy(Coefficients(a)));
 <rcwa mapping of Z_( 2, 3 ) with modulus 4>
 gap> Display(b);
 
