@@ -80,8 +80,14 @@ SetName(f5,"f5"); SetName(f7,"f7"); SetName(f9,"f9");
 ##  shown to be divergent, and their iterates can be shown to be non-cyclic
 ##  (mod x).
 ##
+x := Indeterminate(GF(2),1); SetName(x,"x");
+R := PolynomialRing(GF(2),1); 
+
 ML1 := RcwaMapping(R,x,[[1,0,x],[(x+1)^3,1,x]]*One(R));
 ML2 := RcwaMapping(R,x,[[1,0,x],[(x+1)^2,1,x]]*One(R));
+
+ChangePoints := l -> Filtered([1..Length(l)-1],pos->l[pos]<>l[pos+1]);
+Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
 
 #############################################################################
 ##
