@@ -115,8 +115,6 @@ gap> G := Group(f1,f2,f3);
 <rcwa group over Z with 3 generators>
 gap> MovedPoints(G);
 0(2) U 1(6) U 5(6)
-gap> phi := ProjectionFromFreeGroupByGenerators(G);
-[ f1, f2, f3 ] -> [ f1, f2, f3 ]
 ]]>
 </Example>
 
@@ -741,7 +739,7 @@ gap> for i in [1..3] do
 >                                                       rc(2,4)^(pow[i-j+1]^-1))))));
 >    od;
 gap> C;
-[ 1(4) U 0(12) U [ -2 ], 2(24) U 18(24), 6(48) U 38(48) U 10(72) U 58(72),
+[ 1(4) U 0(12) U [ -2 ], 2(24) U 18(24), 6(48) U 38(48) U 10(72) U 58(72), 
   <union of 38 residue classes (mod 864)> ]
 gap> List(C,S->Length(Cycle(kappa,S)));
 [ 1, 4, 7, 10 ]
@@ -1564,3 +1562,4 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
+

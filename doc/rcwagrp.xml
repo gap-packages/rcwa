@@ -417,38 +417,6 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
   Factoring elements into generators
 </Heading>
 
-  There is some functionality which -- under <Q>suitable</Q> circumstances --
-  permits to factor elements of rcwa groups into generators. Before we start
-  with the descriptions of the methods in question, we need to introduce
-  an auxiliary function:
-
-  <ManSection>
-    <Func Name="ProjectionFromFreeGroupByGenerators" Arg="G"/>
-    <Returns>
-      the projection <C>F</C> <M>\rightarrow</M> <A>G</A> from a free group
-      <C>F</C> of suitable rank to <A>G</A> which maps the generators of
-      <C>F</C> to those of <A>G</A> one-by-one. If generators of <A>G</A>
-      have names, these are inherited by the corresponding generators of
-      <C>F</C>.
-    </Returns>
-    <Description>
-      Of course, <A>G</A> does not necessarily have to be an rcwa group,
-      but can be an arbitrary group with known generators.
-<Example>
-<![CDATA[
-gap> G := Group(a,t*u,g);
-<rcwa group over Z with 3 generators>
-gap> phi := ProjectionFromFreeGroupByGenerators(G);
-[ a, f2, g ] -> [ a, <bijective rcwa mapping of Z with modulus 5>, g ]
-gap> Source(phi);
-<free group on the generators [ a, f2, g ]>
-gap> Range(phi) = G and Image(phi) = G;
-true
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
   <ManSection>
     <Meth Name ="PreImagesRepresentative" Arg="phi, g"
           Label="PreImagesRepresentative (element factorization)"/>
@@ -471,7 +439,7 @@ true
 <![CDATA[
 gap> G := Group(g,h);
 <rcwa group over Z with 2 generators>
-gap> phi := ProjectionFromFreeGroupByGenerators(G);
+gap> phi := EpimorphismFromFreeGroup(G);
 [ g, h ] -> [ g, h ]
 gap> PreImagesRepresentative(phi,h*g^3*h^2*g^-1*h*g*h^-3);
 h*g^3*h^2*g^-1*h*g*h^-3
@@ -482,7 +450,7 @@ gap> G := Group(a,nu);
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
 false
-gap> phi := ProjectionFromFreeGroupByGenerators(G);
+gap> phi := EpimorphismFromFreeGroup(G);
 [ a, nu ] -> [ a, nu ]
 gap> F := Source(phi);
 <free group on the generators [ a, nu ]>
@@ -522,50 +490,42 @@ IdentityMapping( Integers )
 <![CDATA[
 gap> G := Group(g,h);
 <rcwa group over Z with 2 generators>
-gap> phi := ProjectionFromFreeGroupByGenerators(G);
+gap> phi := EpimorphismFromFreeGroup(G);
 [ g, h ] -> [ g, h ]
 gap> f := g^3*h*g^-4*h^5*g;
 <bijective rcwa mapping of Z with modulus 12>
 gap> RCWAInfo(2);
 gap> pre := PreImagesRepresentatives(phi,f);
-#I  Orbit lengths after extension step 1: [ 11, 10 ]
-#I  |Candidates| = 2
-#I  Orbit lengths after extension step 1: [ 12, 10 ]
-#I  Orbit lengths after extension step 2: [ 77, 59 ]
+#I  Orbit lengths after extension step 1: [ 4, 5 ]
 #I  |Candidates| = 1
-#I  Orbit lengths after extension step 1: [ 12, 10 ]
-#I  Orbit lengths after extension step 2: [ 88, 62 ]
-#I  Orbit lengths after extension step 3: [ 585, 380 ]
-#I  |Candidates| = 5
-#I  Orbit lengths after extension step 1: [ 12, 12 ]
-#I  Orbit lengths after extension step 2: [ 88, 86 ]
-#I  Orbit lengths after extension step 3: [ 598, 568 ]
-#I  Orbit lengths after extension step 4: [ 3760, 3460 ]
+#I  Orbit lengths after extension step 1: [ 5, 5 ]
+#I  Orbit lengths after extension step 2: [ 17, 15 ]
+#I  Orbit lengths after extension step 3: [ 52, 39 ]
 #I  |Candidates| = 1
-#I  Orbit lengths after extension step 1: [ 12, 12 ]
-#I  Orbit lengths after extension step 2: [ 88, 88 ]
-#I  Orbit lengths after extension step 3: [ 598, 598 ]
-#I  Orbit lengths after extension step 4: [ 3789, 3789 ]
-#I  Orbit lengths after extension step 5: [ 23168, 23168 ]
-#I  |Candidates| = 16
-[ g*h*g*h*g^-2*h^-1*g^-1*h^5*g, g*h*g*h*g^-2*h*g^-1*h^-1*g^-1*h^2*g*h^2*g, 
-  g*h*g*h*g^-1*h^-2*g^-1*h^3*g^-1*h^3*g, h^2*g^-1*h^-1*g*h*g*h*g^-2*h^-1*g^
-    -1*h*g*h^3*g, h*g*h^2*g^-2*h^-1*g^-1*h^-1*g^2*h^-1*g^-1*h^-1*g^-1*h^2*g*h^
-    -1, g*h*g^-1*h^-1*g^-1*h*g^2*h*g^-1*h^-1*g*h^-1*g^-1*h^-1*g^-2*h*g*h^-2*g^
-    -1 ]
+#I  Orbit lengths after extension step 1: [ 5, 5 ]
+#I  Orbit lengths after extension step 2: [ 17, 15 ]
+#I  Orbit lengths after extension step 3: [ 53, 43 ]
+#I  Orbit lengths after extension step 4: [ 158, 119 ]
+#I  |Candidates| = 1
+#I  Orbit lengths after extension step 1: [ 5, 5 ]
+#I  Orbit lengths after extension step 2: [ 17, 17 ]
+#I  Orbit lengths after extension step 3: [ 53, 53 ]
+#I  Orbit lengths after extension step 4: [ 159, 158 ]
+#I  Orbit lengths after extension step 5: [ 472, 462 ]
+#I  Orbit lengths after extension step 6: [ 1356, 1309 ]
+#I  Orbit lengths after extension step 7: [ 3822, 3643 ]
+#I  |Candidates| = 11
+[ g^3*h*g^3*h^5*g, g^-3*h^-4*g^-3*h^-1*g*h*g, g^3*h*g^-4*h^5*g ]
 gap> RCWAInfo(0);
-gap> Length(pre);
-6
 gap> List(pre,Length);
-[ 14, 16, 16, 18, 19, 22 ]
+[ 13, 14, 14 ]
 gap> Set(List(pre,w->w^phi)) = [f];
 true
-gap> w := pre[5]*pre[6]^-1;
-h*g*h^2*g^-2*h^-1*g^-1*h^-1*g^2*h^-1*g^-1*h^-1*g^-1*h^2*g*h^-1*g*h^2*g^-1*h^
--1*g^2*h*g*h*g^-1*h*g*h^-1*g^-2*h^-1*g*h*g*h^-1*g^-1
+gap> w := pre[1]*pre[2]^-1;
+g^3*h*g^3*h^4*g^-1*h*g^3*h^4*g^3
 gap> Length(w);
-41
-gap> w^phi; # A relation of length 41.
+23
+gap> w^phi; # A relation of length 23.
 IdentityMapping( Integers )
 ]]>
 </Example>
@@ -739,7 +699,7 @@ a^-1*b^-1*a*b^4*a
 gap> w^phi;
 <bijective rcwa mapping of Z with modulus 4608>
 gap> w := RepresentativeActionPreImage(G,[37,4,9],[4,51,8],OnTuples,F);
-b*a^2*b^-1*a^2*b^2*a*b^-1*a^-1*b*a^-1*b^-1*a^-2*b*a
+b*a^6*b*a^-3*b^-3*a^-1*b*a^2
 gap> w := RepresentativeActionPreImage(G,[17,14,9],[4,51,8],OnPoints,F);
 a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
 ]]>
@@ -1490,6 +1450,7 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
