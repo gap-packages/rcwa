@@ -1762,7 +1762,7 @@ InstallMethod( CompositionMapping2,
 
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
-    m3 := Lcm( m1, m2 ) * Divisor( f );
+    m3 := Minimum( Lcm( m1, m2 ) * Divisor( f ), m1 * m2 );
 
     c3 := [];
     for n in [0 .. m3 - 1] do
@@ -1798,7 +1798,8 @@ InstallMethod( CompositionMapping2,
     local c, m, d, R, q, x, res, r, n1, n2;
 
     c := [f!.coeffs, g!.coeffs, []];
-    m := [f!.modulus, g!.modulus]; m[3] := Lcm( m[1], m[2] ) * Divisor( f );
+    m := [f!.modulus, g!.modulus];
+    m[3] := Minimum( Lcm( m[1], m[2] ) * Divisor( f ), m[1] * m[2] );
     d := List(m, DegreeOfLaurentPolynomial);
     R := UnderlyingRing(FamilyObj(f));
     q := Size(CoefficientsRing(R));
