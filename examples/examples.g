@@ -207,10 +207,3 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
 
-
-
-
-
-
-
-

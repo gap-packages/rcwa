@@ -336,7 +336,7 @@ Bijective integral rcwa mapping with modulus 18, of order 6
 gap> TrivialSubgroup(G);
 Trivial integral rcwa group
 gap> orb := Orbit(G,1);
-[ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
+[ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
 gap> MovedPoints(G);
 1(3) U 2(3) U 3(9) U 6(9)
 gap> OrbitsModulo(G,9);
@@ -641,30 +641,24 @@ gap> Order(x*y);
 24
 gap> Order(Comm(x,y));
 20
-gap> IsFlat(f);
+gap> IsIntegral(f);
 true
-gap> IsFlat(u);
-false
-gap> IsFlat(T);
-false
-gap> IsFlat(nu);
-true
-gap> IsFlat(nu^a);
-false
-gap> IsFlat((nu^a)^2);
-true
-gap> IsFlat(AlternatingGroup(IsIntegralRcwaGroup,5));
-true
-gap> IsFlat(Group(a,b));
-false
-gap> IsFlat(Group(g));
-false
 gap> IsIntegral(u);
+false
+gap> IsIntegral(T);
+false
+gap> IsIntegral(nu);
+true
+gap> IsIntegral(nu^a);
+false
+gap> IsIntegral((nu^a)^2);
+true
+gap> IsIntegral(Group(a,b));
+false
+gap> IsIntegral(Group(g));
 false
 gap> IsIntegral(t);
 true
-gap> IsIntegral(T);
-false
 gap> IsIntegral(RcwaMapping([[2,0,1]]));
 true
 gap> IsIntegral(RcwaMapping([[2,0,1],[3,5,1]]));
@@ -769,57 +763,6 @@ gap> CoefficientsOnTrajectory(a,8,10,"length",true);
 [ [ 1, 0, 1 ], [ 3, 0, 2 ], [ 9, 0, 4 ], [ 27, 0, 8 ], [ 81, -8, 32 ], 
   [ 243, -24, 64 ], [ 729, -72, 128 ], [ 2187, -88, 512 ], 
   [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
-gap> C2 := CyclicGroup(IsIntegralRcwaGroup,2);
-<integral rcwa group with 1 generator>
-gap> IdGroup(C2);
-[ 2, 1 ]
-gap> G := AbelianGroup(IsIntegralRcwaGroup,[2,3]);
-<integral rcwa group with 2 generators>
-gap> IdGroup(G);
-[ 6, 2 ]
-gap> G := ElementaryAbelianGroup(IsIntegralRcwaGroup,8);
-<integral rcwa group with 3 generators>
-gap> IdGroup(G);
-[ 8, 5 ]
-gap> G := ExtraspecialGroup(IsIntegralRcwaGroup,27,3);
-<integral rcwa group with 3 generators>
-gap> Size(G);
-27
-gap> IsAbelian(G);
-false
-gap> Exponent(G);
-3
-gap> D4 := DihedralGroup(IsIntegralRcwaGroup,8);
-<integral rcwa group with 2 generators>
-gap> IdGroup(D4);
-[ 8, 3 ]
-gap> S4 := SymmetricGroup(IsIntegralRcwaGroup,4);
-<integral rcwa group with 2 generators>
-gap> Size(S4);
-24
-gap> G := SylowSubgroup(S4,2);;
-gap> IdGroup(G);
-[ 8, 3 ]
-gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);
-<integral rcwa group with 2 generators>
-gap> Size(A5);
-60
-gap> IsPerfect(A5);
-true
-gap> IsSimple(A5);
-true
-gap> G := GL(IsIntegralRcwaGroup,2,3);
-<integral rcwa group with 2 generators>
-gap> Size(G);
-48
-gap> G := SL(IsIntegralRcwaGroup,2,3);
-<integral rcwa group with 2 generators>
-gap> Size(G);
-24
-gap> G := PSL(IsIntegralRcwaGroup,2,3);
-<integral rcwa group with 2 generators>
-gap> Size(G);
-12
 gap> G := Group(g,h);;
 gap> P := RespectedClassPartition(G);
 [ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12),

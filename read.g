@@ -11,10 +11,8 @@ ReadPackage( "rcwa", "gap/float.g" );
 ReadPackage( "rcwa", "gap/rcwaaux.g" );
 ReadPackage( "rcwa", "gap/rcwamap.gi" );
 ReadPackage( "rcwa", "gap/rcwagrp.gi" );
-ReadPackage( "rcwa", "gap/rcwalib.gi" );
 
 #############################################################################
 ##
 #E  read.g . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
 
