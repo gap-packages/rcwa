@@ -3112,7 +3112,8 @@ InstallGlobalFunction( Rho,
 
     local  rho;
 
-    if   IsIntegers(S) or IsEmpty(S) then return 0;
+    if   IsEmpty(S)    then return 0;
+    elif IsIntegers(S) then return 1/2;
     elif IsUnionOfResidueClassesOfZ(S)
     then rho := Sum(Residues(S))/Modulus(S) - Length(Residues(S))/2;
          if   IsInt(rho) then return 0;
