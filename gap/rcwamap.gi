@@ -2392,24 +2392,26 @@ InstallMethod( Order,
 
 #############################################################################
 ##
-#F  TransitionMatrix( <f>, <deg> ) . . <deg>x<deg>-`Transition matrix' of <f>
+#F  TransitionMatrix( <f>, <m> ) . . Transition matrix of <f> for modulus <m>
 ##
 InstallGlobalFunction( TransitionMatrix,
 
-  function ( f, deg )
+  function ( f, m )
 
-    local  T, m, n, i, j;
+    local  T, R, mTest, Resm, ResmTest, n, i, j;
 
-    if   not IsRationalBasedRcwaMapping(f) or not IsPosInt(deg)
-    then Error("usage: TransitionMatrix( <f>, <deg> ),\nwhere <f> is a ",
-               "rational-based rcwa mapping and <deg> is an integer > 0.\n");
+    if not IsRcwaMapping(f) or not m in Source(f) then
+      Error("usage: TransitionMatrix( <f>, <m> ),\nwhere <f> is an ",
+            "rcwa mapping and <m> lies in the source of <f>.\n");
     fi;
-    m := Modulus(f) * Lcm(deg,Divisor(f));
-    T := MutableNullMat(deg,deg);
-    for n in [0..m-1] do
-      i := n   mod deg;
-      j := n^f mod deg;
-      T[i+1][j+1] := 1;
+    R := Source(f); Resm := AllResidues(R,m);
+    mTest := Modulus(f) * Lcm(m,Divisor(f));
+    ResmTest := AllResidues(R,mTest);
+    T := MutableNullMat(Length(Resm),Length(Resm));
+    for n in ResmTest do
+      i := n   mod m;
+      j := n^f mod m;
+      T[Position(Resm,i)][Position(Resm,j)] := 1;
     od;
     return T;
   end );
@@ -3069,25 +3071,27 @@ InstallMethod( Restriction,
 
 #############################################################################
 ##
-#M  Divergence( <f> ) . . . . . . . . . . . . . . . for integral rcwa mapping
+#M  Divergence( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( Divergence,
-               "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
-    local  pow, m, c, M, approx, prev, facts, p, exp, eps, prec;
+    local  R, pow, m, c, M, approx, prev, facts, p, NrRes, exp, eps, prec;
 
+    R := Source(f);
     prec := 10^8; eps := Float(1/prec);
     pow := f; exp := 1; approx := Float(0);
     repeat
-      m := Modulus(pow); c := Coefficients(pow);
+      m := Modulus(pow); NrRes := Length(AllResidues(R,m));
+      c := Coefficients(pow);
       M := List(TransitionMatrix(pow,m),l->l/Sum(l));
-      facts := List(c,t->Float(t[1]/t[3]));
-      p := List(TransposedMat(M),l->Float(Sum(l)/m));
+      facts := List(c,t->Float(Length(AllResidues(R,t[1]))/
+                               Length(AllResidues(R,t[3]))));
+      p := List(TransposedMat(M),l->Float(Sum(l)/NrRes));
       prev := approx;
-      approx := Product(List([1..m],r->facts[r]^p[r]))^Float(1/exp);
+      approx := Product(List([1..NrRes],i->facts[i]^p[i]))^Float(1/exp);
       pow := pow * f; exp := exp + 1;
     until AbsoluteValue(approx-prev) < eps;
     return approx;
@@ -3096,4 +3100,5 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
