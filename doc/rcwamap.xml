@@ -53,7 +53,8 @@ rcwa mappings. <P/>
   <ManSection>
     <Func Name="AllResidues" Arg="R, m"/>
     <Returns>
-      a sorted list of all residues modulo <A>m</A> in the ring <A>R</A>.
+      A sorted list of all residues modulo&nbsp;<A>m</A>
+      in the ring&nbsp;<A>R</A>.
     </Returns>
     <Description>
       The list returned by this function defines the ordering in which the
@@ -97,6 +98,7 @@ gap> AllResidues(R,x^4+x^2);
     <Meth Name="RcwaMapping" Arg="pi, coeffs"/>
     <Meth Name="RcwaMapping" Arg="q, modulus, coeffs"/>
     <Meth Name="RcwaMapping" Arg="cycles"/>
+    <Returns> An rcwa mapping. </Returns>
     <Description>
       Construction of an rcwa mapping.<P/>
 
@@ -224,7 +226,7 @@ gap> [Multiplier(f),Divisor(f)];
 
   <ManSection>
     <Meth Name="Display" Arg="f"/>
-    <Returns> nothing. </Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       Displays the rcwa mapping <A>f</A> in a nice human-readable form.
 <Example>
@@ -267,7 +269,7 @@ Rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0
 
   <ManSection>
     <Meth Name="Print" Arg="f"/>
-    <Returns> nothing. </Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       Prints the rcwa mapping <A>f</A> in &GAP;-readable format.
 <Example>
@@ -290,7 +292,8 @@ RcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ],
   <ManSection>
     <Meth Name="String" Arg="f"/>
     <Returns>
-      a &GAP;-readable string representation of the rcwa mapping <A>f</A>.
+      A &GAP;-readable string representation of the
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -308,7 +311,7 @@ gap> String(d);
   <ManSection>
     <Meth Name="LaTeXObj" Arg="f"/>
     <Returns>
-      a &LaTeX; representation of the integral rcwa mapping <A>f</A>.
+      A &LaTeX; representation of the integral rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       An indentation by <A>Indentation</A> characters can be specified by
@@ -339,10 +342,10 @@ n \ \longmapsto \
 
   <ManSection>
     <Oper Name="Modulus" Arg="f" Label="Modulus of an rcwa mapping"/>
-    <Returns>the modulus of the rcwa mapping <A>f</A>.</Returns>
+    <Returns> The modulus of the rcwa mapping&nbsp;<A>f</A>. </Returns>
     <Description>
       See also <Ref Meth="Modulus" Label="Modulus of an rcwa group"/> for
-      rcwa groups, and <Ref Prop="IsTame" Label="Tame rcwa mapping"/>.
+      rcwa groups, and&nbsp;<Ref Prop="IsTame" Label="Tame rcwa mapping"/>.
 <Example>
 <![CDATA[
 gap> Modulus(u);
@@ -357,9 +360,9 @@ x^2+Z(2)^0
   <ManSection>
     <Meth Name="Coefficients" Arg="f"/>
     <Returns>
-      the list of coefficients of the rcwa mapping <A>f</A> as described
-      above.
-   .</Returns>
+      The list of coefficients of the rcwa mapping&nbsp;<A>f</A>
+      as described above.
+    </Returns>
     <Description>
 <Example>
 <![CDATA[
@@ -386,8 +389,8 @@ gap> Coefficients(r);
   <ManSection>
     <Meth Name="\=" Arg="f, g"/>
     <Returns>
-      <C>true</C> or <C>false</C>, depending on whether the rcwa mappings
-      <A>f</A> and <A>g</A> are equal or not.
+      <C>true</C> if the rcwa mappings <A>f</A> and&nbsp;<A>g</A> are equal,
+      and <C>false</C> otherwise.
     </Returns>
     <Description>
       Since rcwa mappings are stored in a normalized form, testing for
@@ -411,9 +414,9 @@ true
 
   <ManSection>
     <Attr Name="Multiplier" Arg="f" Label="Multiplier of an rcwa mapping"/>
-    <Returns> the multiplier of the rcwa mapping <A>f</A>. </Returns>
+    <Returns> The multiplier of the rcwa mapping&nbsp;<A>f</A>. </Returns>
     <Description>
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
 gap> Multiplier(g);
@@ -433,9 +436,9 @@ x^2+x+Z(2)^0
 
   <ManSection>
     <Attr Name="Divisor" Arg="f" Label="Divisor of an rcwa mapping"/>
-    <Returns> the divisor of the rcwa mapping <A>f</A>. </Returns>
+    <Returns> The divisor of the rcwa mapping&nbsp;<A>f</A>. </Returns>
     <Description>
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
 gap> Divisor(g);
@@ -455,11 +458,10 @@ x^2+Z(2)^0
 
   <ManSection>
     <Oper Name="PrimeSet" Arg="f" Label="Prime set of an rcwa mapping"/>
-    <Returns> the prime set of the rcwa mapping <A>f</A>. </Returns>
+    <Returns> The prime set of the rcwa mapping&nbsp;<A>f</A>. </Returns>
     <Description>
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
-
-      See also <Ref Oper="PrimeSet" Label="Prime set of an rcwa group"/>
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+      See also&nbsp;<Ref Oper="PrimeSet" Label="Prime set of an rcwa group"/>
       for rcwa groups.
 <Example>
 <![CDATA[
@@ -516,9 +518,8 @@ false
     </Returns>
     <Description>
       Of course the term <E>class-wise order-preserving</E> is defined
-      only for rcwa mappings of ordered rings, e.g. of <M>\ZZ</M>. <P/>
-
-      See also <Ref Prop="IsClassWiseOrderPreserving"
+      only for rcwa mappings of ordered rings, e.g. of&nbsp;<M>\Z</M>.
+      See also&nbsp;<Ref Prop="IsClassWiseOrderPreserving"
       Label="Class-wise order-preserving rcwa group"/>
       for rcwa groups.
 <Example>
@@ -543,12 +544,12 @@ true
     <Attr Name="SetOnWhichMappingIsClassWiseConstant" Arg="f"/>
     <Attr Name="SetOnWhichMappingIsClassWiseOrderPreserving" Arg="f"/>
     <Returns>
-      the union of the residue classes (mod <C>Modulus(<A>f</A>)</C>) on
-      which the rcwa mapping <A>f</A> is class-wise order-reversing,
+      The union of the residue classes (mod&nbsp;<C>Modulus(<A>f</A>)</C>)
+      on which the rcwa mapping&nbsp;<A>f</A> is class-wise order-reversing,
       class-wise constant resp. class-wise order-preserving.
     </Returns>
     <Description>
-      The source of the rcwa mapping <A>f</A> must be ordered.
+      The source of the rcwa mapping&nbsp;<A>f</A> must be ordered.
 <Example>
 <![CDATA[
 gap> SetOnWhichMappingIsClassWiseOrderPreserving(T);
@@ -572,8 +573,8 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
   <ManSection>
     <Attr Name="LargestSourcesOfAffineMappings" Arg="f"/>
     <Returns>
-      the coarsest partition of <C>Source(<A>f</A>)</C> on whose
-      elements the rcwa mapping <A>f</A> is affine.
+      The coarsest partition of <C>Source(<A>f</A>)</C> on whose
+      elements the rcwa mapping&nbsp;<A>f</A> is affine.
     </Returns>
     <Description>
 <Example>
@@ -603,17 +604,17 @@ gap> LargestSourcesOfAffineMappings(r);
   <ManSection>
     <Meth Name="Determinant" Arg="f"/>
     <Meth Name="Determinant" Arg="f, S"/>
-    <Returns> the determinant of the rcwa mapping <A>f</A>. </Returns>
+    <Returns> The determinant of the rcwa mapping&nbsp;<A>f</A>. </Returns>
     <Description>
       The determinant induces an epimorphism from the group of all class-wise
       order-preserving rcwa mappings of <M>\Z</M> onto the additive group
       <M>(\Z,+)</M>.
 
-      If a residue class union <A>S</A> is given as an additional
+      If a residue class union&nbsp;<A>S</A> is given as an additional
       argument, the method returns the determinant of the restriction
-      of <A>f</A> to <A>S</A>.
+      of <A>f</A> to&nbsp;<A>S</A>.
 
-      For the definition see Chapter <Ref Label="ch:Introduction"/>.
+      For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
 gap> nu := RcwaMapping([[1,1,1]]);;
@@ -654,7 +655,8 @@ gap> Determinant(u^2*b^-3);
     <Meth Name="ImageElm" Arg="f, x"/>
     <Meth Name="\^" Arg="f, x"/>
     <Returns>
-      the image of the ring element <A>x</A> under the rcwa mapping <A>f</A>.
+      The image of the ring element&nbsp;<A>x</A> under
+      the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -677,15 +679,15 @@ x^3+Z(2)^0
     <Meth Name="Image" Arg="f"/>
     <Meth Name="\^" Arg="f, S"/>
     <Returns>
-      in the first two forms the image of the set <A>S</A> under the
-      rcwa mapping <A>f</A>, and in the third form the image of the
-      rcwa mapping <A>f</A>.
+      In the first two forms the image of the set&nbsp;<A>S</A> under the
+      rcwa mapping&nbsp;<A>f</A>, and in the third form the image of the
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
-      In particular the argument <A>S</A> can be a union of residue classes
-      with or without fixed representatives -- thus rcwa mappings resp.
-      rcwa groups can act on sets of residue class unions as well as on
-      sets of single ring elements.
+      In particular the argument&nbsp;<A>S</A> can be a union of residue
+      classes with or without fixed representatives -- thus rcwa mappings
+      resp. rcwa groups can act on sets of residue class unions as well
+      as on sets of single ring elements.
 <Example>
 <![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
@@ -718,12 +720,12 @@ gap> AsOrdinaryUnionOfResidueClasses(last);
   <ManSection>
     <Meth Name="\^" Arg="f, P"/>
     <Returns>
-      the image of the partition <A>P</A> of <C>Source( <A>f</A> )</C>
-      under the rcwa mapping <A>f</A>.
+      The image of the partition <A>P</A> of <C>Source( <A>f</A> )</C>
+      under the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       The argument <A>P</A> must be a partition of the source of the
-      rcwa mapping <A>f</A> into disjoint residue classes.
+      rcwa mapping&nbsp;<A>f</A> into disjoint residue classes.
 <Example>
 <![CDATA[
 gap> P := [rc(0,2),rc(1,4),rc(3,4)];
@@ -742,8 +744,8 @@ gap> last^(f^-1);
   <ManSection>
     <Meth Name="PreImageElm" Arg="f, x"/>
     <Returns>
-      the preimage of the ring element <A>x</A> under the bijective
-      rcwa mapping <A>f</A>.
+      The preimage of the ring element&nbsp;<A>x</A> under the bijective
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -762,8 +764,8 @@ x^3+x^2+x+Z(2)^0
   <ManSection>
     <Meth Name="PreImagesElm" Arg="f, x"/>
     <Returns>
-      the set of preimages of the ring element <A>x</A> under the
-      rcwa mapping <A>f</A>.
+      The set of preimages of the ring element&nbsp;<A>x</A> under the
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -784,7 +786,8 @@ gap> PreImagesElm(ZeroOne,1);
     <Meth Name ="PreImagesRepresentative" Arg="f, x"
           Label="PreImagesRepresentative for rcwa mapping"/>
     <Returns>
-      a representative of the set of preimages of <A>x</A> under <A>f</A>.
+      A representative of the set of preimages of <A>x</A>
+      under&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -800,11 +803,12 @@ gap> PreImagesRepresentative(ZeroOne,1);
     <Meth Name="PreImagesSet" Arg="f, S"/>
     <Meth Name="PreImage" Arg="f, S"/>
     <Returns>
-      the preimage of the set <A>S</A> under the rcwa mapping <A>f</A>.
+      The preimage of the set&nbsp;<A>S</A> under the
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
-      In particular the argument <A>S</A> can be a union of residue classes
-      with or without fixed representatives.
+      In particular the argument&nbsp;<A>S</A> can be a union of
+      residue classes with or without fixed representatives.
 <Example>
 <![CDATA[
 gap> PreImage(T,A);
@@ -828,7 +832,7 @@ gap> last2^T;
   <ManSection>
     <Meth Name="MovedPoints" Arg="f"/>
     <Returns>
-      the set of moved points (support) of the rcwa mapping <A>f</A>.
+      The set of moved points (support) of the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -852,24 +856,24 @@ GF(2)[x] \ [ 0*Z(2), Z(2)^0, x, x+Z(2)^0 ]
   <ManSection>
     <Meth Name="IsInjective" Arg="f"/>
     <Returns>
-      <C>true</C> or <C>false</C>, depending on whether the rcwa mapping
-      <A>f</A> is injective or not.
+      <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is injective
+      and <C>false</C> otherwise.
     </Returns>
   </ManSection>
 
   <ManSection>
     <Meth Name="IsSurjective" Arg="f"/>
     <Returns>
-      <C>true</C> or <C>false</C>, depending on whether the rcwa mapping
-      <A>f</A> is surjective or not.
+      <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is surjective
+      and <C>false</C> otherwise.
     </Returns>
   </ManSection>
 
   <ManSection>
     <Meth Name="IsBijective" Arg="f"/>
     <Returns>
-      <C>true</C> or <C>false</C>, depending on whether the rcwa mapping
-      <A>f</A> is bijective or not.
+      <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is bijective
+      and <C>false</C> otherwise.
     </Returns>
   </ManSection>
 
@@ -909,8 +913,8 @@ true
     <Meth Name="\+" Arg = "f, g"/>
     <Meth Name="\-" Arg = "f, g"/>
     <Returns>
-      the (pointwise) sum resp. difference of the rcwa mappings <A>f</A>
-      and <A>g</A>.
+      The (pointwise) sum resp. difference of the
+      rcwa mappings&nbsp;<A>f</A> and&nbsp;<A>g</A>.
     </Returns>
     <Description>
 <Example>
@@ -952,8 +956,8 @@ true
   <ManSection>
     <Meth Name="\*" Arg="f, g"/>
     <Returns>
-      the product (composition) of the rcwa mappings <A>f</A> and
-      <A>g</A>. The mapping <A>f</A> is applied first.
+      The product (composition) of the rcwa mappings&nbsp;<A>f</A>
+      and&nbsp;<A>g</A>. The mapping&nbsp;<A>f</A> is applied first.
     </Returns>
     <Description>
 <Example>
@@ -1017,8 +1021,8 @@ gap> (1,2)^RcwaMapping([[1,2^28,1]]);
   <ManSection>
     <Meth Name="Inverse" Arg="f"/>
     <Returns>
-      the inverse mapping <C><A>f</A>&circum;-1</C> of the bijective
-      rcwa mapping <A>f</A>.
+      The inverse mapping&nbsp;<C><A>f</A>&circum;-1</C> of the bijective
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
 <Example>
@@ -1055,7 +1059,7 @@ Bijective rcwa mapping of GF(2)[x] with modulus x^2+x+Z(2)^0
   <ManSection>
     <Meth Name="\^" Arg="f, g"/>
     <Returns>
-      the conjugate <M>f^g = g^{-1}fg</M> of <A>f</A> under <A>g</A>.
+      The conjugate <M>f^g = g^{-1}fg</M> of <A>f</A> under&nbsp;<A>g</A>.
     </Returns>
     <Description>
 <Example>
@@ -1087,8 +1091,8 @@ Rcwa mapping of GF(2)[x] with modulus x^3+x^2+x
     <Var Name="ZeroIntegralRcwaMapping"/>
     <Meth Name="Zero" Arg="f"/>
     <Returns>
-      the zero integral rcwa mapping, resp. the zero mapping in the
-      family of rcwa mappings <A>f</A> belongs to.
+      The zero integral rcwa mapping, resp. the zero mapping in the
+      family of rcwa mappings <A>f</A>&nbsp;belongs to.
     </Returns>
     <Description>
 <Example>
@@ -1107,8 +1111,8 @@ ZeroMapping( GF(2)[x], GF(2)[x] )
     <Var Name="IdentityIntegralRcwaMapping"/>
     <Meth Name="One" Arg="f"/>
     <Returns>
-      the identity integral rcwa mapping, resp. the identity mapping in the
-      family of rcwa mappings <A>f</A> belongs to.
+      The identity integral rcwa mapping, resp. the identity mapping in the
+      family of rcwa mappings <A>f</A>&nbsp;belongs to.
     </Returns>
     <Description>
 <Example>
@@ -1142,7 +1146,7 @@ IdentityMapping( Z_( 2 ) )
   <ManSection>
     <Meth Name="Order" Arg="f"/>
     <Returns>
-      the multiplicative order of the bijective rcwa mapping <A>f</A>.
+      The multiplicative order of the bijective rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       You can get information about the used methods on some
@@ -1161,8 +1165,8 @@ infinity
   <ManSection>
     <Prop Name="IsTame" Arg="f" Label="Tame rcwa mapping"/>
     <Returns>
-      <C>true</C> or <C>false</C> depending on whether
-      the rcwa mapping <A>f</A> is tame or not.
+      <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is tame and
+      <C>false</C> otherwise.
     </Returns>
     <Description>
       For the definition when an rcwa mapping is called <E>tame</E>
@@ -1192,9 +1196,9 @@ true
   <ManSection>
     <Func Name="TransitionMatrix" Arg="f, m"/>
     <Returns>
-      the transition matrix of the Markov chain associated to
-      the rcwa mapping <A>f</A> and the states <M>r</M>(<A>m</A>) <M>\in</M>
-      <M>R</M>/<A>m</A><M>R</M>.
+      The transition matrix of the Markov chain associated to
+      the rcwa mapping&nbsp;<A>f</A> and the states <M>r</M>(<A>m</A>)
+      <M>\in</M> <M>R</M>/<A>m</A><M>R</M>.
     </Returns>
     <Description>
       <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
@@ -1245,7 +1249,8 @@ gap> Display(M*One(GF(7)));
   <ManSection>
     <Oper Name="TransitionGraph" Arg="f, m"/>
     <Returns>
-      the transition graph for modulus <A>m</A> of the rcwa mapping <A>f</A>.
+      The transition graph for modulus&nbsp;<A>m</A>
+      of the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       <Index Key="rcwa mapping" Subkey="transition graph"></Index>
@@ -1253,7 +1258,7 @@ gap> Display(M*One(GF(7)));
       of <M>f</M> for modulus <M>m</M> as follows:
       <Enum>
         <Item>
-          The vertices are the residue classes (mod <M>m</M>).
+          The vertices are the residue classes (mod&nbsp;<M>m</M>).
         </Item>
         <Item>
           There is an edge from <M>r_1(m)</M> to <M>r_2(m)</M> if and only if
@@ -1261,10 +1266,10 @@ gap> Display(M*One(GF(7)));
           <M>n_1^f \in r_2(m)</M>.
         </Item>
       </Enum>
-      The assignment of the residue classes (mod <M>m</M>) to the vertices
-      of the graph is given by the ordering of the residues in the return
-      value of <C>AllResidues(<A>m</A>)</C> (see <Ref Func="AllResidues"/>).
-      <P/>
+      The assignment of the residue classes (mod&nbsp;<M>m</M>) to the
+      vertices of the graph is given by the ordering of the residues in
+      the return value of <C>AllResidues(<A>m</A>)</C>
+      (see&nbsp;<Ref Func="AllResidues"/>). <P/>
 
       The result is returned as a <Package>GRAPE</Package>-graph.
 <Example>
@@ -1283,9 +1288,9 @@ rec( isGraph := true, order := 4, group := Group(()),
     <Oper Name="OrbitsModulo" Arg="f, m"
           Label="OrbitsModulo for rcwa mapping"/>
     <Returns>
-      the partition of <C>AllResidues(<A>m</A>)</C> corresponding to
-      the weakly-connected components of the transition graph for modulus
-      <A>m</A> of the rcwa mapping <A>f</A>.
+      The partition of <C>AllResidues(<A>m</A>)</C> corresponding to
+      the weakly-connected components of the transition graph for
+      modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       See also <Ref Meth="OrbitsModulo" Label="OrbitsModulo for rcwa group"/>
@@ -1302,13 +1307,13 @@ gap> OrbitsModulo(Comm(a,b),9);
   <ManSection>
     <Oper Name ="FactorizationOnConnectedComponents" Arg = "f, m"/>
     <Returns>
-      the set of restrictions of the rcwa mapping <A>f</A> to the
+      The set of restrictions of the rcwa mapping&nbsp;<A>f</A> to the
       weakly-connected components of its transition graph
       <M>\Gamma_{f,m}</M>.
     </Returns>
     <Description>
       These mappings have pairwisely disjoint supports, hence any two
-      of them commute, and their product equals <A>f</A>.
+      of them commute, and their product equals&nbsp;<A>f</A>.
 <Example>
 <![CDATA[
 gap> sigma := RcwaMapping([[1, 0,1],[1, 1,1],[2,2,1],[3,-3,2],
@@ -1335,8 +1340,8 @@ gap> List(fact,MovedPoints);
   <ManSection>
     <Func Name="Trajectory" Arg="f, n, val, cond"/>
     <Returns>
-      the trajectory of the ring element <A>n</A>
-      under the rcwa mapping <A>f</A>.
+      The trajectory of the ring element&nbsp;<A>n</A>
+      under the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       The parameter <A>val</A> can either specify the
@@ -1376,11 +1381,11 @@ gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1],"stop"));
     <Func Name="TrajectoryModulo" Arg="f, n, m, lng"/>
     <Func Name="TrajectoryModulo" Arg="f, n, lng"/>
     <Returns>
-      the sequence <M>(n_i), i = 0, \dots, lng-1</M> with
-      <M>n_i := n^{(f^i)}</M> mod <A>m</A> as a list.
+      The sequence <M>(n_i), i = 0, \dots, lng-1</M> with
+      <M>n_i := n^{(f^i)}</M>&nbsp;mod&nbsp;<A>m</A> as a list.
     </Returns>
     <Description>
-      If <A>m</A> is not given it defaults to the modulus of <A>f</A>.
+      If <A>m</A> is not given it defaults to the modulus of&nbsp;<A>f</A>.
 <Example>
 <![CDATA[
 gap> TrajectoryModulo(a,8,25);
@@ -1398,13 +1403,13 @@ gap> TrajectoryModulo(T,27,2,100);
   <ManSection>
     <Func Name="CoefficientsOnTrajectory" Arg="f, n, val, cond, all"/>
     <Returns>
-      a list of lists of 3 ring elements, each -- see below.
+      A list of lists of 3 ring elements, each -- see below.
     </Returns>
     <Description>
       This function computes something which we might call <Q>accumulated
       coefficients</Q> on the trajectory of <A>n</A> under the rcwa mapping
       <A>f</A>. More precisely: it computes a list <C>c</C> of coefficient
-      triples such that for any <C>k</C>, we have
+      triples such that for any&nbsp;<C>k</C>, we have
       <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) = (c[k][1]*<A>n</A> +
       c[k][2])/c[k][3]</C>. The meaning of the arguments <A>val</A> and
       <A>cond</A> is the same as in <Ref Func="Trajectory"/>.
@@ -1449,7 +1454,7 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 
   <ManSection>
     <Oper Name="ContractionCentre" Arg="f, maxn, bound"/>
-    <Returns> a list of ring elements -- see below. </Returns>
+    <Returns> A list of ring elements -- see below. </Returns>
     <Description>
       Tries to compute the <E>contraction centre</E> of an rcwa mapping -
       assuming its existence this is the uniquely-defined finite subset
@@ -1478,8 +1483,8 @@ gap> S0 := ContractionCentre(T,100,1000);
   <ManSection>
     <Attr Name="Divergence" Arg="f"/>
     <Returns>
-      a floating point approximation of the <E>divergence</E> of the
-      rcwa mapping <A>f</A>.
+      A floating point approximation of the <E>divergence</E> of the
+      rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
       Ths divergence is conjectured to be a measure for how fast an rcwa
@@ -1523,11 +1528,11 @@ gap> Divergence(a*u);
   <ManSection>
     <Attr Name="ImageDensity" Arg="f"/>
     <Returns>
-      the <E>image density</E> of the rcwa mapping <A>f</A>.
+      The <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
     </Returns>
     <Description>
-      We define the <E>image density</E> of an rcwa mapping <A>f</A> of
-      a ring <M>R</M> by the sum of the densities of the images of the
+      We define the <E>image density</E> of an rcwa mapping&nbsp;<A>f</A>
+      of a ring <M>R</M> by the sum of the densities of the images of the
       affine partial mappings of <A>f</A>, where we set the density
       of a residue class <M>r(m)</M> equal to <M>1/|R/mR|</M>.
       Injective rcwa mappings have an image density of at most 1, and the
@@ -1601,7 +1606,7 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
   <ManSection>
     <Func Name="RcwaMappingsFamily" Arg="R"/>
     <Returns>
-      the family of rcwa mappings of the ring <A>R</A>.
+      The family of rcwa mappings of the ring&nbsp;<A>R</A>.
     </Returns>
   </ManSection>
 

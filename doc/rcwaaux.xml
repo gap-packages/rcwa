@@ -39,7 +39,7 @@
 
   <ManSection>
     <Func Name="RCWABuildManual" Arg=""/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       This function builds the manual of the &RCWA; package in the file
       formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text.
@@ -59,7 +59,7 @@
 
   <ManSection>
     <Func Name="RCWATest" Arg="[ test1 [, test2 [, ... ] ] ]"/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       Performs tests of the &RCWA; package. <P/>
 
@@ -129,7 +129,7 @@
 
   <ManSection>
     <Func Name="RCWAReadExamples" Arg=""/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       This function reads the examples file of the &RCWA; package
       ( <F>rcwa/examples/examples.g</F> ).
@@ -143,5 +143,3 @@
 </Chapter>
 
 <!-- #################################################################### -->
-
-
