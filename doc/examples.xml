@@ -632,6 +632,7 @@ gap> List([0..9],i->Modulus(s^i));
 [ 1, 9, 9, 27, 27, 27, 27, 27, 27, 1 ]
 gap> List([0..7],i->Modulus(g^i));
 [ 1, 6, 12, 12, 12, 12, 6, 1 ]
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> List([0..3],i->Modulus(u^i));
 [ 1, 5, 25, 125 ]
 gap> List([0..6],i->Modulus(v^i));
