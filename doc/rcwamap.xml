@@ -247,7 +247,7 @@ gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 <rcwa mapping of Z with modulus 5>
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
-gap> R := PolynomialRing(GF(2),1);
+gap> R := PolynomialRing(GF(2),1); z := Zero(R);; e := One(R);;
 GF(2)[x]
 gap> r := RcwaMapping( R, x^2 + e,
 >                      [ [ x^2 + x + e, z      , x^2 + e ],
@@ -429,7 +429,7 @@ false
 gap> f^2;           
 <wild bijective rcwa mapping of Z with modulus 24>
 gap> f^2*u;         
-<rcwa mapping of Z with modulus 120>
+<bijective rcwa mapping of Z with modulus 120>
 gap> f^2*u*a;
 <rcwa mapping of Z with modulus 240>
 gap> f^2*u*a^2;
