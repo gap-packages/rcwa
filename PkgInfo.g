@@ -36,7 +36,7 @@ Persons          := [
                            Institution   := "University of Stuttgart"
                          )
                     ],
-Status           := "under development",
+Status           := "dev",
 CommunicatedBy   := "",
 AcceptDate       := "",
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
@@ -55,7 +55,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
-                         NeededOtherPackages    := [ "GAPDoc", "GRAPE" ],
+                         NeededOtherPackages    := [ ["GAPDoc",">=0.99"], ["GRAPE",">=4.0"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
