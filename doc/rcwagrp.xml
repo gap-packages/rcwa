@@ -178,19 +178,18 @@ Bijective rcwa mapping of Z with modulus 4
 <Heading>Attributes and properties of rcwa groups</Heading>
 
 <ManSection>
-  <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
-  <Meth Name="Mod"     Arg="G"/>
+  <Meth Name="Modulus" Arg="G" Label = "G"/>
+  <Meth Name="Mod"     Arg="G" Label = "G"/>
   <Returns> The modulus of the rcwa group&nbsp;<A>G</A>. </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-
-    This can be probabilistic, increase the Info level of <C>InfoRCWA</C>
-    (see <Ref Label="sec:TheInfoClass"/>) to get information about the
-    methods used in your particular case. In any case if the returned
-    modulus is not equal to zero the result is certain.
-
-    See also <Ref Meth="Modulus" Label="Modulus of an rcwa mapping"/>
-    for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
+    The <E>Modulus</E> of an rcwa group is the lcm of the moduli of its
+    elements in case such an lcm exists and 0 otherwise.
+    Some methods for computing the modulus of an rcwa group are
+    probabilistic. If such a method is used, a warning at warning
+    level&nbsp;1 is issued. If the returned modulus is not equal
+    to zero the result is always certain.
+    See also <Ref Meth="Modulus" Label="f"/>
+    for rcwa mappings, and <Ref Prop="IsTame" Label="G"/>.
 <Example>
 <![CDATA[
 gap> g1 := RcwaMapping((1,2),[1..2]);
@@ -211,22 +210,19 @@ gap> Modulus(Group(a,b));
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsTame" Arg="G" Label="Tame rcwa group"/>
+  <Prop Name="IsTame" Arg="G" Label="G"/>
   <Returns>
     <C>true</C> if the rcwa group&nbsp;<A>G</A> is tame and <C>false</C>
     otherwise.
   </Returns>
   <Description>
-    For the definition when an rcwa group is called <E>tame</E>
-    see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-
-    Methods for determining whether an rcwa group is tame can be
-    probabilistic -- increase the Info level of <C>InfoRCWA</C>
-    (see <Ref Label="sec:TheInfoClass"/>) to get information about
-    the methods used in your particular case. A positive result
-    (return value is <C>true</C>) is correct in any case.
-
-    See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
+    An rcwa group is called <E>tame</E> if its modulus is not equal
+    to&nbsp;0.
+    Some methods for determining whether an rcwa group is tame are
+    probabilistic.If such a method is used, a warning at warning
+    level&nbsp;1 is issued. A positive result
+    (return value is <C>true</C>) is always correct.
+    See also <Ref Prop="IsTame" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -242,12 +238,12 @@ true
 </ManSection>
 
 <ManSection>
-  <Oper Name="PrimeSet" Arg="G" Label="Prime set of an rcwa group"/>
+  <Oper Name="PrimeSet" Arg="G" Label="G"/>
   <Returns> The prime set of the rcwa group&nbsp;<A>G</A>. </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-    See also&nbsp;<Ref Oper="PrimeSet"
-                       Label="Prime set of an rcwa mapping"/>
+    The <E>prime set</E> of an rcwa group is the union of the prime
+    sets of its elements.
+    See also&nbsp;<Ref Oper="PrimeSet" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -261,21 +257,20 @@ gap> PrimeSet(H);
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsIntegral" Arg="G" Label="Integral group"/>
+  <Prop Name="IsIntegral" Arg="G" Label="G"/>
   <Returns>
     <C>true</C> if the rcwa group&nbsp;<A>G</A> is integral and
     <C>false</C> otherwise.
   </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-    See also&nbsp;<Ref Prop="IsIntegral" Label="Integral mapping"/>
+    An rcwa group is called <E>integral</E> if all of its elements are.
+    See also&nbsp;<Ref Prop="IsIntegral" Label="f"/>
     for rcwa mappings.
   </Description>
 </ManSection>
 
 <ManSection>
-  <Prop Name ="IsClassWiseOrderPreserving" Arg="G"
-        Label="Class-wise order-preserving rcwa group"/>
+  <Prop Name ="IsClassWiseOrderPreserving" Arg="G" Label="G"/>
   <Returns>
     <C>true</C> if the rcwa group&nbsp;<A>G</A> is class-wise
     order-preserving and <C>false</C> otherwise.
@@ -283,8 +278,7 @@ gap> PrimeSet(H);
   <Description>
     Of course the term <E>class-wise order-preserving</E> is defined only
     for rcwa groups over ordered rings, e.g. over&nbsp;<M>\Z</M>.
-    See also <Ref Prop ="IsClassWiseOrderPreserving"
-                  Label="Class-wise order-preserving rcwa mapping"/>
+    See also <Ref Prop ="IsClassWiseOrderPreserving" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -436,8 +430,7 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
 </Heading>
 
 <ManSection>
-  <Meth Name ="PreImagesRepresentative" Arg="phi, g"
-        Label="PreImagesRepresentative (element factorization)"/>
+  <Meth Name ="PreImagesRepresentative" Arg="phi, g" Label="phi, g"/>
   <Returns>
     A representative of the set of preimages of&nbsp;<A>g</A> under
     the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group
@@ -500,8 +493,7 @@ IdentityMapping( Integers )
     Quite frequently, computing several preimages is not harder than
     computing just one, i.e. often several preimages are found
     simultaneously. This operation is called by
-    <Ref Meth ="PreImagesRepresentative"
-         Label="PreImagesRepresentative (element factorization)"/>,
+    <Ref Meth ="PreImagesRepresentative" Label="phi, g"/>,
     which simply chooses the shortest representative -- for a slightly
     more concise description see there.
 <Example>
@@ -856,8 +848,7 @@ gap> ShortOrbits(Group(u),[-30..30],100);
 </ManSection>
 
 <ManSection>
-  <Meth Name ="OrbitsModulo" Arg="G, m"
-        Label="OrbitsModulo for rcwa group"/>
+  <Meth Name ="OrbitsModulo" Arg="G, m" Label="G, m"/>
   <Returns>
     `The set of orbits on the set of residue classes (mod&nbsp;<A>m</A>)
     under the action of&nbsp;<A>G</A>'.
@@ -868,11 +859,8 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     there is an element <M>g</M> in <A>G</A> such that <M>M_{i,j} \neq 0</M>,
     where <M>M</M> is the transition matrix of&nbsp;<M>g</M>
     for modulus&nbsp;<A>m</A> (see <Ref Func="TransitionMatrix"/>)
-    and <C>R</C> is the ring the group <A>G</A> acts on. <P/>
-
-    See also <Ref Oper ="OrbitsModulo"
-                  Label="OrbitsModulo for rcwa mapping"/>
-    for rcwa mappings.
+    and <C>R</C> is the ring the group <A>G</A> acts on.
+    See also <Ref Oper ="OrbitsModulo" Label="f"/> for rcwa mappings.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(G,72);
@@ -894,8 +882,7 @@ gap> OrbitsModulo(G,72);
 <Heading>Special features for tame rcwa groups</Heading>
 
 <ManSection>
-  <Attr Name ="RespectedClassPartition" Arg="sigma"
-        Label="Respected class partition of rcwa mapping"/>
+  <Attr Name ="RespectedClassPartition" Arg="sigma" Label="sigma"/>
   <Returns>
     A <E>respected partition</E> of <A>sigma</A>, i.e. a partition of the
     base ring&nbsp;<M>R</M> into a finite number of residue classes on
@@ -904,8 +891,7 @@ gap> OrbitsModulo(G,72);
   </Returns>
   <Description>
     Such a partition exists if and only if <A>sigma</A>&nbsp;is tame.
-    See also <Ref Attr="RespectedClassPartition"
-                  Label="Respected class partition of rcwa group"/>
+    See also <Ref Attr="RespectedClassPartition" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -921,8 +907,7 @@ gap> Permutation(g,rcp);
 </ManSection>
 
 <ManSection>
-  <Attr Name ="RespectedClassPartition" Arg="G"
-        Label="Respected class partition of rcwa group"/>
+  <Attr Name ="RespectedClassPartition" Arg="G" Label="G"/>
   <Returns>
     A <E>respected partition</E> of <A>G</A>, i.e. a partition of the
     base ring&nbsp;<M>R</M> into a finite number of residue classes on
@@ -933,8 +918,7 @@ gap> Permutation(g,rcp);
     The partition is non-trivial provided that the modulus of&nbsp;<A>G</A>
     is not equal to&nbsp;1. Such a partition exists if and only
     if&nbsp;<A>G</A> is tame.
-    See also <Ref Attr ="RespectedClassPartition"
-                  Label="Respected class partition of rcwa mapping"/>
+    See also <Ref Attr ="RespectedClassPartition" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -1185,8 +1169,7 @@ Bijective rcwa mapping of Z with modulus 24, of order 12
 </ManSection>
 
 <ManSection>
-  <Attr Name ="IntegralConjugate" Arg="f"
-        Label="Integral conjugate of rcwa mapping"/>
+  <Attr Name ="IntegralConjugate" Arg="f" Label="f"/>
   <Returns>
     Some integral representative of the conjugacy class of the tame
     bijective rcwa mapping&nbsp;<A>f</A> in the whole group RCWA(<M>R</M>).
@@ -1196,8 +1179,7 @@ Bijective rcwa mapping of Z with modulus 24, of order 12
     class rings of any finite cardinality.
     Since the result is not defined uniquely, methods for this
     operation will just choose one such mapping.
-    See also <Ref Attr ="IntegralConjugate"
-                  Label="Integral conjugate of rcwa group"/>
+    See also <Ref Attr ="IntegralConjugate" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -1226,8 +1208,7 @@ Bijective rcwa mapping of Z with modulus 14, of order 7
 </ManSection>
 
 <ManSection>
-  <Attr Name ="IntegralConjugate" Arg="G"
-        Label="Integral conjugate of rcwa group"/>
+  <Attr Name ="IntegralConjugate" Arg="G" Label="G"/>
   <Returns>
     Some integral conjugate of the tame rcwa group&nbsp;<A>G</A>
     in the whole group RCWA(<M>R</M>).
@@ -1235,8 +1216,7 @@ Bijective rcwa mapping of Z with modulus 14, of order 7
   <Description>
     Since this is not defined uniquely, methods
     for this operation will just choose one such group.
-    See also <Ref Attr ="IntegralConjugate"
-                  Label="Integral conjugate of rcwa mapping"/>
+    See also <Ref Attr ="IntegralConjugate" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -1290,8 +1270,7 @@ Bijective rcwa mapping of Z with modulus 14, of order 12
 </ManSection>
 
 <ManSection>
-  <Attr Name ="IntegralizingConjugator" Arg="f"
-        Label="Integralizing conjugator of rcwa mapping"/>
+  <Attr Name ="IntegralizingConjugator" Arg="f" Label="f"/>
   <Returns>
     An rcwa mapping mapping&nbsp;<A>x</A> such that
     <A>f</A>&circum;<A>x</A> is integral. 
@@ -1300,8 +1279,7 @@ Bijective rcwa mapping of Z with modulus 14, of order 12
     This is of course not defined uniquely, but it holds that
     <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
     IntegralConjugate(<A>f</A>)</C>.
-    See also <Ref Attr ="IntegralizingConjugator"
-                  Label="Integralizing conjugator of rcwa group"/>
+    See also <Ref Attr ="IntegralizingConjugator" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -1335,8 +1313,7 @@ true
 </ManSection>
 
 <ManSection>
-  <Attr Name ="IntegralizingConjugator" Arg="G"
-        Label="Integralizing conjugator of rcwa group"/>
+  <Attr Name ="IntegralizingConjugator" Arg="G" Label="G"/>
   <Returns>
     An rcwa mapping mapping&nbsp;<A>x</A> such that
     <A>G</A>&circum;<A>x</A> is integral.
@@ -1345,8 +1322,7 @@ true
     This is of course not defined uniquely, but it holds
     that <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
             IntegralConjugate(<A>G</A>)</C>.
-    See also <Ref Attr ="IntegralizingConjugator"
-                  Label="Integralizing conjugator of rcwa mapping"/>
+    See also <Ref Attr ="IntegralizingConjugator" Label="f"/>
     for rcwa mappings.
 <Example>
 <![CDATA[
@@ -1451,8 +1427,7 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 <Heading>Images under restriction monomorphisms</Heading>
 
 <ManSection>
-  <Oper Name ="Restriction" Arg="g, f"
-        Label="Restriction of an rcwa mapping"/>
+  <Oper Name ="Restriction" Arg="g, f" Label = "g, f"/>
   <Returns> The <E>restriction</E> of <A>g</A> by&nbsp;<A>f</A>. </Returns>
   <Description>
     By definition, the restriction <M>g_f</M> of <A>g</A> by <A>f</A>
@@ -1460,10 +1435,8 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
     <M>f \cdot g_f = g \cdot f</M> and fixing the complement of
     the image of <A>f</A>. The mapping <A>f</A> has to be injective and
     its multiplier must not be zero. If <A>f</A> is bijective the
-    returned mapping is just the conjugate of <A>g</A> by <A>f</A>. <P/>
-
-    See also <Ref Oper="Restriction" Label="Restriction of an rcwa group"/>
-    for rcwa groups.
+    returned mapping is just the conjugate of <A>g</A> by <A>f</A>.
+    See also <Ref Oper="Restriction" Label="G, f"/> for rcwa groups.
 <Example>
 <![CDATA[
 gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
@@ -1475,8 +1448,7 @@ IdentityMapping( Integers )
 </ManSection>
 
 <ManSection>
-  <Oper Name ="Restriction" Arg="G, f"
-        Label="Restriction of an rcwa group"/>
+  <Oper Name ="Restriction" Arg="G, f" Label="G, f"/>
   <Returns> The restriction of <A>G</A> by&nbsp;<A>f</A>. </Returns>
   <Description>
     The mapping <A>f</A> has to be injective.
@@ -1485,8 +1457,7 @@ IdentityMapping( Integers )
     group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
     The elements of the restricted group are just the restrictions
     of the elements of <A>G</A> by <A>f</A>. For a definition see
-    <Ref Oper="Restriction" Label="Restriction of an rcwa mapping"/>
-    for rcwa mappings.
+    <Ref Oper="Restriction" Label="g, f"/> for rcwa mappings.
 <Example>
 <![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));

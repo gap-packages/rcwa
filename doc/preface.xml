@@ -10,6 +10,8 @@
 
 <!-- #################################################################### -->
 
+<Section Label="sec:motivation"><Heading>Motivation</Heading>
+
 <Index Key="Collatz conjecture">Collatz conjecture</Index>
 <Index Key="Collatz conjecture">Collatz mapping</Index>
 In the 1930s Lothar Collatz proposed the following procedure:
@@ -73,7 +75,34 @@ generalizations. There are several obvious things we can do:
 
 </List>
 
-This is the motivation for the following definitions: <P/>
+<Index Key="dynamical systems">dynamical systems</Index>
+<Index Key="Markov chains">Markov chains</Index>
+It seems that so far nobody has studied generalizations of the Collatz
+mapping from an algebraic point of view, although there have been some
+publications which shed light on the topic by investigating related
+dynamical systems and Markov chains.
+In this context I would like to mention a monograph by
+Günther&nbsp;J. Wirsching&nbsp;<Cite Key="Wirsching98"/> and an article by
+G.&nbsp;Venturini&nbsp;<Cite Key="Venturini92"/>.
+Permutation group-theoretic work which might be considered to be weakly
+related to this topic has been done by Hans Läuchli and
+Peter&nbsp;M. Neumann&nbsp;<Cite Key="LaeuchliNeumann88"/>.
+<Index Key="permutation groups">permutation groups</Index>
+<Index Key="permutation groups" Subkey="over rings"></Index> 
+<Index Key="permutation groups" Subkey="countable"></Index>
+For a general survey of results concerning infinite permutation groups
+see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
+
+</Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:basicdefinitions"><Heading>Basic definitions</Heading>
+
+The considerations in the last section are the motivation for the
+following definitions: <P/>
 
 <Index Key="rcwa mapping" Subkey="definition"></Index> 
 Let <M>R</M> be an infinite euclidean domain which is not a field and all
@@ -126,6 +155,12 @@ this subgroup is proper.
 We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
 group, or in short an <E>rcwa</E> group. <P/>
 
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:about"><Heading>About the package</Heading>
+
 This package provides functionality for computing with rcwa mappings of
 the ring of integers, its semilocalizations and of polynomial rings in one
 variable over a finite field, as well as with rcwa groups over these rings.
@@ -140,76 +175,39 @@ the examples which permit the most efficient computational treatment. <P/>
 
 <Index Key="rcwa group" Subkey="modulus"></Index>
 We define the <E>modulus</E> of an rcwa group by the lcm of the moduli of
-its elements in case such an lcm exists, and by&nbsp;0 otherwise.
+its elements in case such an lcm exists, and by&nbsp;0 otherwise. <P/>
+
 There are relatively elaborate methods for dealing with rcwa groups which
 have a comparatively easy structure, namely those having non-zero modulus.
 We call such groups and the mappings generating cyclic such groups
-<E>tame</E>.
-There are theorems stating that tame groups act imprimitively on the
-underlying ring <M>R</M>, that there are block systems consisting of only
-finitely many single residue classes, that a tame group is always
-isomorphic to a subgroup of the wreath product of the affine group with
-some large enough finite symmetric group and that any of the latter
-groups can faithfully be represented as a tame rcwa group.
-The groups which are not tame are much more difficult to examine and
-can act highly transitive on the ring <M>R</M> or on subsets of it.
-Many important questions for such groups might be conjectured to be
-algorithmically undecidable -- such conjectures are for example supported
-by the difficulty of the Collatz problem as well as by the fact that there
-are concretely given cycles of concretely given bijective rcwa mappings
-which are conjectured but not known to be infinite(!) -- see the
-Introduction&nbsp;(<Ref Label="ch:Introduction"/>).
-The structure of these groups also looks much more <Q>mysterious</Q>.
-Thus we call these groups and the mappings generating cyclic such groups
-<E>wild</E> -- but nethertheless there is e.g. an algorithm for factoring
-elements into generators, which usually works reasonably well if the
-resulting word would not be <Q>too long</Q>.
+<E>tame</E>. Computing with tame rcwa groups is comparatively easy.
+Understanding tame rcwa groups is a prerequisite for being able to
+investigate those which are not tame. <P/>
+
+The groups which are not tame are much more difficult to examine.
+In general, it is difficult to find out something about the structure
+of a given such group. Thus we call these groups and the mappings
+generating cyclic such groups <E>wild</E>. 
+Nevertheless, some computations can be done also in these groups --
+there is e.g. an algorithm for factoring elements into generators,
+which usually works reasonably well if the resulting word is not
+<Q>too long</Q>.
 In any case please note that also tame mappings can generate wild groups --
 given two or more arbitrary tame mappings it is quite likely that the
 group generated by them is wild. <P/>
-
-<Index Key="dynamical systems">dynamical systems</Index>
-<Index Key="Markov chains">Markov chains</Index>
-It seems that so far nobody has studied rcwa mappings from an
-algebraic point of view, although there have been some publications which
-shed light on the topic by investigating related dynamical systems and
-Markov chains. In this context I would like to mention a monograph by
-Günther&nbsp;J. Wirsching&nbsp;<Cite Key="Wirsching98"/> and an article by
-G.&nbsp;Venturini&nbsp;<Cite Key="Venturini92"/>.
-Permutation group-theoretic work which might be considered to be weakly
-related to this topic has been done by Hans Läuchli and
-Peter&nbsp;M. Neumann&nbsp;<Cite Key="LaeuchliNeumann88"/>.
-<Index Key="permutation groups">permutation groups</Index>
-<Index Key="permutation groups" Subkey="over rings"></Index> 
-<Index Key="permutation groups" Subkey="countable"></Index>
-For a general survey of results concerning infinite permutation groups
-see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
-
-One of the major questions in this context is whether the groups
-RCWA(<M>R</M>) are simple or not. In fact there is some evidence that they
-are so (normal subgroups must be <Q>quite large</Q>, etc. --
-for an example of computational investigations in this direction see
-Section&nbsp;<Ref Label="sec:WildProductOfInvolutions"/>),
-but also some evidence that they are not (e.g. there is an interesting
-epimorphism from the large subgroup RCWA<M>^+(\Z)</M> of all class-wise
-order-preserving rcwa mappings onto <M>(\Z,+)</M>, which can be evaluated for
-a given mapping using the function&nbsp;<Ref Meth="Determinant"/>). <P/>
 
 The main reason for me to develop this package was the desire to get a
 suitable tool for investigating a large number of examples and getting deep
 enough insight into the structure of residue class-wise affine mappings and
 groups to be able to start building a theory of them from the bottom in my
-Thesis&nbsp;<Cite Key="Kohl04"/> and to attack problems like whether the
-group of all residue class-wise affine bijections of the integers
-is simple or not. <P/>
+Thesis&nbsp;<Cite Key="Kohl05"/>. If you use &RCWA; in some work leading
+to a publication, I ask you to cite it just as you would cite a journal
+article. <P/>
 
 At this point I would like to thank Bettina&nbsp;Eick for her kind help in
 trying to make this package and in particular its documentation more
 useful and more interesting for a larger number of people. <P/>
 
-If you use &RCWA; in some work leading to a publication,
-I ask you to cite it just as you would cite a journal article --
-the recommended way to do so can be found on the package's homepage.
 I would be grateful for any bug reports, comments or suggestions and
 of course for reports of results found with the help of this package.
 
@@ -224,6 +222,8 @@ of course for reports of results found with the help of this package.
   \vfill \hfill Stefan Kohl
 ]]>
 </Alt>
+
+</Section>
 
 <!-- #################################################################### -->
 

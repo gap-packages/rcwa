@@ -36,7 +36,7 @@
     </Address>
   </Author>
   <Date>June 11, 2004</Date>
-  <Copyright> &copyright; 2003, 2004 by Stefan Kohl <P/>
+  <Copyright> &copyright; 2003, 2004, 2005 by Stefan Kohl <P/>
               After an official release we adopt the copyright regulations
               of &GAP; as detailed in the copyright notice in the
               &GAP; manual.
@@ -53,7 +53,6 @@
 <Body>
 
 <#Include SYSTEM "preface.xml">
-<#Include SYSTEM "intro.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
 <#Include SYSTEM "rcwaaux.xml">

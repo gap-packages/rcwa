@@ -92,32 +92,16 @@ gap> List([1..100],n->Length(Trajectory(f6,n,S0,"stop")));
 gap> Maximum(Trajectory(f6,47,S0,"stop"));;
 736339177776247330443187705477107581873369010805146980871580925673774229545698\
 886054
-gap> l := Trajectory(f6,3224,S0,"stop");;
-gap> Length(l);
-19949563
-gap> LogInt(Maximum(l),10);
-2197
-gap> Int(Maximum(l)/10^2197);
-3
-gap> l[19949563]; # The sequence ends at the fixed point 2.
-2
-gap> 2^f6;
-2
 ]]>
 </Log>
 
-The computation of the trajectory starting at 3224 is a test whether your
-computer is well-equipped with main memory -- as the trajectory ascends to
-about <M>3 \cdot 10^{2197}</M> before descending again this might require
-roughly 10GB (of course when I computed this sequence I did not store all
-the iterates ...).
+When constructing the mapping <C>f6</C>, the denominators of the
+partial mappings have been chosen to be equal and the numerators have
+been chosen to be numbers coprime to the common denominator, whose product
+is just a little bit smaller than the <C>Modulus(f6)</C>th power of the
+denominator. In the example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M>
+and <M>6^6 = 46656</M>. <P/>
 
-In order to construct the mapping <C>f6</C> we have chosen the denominators
-of the partial mappings to be equal and the numerators to be numbers
-coprime to the common denominator whose product is just a little bit
-smaller than the <C>Modulus(f6)</C>th power of the denominator -- in our
-example we have <M>5 \cdot 7 \cdot 11^3 = 46585</M> and <M>6^6 = 46656</M>.
-<P/>
 Although the trajectories of <C>T</C> are much shorter than those of
 <C>f6</C>, it seems likely that this does not make the problem of deciding
 whether the mapping&nbsp;<C>T</C> is contracting essentially easier --
@@ -923,7 +907,7 @@ gap> Multpk(elm1,3,-1)^elm1;
 3(4)
 gap> fact1 := RcwaMapping([[rc(4,6),rc(8,12)]]);
 <rcwa mapping of Z with modulus 12>
-gap> elm2 := elm/fact1;
+gap> elm2 := elm1/fact1;
 <rcwa mapping of Z with modulus 12>
 gap> Display(elm2);
 

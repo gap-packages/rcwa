@@ -29,6 +29,11 @@ In order to define an rcwa mapping we need to know about the following:
 
   <Mark>Modulus</Mark>
   <Item>
+    The <E>Modulus</E> of an rcwa mapping&nbsp;<M>f</M> is the standard
+    associate of a multiplicatively smallest ring element <M>m</M> such
+    that the restriction of <M>f</M> to any residue class
+    (mod&nbsp;<M>m</M>) is affine.
+
     The modulus is stored as a component <A>modulus</A> in any rcwa mapping
     object.
   </Item>
@@ -348,12 +353,16 @@ n \ \longmapsto \
 <Heading>Extracting the components of rcwa mappings</Heading>
 
 <ManSection>
-  <Meth Name="Modulus" Arg="f" Label="Modulus of an rcwa mapping"/>
-  <Meth Name="Mod"     Arg="f"/>
+  <Meth Name="Modulus" Arg="f" Label="f"/>
+  <Meth Name="Mod"     Arg="f" Label="f"/>
   <Returns> The modulus of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
-    See also <Ref Meth="Modulus" Label="Modulus of an rcwa group"/> for
-    rcwa groups, and&nbsp;<Ref Prop="IsTame" Label="Tame rcwa mapping"/>.
+    The <E>Modulus</E> of an rcwa mapping&nbsp;<M>f</M> is the standard
+    associate of a multiplicatively smallest ring element <M>m</M> such
+    that the restriction of <M>f</M> to any residue class
+    (mod&nbsp;<M>m</M>) is affine.
+    See also <Ref Meth="Modulus" Label="G"/> for
+    rcwa groups, and&nbsp;<Ref Prop="IsTame" Label="f"/>.
 <Example>
 <![CDATA[
 gap> Modulus(u);
@@ -421,11 +430,13 @@ true
 <Heading>Multiplier, divisor, prime set, sign and determinant</Heading>
 
 <ManSection>
-  <Attr Name="Multiplier" Arg="f" Label="Multiplier of an rcwa mapping"/>
-  <Attr Name="Mult"       Arg="f"/>
+  <Attr Name="Multiplier" Arg="f" Label="f"/>
+  <Attr Name="Mult"       Arg="f" Label="f"/>
   <Returns> The multiplier of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+    In the notation we used in the definition of an rcwa mapping in the
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>multiplier</E> is
+    the lcm of the coefficients <M>a_{r(m)}</M> in the numerators.
 <Example>
 <![CDATA[
 gap> Multiplier(g);
@@ -444,11 +455,13 @@ x^2+x+Z(2)^0
 </ManSection>
 
 <ManSection>
-  <Attr Name="Divisor" Arg="f" Label="Divisor of an rcwa mapping"/>
-  <Attr Name="Div"     Arg="f"/>
+  <Attr Name="Divisor" Arg="f" Label="f"/>
+  <Attr Name="Div"     Arg="f" Label="f"/>
   <Returns> The divisor of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+    In the notation we used in the definition of an rcwa mapping in the
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>divisor</E> is the
+    lcm of the coefficients <M>c_{r(m)}</M> in the denominators.
 <Example>
 <![CDATA[
 gap> Divisor(g);
@@ -467,11 +480,12 @@ x^2+Z(2)^0
 </ManSection>
 
 <ManSection>
-  <Oper Name="PrimeSet" Arg="f" Label="Prime set of an rcwa mapping"/>
+  <Oper Name="PrimeSet" Arg="f" Label="f"/>
   <Returns> The prime set of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-    See also&nbsp;<Ref Oper="PrimeSet" Label="Prime set of an rcwa group"/>
+    The set of prime divisors of the product of the modulus, the multiplier
+    and the divisor of an rcwa mapping.
+    See also&nbsp;<Ref Oper="PrimeSet" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -491,14 +505,18 @@ gap> PrimeSet(r);
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsIntegral" Arg="f" Label="Integral mapping"/>
+  <Prop Name="IsIntegral" Arg="f" Label="f"/>
   <Returns>
     <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is integral and
     <C>false</C> otherwise.
   </Returns>
   <Description>
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-    See also&nbsp;<Ref Prop="IsIntegral" Label="Integral group"/>
+    An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1,
+    thus <Q>if no proper divisions occur</Q>.
+    Be careful not to confuse this with the term <E>integral rcwa mapping</E>
+    for rcwa mappings of the integers; normally it should be rather clear
+    what is meant.
+    See also&nbsp;<Ref Prop="IsIntegral" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -520,8 +538,7 @@ false
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsClassWiseOrderPreserving" Arg="f"
-        Label="Class-wise order-preserving rcwa mapping"/>
+  <Prop Name="IsClassWiseOrderPreserving" Arg="f" Label="f"/>
   <Returns>
     <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is class-wise
     order-preserving and <C>false</C> otherwise.
@@ -529,8 +546,7 @@ false
   <Description>
     Of course the term <E>class-wise order-preserving</E> is defined
     only for rcwa mappings of ordered rings, e.g. of&nbsp;<M>\Z</M>.
-    See also&nbsp;<Ref Prop="IsClassWiseOrderPreserving"
-    Label="Class-wise order-preserving rcwa group"/>
+    See also&nbsp;<Ref Prop="IsClassWiseOrderPreserving" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -658,12 +674,24 @@ gap> Multpk(kappa,3,-1);
   <Attr Name="Sign" Arg="f"/>
   <Returns> The sign of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
+    Using the notation from the definition of an rcwa mapping in the
+    Preface&nbsp;(<Ref Label="ch:preface"/>), we define the <E>sign</E> of
+    a bijective rcwa mapping <M>\sigma</M> of&nbsp;<M>\Z</M> by
+    <Alt Not="LaTeX">
+      (see LaTeX version of the manual).
+    </Alt> 
+    <Alt Only="LaTeX">
+      <Display>
+        (-1)^{\displaystyle{{\rm det}(\sigma) + \frac{1}{m}
+        \left(
+          \sum_{r(m): \ a_{r(m)} &lt; 0} (m - 2r)
+        \right)}}.
+      </Display>
+    </Alt>
     The sign induces an epimorphism from RCWA(<M>\Z</M>) onto
     the group <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>. This means that
     the kernel of the sign mapping is a normal subgroup of
     RCWA(<M>\Z</M>) of index&nbsp;2.
-
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
 gap> nu := RcwaMapping([[1,1,1]]);;
@@ -697,6 +725,23 @@ gap> Sign(Comm(a,b));
   <Meth Name="Determinant" Arg="f, S"/>
   <Returns> The determinant of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
+    We define the <E>determinant</E> of an affine mapping
+    <M>n \mapsto (an+b)/c</M> whose source is a residue class
+    <M>r(m)</M> by <M>b/|a|m</M>, and extend this definition additively
+    to determinants of rcwa mappings and those restrictions to
+    unions of residue classes.
+    Then, using the notation from the definition of an rcwa mapping in the
+    Preface&nbsp;(<Ref Label="ch:preface"/>), the <E>determinant</E>
+    det(<M>\sigma</M>) of an rcwa mapping <M>\sigma</M> is given by
+    <Alt Not="LaTeX">
+      (see LaTeX version of the manual).
+    </Alt> 
+    <Alt Only="LaTeX">
+      <Display>
+        \frac{1}{m}
+        \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
+      </Display>
+    </Alt>
     The determinant induces an epimorphism from the group of all
     class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
     onto the additive group <M>(\Z,+)</M>.
@@ -704,8 +749,6 @@ gap> Sign(Comm(a,b));
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
     of <A>f</A> to&nbsp;<A>S</A>.
-
-    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
 gap> Determinant(nu);
@@ -769,11 +812,12 @@ x^3+Z(2)^0
   <Returns>
     In the first three forms the image of the set&nbsp;<A>S</A> under the
     rcwa mapping&nbsp;<A>f</A>, and in the fourth form the image of the
-    rcwa mapping&nbsp;<A>f</A>.
+    rcwa mapping&nbsp;<A>f</A>. The returned object is a set, i.e. no
+    particular ordering of elements is guaranteed.
   </Returns>
   <Description>
-    In particular the argument&nbsp;<A>S</A> can be a union of residue
-    classes with or without fixed representatives -- thus rcwa mappings
+    The argument&nbsp;<A>S</A> can be a finite set or a union of residue
+    classes with or without fixed representatives. Thus rcwa mappings
     resp. rcwa groups can act on sets of residue class unions as well
     as on sets of single ring elements.
 <Example>
@@ -871,8 +915,7 @@ gap> PreImagesElm(ZeroOne,1);
 </ManSection>
 
 <ManSection>
-  <Meth Name ="PreImagesRepresentative" Arg="f, x"
-        Label="PreImagesRepresentative for rcwa mapping"/>
+  <Meth Name ="PreImagesRepresentative" Arg="f, x" Label="f, x"/>
   <Returns>
     A representative of the set of preimages of <A>x</A>
     under&nbsp;<A>f</A>.
@@ -1237,15 +1280,18 @@ infinity
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsTame" Arg="f" Label="Tame rcwa mapping"/>
+  <Prop Name="IsTame" Arg="f" Label="f"/>
   <Returns>
     <C>true</C> if the rcwa mapping&nbsp;<A>f</A> is tame and
     <C>false</C> otherwise.
   </Returns>
   <Description>
-    For the definition when an rcwa mapping is called <E>tame</E>
-    see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
-    See also&nbsp;<Ref Prop="IsTame" Label="Tame rcwa group"/>
+    An rcwa mapping is called <E>tame</E> if the set of the moduli of its
+    powers is bounded. Tameness is a class invariant -- this means that all
+    conjugates of tame mappings are also tame.
+    An rcwa mapping which is not tame is called <E>wild</E>.
+
+    See also&nbsp;<Ref Prop="IsTame" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -1359,15 +1405,14 @@ rec( isGraph := true, order := 4, group := Group(()),
 </ManSection>
 
 <ManSection>
-  <Oper Name="OrbitsModulo" Arg="f, m"
-        Label="OrbitsModulo for rcwa mapping"/>
+  <Oper Name="OrbitsModulo" Arg="f, m" Label="f, m"/>
   <Returns>
     The partition of <C>AllResidues(<A>m</A>)</C> corresponding to
     the weakly-connected components of the transition graph for
     modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    See also <Ref Meth="OrbitsModulo" Label="OrbitsModulo for rcwa group"/>
+    See also <Ref Meth="OrbitsModulo" Label="G"/>
     for rcwa groups.
 <Example>
 <![CDATA[
@@ -1614,10 +1659,11 @@ gap> S0 := ContractionCentre(T,100,1000);
     The <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    We define the <E>image density</E> of an rcwa mapping&nbsp;<A>f</A>
-    of a ring <M>R</M> by the sum of the densities of the images of the
-    affine partial mappings of <A>f</A>, where we set the density
-    of a residue class <M>r(m)</M> equal to <M>1/|R/mR|</M>.
+    Let <M>f</M> be an rcwa mapping of <M>\Z</M> with modulus <M>m</M>.
+    Assume that the restriction of <M>f</M> to a residue class <M>r(m)</M>
+    is given by <M>n \mapsto (a_{r(m)} \cdot n + b_{r(m)})/c_{r(m)}</M>.
+    Then we define the <E>image density</E> of <M>f</M> by
+    <M>\sum_{r(m) \in \Z/m\Z} c_{r(m)}/a_{r(m)}</M>.
     Injective rcwa mappings have an image density of at most&nbsp;1, and the
     image density of a surjective rcwa mapping is at least&nbsp;1 -- thus in
     particular the image density of a bijective mapping equals&nbsp;1.
