@@ -1,8 +1,8 @@
 <!-- ################################################################################# -->
 <!-- ##                                                                             ## -->
-<!-- ##  semiloc.xml                RCWA documentation                 Stefan Kohl  ## -->
+<!-- ##  z_pi.xml                  RCWA documentation                  Stefan Kohl  ## -->
 <!-- ##                                                                             ## -->
-<!-- ##  $Id$                    ## -->
+<!-- ##  $Id$                       ## -->
 <!-- ##                                                                             ## -->
 <!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
 <!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
@@ -24,10 +24,13 @@ this here.
 
   <ManSection>
     <Func Name="Z_pi" Arg="pi"/>
+    <Func Name="Z_pi" Arg="p"/>
     <Returns>the ring <M>\Z_\pi</M>.</Returns>
     <Description>
+      The function also accepts a single prime <A>p</A> instead of the one-element
+      list <C><A>pi</A> = [ <A>p</A> ]</C> as argument.
 <Example>
-gap> R := Z_pi([2]);
+gap> R := Z_pi(2);
 Z_[ 2 ]
 gap> S := Z_pi([2,5,7]);
 Z_[ 2, 5, 7 ]

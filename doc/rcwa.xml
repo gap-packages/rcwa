@@ -28,7 +28,7 @@
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
     <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
   </Author>
-  <Date>May 24, 2002</Date>
+  <Date>June 10, 2002</Date>
   <Copyright> &copyright; 2002 by Stefan Kohl <P/>
               After an official release, we adopt the copyright regulations of &GAP;
               as detailed in the copyright notice in the &GAP; manual.
@@ -46,7 +46,7 @@
 
 <#Include SYSTEM "preface.xml">
 <#Include SYSTEM "intro.xml">
-<#Include SYSTEM "semiloc.xml">
+<#Include SYSTEM "z_pi.xml">
 <#Include SYSTEM "resclass.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">

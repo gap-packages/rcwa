@@ -446,10 +446,13 @@ Rcwa mapping of GF(2)[x] with modulus Z(2)^0+x^2
     <Meth Name="LaTeXObj" Arg="f"/>
     <Returns>a &LaTeX; representation of the integral rcwa mapping <A>f</A>.</Returns>
     <Description>
+      An indentation by <A>Indentation</A> characters can be specified by setting
+      this option value accordingly. This only applies to rcwa mappings with modulus
+      larger than 1.
 <Example>
 <![CDATA[
 gap> Print(LaTeXObj(u^-1));
-n \ \mapsto \
+n \ \longmapsto \
 \begin{cases}
   \frac{5n}{3}      & \text{if} \ n \equiv 0 \ (3), \\
   \frac{5n + 1}{3}  & \text{if} \ n \equiv 1 \ (3), \\
@@ -852,8 +855,9 @@ IdentityMapping( Z_[ 2 ] )
       the multiplicative order of the bijective rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      One of the two sufficient criteria for <A>f</A> having infinite order which
-      are used by this package relies on a currently unproved hypothesis.
+      One of the (currently at least three) sufficient criteria for <A>f</A> having
+      infinite order which are used by this package relies on a currently unproved
+      hypothesis.
 <Example>
 gap> Order(Comm(a,b));
 6
