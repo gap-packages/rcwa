@@ -974,11 +974,20 @@ gap> H := Restriction(G,RcwaMapping([[3,2,1]]));
 <integral rcwa group with 2 generators>
 gap> IsTransitive(H,MovedPoints(H));
 false
+gap> SetName(g,"g"); SetName(h,"h");
+gap> D := DirectProduct(Group(a,b),Group(g,h),Group(nu,t));
+<integral rcwa group with 6 generators>
+gap> Projection(D,1);;
+gap> Embedding(D,2);
+[ g, h ] -> [ <integral rcwa mapping with modulus 18>,
+  <integral rcwa mapping with modulus 18> ]
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
 
 
 
