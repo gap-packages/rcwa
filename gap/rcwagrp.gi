@@ -293,8 +293,8 @@ ClassPairs := m -> Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
                                  and (t[2] <> t[4] or t[1] < t[3]));
 MakeReadOnlyGlobal( "ClassPairs" );
 
-BindGlobal( "CLASS_PAIRS", [ 6, ClassPairs(6) ] );
-BindGlobal( "CLASS_PAIRS_LARGE", CLASS_PAIRS );
+InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
+InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
 
 #############################################################################
 ##
@@ -1408,33 +1408,12 @@ InstallOtherMethod( RepresentativeActionOp,
                                  ResidueClass(Integers,mtilde,r2)]);
     end;
 
-    if   ValueOption("NC") <> true
-      and (       Length(P1) <> Length(P2)
-            or not ForAll(Union(P1,P2),IsUnionOfResidueClasses)
-            or not ForAll(Union(P1,P2),cl->Length(Residues(cl)) = 1)
-            or Union(P1) <> Integers or Union(P2) <> Integers
-            or Sum(List(P1,Density)) <> 1 or Sum(List(P2,Density)) <> 1 )
-    then TryNextMethod(); fi;
+    g := RcwaMapping(P1,P2); # Do this always. If tame, just to check arg's.
 
-    k    := Length(P1);
-    tame := ValueOption("IsTame") = true;
-    if not tame then
-      m := Lcm(List(P1,Modulus));
-      c := List([0..m-1],r->[1,0,1]);
-      for i in [1..k] do
-        mi      := Modulus(P1[i]); ri      := Residues(P1[i])[1];
-        mtildei := Modulus(P2[i]); rtildei := Residues(P2[i])[1];
-        ar := mtildei; br := mi*rtildei-mtildei*ri; cr := mi;
-        r := ri + 1;
-        while r <= m do
-          c[r] := [ar,br,cr];
-          r := r + mi;
-        od;
-      od;
-      return RcwaMapping(c);
-    else
-      P       := [P1,P2];
+    if ValueOption("IsTame") = true then
+      k       := Length(P1);
       m       := Lcm(List(Union(P1,P2),Modulus));
+      P       := [P1,P2];
       Phat    := List([0..m-1],r->ResidueClass(Integers,m,r));
       Buckets := List([1..2],i->List([1..k],j->Filtered(Phat,
                  cl->Residues(cl)[1] mod Modulus(P[i][j]) =
@@ -1453,12 +1432,10 @@ InstallOtherMethod( RepresentativeActionOp,
           fi;
         od;
       until ForAll([1..k],i->Length(Buckets[1][i]) = Length(Buckets[2][i]));
-      g := RepresentativeAction(RCWA_Z,Flat(Buckets[1]),
-                                       Flat(Buckets[2]):NC,IsTame:=false);
-      SetIsTame(g,true);
-      SetRespectedPartition(g,Set(Flat(Buckets[1])));
-      return g;
+      g := RcwaMapping(Flat(Buckets[1]),Flat(Buckets[2]));
+      SetIsTame(g,true); SetRespectedPartition(g,Set(Flat(Buckets[1])));
     fi;
+    return g;
   end );
 
 #############################################################################

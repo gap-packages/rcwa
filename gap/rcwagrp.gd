@@ -336,4 +336,15 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
+#V  CLASS_PAIRS
+#V  CLASS_PAIRS_LARGE
+##
+##  Residues and moduli of pairs of disjoint residue classes.
+##  Mainly used to generate random class transpositions.
+##
+DeclareGlobalVariable( "CLASS_PAIRS" );
+DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
+
+#############################################################################
+##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
