@@ -287,6 +287,19 @@ kappa36 := RcwaMapping(
               [3, -6,2],[1,  1,1],[3, -8,2],[1,  0,1],[1,  0,1],[1,  0,1]]);
 SetName(kappa36,"kappa36");
 
+# Even better: apart from the fixed points 4, 6 and 8 and the transpositions
+# (-17,-45), (13,36) and (17,48), the following permutation seems to have
+# only one single cycle(!) on the integers:
+
+onecyc := RcwaMapping(
+            [[1,  3,3],[1,  9,1],[1, 14,1],[1, -7,1],[3, -4,2],[1,-14,3],
+             [3, -6,2],[1, 13,1],[3, -8,2],[3, 11,1],[2, -8,1],[3,  6,1],
+             [1,  3,3],[2, 10,1],[1,  4,1],[1, 15,1],[3, -4,2],[2, 14,1],
+             [3, -6,2],[2,-11,1],[3, -8,2],[3, 11,1],[1, -8,1],[3,  6,1],
+             [2, 24,1],[1,  9,1],[1,-11,1],[1, -6,3],[3, -4,2],[1, -1,1],
+             [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]);
+SetName(onecyc,"onecyc");
+
 # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group all of
 # whose orbits on Z seem to be finite.
 
