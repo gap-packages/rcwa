@@ -263,6 +263,16 @@ Bijective integral rcwa mapping with modulus 18, of order 6
    6                                   | (n + 2)/2
   15                                   | (n - 5)/2
 
+gap> Print(LaTeXObj(ab));
+n \ \mapsto \
+\begin{cases}
+  n                & \text{if} \ n \equiv 0, 2, 3, 8 \ (9), \\
+  2n - 5           & \text{if} \ n \equiv 1 \ (9), \\
+  n + 3            & \text{if} \ n \equiv 4, 7 \ (9), \\
+  2n - 4           & \text{if} \ n \equiv 5 \ (9), \\
+  \frac{n + 2}{2}  & \text{if} \ n \equiv 6 \ (18), \\
+  \frac{n - 5}{2}  & \text{if} \ n \equiv 15 \ (18).
+\end{cases}
 gap> G := Group(ab,ac);
 <integral rcwa group with 2 generators>
 gap> Display(G);
