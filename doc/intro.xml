@@ -42,8 +42,8 @@
   generating the ideal <M>I_f</M>,
   <Index Key="rcwa mapping" Subkey="multiplier"></Index>
   the <E>multiplier</E> Mult(<M>f</M>) of <M>f</M> as the standard
-  associate of the least common multiple of the non-zero coefficients
-  <M>a_r</M> in the numerators,
+  associate of the least common multiple of the coefficients <M>a_r</M> in
+  the numerators,
   <Index Key="rcwa mapping" Subkey="divisor"></Index>
   the <E>divisor</E> Div(<M>f</M>) of <M>f</M> as the standard
   associate of the least common multiple of the coefficients <M>c_r</M> in
