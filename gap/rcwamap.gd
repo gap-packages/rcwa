@@ -234,12 +234,43 @@ DeclareOperation( "RcwaMappingNC", [ IsObject ] );
 
 #############################################################################
 ##
-#F  ClassShift( <S> ) . .  shift of residue class union <S> by Modulus( <S> )
+#F  ClassShift( <r>, <m> ) . . . . . . . . . . . . . . .  class shift nu_r(m)
+#F  ClassShift( [ <r>, <m> ] )
+##
+DeclareGlobalFunction( "ClassShift" );
+
+#############################################################################
+##
+#F  ClassReflection( <r>, <m> ) . . . . . . .  class reflection varsigma_r(m)
+#F  ClassReflection( [ <r>, <m> ] )
+##
+DeclareGlobalFunction( "ClassReflection" );
+
+#############################################################################
+##
+#F  ClassTransposition( <r1>, <m1>, <r2>, <m2> ) . . . .  class transposition
+#F  ClassTransposition( [ <r1>, <m1>, <r2>, <m2> ] )
+##
+DeclareGlobalFunction( "ClassTransposition" );
+
+#############################################################################
+##
+#A  FactorizationIntoGenerators( <g> ) . . .  factorization into genenerators
+##
+##  A factorization of the group element <g> into generators.
+##  In particular a factorization of an element of RCWA(Z) into class shifts,
+##  class reflections and class transpositions.
+##
+DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
+
+#############################################################################
+##
+#F  ClassUnionShift( <S> ) . . . . . shift of rc.-union <S> by Modulus( <S> )
 ##
 ##  The rcwa mapping which maps <S> to <S> + `Modulus'(<S>) and fixes the
 ##  complement of <S>.
 ##
-DeclareGlobalFunction( "ClassShift" );
+DeclareGlobalFunction( "ClassUnionShift" );
  
 #############################################################################
 ##

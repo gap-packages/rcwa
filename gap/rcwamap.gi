@@ -705,9 +705,63 @@ InstallOtherMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  ClassShift( <S> ) . .  shift of residue class union <S> by Modulus( <S> )
+#F  ClassShift( r, m ) . . . . . . . . . . . . . . . . .  class shift nu_r(m)
+#F  ClassShift( [ r, m ] )
 ##
 InstallGlobalFunction( ClassShift,
+
+  function ( arg )
+
+    local  coeff, r, m;
+
+    if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
+    if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
+    coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
+    return RcwaMapping(coeff);
+  end );
+
+#############################################################################
+##
+#F  ClassReflection( r, m ) . . . . . . . . . . class reflection varsigma_r(m)
+#F  ClassReflection( [ r, m ] )
+##
+InstallGlobalFunction( ClassReflection,
+
+  function ( arg )
+
+    local  coeff, r, m;
+
+    if IsList(arg[1]) then arg := arg[1]; fi; r := arg[1]; m := arg[2];
+    if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
+    coeff := List([1..m],r->[1,0,1]);
+    coeff[r+1] := [-1,2*r,1];
+    return RcwaMapping(coeff);
+  end );
+
+#############################################################################
+##
+#F  ClassTransposition( r1, m1, r2, m2 )  cl. transposition tau_r1(m1),r2(m2)
+#F  ClassTransposition( [ r1, m1, r2, m2 ] )
+##
+InstallGlobalFunction( ClassTransposition,
+
+  function ( arg )
+
+    local  r1, m1, r2, m2;
+
+    if IsList(arg[1]) then arg := arg[1]; fi;
+    if Length(arg) <> 4 or not ForAll(arg,IsInt) then return fail; fi;
+    r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
+    if m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then return fail; fi;
+    return RcwaMapping([[ResidueClass(Integers,m1,r1),
+                         ResidueClass(Integers,m2,r2)]]);
+  end );
+
+#############################################################################
+##
+#F  ClassUnionShift( <S> ) . . . . . shift of rc.-union <S> by Modulus( <S> )
+##
+InstallGlobalFunction( ClassUnionShift,
 
   function ( S )
 
@@ -2585,9 +2639,10 @@ InstallMethod( Order,
         return infinity;
       fi;
       if m > SizeLimit then
-        warning := Concatenation("Order: cycle exceeds growth limit,\n",
+        warning := Concatenation("Warning, probabilistic method for ",
+                                 "Order: cycle exceeds growth limit,\n",
                                  "mapping has presumably infinite order.");
-        Info(InfoRCWA,1,warning); Info(InfoWarning,2,warning);
+        Info(InfoWarning,1,warning);
         return infinity;
       fi;
       Add(CycLngs,CycLng);
@@ -3196,7 +3251,7 @@ InstallMethod( ContractionCentre,
     local  S0, S, n, n_i, i, seq;
 
     Info(InfoWarning,1,"Warning: `ContractionCentre' is highly ",
-                       "probabilistic.\nThe returned value can only be ",
+                       "probabilistic.\nThe returned result can only be ",
                        "regarded as a rough guess.\n See ?ContractionCentre",
                        " for information on how to improve this guess.");
     if IsBijective(f) then return fail; fi;
