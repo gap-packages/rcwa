@@ -614,8 +614,14 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     By default, prime switches are taken as one factor. 
     If the option <A>ExpandPrimeSwitches</A> is set, they are each
     decomposed into the 6 class transpositions given in
-    the definition (see <Ref Func="PrimeSwitch" Label="p"/>). <P/>
-
+    the definition (see <Ref Func="PrimeSwitch" Label="p"/>).
+    By default, at the end it is checked whether the product of the
+    determined factors indeed equals <A>g</A>. This check can be
+    suppressed by setting the option <A>NC</A>. By default, the factoring
+    process begins with splitting off factors from the right. This
+    can be changed by setting the option <A>Direction</A> to
+    <C>"from the left"</C>. <P/>
+    
     The problem of obtaining a factorization as desired is algorithmically
     difficult, and this factorization routine is currently perhaps the most
     sophisticated part of the &RCWA; package. Information about the
@@ -685,12 +691,10 @@ in&nbsp;1932, and whose cycle structure is unknown so far.
 gap> nu := ClassShift(0,1);;
 gap> List( [ nu, a, b, u ], Determinant );
 [ 1, 0, 1, 0 ]
-gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
-5
-gap> Determinant(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3*u);
-0
 gap> Determinant(u^2*b^-3);
 -3
+gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
+5
 ]]>
 </Example>
   </Description>
