@@ -2,7 +2,7 @@
 <!-- ##                                                                             ## -->
 <!-- ##  rcwagrp.xml                RCWA documentation                 Stefan Kohl  ## -->
 <!-- ##                                                                             ## -->
-<!-- ##  $Id$                    ## -->
+<!-- ##  $Id$                   ## -->
 <!-- ##                                                                             ## -->
 <!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
 <!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
@@ -567,8 +567,7 @@ gap> S4 := SymmetricGroup(IsIntegralRcwaGroup,4);
 <integral rcwa group with 2 generators>
 gap> Size(S4);
 24
-gap> G := SylowSubgroup(S4,2);
-<integral rcwa group with 3 generators, of size 8>
+gap> G := SylowSubgroup(S4,2);;
 gap> IdGroup(G);
 [ 8, 3 ]
 gap> A5 := AlternatingGroup(IsIntegralRcwaGroup,5);
