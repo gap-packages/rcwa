@@ -2294,8 +2294,8 @@ InstallMethod( Order,
 ##
 ##  This method tests whether <f> satisfies one sufficient criterium for
 ##  having infinite order: it checks whether there is a small, smooth
-##  exponent <e> such that <f>^<e> maps one residue class mod. the modulus
-##  non-identically onto itself; in case <f> does not, it gives up.
+##  exponent <e> such that the mapping <f>^<e> has a cycle which is a whole
+##  residue class. In case <f> does not have such a cycle it gives up.
 ##
 InstallMethod( Order,
                "for rat.-based rcwa map's, arith. progression method (RCWA)",
@@ -2318,9 +2318,8 @@ InstallMethod( Order,
                                and c[n][2] mod m2 = 0);
       if   r <> fail
       then Info(InfoRCWA,1,"Order: the ",Ordinal(e)," power of the argument",
-                           " is ",g,"; this mapping maps the residue ",
-                           "class ",r-1,"(",m2,") non-identically ",
-                           "onto itself, hence its order is infinity.");
+                           " is ",g,";\nThere is a `class shift' on the ",
+                           "residue class ",r-1,"(",m2,").");
            return infinity;
       fi;
       g := g^n; e := e * n; if g = one then break; fi;
