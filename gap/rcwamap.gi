@@ -1188,7 +1188,11 @@ InstallMethod( Modulus,
 ##
 InstallMethod( Multiplier,
                "for rcwa mappings", true, [ IsRcwaMapping ], 0,
-               f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
+               f -> Lcm( List( f!.coeffs, function ( c )
+                                            if   IsZero(c[1])
+                                            then return One(c[1]);
+                                            else return c[1]; fi;
+                                          end ) ) ); 
 
 #############################################################################
 ##
@@ -1199,7 +1203,8 @@ InstallMethod( Multiplier,
                true, [     IsSemilocalIntegralRcwaMapping
                        and IsRationalBasedRcwaDenseRep ], 10,
 
-  f -> Lcm( List( f!.coeffs, c -> StandardAssociate( Source(f), c[1] ) ) ) );
+  f -> Lcm( List( f!.coeffs,
+                  c -> Maximum( StandardAssociate(Source(f),c[1]), 1 ) ) ) );
 
 #############################################################################
 ##
