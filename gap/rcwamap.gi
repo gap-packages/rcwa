@@ -466,6 +466,55 @@ InstallOtherMethod( RcwaMapping,
 
 #############################################################################
 ##
+#F  RcwaMappingNC( <P1>, <P2> )
+##
+InstallOtherMethod( RcwaMappingNC,
+                    "rcwa mapping by two class partitions (RCWA)",
+                    true, [ IsList, IsList ], 0,
+
+  function ( P1, P2 )
+
+    local R, coeffs, m, res, r1, m1, r2, m2, i, j;
+
+    if not IsUnionOfResidueClasses(P1[1]) then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(P1[1]));
+    m := Lcm(R,List(P1,Modulus)); res := AllResidues(R,m);
+    coeffs := List(res,r->[1,0,1]*One(R));
+    for i in [1..Length(P1)] do
+      r1 := Residues(P1[i])[1]; m1 := Modulus(P1[i]);
+      r2 := Residues(P2[i])[1]; m2 := Modulus(P2[i]);
+      for j in Filtered([1..Length(res)],j->res[j] mod m1 = r1) do
+        coeffs[j] := [m2,m1*r2-m2*r1,m1];
+      od;
+    od;
+    return RcwaMappingNC(R,m,coeffs);
+  end );
+
+#############################################################################
+##
+#F  RcwaMapping( <P1>, <P2> )
+##
+InstallOtherMethod( RcwaMapping,
+                    "rcwa mapping by two class partitions (RCWA)",
+                    true, [ IsList, IsList ], 0,
+
+  function ( P1, P2 )
+
+    local R;
+
+    if not    (ForAll(Concatenation(P1,P2),
+                      S ->     IsUnionOfResidueClasses(S)
+                           and Length(Residues(S)) = 1)
+           and Length(P1) = Length(P2)
+           and Sum(List(P1,Density)) = 1
+           and Union(P1) = UnderlyingRing(FamilyObj(P1[1])))
+    then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(P1[1]));
+    return RcwaMappingNC(P1,P2);
+  end );
+
+#############################################################################
+##
 #F  RcwaMappingNC( <pi>, <coeffs> )
 ##
 InstallOtherMethod( RcwaMappingNC,
