@@ -843,6 +843,8 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
     </Description>
   </ManSection>
 
+  <Alt Only="HTML">&nbsp;</Alt>
+
 </Section>
 
 <!-- #################################################################### -->
@@ -850,6 +852,7 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 

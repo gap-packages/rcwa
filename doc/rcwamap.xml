@@ -1138,7 +1138,7 @@ rec( isGraph := true, order := 4, group := Group(()),
     <Oper Name="OrbitsModulo" Arg="f, m"
           Label="OrbitsModulo for rcwa mapping"/>
     <Returns>
-      the partition of of <C>AllResidues(<A>m</A>)</C> corresponding to
+      the partition of <C>AllResidues(<A>m</A>)</C> corresponding to
       the weakly-connected components of the transition graph for modulus
       <A>m</A> of the rcwa mapping <A>f</A>.
     </Returns>
@@ -1612,6 +1612,7 @@ IdentityMapping( Integers )
 </Chapter>
 
 <!-- #################################################################### -->
+
 
 
 
