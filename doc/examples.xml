@@ -106,7 +106,7 @@ Bijective rcwa mapping of Z with modulus 36
 <Example>
 <![CDATA[
 gap> MovedPoints(sigma);
-<union of 29 residue classes (mod 36), +0/-2 elements>
+<union of 29 residue classes (mod 36) of Z, +0/-2 elements>
 gap> Intersection(last,[-20..20]);
 [ -19, -18, -17, -15, -14, -13, -12, -11, -10, -9, -7, -5, -3, -2, -1, 1, 2, 
   5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19 ]
@@ -1058,20 +1058,20 @@ gap> S7 := S6^T;
 gap> U := ResidueClass(Integers,3,1);;
 gap> for i in [1..6] do U := PreImage(T,U); od;
 gap> U := Intersection(U,S0);
-<union of 11 residue classes (mod 64)>
+<union of 11 residue classes (mod 64) of Z>
 gap> V := ResidueClass(Integers,3,2);;
 gap> for i in [1..6] do V := PreImage(T,V); od;
 gap> V := Intersection(V,S0);
-<union of 21 residue classes (mod 64)>
+<union of 21 residue classes (mod 64) of Z>
 gap> Display(U);
 
-The union of the residue classes r ( mod 64 )  for r =
+The union of the residue classes r ( mod 64 ) of Z for r =
 
   1  5  7  9 21 23 29 31 49 51 59
 
 gap> Display(V);
 
-The union of the residue classes r ( mod 64 )  for r =
+The union of the residue classes r ( mod 64 ) of Z for r =
 
   3 11 13 15 17 19 25 27 33 35 37 39 41 43 45 47 53 55 57 61 63
 
@@ -1092,11 +1092,11 @@ gap> S1 := S0^T;
 gap> S2 := S1^T;
 0(3) U 5(9) U 7(9) U 8(27)
 gap> S3 := S2^T;
-<union of 20 residue classes (mod 27)>
+<union of 20 residue classes (mod 27) of Z>
 gap> S4 := S3^T;
-<union of 73 residue classes (mod 81)>
+<union of 73 residue classes (mod 81) of Z>
 gap> S5 := S4^T;
-<union of 79 residue classes (mod 81)>
+<union of 79 residue classes (mod 81) of Z>
 gap> S6 := S5^T;
 Integers
 gap> S7 := S6^T;
@@ -1119,14 +1119,14 @@ gap> for s in S do View(s); Print("\n"); od;
 0(5) U 8(15)
 0(5) U 4(15) U 8(15)
 0(5) U 2(15) U 4(15) U 8(15) U 29(45)
-<union of 73 residue classes (mod 135)>
-<union of 244 residue classes (mod 405)>
-<union of 784 residue classes (mod 1215)>
-<union of 824 residue classes (mod 1215)>
-<union of 2593 residue classes (mod 3645)>
-<union of 2647 residue classes (mod 3645)>
-<union of 2665 residue classes (mod 3645)>
-<union of 2671 residue classes (mod 3645)>
+<union of 73 residue classes (mod 135) of Z>
+<union of 244 residue classes (mod 405) of Z>
+<union of 784 residue classes (mod 1215) of Z>
+<union of 824 residue classes (mod 1215) of Z>
+<union of 2593 residue classes (mod 3645) of Z>
+<union of 2647 residue classes (mod 3645) of Z>
+<union of 2665 residue classes (mod 3645) of Z>
+<union of 2671 residue classes (mod 3645) of Z>
 1(3) U 2(3) U 0(15)
 gap> Union(S[13],ResidueClass(Integers,3,0));
 Integers
@@ -1232,8 +1232,3 @@ gap> seq(20);
 </Chapter>
 
 <!-- #################################################################### -->
-
-
-
-
-
