@@ -1113,7 +1113,7 @@ gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
   ClassReflection(0,3) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "integral.tst", 3100000000 );
+gap> STOP_TEST( "integral.tst", 4000000000 );
 
 #############################################################################
 ##

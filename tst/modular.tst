@@ -260,7 +260,7 @@ gap> LargestSourcesOfAffineMappings(r);
 gap> LargestSourcesOfAffineMappings(One(r));
 [ GF(2)[x] ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> STOP_TEST( "modular.tst", 1500000000 );
+gap> STOP_TEST( "modular.tst", 250000000 );
 
 #############################################################################
 ##

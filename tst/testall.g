@@ -89,9 +89,9 @@ end;
 ##  sed -e 's: );: ],:'
 ##
 TEST_FILES := [ [ "float.tst"    ,    1000000 ],
-                [ "integral.tst" , 3100000000 ],
-                [ "semiloc.tst"  ,  100000000 ],
-                [ "modular.tst"  , 1500000000 ] ];
+                [ "semiloc.tst"  ,   30000000 ],
+                [ "modular.tst"  ,  250000000 ],
+                [ "integral.tst" , 4000000000 ] ];
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 
