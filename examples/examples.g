@@ -1,8 +1,11 @@
 #############################################################################
 ##
-#W  examples.gap               GAP4 Package `RCWA'                Stefan Kohl
+#W  examples.g                GAP4 Package `RCWA'                 Stefan Kohl
 ##
 #H  @(#)$Id$
+##
+#Y  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,
+#Y  Universit\"at Stuttgart, Germany
 ##
 ##  This file contains the rcwa mappings used in the examples in the manual.
 ##
@@ -100,4 +103,4 @@ r := ModularRcwaMapping( 2, x^2 + e,
 
 #############################################################################
 ##
-#E  examples.gap . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+#E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
