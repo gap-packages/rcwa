@@ -786,13 +786,14 @@ MakeReadOnlyGlobal( "DisplayModularAffineMapping" );
 
 LaTeXIntegralAffineMapping := function ( t )
 
-  local  str, a, b, c, append;
+  local  german, str, a, b, c, append;
  
   append := function ( arg )
     str := CallFuncList(Concatenation,
                         Concatenation([str],List(arg,String)));
   end;
 
+  german := ValueOption("german") = true;
   a := t[1]; b := t[2]; c := t[3]; str := "";
   if   c = 1
   then if   a = 0
@@ -805,12 +806,14 @@ LaTeXIntegralAffineMapping := function ( t )
             elif b < 0 then append(" - ",-b);
             fi;
        fi;
-  elif b = 0 then append("\\frac{");
+  elif b = 0 then if german then append("\\linfrac{");
+                            else append("\\frac{"); fi;
                   if   AbsInt(a) <> 1 then append(a);
                   elif a = -1         then append("-");
                   fi;
                   append("n}{",c,"}");
-  else append("\\frac{");
+  else if german then append("\\afffrac{");
+                 else append("\\frac{"); fi;
        if   AbsInt(a) <> 1 then append(a);
        elif a = -1         then append("-");
        fi;
@@ -1069,7 +1072,7 @@ InstallMethod( LaTeXObj,
 
   function ( f )
 
-    local  c, m, mred, str, affs, maxafflng, t, poses, pos, res,
+    local  c, m, mred, german, str, affs, maxafflng, t, poses, pos, res,
            indent, append, i, j;
 
     append := function ( arg )
@@ -1077,6 +1080,7 @@ InstallMethod( LaTeXObj,
                           Concatenation([str],List(arg,String)));
     end;
 
+    german := ValueOption("german") = true;
     c := Coefficients(f); m := Length(c);
     if m = 1 then
       return Concatenation("n \\ \\mapsto \\ ",
@@ -1094,8 +1098,9 @@ InstallMethod( LaTeXObj,
     maxafflng := Maximum( List( affs, Length ) );
     for pos in poses do
       append( indent, "  ", affs[ pos[1] + 1 ],
-              String( " ", maxafflng - Length( affs[pos[1]+1] ) + 1 ) );
-      append(" & \\text{if} \\ n \\equiv ");
+              String( "", maxafflng - Length( affs[pos[1]+1] ) ) );
+      if german then append(" & \\falls n \\equiv ");
+                else append(" & \\text{if} \\ n \\equiv "); fi;
       mred := Minimum( Filtered( DivisorsInt(m),
                                  d -> ForAll(Collected(List(pos,j->j mod d)),
                                              t -> t[2] = m/d) ) );
@@ -2972,5 +2977,6 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
