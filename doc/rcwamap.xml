@@ -671,11 +671,10 @@ x^3+Z(2)^0
       rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      In particular, <A>S</A> can be a union of residue classes;
-      thus, rcwa mappings resp. rcwa groups can act on sets of residue class
-      unions as well as on sets of single ring elements.
-      The argument <A>S</A> can also be a union of residue classes with
-      fixed representatives.
+      In particular the argument <A>S</A> can be a union of residue classes
+      with or without fixed representatives -- thus rcwa mappings resp.
+      rcwa groups can act on sets of residue class unions as well as on
+      sets of single ring elements.
 <Example>
 <![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
@@ -793,8 +792,8 @@ gap> PreImagesRepresentative(ZeroOne,1);
       the preimage of the set <A>S</A> under the rcwa mapping <A>f</A>.
     </Returns>
     <Description>
-      In particular, <A>S</A> can be a union of residue classes with or
-      without fixed representatives.
+      In particular the argument <A>S</A> can be a union of residue classes
+      with or without fixed representatives.
 <Example>
 <![CDATA[
 gap> PreImage(T,A);
@@ -1566,4 +1565,3 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 </Chapter>
 
 <!-- #################################################################### -->
-
