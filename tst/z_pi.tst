@@ -11,6 +11,8 @@
 gap> START_TEST("$Id$");
 gap> R := Z_pi([2]);
 Z_[ 2 ]
+gap> R = Z_pi(2);
+true
 gap> S := Z_pi([2,5,7]);
 Z_[ 2, 5, 7 ]
 gap> T := Z_pi([3,11]);

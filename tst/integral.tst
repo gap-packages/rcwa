@@ -89,6 +89,8 @@ gap> t := RcwaMapping([[-1,0,1]]);
 Integral rcwa mapping: n -> -n
 gap> Order(t);
 2
+gap> LaTeXObj(t);
+"n \\ \\mapsto \\ -n"
 gap> k := RcwaMapping([[-4,-8,1]]);;
 gap> IsBijective(k);
 false
@@ -264,7 +266,7 @@ Bijective integral rcwa mapping with modulus 18, of order 6
   15                                   | (n - 5)/2
 
 gap> Print(LaTeXObj(ab));
-n \ \mapsto \
+n \ \longmapsto \
 \begin{cases}
   n                & \text{if} \ n \equiv 0, 2, 3, 8 \ (9), \\
   2n - 5           & \text{if} \ n \equiv 1 \ (9), \\
@@ -273,6 +275,13 @@ n \ \mapsto \
   \frac{n + 2}{2}  & \text{if} \ n \equiv 6 \ (18), \\
   \frac{n - 5}{2}  & \text{if} \ n \equiv 15 \ (18).
 \end{cases}
+gap> Print(LaTeXObj(a:Indentation:=2));
+  n \ \longmapsto \
+  \begin{cases}
+    \frac{3n}{2}      & \text{if} \ n \equiv 0 \ (2), \\
+    \frac{3n + 1}{4}  & \text{if} \ n \equiv 1 \ (4), \\
+    \frac{3n - 1}{4}  & \text{if} \ n \equiv 3 \ (4).
+  \end{cases}
 gap> G := Group(ab,ac);
 <integral rcwa group with 2 generators>
 gap> Display(G);
