@@ -3644,9 +3644,7 @@ InstallMethod( FactorizationIntoGenerators,
       cycs := Orbits(Group(h),MovedPoints(h));
       for cyc in cycs do
         for i in [2..Length(cyc)] do
-          Add(facts,ClassTransposition(
-                    Residues(P[cyc[1]])[1],Modulus(P[cyc[1]]),
-                    Residues(P[cyc[i]])[1],Modulus(P[cyc[i]])));
+          Add(facts,ClassTransposition(P[cyc[1]],P[cyc[i]]));
         od;
       od;
 
@@ -3726,26 +3724,18 @@ InstallMethod( FactorizationIntoGenerators,
 
         repeat
           pairs := Filtered(Cartesian(clSmult,clSdiv),
-                     pair ->  Number(Factors(Modulus(pair[1])),q->q=p)
-                            - Number(Factors(Modulus(pair[2])),q->q=p) = k);
+                   pair->PadicValue(Modulus(pair[1])/Modulus(pair[2]),p)=k);
           pairs := Set(pairs);
           if pairs = [] then
             diffs := List(Cartesian(clSmult,clSdiv),
-                          pair ->  Number(Factors(Modulus(pair[1])),q->q=p)
-                                 - Number(Factors(Modulus(pair[2])),q->q=p));
+                     pair->PadicValue(Modulus(pair[1])/Modulus(pair[2]),p));
             if Minimum(diffs) < k then
               Info(InfoRCWA,2,"Split classes in clSmult.");
-              clSmult := Flat(List(clSmult,
-                              cl->List([0..p-1],
-                              t->ResidueClass(Residues(cl)[1]+t*Modulus(cl),
-                                              p*Modulus(cl)))));
+              clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
             fi;
             if Maximum(diffs) > k then
               Info(InfoRCWA,2,"Split classes in clSdiv.");
-              clSdiv := Flat(List(clSdiv,
-                             cl->List([0..p-1],
-                             t->ResidueClass(Residues(cl)[1]+t*Modulus(cl),
-                                             p*Modulus(cl)))));
+              clSdiv := Flat(List(clSdiv,cl->SplittedClass(cl,p)));
             fi;
           fi;
         until pairs <> [];
@@ -3790,9 +3780,8 @@ InstallMethod( FactorizationIntoGenerators,
              > Density(Union(Flat(disjoint)))
           then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
           for pair in disjoint do
-            ct := ClassTransposition(Residues(pair[1])[1],Modulus(pair[1]),
-                                     Residues(pair[2])[1],Modulus(pair[2]));
-            g := g/ct;
+            ct    := ClassTransposition(pair);
+            g     := g/ct;
             facts := Concatenation([ct],facts);
             Info(InfoRCWA,1,"Dividing by ",Name(ct)); StateInfo();
           od;
