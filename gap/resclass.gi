@@ -310,7 +310,7 @@ InstallMethod( ViewObj,
     if   (IsIntegers(R) and Length(r) <= 5 and m < 10000) or Length(r) = 1
     then
       if IsOne(m) then
-        Print(R," \\ ");
+        Print(String(R)," \\ ");
         if   Length(excluded) > 20
           or Length(String(excluded)) > SizeScreen()[1]-Length(String(R))-8
         then Print("<list of length ",Length(excluded),">");
