@@ -1587,30 +1587,13 @@ InstallMethod( ImagesElm,
 
 #############################################################################
 ##
-#M  ImagesSet( <f>, Integers ) . . . . for integral rcwa mapping and integers
-##
-##  Image of the rcwa mapping <f>.
-##
-InstallMethod( ImagesSet,
-               "for integral rcwa mapping and integers (RCWA)", true, 
-               [ IsRationalBasedRcwaMapping, IsRing ], 0, 
-
-  function ( f, R )
-
-    if R <> Source( f ) then TryNextMethod( ); fi;
-    return Union( ImagesSet( f, ResidueClass( R, 2, 0 ) ),
-                  ImagesSet( f, ResidueClass( R, 2, 1 ) ) );
-  end );
-
-#############################################################################
-##
 #M  ImagesSet( <f>, <S> ) . . . for rcwa mapping and union of residue classes
 ##
 ##  Image of the set <S> under the rcwa mapping <f>.
 ##
-InstallMethod( ImagesSet,
-               "for rcwa mapping and residue class union (RCWA)",
-               true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
+InstallOtherMethod( ImagesSet,
+                    "for rcwa mapping and residue class union (RCWA)",
+                    true, [ IsRcwaMapping, IsListOrCollection ], 0,
 
   function ( f, S )
 
@@ -3103,6 +3086,7 @@ InstallMethod( Divergence,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
