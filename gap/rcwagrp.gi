@@ -1299,6 +1299,35 @@ InstallOtherMethod( RepresentativeActionOp,
      return pre^phi;
   end );
 
+############################################################################# 
+##
+#M  DirectProductOp( <groups>, <onegroup> ) . . . .  for integral rcwa groups
+##
+InstallMethod( DirectProductOp,
+               "for integral rcwa groups (RCWA)", ReturnTrue,
+               [ IsList, IsIntegralRcwaGroup ], 0,
+
+  function ( groups, onegroup )
+
+    local  D, factors, f, m, G, gens, info, first;
+
+    if   IsEmpty(groups) or not ForAll(groups,IsIntegralRcwaGroup)
+    then TryNextMethod(); fi;
+    m := Length(groups);
+    f := List([0..m-1],r->RcwaMapping([[m,r,1]]));
+    factors := List([1..m],r->Restriction(groups[r],f[r]));
+    gens := []; first := [1];
+    for G in factors do
+      gens := Concatenation(gens,GeneratorsOfGroup(G));
+      Add(first,Length(gens)+1);
+    od;
+    D := GroupByGenerators(gens);
+    info := rec(groups := groups, first := first,
+                embeddings := [ ], projections := [ ]);
+    SetDirectProductInfo(D,info);
+    return D;
+  end );
+
 #############################################################################
 ##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
@@ -1333,7 +1362,4 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
 
