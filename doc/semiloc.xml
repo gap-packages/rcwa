@@ -122,6 +122,7 @@ gap> StandardAssociate(U,36/13);
 
   <ManSection>
     <Meth Name="GcdOp" Arg="R, x, y"/>
+    <Meth Name="Gcd"   Arg="R, x, y"/>
     <Returns>
       the greatest common divisor of <A>x</A> and <A>y</A>
       in the semilocalization <A>R</A> of the integers.
@@ -138,6 +139,7 @@ gap> Gcd(S,90/3,60/17,120/33);
 
   <ManSection>
     <Meth Name="LcmOp" Arg="R, x, y"/>
+    <Meth Name="Lcm"   Arg="R, x, y"/>
     <Returns>
       the least common multiple of <A>x</A> and <A>y</A>
       in the semilocalization <A>R</A> of the integers.

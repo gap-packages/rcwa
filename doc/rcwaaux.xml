@@ -21,7 +21,7 @@
     <Func Name="BuildRCWAManual" Arg=""/>
     <Returns>Nothing.</Returns>
     <Description>
-      This function builds the manual of the RCWA package in the file formats
+      This function builds the manual of the &RCWA; package in the file formats
       &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
 
       This is done using the &GAPDoc; package by Frank L\"ubeck and Max Neunh\"offer.
@@ -39,7 +39,7 @@
     <Func Name="RCWATest" Arg="[ test1 [, test2 [, ... ] ] ]"/>
     <Returns>Nothing.</Returns>
     <Description>
-      Performs tests of the <Package>RCWA</Package> package. <P/>
+      Performs tests of the &RCWA; package. <P/>
 
       The arguments <A>test1</A>, <A>test2</A>, ..., if present,
       are names of tests. <P/>
@@ -78,6 +78,22 @@
       In case that all tests are to be performed, the function makes use of
       an adaptation of the test file <F>tst/testall.g</F> of the &GAP;
       library to this package.
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- ################################################################################# -->
+
+<Section Label="sec:ReadingTheExamples">
+<Heading>Reading the examples file</Heading>
+
+  <ManSection>
+    <Func Name="ReadRCWAExamples" Arg=""/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      This function reads the examples file of the &RCWA; package
+      ( this is <F>rcwa/examples/examples.g</F> ).
     </Description>
   </ManSection>
 
