@@ -31,25 +31,22 @@ statement as the Collatz conjecture has not been proved so far!):
 <![CDATA[
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
 gap> S0 := ContractionCentre(T,100,1000);
+#I  Warning: `ContractionCentre' is highly probabilistic.
+The returned result can only be regarded as a rough guess.
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
 gap> S0^T = S0; # This holds by definition of the contraction centre.
 true
-gap> Trajectory(T,15,S0,"stop");
-[ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2 ]
 gap> Trajectory(T,27,S0,"stop");
 [ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
   233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
   425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
   3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
   23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2 ]
-gap> List([1..100],n->Length(Trajectory(T,n,S0,"stop")));
-[ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11, 
-  11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7, 69, 7, 
-  20, 12, 12, 12, 66, 9, 17, 17, 17, 9, 9, 71, 71, 14, 22, 14, 22, 14, 14, 
-  68, 68, 6, 19, 19, 19, 11, 11, 11, 65, 16, 73, 16, 11, 16, 16, 24, 24, 8, 
-  16, 70, 70, 8, 8, 21, 21, 13, 21, 13, 59, 13, 13, 67, 67, 10, 75, 18, 18, 
-  18 ]
+gap> List([1..50],n->Length(Trajectory(T,n,S0,"stop")));
+[ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11,
+  11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7, 69, 7,
+  20, 12, 12, 12, 66, 9, 17, 17 ]
 gap> Maximum(List([1..1000],n->Length(Trajectory(T,n,S0,"stop"))));
 113
 gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0,"stop"))));
@@ -57,8 +54,8 @@ gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0,"stop"))));
 ]]>
 </Example>
 
-In the sequel, an example of another mapping is given, which is probably
-also contracting, but yields much longer trajectories:
+The following mapping also seems to be contracting, but its trajectories
+are much longer:
 
 <Log>
 <![CDATA[
@@ -79,6 +76,8 @@ Integral rcwa mapping with modulus 6
   5                                    | (11n - 1)/6
 
 gap> S0 := ContractionCentre(f6,1000,100000);;
+#I  Warning: `ContractionCentre' is highly probabilistic.
+The returned result can only be regarded as a rough guess.
 gap> Trajectory(f6,25,S0,"stop");
 [ 25, 21, 39, 72, 12, 2 ]
 gap> List([1..100],n->Length(Trajectory(f6,n,S0,"stop")));
@@ -93,9 +92,9 @@ gap> Maximum(Trajectory(f6,47,S0,"stop"));;
 ]]>
 </Log>
 
-Computing the trajectory of 3224 takes quite a while -- it ascends to
-about <M>3 \cdot 10^{2197}</M>, before it approaches the fixed point&nbsp;2
-after 19949562 steps. <P/>
+Computing the trajectory of 3224 takes quite a while -- this trajectory
+ascends to about <M>3 \cdot 10^{2197}</M>, before it approaches the fixed
+point&nbsp;2 after 19949562 steps. <P/>
 
 When constructing the mapping <C>f6</C>, the denominators of the
 partial mappings have been chosen to be equal and the numerators have
@@ -108,11 +107,14 @@ Although the trajectories of <C>T</C> are much shorter than those of
 <C>f6</C>, it seems likely that this does not make the problem of deciding
 whether the mapping&nbsp;<C>T</C> is contracting essentially easier --
 even for mappings with much shorter trajectories than&nbsp;<C>T</C>
-the problem seems to be equally hard -- provided that it is not trivial,
-i.e. that there is no <M>k</M> such that applying the <M>k</M>th power of
-the respective mapping to any integer decreases its absolute value.
+the problem seems to be equally hard. A solution can usually only be found
+in trivial cases, i.e. for example when there is some <M>k</M> such that
+applying the <M>k</M>th power of the respective mapping to any integer
+decreases its absolute value.
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -122,7 +124,7 @@ the respective mapping to any integer decreases its absolute value.
 In <Cite Key="Andaloro00"/>, P.&nbsp;Andaloro has shown that proving that
 trajectories of integers <M>n \in 1(16)</M> under the Collatz mapping always
 end up with&nbsp;1 would be sufficient for proving the Collatz conjecture.
-In the sequel, this result should be verified with &RCWA;. Checking that the
+In the sequel, this result is verified with &RCWA;. Checking that the
 union of the images of the residue class 1(16) under powers of the Collatz
 mapping&nbsp;<M>T</M> contains <M>\mathbb{Z} \setminus 0(3)</M> is obviously
 sufficient. Thus we proceed by setting <M>S := 1(16)</M> and successively
@@ -161,6 +163,8 @@ Further similar computations are shown in
 Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>.
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -202,29 +206,25 @@ gap> List([ML1,ML2],IsSurjective);
 [ true, true ]
 gap> List([ML1,ML2],IsInjective);
 [ false, false ]
-gap> traj1 := Trajectory(ML1,One(R),20,"length");
-[ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x, 
-  x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0, 
-  x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2, 
-  x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0, 
-  x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4, 
-  x^12+x^11+x^10+x^7+x^6+x^5+x^3, x^11+x^10+x^9+x^6+x^5+x^4+x^2, 
-  x^10+x^9+x^8+x^5+x^4+x^3+x, x^9+x^8+x^7+x^4+x^3+x^2+Z(2)^0, 
-  x^11+x^9+x^8+x^4+x^3+x^2+Z(2)^0 ]
-gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),20,"length");
-[ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0, 
-  x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0, 
-  x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0, 
-  x^10+x^8+x^7+x^5+x^4+x+Z(2)^0, x^11+x^8+x^7+x^5+x^4+x^3+x^2+x+Z(2)^0, 
-  x^12+x^10+x^9+x^8+x^7+x^5+Z(2)^0, x^13+x^10+x^7+x^4+x, 
-  x^12+x^9+x^6+x^3+Z(2)^0, x^13+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x, 
-  x^12+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
-  x^13+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
-  x^14+x^12+x^11+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
-  x^15+x^12+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0, 
-  x^16+x^14+x^13+x^11+x^10+x^7+x^6+x^4+x^3+x+Z(2)^0 ]
+gap> traj1 := Trajectory(ML1,One(R),16,"length");
+[ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x,
+  x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0,
+  x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2,
+  x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0,
+  x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4,
+  x^12+x^11+x^10+x^7+x^6+x^5+x^3 ]
+gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),16,"length");
+[ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0,
+  x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0,
+  x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0,
+  x^10+x^8+x^7+x^5+x^4+x+Z(2)^0, x^11+x^8+x^7+x^5+x^4+x^3+x^2+x+Z(2)^0,
+  x^12+x^10+x^9+x^8+x^7+x^5+Z(2)^0, x^13+x^10+x^7+x^4+x,
+  x^12+x^9+x^6+x^3+Z(2)^0, x^13+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x,
+  x^12+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0 ]
 ]]>
 </Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 The pattern which Matthews and Leigh used to show the divergence of the
 above trajectories can be recognized easily by looking at the corresponding
@@ -292,7 +292,7 @@ sheds a light on the idea behind it.
 
 <Section Label="sec:WildProductOfInvolutions">
 <Heading>
-  Three involutions whose product has coprime multiplier and divisor
+  Involutions whose product has coprime multiplier and divisor
 </Heading>
 
 It is not very easy to find tame mappings whose product is not balanced, i.e.
@@ -310,13 +310,11 @@ only wild, but even has coprime multiplier and divisor.
 <Example>
 <![CDATA[
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
-gap> f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);;
-gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);;
-gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);;
-gap> SetName(f1,"f1"); SetName(f2,"f2"); SetName(f3,"f3");
-gap> List([f1,f2,f3],Order);
-[ 2, 2, 2 ]
-gap> Display(f1);
+gap> f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);; SetName(f1,"f1");
+gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);; SetName(f2,"f2");
+gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);; SetName(f3,"f3");
+gap> List([f1,f2,f3],Order);;
+gap> Perform([f1,f2,f3],Display);
 
 Bijective rcwa mapping of Z with modulus 24, of order 2
 
@@ -328,7 +326,6 @@ Bijective rcwa mapping of Z with modulus 24, of order 2
    4 12 20                             | (3n + 8)/4
    5 11 17 23                          | (4n - 8)/3
 
-gap> Display(f2);
 
 Bijective rcwa mapping of Z with modulus 12, of order 2
 
@@ -340,7 +337,6 @@ Bijective rcwa mapping of Z with modulus 12, of order 2
    3  9                                | n
    5 11                                | (2n - 4)/3
 
-gap> Display(f3);
 
 Bijective rcwa mapping of Z with modulus 12, of order 2
 
@@ -352,6 +348,11 @@ Bijective rcwa mapping of Z with modulus 12, of order 2
    4 10                                | 2n - 1
    7                                   | (n + 1)/2
 
+]]>
+</Example>
+
+<Example>
+<![CDATA[
 gap> f := f1*f2*f3;
 <bijective rcwa mapping of Z with modulus 12>
 gap> IsTame(f);
@@ -398,6 +399,8 @@ gap> MovedPoints(G);
 0(2) U 1(6) U 5(6)
 ]]>
 </Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 The involutions <C>f1</C>, <C>f2</C> and <C>f3</C> are conjugate
 in RCWA(<M>\mathbb{Z}</M>):
@@ -504,6 +507,13 @@ gap> LogInt(Trajectory(f12,2,1000,"length")[1000],10);
 300
 gap> Trajectory(f12,2,20,"length") mod 12;
 [ 2, 5, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> Display(f12); # Once a trajectory enters 1(12), it gets stuck there:
 
 Bijective rcwa mapping of Z with modulus 12
@@ -559,6 +569,8 @@ As already observed, the situation concerning <C>f13</C> and <C>f23</C>
 looks quite a bit different. We take a closer look at the <Q>smaller</Q> one
 of these two examples:
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> components := FactorizationOnConnectedComponents(f23,Modulus(f23));
@@ -572,23 +584,6 @@ gap> List(components{[1,2]},Order); # We can split off two involutions.
 gap> f23c := components[3];; SetName(f23c,"f23c"); # The complicate part.
 gap> f23c^-1;
 <bijective rcwa mapping of Z with modulus 72>
-gap> Display(f23c);
-
-Bijective rcwa mapping of Z with modulus 72
-
-               n mod 72                |                n^f23c
----------------------------------------+--------------------------------------
-   0  8 16 24 32 40 48 56 64           | (3n + 8)/4
-   1 19 37 55                          | (2n - 2)/3
-   2 10 14 22 26 34 38 46 50 58 62 70  | (3n + 4)/2
-   3  6  9 11 15 18 21 27 29 30 33 39  | 
-  42 45 47 51 54 57 63 65 66 69        | n
-   4 12 20 28 36 44 52 60 68           | (3n + 4)/4
-   5 23 41 59                          | (4n - 17)/3
-   7 25 43 61                          | (4n - 7)/3
-  13 31 49 67                          | (4n - 13)/3
-  17 35 53 71                          | (4n - 11)/3
-
 gap> Difference(Integers,MovedPoints(f23c));
 3(6) U 6(12) U 11(18) U [ 4, 7, 8, 13 ]
 gap> powers := List([1..4],k->f23c^k);
@@ -623,6 +618,8 @@ of the <Q>phenomenon</Q> of wild mappings having only finite cycles will be
 continued in Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -678,6 +675,13 @@ gap> List(l,k->Order(Comm(u,nu^k)));
   5, 3, 5, 5, 3, infinity, 7, infinity, 7, 5, 3, infinity, infinity, 3, 5, 7, 
   infinity, 7, infinity, 3, 5, 5, 3, 5, infinity, infinity, infinity, 5, 3, 
   5, 5, 3 ]
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> Display(Comm(u,nu^13));
 
 Bijective rcwa mapping of Z with modulus 9
@@ -746,9 +750,9 @@ a <Q>minimal</Q> example. <P/>
 Over <M>R</M> = GF(<M>q</M>)[<M>x</M>], constructing such mappings is easy
 since the degree function gives rise to a partition of <M>R</M> into
 finite sets which is left invariant by suitable wild rcwa mappings.
-Over <M>R = \mathbb{Z}</M> however the situation looks completely
-different -- there is no such <Q>natural</Q> partition into finite sets
-which can be fixed by a wild rcwa mapping.
+Over <M>R = \mathbb{Z}</M> however the situation looks different --
+there is no such <Q>natural</Q> partition into finite sets which can be
+fixed by a wild rcwa mapping.
 
 <Example>
 <![CDATA[
@@ -771,27 +775,22 @@ Bijective rcwa mapping of Z with modulus 12
    8                                   | (n + 1)/3
   11                                   | 2n - 2
 
-gap> List([-50..50],n->Length(Cycle(kappa,n)));
-[ 13, 13, 1, 1, 4, 4, 4, 1, 7, 7, 7, 1, 10, 10, 1, 1, 13, 13, 4, 1, 4, 4, 7, 
-  1, 10, 10, 1, 1, 4, 4, 7, 1, 10, 10, 4, 1, 7, 7, 1, 1, 7, 7, 4, 1, 4, 4, 2, 
-  1, 1, 2, 1, 1, 4, 4, 4, 1, 7, 7, 4, 1, 7, 7, 1, 1, 10, 10, 7, 1, 4, 4, 7, 
-  1, 10, 10, 1, 1, 4, 4, 4, 1, 13, 13, 7, 1, 10, 10, 1, 1, 7, 7, 4, 1, 4, 4, 
-  10, 1, 13, 13, 1, 1, 4 ]
+gap> List([-32..32],n->Length(Cycle(kappa,n)));
+[ 4, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 7, 1, 10, 10, 4, 1, 7, 7, 1, 1, 7, 7,
+  4, 1, 4, 4, 2, 1, 1, 2, 1, 1, 4, 4, 4, 1, 7, 7, 4, 1, 7, 7, 1, 1, 10, 10,
+  7, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 4, 1, 13, 13, 7 ]
 gap> List([2..14],k->Maximum(List([1..2^k],n->Length(Cycle(kappa,n)))));
 [ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
 gap> List([2..14],k->Length(Cycle(kappa,2^k-2)));
 [ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
-gap> Cycle(kappa,2^16-2);
-[ 65534, 98302, 147454, 221182, 331774, 497662, 746494, 1119742, 1679614, 
-  2519422, 3779134, 5668702, 8503054, 12754582, 19131874, 28697812, 57395624, 
-  19131875, 38263748, 12754583, 25509164, 8503055, 17006108, 5668703, 
-  11337404, 3779135, 7558268, 2519423, 5038844, 1679615, 3359228, 1119743, 
-  2239484, 746495, 1492988, 497663, 995324, 331775, 663548, 221183, 442364, 
-  147455, 294908, 98303, 196604, 65535 ]
+gap> Cycle(kappa,2^12-2);
+[ 4094, 6142, 9214, 13822, 20734, 31102, 46654, 69982, 104974, 157462,
+  236194, 354292, 708584, 236195, 472388, 157463, 314924, 104975, 209948,
+  69983, 139964, 46655, 93308, 31103, 62204, 20735, 41468, 13823, 27644,
+  9215, 18428, 6143, 12284, 4095 ]
 gap> last mod 12;
-[ 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 8, 11, 8, 11, 
-  8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 
-  11, 8, 11, 8, 3 ]
+[ 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 8, 11, 8, 11, 8, 11, 8, 11,
+  8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 3 ]
 gap> lengthstatistics := Collected(List(ShortOrbits(Group(kappa),
 >                                                   [1..12^4],100),Length));
 [ [ 1, 6912 ], [ 4, 1728 ], [ 7, 864 ], [ 10, 432 ], [ 13, 216 ], 
@@ -799,6 +798,8 @@ gap> lengthstatistics := Collected(List(ShortOrbits(Group(kappa),
   [ 34, 2 ], [ 37, 1 ], [ 40, 1 ] ]
 ]]>
 </Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 We would like to determine a partition of&nbsp;<M>\Z</M> into unions of
 cycles of equal length:
@@ -853,6 +854,11 @@ gap> Sum(last2);
 47/144
 gap> Density(Union(cycle10));
 47/432
+]]>
+</Example>
+
+<Example>
+<![CDATA[
 gap> P := List(C,S->Union(Cycle(kappa,S)));;
 gap> for S in P do View(S); Print("\n"); od;
 1(4) U 0(12) U [ -2 ]
@@ -898,6 +904,13 @@ gap> Multpk(elm1,3,-1)^elm1;
 3(4)
 gap> fact1 := RcwaMapping([[rc(4,6),rc(8,12)]]);
 <rcwa mapping of Z with modulus 12>
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> elm2 := elm1/fact1;
 <rcwa mapping of Z with modulus 12>
 gap> Display(elm2);
@@ -933,9 +946,7 @@ gap> fact3 := RcwaMapping([[rc(2,4),rc(3,4)]]);
 <rcwa mapping of Z with modulus 4>
 gap> elm4 := elm3/fact3;
 IdentityMapping( Integers )
-gap> kappafacts := [ RcwaMapping([[rc(2,4),rc(3,4)]]),
->                    RcwaMapping([[rc(3,4),rc(8,12)]]),
->                    RcwaMapping([[rc(4,6),rc(8,12)]]) ];
+gap> kappafacts := [ fact3, fact2, fact1 ];
 [ <rcwa mapping of Z with modulus 4>, <rcwa mapping of Z with modulus 12>,
   <rcwa mapping of Z with modulus 12> ]
 gap> List(kappafacts,Order);
@@ -946,6 +957,8 @@ true
 </Example>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -1006,14 +1019,15 @@ gap> Collected(List(ShortOrbits(G,AllResidues(R,x^4),100),Length));
 ]]>
 </Example>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 Changing the generators a little causes the group structure to change a lot:
 
 <Example>
 <![CDATA[
 gap> cg[1][2] := cg[1][2] + (x^2 + e) * p * q;;
 gap> ch[7][2] := ch[7][2] + x * r * s;;
-gap> g := RcwaMapping( R, q, cg );;
-gap> h := RcwaMapping( R, s, ch );;
+gap> g := RcwaMapping( R, q, cg );; h := RcwaMapping( R, s, ch );;
 gap> G := Group(g,h);
 <rcwa group over GF(4)[x] with 2 generators>
 gap> orb := Orbit(G,Zero(R));;
@@ -1030,9 +1044,7 @@ gap> Length(orb);
 512
 gap> H := Action(G,orb);
 <permutation group with 2 generators>
-gap> IsNaturalSymmetricGroup(H);
-false
-gap> IsNaturalAlternatingGroup(H);
+gap> IsNaturalSymmetricGroup(H) or IsNaturalAlternatingGroup(H);
 false
 gap> blk := Blocks(H,[1..512]);;
 gap> List(blk,Length);
@@ -1067,6 +1079,13 @@ gap> s := RcwaMapping([[1,0,1],[1,1,1],[3,6,1],
 >                      [1,0,3],[1,1,1],[3,6,1],
 >                      [1,0,1],[1,1,1],[3,-21,1]]);;
 gap> SetName(r,"r"); SetName(s,"s");
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> Display(r);
 
 Rcwa mapping of Z with modulus 9
@@ -1243,6 +1262,69 @@ gap> RankOfKernelOfActionOnClassPartition(G);
 
 </Section>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:CheckingForSolvability">
+<Heading>Checking for solvability</Heading>
+
+Is the group generated by the mappings <A>a</A> and <A>b</A> from the last
+paragraph solvable? <P/>
+
+This group is wild. Presently there is no general method available for
+testing wild rcwa groups for solvability. But nevertheless, for the given
+group this question can be decided to the negative. The idea is to find a
+subgroup <A>U</A> which acts on a finite set <A>S</A> of integers,
+and induces on <A>S</A> a non-solvable finite permutation group:
+
+<Example>
+<![CDATA[
+gap> G := Group(a,b);;
+gap> ShortOrbits(G,[-10..10],100);
+[ [ -10 ], [ -9 ], [ -30, -21, -14, -13, -11, -8 ], [ -7 ], [ -6 ],
+  [ -12, -5, -4, -3, -2, 1 ], [ -1 ], [ 0 ], [ 2 ], [ 3 ],
+  [ 4, 5, 6, 7, 10, 15 ], [ 8 ], [ 9 ] ]
+gap> S := [ 4, 5, 6, 7, 10, 15 ];;
+gap> Cycle(Comm(a,b),4);
+[ 4, 7, 10, 15, 5, 6 ]
+gap> elm := RepresentativeAction(G,S,Permuted(S,(1,4)),OnTuples);
+<bijective rcwa mapping of Z with modulus 81>
+gap> List(S,n->n^elm);
+[ 7, 5, 6, 4, 10, 15 ]
+gap> U := Group(Comm(a,b),elm);
+<rcwa group over Z with 2 generators>
+gap> Action(U,S);
+Group([ (1,4,5,6,2,3), (1,4) ])
+gap> DisplayCompositionSeries(CompositionSeries(last));
+G (2 gens, size 720)
+ | Z(2)
+S (4 gens, size 360)
+ | A(6) ~ A(1,9) = L(2,9) ~ B(1,9) = O(3,9) ~ C(1,9) = S(2,9) ~ 2A(1,9) = U(2,9)
+1 (0 gens, size 1)
+]]>
+</Example>
+
+Thus, the subgroup <A>U</A> induces on <A>S</A> a natural symmetric group
+of degree&nbsp;6. Hence the group&nbsp;<A>G</A> is not solvable, as claimed.
+We finish this example by factoring the group element <A>elm</A> into
+generators:
+
+<Example>
+<![CDATA[
+gap> F := FreeGroup("a","b");
+<free group on the generators [ a, b ]>
+gap> RepresentativeActionPreImage(G,S,Permuted(S,(1,4)),OnTuples,F);
+a^-2*b^-2*a*b*a^-1*b*a*b^-2*a
+gap> a^-2*b^-2*a*b*a^-1*b*a*b^-2*a = elm;
+true
+]]>
+</Example>
+
+</Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <!-- #################################################################### -->
 
 <Section Label="sec:LocalExample">
@@ -1250,7 +1332,7 @@ gap> RankOfKernelOfActionOnClassPartition(G);
 
 We start with something one can observe when trying to <Q>transfer</Q> an
 rcwa mapping from the ring of integers to one of its localizations (we take
-the mapping <C>a</C> from the last example):
+the mapping <C>a</C> from the previous examples):
 
 <Example>
 <![CDATA[
@@ -1300,18 +1382,10 @@ gap> List(ShortOrbits(Group(a23),[0..50]/7,50),orb->Cycle(a23,orb[1]));
   [ 4, 6, 9, 7, 5 ] ]
 gap> List(last,Length);
 [ 1, 2, 6, 1, 2, 5 ]
-gap> List(ShortOrbits(Group(a23),[0..50]/11,50),orb->Cycle(a23,orb[1]));
-[ [ 0 ], [ -5/11, -1/11, 2/11, 3/11, 5/11, 1/11, -2/11, -3/11 ], 
-  [ 4/11, 6/11, 9/11 ], [ 1 ], 
-  [ 16/11, 24/11, 36/11, 54/11, 81/11, 58/11, 87/11, 68/11, 102/11, 153/11, 
-      112/11, 168/11, 252/11, 378/11, 567/11, 428/11, 642/11, 963/11, 725/11, 
-      541/11, 403/11, 305/11, 226/11, 339/11, 257/11, 190/11, 285/11, 211/11, 
-      161/11, 118/11, 177/11, 130/11, 195/11, 149/11, 109/11, 79/11, 62/11, 
-      93/11, 67/11, 53/11, 37/11, 25/11 ], [ 2, 3 ], [ 4, 6, 9, 7, 5 ] ]
-gap> List(last,Length);
-[ 1, 8, 3, 1, 42, 2, 5 ]
 ]]>
 </Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 But the group structure remains invariant under the <Q>transfer</Q> of
 a group with prime set <M>\{2,3\}</M> from <M>\Z</M> to <M>\Z_{(2,3)}</M>:
@@ -1364,6 +1438,13 @@ Rcwa mapping of Z with modulus 8
   3 7                                  | n - 1
   5                                    | (n + 1)/2
 
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> IsInjective(v);
 true
 gap> IsSurjective(v);
@@ -1413,6 +1494,8 @@ the end of the example would not be surjective.
 
 </Section>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <!-- #################################################################### -->
 
 <Section Label="sec:Twisting257CyclesToModulus32">
@@ -1426,24 +1509,16 @@ graph and then to assign suitable affine mappings to its vertices.
 
 <Example>
 <![CDATA[
-gap> x := RcwaMapping([[ 16,  2,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1, 16,  1], [ 16, 18,  1],
->                      [  1,  0, 16], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [ 16, 18,  1],
->                      [  1,-14,  1], [  1,-31,  1]]);;
-gap> SetName(x,"x");
-gap> Display(x);
+gap> x := RcwaMapping(
+>           [[ 16,  2,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>            [  1,  0, 16], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [  1,-31,  1]]);;
+gap> SetName(x,"x"); Display(x);
 
 Rcwa mapping of Z with modulus 32
 
@@ -1459,17 +1534,6 @@ Rcwa mapping of Z with modulus 32
 
 gap> Order(x);
 257
-gap> List([-20..20],n->n^x);
-[ -4, -286, -2, -254, -1, -222, -28, -190, -26, -158, -24, -126, -22, -94, 
-  -20, -62, -18, -30, -16, -32, 2, 34, 18, 66, 20, 98, 22, 130, 24, 162, 26, 
-  194, 28, 226, 30, 258, 1, 290, 4, 322, 6 ]
-]]>
-</Example>
-
-A cycle of this permutation looks as follows:
-
-<Example>
-<![CDATA[
 gap> Cycle(x,[1],0);
 [ 0, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30, 16, 1, 34, 50, 36, 
   52, 38, 54, 40, 56, 42, 58, 44, 60, 46, 62, 48, 3, 66, 82, 68, 84, 70, 86, 
@@ -1494,6 +1558,8 @@ gap> Length(last);
 </Example>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
