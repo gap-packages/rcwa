@@ -49,8 +49,9 @@ InstallGlobalFunction( Z_pi,
 
   function ( pi )
 
-    if not ForAll(pi,IsPrimeInt)
-    then Error("Z_pi( <pi> ): <pi> must be a set of primes.\n"); fi;
+    if IsInt( pi ) and IsPrimeInt( pi ) then pi := [ pi ]; fi;
+    if not IsList( pi ) or not ForAll( pi, IsPrimeInt )
+    then Error( "Z_pi( <pi> ): <pi> must be a set of primes.\n" ); fi;
     return Z_piCons( IsRing, Set( pi ) );
   end );
 

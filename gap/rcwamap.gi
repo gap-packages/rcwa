@@ -1006,7 +1006,7 @@ InstallMethod( LaTeXObj,
   function ( f )
 
     local  c, m, mred, str, affs, maxafflng, t, poses, pos, res,
-           append, i, j;
+           indent, append, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
@@ -1014,14 +1014,22 @@ InstallMethod( LaTeXObj,
     end;
 
     c := Coefficients(f); m := Length(c);
-    str := "n \\ \\mapsto \\\n\\begin{cases}\n";
+    if m = 1 then
+      return Concatenation("n \\ \\mapsto \\ ",
+                           LaTeXIntegralAffineMapping(c[1]));
+    fi;
+    indent := ValueOption("Indentation");
+    if not IsPosInt(indent)
+    then indent := ""; else indent := String(" ",indent); fi;
+    str := indent;
+    append("n \\ \\longmapsto \\\n",indent,"\\begin{cases}\n");
     poses := AsSortedList( List( Set(c),
                                  t -> Filtered( [0..m-1],
                                                 i -> c[i+1] = t ) ) );
     affs := List( c, LaTeXIntegralAffineMapping );
     maxafflng := Maximum( List( affs, Length ) );
     for pos in poses do
-      append( "  ", affs[ pos[1] + 1 ],
+      append( indent, "  ", affs[ pos[1] + 1 ],
               String( " ", maxafflng - Length( affs[pos[1]+1] ) + 1 ) );
       append(" & \\text{if} \\ n \\equiv ");
       mred := Minimum( Filtered( DivisorsInt(m),
@@ -1037,7 +1045,7 @@ InstallMethod( LaTeXObj,
       then append(".\n");
       else append(", \\\\\n"); fi;
     od;
-    append("\\end{cases}\n");
+    append(indent,"\\end{cases}\n");
     return str;
   end );
 
@@ -2116,6 +2124,26 @@ InstallOtherMethod( IsUnit,
 
 #############################################################################
 ##
+#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
+##
+##  The `factors of multiplier and divisor' criterion.
+##
+InstallMethod( Order,
+               "for rcwa mappings, factors of mult. and div. - criterion",
+               true, [ IsRcwaMapping ], 50,
+
+  function ( f )
+
+    local  R, mult, div;
+
+    R := Source(f);
+    mult := Multiplier(f); div := Divisor(f);
+    if Set(Factors(R,mult)) <> Set(Factors(R,div))
+    then return infinity; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  Order( <f> ) . . . . . . . . . . . . . .  for rational-based rcwa mapping
 ##
 ##  This method tests whether <f> satisfies one sufficient criterium for
@@ -2252,6 +2280,27 @@ InstallMethod( PrimeSet,
                        Set(Factors(Source(f),Multiplier(f))),
                        Set(Factors(Source(f),Divisor(f)))),
                  x -> IsIrreducibleRingElement( Source( f ), x ) ) );
+
+#############################################################################
+##
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+##  The `factors of multiplier and divisor' criterion.
+##  This is only applicable for bijective mappings, e.g. n -> 2n
+##  certainly isn't wild.
+##
+InstallMethod( IsTame,
+               "for bijective rcwa mappings", true, [ IsRcwaMapping ], 50,
+
+  function ( f )
+
+    local  R, mult, div;
+
+    if not IsBijective(f) then TryNextMethod(); fi;
+    R := Source(f); mult := Multiplier(f); div := Divisor(f);
+    if Set(Factors(R,mult)) <> Set(Factors(R,div))
+    then return false; else TryNextMethod(); fi;
+  end );
 
 #############################################################################
 ##
