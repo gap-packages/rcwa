@@ -1050,6 +1050,18 @@ gap> AsOrdinaryUnionOfResidueClasses(last2);
 <union of 8 residue classes (mod 16)>
 gap> Residues(last);
 [ 2, 8, 9, 11, 12, 13, 14, 15 ]
+gap> DecreasingOn(T);
+0(2)
+gap> DecreasingOn(T^2);
+0(2) U 1(4)
+gap> DecreasingOn(T^3);
+0(4) U 2(8) U 5(8)
+gap> DecreasingOn(a);
+1(2)
+gap> DecreasingOn(a^2);
+1(8) U 7(8)
+gap> DecreasingOn(a^3);
+<union of 8 residue classes (mod 16)>
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
