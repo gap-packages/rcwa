@@ -15,12 +15,12 @@ computing with residue class-wise affine groups.
 <!-- #################################################################### -->
 
 <Section Label="sec:ContructingRcwaGroups">
-<Heading>Constructing rcwa groups</Heading>
+<Heading>Constructing residue class-wise affine groups</Heading>
 
-Rcwa groups can be constructed using either <C>Group</C>,
-<C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
-(see the reference manual). Note that currently except of the groups
-RCWA(<M>R</M>) only finitely generated rcwa groups are supported.
+Residue class-wise affine groups can be constructed using either
+<C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>,
+as usual (see the reference manual). Note that currently except of the
+groups RCWA(<M>R</M>) only finitely generated rcwa groups are supported.
 
 <Example>
 <![CDATA[
@@ -39,7 +39,10 @@ infinity
 ]]>
 </Example>
 
-All rcwa groups over a ring <M>R</M> are subgroups of RCWA(<M>R</M>).
+For rcwa groups, there are methods available for the operations
+<C>Display</C> and <C>Print</C>. <P/>
+
+All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
 constructed as described above. It is handled as a special case:
 
@@ -50,6 +53,7 @@ constructed as described above. It is handled as a special case:
     of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> RCWA_Z := RCWA(Integers);
@@ -66,8 +70,7 @@ gap> IsPerfect(RCWA_Z);
 false
 gap> Centre(RCWA_Z);
 Trivial rcwa group over Z
-gap> IsSubgroup(RCWA_Z, Group(RcwaMapping([[-1,0,1]]),
->                             RcwaMapping((1,2,3),[1..4]),
+gap> IsSubgroup(RCWA_Z, Group(RcwaMapping((1,2,3),[1..4]),
 >                             RcwaMapping(2,[[0,1],[1,0],[2,3],[3,2]])));
 true
 ]]>
@@ -76,7 +79,7 @@ true
 </ManSection>
 
 <ManSection>
-  <Meth Name="Random" Arg="RCWA( Integers )" Label="RCWA( Integers )"/>
+  <Meth Name="Random" Arg="RCWA_Z" Label="RCWA( Integers )"/>
   <Returns>
     A pseudo-random element of the group RCWA(<M>\mathbb{Z}</M>).
   </Returns>
@@ -109,12 +112,14 @@ Bijective rcwa mapping of Z with modulus 60
 
 ]]>
 </Log>
+
     The elements returned by this method are obtained by multiplying
     class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
     class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
     class transpositions (see <Ref Func="ClassTransposition"
                               Label="r1, m1, r2, m2"/>).
     These factors are stored as an attribute value:
+
 <Log>
 <![CDATA[
 gap> Perform(FactorizationIntoGenerators(elm),Display);
@@ -167,8 +172,10 @@ Rcwa mapping of Z with modulus 2
   </Description>
 </ManSection>
 
-Another possible way to get an rcwa group is by <Q>translating</Q> a
-permutation group, or by taking the image of an rcwa representation.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+Another possible way to get an rcwa group is by taking the image of an
+rcwa representation, or by <Q>translating</Q> a permutation group:
 
 <ManSection>
   <Attr Name="IsomorphismRcwaGroup" Arg="G" Label="G"/>
@@ -202,9 +209,6 @@ gap> List(DerivedSeries(H),Size);
 </Example>
   </Description>
 </ManSection>
-
-For rcwa groups, there are methods available for the operations
-<C>Display</C> and <C>Print</C>.
 
 </Section>
 
@@ -260,9 +264,9 @@ gap> Modulus(Group(a,b));
     to&nbsp;0. <P/>
 
     Some methods for determining whether an rcwa group is tame are
-    probabilistic.If such a method is used, a warning at warning level&nbsp;1
-    is issued. A positive result (return value is <C>true</C>) is always
-    correct.
+    probabilistic. If such a method is used, a warning at warning
+    level&nbsp;1 is issued. A positive result (return value is <C>true</C>)
+    is always correct.
 <Example>
 <![CDATA[
 gap> IsTame(G);
@@ -315,10 +319,10 @@ for <C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>.
   </Returns>
   <Description>
     Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
-    This will be successful if <A>G</A> is tame. For wild groups only a
-    number of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C>
-    the method will give information about reasons why <A>g</A> is an
-    element of <A>G</A> or not.
+    This will be successful if <A>G</A> is tame and class-wise
+    order-preserving. For wild groups only a number of easy cases are
+    covered. On <C>InfoLevel(InfoRCWA) = 3</C> the method will give
+    information about reasons why <A>g</A> is an element of <A>G</A> or not.
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
@@ -363,6 +367,8 @@ gap> phi := IsomorphismPermGroup(H);
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Attr Name="IsomorphismMatrixGroup" Arg="G" Label="G"/>
@@ -444,7 +450,8 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
     The homomorphism <A>phi</A> must map the generators of the free
     group to the generators of the rcwa group one-by-one.
     This method is also suitable for wild groups. The implementation
-    is based on <Ref Oper="RepresentativeActionPreImage"/>.
+    is based on <Ref Oper="RepresentativeActionPreImage"
+                     Label="G, src, dest, act, F"/>.
 <Example>
 <![CDATA[
 gap> G := Group(g,h);
@@ -480,6 +487,8 @@ IdentityMapping( Integers )
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Oper Name ="PreImagesRepresentatives" Arg="phi, g" Label="phi, g"/>
@@ -589,13 +598,9 @@ There is a `class shift' on the residue class 0(12).
 #I  Size: use action on respected class partition.
 #I  KernelOfActionOnClassPartition: gen. #1, lng = 1
 #I  KernelOfActionOnClassPartition: gen. #2, lng = 2
-#I  KernelOfActionOnClassPartition: gen. #4, lng = 3
-#I  KernelOfActionOnClassPartition: gen. #5, lng = 4
-#I  KernelOfActionOnClassPartition: gen. #7, lng = 5
-#I  KernelOfActionOnClassPartition: gen. #8, lng = 6
-#I  KernelOfActionOnClassPartition: gen. #10, lng = 7
-#I  KernelOfActionOnClassPartition: gen. #12, lng = 8
-#I  KernelOfActionOnClassPartition: gen. #13, lng = 9
+
+                       [ ... ]
+
 #I  KernelOfActionOnClassPartition: gen. #14, lng = 10
 #I  Searching for class shifts ...
 #I  ... in generators
@@ -616,7 +621,7 @@ gap> RCWAInfo(0);
   <Meth Name="RepresentativeAction"
         Arg="G, src, dest, act" Label="G, src, dest, act"/>
   <Returns>
-    An element of <A>G</A> that maps <A>src</A> to&nbsp;<A>dest</A>
+    An element of <A>G</A> which maps <A>src</A> to&nbsp;<A>dest</A>
     under the action given by&nbsp;<A>act</A>.
   </Returns>
   <Description>
@@ -624,11 +629,11 @@ gap> RCWAInfo(0);
     either returns <C>fail</C> or runs into an infinite loop.
     The problem of whether <A>src</A> and <A>dest</A> lie in the same
     orbit under the action of <A>G</A> in general seems to be hard.
-    The given method is based on <Ref Oper="RepresentativeActionPreImage"/>,
-    and it basically just computes an image under an homomorphism. As this
-    involves multiplications of rcwa mappings, this can be quite expensive
-    if the group <A>G</A> is wild, the preimage is a rather long word and
-    coefficient explosion occurs.
+    The given method is based on <Ref Oper="RepresentativeActionPreImage"
+    Label="G, src, dest, act, F"/>, and it basically just computes an image
+    under an homomorphism. As this involves multiplications of rcwa mappings,
+    this can be quite expensive if the group <A>G</A> is wild, the preimage
+    is a rather long word and coefficient explosion happens to occur.
 <Example>
 <![CDATA[
 gap> G := Group(a,b);
@@ -668,10 +673,8 @@ Bijective rcwa mapping of Z with modulus 9
 
 gap> List([5,4,9],n->n^g);
 [ 13, 5, 4 ]
-gap> g := RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
+gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
 <bijective rcwa mapping of Z with modulus 256>
-gap> List([7,4,9],n->n^g);
-[ 4, 5, 8 ]
 ]]>
 </Example>
   </Description>
@@ -698,7 +701,8 @@ gap> List([7,4,9],n->n^g);
     computations of the orbits of <A>src</A> and <A>dest</A> until they
     intersect non-trivially. It avoids multiplying rcwa mappings.
     Of course the other warnings given in the description of
-    <Ref Meth="RepresentativeAction"/> apply to this operation, too.
+    <Ref Meth="RepresentativeAction" Label="G, src, dest, act"/>
+    apply to this operation, too.
 <Example>
 <![CDATA[
 gap> F := FreeGroup("a","b");;
@@ -818,12 +822,12 @@ gap> ShortOrbits(Group(u),[-30..30],100);
   <Returns>
     A partition of <C>[0..<A>m</A>-1]</C>, such that <M>i</M> and
     <M>j</M> lie in the same subset if and only if there is an element
-    <M>g</M> in <A>G</A> which moves an element from the residue class
+    <M>g</M> of <A>G</A> which moves an element from the residue class
     <M>i(m)</M> to the residue class <M>j(m)</M>.
   </Returns>
   <Description>
     The argument <A>G</A> must be an rcwa group over <M>\mathbb{Z}</M>.
-    See also <Ref Oper ="OrbitsModulo" Label="f"/> for rcwa mappings.
+    See also <Ref Oper ="OrbitsModulo" Label="f, m"/> for rcwa mappings.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(G,72);
@@ -939,6 +943,8 @@ gap> List(GeneratorsOfGroup(K),k->Factorization(G,k)); # Requires GAP >= 4.5.
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G" Label="G"/>
   <Returns>
@@ -962,7 +968,8 @@ gap> L := KernelOfActionOnClassPartitionHNFMat(G);
 </ManSection>
 
 There are methods for <C>IsSolvable</C> and <C>IsPerfect</C>
-available for tame rcwa groups over&nbsp;<M>\mathbb{Z}</M>.
+available for tame rcwa groups over&nbsp;<M>\mathbb{Z}</M>,
+and often also the derived subgroup can be computed:
 
 <Example>
 <![CDATA[
@@ -987,7 +994,7 @@ infinity
 <Heading>Conjugacy in RCWA(R)</Heading>
 
 <ManSection>
-  <Meth Name="IsConjugate" Arg="RCWA( Integers ), f, g"
+  <Meth Name="IsConjugate" Arg="RCWA_Z, f, g"
                            Label="RCWA( Integers ), f, g"/>
   <Returns>
     <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
@@ -1010,15 +1017,15 @@ false
 </ManSection>
 
 <ManSection>
-  <Meth Name="RepresentativeAction" Arg="G, f, g" Label="G, f, g"/>
+  <Meth Name="RepresentativeAction" Arg="RCWA_Z, f, g"
+                                    Label="RCWA( Integers ), f, g"/>
   <Returns>
     An rcwa mapping&nbsp;<C>x</C> such that
     <C><A>f</A>&circum;x = <A>g</A></C>, if such an <C>x</C>
     exists and <C>fail</C> otherwise.
   </Returns>
   <Description>
-    This method covers the case that <C><A>G</A> = RCWA(Integers)</C>
-    and <A>f</A> and&nbsp;<A>g</A> are tame rcwa mappings of&nbsp;<M>\Z</M>.
+    This method works for tame rcwa mappings of&nbsp;<M>\Z</M>.
 <Example>
 <![CDATA[
 gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
@@ -1064,27 +1071,24 @@ Bijective rcwa mapping of Z with modulus 24, of order 12
     In the author's forthcoming PhD Thesis, it will be proved that such a
     representative exists. Since the result is not defined uniquely,
     methods for this operation will just choose one such mapping.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
-gap> g_int := IntegralConjugate(g);;
-gap> Display(g_int);
-
-Bijective rcwa mapping of Z with modulus 14, of order 7
-
-               n mod 14                |                 n^f
----------------------------------------+--------------------------------------
-   0                                   | n + 10
-   1  6                                | n + 3
-   2                                   | n + 9
-   3  8                                | n - 3
-   4  9                                | n - 2
-   5                                   | n + 7
-   7                                   | n + 6
-  10                                   | n - 9
-  11                                   | n - 8
-  12                                   | n - 6
-  13                                   | n - 5
-
+gap> Print(LaTeXObj(IntegralConjugate(g)));
+n \ \longmapsto \
+\begin{cases}
+  n + 10 & \text{if} \ n \equiv 0 \ (14), \\
+  n + 3  & \text{if} \ n \equiv 1, 6 \ (14), \\
+  n + 9  & \text{if} \ n \equiv 2 \ (14), \\
+  n - 3  & \text{if} \ n \equiv 3, 8 \ (14), \\
+  n - 2  & \text{if} \ n \equiv 4, 9 \ (14), \\
+  n + 7  & \text{if} \ n \equiv 5 \ (14), \\
+  n + 6  & \text{if} \ n \equiv 7 \ (14), \\
+  n - 9  & \text{if} \ n \equiv 10 \ (14), \\
+  n - 8  & \text{if} \ n \equiv 11 \ (14), \\
+  n - 6  & \text{if} \ n \equiv 12 \ (14), \\
+  n - 5  & \text{if} \ n \equiv 13 \ (14).
+\end{cases}
 ]]>
 </Example>
   </Description>
@@ -1105,8 +1109,7 @@ Bijective rcwa mapping of Z with modulus 14, of order 7
     IntegralConjugate(<A>f</A>)</C>.
 <Example>
 <![CDATA[
-gap> g_to_int := IntegralizingConjugator(g);;
-gap> Display(g_to_int);
+gap> Display(IntegralizingConjugator(g));
 
 Bijective rcwa mapping of Z with modulus 24
 
@@ -1127,8 +1130,6 @@ Bijective rcwa mapping of Z with modulus 24
   14                                   | (7n + 46)/12
   20                                   | (7n + 16)/12
 
-gap> g^g_to_int = g_int;
-true
 ]]>
 </Example>
   </Description>
@@ -1147,7 +1148,7 @@ true
     cycle always yields a new cycle. <P/>
 
     Since &GAP;-permutations cannot move negative integers, rationals
-    or even polynomials, the cycles are returned as lists, for example
+    or even polynomials, the cycles are returned as lists. For example,
     the list <C>[-3,1,2,-2]</C> denotes the cycle <C>(-3,1,2,-2)</C>.
     Mappings having different sets of finite cycle lengths are obviously
     not conjugate in RCWA(<M>R</M>).
@@ -1252,14 +1253,11 @@ rcwa groups (regardless of whether they are tame or not):
   </Returns>
   <Description>
     As there is no unique or canonical way to embed a direct product
-    of rcwa groups into RCWA(<M>R</M>), this method may choose any
-    such embedding.
+    of rcwa groups into RCWA(<M>\mathbb{Z}</M>), this method may choose
+    any such embedding.
 <Example>
 <![CDATA[
-gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));
-<rcwa group over Z with 5 generators>
-gap> List(GeneratorsOfGroup(G),Order);
-[ 7, 12, infinity, infinity, infinity ]
+gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));;
 gap> Embedding(G,1);
 [ g, h ] -> [ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
   <bijective rcwa mapping of Z with modulus 18, of order 12> ]

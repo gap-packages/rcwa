@@ -1072,6 +1072,8 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Func Name="IncreasingOn" Arg="f" Label="f"/>
   <Func Name="DecreasingOn" Arg="f" Label="f"/>
@@ -1092,8 +1094,6 @@ gap> List([1..3],k->DecreasingOn(T^k));
 [ 0(2), 0(2) U 1(4), 0(4) U 2(8) U 5(8) ]
 gap> List([1..3],k->IncreasingOn(a^k));
 [ 0(2), 0(2) U 3(8) U 5(8), 0(4) U 2(16) U 5(16) U 11(16) U 14(16) ]
-gap> List([1..3],k->DecreasingOn(a^k));
-[ 1(2), 1(8) U 7(8), <union of 8 residue classes (mod 16)> ]
 ]]>
 </Example>
   </Description>
@@ -1148,12 +1148,10 @@ gap> S0 := ContractionCentre(T,100,1000);
     Nothing particular is guaranteed.
 <Example>
 <![CDATA[
-gap> Divergence(T);
+gap> List( [ T, a ], Divergence );
 #I  Warning: Divergence: no particular return value is guaranteed.
-0.866025
-gap> Divergence(a);
 #I  Warning: Divergence: no particular return value is guaranteed.
-1.06066
+[ 0.866025, 1.06066 ]
 ]]>
 </Example>
   </Description>
@@ -1167,10 +1165,11 @@ gap> Divergence(a);
   <Description>
     In the notation introduced in the definition of an rcwa mapping,
     the <E>image density</E> of <M>f</M> is defined by
-    <M>\sum_{r(m) \in R/mR} |R/c_{r(m)}R|/|R/a_{r(m)}R|</M>.
-    Injective rcwa mappings have an image density of at most&nbsp;1, and the
-    image density of a surjective rcwa mapping is at least&nbsp;1 -- thus in
-    particular the image density of a bijective mapping equals&nbsp;1.
+    <M>\frac{1}{m} \sum_{r(m) \in R/mR} |R/c_{r(m)}R|/|R/a_{r(m)}R|</M>.
+    Injective rcwa mappings have an image density of at most&nbsp;1, and
+    the image density of a surjective rcwa mapping is at least&nbsp;1
+    (this can be seen easily) -- thus in particular the image density of
+    a bijective mapping equals&nbsp;1.
 <Example>
 <![CDATA[
 gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
