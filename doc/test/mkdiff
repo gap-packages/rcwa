@@ -9,11 +9,11 @@
 ##
 ##  mkdiff.sh [-c] [file1 file2 ...]
 ##
-##  This is the 'mkdiff' version for package documentations.
+##  This is the 'mkdiff' version for XML files of package documentations.
 ##
 ##  For each file name 'file', say, in the given list of file names compare
 ##  the manual file '../file.tex' with the test file 'file.tst' and write all
-##  differences to a file 'diffs'.
+##  differences to a file 'xdiffs'.
 ##
 ##  If '-c' is specified use the context output format of the 'diff' command.
 ##
@@ -25,12 +25,12 @@
 ##
 ##  Define the local call of the proper test function.
 ##
-mkdiff="../../../../doc/test/mkdiff.sh"
+mkxdiff="../../../../doc/test/mkxdiff.sh"
 
 
 #############################################################################
 ##
 ##  Run the test for each of the documentation files.
 ##
-$mkdiff $*
+$mkxdiff $*
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 #############################################################################
 ##
-#W  mktest           Test the CRYST manual examples            Volkmar Felsch
+#W  mktest            Test the RCWA manual examples            Volkmar Felsch
 ##
 #H  $Id$
 ##
@@ -14,7 +14,7 @@
 ##
 ##  More precisely: Let 'file.tex' be one of these files. Then the test
 ##  function runs all examples given in that file and constructs (in the
-##  current directory) a new version 'file.tst' of the given file which is
+##  current directory) a new version 'file.xtst' of the given file which is
 ##  up-to-date with respect to the output of the examples.
 ##
 ##  The options have the following meaning:
@@ -39,7 +39,7 @@
 ##
 ##  Define the local call of the proper test function.
 ##
-mktest="../../../../doc/test/mktest2.sh"
+mkxtest="../../../../doc/test/mkxtest.sh"
 
 #############################################################################
 ##
@@ -51,5 +51,15 @@ options=$*
 ##
 ##  Run the test for all documentation files (in some arbitrary order).
 ##
-$mktest $options -r rcwa rcwa
+$mkxtest $options -r rcwa abstract
+$mkxtest $options -r rcwa preface
+$mkxtest $options -r rcwa intro
+$mkxtest $options -r rcwa z_pi
+$mkxtest $options -r rcwa resclass
+$mkxtest $options -r rcwa rcwamap
+$mkxtest $options -r rcwa rcwagrp
+$mkxtest $options -r rcwa rcwainfo
+$mkxtest $options rcwaaux
+$mkxtest $options -r rcwa examples
+$mkxtest $options -r rcwa rcwa
 
