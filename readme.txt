@@ -17,6 +17,7 @@ of the GAP distribution.
 
 After extracting the distribution file in the proper place,
 you can load the package via RequirePackage( "rcwa" );
+Then you can build the manual by issueing BuildRCWAManual( );.
 
 If you have problems with this package, wish to make comments
 or suggestions, or if you find bugs, please send e-mail to
