@@ -13,6 +13,12 @@
 rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 md := f -> [Multiplier(f),Divisor(f)];
 
+nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
+t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
+
+nu_rm := function(r,m) return Restriction(nu,RcwaMapping([[m,r,1]])); end;
+t_rm  := function(r,m) return Restriction(t, RcwaMapping([[m,r,1]])); end;
+
 #############################################################################
 ##
 ##  `Three involutions whose product has coprime multiplier and divisor'
@@ -132,8 +138,6 @@ SetName(r_2mod,"r");
 ##
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 SetName(u,"u");
-nu := RcwaMapping([[ 1, 1, 1]]);
-SetName(nu,"nu");
 
 # The following mapping is wild, but all cycles of integers |n| < 29 are
 # finite. It has been constructed in a similar way as `u'.
@@ -258,8 +262,6 @@ c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]); SetName(c,"c");
 ab := Comm(a,b); SetName(ab,"[a,b]");
 ac := Comm(a,c); SetName(ac,"[a,c]");
 bc := Comm(b,c); SetName(bc,"[b,c]");
-
-t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 
 # Two rcwa mappings of orders 7 and 12, respectively, which have isomorphic
 # transition graphs for modulus 6 and generate the infinite tame group we
