@@ -203,7 +203,6 @@ gap> r := RcwaMapping( R, x^2 + e,
 >                        [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
 <rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0>
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
-
 gap> f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);;
 gap> f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);;
 gap> f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);;
@@ -424,7 +423,7 @@ true
 <!-- #################################################################### -->
 
 <Section Label="sec:MultDiv">
-<Heading>Multiplier, divisor, prime set and determinant</Heading>
+<Heading>Multiplier, divisor, prime set, sign and determinant</Heading>
 
 <ManSection>
   <Attr Name="Multiplier" Arg="f" Label="Multiplier of an rcwa mapping"/>
@@ -616,13 +615,51 @@ gap> LargestSourcesOfAffineMappings(r);
 </ManSection>
 
 <ManSection>
+  <Attr Name="Sign" Arg="f"/>
+  <Returns> The sign of the rcwa mapping&nbsp;<A>f</A>. </Returns>
+  <Description>
+    The sign induces an epimorphism from RCWA(<M>\Z</M>) onto
+    the group <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>. This means that
+    the kernel of the sign mapping is a normal subgroup of
+    RCWA(<M>\Z</M>) of index&nbsp;2.
+
+    For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
+<Example>
+<![CDATA[
+gap> nu := RcwaMapping([[1,1,1]]);;
+gap> a  := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> b  := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
+gap> Sign(nu);
+-1
+gap> Sign(nu^2);
+1
+gap> Sign(nu^3);
+-1
+gap> Sign(t);
+-1
+gap> Sign(nu^3*t);
+1
+gap> Sign(a);
+1
+gap> Sign(a*b);
+-1
+gap> Sign((a*b)^2);
+1
+gap> Sign(Comm(a,b));
+1
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Meth Name="Determinant" Arg="f"/>
   <Meth Name="Determinant" Arg="f, S"/>
   <Returns> The determinant of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
-    The determinant induces an epimorphism from the group of all class-wise
-    order-preserving rcwa mappings of <M>\Z</M> onto the additive group
-    <M>(\Z,+)</M>.
+    The determinant induces an epimorphism from the group of all
+    class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
+    onto the additive group <M>(\Z,+)</M>.
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
@@ -631,9 +668,6 @@ gap> LargestSourcesOfAffineMappings(r);
     For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
 <Example>
 <![CDATA[
-gap> nu := RcwaMapping([[1,1,1]]);;
-gap> a  := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
-gap> b  := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> Determinant(nu);
 1
 gap> Determinant(a);

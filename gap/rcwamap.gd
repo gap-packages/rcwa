@@ -339,6 +339,15 @@ DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
 
 #############################################################################
 ##
+#A  Sign( <f> ) . . . . . . . . . . the sign of the integral rcwa mapping <f>
+##
+##  The *sign* of the rcwa mapping <f>. The sign mapping is an epimorphism
+##  from RCWA($\Z$) to U($\Z$).
+##
+DeclareAttribute( "Sign", IsRcwaMapping );
+
+#############################################################################
+##
 #O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
 ##
 ##  The set of elements $n$ of the base ring $R$, which are mapped to

@@ -986,6 +986,24 @@ gap> Determinant(sigma*b^-1*nu^2);
 1
 gap> Determinant(PseudoRandom(Group(g,h)));
 0
+gap> Sign(nu);
+-1
+gap> Sign(nu^2);
+1
+gap> Sign(nu^3);
+-1
+gap> Sign(t);
+-1
+gap> Sign(nu^3*t);
+1
+gap> Sign(a);
+1
+gap> Sign(a*b);
+-1
+gap> Sign((a*b)^2);
+1
+gap> Sign(Comm(a,b));
+1
 gap> SetOnWhichMappingIsClassWiseOrderPreserving(T);
 Integers
 gap> SetOnWhichMappingIsClassWiseOrderPreserving(u);

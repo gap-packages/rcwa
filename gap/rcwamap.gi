@@ -1469,13 +1469,37 @@ InstallMethod( IsClassWiseOrderPreserving,
 
 #############################################################################
 ##
+#M  Sign( <f> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallOtherMethod( Sign,
+                    "for integral rcwa mappings (RCWA)",
+                    true, [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  m, c, sgn, r, ar, br, cr;
+
+    m := Modulus(f); c := Coefficients(f);
+    sgn := 0;
+    for r in [0..m-1] do
+      ar := c[r+1][1]; br := c[r+1][2]; cr := c[r+1][3];
+      sgn := sgn + br/AbsInt(ar);
+      if ar < 0 then sgn := sgn + (m - 2*r); fi;
+    od;
+    sgn := (-1)^(sgn/m);
+    return sgn;
+  end );
+
+#############################################################################
+##
 #M  Determinant( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 InstallOtherMethod( Determinant,
-                    "for rcwa mappings (RCWA)",
-                    true, [ IsRcwaMapping ], 0,
+                    "for integral rcwa mappings (RCWA)",
+                    true, [ IsIntegralRcwaMapping ], 0,
                     f -> Sum( List( Coefficients( f ),
-                                    c -> c[2] / c[1] ) ) / Modulus( f ) );
+                                    c -> c[2] / AbsInt( c[1] ) ) ) / 
+                         Modulus( f ) );
 
 #############################################################################
 ##
@@ -1493,7 +1517,7 @@ InstallOtherMethod( Determinant,
     m := Modulus(f); c := Coefficients(f);
     return Sum(List([1..m],
                     r->Density(Intersection(S,ResidueClass(Integers,m,r-1)))
-                      *c[r][2]/c[r][1]));
+                      *c[r][2]/AbsInt(c[r][1])));
   end );
 
 #############################################################################
