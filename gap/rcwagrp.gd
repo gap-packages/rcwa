@@ -13,14 +13,6 @@ Revision.rcwagrp_gd :=
 
 #############################################################################
 ##
-#C  CategoryCollections( IsIntegralRcwaMapping ) . . .  integral rcwa domains
-##
-##  The category of all domains formed out of integral rcwa mappings.
-##
-DeclareCategoryCollections( "IsIntegralRcwaMapping" );
-
-#############################################################################
-##
 #C  IsRcwaGroup . . . . . . . . . . . . . . . . . . . . . . . all rcwa groups
 ##
 ##  The category of all rcwa groups.
@@ -70,6 +62,14 @@ DeclareSynonym( "IsModularRcwaGroup",
 
 #############################################################################
 ##
+#C  CategoryCollections( IsIntegralRcwaMapping ) . . .  integral rcwa domains
+##
+##  The category of all domains formed out of integral rcwa mappings.
+##
+DeclareCategoryCollections( "IsIntegralRcwaMapping" );
+
+#############################################################################
+##
 #V  TrivialIntegralRcwaGroup( <G> ) . . . . . . . trivial integral rcwa group
 #V  TrivialRcwaGroup( <G> )
 ##
@@ -112,9 +112,88 @@ DeclareProperty( "IsNaturalRCWA_GF_q_x", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
+#F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
 ##
-DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
+##  Computes the number of conjugacy classes of the whole group RCWA(Z) of
+##  elements of order <ord>.
+##
+DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
+
+#############################################################################
+##
+#A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
+##
+DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
+
+#############################################################################
+##
+#P  IsTame( <G> ) . . . . . indicates whether or not <G> is a tame rcwa group
+##
+##  We say that an $R$-rcwa group is *tame* if and only if its modulus is
+##  strictly positive, and *wild* otherwise.
+##
+DeclareProperty( "IsTame", IsRcwaGroup );
+
+#############################################################################
+##
+#A  PrimeSet( <G> ) . . . . . . . . . . . . . prime set of the rcwa group <G>
+##
+##  Prime set of rcwa group <G>.
+##
+##  We define the prime set of an rcwa group <G> as the union of the prime
+##  sets of its elements.
+##
+DeclareAttribute( "PrimeSet", IsRcwaGroup );
+
+############################################################################# 
+##
+#P  IsIntegral( <G> ) . . . . . . .  indicates whether or not <G> is integral 
+##
+##  We say that an $R$-rcwa group is *integral* if and only if all of its
+##  elements are integral.
+##
+DeclareProperty( "IsIntegral", IsRcwaGroup ); 
+
+############################################################################# 
+##
+#P  IsClassWiseOrderPreserving( <G> ) .  is <G> class-wise order-preserving ?
+##
+##  Indicates whether <G> is class-wise order-preserving or not.
+##
+##  We say that an integral rcwa group <G> is *class-wise order-preserving*
+##  if all of its elements are.
+##
+DeclareProperty( "IsClassWiseOrderPreserving", IsIntegralRcwaGroup ); 
+
+############################################################################# 
+##
+#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
+##
+##  Computes all finite orbits of the rcwa group <G> of maximal length
+##  <maxlng>, which intersect non-trivially with the set <S>.
+##
+DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
+
+############################################################################# 
+##
+#O  OrbitUnion( <G>, <S> ) . . . . . . .  union of the orbit of <S> under <G>
+##
+##  Computes the union of the elements of the orbit of the set <S> under
+##  the rcwa group <G>. In particular, <S> can be a union of residue classes.
+##
+DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
+
+############################################################################# 
+##
+#O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+##  Computes the preimage of an element of <G> which maps <src> to <dest>
+##  under the canonical group homomorphism from the free group <F> onto <G>.
+##  The rank of <F> must be equal to the number of generators of <G>.
+##
+DeclareOperation( "RepresentativeActionPreImage",
+                  [ IsRcwaGroup, IsObject, IsObject,
+                    IsFunction, IsFreeGroup ] );
 
 #############################################################################
 ##
@@ -155,6 +234,12 @@ DeclareAttribute( "KernelOfActionOnClassPartitionHNFMat",
 
 #############################################################################
 ##
+#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
+##
+DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
+
+#############################################################################
+##
 #A  IsomorphismIntegralRcwaGroup( <G> ) . . . . .  rcwa representation of <G>
 #A  IsomorphismRcwaGroup( <G> )
 ##
@@ -176,101 +261,48 @@ DeclareSynonym( "RcwaGroupByPermGroup", IntegralRcwaGroupByPermGroup );
 
 #############################################################################
 ##
-#A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
+#A  IntegralizingConjugator( <f> | <G> ) . . mapping <x>: <f>^<x> is integral
 ##
-DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
+##  A mapping <x> such that <f>^<x> resp. <G>^<x> is integral. Exists always
+##  if <f> is a tame bijective rcwa mapping resp. if <G> is a tame rcwa
+##  group, and the underlying ring <R> has residue class rings of any finite
+##  cardinality.
+##
+DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  PrimeSet( <G> ) . . . . . . . . . . . . . prime set of the rcwa group <G>
+#A  IntegralConjugate( <f> | <G> ) . . .  integral conjugate of <f> resp. <G>
 ##
-##  Prime set of rcwa group <G>.
-##
-##  We define the prime set of an rcwa group <G> as the union of the prime
-##  sets of its elements.
-##
-DeclareAttribute( "PrimeSet", IsRcwaGroup );
+##  Some integral conjugate of the rcwa mapping <f> resp. rcwa group <G>
+##  in RCWA(<R>). This is certainly not defined uniquely, and exists only
+##  if <f> is tame.
+##  
+DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
-#P  IsTame( <G> ) . . . . . indicates whether or not <G> is a tame rcwa group
+#A  StandardizingConjugator( <f> | <G> ) . . mapping <x>: <f>^<x> is standard
 ##
-##  We say that an $R$-rcwa group is *tame* if and only if its modulus is
-##  strictly positive, and *wild* otherwise.
+##  A mapping <x> such that <f>^<x> resp. <G>^<x> is the ``standard''
+##  representative of the conjugacy class resp. conjugacy class of subgroups
+##  of RCWA(<R>) the bijective rcwa mapping <f> resp. the rcwa group <G>
+##  belongs to.
 ##
-DeclareProperty( "IsTame", IsRcwaGroup );
-
-############################################################################# 
-##
-#P  IsIntegral( <G> ) . . . . . . .  indicates whether or not <G> is integral 
-##
-##  We say that an $R$-rcwa group is *integral* if and only if all of its
-##  elements are integral.
-##
-DeclareProperty( "IsIntegral", IsRcwaGroup ); 
-
-############################################################################# 
-##
-#P  IsClassWiseOrderPreserving( <G> ) .  is <G> class-wise order-preserving ?
-##
-##  Indicates whether <G> is class-wise order-preserving or not.
-##
-##  We say that an integral rcwa group <G> is *class-wise order-preserving*
-##  if all of its elements are.
-##
-DeclareProperty( "IsClassWiseOrderPreserving", IsIntegralRcwaGroup ); 
+DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  RcwaBase( <G> ) . . . . . . . . . . . . . . . . . . . .  <internal stuff>
+#A  StandardConjugate( <f> | <G> ) . . . standard rep. of the conjugacy class
 ##
-##  A set of representatives for a set of orbits on which the rcwa group <G>
-##  acts faithfully. Used for element testing, etc.. Only useful for finite
-##  rcwa groups.
+##  Some ``nice'' canonical representative of the conjugacy class of the
+##  bijective rcwa mapping <f> / rcwa group <G> in the whole group RCWA(<R>).
+##  Two rcwa mappings / rcwa groups are conjugate in RCWA(<R>) if and only if
+##  their ``standard conjugates'' are equal.
 ##
-DeclareAttribute( "RcwaBase", IsRcwaGroup );
-
-############################################################################# 
-##
-#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
-##
-##  Computes all finite orbits of the rcwa group <G> of maximal length
-##  <maxlng>, which intersect non-trivially with the set <S>.
-##
-DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
-
-############################################################################# 
-##
-#O  OrbitUnion( <G>, <S> ) . . . . . . .  union of the orbit of <S> under <G>
-##
-##  Computes the union of the elements of the orbit of the set <S> under
-##  the rcwa group <G>. In particular, <S> can be a union of residue classes.
-##
-DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
-
-############################################################################# 
-##
-#O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
-##
-##  Computes the preimage of an element of <G> which maps <src> to <dest>
-##  under the canonical group homomorphism from the free group <F> onto <G>.
-##  The rank of <F> must be equal to the number of generators of <G>.
-##
-DeclareOperation( "RepresentativeActionPreImage",
-                  [ IsRcwaGroup, IsObject, IsObject,
-                    IsFunction, IsFreeGroup ] );
-
-#############################################################################
-##
-#F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
-##
-##  Computes the number of conjugacy classes of the whole group RCWA(Z) of
-##  elements of order <ord>.
-##
-DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
+DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
 

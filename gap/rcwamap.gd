@@ -238,13 +238,12 @@ DeclareAttribute( "PrimeSet", IsRcwaMapping );
 
 #############################################################################
 ##
-#O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
+#P  IsTame( <f> ) . . . . indicates whether or not <f> is a tame rcwa mapping
 ##
-##  The set of elements $n$ of the base ring $R$, which are mapped to
-##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
-##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
+##  We say that an rcwa mapping <f> is *tame* if and only if the moduli
+##  of its powers are bounded, and *wild* otherwise.
 ##
-DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
+DeclareProperty( "IsTame", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -273,6 +272,16 @@ DeclareProperty( "IsBalanced", IsRcwaMapping );
 ##  class-wise order-preserving.
 ##
 DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping ); 
+
+#############################################################################
+##
+#O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
+##
+##  The set of elements $n$ of the base ring $R$, which are mapped to
+##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
+##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
+##
+DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
@@ -380,21 +389,24 @@ DeclareGlobalFunction( "CoefficientsOnTrajectory" );
 
 #############################################################################
 ##
-#P  IsTame( <f> ) . . . . indicates whether or not <f> is a tame rcwa mapping
-##
-##  We say that an rcwa mapping <f> is *tame* if and only if the moduli
-##  of its powers are bounded, and *wild* otherwise.
-##
-DeclareProperty( "IsTame", IsRcwaMapping );
-
-#############################################################################
-##
 #O  ShortCycles( <f>, <maxlng> ) . . . . short cycles of the rcwa mapping <f>
 ##
 ##  Computes all ``single'' finite cycles of the rcwa mapping <f>
 ##  of length <= <maxlng>.
 ##
 DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
+
+#############################################################################
+##
+#A  CycleType( <f> ) . . . . . . . . . . . . . . . . . . .  cycle type of <f>
+##
+##  The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
+##  lists, where the first list is the set of the cycle lengths which occur
+##  infinitely often, and the second list contains the cycle lengths which
+##  occur only finitely often, with the respective multiplicities and sorted
+##  by increasing length.
+##
+DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -410,54 +422,13 @@ DeclareAttribute( "RespectedClassPartition", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  IntegralizingConjugator( <f> ) . .  mapping <x> s.th. <f>^<x> is integral
+#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
 ##
-##  A mapping <x> such that <f>^<x> is integral. Exists always if <f> is a
-##  tame bijection and <R> has residue class rings of any finite cardinality.
+##  Computes some mapping <h>^<r> such that there is a partition which is
+##  respected by both <g> and <h>^<r>, hence such that the group generated
+##  by <g> and <h>^<r> is tame. Methods may return any such mapping.
 ##
-DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
-
-#############################################################################
-##
-#A  IntegralConjugate( <f> ) . . . . . . . . . . .  integral conjugate of <f>
-##
-##  Some integral conjugate of the rcwa mapping <f>.
-##  This is certainly not defined uniquely, and exists only if <f> is tame.
-##  
-DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
-
-#############################################################################
-##
-#A  StandardizingConjugator( <f> ) . .  mapping <x> s.th. <f>^<x> is standard
-##
-##  A mapping <x> such that <f>^<x> is the ``standard'' representative of
-##  the conjugacy class of the bijective integral rcwa mapping <f> in the
-##  whole group RCWA(Z).
-##
-DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
-
-#############################################################################
-##
-#A  StandardConjugate( <f> ) . .  standard rep. of the conjugacy class of <f>
-##
-##  Some ``nice'' canonical representative of the conjugacy class of the
-##  bijective integral rcwa mapping <f> in the whole group RCWA(Z).
-##  Two integral rcwa mappings are conjugate if and only if their 
-##  ``standard conjugates'' are equal. 
-##
-DeclareAttribute( "StandardConjugate", IsRcwaMapping );
-
-#############################################################################
-##
-#A  CycleType( <f> ) . . . . . . . . . . . . . . . . . . .  cycle type of <f>
-##
-##  The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
-##  lists, where the first list is the set of the cycle lengths which occur
-##  infinitely often, and the second list contains the cycle lengths which
-##  occur only finitely often, with the respective multiplicities and sorted
-##  by increasing length.
-##
-DeclareAttribute( "CycleType", IsRcwaMapping );
+DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
@@ -477,16 +448,6 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 DeclareOperation( "ContractionCentre",
                   [ IsRcwaMapping, IsRingElement, IsPosInt ] );
 DeclareSynonym( "ContractionCenter", ContractionCentre );
-
-#############################################################################
-##
-#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
-##
-##  Computes the restriction of the rcwa mapping <g> by (i.e. to the image
-##  of) the rcwa mapping <f>.
-##
-DeclareOperation( "Restriction",
-                  [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
@@ -514,16 +475,15 @@ DeclareAttribute( "ImageDensity", IsRcwaMapping );
 
 #############################################################################
 ##
-#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
+#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 ##
-##  Computes some mapping <h>^<r> such that there is a partition which is
-##  respected by both <g> and <h>^<r>, hence such that the group generated
-##  by <g> and <h>^<r> is tame. Methods may return any such mapping.
+##  Computes the restriction of the rcwa mapping <g> by (i.e. to the image
+##  of) the rcwa mapping <f>.
 ##
-DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Restriction",
+                  [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
 

@@ -702,6 +702,11 @@ IdChars := function ( n, ch )
 end;
 MakeReadOnlyGlobal( "IdChars" );
 
+RingToString := function ( R )
+  if IsIntegers(R) then return "Z"; else return String(R); fi;
+end;
+MakeReadOnlyGlobal( "RingToString");
+
 DisplayIntegralAffineMapping := function ( t )
 
   local  a, b, c;
@@ -763,7 +768,7 @@ DisplaySemilocalIntegralAffineMapping := function ( t )
        if   b > 0 then Print(" + ", b);
        elif b < 0 then Print(" - ",-b);
        fi;
-       Print(")/",c);
+       Print(") / ",c);
   fi;
 end;
 MakeReadOnlyGlobal( "DisplaySemilocalIntegralAffineMapping" );
@@ -915,7 +920,8 @@ InstallMethod( String,
 ##
 InstallMethod( PrintObj,
                "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ],
+               SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ", f!.coeffs, " )" );
@@ -928,7 +934,7 @@ InstallMethod( PrintObj,
 InstallMethod( PrintObj,
                "for semilocal integral rcwa mappings (RCWA)",
                true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
+                       and IsRationalBasedRcwaDenseRep ], SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ",
@@ -940,8 +946,8 @@ InstallMethod( PrintObj,
 #M  PrintObj( <f> ) . . . . . . . . . . . . . . . .  for modular rcwa mapping
 ##
 InstallMethod( PrintObj,
-               "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               "for modular rcwa mappings (RCWA)", true,
+               [ IsModularRcwaMapping and IsModularRcwaDenseRep ], SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ", Size(UnderlyingField(f)),
@@ -963,18 +969,19 @@ InstallMethod( ViewObj,
     if not (IsRationalBasedRcwaDenseRep(f) or IsModularRcwaDenseRep(f))
     then TryNextMethod(); fi;
     Print("<");
-    if   HasIsBijective(f) and IsBijective(f) 
+    if   HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f)))
+    then if IsTame(f) then Print("tame "); else Print("wild "); fi; fi;
+    if   HasIsBijective(f) and IsBijective(f)
     then Print("bijective ");
     elif HasIsInjective(f) and IsInjective(f)
     then Print("injective ");
     elif HasIsSurjective(f) and IsSurjective(f)
     then Print("surjective ");
     fi;
-    if   IsIntegralRcwaMapping(f)
-    then Print("integral rcwa mapping");
-    else Print("rcwa mapping of ",String(Source(f))); fi;
+    Print("rcwa mapping of ",RingToString(Source(f)));
     Print(" with modulus ",f!.modulus);
-    if HasOrder(f) then Print(", of order ",Order(f)); fi;
+    if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
+    then Print(", of order ",Order(f)); fi;
     Print(">");
   end );
 
@@ -998,8 +1005,7 @@ InstallMethod( Display,
     then TryNextMethod(); fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then name := Name(f); else name := "f"; fi;
-    prefix := false;
-    if not IsIntegralRcwaMapping(f) then RingString := String(Source(f)); fi;
+    prefix := false; RingString := RingToString(Source(f));
     if   IsModularRcwaMapping(f)
     then VarName := "P"; q := Size(UnderlyingField(f));
          d := DegreeOfLaurentPolynomial(m); NrResidues := q^d;
@@ -1008,33 +1014,32 @@ InstallMethod( Display,
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
     else VarName := "n"; NrResidues := m; fi;
     if   IsOne(f)
-    then if   IsIntegralRcwaMapping(f)
-         then Print("Identity integral rcwa mapping");
-         else Print("Identity rcwa mapping of ",RingString); fi;  
+    then Print("Identity rcwa mapping of ",RingString);
     elif IsZero(f)
-    then if   IsIntegralRcwaMapping(f)
-         then Print("Zero integral rcwa mapping");
-         else Print("Zero rcwa mapping of ",RingString); fi;
+    then Print("Zero rcwa mapping of ",RingString);
     elif IsOne(m) and IsZero(c[1][1])
-    then if   IsIntegralRcwaMapping(f)
-         then Print("Constant integral rcwa mapping with value ",c[1][2]);
-         else Print("Constant rcwa mapping of ",RingString,
-                    " with value ",c[1][2]); fi;
+    then Print("Constant rcwa mapping of ",RingString,
+               " with value ",c[1][2]);
     else if not IsOne(m) then Print("\n"); fi;
+         if HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f))) then
+           if IsTame(f) then Print("Tame "); else Print("Wild "); fi;
+           prefix := true;
+         fi;
          if   HasIsBijective(f) and IsBijective(f)
-         then Print("Bijective "); prefix := true;
+         then if prefix then Print("bijective ");
+                        else Print("Bijective "); fi;
+              prefix := true;
          elif HasIsInjective(f) and IsInjective(f)
-         then Print("Injective "); prefix := true;
+         then if prefix then Print("injective ");
+                        else Print("Injective "); fi;
+              prefix := true;
          elif HasIsSurjective(f) and IsSurjective(f)
-         then Print("Surjective "); prefix := true;
+         then if prefix then Print("surjective ");
+                        else Print("Surjective "); fi;
+              prefix := true;
          fi;
-         if IsIntegralRcwaMapping(f) then
-           if prefix then Print("integral rcwa mapping");
-                     else Print("Integral rcwa mapping"); fi;
-         else
-           if prefix then Print("rcwa"); else Print("Rcwa"); fi;
-           Print(" mapping of ",RingString);
-         fi;
+         if prefix then Print("rcwa"); else Print("Rcwa"); fi;
+         Print(" mapping of ",RingString);
          if IsOne(m) then
            Print(": ",VarName," -> ");
            if   IsIntegralRcwaMapping(f)
@@ -1044,7 +1049,8 @@ InstallMethod( Display,
            else DisplayModularAffineMapping(c[1],SizeScreen()[1]-48); fi;
          else
            Print(" with modulus ",m);
-           if HasOrder(f) then Print(", of order ",Order(f)); fi;
+           if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
+           then Print(", of order ",Order(f)); fi;
            Print("\n\n");
            scr := SizeScreen()[1] - 2;
            if   IsRationalBasedRcwaMapping(f)
@@ -1809,42 +1815,14 @@ InstallMethod( \+,
 
 #############################################################################
 ##
-#M  AdditiveInverseOp( <f> ) . . . . . . . . . . .  for integral rcwa mapping
+#M  AdditiveInverseOp( <f> ) . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 ##  Pointwise additive inverse of rcwa mapping <f>.
 ##
 InstallMethod( AdditiveInverseOp,
-               "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
-
-  f -> RcwaMappingNC( List( f!.coeffs, c -> [ -c[1], -c[2], c[3] ] ) ) );
-
-#############################################################################
-##
-#M  AdditiveInverseOp( <f> ) . . . . . .  for semilocal integral rcwa mapping
-##
-##  Pointwise additive inverse of rcwa mapping <f>.
-##
-InstallMethod( AdditiveInverseOp,
-               "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
-
-  f -> RcwaMappingNC( NoninvertiblePrimes(Source(f)),
-                      List(f!.coeffs, c -> [ -c[1], -c[2], c[3] ]) ) );
-
-#############################################################################
-##
-#M  AdditiveInverseOp( <f> ) . . . . . . . . . . . . for modular rcwa mapping
-##
-##  Pointwise additive inverse of rcwa mapping <f>.
-##
-InstallMethod( AdditiveInverseOp,
-               "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
-  
-  f -> RcwaMappingNC( Size(UnderlyingField(f)), f!.modulus,
-                      List(f!.coeffs, c -> [-c[1],-c[2],c[3]]) ) );
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               f -> f * RcwaMappingNC( Source(f), One(Source(f)),
+                                       [[-1,0,1]] * One(Source(f)) ) );
 
 #############################################################################
 ##
@@ -1862,7 +1840,7 @@ InstallMethod( CompositionMapping2,
 
   function ( g, f )
 
-    local c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
+    local  fg, c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
 
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
@@ -1877,11 +1855,21 @@ InstallMethod( CompositionMapping2,
                 c1[n1][3] * c2[n2][3] ]);
     od;
 
-    if   IsIntegralRcwaMapping( f ) 
-    then return RcwaMappingNC( c3 );
-    else pi := NoninvertiblePrimes( Source( f ) );
-         return RcwaMappingNC( pi, c3 );
+    if   IsIntegralRcwaMapping(f) 
+    then fg := RcwaMappingNC(c3);
+    else pi := NoninvertiblePrimes(Source(f));
+         fg := RcwaMappingNC(pi,c3);
     fi;
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
   end );
 
 #############################################################################
@@ -1899,7 +1887,7 @@ InstallMethod( CompositionMapping2,
 
   function ( g, f )
 
-    local c, m, d, R, q, x, res, r, n1, n2;
+    local  fg, c, m, d, R, q, x, res, r, n1, n2;
 
     c := [f!.coeffs, g!.coeffs, []];
     m := [f!.modulus, g!.modulus];
@@ -1919,7 +1907,17 @@ InstallMethod( CompositionMapping2,
                   c[1][n1][3] * c[2][n2][3] ]);
     od;
 
-    return RcwaMappingNC( q, m[3], c[3] );
+    fg := RcwaMappingNC( q, m[3], c[3] );
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
   end );
 
 #############################################################################
@@ -2083,11 +2081,24 @@ InstallMethod( \^,
                ReturnTrue, [ IsRcwaMapping, IsInt ], 0,
 
   function ( f, n )
-   
-    if   n > 1 then TryNextMethod();
+
+    local  pow;
+
+    if ValueOption("UseKernelPOW") = true then TryNextMethod(); fi;
+
+    if   n = 0 then return One( f );
     elif n = 1 then return f;
-    elif n = 0 then return One( f );
-    else            return Inverse( f )^-n; fi;
+    elif n > 1 then pow := POW(f,n:UseKernelPOW);
+               else pow := POW(Inverse( f ),-n:UseKernelPOW);
+    fi;
+
+    if HasOrder(f) then
+      if Order(f) = infinity then SetOrder(pow,infinity); else
+        SetOrder(pow,Order(f)/Gcd(Order(f),n));
+      fi;
+    fi;
+
+    return pow;
   end );
 
 #############################################################################
@@ -2776,102 +2787,6 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
-#M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
-##
-InstallMethod( RespectedClassPartition,
-               "for tame bijective rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
-
-  function ( sigma )
-    if not IsBijective(sigma) then return fail; fi;
-    return RespectedClassPartition( Group( sigma ) );
-  end );
-
-#############################################################################
-##
-#M  IntegralizingConjugator( <sigma> ) .  for tame bij. integral rcwa mapping
-##
-InstallMethod( IntegralizingConjugator,
-               "for tame bijective integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping ], 0,
-
-  function ( sigma )
-
-    local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
-
-    if IsIntegral(sigma) then return One(sigma); fi;
-    pcp := RespectedClassPartition(sigma); 
-    if pcp = fail then return fail; fi;
-    m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
-    c := List([1..m],i->[1,0,1]);
-    for rtilde in [0..mtilde-1] do
-      cl := pcp[rtilde+1];
-      r := Residues(cl)[1]; m_cl := Modulus(cl);
-      for j in [0..m/m_cl-1] do
-        c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
-      od;
-    od;
-    return RcwaMapping(c);
-  end );
-
-#############################################################################
-##
-#M  IntegralConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
-##
-InstallMethod( IntegralConjugate,
-               "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               f -> f^IntegralizingConjugator( f ) );
-
-#############################################################################
-##
-#M  StandardizingConjugator( <sigma> ) .  for tame bij. integral rcwa mapping
-##
-InstallMethod( StandardizingConjugator,
-               "for tame bijective integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping ], 0,
-
-  function ( sigma )
-
-    local  toflat, flat, m, mtilde, mTilde, r, rtilde, c, pcp, cycs, lngs,
-           cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
-
-    if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
-    if not IsIntegral(sigma) then
-      toflat := IntegralizingConjugator(sigma);
-      flat   := sigma^toflat;
-    else toflat := One(sigma); flat := sigma; fi;
-    m := Modulus(flat); pcp := RespectedClassPartition(flat);
-    cycs := Cycles(flat,pcp); lngs := Set(List(cycs,Length));
-    cohorts := List(lngs,l->Filtered(cycs,cyc->Length(cyc)=l));
-    mtilde := Sum(lngs); c := List([1..m],i->[1,0,1]); rtilde := 0;
-    for cohort in cohorts do
-      nrcycs := Length(cohort); l := Length(cohort[1]);
-      res := List([1..l],i->List([1..nrcycs],j->Residues(cohort[j][i])[1]));
-      cyc := List([1..nrcycs],j->Cycle(flat,res[1][j]));
-      mTilde := nrcycs * mtilde;
-      for i in [1..l] do
-        for r in res[i] do
-          j := Position(res[i],r);
-          n := cyc[j][i]; ntilde := (j-1)*mtilde+rtilde;
-          k := (ntilde*m-mTilde*n-m*rtilde+mtilde*r)/(m*mtilde);
-          c[r+1] := [mTilde,k*m*mtilde+m*rtilde-mtilde*r,m];
-        od;
-        rtilde := rtilde + 1;
-      od;
-    od; 
-    return toflat * RcwaMapping(c);
-  end );
-
-#############################################################################
-##
-#M  StandardConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
-##
-InstallMethod( StandardConjugate,
-               "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               f -> f^StandardizingConjugator( f ) );
-
-#############################################################################
-##
 #M  CycleType( <f> ) . . . . . . . . . . . . . for tame integral rcwa mapping
 ##
 InstallMethod( CycleType,
@@ -2887,67 +2802,15 @@ InstallMethod( CycleType,
 
 #############################################################################
 ##
-#M  IsConjugate( RCWA( Integers ), <f>, <g> ) 
+#M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
 ##
-##  For integral rcwa mappings, in the full group `RCWA( Integers )'.
-##  Checks whether the standard conjugates of <f> and <g> are equal, if the
-##  mappings are tame, and looks for different lengths of short cycles
-##  otherwise (the latter will not terminate if <f> and <g> are conjugate).
-##
-InstallOtherMethod( IsConjugate,
-                    "for two integral rcwa mappings, in RCWA(Z) (RCWA)",
-                    true, 
-                    [ IsNaturalRCWA_Z, 
-                      IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
+InstallMethod( RespectedClassPartition,
+               "for tame bijective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
 
-  function ( RCWA_Z, f, g )
-
-    local  maxlng;
-
-    if f = g then return true; fi;
-    if Order(f) <> Order(g) or IsTame(f) <> IsTame(g) then return false; fi;
-    if IsTame(f) then
-      return StandardConjugate(f) = StandardConjugate(g);
-    else
-      maxlng := 2;
-      repeat
-        if    Collected(List(ShortCycles(f,maxlng),Length))
-           <> Collected(List(ShortCycles(g,maxlng),Length))
-        then return false; fi;
-        maxlng := maxlng * 2;
-      until false;
-    fi;
-  end );
-
-#############################################################################
-##
-#M  IsConjugate( RCWA( Z_pi( <pi> ) ), <f>, <g> ) 
-##
-##  For semilocal integral rcwa mappings, in the full group
-##  `RCWA( Z_pi( <pi> ) )'. Probabilistic method.
-##
-InstallOtherMethod( IsConjugate,
-                    Concatenation("for two semilocal integral rcwa ",
-                                  "mappings in RCWA(Z_pi) (RCWA)"),
-                    ReturnTrue, 
-                    [ IsNaturalRCWA_Z_pi,
-                      IsSemilocalIntegralRcwaMapping,
-                      IsSemilocalIntegralRcwaMapping ], 0,
-
-  function ( RCWA_Z_pi, f, g )
-
-    local  maxlng;
-
-    if not f in RCWA_Z_pi or not g in RCWA_Z_pi then return fail; fi;
-    if f = g then return true; fi;
-    if Order(f) <> Order(g) or IsTame(f) <> IsTame(g) then return false; fi;
-    maxlng := 2;
-    repeat
-      if    Collected(List(ShortCycles(f,maxlng),Length))
-         <> Collected(List(ShortCycles(g,maxlng),Length))
-      then return false; fi;
-      maxlng := maxlng * 2;
-    until false;
+  function ( sigma )
+    if not IsBijective(sigma) then return fail; fi;
+    return RespectedClassPartition( Group( sigma ) );
   end );
 
 ReducedSetOfStartingValues := function ( S, f, lng )
@@ -3057,6 +2920,12 @@ InstallMethod( Restriction,
     gf := RcwaMapping(mgf,c);
     if   g*f <> f*gf
     then Error("Restriction: Diagram does not commute.\n"); fi;
+
+    if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
+    if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
+    if HasIsTame(g)       then SetIsTame(gf,IsTame(g)); fi;
+    if HasOrder(g)        then SetOrder(gf,Order(g)); fi;
+
     return gf;
   end );
 
@@ -3160,7 +3029,4 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
 
