@@ -91,6 +91,10 @@ SetUnderlyingRing( IntegralRcwaMappingsFamily, Integers );
 BindGlobal( "Z_PI_RCWAMAPPING_FAMILIES", [] );
 BindGlobal( "MODULAR_RCWAMAPPING_FAMILIES", [] );
 
+# Buffer for storing already computed polynomial residue systems.
+
+BindGlobal( "MODULAR_RCWA_RESIDUE_CACHE", [] );
+
 #############################################################################
 ##
 #F  SemilocalIntegralRcwaMappingsFamily( <primes> )
@@ -168,31 +172,51 @@ InstallTrueMethod( IsRcwaMapping, IsModularRcwaMapping );
 InstallGlobalFunction ( AllGFqPolynomialsModDegree,
 
   function ( q, d, x )
-    if   d <> 0
-    then return List( Tuples( GF( q ), d ),
-                      t -> Sum( List( [ 1 .. d ], i -> t[i] * x^(d-i) ) ) );
-    else return [ 0 * One( x ) ]; fi;
+
+    local  erg, mon, gflist;
+
+    if   d = 0
+    then return [ 0 * One( x ) ];
+    elif     IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ] )
+         and IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] )
+    then return ShallowCopy( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] );
+    else gflist := AsList( GF( q ) );
+         mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
+         erg := List( Tuples( GF( q ), d ),
+                      t -> Sum( List( [ 1 .. d ],
+                                      i -> mon[ Position( gflist, t[ i ] ) ]
+                                              [ d - i + 1 ] ) ) );
+         MakeReadWriteGlobal( "MODULAR_RCWA_RESIDUE_CACHE" );
+         if not IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ] )
+         then MODULAR_RCWA_RESIDUE_CACHE[ q ] := [ ]; fi;
+         MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
+         MakeReadOnlyGlobal( "MODULAR_RCWA_RESIDUE_CACHE" );
+         return erg;
+    fi;
   end );
 
 # Bring the rcwa mapping <f> to normalized, reduced form.
 
 ReduceIntegralRcwaMapping := function ( f )
 
-  local  c, m, divs, d, cRed, n, i;
+  local  c, m, fact, p, cRed, cRedBuf, n;
 
   c := f!.coeffs; m := f!.modulus;
   for n in [1..Length(c)] do
-    d := Gcd(c[n]);
-    c[n] := c[n]/d;
+    c[n] := c[n]/Gcd(c[n]);
     if c[n][3] < 0 then c[n] := -c[n]; fi;
   od;
-  divs := DivisorsInt(m); i := 1;
-  repeat
-    d := divs[i]; i := i + 1;
-    cRed := List([1..m/d], i -> c{[(i - 1) * d + 1 .. i * d]});
-  until Length(Set(cRed)) = 1;
-  f!.coeffs  := Immutable(cRed[1]);
-  f!.modulus := Length(cRed[1]);
+  fact := Set(FactorsInt(m)); cRed := c;
+  for p in fact do
+    repeat
+      cRedBuf := StructuralCopy(cRed);
+      cRed := List([1..p], i -> cRedBuf{[(i - 1) * m/p + 1 .. i * m/p]});
+      if   Length(Set(cRed)) = 1
+      then cRed := cRed[1]; m := m/p; else cRed := cRedBuf; fi;
+    until cRed = cRedBuf or m mod p <> 0;
+  od;
+  f!.coeffs  := Immutable(cRed);
+  f!.modulus := Length(cRed);
 end;
 MakeReadOnlyGlobal( "ReduceIntegralRcwaMapping" );
 
@@ -1238,15 +1262,17 @@ InstallMethod( ImageElm,
 
   function ( f, p )
 
-    local Coeffs, Modulus, r, q, d, x, c, pos;
+    local Coeffs, Modulus, F, FList, r, q, d, x, c, pos;
 
     if not p in Source(f) then TryNextMethod(); fi;
     Modulus := f!.modulus; r := p mod Modulus;
-    q := Size(UnderlyingField(f));
+    F := UnderlyingField(f); q := Size(F);
     d := DegreeOfLaurentPolynomial(Modulus);
     x := IndeterminatesOfPolynomialRing(Source(f))[1];
-    c := CoefficientsOfUnivariatePolynomial(p);
-    pos := Position(AllGFqPolynomialsModDegree(q,d,x),r);
+    c := CoefficientsOfUnivariatePolynomial(r);
+    c := Concatenation(c,ListWithIdenticalEntries(d-Length(c),Zero(F)));
+    FList := AsList(F); c := List(c,ci->Position(FList,ci)-1);
+    pos := Sum(List([1..d],i->c[i]*q^(i-1))) + 1;
     Coeffs := f!.coeffs[pos];
     return (Coeffs[1] * p + Coeffs[2]) / Coeffs[3];
   end );
@@ -1521,7 +1547,7 @@ InstallMethod( CompositionMapping2,
                IsIdenticalObj,
                [IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep,
                 IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep],
-               0,
+               SUM_FLAGS,
 
   function ( g, f )
 
@@ -1558,7 +1584,7 @@ InstallMethod( CompositionMapping2,
                "for two modular rcwa mappings",
                IsIdenticalObj,
                [IsModularRcwaMapping and IsModularRcwaDenseRep,
-                IsModularRcwaMapping and IsModularRcwaDenseRep], 100,
+                IsModularRcwaMapping and IsModularRcwaDenseRep], SUM_FLAGS,
 
   function ( g, f )
 
