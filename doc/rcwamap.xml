@@ -1541,6 +1541,31 @@ true
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Oper Name="ContractionCentre" Arg="f, boundstart, maxlng"/>
+    <Description>
+      Tries to compute the <Q>contraction centre</Q> of an rcwa mapping -
+      assuming its existence this is the uniquely-defined finite subset
+      <M>S_0</M> of the base ring <M>R</M> which is mapped bijectively onto
+      itself under <A>f</A> and where for any <M>x</M> in <M>R</M> there is an
+      integer <M>k</M> such that the image of <M>x</M> under the <M>k</M>-th
+      power of <M>f</M> lies in <M>S_0</M>.
+      The mapping <A>f</A> is assumed to be contracting.
+      As this problem seems to be computationally undecidable methods will be
+      probabilistic. The argument <A>boundstart</A> is a bound on the starting
+      value and <A>maxlng</A> is a bound on the sequence length to be searched.
+      If the limit <A>maxlng</A> is reached without completing a cycle a
+      warning is issued.
+<Example>
+<![CDATA[
+gap> S0 := ContractionCentre(T,100,1000);
+[ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0,
+  1, 2 ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
   <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
@@ -1550,3 +1575,4 @@ true
 </Chapter>
 
 <!-- #################################################################### -->
+
