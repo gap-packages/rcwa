@@ -840,23 +840,6 @@ InstallGlobalFunction( ClassUnionShift,
     return RcwaMapping(R,m,c);
   end );
 
-#############################################################################
-##
-#F  PadicValuation( rat, p )  (taken from pkg/polycyclic/gap/action/dixon.gi)
-##
-BindGlobal( "PadicValuation",
-
-  function ( rat, p )
-
-    local  a1, a2;
-
-    a1 := AbsInt( NumeratorRat( rat ) );
-    a2 := DenominatorRat( rat );
-    a1 := Length( Filtered( FactorsInt( a1 ), x -> x = p ) );
-    a2 := Length( Filtered( FactorsInt( a2 ), x -> x = p ) );
-    return a1 - a2;
-  end );
-
 IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
 end;
