@@ -189,9 +189,6 @@ DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
 ##
 DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
-if   not CompareVersionNumbers(VERSION,"4.5")
-then DeclareAttribute("EpimorphismFromFreeGroup",IsGroup); fi;
-
 #############################################################################
 ##
 #O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
@@ -337,3 +334,4 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 #############################################################################
 ##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
