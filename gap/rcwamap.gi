@@ -558,7 +558,7 @@ InstallGlobalFunction( RcwaMapping,
       and IsList( arg[2] ) and IsList( arg[2][1] )
       and Set( List( arg[2], Length ) ) = [ 3 ]
     then return CallFuncList( SemilocalIntegralRcwaMapping, arg );
-    elif Length( arg ) = 3 and IsPrimePowerInt( arg[1] )
+    elif Length( arg ) = 3 and IsInt( arg[1] ) and IsPrimePowerInt( arg[1] )
     then return CallFuncList( ModularRcwaMapping, arg );
     else return CallFuncList( IntegralRcwaMapping, arg );
     fi;
@@ -2928,6 +2928,7 @@ InstallMethod( Restriction,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
