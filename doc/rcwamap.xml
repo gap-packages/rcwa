@@ -646,11 +646,13 @@ gap> PrimeSet(r);
   </Returns>
   <Description>
     An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1,
-    thus <Q>if no proper divisions occur</Q>.
+    thus <Q>if no proper divisions occur</Q>. Computing with such mappings
+    is particularly easy. See also&nbsp;<Ref Prop="IsIntegral" Label="G"/>
+    for rcwa groups.<P/>
+
     Be careful not to confuse this with the term <E>integral rcwa mapping</E>
     for rcwa mappings of the integers; normally it should be rather clear
-    what is meant. See also&nbsp;<Ref Prop="IsIntegral" Label="G"/>
-    for rcwa groups.
+    what is meant.
 <Example>
 <![CDATA[
 gap> List( [ u, t, RcwaMapping([[2,0,1],[3,5,1]]) ], IsIntegral );
@@ -774,61 +776,8 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
 
 <!-- #################################################################### -->
 
-<Section Label="sec:TransMatGraphTrajectories">
-<Heading>Transition matrices, transition graphs and trajectories</Heading>
-
-<ManSection>
-  <Func Name="TransitionMatrix" Arg="f, m" Label="f, m"/>
-  <Returns>
-    The transition matrix of the Markov chain associated to
-    the mapping&nbsp;<A>f</A> and the states <M>r</M>(<A>m</A>)
-    <M>\in</M> <M>R</M>/<A>m</A><M>R</M>.
-  </Returns>
-  <Description>
-    <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
-    The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
-    columns of the matrix is given by the ordering of the residues
-    in the return value of <C>AllResidues(<A>m</A>)</C>
-    (see <Ref Func="AllResidues"/>).
-    The sums of the rows of a transition matrix are always equal to&nbsp;1.
-<Example>
-<![CDATA[
-gap> M := TransitionMatrix(a,7);;
-gap> Display(M);
-[ [  1/2,    0,  1/4,    0,    0,  1/4,    0 ],
-  [    0,  1/4,    0,    0,  1/4,  1/2,    0 ],
-  [  1/4,    0,    0,  3/4,    0,    0,    0 ],
-  [    0,  1/2,  1/4,    0,    0,    0,  1/4 ],
-  [    0,  1/4,    0,    0,    0,  1/4,  1/2 ],
-  [  1/4,    0,    0,    0,  3/4,    0,    0 ],
-  [    0,    0,  1/2,  1/4,    0,    0,  1/4 ] ]
-gap> DeterminantMat(M);
--81/4096
-gap> M := TransitionMatrix(T,19);;
-gap> Display(M*One(GF(7)));
- 4 . . . . . . . . . 4 . . . . . . . .
- . . 4 . . . . . . . 4 . . . . . . . .
- . 4 . . . . . . . . . . . 4 . . . . .
- . . . . . 4 . . . . . 4 . . . . . . .
- . . 4 . . . . . . . . . . . . . 4 . .
- . . . . . . . . 4 . . . 4 . . . . . .
- 4 . . 4 . . . . . . . . . . . . . . .
- . . . . . . . . . . . 4 . 4 . . . . .
- . . . 4 4 . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . 1 . . . .
- . . . . . 4 4 . . . . . . . . . . . .
- . . . . . . . . . . . . . . . 4 . 4 .
- . . . . . . 4 . . 4 . . . . . . . . .
- . 4 . . . . . . . . . . . . . . 4 . .
- . . . . . . . 4 . . . . 4 . . . . . .
- . . . . 4 . . . . . . . . . . . . 4 .
- . . . . . . . . 4 . . . . . . 4 . . .
- . . . . . . . 4 . . . . . . . . . . 4
- . . . . . . . . . 4 . . . . . . . . 4
-]]>
-</Example>
-  </Description>
-</ManSection>
+<Section Label="sec:TransGraphMat">
+<Heading>Transition graphs and transition matrices</Heading>
 
 <ManSection>
   <Oper Name="TransitionGraph" Arg="f, m" Label="f, m"/>
@@ -918,6 +867,66 @@ gap> List(fact,MovedPoints);
 </Example>
   </Description>
 </ManSection>
+
+<ManSection>
+  <Func Name="TransitionMatrix" Arg="f, m" Label="f, m"/>
+  <Returns>
+    The transition matrix of the Markov chain associated to
+    the mapping&nbsp;<A>f</A> and the states <M>r</M>(<A>m</A>)
+    <M>\in</M> <M>R</M>/<A>m</A><M>R</M>.
+  </Returns>
+  <Description>
+    <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
+    The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
+    columns of the matrix is given by the ordering of the residues
+    in the return value of <C>AllResidues(<A>m</A>)</C>
+    (see <Ref Func="AllResidues"/>).
+    The sums of the rows of a transition matrix are always equal to&nbsp;1.
+<Example>
+<![CDATA[
+gap> M := TransitionMatrix(a,7);;
+gap> Display(M);
+[ [  1/2,    0,  1/4,    0,    0,  1/4,    0 ],
+  [    0,  1/4,    0,    0,  1/4,  1/2,    0 ],
+  [  1/4,    0,    0,  3/4,    0,    0,    0 ],
+  [    0,  1/2,  1/4,    0,    0,    0,  1/4 ],
+  [    0,  1/4,    0,    0,    0,  1/4,  1/2 ],
+  [  1/4,    0,    0,    0,  3/4,    0,    0 ],
+  [    0,    0,  1/2,  1/4,    0,    0,  1/4 ] ]
+gap> DeterminantMat(M);
+-81/4096
+gap> M := TransitionMatrix(T,19);;
+gap> Display(M*One(GF(7)));
+ 4 . . . . . . . . . 4 . . . . . . . .
+ . . 4 . . . . . . . 4 . . . . . . . .
+ . 4 . . . . . . . . . . . 4 . . . . .
+ . . . . . 4 . . . . . 4 . . . . . . .
+ . . 4 . . . . . . . . . . . . . 4 . .
+ . . . . . . . . 4 . . . 4 . . . . . .
+ 4 . . 4 . . . . . . . . . . . . . . .
+ . . . . . . . . . . . 4 . 4 . . . . .
+ . . . 4 4 . . . . . . . . . . . . . .
+ . . . . . . . . . . . . . . 1 . . . .
+ . . . . . 4 4 . . . . . . . . . . . .
+ . . . . . . . . . . . . . . . 4 . 4 .
+ . . . . . . 4 . . 4 . . . . . . . . .
+ . 4 . . . . . . . . . . . . . . 4 . .
+ . . . . . . . 4 . . . . 4 . . . . . .
+ . . . . 4 . . . . . . . . . . . . 4 .
+ . . . . . . . . 4 . . . . . . 4 . . .
+ . . . . . . . 4 . . . . . . . . . . 4
+ . . . . . . . . . 4 . . . . . . . . 4
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:Trajectories">
+<Heading>Trajectories</Heading>
 
 <ManSection>
   <Func Name="Trajectory" Arg="f, n, val, cond" Label="f, n, val, cond"/>
@@ -1109,11 +1118,9 @@ gap> Divergence(a);
     The <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    Let <M>f</M> be an rcwa mapping of <M>\Z</M> with modulus <M>m</M>.
-    Assume that the restriction of <M>f</M> to a residue class <M>r(m)</M>
-    is given by <M>n \mapsto (a_{r(m)} \cdot n + b_{r(m)})/c_{r(m)}</M>.
-    Then the <E>image density</E> of <M>f</M> is defined by
-    <M>\sum_{r(m) \in \Z/m\Z} c_{r(m)}/a_{r(m)}</M>.
+    In the notation introduced in the definition of an rcwa mapping,
+    the <E>image density</E> of <M>f</M> is defined by
+    <M>\sum_{r(m) \in R/mR} |R/c_{r(m)}R|/|R/a_{r(m)}R|</M>.
     Injective rcwa mappings have an image density of at most&nbsp;1, and the
     image density of a surjective rcwa mapping is at least&nbsp;1 -- thus in
     particular the image density of a bijective mapping equals&nbsp;1.
