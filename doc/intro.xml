@@ -423,7 +423,7 @@ We proceed with a list briefly giving some results and remarks
     bounded to the above. The existence of such mappings can be observed
     relatively easy for rings like GF(<M>q</M>)[<M>x</M>] (see above), but
     e.g. on <M>\mathbb{Z}</M>, constructing examples is more difficult.
-    <M>\rightarrow</M> <Ref Label="sec:WildButFiniteCycles"/>.
+    <M>\rightarrow</M> Section&nbsp;<Ref Label="sec:WildButFiniteCycles"/>.
   </Item>
 
   <Mark>-</Mark>
@@ -492,6 +492,10 @@ We end this chapter by listing a few open problems (in arbitrary order).
     and natural generalizations of this long-standing conjecture.
     For related functionality of this package see
     <Ref Oper="ContractionCentre"/> and <Ref Attr="Divergence"/>.
+    See also the examples given in
+    Section&nbsp;<Ref Label="sec:SlowlyContractingMapping"/>,
+    <Ref Label="sec:CollatzImagesAndPreImages"/> and
+    <Ref Label="sec:CollatzMapping"/>.
   </Item>
 
 </List>
