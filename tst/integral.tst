@@ -876,7 +876,7 @@ gap> Cycle(f1,rc(5,6));
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 <rcwa group over Z with 2 generators>
 gap> MovedPoints(G);
-3(5)
+3(5) \ [ -2, 3 ]
 gap> Divergence(g);
 1
 gap> Divergence(a);
