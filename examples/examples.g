@@ -404,6 +404,10 @@ c23 := RcwaMapping(Z_pi([2,3]),ShallowCopy(Coefficients(c)));
 
 ab23 := Comm(a23,b23); ac23 := Comm(a23,c23);
 
+SetName(a2,"a2");
+SetName(a23,"a23"); SetName(b23,"b23"); SetName(c23,"c23");
+SetName(ab23,"[a23,b23]"); SetName(ac23,"[a23,c23]");
+
 v := RcwaMapping([[6,0,1],[1,-7,2],[6,0,1],[1,-1,1],
                   [6,0,1],[1, 1,2],[6,0,1],[1,-1,1]]);
 
@@ -476,23 +480,40 @@ T5 := RcwaMapping([[1,0,2],[5,-1,2]]); SetName(T5,"T5");
 ##
 ##  The Venturini examples.
 ##
-V1 := t -> RcwaMapping([[2500,6     ,6],[t,  -t+4,2],[1,16,6],
-                        [t   ,-3*t+4,2],[t,-4*t+4,2],[1,13,6]]);
+V1 := function ( t )
+
+        local map;
+
+        map := RcwaMapping([[2500,6     ,6],[t,  -t+4,2],[1,16,6],
+                            [t   ,-3*t+4,2],[t,-4*t+4,2],[1,13,6]]);
+        SetName(map,Concatenation("V1(",String(t),")"));
+        return map;
+      end;
 
 V2 := function ( k, p, t )
 
-        local  c, r;
+        local  map, c, r;
 
         if not IsSubset(PositiveIntegers,[k,p,t])
           or t < 1 or t >= p or Gcd(p,t) <> 1 then return fail;
         fi;
         c := [[p^(k-1),1,1]];
         for r in [1..p-1] do c[r+1] := [t,r*(p-t),p]; od;
-        return RcwaMapping(c);        
+        map := RcwaMapping(c);
+        SetName(map,Concatenation("V2(",String(k),",",String(p),",",
+                                        String(t),")"));
+        return map;
       end;
 
-V3 := t -> RcwaMapping([[ 1, 0,4],[1,  1,2],[20,    -40,1],[1,-3,8],
-                        [20,48,1],[3,-13,2],[ t,-6*t+64,4],[1, 1,8]]);
+V3 := function ( t )
+
+        local map;
+
+        map := RcwaMapping([[ 1, 0,4],[1,  1,2],[20,    -40,1],[1,-3,8],
+                            [20,48,1],[3,-13,2],[ t,-6*t+64,4],[1, 1,8]]);
+        SetName(map,Concatenation("V3(",String(t),")"));
+        return map;
+      end;
 
 V4 := RcwaMapping([[9, 1,1],[  1,  32,3],[1,-2,3],
                    [1, 3,1],[100,-364,9],[1,-5,3],
@@ -506,6 +527,21 @@ V6 := RcwaMapping([[1,  4,2],[1,  3,2],[ 1,  2, 2],[ 1,  1, 2],[ 1,  0, 2],
 V7 := RcwaMapping([[1,0,3],[2,-2,3],[5,-4,3],[4,0,3],[5,-8,3],[4,-2,3]]);
 
 V8 := RcwaMapping([[1,0,3],[1,-1,3],[5,5,3],[3,5,2],[3,2,2],[3,-1,2]]);
+
+SetName(V4,"V4"); SetName(V5,"V5"); SetName(V6,"V6");
+SetName(V7,"V7"); SetName(V8,"V8");
+
+#############################################################################
+##
+##  An example by H. M. Farkas.
+##
+##  The following mapping has no divergent trajectories, but trajectories
+##  which ascent any given number of consecutive steps. Proof: elementary.
+##
+Farkas := RcwaMapping([[1,0,3],[1,1,2],[1,0,1],[1,0,3],
+                       [1,0,1],[1,1,2],[1,0,3],[3,1,2],
+                       [1,0,1],[1,0,3],[1,0,1],[3,1,2]]);
+SetName(Farkas,"Farkas");
 
 #############################################################################
 ##
