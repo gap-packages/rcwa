@@ -890,6 +890,26 @@ gap> RCWAInfo(0);
 gap> S0 := ContractionCentre(T,100,1000);
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0,
   1, 2 ]
+gap> f1 := RcwaMapping([[2,0,1]]);
+Integral rcwa mapping: n -> 2n
+gap> f2 := RcwaMapping([[2,1,1]]);
+Integral rcwa mapping: n -> 2n + 1
+gap> a_1 := Restriction(a,f1);
+<integral rcwa mapping with modulus 8>
+gap> a_2 := Restriction(a,f2);
+<integral rcwa mapping with modulus 8>
+gap> G := Group(a_1,a_2);
+<integral rcwa group with 2 generators>
+gap> IsAbelian(G);
+true
+gap> Set(FactorizationOnConnectedComponents(a_1*a_2,2)) = Set([a_1,a_2]);
+true
+gap> List([-2..2],k->Multpk(a,2,k));
+[ The residue class 1(2), The residue class 0(2), [  ], [  ], [  ] ]
+gap> List([-2..2],k->Multpk(a,3,k));
+[ [  ], [  ], [  ], Integers, [  ] ]
+gap> List([-2..2],k->Multpk(a,5,k));
+[ [  ], [  ], Integers, [  ], [  ] ]
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################
