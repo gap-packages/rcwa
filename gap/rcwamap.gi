@@ -654,6 +654,23 @@ InstallOtherMethod( RcwaMapping,
     else TryNextMethod(); fi;
   end );
 
+#############################################################################
+##
+#F  ClassShift( <S> ) . .  shift of residue class union <S> by Modulus( <S> )
+##
+InstallGlobalFunction( ClassShift,
+
+  function ( S )
+
+    local  R, m, res, resS, r, c, f;
+
+    R := UnderlyingRing(FamilyObj(S));
+    m := Modulus(S); resS := Residues(S); res := AllResidues(R,m);
+    c := List(res,r->[1,0,1]*One(R));
+    for r in resS do c[PositionSorted(res,r)] := [1,m,1]*One(R); od;
+    return RcwaMapping(R,m,c);
+  end );
+
 IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
 end;
@@ -2955,4 +2972,5 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 

@@ -189,16 +189,8 @@ DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
 ##
 DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
-#############################################################################
-##
-#F  ProjectionFromFreeGroupByGenerators( <G> ) . . . .  projection <F> -> <G>
-##
-##  The projection <F> -> <G> from a free group <F> of suitable rank to <G>
-##  which maps the generators of <F> to those of <G> one-by-one.
-##  If generators of <G> have names, these are inherited by the corresponding
-##  generators of <F>.
-##
-DeclareGlobalFunction( "ProjectionFromFreeGroupByGenerators" );
+if   not CompareVersionNumbers(VERSION,"4.5")
+then DeclareAttribute("EpimorphismFromFreeGroup",IsGroup); fi;
 
 #############################################################################
 ##
@@ -220,7 +212,7 @@ DeclareOperation( "PreImagesRepresentatives",
 ##  The rank of <F> must be equal to the number of generators of <G>.
 ##
 DeclareOperation( "RepresentativeActionPreImage",
-                  [ IsRcwaGroup, IsObject, IsObject,
+                  [ IsGroup, IsObject, IsObject,
                     IsFunction, IsFreeGroup ] );
 
 #############################################################################
@@ -232,7 +224,7 @@ DeclareOperation( "RepresentativeActionPreImage",
 ##  computing just one representative.
 ##
 DeclareOperation( "RepresentativesActionPreImage",
-                  [ IsRcwaGroup, IsObject, IsObject,
+                  [ IsGroup, IsObject, IsObject,
                     IsFunction, IsFreeGroup ] );
 
 #############################################################################

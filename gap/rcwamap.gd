@@ -176,22 +176,22 @@ DeclareRepresentation( "IsRcwaMappingStandardRep",
 
 #############################################################################
 ##
-#F  RcwaMapping( <R>, <modulus>, <coeffs> )
-#F  RcwaMapping( <R>, <coeffs> )
-#F  RcwaMapping( <coeffs> )
-#F  RcwaMapping( <perm>, <range> )
-#F  RcwaMapping( <modulus>, <values> )
-#F  RcwaMapping( <pi>, <coeffs> )
-#F  RcwaMapping( <q>, <modulus>, <coeffs> )
-#F  RcwaMapping( <cycles> )
-#F  RcwaMappingNC( <R>, <modulus>, <coeffs> )
-#F  RcwaMappingNC( <R>, <coeffs> )
-#F  RcwaMappingNC( <coeffs> )
-#F  RcwaMappingNC( <perm>, <range> )
-#F  RcwaMappingNC( <modulus>, <values> )
-#F  RcwaMappingNC( <pi>, <coeffs> )
-#F  RcwaMappingNC( <q>, <modulus>, <coeffs> )
-#F  RcwaMappingNC( <cycles> )
+#M  RcwaMapping( <R>, <modulus>, <coeffs> )
+#M  RcwaMapping( <R>, <coeffs> )
+#M  RcwaMapping( <coeffs> )
+#M  RcwaMapping( <perm>, <range> )
+#M  RcwaMapping( <modulus>, <values> )
+#M  RcwaMapping( <pi>, <coeffs> )
+#M  RcwaMapping( <q>, <modulus>, <coeffs> )
+#M  RcwaMapping( <cycles> )
+#M  RcwaMappingNC( <R>, <modulus>, <coeffs> )
+#M  RcwaMappingNC( <R>, <coeffs> )
+#M  RcwaMappingNC( <coeffs> )
+#M  RcwaMappingNC( <perm>, <range> )
+#M  RcwaMappingNC( <modulus>, <values> )
+#M  RcwaMappingNC( <pi>, <coeffs> )
+#M  RcwaMappingNC( <q>, <modulus>, <coeffs> )
+#M  RcwaMappingNC( <cycles> )
 ##
 ##  Construction of the rcwa mapping 
 ##
@@ -232,6 +232,15 @@ DeclareRepresentation( "IsRcwaMappingStandardRep",
 DeclareOperation( "RcwaMapping", [ IsObject ] );
 DeclareOperation( "RcwaMappingNC", [ IsObject ] );
 
+#############################################################################
+##
+#F  ClassShift( <S> ) . .  shift of residue class union <S> by Modulus( <S> )
+##
+##  The rcwa mapping which maps <S> to <S> + `Modulus'(<S>) and fixes the
+##  complement of <S>.
+##
+DeclareGlobalFunction( "ClassShift" );
+ 
 #############################################################################
 ##
 #V  ZeroIntegralRcwaMapping . . . . . . . . . . .  zero integral rcwa mapping

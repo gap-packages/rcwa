@@ -844,7 +844,7 @@ InstallMethod( \in,
 
   function ( g, G )
 
-    local  P, H, h, K, k, L, l, F, phi, factors, head, c, gens, gensinv;
+    local  P, H, h, K, k, L, l, F, phi, c, gens, gensinv;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -867,7 +867,7 @@ InstallMethod( \in,
     fi;
     if not IsTame(G) then
       Info(InfoRCWA,3,"<G> is wild -- trying to factor <g> into gen's ...");
-      phi := ProjectionFromFreeGroupByGenerators(G);
+      phi := EpimorphismFromFreeGroup(G);
       return PreImagesRepresentative(phi,g) <> fail;
     else
       if   Modulus(G) mod Modulus(g) <> 0 then
@@ -897,11 +897,11 @@ InstallMethod( \in,
       if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
       Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
       Info(InfoRCWA,3,"on RespectedClassPartition(<G>).");
-      phi     := ProjectionFromFreeGroupByGenerators(H);
-      factors := List(LetterRepAssocWord(PreImagesRepresentative(phi,h)),
-                      id->gens[AbsInt(id)]^SignInt(id));
-      head    := Product(factors);
-      k       := g/head;
+      phi  := EpimorphismFromFreeGroup(H);
+      h    := PreImagesRepresentative(phi,h:NoStabChain);
+      h    := Product(List(LetterRepAssocWord(h),
+                           id->gens[AbsInt(id)]^SignInt(id)));
+      k    := g/h;
       Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
       Info(InfoRCWA,3,"the action of <g> on RespectedClassPartition(<G>).");
       K := KernelOfActionOnClassPartition(G);
@@ -1430,9 +1430,10 @@ InstallOtherMethod( OrbitOp,
 
 #############################################################################
 ##
-#F  ProjectionFromFreeGroupByGenerators( <G> ) . . . .  projection <F> -> <G>
+#M  EpimorphismFromFreeGroup( <G> ) . . . . . . . . . . . . .  for rcwa group
 ##
-InstallGlobalFunction( ProjectionFromFreeGroupByGenerators,
+InstallMethod( EpimorphismFromFreeGroup,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -1453,8 +1454,8 @@ InstallGlobalFunction( ProjectionFromFreeGroupByGenerators,
 #M  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
 InstallMethod( RepresentativesActionPreImage,
-               "for rcwa groups (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
+               "for rcwa groups and permutation groups (RCWA)", ReturnTrue,
+               [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
                0,
 
   function ( G, src, dest, act, F )
@@ -1493,8 +1494,12 @@ InstallMethod( RepresentativesActionPreImage,
       return SetOfRepresentatives(orb,eq,lt,shorter);
     end;
 
-    R := Source(One(G));
-    if src in R then src := [src]; fi; if dest in R then dest := [dest]; fi;
+    if   IsPermGroup(G)
+    then R := PositiveIntegers;
+    elif IsRcwaGroup(G) then R := Source(One(G));
+    else TryNextMethod(); fi;
+    if not IsList(src)  then src  := [src];  fi;
+    if not IsList(dest) then dest := [dest]; fi;
     if   not IsSubset(R,Union(src,dest))
       or Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
     then TryNextMethod(); fi;
@@ -1526,14 +1531,15 @@ InstallMethod( RepresentativesActionPreImage,
 #M  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
 InstallMethod( RepresentativeActionPreImage,
-               "for rcwa groups (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
+               "for rcwa groups and permutation groups (RCWA)", ReturnTrue,
+               [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ],
                0,
 
   function ( G, src, dest, act, F )
 
     local  candidates, minlng, shortest;
 
+    if not IsRcwaGroup(G) and not IsPermGroup(G) then TryNextMethod(); fi;
     candidates := RepresentativesActionPreImage(G,src,dest,act,F);
     if candidates = [] then return fail; fi;
     minlng   := Minimum(List(candidates,Length));
@@ -1553,7 +1559,7 @@ InstallOtherMethod( RepresentativeActionOp,
 
     local  F, phi, pre;
 
-     phi := ProjectionFromFreeGroupByGenerators(G);
+     phi := EpimorphismFromFreeGroup(G);
      pre := RepresentativeActionPreImage(G,src,dest,act,Source(phi));
      if pre = fail then return fail; fi;
      return pre^phi;
@@ -1565,12 +1571,12 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 InstallMethod( PreImagesRepresentatives,
                "for hom's from free groups to integral rcwa groups (RCWA)",
-               ReturnTrue, [ IsGroupHomomorphism, IsIntegralRcwaMapping ], 0,
+               ReturnTrue, [ IsGroupHomomorphism, IsObject ], 0,
 
   function ( phi, g )
 
     local  F, G, IsCorrect, candidates, minlng, shortest,
-           preimage, image, lng;
+           preimage, image, lng, add;
 
     IsCorrect := function ( cand )
 
@@ -1587,12 +1593,14 @@ InstallMethod( PreImagesRepresentatives,
     end;
 
     F := Source(phi); G := Range(phi);
-    if   not IsFreeGroup(F) or not IsIntegralRcwaGroup(G)
-      or not MappingGeneratorsImages(phi) = List([F,G],GeneratorsOfGroup)
+    if   not IsFreeGroup(F)
+      or not (IsIntegralRcwaGroup(G) or IsPermGroup(G))
+      or FamilyObj(g) <> FamilyObj(One(G))
+      or MappingGeneratorsImages(phi) <> List([F,G],GeneratorsOfGroup)
     then TryNextMethod(); fi;
-    lng := 1;
+    lng := 1; add := 1;
     repeat
-      lng        := lng + 1;
+      lng        := lng + add; if IsPermGroup(G) then add := add + 1; fi;
       preimage   := [1..lng];
       image      := List(preimage,n->n^g);
       candidates := RepresentativesActionPreImage(G,preimage,image,
@@ -1608,13 +1616,16 @@ InstallMethod( PreImagesRepresentatives,
 #M  PreImagesRepresentative( <phi>, <g> )
 ##
 InstallMethod( PreImagesRepresentative,
-               "for hom's from free groups to integral rcwa groups (RCWA)",
-               ReturnTrue, [ IsGroupHomomorphism, IsIntegralRcwaMapping ], 0,
+               "for hom's from free groups to rcwa- or perm.-groups (RCWA)",
+               ReturnTrue, [ IsGroupHomomorphism, IsObject ], SUM_FLAGS,
 
   function ( phi, g )
 
     local  candidates, minlng, shortest;
 
+    if not IsRcwaMapping(g) and
+       not (IsPerm(g) and ValueOption("NoStabChain") = true)
+    then TryNextMethod(); fi;
     candidates := PreImagesRepresentatives(phi,g);
     if candidates = [] then return fail; fi;
     minlng   := Minimum(List(candidates,Length));
@@ -1731,4 +1742,3 @@ InstallMethod( DirectProductOp,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
