@@ -637,6 +637,7 @@ InstallMethod( Intersection2,
     included := Union(U1!.included,U2!.included);
     included := Filtered(included,n -> n in U1!.included and n mod m2 in r2
                                     or n in U2!.included and n mod m1 in r1);
+    included := Union(included,Intersection(U1!.included,U2!.included));
     excluded := Union(U1!.excluded,U2!.excluded);
     if IsIntegers(R) and m * Gcd(m1,m2) > 100 * Length(r1) * Length(r2) then
       gcd := Gcd(m1,m2);

@@ -1371,34 +1371,19 @@ InstallMethod( ImagesSet,
 
   function ( f, S )
 
-    local  c, m, modulus, immod, residues, excluded,
-           image, imagemod, val, residue, res, pers,
-           r, t, n, im;
+    local  image, immod, imres, rump, im, im2, pre, diff, excluded, n;
 
-    c := f!.coeffs; m := f!.modulus;
-    image := List(IncludedElements(S),n->n^f);
-    modulus := Modulus(S); residues := Residues(S);
-    immod := Lcm(m,modulus); pers := immod/modulus;
-    residues := Flat(List([0..pers-1],i->List(residues,res->res+i*modulus)));
+    rump  := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
+    immod := Modulus(f) * Multiplier(f) * Modulus(S);
+    imres := Set( List( Intersection( rump, [ 0 .. immod*Divisor(f) - 1 ] ),
+                        n -> n^f mod immod ) );
+    image := Union( ResidueClassUnion( Integers, immod, imres ),
+                    List( IncludedElements(S), n -> n^f ) );
     excluded := ExcludedElements(S);
-    for res in residues do
-      r := res mod m;
-      if c[r+1][1] <> 0 then
-        t        := c[r+1];
-        imagemod := (immod*t[1])/Gcd(m*modulus,t[3]);
-        val      := (t[1]*res + t[2])/t[3];
-        if Gcd(DenominatorRat(val),imagemod) <> 1 then continue; fi;
-        residue  := val mod imagemod;
-        image    := Union(image,ResidueClass(Integers,imagemod,residue));
-      elif Intersection(S,ResidueClass(Integers,m,r)) <> []
-      then image := Union(image,[c[r+1][2]]);
-      fi;
-      if IsIntegers(image) then break; fi;
-    od;
     for n in excluded do
       im := n^f;
-      if   Intersection(S,PreImagesElm(f,im)) = []
-      then image := Difference(image,[im]); fi;
+      if   Intersection( S, PreImagesElm( f, im ) ) = []
+      then image := Difference( image, [ im ] ); fi;
     od;
     return image;
   end );
@@ -1518,19 +1503,20 @@ InstallMethod( PreImagesSet,
 
     local  preimage, premod, preres, rump, pre, pre2, im, diff, excluded, n;
 
-    rump := ResidueClassUnion(Integers,Modulus(S),Residues(S));
-    premod := Lcm(Modulus(f)*Divisor(f),Modulus(S));
-    preres := Filtered([0..premod],n->n^f in rump);
-    preimage := Union(ResidueClassUnion(Integers,premod,preres),
-                      Flat(List(IncludedElements(S),n->PreImagesElm(f,n))));
+    rump := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
+    premod := Modulus(f) * Divisor(f) * Modulus(S);
+    preres := Filtered( [ 0 .. premod ], n -> n^f in rump );
+    preimage := Union( ResidueClassUnion( Integers, premod, preres ),
+                       Flat( List( IncludedElements(S),
+                                   n -> PreImagesElm( f, n ) ) ) );
     excluded := ExcludedElements(S);
     for n in excluded do
-      pre  := PreImagesElm(f,n);
-      im   := ImagesSet(f,pre);
-      pre2 := PreImagesSet(f,Difference(im,excluded));
-      diff := Difference(pre,pre2);
-      if   diff <> []
-      then preimage := Difference(preimage,diff); fi;
+      pre  := PreImagesElm( f, n );
+      im   := ImagesSet( f, pre );
+      pre2 := PreImagesSet( f, Difference( im, excluded ) );
+      diff := Difference( pre, pre2 );
+      if   diff <> [ ]
+      then preimage := Difference( preimage, diff ); fi;
     od;
     return preimage;
   end );
