@@ -179,6 +179,7 @@ Bijective rcwa mapping of Z with modulus 4
 
 <ManSection>
   <Meth Name="Modulus" Arg="G" Label = "Modulus of an rcwa group"/>
+  <Meth Name="Mod"     Arg="G"/>
   <Returns> The modulus of the rcwa group&nbsp;<A>G</A>. </Returns>
   <Description>
     For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
@@ -188,7 +189,7 @@ Bijective rcwa mapping of Z with modulus 4
     methods used in your particular case. In any case if the returned
     modulus is not equal to zero the result is certain.
 
-    See also <Ref Oper="Modulus" Label="Modulus of an rcwa mapping"/>
+    See also <Ref Meth="Modulus" Label="Modulus of an rcwa mapping"/>
     for rcwa mappings, and <Ref Prop="IsTame" Label="Tame rcwa group"/>.
 <Example>
 <![CDATA[
@@ -1565,4 +1566,3 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 </Chapter>
 
 <!-- #################################################################### -->
-

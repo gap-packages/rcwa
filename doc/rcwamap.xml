@@ -354,7 +354,8 @@ n \ \longmapsto \
 <Heading>Extracting the components of rcwa mappings</Heading>
 
 <ManSection>
-  <Oper Name="Modulus" Arg="f" Label="Modulus of an rcwa mapping"/>
+  <Meth Name="Modulus" Arg="f" Label="Modulus of an rcwa mapping"/>
+  <Meth Name="Mod"     Arg="f"/>
   <Returns> The modulus of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
     See also <Ref Meth="Modulus" Label="Modulus of an rcwa group"/> for
@@ -427,6 +428,7 @@ true
 
 <ManSection>
   <Attr Name="Multiplier" Arg="f" Label="Multiplier of an rcwa mapping"/>
+  <Attr Name="Mult"       Arg="f"/>
   <Returns> The multiplier of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
     For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.
@@ -449,6 +451,7 @@ x^2+x+Z(2)^0
 
 <ManSection>
   <Attr Name="Divisor" Arg="f" Label="Divisor of an rcwa mapping"/>
+  <Attr Name="Div"     Arg="f"/>
   <Returns> The divisor of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
     For the definition see Chapter&nbsp;<Ref Label="ch:Introduction"/>.

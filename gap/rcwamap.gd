@@ -261,6 +261,7 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 ##  associate of the least common multiple of the coefficients $a_r$.
 ##
 DeclareAttribute( "Multiplier", IsRcwaMapping );
+DeclareSynonym( "Mult", Multiplier );
 
 #############################################################################
 ##
@@ -270,6 +271,7 @@ DeclareAttribute( "Multiplier", IsRcwaMapping );
 ##  associate of the least common multiple of the coefficients $c_r$.
 ##
 DeclareAttribute( "Divisor", IsRcwaMapping );
+DeclareSynonym( "Div", Divisor );
 
 #############################################################################
 ##
