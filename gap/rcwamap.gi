@@ -2540,7 +2540,7 @@ InstallGlobalFunction( Trajectory,
     if cond = "length" then
       for step in [1..val-1] do Add(seq,seq[step]^f); od;
     elif cond = "stop" then
-      if not IsList(val) then val := [val]; fi;
+      if not IsListOrCollection(val) then val := [val]; fi;
       repeat Add(seq,seq[Length(seq)]^f); until seq[Length(seq)] in val;
     fi;
     return seq;
@@ -3185,4 +3185,5 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
