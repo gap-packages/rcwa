@@ -181,8 +181,9 @@ They are listed in alphabetical order.
     If <A>G</A> is not tame, try to factor <A>g</A> into generators
     of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>. If successful,
     return <C>true</C>. If <A>g</A> is in <A>G</A>, this terminates after
-    a finite number of steps. Otherwise it runs into an infinite loop.
-    If <A>G</A> is tame, proceed as follows: <P/>
+    a finite number of steps. Both runtime and memory requirements are
+    exponential in the word length. If <A>g</A> is not in <A>G</A>, it runs 
+    into an infinite loop. If <A>G</A> is tame, proceed as follows: <P/>
 
     Test whether the modulus of <A>g</A> divides the modulus of <A>G</A>.
     If not, return <C>false</C>. Test whether <A>G</A> is finite and <A>g</A>
