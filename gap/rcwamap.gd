@@ -332,6 +332,23 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
+#A  SetOnWhichMappingIsOrderReversing( <f> )
+#A  SetOnWhichMappingIsConstant( <f> )
+#A  SetOnWhichMappingIsOrderPreserving( <f> )
+##
+##  The union of the residue classes (mod Mod(<f>)) on which the rcwa mapping
+##  <f> is class-wise order-reversing, class-wise constant resp. class-wise
+##  order-preserving.
+##
+DeclareAttribute( "SetOnWhichMappingIsOrderReversing",
+                  IsRationalBasedRcwaMapping );
+DeclareAttribute( "SetOnWhichMappingIsConstant",
+                  IsRationalBasedRcwaMapping );
+DeclareAttribute( "SetOnWhichMappingIsOrderPreserving",
+                  IsRationalBasedRcwaMapping );
+
+#############################################################################
+##
 #F  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
 ##
 ##  The *transition matrix* <T> of <f> for modulus <m>.

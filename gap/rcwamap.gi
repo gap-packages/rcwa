@@ -1369,6 +1369,31 @@ InstallMethod( Multpk,
 
 #############################################################################
 ##
+#M  SetOnWhichMappingIsOrderReversing . . . for "rational-based" rcwa mapping
+#M  SetOnWhichMappingIsConstant . . . . . . for "rational-based" rcwa mapping
+#M  SetOnWhichMappingIsOrderPreserving  . . for "rational-based" rcwa mapping
+##
+InstallMethod( SetOnWhichMappingIsOrderReversing,
+               "for rational-based rcwa mappings (RCWA)",
+               true, [ IsRationalBasedRcwaMapping ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                          Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                    r -> Coefficients( f )[r+1][1] < 0 ) ) );
+InstallMethod( SetOnWhichMappingIsConstant,
+               "for rational-based rcwa mappings (RCWA)",
+               true, [ IsRationalBasedRcwaMapping ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                          Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                    r -> Coefficients( f )[r+1][1] = 0 ) ) );
+InstallMethod( SetOnWhichMappingIsOrderPreserving,
+               "for rational-based rcwa mappings (RCWA)",
+               true, [ IsRationalBasedRcwaMapping ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                          Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                    r -> Coefficients( f )[r+1][1] > 0 ) ) );
+
+#############################################################################
+##
 #M  IsIntegral( <f> ) . . . . . . . . . . . . . . . .. . . . for rcwa mapping
 ##
 InstallMethod( IsIntegral,
@@ -1405,19 +1430,17 @@ InstallOtherMethod( Determinant,
 
 #############################################################################
 ##
-#M  MovedPoints( <f> ) . . . . . . . . . . . . . . for bijective rcwa mapping
+#M  MovedPoints( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
-##  The set of moved points (support) of the bijective rcwa mapping <f>.
+##  The set of moved points (support) of the rcwa mapping <f>.
 ##
 InstallOtherMethod( MovedPoints,
-                    "for bijective rcwa mapping (RCWA)", true,
-                    [ IsRcwaMapping ], 0,
+                    "for rcwa mapping (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
     local  m, c, R, q, d, x, r, pols, residues, fixed, fixpoint;
 
-    if not IsBijective(f) then TryNextMethod(); fi;
     m := Modulus(f); c := Coefficients(f); R := Source(f);
     if   IsRationalBasedRcwaMapping(f)
     then pols     := [0..m-1]; # just a dummy
@@ -3132,3 +3155,4 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
