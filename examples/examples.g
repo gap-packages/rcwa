@@ -112,6 +112,15 @@ SetName(r_2mod,"r");
 nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
 t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 
+# A factorization of a (see above) into two balanced mappings,
+# where one of them is an involution.
+
+Coeff_a2 := List([1..72],r->[1,0,1]);
+Coeff_a2{[2,4..72]} := List([1..36],r->[36,0,1]);
+Coeff_a2[37] := [1,0,36];
+a2 := RcwaMapping(Coeff_a2); a1 := a/a2;
+SetName(a1,"a1"); SetName(a2,"a2");
+
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
