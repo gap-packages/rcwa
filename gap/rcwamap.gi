@@ -3446,4 +3446,57 @@ InstallMethod( CompatibleConjugate,
 
 #############################################################################
 ##
+#M  FactorizationIntoGenerators( <g> ) . . . . . . for integral rcwa mappings
+##
+InstallMethod( FactorizationIntoGenerators,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( g )
+
+    local  facts, P, h, cycs, cyc, gfixP, c, m, cr, i, j, r;
+
+    if not IsBijective(g) then return fail; fi;
+    if IsOne(g) then return [g]; fi;
+    facts := [];
+    if IsTame(g) then
+      P := RespectedClassPartition(g);
+      h := Permutation(g,P);
+      cycs := Orbits(Group(h),MovedPoints(h));
+      for cyc in cycs do
+        for i in [2..Length(cyc)] do
+          Add(facts,ClassTransposition(
+                    Residues(P[cyc[1]])[1],Modulus(P[cyc[1]]),
+                    Residues(P[cyc[i]])[1],Modulus(P[cyc[i]])));
+        od;
+      od;
+      gfixP := g/Product(facts); # gfixP stabilizes the partition P.
+      m := Modulus(gfixP); c := Coefficients(gfixP);
+      for r in [1..m] do
+        if c[r][1] < 0 then
+          cr := ClassReflection(r-1,m);
+          facts := Concatenation([cr],facts);
+          gfixP := gfixP * cr;
+        fi;
+      od;
+      m := Modulus(gfixP); c := Coefficients(gfixP);
+      for r in [1..m] do # Now gfixP is class-wise order-preserving.
+        if c[r][2] < 0 then
+          facts := Concatenation(ListWithIdenticalEntries(
+                                 -c[r][2]/m,ClassShift(r-1,m)^-1),facts);
+        elif c[r][2] > 0 then
+          facts := Concatenation(ListWithIdenticalEntries(
+                                 c[r][2]/m,ClassShift(r-1,m)),facts);
+        fi;
+      od;
+    else
+      TryNextMethod();
+    fi;
+    if   Product(facts) <> g
+    then Error("FactorizationIntoGenerators: internal error!");
+    else return facts; fi;
+  end );
+
+#############################################################################
+##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
