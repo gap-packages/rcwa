@@ -771,7 +771,10 @@ InstallMethod( Difference,
 InstallMethod( Difference,
                "for finite set and residue class union", ReturnTrue,
                [ IsList, IsUnionOfResidueClasses ], 0,
-               function ( S, U ) return Difference( U, S ); end );
+
+  function ( S, U )
+    return Filtered( Set( S ), n -> not n in U );
+  end );
 
 #############################################################################
 ##

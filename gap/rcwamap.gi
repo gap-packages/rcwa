@@ -1124,8 +1124,8 @@ InstallMethod( OneOp,
 
     local  one;
  
-    one := ModularRcwaMapping( Size(UnderlyingField(f)), One(Source(f)),
-                               [[1,0,1]] * One(Source(f)) );
+    one := ModularRcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
+                                 [[1,0,1]] * One(Source(f)) );
     SetIsOne( one, true ); return one;
   end );
 
@@ -1366,8 +1366,7 @@ InstallMethod( ImagesSet,
 ##
 InstallMethod( ImagesSet,
                "for integral rcwa mapping and residue class union", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                 IsUnionOfResidueClassesOfZ ], 0, 
+               [ IsIntegralRcwaMapping, IsUnionOfResidueClassesOfZ ], 0, 
 
   function ( f, S )
 
@@ -1552,9 +1551,9 @@ InstallMethod( \+,
     od;
 
     if   IsIntegralRcwaMapping( f )
-    then return IntegralRcwaMapping( c3 );
+    then return IntegralRcwaMappingNC( c3 );
     else pi := NoninvertiblePrimes( Source( f ) );
-         return SemilocalIntegralRcwaMapping( pi, c3 );
+         return SemilocalIntegralRcwaMappingNC( pi, c3 );
     fi;
   end );
 
@@ -1590,7 +1589,7 @@ InstallMethod( \+,
                   c[1][n1][3] * c[2][n2][3] ]);
     od;
 
-    return ModularRcwaMapping( q, m[3], c[3] );
+    return ModularRcwaMappingNC( q, m[3], c[3] );
   end );
 
 #############################################################################
@@ -1603,8 +1602,8 @@ InstallMethod( AdditiveInverseOp,
                "for integral rcwa mappings", true,
                [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
 
-  f -> IntegralRcwaMapping( List( f!.coeffs,
-                                  c -> [ -c[1], -c[2], c[3] ] ) ) );
+  f -> IntegralRcwaMappingNC( List( f!.coeffs,
+                                    c -> [ -c[1], -c[2], c[3] ] ) ) );
 
 #############################################################################
 ##
@@ -1617,9 +1616,9 @@ InstallMethod( AdditiveInverseOp,
                true, [     IsSemilocalIntegralRcwaMapping 
                        and IsRationalBasedRcwaDenseRep ], 0,
 
-  f -> SemilocalIntegralRcwaMapping( NoninvertiblePrimes(Source(f)),
-                                     List(f!.coeffs,
-                                          c -> [ -c[1], -c[2], c[3] ]) ) );
+  f -> SemilocalIntegralRcwaMappingNC( NoninvertiblePrimes(Source(f)),
+                                       List(f!.coeffs,
+                                            c -> [ -c[1], -c[2], c[3] ]) ) );
 
 #############################################################################
 ##
@@ -1631,8 +1630,8 @@ InstallMethod( AdditiveInverseOp,
                "for modular rcwa mappings",
                true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
   
-  f -> ModularRcwaMapping( Size(UnderlyingField(f)), f!.modulus,
-                           List(f!.coeffs, c -> [ -c[1], -c[2], c[3] ]) ) );
+  f -> ModularRcwaMappingNC( Size(UnderlyingField(f)), f!.modulus,
+                             List(f!.coeffs, c -> [-c[1],-c[2],c[3]]) ) );
 
 #############################################################################
 ##
@@ -1666,9 +1665,9 @@ InstallMethod( CompositionMapping2,
     od;
 
     if   IsIntegralRcwaMapping( f ) 
-    then return IntegralRcwaMapping( c3 );
+    then return IntegralRcwaMappingNC( c3 );
     else pi := NoninvertiblePrimes( Source( f ) );
-         return SemilocalIntegralRcwaMapping( pi, c3 );
+         return SemilocalIntegralRcwaMappingNC( pi, c3 );
     fi;
   end );
 
@@ -1706,7 +1705,7 @@ InstallMethod( CompositionMapping2,
                   c[1][n1][3] * c[2][n2][3] ]);
     od;
 
-    return ModularRcwaMapping( q, m[3], c[3] );
+    return ModularRcwaMappingNC( q, m[3], c[3] );
   end );
 
 #############################################################################
@@ -1756,9 +1755,9 @@ InstallMethod( InverseOp,
     if not ForAll([1..mInv], i -> IsBound(cInv[i])) then return fail; fi;
 
     if   IsIntegralRcwaMapping( f )
-    then Result := IntegralRcwaMapping( cInv );
+    then Result := IntegralRcwaMappingNC( cInv );
     else pi := NoninvertiblePrimes( Source( f ) );
-         Result := SemilocalIntegralRcwaMapping( pi, cInv );
+         Result := SemilocalIntegralRcwaMappingNC( pi, cInv );
     fi;
     SetInverse(f, Result); SetInverse(Result, f);
     if HasOrder(f) then SetOrder(Result, Order(f)); fi;
@@ -1812,7 +1811,7 @@ InstallMethod( InverseOp,
     if   not ForAll([1..Length(resInv)], i -> IsBound(cInv[i]))
     then return fail; fi;
 
-    Result := ModularRcwaMapping( q, mInv, cInv );
+    Result := ModularRcwaMappingNC( q, mInv, cInv );
     SetInverse(f, Result); SetInverse(Result, f);
     if HasOrder(f) then SetOrder(Result, Order(f)); fi;
 
@@ -2375,7 +2374,7 @@ InstallMethod( StandardConjugate,
       for j in [1..l - 1] do Add(StdCoeffs,[1,1,1]); od;
       Add(StdCoeffs,[1,-l + 1,1]);
     od;
-    Std  := RcwaMapping(StdCoeffs);
+    Std := RcwaMapping(StdCoeffs);
     if Std = f then
       Info(InfoRCWA,2,"The mapping is already in standard form.");
       SetStandardizingConjugator(f,IdentityIntegralRcwaMapping);
