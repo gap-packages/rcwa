@@ -14,6 +14,15 @@ Revision.rcwaaux_g :=
 InstallMethod( String, "for Integers", true, [ IsIntegers ], 0,
                Ints -> "Integers" );
 
+# The string representation of One(GF(2)) is subject to change to "Z(2)^0".
+
+if not CompareVersionNumbers( VERSION, "4r4" ) then
+  InstallMethod( String, "for One(GF(2))", true, [ IsFFE ], SUM_FLAGS,
+  function ( ffe )
+    if ffe = Z(2) then return "Z(2)^0"; else TryNextMethod(); fi;
+  end );
+fi;
+
 #############################################################################
 ##
 ##  Reverse monomial ordering in GAP 4.3. The leading term should be printed
