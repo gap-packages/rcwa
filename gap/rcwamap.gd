@@ -104,41 +104,6 @@ DeclareGlobalFunction( "ModularRcwaMappingsFamily" );
 
 #############################################################################
 ##
-#F  AllGFqPolynomialsModDegree( <q>, <d>, <x> ) . residues in canonical order
-##
-##  Returns a sorted list of all residues modulo a polynomial of degree <d>
-##  over GF(<q>) in the variable <x>.
-##  This gives also the ordering in which the coefficients of a modular rcwa
-##  mapping are stored; thus, if <f> is a modular rcwa mapping over
-##  GF(<q>)[x] with coefficients list <c>, whose modulus <m> has degree <d>,
-##  then <f> maps a polynomial <P> with <P> mod <m> = <r> to
-##
-##  ( <c>[`Position'(<res>,<r>)][1] * <P> + <c>[`Position'(<res>,<r>)][2] ) /
-##    <c>[`Position'(<res>,<r>)][3],
-##
-##  where <res> denotes the list of residues returned by this function.
-##
-DeclareGlobalFunction( "AllGFqPolynomialsModDegree" );
-
-#############################################################################
-##
-#F  UnderlyingRing( <fam> ) . . . . . . . . . . . . . . . . . underlying ring
-##
-##  The underlying ring of a family of rcwa mappings.
-##
-DeclareAttribute( "UnderlyingRing", IsObject );
-
-#############################################################################
-##
-#F  UnderlyingIndeterminate( <fam> ) . . indet. of underlying polynomial ring
-##
-##  The indeterminate of the underlying polynomial ring of the family <fam>
-##  of modular rcwa mappings.
-##
-DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
-
-#############################################################################
-##
 #R  IsRationalBasedRcwaDenseRep . ."dense" rep. of "rat.-based" rcwa mappings
 ##
 ##  Representation of integral rcwa mappings and semilocal integral rcwa
@@ -262,12 +227,6 @@ DeclareGlobalVariable( "ZeroIntegralRcwaMapping" );
 #V  IdentityIntegralRcwaMapping . . . . . . .  identity integral rcwa mapping
 ##
 DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
-
-#############################################################################
-##
-#O  Modulus( <obj> ) . . . . . . . . . . . . modulus of an rcwa mapping, etc.
-##
-DeclareOperation( "Modulus", [ IsObject ] );
 
 #############################################################################
 ##

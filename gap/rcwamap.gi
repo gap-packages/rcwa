@@ -94,10 +94,6 @@ SetUnderlyingRing( IntegralRcwaMappingsFamily, Integers );
 BindGlobal( "Z_PI_RCWAMAPPING_FAMILIES", [] );
 BindGlobal( "MODULAR_RCWAMAPPING_FAMILIES", [] );
 
-# Buffer for storing already computed polynomial residue systems.
-
-BindGlobal( "MODULAR_RCWA_RESIDUE_CACHE", [] );
-
 #############################################################################
 ##
 #F  SemilocalIntegralRcwaMappingsFamily( <R> )
@@ -191,36 +187,6 @@ InstallTrueMethod( IsRationalBasedRcwaMapping, IsIntegralRcwaMapping );
 InstallTrueMethod( IsRationalBasedRcwaMapping,
                    IsSemilocalIntegralRcwaMapping );
 InstallTrueMethod( IsRcwaMapping, IsModularRcwaMapping );
-
-#############################################################################
-##
-#F  AllGFqPolynomialsModDegree( <q>, <d>, <x> ) . residues in canonical order
-##
-InstallGlobalFunction ( AllGFqPolynomialsModDegree,
-
-  function ( q, d, x )
-
-    local  erg, mon, gflist;
-
-    if   d = 0
-    then return [ Zero( x ) ];
-    elif     IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ] )
-         and IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] )
-    then return ShallowCopy( MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] );
-    else gflist := AsList( GF( q ) );
-         mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
-         erg := List( Tuples( GF( q ), d ),
-                      t -> Sum( List( [ 1 .. d ],
-                                      i -> mon[ Position( gflist, t[ i ] ) ]
-                                              [ d - i + 1 ] ) ) );
-         MakeReadWriteGlobal( "MODULAR_RCWA_RESIDUE_CACHE" );
-         if not IsBound( MODULAR_RCWA_RESIDUE_CACHE[ q ] )
-         then MODULAR_RCWA_RESIDUE_CACHE[ q ] := [ ]; fi;
-         MODULAR_RCWA_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
-         MakeReadOnlyGlobal( "MODULAR_RCWA_RESIDUE_CACHE" );
-         return erg;
-    fi;
-  end );
 
 # Bring the rcwa mapping <f> to normalized, reduced form.
 
@@ -568,45 +534,6 @@ IdChars := function ( n, ch )
   return Concatenation( ListWithIdenticalEntries( n, ch ) );
 end;
 MakeReadOnlyGlobal( "IdChars" );
-
-#############################################################################
-##
-#M  String( <f> ) . . . . . for univariate polynomial ring over finite field
-##
-InstallMethod( String,
-               "for univariate polynomial rings over finite fields",
-               true, [ IsUnivariatePolynomialRing ], 0,
-
-  function ( R )
-
-    local  F, q, x, IndNr, IndName;
-
-    F := CoefficientsRing(R); q := Size(F);
-    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
-    x := IndeterminatesOfPolynomialRing(R)[1];
-    IndNr := IndeterminateNumberOfUnivariateLaurentPolynomial(x);
-    IndName := IndeterminateName(FamilyObj(x),IndNr);
-    if   IndName = fail
-    then IndName := Concatenation("x_",String(IndNr)); fi;
-    return Concatenation( "GF(", String(q), ")[", IndName, "]" );
-  end );
-
-#############################################################################
-##
-#M  ViewObj( <f> ) . . . . . for univariate polynomial ring over finite field
-##
-InstallMethod( ViewObj,
-               "for univariate polynomial rings over finite fields",
-               true, [ IsUnivariatePolynomialRing ], 100,
-
-  function ( R )
-
-    local  F, q;
-
-    F := CoefficientsRing(R); q := Size(F);
-    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
-    Print(String(R));
-  end );
 
 DisplayIntegralAffineMapping := function ( t )
 
