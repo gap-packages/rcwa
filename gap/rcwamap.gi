@@ -3599,12 +3599,14 @@ InstallMethod( FactorizationIntoGenerators,
 
   function ( g )
 
-    local  DivideBy, StateInfo, facts, elm, log, loop, rnd, rev, revert,
-           affsrc, P, h, cycs, cyc, gfixP, cl, rest, c, m, cr,
+    local  DivideBy, SaveState, RevertDirectionAndJumpBack, StateInfo,
+           facts, gbuf, leftfacts, leftfactsbuf, rightfacts, rightfactsbuf,
+           elm, direction, sgn, log, loop, rev, revert,
+           affsrc, P, h, cycs, cyc, gfixP, cl, rest, c, m, r,
            multfacts, divfacts, p, q, Smult, Sdiv, clSmult, clSdiv,
            pairs, pair, diffs, largeprimes, splitpair, splittedpairs,
-           splittedpair, d, dpos, disjoint, switch, expandswitches,
-           ct, i, j, k, kmult, kdiv, r;
+           splittedpair, d, dpos, disjoint, multswitches, divswitches,
+           kmult, kdiv, i, j, k;
 
     StateInfo := function ( )
       Info(InfoRCWA,1,"Modulus(<g>) = ",Modulus(g),
@@ -3612,16 +3614,40 @@ InstallMethod( FactorizationIntoGenerators,
                       ", Divisor(<g>) = ",Divisor(g));
     end;
 
+    SaveState := function ( )
+      gbuf          := g;
+      leftfactsbuf  := ShallowCopy(leftfacts);
+      rightfactsbuf := ShallowCopy(rightfacts);
+    end;
+
+    RevertDirectionAndJumpBack := function ( )
+      if   direction  = "from the right"
+      then direction := "from the left";
+      else direction := "from the right"; fi;
+      Info(InfoRCWA,1,"Jumping back and retrying with divisions ",
+                      direction,".");
+      g := gbuf; leftfacts := leftfactsbuf; rightfacts := rightfactsbuf;
+    end;
+
     DivideBy := function ( elm )
-      g     := g/elm;
-      facts := Concatenation([elm],facts);
-      Info(InfoRCWA,1,"Dividing by ",Name(elm)); StateInfo();
+      Info(InfoRCWA,1,"Dividing by ",Name(elm)," ",direction,".");
+      if direction = "from the right" then
+        g          := g * elm^-1;
+        rightfacts := Concatenation([elm],rightfacts);
+      else
+        g         := elm^-1 * g;
+        leftfacts := Concatenation(leftfacts,[elm]);
+      fi;
+      StateInfo();
     end;
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
 
-    facts := []; elm := g; log := []; loop := false;
+    leftfacts := []; rightfacts := []; facts := []; elm := g;
+    direction := ValueOption("Direction"); 
+    if direction <> "from the left" then direction := "from the right"; fi;
+    multswitches := []; divswitches := []; log := []; loop := false;
 
     if not IsClassWiseOrderPreserving(g) then # First make <g> cwop.
       rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
@@ -3676,7 +3702,6 @@ InstallMethod( FactorizationIntoGenerators,
     else
 
       StateInfo();
-      expandswitches := ValueOption("ExpandPrimeSwitches") = true;
 
       repeat
 
@@ -3692,32 +3717,21 @@ InstallMethod( FactorizationIntoGenerators,
 
           if Maximum(p,q) >= 3 then
             if p > q then # Additional prime p in multiplier.
-              switch := PrimeSwitch(p);
-              if expandswitches then
-                facts := Concatenation(FactorizationIntoGenerators(switch),
-                                       facts);
-              else facts := Concatenation([switch],facts); fi;
-              g := g/switch;
-              Info(InfoRCWA,1,"Dividing by ",Name(switch));
+              if p in multswitches then RevertDirectionAndJumpBack(); fi;
+              Add(divswitches,p); SaveState();
+              DivideBy(PrimeSwitch(p));
               if Multiplier(g) mod p <> 0 then # p removed from multiplier.
                 DivideBy(ClassTransposition(0,2,1,2*p));
               fi;
             else          # Additional prime q in divisor.
-              switch := PrimeSwitch(q);
-              if expandswitches then
-                facts  := Concatenation(
-                            Reversed(FactorizationIntoGenerators(switch)),
-                            facts);
-              else facts := Concatenation([switch^-1],facts); fi;
-              g := g*switch;
-              Info(InfoRCWA,1,"Multiplying by ",Name(switch));
-              if Divisor(g) mod q <> 0 then    # q removed from divisor.
+              if q in divswitches then RevertDirectionAndJumpBack(); fi;
+              Add(multswitches,q); SaveState();
+              DivideBy(PrimeSwitch(q)^-1);
+              if Divisor(g) mod q <> 0 then # q removed from divisor.
                 DivideBy(ClassTransposition(0,2,1,2*q));
               fi;
             fi;
           elif 2 in [p,q] then DivideBy(ClassTransposition(0,2,1,4)); fi;
-
-          StateInfo();
 
         od;
 
@@ -3727,8 +3741,10 @@ InstallMethod( FactorizationIntoGenerators,
         kmult := Number(Factors(Multiplier(g)),q->q=p);
         kdiv  := Number(Factors(Divisor(g)),q->q=p);
         k     := Maximum(kmult,kdiv);
-        Smult := Multpk(g,p,kmult)^g;
-        Sdiv  := Multpk(g,p,-kdiv)^g;
+        Smult := Multpk(g,p,kmult);
+        Sdiv  := Multpk(g,p,-kdiv);
+        if   direction = "from the right"
+        then Smult := Smult^g; Sdiv := Sdiv^g; fi;
 
         Info(InfoRCWA,1,"p = ",p,", kmult = ",kmult,", kdiv = ",kdiv);
 
@@ -3737,29 +3753,37 @@ InstallMethod( FactorizationIntoGenerators,
 
         clSmult := AsUnionOfFewClasses(Smult);
         clSdiv  := AsUnionOfFewClasses(Sdiv);
+
         if InfoLevel(InfoRCWA) >= 1 then
-          Print("#I Image of classes being multiplied by q*p^kmult:\n#I ");
+          if   direction = "from the right"
+          then Print("#I Image of c"); else Print("#I C"); fi;
+          Print("lasses being multiplied by q*p^kmult:\n#I ");
           ViewObj(clSmult);
-          Print("\n#I Image of classes being divided by q*p^kdiv:\n#I ");
+          if   direction = "from the right"
+          then Print("\n#I Image of c"); else Print("\n#I C"); fi;
+          Print("lasses being divided by q*p^kdiv:\n#I ");
           ViewObj(clSdiv); Print("\n");
         fi;
 
-        if not [p,kmult,kdiv,clSmult,clSdiv] in log then
+        if not [p,kmult,kdiv,clSmult,clSdiv,direction] in log then
 
-          Add(log,[p,kmult,kdiv,clSmult,clSdiv]);
+          Add(log,[p,kmult,kdiv,clSmult,clSdiv,direction]);
 
           repeat
+            if   direction = "from the right"
+            then sgn := 1; else sgn := -1; fi;
             pairs := Filtered(Cartesian(clSmult,clSdiv),
-                     pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p)=k);
+                     pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p)
+                           = sgn * k);
             pairs := Set(pairs);
             if pairs = [] then
               diffs := List(Cartesian(clSmult,clSdiv),
                        pair->PadicValuation(Mod(pair[1])/Mod(pair[2]),p));
-              if Maximum(diffs) < k then
+              if Maximum(diffs) < sgn * k then
                 Info(InfoRCWA,2,"Split classes in clSmult.");
                 clSmult := Flat(List(clSmult,cl->SplittedClass(cl,p)));
               fi;
-              if Maximum(diffs) > k then
+              if Maximum(diffs) > sgn * k then
                 Info(InfoRCWA,2,"Split classes in clSdiv.");
                 clSdiv := Flat(List(clSdiv,cl->SplittedClass(cl,p)));
               fi;
@@ -3810,20 +3834,30 @@ InstallMethod( FactorizationIntoGenerators,
           until pairs = [];
 
         else
-          Info(InfoRCWA,1,"A loop has been detected - trying to break out.");
-          repeat
-            rnd := Random(RCWA(Integers));
-          until Modulus(rnd) <= 30 and IsClassWiseOrderPreserving(rnd)
-                and not IsOne(rnd);
-          Perform(FactorizationIntoGenerators(rnd),DivideBy);
-          Info(InfoRCWA,1,"Finished random `break out' phase.");
-          loop := false;
+          if ValueOption("Slave") = true then
+            Info(InfoRCWA,1,"A loop has been detected. Attempt failed.");
+            return fail;
+          else
+            Info(InfoRCWA,1,"A loop has been detected. Trying to ",
+                            "factor the inverse instead.");
+            facts := FactorizationIntoGenerators(elm^-1:Slave);
+            if facts = fail then
+              Info(InfoRCWA,1,"Factorization of the inverse failed also. ",
+                              "Giving up.");
+              return fail;
+            else return Reversed(List(facts,Inverse)); fi;
+          fi;
         fi;
 
       until IsIntegral(g);
 
-      if   not IsOne(g)
-      then facts := Concatenation(FactorizationIntoGenerators(g),facts); fi;
+      facts := Concatenation(leftfacts,
+                             FactorizationIntoGenerators(g),
+                             rightfacts);
+
+      if ValueOption("ExpandPrimeSwitches") = true then
+        facts := Flat(List(facts,FactorizationIntoGenerators));
+      fi;
 
     fi;
 
