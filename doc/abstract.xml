@@ -22,8 +22,8 @@
 
   For the documentation, the package &GAPDoc; <Cite Key="GAPDoc"/> is needed.
 
-  The package <Package>GRAPE</Package><Cite Key="GRAPE"/> is loaded for use by the
-  function <C>RcwaGraph</C>, if present.
+  The package <Package>GRAPE</Package><Cite Key="GRAPE"/> is needed for dealing with
+  graphs of rcwa mappings.
 
   &RCWA; must be installed in the <F>pkg</F> subdirectory of the &GAP; distribution.
 
