@@ -148,7 +148,7 @@ InstallGlobalFunction( ModularRcwaMappingsFamily,
     fi;
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
     fam := First( MODULAR_RCWAMAPPING_FAMILIES,
-                  fam -> UnderlyingRing( fam ) = R );
+                  fam -> IsIdenticalObj( UnderlyingRing( fam ), R ) );
     if fam <> fail then return fam; fi;
     fam := NewFamily( Concatenation( "RcwaMappingsFamily( ",
                                       String( R ), " )" ),
