@@ -32,11 +32,13 @@ DeclarePackageAutoDocumentation( "rcwa", "doc" );
 # Load the package GRAPE, if available
 # (this is currently only used by the function `RcwaGraph').
 
+OLD_WARNINGLEVEL := InfoLevel( InfoWarning ); SetInfoLevel( InfoWarning, 0 );
 if IsList( TestPackageAvailability( "grape", "4.0" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
   RequirePackage( "grape" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
+SetInfoLevel( InfoWarning, OLD_WARNINGLEVEL );
 
 # Read the declaration part of the package.
 
