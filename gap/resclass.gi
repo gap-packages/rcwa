@@ -770,6 +770,28 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <U>, <R> ) . . . . . for residue class union and base ring
+##
+InstallMethod( Intersection2,
+               "for residue class union and base ring", ReturnTrue,
+               [ IsUnionOfResidueClasses, IsRing ], 0,
+
+  function ( U, R )
+    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
+    return U;
+  end );
+
+#############################################################################
+##
+#M  Intersection2( <R>, <U> ) . . . . . for base ring and residue class union
+##
+InstallMethod( Intersection2,
+               "for base ring and residue class union", ReturnTrue,
+               [ IsRing, IsUnionOfResidueClasses ], 0,
+               function ( R, U ) return Intersection2( U, R ); end );
+
+#############################################################################
+##
 #M  Intersection2( <S1>, <S2> ) . . . . . . . . . . . . .  for set and subset
 ##
 InstallMethod( Intersection2,
@@ -780,6 +802,18 @@ InstallMethod( Intersection2,
     if   IsSubset(S1,S2) then return S2;
     elif IsSubset(S2,S1) then return S1;
     else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Intersection2( <S>, <S_> ) . . . . . . . . . . for two times the same set
+##
+InstallMethod( Intersection2,
+               "for two times the same set", ReturnTrue,
+               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+
+  function ( S, S_ )
+    if IsIdenticalObj(S,S_) then return S; else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -828,6 +862,19 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
+#M  Difference( <U>, <R> ) . . . . . .  for residue class union and base ring
+##
+InstallMethod( Difference,
+               "for residue class union and base ring", ReturnTrue,
+               [ IsUnionOfResidueClasses, IsRing ], 0,
+
+  function ( U, R )
+    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
+    return [];
+  end );
+
+#############################################################################
+##
 #M  Difference( <R>, <S> ) . . . . . . . . . . . . .  for ring and finite set
 ##
 InstallMethod( Difference,
@@ -836,6 +883,18 @@ InstallMethod( Difference,
   function ( R, S )
     S := Set(S); if not IsSubset(R,S) then TryNextMethod(); fi;
     return ResidueClassUnion(R,One(R),[Zero(R)],[],S);
+  end );
+
+#############################################################################
+##
+#M  Difference( <S>, <S_> ) . . . . . . . . . . .  for two times the same set
+##
+InstallMethod( Difference,
+               "for two times the same set", ReturnTrue,
+               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+
+  function ( S, S_ )
+    if IsIdenticalObj(S,S_) then return []; else TryNextMethod(); fi;
   end );
 
 #############################################################################
