@@ -21,10 +21,28 @@ nu  := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
 t   := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 tau := RcwaMapping([[1,1,1],[1,-1,1]]);
 
+# Class shifts, class reflections and class transpositions given as images of
+# these basic generators under restriction monomorphisms.
+
 nu_rm := function(r,m) return Restriction(nu,RcwaMapping([[m,r,1]])); end;
 t_rm  := function(r,m) return Restriction(t, RcwaMapping([[m,r,1]])); end;
 ct    := function(r1,m1,r2,m2)
            return Restriction(tau,RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end;
+
+# A class transposition ct(r1,m1,r2,m2) is the commutator of the following
+# mappings ct1(r1,m1,r2,m2) und ct2(r1,m1,r2,m2):
+
+tau1 := RcwaMapping([[1,1,1],[1,1,1],[1,-2,1],[1,0,1]]);
+tau2 := RcwaMapping([[1,1,1],[1,2,1],[1,0,1],[1,-3,1]]);
+
+ct1   := function(r1,m1,r2,m2)
+           return Restriction(tau1,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end;
+ct2   := function(r1,m1,r2,m2)
+           return Restriction(tau2,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
          end;
 
 #############################################################################
@@ -365,6 +383,41 @@ T5 := RcwaMapping([[1,0,2],[5,-1,2]]); SetName(T5,"T5");
 ##  `Replacing the Collatz mapping by conjugates'
 ##
 ##  (All mappings used in this example have already been defined above.)
+
+#############################################################################
+##
+##  The Venturini examples.
+##
+V1 := t -> RcwaMapping([[2500,6     ,6],[t,  -t+4,2],[1,16,6],
+                        [t   ,-3*t+4,2],[t,-4*t+4,2],[1,13,6]]);
+
+V2 := function ( k, p, t )
+
+        local  c, r;
+
+        if not IsSubset(PositiveIntegers,[k,p,t])
+          or t < 1 or t >= p or Gcd(p,t) <> 1 then return fail;
+        fi;
+        c := [[p^(k-1),1,1]];
+        for r in [1..p-1] do c[r+1] := [t,r*(p-t),p]; od;
+        return RcwaMapping(c);        
+      end;
+
+V3 := t -> RcwaMapping([[ 1, 0,4],[1,  1,2],[20,    -40,1],[1,-3,8],
+                        [20,48,1],[3,-13,2],[ t,-6*t+64,4],[1, 1,8]]);
+
+V4 := RcwaMapping([[9, 1,1],[  1,  32,3],[1,-2,3],
+                   [1, 3,1],[100,-364,9],[1,-5,3],
+                   [1,-6,1],[100,-637,9],[1,-8,3]]);
+
+V5 := RcwaMapping([[1,0,6],[2,16,3],[3,11,1],[1,-3,6],[1,-4,1],[1,9,2]]);
+
+V6 := RcwaMapping([[1,  4,2],[1,  3,2],[ 1,  2, 2],[ 1,  1, 2],[ 1,  0, 2],
+                   [5,-17,2],[5,-22,2],[17,-39,10],[17,-56,10],[17,-73,10]]);
+
+V7 := RcwaMapping([[1,0,3],[2,-2,3],[5,-4,3],[4,0,3],[5,-8,3],[4,-2,3]]);
+
+V8 := RcwaMapping([[1,0,3],[1,-1,3],[5,5,3],[3,5,2],[3,2,2],[3,-1,2]]);
 
 #############################################################################
 ##
