@@ -525,6 +525,7 @@ gap> OrbitsModulo(G,72);
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
+gap> SetName(g,"g");; SetName(h,"h");;
 gap> G := Group(g,h);;
 gap> Size(G);
 infinity
@@ -557,10 +558,10 @@ Bijective integral rcwa mapping with modulus 6, of order 12
 
 ]
 gap> pcp := RespectedClassPartition(G);
-[ The residue class 0(12), The residue class 1(12), The residue class 3(12),
-  The residue class 4(12), The residue class 5(12), The residue class 6(12),
-  The residue class 7(12), The residue class 9(12), The residue class 10(12),
-  The residue class 11(12), The residue class 2(24), The residue class 8(24),
+[ The residue class 0(12), The residue class 1(12), The residue class 3(12), 
+  The residue class 4(12), The residue class 5(12), The residue class 6(12), 
+  The residue class 7(12), The residue class 9(12), The residue class 10(12), 
+  The residue class 11(12), The residue class 2(24), The residue class 8(24), 
   The residue class 14(24), The residue class 20(24) ]
 ]]>
 </Example>
