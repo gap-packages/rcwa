@@ -146,12 +146,12 @@ DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
 ##
 ##  The coefficient list is a list of <modulus> lists of 3 integers,
 ##  defining the mapping on the residue classes
-##  0 .. <modulus> - 1 (mod <modulus>), in this order. 
+##  0 .. <modulus> - 1 (mod <modulus>), in this order.
 ##  If <n> mod <modulus> = <r>, then <n> is mapped to
 ##  (<coeffs>[<r>+1][1] * <n> + <coeffs>[<r>+1][2])/<coeffs>[<r>+1][3].
 ##
-DeclareRepresentation( "IsRationalBasedRcwaDenseRep", 
-                       IsComponentObjectRep and IsAttributeStoringRep, 
+DeclareRepresentation( "IsRationalBasedRcwaDenseRep",
+                       IsComponentObjectRep and IsAttributeStoringRep,
                        [ "modulus", "coeffs" ] );
 
 #############################################################################
@@ -269,36 +269,48 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 ##
 DeclareOperation( "Modulus", [ IsObject ] );
 
-############################################################################# 
-## 
-#A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f> 
-## 
+#############################################################################
+##
+#A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f>
+##
 ##  We define the *multiplier* of an rcwa mapping <f> as the standard
 ##  associate of the least common multiple of the coefficients $a_r$
 ##  (cp. chapter `introduction' in the manual).
-## 
-DeclareAttribute( "Multiplier", IsRcwaMapping ); 
+##
+DeclareAttribute( "Multiplier", IsRcwaMapping );
 
-############################################################################# 
-## 
-#A  Divisor( <f> ) . . . . . . . . . . .  the divisor of the rcwa mapping <f> 
-## 
+#############################################################################
+##
+#A  Divisor( <f> ) . . . . . . . . . . .  the divisor of the rcwa mapping <f>
+##
 ##  We define the *divisor* of an rcwa mapping <f> as the standard
 ##  associate of the least common multiple of the coefficients $c_r$
 ##  (cp. chapter `introduction' in the manual).
-## 
-DeclareAttribute( "Divisor", IsRcwaMapping ); 
+##
+DeclareAttribute( "Divisor", IsRcwaMapping );
 
-############################################################################# 
-## 
-#P  IsFlat( <f> ) . . . . indicates whether or not <f> is a flat rcwa mapping 
-## 
+#############################################################################
+##
+#A  PrimeSet( <f> ) . . . . . . . . . . . . prime set of the rcwa mapping <f>
+##
+##  Prime set of rcwa mapping <f>.
+##
+##  We define the prime set of an rcwa mapping <f> as the set of all primes
+##  dividing the modulus of <f> or some coefficient occuring as factor in the
+##  numerator or as denominator.
+##
+DeclareAttribute( "PrimeSet", IsRcwaMapping );
+
+#############################################################################
+##
+#P  IsFlat( <f> ) . . . . indicates whether or not <f> is a flat rcwa mapping
+##
 ##  We say that an rcwa mapping is *flat* if and only if its multiplier
 ##  and its divisor are equal to 1.
 ##
-DeclareProperty( "IsFlat", IsRcwaMapping ); 
+DeclareProperty( "IsFlat", IsRcwaMapping );
 
-############################################################################# 
+#############################################################################
 ##
 #P  IsClassWiseOrderPreserving( <f> ) .  is <f> class-wise order-preserving ?
 ##
@@ -307,7 +319,7 @@ DeclareProperty( "IsFlat", IsRcwaMapping );
 ##
 DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping ); 
 
-############################################################################# 
+#############################################################################
 ##
 #F  TransitionMatrix( <f>, <deg> ) . . <deg>x<deg>-`Transition matrix' of <f>
 ##
@@ -349,7 +361,19 @@ DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
 ##
 DeclareOperation( "OrbitsModulo", [ IsRcwaMapping, IsRingElement ] );
 
-############################################################################# 
+#############################################################################
+##
+#O  FactorizationOnConnectedComponents( <f>, <m> )
+##
+##  Returns the set of restrictions of the rcwa mapping <f> onto the
+##  weakly-connected components of its transition graph $\Gamma_{f,m}$.
+##  These mappings have pairwisely disjoint supports, hence any two of them
+##  commute, and their product equals <f>.
+##
+DeclareOperation( "FactorizationOnConnectedComponents",
+                  [ IsRcwaMapping, IsRingElement ] );
+
+#############################################################################
 ##
 #F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
 #F  TrajectoryModulo( <f>, <n>, <lng> )
@@ -362,15 +386,20 @@ DeclareGlobalFunction( "TrajectoryModulo" );
 
 #############################################################################
 ##
-#A  PrimeSet( <f> ) . . . . . . . . . . . . prime set of the rcwa mapping <f>
+#F  CoefficientsOnTrajectory( <f>, <n>, <val>, <cond>, <all> )
 ##
-##  Prime set of rcwa mapping <f>.
+##  This function computes accumulated coefficients on the trajectory of <n>
+##  under the rcwa mapping <f>. More precisely: it computes a list <c> of
+##  coefficient triples such that for any <k>, we have
+##  <n>^(<f>^(<k>-1)) = (<c>[<k>][1]*<n> + <c>[<k>][2])/<c>[<k>][3].
+##  The parameter <val> can either specify the length of the sequence to
+##  be processed or be a `stopping value' such that the function stops when
+##  it reaches some iterate <n>^(<f>^<k>) = <val>, depending on whether
+##  <cond> = `"length"' or <cond> = `"stop"'. If <all> = `true', the whole
+##  sequence of coefficient triples is returned, otherwise the result is only
+##  the last triple.
 ##
-##  We define the prime set of an rcwa mapping <f> as the set of all primes
-##  dividing the modulus of <f> or some coefficient occuring as factor in the
-##  numerator or as denominator.
-##
-DeclareAttribute( "PrimeSet", IsRcwaMapping );
+DeclareGlobalFunction( "CoefficientsOnTrajectory" );
 
 #############################################################################
 ##
@@ -400,7 +429,7 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 ##  occur only finitely often, with the respective multiplicities and sorted
 ##  by increasing length.
 ##
-DeclareAttribute( "CycleType", IsRcwaMapping ); 
+DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
@@ -411,7 +440,7 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 ##  Two integral rcwa mappings are conjugate if and only if their 
 ##  ``standard conjugates'' are equal. 
 ##
-DeclareAttribute( "StandardConjugate", IsRcwaMapping ); 
+DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##

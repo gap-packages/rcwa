@@ -2306,7 +2306,9 @@ InstallGlobalFunction( TransitionMatrix,
 #M  TransitionGraph( <f>, <m> ) . . . . . . . for rational-based rcwa mapping
 ##
 ##  The vertices are labelled by 1..<m> instead of 0..<m>-1 (0 is identified
-##  with 1, etc.) because in {\GAP}, permutations cannot move 0. 
+##  with 1, etc.) because in {\GAP}, permutations cannot move 0.
+##
+##  The result is returned as a GRAPE graph.
 ##
 InstallMethod( TransitionGraph,
                "for rational-based rcwa mappings",
@@ -2340,6 +2342,32 @@ InstallMethod( OrbitsModulo,
     return Set(List(C,c->List(c,r->r-1)));
   end );
 
+#############################################################################
+##
+#M  FactorizationOnConnectedComponents( <f>, <m> )
+##
+InstallMethod( FactorizationOnConnectedComponents,
+               "for rational-based rcwa mappings", true,
+               [ IsRationalBasedRcwaMapping, IsPosInt ], 0,
+
+  function ( f, m )
+
+    local  factors, c, comps, comp, coeff, m_f, m_res, r;
+
+    c := Coefficients(f);
+    comps := OrbitsModulo(f,m);
+    m_f := Modulus(f); m_res := Lcm(m,m_f);
+    factors := [];
+    for comp in comps do
+      coeff := List([1..m_res],i->[1,0,1]);
+      for r in [0..m_res-1] do
+        if r mod m in comp then coeff[r+1] := c[r mod m_f + 1]; fi;
+      od;
+      Add(factors,RcwaMapping(coeff));
+    od;
+    return Set(Filtered(factors,f->not IsOne(f)));
+  end );
+
 ############################################################################# 
 ##
 #F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
@@ -2366,6 +2394,48 @@ InstallGlobalFunction( TrajectoryModulo,
       Add(seq,n mod m); n := n^f;
     od;
     return seq;
+  end );
+
+#############################################################################
+##
+#F  CoefficientsOnTrajectory( <f>, <n>, <end>, <cond>, <all> )
+##
+InstallGlobalFunction( CoefficientsOnTrajectory,
+
+  function ( f, n, val, cond, all )
+
+    local coeff, cycle, c, m, d, pos, res, r, deg, R, q, x;
+
+    if not (    IsRcwaMapping(f) and n in Source(f)
+            and (   val in Source(f) and cond = "stop"
+                 or IsPosInt(val) and cond = "length")
+            and all in [false,true])
+    then Error("for usage of `CoefficientsOnTrajectory' see manual.\n"); fi;
+    c := Coefficients(f); m := Modulus(f);
+    cycle := [n];
+    if   cond = "length"
+    then for pos in [2..val] do Add(cycle,cycle[pos-1]^f); od;
+    else repeat
+           Add(cycle,cycle[Length(cycle)]^f);
+         until cycle[Length(cycle)] = val;
+    fi;
+    if IsModularRcwaMapping(f) then
+      deg := DegreeOfLaurentPolynomial(m);
+      R   := Source(f);
+      q   := Size(CoefficientsRing(R));
+      x   := IndeterminatesOfPolynomialRing(R)[1];
+      res := AllGFqPolynomialsModDegree(q,deg,x);
+    else res := [0..m-1]; fi;
+    coeff := [[1,0,1]*One(Source(f))];
+    for pos in [1..Length(cycle)-1] do
+      r := Position(res,cycle[pos] mod m);
+      coeff[pos+1] := [ c[r][1] * coeff[pos][1],
+                        c[r][1] * coeff[pos][2] + c[r][2] * coeff[pos][3],
+                        c[r][3] * coeff[pos][3] ];
+      d := Gcd(coeff[pos+1]);
+      coeff[pos+1] := coeff[pos+1]/d;
+    od;
+    if all then return coeff; else return coeff[Length(coeff)]; fi;
   end );
 
 #############################################################################
