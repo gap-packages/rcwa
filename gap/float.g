@@ -45,8 +45,23 @@ InstallMethod( Float,
 ##
 InstallMethod( Float,
                "for rationals", true, [ IsRat ], 0,
-               x -> FLOAT_INT(  NumeratorRat(x))/
-                    FLOAT_INT(DenominatorRat(x)) );
+
+  function ( x )
+
+    local  M, a_i, i, sign, col;
+
+    if   Maximum(NumeratorRat(x),DenominatorRat(x)) < 2^28
+    then return FLOAT_INT(NumeratorRat(x))/FLOAT_INT(DenominatorRat(x)); fi;
+    i := 0; M := [[1,0],[0,1]];
+    if x < 0 then sign := -1; x := -x; else sign := 1; fi;
+    repeat
+      a_i := Int(x); i := i + 1;
+      M := M * [[a_i,1],[1,0]];
+      if x <> a_i then x := 1/(x - a_i); else break; fi;
+    until Maximum(M[1][1],M[2][1]) >= 2^28;
+    if ForAny(Flat(M),n->n>2^28) then col := 2; else col := 1; fi;
+    return sign * FLOAT_INT(M[1][col])/FLOAT_INT(M[2][col]);
+  end );
 
 #############################################################################
 ##
@@ -143,3 +158,4 @@ InstallOtherMethod( \*,
 #############################################################################
 ##
 #E  float.g . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
