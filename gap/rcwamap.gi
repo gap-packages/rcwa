@@ -3062,6 +3062,37 @@ InstallMethod( ContractionCentre,
 
 #############################################################################
 ##
+#M  RestrictedPerm( <g>, <S> ) . . . . . . . . . . . . . .  for rcwa mappings
+##
+InstallOtherMethod( RestrictedPerm,
+                    "for rcwa mappings (RCWA)", true,
+                    [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
+
+  function ( g, S )
+
+    local  R, mg, mS, m, resg, resS, resm, cg, cgS, gS, r, pos;
+
+    R := Source(g);
+    if UnderlyingRing(FamilyObj(S)) <> R
+      or IncludedElements(S) <> [] or ExcludedElements(S) <> []
+      or not IsSubset(S,S^g)
+    then TryNextMethod(); fi;
+    mg := Modulus(g); mS := Modulus(S); m := Lcm(mg,mS);
+    resg := AllResidues(R,mg); resS := Residues(S); resm := AllResidues(R,m);
+    cg := Coefficients(g);
+    cgS := List(resm,r->[1,0,1]*One(R));
+    for pos in [1..Length(resm)] do
+      r := resm[pos];
+      if r mod mS in resS then
+        cgS[pos] := cg[Position(resg,r mod mg)];
+      fi;
+    od;
+    gS := RcwaMapping(R,m,cgS);
+    return gS;
+  end );
+
+#############################################################################
+##
 #M  Restriction( <g>, <f> ) . . . . . . . . . . .  for integral rcwa mappings
 ##
 InstallMethod( Restriction,
@@ -3185,5 +3216,6 @@ InstallMethod( CompatibleConjugate,
 #############################################################################
 ##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
