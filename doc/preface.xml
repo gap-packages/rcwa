@@ -10,17 +10,163 @@
 
 <!-- #################################################################### -->
 
-This package deals with a certain kind of mappings of euclidean rings onto
-themselves, namely those which are affine on any residue class modulo
-<M>m</M>, where <M>m</M> is some modulus depending on the particular mapping.
-It provides functionality for doing computations with such mappings over
-the ring of integers, its semilocalizations and over polynomial rings in
-one variable over a finite field.
-In the introduction I will give brief definitions of the basic terms. <P/>
+<Index Key="Collatz conjecture">Collatz conjecture</Index>
+<Index Key="Collatz conjecture">Collatz mapping</Index>
+In the 1930s Lothar Collatz proposed the following procedure:
+
+<List>
+
+  <Mark>1.</Mark>
+  <Item>
+    Choose a positive integer <M>n</M>.
+  </Item>
+
+  <Mark>2.</Mark>
+  <Item>
+    Divide <M>n</M> by 2 if it is even, and multiply it by 3 and add 1
+    otherwise.
+  </Item>
+
+  <Mark>3.</Mark>
+  <Item>
+    Terminate if <M>n = 1</M> and continue with step 2 otherwise.
+  </Item>
+
+</List>
+
+He conjectured that this process eventually terminates regardless of the
+choice of the starting value <M>n</M>.
+
+To give an easy example: starting at 15, we get the sequence 15, 46, 23, 70,
+35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1.
+
+In fact, Collatz' problem is still unsolved today, despite the fact that
+there have been more than 100 publications treating aspects of it so far --
+for an annotated bibliography listing many of them see
+<Cite Key="Lagarias98"/>.
+
+We look at the mapping introduced in step 2 above and ask for
+generalizations. There are several obvious things we can do:
+
+<List>
+
+  <Mark>1.</Mark>
+  <Item>
+    We can replace the mappings <M>n \mapsto n/2</M> and
+    <M>n \mapsto 3n+1</M> by <Q>suitable</Q> other
+    mappings.
+  </Item>
+
+  <Mark>2.</Mark>
+  <Item>
+    Instead of making the choice of the mapping depend
+    on whether <M>n</M> is even or odd, we can introduce
+    more alternatives and make it depend on <M>n</M> mod
+    <M>m</M> for some modulus <M>m</M> greater than 2.
+  </Item>
+
+  <Mark>3.</Mark>
+  <Item>
+    The Collatz mapping is defined over the ring of integers --
+    there may be other rings which admit similar mappings.
+  </Item>
+
+</List>
+
+This is the motivation for the following definitions: <P/>
+
+<Index Key="rcwa mapping" Subkey="definition"></Index> 
+Let <M>R</M> be an infinite euclidean domain which is not a field and all
+of whose proper residue class rings are finite.
+We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
+affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
+modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
+there are coefficients <M>a_r, b_r, c_r \in R</M> such that the restriction
+of <M>f</M> to <M>r(m)</M> is given by <P/>
+<Alt Only="Text"> 
+  <![CDATA[
+
+                      n  -->  ( a_r * n + b_r ) / c_r.
+
+  ]]>
+</Alt>
+<Alt Only="HTML">
+  <![CDATA[
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    n  -->  ( a_r * n + b_r ) / c_r.
+  ]]>
+</Alt>
+<Alt Only="LaTeX">
+  <Display>
+    n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r}.
+  </Display>
+</Alt>
+We always assume that all fractions are reduced, i.e. that
+<M>\gcd( a_r, b_r, c_r ) = 1</M>, and that <M>m</M> is minimal w.r.t. the
+given property. Apart from the restrictions imposed by the condition that
+the image of any residue class <M>r(m)</M> under <M>f</M> must be a subset
+of <M>R</M> and that we cannot divide by 0, the coefficients <M>a_r</M>,
+<M>b_r</M> and <M>c_r</M> can be any ring elements.
+<Index Key="rcwa mapping" Subkey="modulus"></Index>
+We call <M>m</M> the <E>modulus</E> of <M>f</M>.
+When talking about the <E>product</E> of some rcwa mappings we always mean
+their composition as mappings, and by the inverse of a bijective rcwa mapping
+we mean its inverse mapping. <P/>
+
+The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>)
+<M>\ | \ g</M> is residue class-wise affine <M>\}</M> } is closed under
+multiplication and taking inverses (this can be verified easily), hence
+forms a subgroup of Sym(<M>R</M>). For reasons of cardinality this
+subgroup is proper.
+<Index Key="rcwa group" Subkey="definition"></Index>
+We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
+group, or in short an <E>rcwa</E> group.
+<Index Key="rcwa group" Subkey="modulus"></Index>
+We define the <E>modulus</E> of an rcwa group by the lcm of the moduli of
+its elements in case such an lcm exists, and by 0 otherwise. <P/>
+
+This package provides functionality for computing with rcwa mappings of
+the ring of integers, its semilocalizations and of polynomial rings in one
+variable over a finite field, as well as with rcwa groups over these rings.
+The reasons for choosing the given rings are basically the following:
+The Collatz conjecture is a question about the integers, thus we clearly
+want to look at these. The ring <M>\mathbb{Z}</M> has characteristic 0 and
+infinitely many prime elements. A natural question which arises is what
+happens when moving to some ring with characteristic <M>p</M> or with only
+finitely many prime elements.
+The rings GF(<M>q</M>)[<M>x</M>] and <M>\mathbb{Z}_{(\pi)}</M> are probably
+the examples which permit the most efficient computational treatment. <P/>
+
+There are relatively elaborate methods for dealing with rcwa groups which
+have a comparatively easy structure, namely those having non-zero modulus.
+We call such groups and the mappings generating cyclic such groups
+<E>tame</E>.
+There are theorems stating that tame groups act imprimitively on the
+underlying ring <M>R</M>, that there are block systems consisting of only
+finitely many single residue classes, that a tame group is always
+isomorphic to a subgroup of the wreath product of the affine group with
+some large enough finite symmetric group and that any of the latter
+groups can faithfully be represented as a tame rcwa group.
+The groups which are not tame are much more difficult to examine and
+can act highly transitive on the ring <M>R</M> or on subsets of it.
+Many important questions for such groups might be conjectured to be
+algorithmically undecidable -- such conjectures are for example supported
+by the difficulty of the Collatz problem as well as by the fact that there
+are concretely given cycles of concretely given bijective rcwa mappings
+which are conjectured but not known to be infinite(!) -- see the
+introduction. The structure of these groups also looks much more
+<Q>mysterious</Q>. Thus we call these groups and the mappings generating
+cyclic such groups <E>wild</E>.
+Please note however that also tame mappings can generate wild groups --
+given two or more arbitrary tame mappings it is quite likely that the
+group generated by them is wild. <P/>
 
 <Index Key="dynamical systems">dynamical systems</Index>
 <Index Key="Markov chains">Markov chains</Index>
-It seems that so far nobody has studied the mentioned mappings from an
+It seems that so far nobody has studied rcwa mappings from an
 algebraic point of view, although there have been some publications which
 shed light on the topic by investigating related dynamical systems and
 Markov chains. In this context I would like to mention a monograph by
@@ -28,26 +174,12 @@ Günther J. Wirsching <Cite Key="Wirsching98"/> and an article by
 G. Venturini <Cite Key="Venturini92"/>.
 Permutation group-theoretic work which might be considered to be weakly
 related to this topic has been done by Hans Läuchli and  Peter M. Neumann
-<Cite Key="LaeuchliNeumann88"/>, but this does not deal with any kind
-of permutation groups over rings or of countable permutation groups,
-and doesn't seem to help anything in the given context.
+<Cite Key="LaeuchliNeumann88"/>.
 <Index Key="permutation groups">permutation groups</Index>
 <Index Key="permutation groups" Subkey="over rings"></Index> 
 <Index Key="permutation groups" Subkey="countable"></Index>
 For a general survey of results concerning infinite permutation groups
-see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>.
-
-<Index Key="Collatz conjecture">Collatz conjecture</Index>
-<Index Key="Collatz conjecture">Collatz mapping</Index>
-Introducing the given kind of mappings, permutations and representations
-of groups was originally motivated by my investigations concerning the
-Collatz- (<M>3n+1</M>-) conjecture (which claims that iterated application
-of the <E>Collatz mapping</E> <M>T</M> which maps even <M>n</M> to <M>n/2</M>
-and odd <M>n</M> to <M>(3n+1)/2</M> eventually would take any positive
-integer to 1; for an annotated bibliography listing about 100 publications
-on this problem see <Cite Key="Lagarias98"/>), but now, residue class-wise
-affine representations of groups seem to be an interesting topic of its own.
-<P/>
+see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
 
 I developed this package as a crucial tool for investigating a large number
 of examples and getting deep enough insight into the structure of residue
@@ -58,14 +190,14 @@ I would be grateful for any bug reports, comments or suggestions.
 
 <Alt Only="Text"> </Alt>
 <Alt Only="HTML">
-  <![CDATA[
-    <P align = right> Stefan Kohl </P>
-  ]]>
+<![CDATA[
+  <P align = right> Stefan Kohl </P>
+]]>
 </Alt>
 <Alt Only="LaTeX">
-  <![CDATA[
-    \vfill \hfill Stefan Kohl
-  ]]>
+<![CDATA[
+  \vfill \hfill Stefan Kohl
+]]>
 </Alt>
 
 <!-- #################################################################### -->
@@ -73,5 +205,4 @@ I would be grateful for any bug reports, comments or suggestions.
 </Chapter>
 
 <!-- #################################################################### -->
-
 

@@ -10,102 +10,441 @@
 
 <!-- #################################################################### -->
 
-  In this chapter we only give brief definitions of the most basic
-  terms in this context. Further terms are defined in the descriptions
-  of the particular operations, attributes, methods and functions.
-  For everything not contained in this manual (theorems, proofs, ...) the
-  reader is referred to the author's thesis <Cite Key="Kohl04" />. <P/>
+Having already defined rcwa mappings and rcwa groups in the Preface, we will
+give a couple of basic definitions followed by a list of some elementary
+properties of the defined objects, a very brief statement of a few results,
+several examples and finally a few open questions in this chapter. <P/>
 
-<Section Label="sec:BasicDefinitions">
-<Heading>Definition of rcwa mappings and rcwa groups</Heading>
+For everything not included in this manual (most theorems and lemmata,
+all proofs, ...) the reader is referred to the author's thesis
+<Cite Key="Kohl04" />. <P/>
 
-  <Index Key="rcwa mapping">rcwa mapping</Index>
-  <Index Key="rcwa mapping" Subkey="definition"></Index> 
-  Let <M>R</M> be an infinite euclidean domain which is not a field and all
-  of whose proper residue class rings are finite.
-  We call a mapping <M>f</M> from <M>R</M> to itself
-  <E>residue class-wise affine</E>, or in short <E>rcwa</E> mapping,
-  if there is a non-zero modulus <M>m</M> in <M>R</M> such that <M>f</M>
-  is given on any residue class <M>r(m) \in R/mR</M> by <P/>
-  <Alt Only="Text"> 
+We assume that on our underlying ring <M>R</M> we have defined a function
+which maps each element to some <E>standard associate</E>. For the rings
+treated in this package we have chosen the following:
+<List>
+
+  <Mark><M>\mathbb{Z}</M></Mark>
+  <Item>
+    The standard associate is the absolute value.
+  </Item>
+
+  <Mark><M>\mathbb{Z}_{(\pi)}</M></Mark>
+  <Item>
+    The standard associate of <M>n</M> is the largest product of
+    non-invertible primes dividing <M>n</M>.
+  </Item>
+
+  <Mark>GF(<M>q</M>)[<M>x</M>]</Mark>
+  <Item>
+    We get our standard associate by dividing by the leading coefficient.
+  </Item>
+
+</List>
+
+Whenever we write <Q>the lcm ...</Q> we always mean its standard associate.
+We proceed with the definitions concerning rcwa mappings.
+
+<Index Key="rcwa mapping" Subkey="modulus"></Index>
+<Index Key="rcwa mapping" Subkey="multiplier"></Index>
+<Index Key="rcwa mapping" Subkey="divisor"></Index>
+<Index Key="rcwa mapping" Subkey="integral"></Index>
+<Index Key="rcwa mapping" Subkey="prime set"></Index>
+<Index Key="rcwa mapping" Subkey="tame"></Index>
+<Index Key="rcwa mapping" Subkey="wild"></Index>
+
+<List>
+
+  <Mark>Modulus</Mark>
+  <Item>
+    The <E>Modulus</E> of an rcwa mapping <M>f</M> is the standard associate
+    of a multiplicatively smallest ring element <M>m</M> such that the
+    restriction of <M>f</M> to any residue class (mod <M>m</M>) is affine.
+    <M>\rightarrow</M> <Ref Oper ="Modulus"
+                            Label="Modulus of an rcwa mapping"/>.
+  </Item>
+
+  <Mark>Multiplier</Mark>
+  <Item>
+    In the notation we used in the definition of an rcwa mapping in the
+    Preface (<Ref Label="ch:preface"/>), the <E>multiplier</E> is the
+    lcm of the coefficients <M>a_r</M> in the numerators.
+    <M>\rightarrow</M> <Ref Attr ="Multiplier"
+                            Label="Multiplier of an rcwa mapping"/>.
+  </Item>
+
+  <Mark>Divisor</Mark>
+  <Item>
+    In the notation we used in the definition of an rcwa mapping in the
+    Preface (<Ref Label="ch:preface"/>), the <E>divisor</E> is the lcm
+    of the coefficients <M>c_r</M> in the denominators.
+    <M>\rightarrow</M> <Ref Attr ="Divisor"
+                            Label="Divisor of an rcwa mapping"/>.
+  </Item>
+
+  <Mark>integral</Mark>
+  <Item>
+    An rcwa mapping is called <E>integral</E> if its divisor equals 1,
+    thus <Q>if no proper divisions occur</Q>.
+    Be careful not to confuse this with the term <E>integral rcwa mapping</E>
+    for rcwa mappings of the integers; normally it should be rather clear
+    what is meant.
+    <M>\rightarrow</M> <Ref Prop="IsIntegral" Label="Integral mapping"/>.
+  </Item>
+
+  <Mark>Prime Set</Mark>
+  <Item>
+    The set of prime divisors of the product of the modulus, the multiplier
+    and the divisor of an rcwa mapping.
+    <M>\rightarrow</M> <Ref Oper ="PrimeSet"
+                            Label="Prime set of an rcwa mapping"/>.
+  </Item>
+
+  <Mark>tame</Mark>
+  <Item>
+    An rcwa mapping is called <E>tame</E> if the cyclic group it generates
+    is tame (definition: see below). Tameness is a class invariant (this
+    means that all conjugates of tame mappings are also tame).
+    <M>\rightarrow</M> <Ref Prop="IsTame" Label="Tame rcwa mapping"/>.
+  </Item>
+
+  <Mark>wild</Mark>
+  <Item>
+    An rcwa mapping is called <E>wild</E> if it is not tame.
+  </Item>
+
+</List>
+
+Now the definitions concerning rcwa groups.
+
+<Index Key="rcwa group" Subkey="modulus"></Index>
+<Index Key="rcwa group" Subkey="tame"></Index>
+<Index Key="rcwa group" Subkey="wild"></Index>
+<Index Key="rcwa representation">rcwa representation</Index>
+<Index Key="rcwa group" Subkey="integral"></Index>
+<Index Key="rcwa group" Subkey="prime set"></Index>
+
+<List>
+
+  <Mark>Modulus</Mark>
+  <Item>
+    The <E>Modulus</E> of an rcwa group is the lcm of the moduli of its
+    elements in case such an lcm exists and 0 otherwise.
+    <M>\rightarrow</M> <Ref Oper ="Modulus"
+                            Label="Modulus of an rcwa group"/>.
+  </Item>
+
+  <Mark>tame</Mark>
+  <Item>
+    An rcwa group is called <E>tame</E> if its modulus is not equal to 0.
+    <M>\rightarrow</M> <Ref Prop="IsTame" Label="Tame rcwa group"/>.
+  </Item>
+
+  <Mark>wild</Mark>
+  <Item>
+    An rcwa group is called <E>wild</E> if it is not tame.
+  </Item>
+
+  <Mark>Rcwa Representation</Mark>
+  <Item>
+    An homomorphism from some group into the group RCWA(<M>R</M>)
+    of all bijective rcwa mappings of the ring <M>R</M>.
+  </Item>
+
+  <Mark>integral</Mark>
+  <Item>
+    An rcwa group is called <E>integral</E> if all of its elements are.
+    See also the warning given in the description of the corresponding
+    property of rcwa mappings.
+    <M>\rightarrow</M> <Ref Prop="IsIntegral" Label="Integral group"/>.
+  </Item>
+
+  <Mark>Prime Set</Mark>
+  <Item>
+    The <E>prime set</E> of an rcwa group is the union of the prime
+    sets of its elements.
+  </Item>
+
+</List>
+
+Listing a few relations between the terms defined so far should not be
+left out in this context:
+
+<List>
+
+  <Mark>-</Mark>
+  <Item>
+    The divisor of an rcwa mapping divides its modulus.
+    The modulus, multiplier resp. divisor of a product of rcwa mappings
+    divides the product of the moduli, multipliers resp. divisors of the
+    factors, and the prime set of a product of rcwa mappings is a subset
+    of the union of the prime sets of the factors.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Inverting a bijective rcwa mapping interchanges multiplier and divisor.
+    The product of the modulus and the multiplier of a bijective rcwa mapping
+    is a multiple of the modulus of its inverse, which in turn is a multiple
+    of the multiplier of the mapping we started with. The multiplier of an
+    integral bijective rcwa mapping equals 1. Inversion leaves the prime
+    set invariant.
+  </Item>
+
+</List>
+
+We proceed with a list briefly giving some results and remarks
+(in arbitrary order).
+
+<Index Key="Fürstenberg topology"></Index>
+
+<List>
+
+  <Mark>-</Mark>
+  <Item>
+    The group RCWA(<M>R</M>) acts highly transitive (i.e. <M>k</M>-fold
+    transitive for any <M>k</M>) on <M>R</M>. It follows immediately that
+    its centre is trivial, and from <Cite Key="DixonMortimer96"/>,
+    Corollary 7.2A we know that any non-trivial normal subgroup must
+    also act highly transitive on <M>R</M>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    A group can faithfully be represented as a tame rcwa group over the
+    ring <M>R</M> if and only if it is isomorphic to a subgroup of the
+    wreath product of the affine group of <M>R</M> with some large enough
+    finite symmetric group.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    The action of a tame group on the underlying ring <M>R</M> is
+    imprimitive and there is a block system which consists of finitely many
+    single residue classes, the so-called <E>respected class partition</E>.
+    <M>\rightarrow</M>
+    <Ref Attr ="RespectedClassPartition"
+         Label="Respected class partition of rcwa group"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Any tame rcwa group is conjugate to an integral group provided that
+    the underlying ring <M>R</M> has residue class rings of any finite
+    cardinality.
+    <M>\rightarrow</M> <Ref Attr="IntegralConjugate"
+                            Label="Integral conjugate of rcwa group"/>
+    and <Ref Attr ="IntegralizingConjugator"
+             Label="Integralizing conjugator of rcwa group"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Choosing the set of all residue classes of <M>R</M> as a basis for a
+    topology turns RCWA(<M>R</M>) into a group of homoeomorphisms.
+    Such a topology has already been introduced on the integers by Harry
+    Fürstenberg in <Cite Key="Fuerstenberg55"/> for a topological proof
+    of the infinitude of primes.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    The group RCWA(<M>R</M>) acts transitive on the set of unions of
+    finitely many residue classes distinct from the empty set and <M>R</M>
+    itself, provided that <M>R</M> has a residue class ring of cardinality 2.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Assume that the ring <M>R</M> has a residue class ring of cardinality 2
+    and that <M>S</M> is a non-empty union of finitely many residue classes
+    of <M>R</M>. Then the group RCWA(<M>R</M>) has an isomorphic subgroup
+    which acts faithfully on the set <M>S</M> and fixes its complement.
+    Images under the corresponding <E>restriction monomorphisms</E> are
+    algorithmically easy to compute.
+    <M>\rightarrow</M> <Ref Oper ="Restriction"
+                            Label="Restriction of an rcwa mapping"/>
+    and <Ref Oper ="Restriction"
+             Label="Restriction of an rcwa group"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    If <M>k</M> is coprime to the order of any torsion element of the
+    group of units of <M>R</M>, the group RCWA(<M>R</M>) has only finitely
+    many conjugacy classes of elements of order <M>k</M> --
+    otherwise it has infinitely many such conjugacy classes.
+    In the former case the number of such classes can be computed easily.
+    <M>\rightarrow</M> <Ref Func="NrConjugacyClassesOfRCWAZOfOrder"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    For better understanding given rcwa mappings as well as for constructing
+    new ones with given properties, it is often helpful to associate directed
+    graphs to them which reflect from which residue classes elements are
+    mapped to which other residue classes -- we call these graphs
+    <E>transition graphs</E>.
+    <M>\rightarrow</M> <Ref Oper="TransitionGraph"/>.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    There is no bijective rcwa mapping <M>g</M> such that the conjugate
+    of the Collatz mapping under <M>g</M> maps all but finitely many
+    positive integers to smaller ones. However, if the Collatz conjecture
+    is true there must be some other permutation of the integers which
+    serves this purpose.
+  </Item>
+
+</List>
+
+<Alt Not="LaTeX">
+  You are reading the HTML- or plaintext version of the &RCWA; manual --
+  due to the typesetting limitations imposed by these file formats, we omit
+  the examples paragraph and refer interested readers to the PDF- or
+  Postscript version.
+</Alt>
+
+<Alt Only="LaTeX">
+
+  Now we give some examples of rcwa mappings.
+
+  We have already mentioned the Collatz mapping, which is usually given
+  in the following slightly more adequate form:
+  <Display>
     <![CDATA[
-
-                      n  -->  ( a_r * n + b_r ) / c_r
-
+    T: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ n \ \longmapsto \
+    \begin{cases}
+      \frac{n}{2}    & \text{if} \ n \ \text{is even}, \\
+      \frac{3n+1}{2} & \text{otherwise}.
+    \end{cases}
     ]]>
-  </Alt>
-  <Alt Only="HTML">
+  </Display>
+  The modulus of this mapping is 2, its multiplier is 3 and its divisor is 2,
+  thus its prime set is <M>\{2,3\}</M>. The mapping <M>T</M> is surjective
+  but not injective, as it bijectively maps the residue class 0(2) onto
+  <M>\mathbb{Z}</M> and the residue class 1(2) onto 2(3). <P/>
+
+  A bijective rcwa mapping of the integers, thus an element of
+  RCWA(<M>\mathbb{Z}</M>), which has already been investigated by several
+  people before is given by
+  <Display>
     <![CDATA[
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      n  -->  ( a_r * n + b_r ) / c_r
+    a: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ n \ \longmapsto \
+    \begin{cases}
+      \frac{3n}{2}      & \text{if} \ n \equiv 0 \ (2), \\
+      \frac{3n + 1}{4}  & \text{if} \ n \equiv 1 \ (4), \\
+      \frac{3n - 1}{4}  & \text{if} \ n \equiv 3 \ (4).
+    \end{cases}
     ]]>
-  </Alt>
-  <Alt Only="LaTeX">
-    <Display>
-      n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r} 
-    </Display>
-  </Alt>
-  for some coefficients <M>a_r, b_r, c_r \in R</M>.
-  We always assume that all fractions are reduced, i.e. that
-  <M>\gcd( a_r, b_r, c_r ) = 1</M>, and that <M>m</M> is minimal w.r.t.
-  the given property. <P/>
+  </Display>
+  The reader may easily guess modulus, multiplier, divisor and prime set
+  of this mapping himself -- it is however a good easy exercise for getting
+  familiar with rcwa mappings to try to find its inverse by hand.
+  The result can afterwards be checked using this package.
+  It can be seen easily that the mapping <M>a</M> centralizes the involution
+  <M>n \mapsto -n</M>. The permutation <M>a</M> has several finite cycles 
+  (find out which!), and as far as I know it is an unsolved problem whether
+  the cycle containing 8 is really infinite. Finally try to guess whether
+  <M>a</M> is tame or wild! <P/>
 
-  We set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>)
-  <M>\ | \ g</M> is residue class-wise affine <M>\}</M> }.
-  The set RCWA(<M>R</M>) is closed under multiplication and taking
-  inverses (this can be verified easily), hence forms a subgroup of
-  Sym(<M>R</M>).
-  This subgroup is proper since <M>R</M> has no zero-divisors and only
-  finite residue class rings.
-  <Index Key="rcwa group">rcwa group</Index>
-  <Index Key="rcwa group" Subkey="definition"></Index>
-  We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
-  group, or in short an <E>rcwa</E> group.
+  The next one is an example of an rcwa mapping of <M>\mathbb{Z}_{(2)}</M>:
+  <Display>
+    <![CDATA[
+    f: \mathbb{Z}_{(2)} \ \longrightarrow \ \mathbb{Z}_{(2)}, \ \
+    n \ \longmapsto \
+    \begin{cases}
+      \frac{1}{3}n - 7 & \text{if} \ n \equiv 0 \ (2), \\
+      5n + \frac{1}{5} & \text{if} \ n \equiv 1 \ (2).
+    \end{cases}
+    ]]>
+  </Display>
+  The reader may test his understanding of the definitions by trying to
+  determine the multiplier and the divisor of this mapping and by trying
+  to figure out whether it is surjective, injective or even bijective --
+  all of this should be quite easy. The mapping <M>f</M> is tame (why?).<P/>
 
-</Section>
+  As our last example for now we give a wild element of
+  RCWA(GF(2)[<M>x</M>]):
+  <Display>
+    <![CDATA[
+    r \in {\rm RCWA}({\rm GF}(2)[x]), \ \
+    P \ \longmapsto \
+    \begin{cases}
+      \frac{(x^2 + x + 1)P            }{x^2 + 1} &
+        \text{if} \ P \equiv 0     \ (x^2 + 1), \\[1mm]
+      \frac{(x^2 + x + 1)P +         x}{x^2 + 1} &
+        \text{if} \ P \equiv 1     \ (x^2 + 1), \\[1mm]
+      \frac{(x^2 + x + 1)P +       x^2}{x^2 + 1} &
+        \text{if} \ P \equiv x     \ (x^2 + 1), \\[1mm]
+      \frac{(x^2 + x + 1)P + (x^2 + x)}{x^2 + 1} &
+        \text{if} \ P \equiv x + 1 \ (x^2 + 1).  \\
+    \end{cases}
+    ]]>
+  </Display>
+  The permutation <M>r</M> obviously fixes the degree of any polynomial,
+  hence has only finite cycles. But there is an easy-to-check criterion
+  which tells us that <M>r</M> is wild: its multiplier and divisor do not
+  have the same prime divisors. Thus there cannot be an upper bound
+  on the cycle lengths!
 
-<Section Label="sec:FurtherBasicDefinitions">
-<Heading>Some further basic definitions</Heading>
+</Alt>
 
-  <Index Key="rcwa mapping" Subkey="modulus"></Index>
-  Let <M>f</M>, <M>m</M>, <M>a_r</M>, <M>b_r</M> and <M>c_r</M> be as above.
-  We define the <E>modulus</E> Mod(<M>f</M>) of <M>f</M> by <M>m</M>,
-  <Index Key="rcwa mapping" Subkey="multiplier"></Index>
-  the <E>multiplier</E> Mult(<M>f</M>) of <M>f</M> by the lcm
-  of the coefficients <M>a_r</M> in the numerators, and
-  <Index Key="rcwa mapping" Subkey="divisor"></Index>
-  the <E>divisor</E> Div(<M>f</M>) of <M>f</M> by the lcm
-  of the coefficients <M>c_r</M> in the denominators. <P/>
+We end this chapter by giving a few open problems (in arbitrary order).
 
-  <Index Key="rcwa group" Subkey="modulus"></Index>
-  We define the <E>modulus</E> of an rcwa group <M>G</M> by the lcm
-  of the moduli of its elements in case this is finite, and set it equal
-  to zero otherwise.
-  <Index Key="rcwa group" Subkey="tame"></Index>
-  <Index Key="rcwa group" Subkey="wild"></Index>
-  We say that an <M>R</M>-rcwa group is <E>tame</E> if and only if
-  its modulus is not equal to zero, and <E>wild</E> otherwise.
-  <Index Key="rcwa mapping" Subkey="tame"></Index>
-  <Index Key="rcwa mapping" Subkey="wild"></Index>
-  Furthermore we say that a bijective <M>R</M>-rcwa mapping <M>f</M> is
-  <E>tame</E> if the cyclic group it generates is <E>tame</E>, and
-  <E>wild</E> otherwise. Analogous definitions apply for non-bijective
-  mappings. <P/>
+<List>
 
-  <Index Key="rcwa representation">rcwa representation</Index>
-  <Index Key="rcwa representation" Subkey="definition"></Index>
-  Let <M>G</M> be a group. We call an homomorphism from <M>G</M> into the
-  whole group RCWA(<M>R</M>) an (<M>R</M>-) <E>rcwa representation</E> of
-  <M>G</M>. <P/>
+  <Mark>-</Mark>
+  <Item>
+    Find out whether the groups RCWA(<M>R</M>) are simple or not.
+    There is indeed some evidence that they are simple, in fact even
+    more than that given above, but I would consider this problem to be
+    <Q>wide open</Q> anyway.
+    In case that they are not simple, determine a non-trivial normal
+    subgroup and the structure of the factor group.
+  </Item>
 
-</Section>
+  <Mark>-</Mark>
+  <Item>
+    What kind of structure can wild rcwa groups have? Only very little is
+    currently known about this. E.g.: Does a free group of rank greater
+    than 1 have a faithful rcwa representation? (almost certainly).
+    Do the groups GL(<M>n</M>,<M>\mathbb{Z}</M>) have such a representation?
+    (<Q>good question</Q>). Do all finitely presented groups have
+    faithful rcwa representations? Are all finitely generated rcwa groups
+    even finitely presented?
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Is it possible that an rcwa group acts primitive but not highly
+    transitive on one of its infinite orbits? There is some weak
+    computational evidence suggesting a negative answer.
+    <M>\rightarrow</M> <Ref Meth="RepresentativeAction"/> and
+                       <Ref Oper="RepresentativeActionPreImage"/>.
+    Can all orbits under the action of a wild group on the underlying ring
+    <M>R</M> be finite? -- For <M>R</M> = GF(<M>q</M>)[<M>x</M>] this is
+    possible (see the example given above) and there are examples
+    suggesting that the same holds for <M>R = \mathbb{Z}</M>
+    (see <Ref Label="sec:WildButFiniteCycles"/>), but this is not clear.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    Prove the Collatz conjecture (maybe this is the hardest one).
+    The theory of residue class-wise affine mappings gives rise to nice
+    and natural generalizations of this long-standing conjecture.
+    For related functionality of this package see
+    <Ref Oper="ContractionCentre"/> and <Ref Attr="Divergence"/>.
+  </Item>
+
+</List>
 
 <!-- #################################################################### -->
 
 </Chapter>
 
 <!-- #################################################################### -->
+
 
