@@ -402,6 +402,82 @@ gap> Difference(l,Intersection(F,[-20..20]));
     </Description>
   </ManSection>
 
+  <ManSection>
+    <Meth Name="\+" Arg="U, x"/>
+    <Meth Name="\+" Arg="x, U"/>
+    <Returns>
+      the set of sums <M>u + x, u \in U</M>.
+    </Returns>
+    <Description>
+<Example>
+gap> Display(L+1);
+ 
+The union of the residue classes r ( mod 30 )  for r =
+ 
+  0  2  8 12 14 18 20 24
+ 
+gap> L+30 = L;
+true
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\-" Arg="U, x"/>
+    <Meth Name="\-" Arg="x, U"/>
+    <Meth Name="\-" Arg="U"/>
+    <Returns>
+      the set of differences <M>u - x, u \in U</M> resp. the set of differences
+      <M>x - u, u \in U</M> resp. the set of the additive inverses of the elements of U.
+    </Returns>
+    <Description>
+<Example>
+gap> F-7;
+Union of the residue classes 0(5) and 4(5), +2/-2 elements
+gap> -L = L;
+true
+gap> -C;
+The residue class Z(7)^4 ( mod x+Z(7)^0 ) of GF(7)[x]
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\*" Arg="U, x"/>
+    <Meth Name="\*" Arg="x, U"/>
+    <Returns>
+      the set of products <M>x \cdot u, u \in U</M>.
+    </Returns>
+    <Description>
+<Example>
+gap> 2*A;
+The residue class 4(6)
+gap> D*17;
+Union of the residue classes 34(102) and 68(102)
+gap> x^3*C;
+The residue class Z(7)*x^3 ( mod x^4+x^3 ) of GF(7)[x]
+gap> 2*Difference(Integers,[1,2,3]);
+The residue class 0(2), +0/-3 elements
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\/" Arg="U, x"/>
+    <Returns>
+      the set of quotients <M>u/x, u \in U</M>.
+    </Returns>
+    <Description>
+      If the result is not a subset of the underlying ring, the method gives up.
+<Example>
+gap> D/2;
+Union of the residue classes 1(3) and 2(3)
+gap> M/5;
+Union of the residue classes 1(6) and 5(6)
+</Example>
+    </Description>
+  </ManSection>
+
   <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
