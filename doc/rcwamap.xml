@@ -2,7 +2,7 @@
 <!-- ##                                                                             ## -->
 <!-- ##  rcwamap.xml                RCWA documentation                 Stefan Kohl  ## -->
 <!-- ##                                                                             ## -->
-<!-- ##  $Id$                    ## -->
+<!-- ##  $Id$                   ## -->
 <!-- ##                                                                             ## -->
 <!-- ##  Copyright (C) 2002 by Stefan Kohl, Mathematisches Institut B,              ## -->
 <!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
@@ -965,7 +965,7 @@ gap> DeterminantMat(M);
     <Func Name="TrajectoryModulo" Arg="f, n, m, lng"/>
     <Func Name="TrajectoryModulo" Arg="f, n, lng"/>
     <Returns>
-      the sequence <M>(n_i), i = 0, \dots, lng-1</M> with <M>n_i := n^(f^i)</M>
+      the sequence <M>(n_i), i = 0, \dots, lng-1</M> with <M>n_i := n^{(f^i)}</M>
       mod <A>m</A> as a list.
     </Returns>
     <Description>
