@@ -115,13 +115,13 @@ InstallMethod( AlternatingGroupCons,
 ##
 InstallMethod( GeneralLinearGroupCons,
                "integral rcwa group by degree and finite field size",
-               true, [ IsIntegralRcwaGroup and IsFinite,
-                       IsPosInt, IsPosInt ], 0,
+               true, [ IsIntegralRcwaGroup,
+                       IsPosInt, IsField and IsFinite ], 0,
 
-  function( filter, d, q )
+  function( filter, d, F )
 
     return IntegralRcwaGroupByPermGroup(
-             Image( IsomorphismPermGroup( GL ( d, q ) ) ) );
+            Image( IsomorphismPermGroup( GL ( d, Size( F ) ) ) ) );
   end );
 
 #############################################################################
@@ -130,13 +130,13 @@ InstallMethod( GeneralLinearGroupCons,
 ##
 InstallMethod( SpecialLinearGroupCons,
                "integral rcwa group by degree and finite field size",
-               true, [ IsIntegralRcwaGroup and IsFinite,
-                       IsPosInt, IsPosInt ], 0,
+               true, [ IsIntegralRcwaGroup,
+                       IsPosInt, IsField and IsFinite ], 0,
 
-  function( filter, d, q )
+  function( filter, d, F )
 
     return IntegralRcwaGroupByPermGroup(
-             Image(IsomorphismPermGroup( SL( d, q ) ) ) );
+             Image(IsomorphismPermGroup( SL( d, Size( F ) ) ) ) );
   end );
 
 #############################################################################
