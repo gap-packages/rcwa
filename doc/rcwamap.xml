@@ -280,8 +280,8 @@ gap> Cycle(a,44);
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
-Some kinds of very simple-structured rcwa mappings are of particular
-interest:
+<Alt Only="LaTeX">\noindent</Alt>
+Some kinds of very simple-structured rcwa mappings are of particular interest:
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
@@ -368,10 +368,13 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
   </Returns>
   <Description>
     For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
-    is a bijective rcwa mapping of <M>\Z</M> with multiplier <M>p</M>
-    and divisor&nbsp;2. The prime switches <M>\sigma_p</M> play an important
-    role in factoring non-balanced rcwa mappings into class shifts, class
-    reflections and class transpositions.
+    is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
+    multiplier&nbsp;<M>p</M> (see <Ref Attr="Multiplier" Label="f"/>) and
+    divisor&nbsp;2 (see <Ref Attr="Divisor" Label="f"/>).
+    The prime switches <M>\sigma_p</M> play an important role in factoring
+    non-balanced rcwa mappings into class shifts, class reflections and
+    class transpositions (cp. <Ref Attr="FactorizationIntoGenerators"
+    Label="g"/>).
 <Example>
 <![CDATA[
 gap> Display(PrimeSwitch(3));
@@ -392,16 +395,15 @@ Wild bijective rcwa mapping of Z with modulus 12
   </Description>
 </ManSection>
 
-A factorization of a bijective rcwa mapping <A>g</A> of the integers
-into class shifts, class reflections and class transpositions can be
-obtained by <C>FactorizationIntoGenerators(<A>g</A>)</C>. <P/>
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 In most cases an rcwa mapping is not determined uniquely by the output of
 the <C>ViewObj</C> method -- in these cases the output is enclosed in
 brackets. There are methods installed for <C>Display</C>, <C>Print</C>
-and <C>String</C>. The printed representation of an rcwa mapping is &GAP; -
-readable if and only if the printed representation of the elements of the
-underlying ring is so. There is also a method for <C>LaTeXObj</C>:
+and <C>String</C>. The <C>Print</C>ed representation of an rcwa mapping
+is &GAP; - readable if and only if the <C>Print</C>ed representation of
+the elements of the underlying ring is so. There is also a method for
+<C>LaTeXObj</C>:
 
 <ManSection>
   <Meth Name="LaTeXObj" Arg="f" Label="f"/>
@@ -411,28 +413,32 @@ underlying ring is so. There is also a method for <C>LaTeXObj</C>:
   <Description>
     The output makes use of the &LaTeX; macro package
     <Package>amsmath</Package>.
-    An indentation by <A>Indentation</A> characters can be specified by
-    setting this option value accordingly.
-    This only applies to rcwa mappings with modulus larger than 1.
+    If the option <A>Factorization</A> is set, a factorization of <A>f</A>
+    into class shifts, class reflections, class transpositions and prime
+    switches is printed (cp. <Ref Attr="FactorizationIntoGenerators"
+    Label="g"/>).
+    For rcwa mappings with modulus larger than&nbsp;1, an indentation by
+    <A>Indentation</A> characters can be specified by setting this option
+    value accordingly.
 <Example>
 <![CDATA[
-gap> Print(LaTeXObj(u^-1));
+gap> Print(LaTeXObj(a));
 n \ \longmapsto \
 \begin{cases}
-  \frac{5n}{3}     & \text{if} \ n \in 0(3), \\
-  \frac{5n + 1}{3} & \text{if} \ n \in 1(3), \\
-  \frac{5n - 1}{9} & \text{if} \ n \in 2(9), \\
-  \frac{5n + 2}{9} & \text{if} \ n \in 5(9), \\
-  \frac{5n - 4}{9} & \text{if} \ n \in 8(9).
+  \frac{3n}{2}     & \text{if} \ n \in 0(2), \\
+  \frac{3n + 1}{4} & \text{if} \ n \in 1(4), \\
+  \frac{3n - 1}{4} & \text{if} \ n \in 3(4).
 \end{cases}
+gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
+       \nu_{8(12)} \cdot \nu_{0(12)}^{-1}
+ \cdot \tau_{0(12),6(12)} \cdot \tau_{0(12),4(12)}
+ \cdot \tau_{0(12),8(12)}
 ]]>
 </Example>
   </Description>
 </ManSection>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -461,18 +467,21 @@ gap> List([-6..6],k->Modulus(f^k));
 [ 324, 108, 108, 36, 36, 12, 1, 12, 24, 48, 96, 192, 384 ]
 gap> Order(f);
 infinity
-gap> IsTame(f);
-false
-gap> f^2;           
-<wild bijective rcwa mapping of Z with modulus 24>
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
+gap> List( [ a, u, f ], IsTame );
+[ false, false, false ]
 gap> f^2*u;         
 <bijective rcwa mapping of Z with modulus 120>
 gap> f^2*u*a;
-<rcwa mapping of Z with modulus 240>
-gap> f^2*u*a^2;
-<rcwa mapping of Z with modulus 960>
+<bijective rcwa mapping of Z with modulus 240>
 gap> f^2*u*a^2*f^-1;
-<rcwa mapping of Z with modulus 3840>
+<bijective rcwa mapping of Z with modulus 3840>
 gap> Comm(f,ClassShift(6,12)*f)^1000;
 <bijective rcwa mapping of Z with modulus 18>
 ]]>
@@ -495,8 +504,6 @@ many residue classes of the source of an rcwa mapping can be computed with
 <C>&circum;</C> (the same symbol as used for exponentiation and conjugation).
 The same works for partitions of the source into a finite number of
 residue classes.
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -562,12 +569,63 @@ IdentityMapping( Z_( 2 ) )
 
 There are operations <C>Modulus</C> and <C>Coefficients</C> for extracting
 the modulus resp. the coefficient list of a given rcwa mapping.
-The meaning of the return values is as described in the last section.
+The meaning of the return values is as described in the previous section.
 
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
 than <M>\mathbb{Z}</M>, not for all operations applicable methods are
 available. <P/>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:FactoringRcwaMappings">
+<Heading>Factoring rcwa mappings</Heading>
+
+Factoring group elements into elements of some <Q>nice</Q> set of generators
+is often helpful. The following can be seen as an attempt towards getting
+a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
+
+<ManSection>
+  <Attr Name="FactorizationIntoGenerators" Arg="g" Label="g"/>
+  <Returns>
+    A factorization of the bijective rcwa mapping&nbsp;<A>g</A> into
+    class shifts, class reflections and class transpositions, provided
+    that such a factorization exists and the method finds it.
+  </Returns>
+  <Description>
+    This may stop with an error message or run into an infinite loop.
+    If it returns a result, this result is always correct.
+    By default, prime switches are taken as one factor. 
+    If the option <A>ExpandPrimeSwitches</A> is set, they are each
+    decomposed into the 6 class transpositions given in
+    the definition (see <Ref Func="PrimeSwitch" Label="p"/>). <P/>
+
+    The problem of obtaining a factorization as desired is algorithmically
+    difficult, and this factorization routine is currently perhaps the most
+    sophisticated part of the &RCWA; package. Information about the
+    progress of the factorization progress can be obtained by setting
+    the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
+<Example>
+<![CDATA[
+gap> FactorizationIntoGenerators(Comm(a,ClassShift(0,4)));
+[ ClassShift(8,12), ClassShift(0,12)^-1, ClassTransposition(0,12,6,12), 
+  ClassTransposition(0,12,4,12), ClassTransposition(0,12,8,12) ]
+gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
+[ ClassShift(15,18), ClassTransposition(1,9,5,9), 
+  ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18), 
+  ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18), 
+  ClassReflection(0,3) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+For purposes of demonstrating the capabilities of the factorization routine,
+in Section&nbsp;<Ref Label="sec:FactoringTheCollatzPermutation"/>
+a permutation is factored which has already been mentioned by Lothar Collatz
+in&nbsp;1932, and whose cycle structure is unknown so far.
 
 </Section>
 
@@ -613,12 +671,8 @@ available. <P/>
 gap> nu := ClassShift(0,1);;
 gap> List( [ nu, a, b, u ], Determinant );
 [ 1, 0, 1, 0 ]
-gap> Determinant(a^2*b^-1);
--1
 gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
 5
-gap> Determinant(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3);
-0
 gap> Determinant(b^-5*nu^7*a^2*nu^-1*b^-1*a^-3*u);
 0
 gap> Determinant(u^2*b^-3);
