@@ -935,30 +935,8 @@ true
 
 <!-- ################################################################################# -->
 
-<Section Label="sec:GraphTransMatPrimeSet">
-<Heading>Graph, transition matrix, trajectory and prime set</Heading>
-
-  <ManSection>
-    <Oper Name="RcwaGraph" Arg="f"/>
-    <Returns>the graph associated to the rcwa mapping <A>f</A>.</Returns>
-    <Description>
-      For technical reasons, the residue classes
-      0(<A>m</A>) .. <A>m</A>-1(<A>m</A>) modulo the modulus <A>m</A>
-      of <A>f</A> are identified with vertices named 1 .. <A>m</A>, in
-      this order. <P/>
-
-      The result is returned as a <Package>GRAPE</Package>-graph,
-      hence the package <Package>GRAPE</Package> has to be present;
-      otherwise, <C>fail</C> is returned after issueing a warning.
-<Example>
-gap> RcwaGraph(a);
-rec( isGraph := true, order := 4, group := Group(()), 
-  schreierVector := [ -1, -2, -3, -4 ], 
-  adjacencies := [ [ 1, 3 ], [ 1, 2, 3, 4 ], [ 2, 4 ], [ 1, 2, 3, 4 ] ], 
-  representatives := [ 1, 2, 3, 4 ], names := [ 1, 2, 3, 4 ] )
-</Example>
-    </Description>
-  </ManSection>
+<Section Label="sec:TransMatGraphPrimeSet">
+<Heading>Transition matrix, graph, trajectory and prime set</Heading>
 
   <ManSection>
     <Func Name="TransitionMatrix" Arg="f, deg"/>
@@ -995,6 +973,45 @@ gap> Display(M*One(GF(2)));
  . . . . . . 1 . . . . . 1
 gap> DeterminantMat(M);
 -16
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Oper Name="TransitionGraph" Arg="f, m"/>
+    <Returns>
+      the transition graph for modulus <A>m</A> of the rcwa mapping <A>f</A>.
+    </Returns>
+    <Description>
+      For technical reasons, the residue classes
+      0(<A>m</A>) .. <A>m</A>-1(<A>m</A>) modulo the modulus <A>m</A>
+      of <A>f</A> are identified with vertices named 1 .. <A>m</A>, in
+      this order. <P/>
+
+      The result is returned as a <Package>GRAPE</Package>-graph.
+<Example>
+gap> TransitionGraph(a,Modulus(a));
+rec( isGraph := true, order := 4, group := Group(()), 
+  schreierVector := [ -1, -2, -3, -4 ], 
+  adjacencies := [ [ 1, 3 ], [ 1, 2, 3, 4 ], [ 2, 4 ], [ 1, 2, 3, 4 ] ], 
+  representatives := [ 1, 2, 3, 4 ], names := [ 1, 2, 3, 4 ] )
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Oper Name="OrbitsModulo" Arg="f, m" Label="OrbitsModulo for rcwa mapping"/>
+    <Returns>
+      the set of the subsets of <C>[0..<A>m</A>-1]</C> corresponding to the
+      weakly-connected components of the transition graph for modulus <A>m</A>
+      of the rcwa mapping <A>f</A>.
+    </Returns>
+    <Description>
+      See also <Ref Meth="OrbitsModulo" Label="OrbitsModulo for rcwa group"/>
+      for rcwa groups.
+<Example>
+gap> OrbitsModulo(Comm(a,b),9);
+[ [ 0 ], [ 1, 4, 5, 6, 7 ], [ 2 ], [ 3 ], [ 8 ] ]
 </Example>
     </Description>
   </ManSection>

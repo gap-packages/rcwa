@@ -79,9 +79,9 @@
   order-preserving. <P/>
 
   <Index Key="rcwa mapping" Subkey="graph"></Index>
-  We define the <E>graph</E> <Alt Only="LaTeX"><M>\Gamma_f</M></Alt>
-  <Alt Not="LaTeX"><M>G_f</M></Alt> associated to an
-  rcwa mapping <M>f</M> with  modulus <M>m</M> as follows:
+  We define the <E>transition graph</E> <Alt Only="LaTeX"><M>\Gamma_f</M></Alt>
+  <Alt Not="LaTeX"><M>G_f</M></Alt> for modulus <M>m</M> of an rcwa mapping <M>f</M>
+  as follows:
 
   <Enum>
     <Item>
@@ -98,14 +98,14 @@
   <Index Key="rcwa mapping" Subkey="transitional rank"></Index>
   <Index Key="rcwa mapping" Subkey="transitional determinant"></Index>
   We define the <E>transition matrix</E> <M>M</M> of degree <M>d</M> of the
-  integral rcwa mapping <M>f</M> by <M>M_{i+1,j+1} = 1</M> if there is an
-  <M>n \equiv i</M> (mod <M>d</M>) such that <M>n^f \equiv j</M>
+  integral or semilocal integral rcwa mapping <M>f</M> by <M>M_{i+1,j+1} = 1</M> if
+  there is an <M>n \equiv i</M> (mod <M>d</M>) such that <M>n^f \equiv j</M>
   (mod <M>d</M>), and 0 if not.
-  Their rank (and in case it is invertible the absolute value of its 
-  determinant) does not depend on the particular assignment of the residue
-  classes (mod <M>d</M>) to rows/columns, hence accordingly, we can define the
-  <E>transitional rank</E> resp. the <E>transitional determinant</E> of
-  <M>f</M> of degree <M>d</M> for any rcwa mapping. <P/>
+  Their rank, trace and the absolute value of its determinant does not depend on the
+  particular assignment of the residue classes (mod <M>d</M>) to rows/columns, hence
+  accordingly, we can define the <E>transitional rank</E>, the <E>transitional trace</E>
+  resp. the <E>transitional determinant</E> of <M>f</M> of degree <M>d</M> for any
+  rcwa mapping. <P/>
 
   <Index Key="rcwa mapping" Subkey="prime set"></Index>
   We define the <E>prime set</E> of an rcwa mapping <M>f</M> as the set of all
