@@ -126,6 +126,12 @@ f5_12 := RcwaMapping([[5, 0,6],[5,3,4],[5,-4,6],[5,-3,4],
                       [5,-4,6],[5,3,4],[5, 4,6],[5,-3,4]]);
 SetName(f5_12,"f5_12");
 
+# The following mapping has modulus 5 and multiplier 16 (this is the largest
+# possible multiplier of a mapping with this modulus).
+
+Mod5Mult16 := RcwaMapping([[16,0,5],[16,24,5],[8,4,5],[4,-2,5],[2,-3,5]]);
+SetName(Mod5Mult16,"Mod5Mult16");
+
 #############################################################################
 ##
 ##  `A wild rcwa mapping which has only finite cycles'
@@ -136,6 +142,14 @@ kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
 SetName(kappa,"kappa");
 
 # A few other related examples.
+
+kappa24 := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                        [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                        [2, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                        [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                        [1,-1,3],[1, 0,1],[1,0,1],[1, 0,1],
+                        [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]);
+SetName(kappa24,"kappa24");
 
 sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);
 sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
@@ -271,6 +285,8 @@ e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
 ##  `Images and preimages under the Collatz mapping'
 ##
 T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
+
+T5 := RcwaMapping([[1,0,2],[5,-1,2]]); SetName(T5,"T5");
 
 #############################################################################
 ##
