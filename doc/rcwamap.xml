@@ -367,12 +367,13 @@ Bijective rcwa mappings can also be inverted, thus there is a method for
 to some power with negative exponent. Computing powers of wild mappings
 is usually expensive -- runtime and memory requirements normally grow
 approximately exponentially with the exponent. How expensive multiplying
-a couple of wild mappings is, varies very much. Whether a given mapping is
-tame or wild can be determined by the operation <C>IsTame</C>.
-Sometimes this uses probabilistic methods. If so, a warning is issued
-at <C>InfoWarning</C> level&nbsp;1. There are methods for <C>Order</C>,
-which can not only compute a finite order, but are also suitable for
-detecting infinite order. <P/>
+a couple of wild mappings is, varies very much. In any case, the amount of
+memory required for storing an rcwa mapping is proportional to its modulus.
+Whether a given mapping is tame or wild can be determined by the operation
+<C>IsTame</C>. Sometimes this uses probabilistic methods. If so, a warning
+is issued at <C>InfoWarning</C> level&nbsp;1. There are methods for
+<C>Order</C>, which can not only compute a finite order, but are also
+suitable for detecting infinite order. <P/>
 
 <Example>
 <![CDATA[
@@ -392,6 +393,8 @@ gap> f^2*u*a^2;
 <bijective rcwa mapping of Z with modulus 960>
 gap> f^2*u*a^2*f^-1;
 <bijective rcwa mapping of Z with modulus 3840>
+gap> Comm(f,ClassShift(6,12)*f)^1000;
+<rcwa mapping of Z with modulus 18>
 ]]>
 </Example>
 
@@ -783,7 +786,7 @@ gap> SetOnWhichMappingIsClassWiseOrderPreserving(
   </Returns>
   <Description>
     <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
-    The assignment of the residue classes (mod <A>m</A>) to the rows and
+    The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
     columns of the matrix is given by the ordering of the residues
     in the return value of <C>AllResidues(<A>m</A>)</C>
     (see <Ref Func="AllResidues"/>).
@@ -873,8 +876,7 @@ rec( isGraph := true, order := 4, group := Group(()),
     modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    See also <Ref Meth="OrbitsModulo" Label="G"/>
-    for rcwa groups.
+    See also <Ref Meth="OrbitsModulo" Label="G"/> for rcwa groups.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(Comm(a,b),9);
@@ -889,8 +891,7 @@ gap> OrbitsModulo(Comm(a,b),9);
         Arg = "f, m" Label="f, m"/>
   <Returns>
     The set of restrictions of the rcwa mapping&nbsp;<A>f</A> to the
-    weakly-connected components of its transition graph
-    <M>\Gamma_{f,m}</M>.
+    weakly-connected components of its transition graph <M>\Gamma_{f,m}</M>.
   </Returns>
   <Description>
     These mappings have pairwisely disjoint supports, hence any two
@@ -931,16 +932,13 @@ gap> List(fact,MovedPoints);
     <C><A>n</A>&circum;(<A>f</A>&circum;k) in <A>val</A></C> is reached,
     depending on whether <C><A>cond</A> = "length"</C> or
     <C><A>cond</A> = "stop"</C>.
+    In the place of the ring element&nbsp;<A>n</A>, a union of residue
+    classes is permitted, also.
 <Example>
 <![CDATA[
-gap> Trajectory(a,8,100,"length");
-[ 8, 12, 18, 27, 20, 30, 45, 34, 51, 38, 57, 43, 32, 48, 72, 108, 162, 243, 
-  182, 273, 205, 154, 231, 173, 130, 195, 146, 219, 164, 246, 369, 277, 208, 
-  312, 468, 702, 1053, 790, 1185, 889, 667, 500, 750, 1125, 844, 1266, 1899, 
-  1424, 2136, 3204, 4806, 7209, 5407, 4055, 3041, 2281, 1711, 1283, 962, 
-  1443, 1082, 1623, 1217, 913, 685, 514, 771, 578, 867, 650, 975, 731, 548, 
-  822, 1233, 925, 694, 1041, 781, 586, 879, 659, 494, 741, 556, 834, 1251, 
-  938, 1407, 1055, 791, 593, 445, 334, 501, 376, 564, 846, 1269, 952 ]
+gap> Trajectory(a,8,30,"length");
+[ 8, 12, 18, 27, 20, 30, 45, 34, 51, 38, 57, 43, 32, 48, 72, 108, 162, 243,
+  182, 273, 205, 154, 231, 173, 130, 195, 146, 219, 164, 246 ]
 gap> Trajectory(T,27,[1],"stop");
 [ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
   233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
@@ -985,18 +983,15 @@ gap> TrajectoryModulo(T,27,2,100);
   <Func Name="CoefficientsOnTrajectory"
         Arg="f, n, val, cond, all" Label="f, n, val, cond, all"/>
   <Returns>
-    A list of lists of 3 ring elements, each -- see below.
+    A list <C>c</C> of coefficient triples such that for any&nbsp;<C>k</C>,
+    it holds that <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
+    (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C>, or its last entry.
   </Returns>
   <Description>
-    This function computes something which we might call <Q>accumulated
-    coefficients</Q> on the trajectory of <A>n</A> under the rcwa mapping
-    <A>f</A>. More precisely: it computes a list <C>c</C> of coefficient
-    triples such that for any&nbsp;<C>k</C>, we have
-    <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) = (c[k][1]*<A>n</A> +
-    c[k][2])/c[k][3]</C>. The meaning of the arguments <A>val</A> and
-    <A>cond</A> is the same as in <Ref Func="Trajectory"/>.
-    If <C><A>all</A> = true</C>, the whole sequence of coefficient triples
-    is returned, otherwise the result is only the last triple.
+    The meaning of the arguments <A>val</A> and <A>cond</A> is the same as
+    in <Ref Func="Trajectory"/>. If <C><A>all</A> = true</C>, the whole
+    sequence of coefficient triples is returned. Otherwise the result is
+    only the last triple.
 <Example>
 <![CDATA[
 gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
@@ -1011,10 +1006,6 @@ gap> CoefficientsOnTrajectory(sigma,37,37,"stop",true);
   [ 9, 15, 1 ], [ 3, 4, 1 ], [ 3, 2, 1 ], [ 1, 0, 1 ] ]
 gap> List(last,c->(c[1]*37+c[2])/c[3]){[1..23]} = Cycle(sigma,37);
 true
-gap> CoefficientsOnTrajectory(a,8,10,"length",true);
-[ [ 1, 0, 1 ], [ 3, 0, 2 ], [ 9, 0, 4 ], [ 27, 0, 8 ], [ 81, -8, 32 ], 
-  [ 243, -24, 64 ], [ 729, -72, 128 ], [ 2187, -88, 512 ], 
-  [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
 gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 [ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ], 
   [ x^4+x^2+Z(2)^0, x^4+x, x^4+Z(2)^0 ], 
@@ -1027,53 +1018,26 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 
 <ManSection>
   <Func Name="IncreasingOn" Arg="f" Label="f"/>
-  <Returns>
-    The union of all residue classes <M>r(m)</M> such that
-    <M>|R/a_{r(m)}R| \gt |R/c_{r(m)R|}</M>, where <M>R</M> denotes the
-    source and <M>m</M> denotes the modulus of&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> IncreasingOn(T);
-1(2)
-gap> IncreasingOn(T^2);
-3(4)
-gap> IncreasingOn(T^3);
-3(4) U 1(8) U 6(8)
-gap> IncreasingOn(a);
-0(2)
-gap> IncreasingOn(a^2);
-0(2) U 3(8) U 5(8)
-gap> IncreasingOn(a^3);
-0(4) U 2(16) U 5(16) U 11(16) U 14(16)
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
   <Func Name="DecreasingOn" Arg="f" Label="f"/>
   <Returns>
     The union of all residue classes <M>r(m)</M> such that
+    <M>|R/a_{r(m)}R| \gt |R/c_{r(m)R|}</M> resp.
     <M>|R/a_{r(m)}R| \lt |R/c_{r(m)R|}</M>, where <M>R</M> denotes the
-    source and <M>m</M> denotes the modulus of&nbsp;<A>f</A>.
+    source, <M>m</M> the modulus and <M>a_{r(m)}</M>, <M>b_{r(m)}</M>
+    and <M>c_{r(m)}</M> the coefficients of&nbsp;<A>f</A> as
+    introduced in the definition of an rcwa mapping.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> DecreasingOn(T);
-0(2)
-gap> DecreasingOn(T^2);
-0(2) U 1(4)
-gap> DecreasingOn(T^3);
-0(4) U 2(8) U 5(8)
-gap> DecreasingOn(a);
-1(2)
-gap> DecreasingOn(a^2);
-1(8) U 7(8)
-gap> DecreasingOn(a^3);
-<union of 8 residue classes (mod 16)>
+gap> List([1..3],k->IncreasingOn(T^k));
+[ 1(2), 3(4), 3(4) U 1(8) U 6(8) ]
+gap> List([1..3],k->DecreasingOn(T^k));
+[ 0(2), 0(2) U 1(4), 0(4) U 2(8) U 5(8) ]
+gap> List([1..3],k->IncreasingOn(a^k));
+[ 0(2), 0(2) U 3(8) U 5(8), 0(4) U 2(16) U 5(16) U 11(16) U 14(16) ]
+gap> List([1..3],k->DecreasingOn(a^k));
+[ 1(2), 1(8) U 7(8), <union of 8 residue classes (mod 16)> ]
 ]]>
 </Example>
   </Description>
@@ -1118,6 +1082,28 @@ gap> S0 := ContractionCentre(T,100,1000);
 </ManSection>
 
 <ManSection>
+  <Attr Name="Divergence" Arg="f"/>
+  <Returns>
+    A floating point value, which should be a rough guess on how fast
+    the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value
+    greater than&nbsp;1) or converge (return value smaller than&nbsp;1).
+  </Returns>
+  <Description>
+    Nothing particular is guaranteed.
+<Example>
+<![CDATA[
+gap> Divergence(T);
+#I  Warning: Divergence: no particular return value is guaranteed.
+0.866025
+gap> Divergence(a);
+#I  Warning: Divergence: no particular return value is guaranteed.
+1.06066
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Attr Name="ImageDensity" Arg="f" Label="f"/>
   <Returns>
     The <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
@@ -1126,19 +1112,15 @@ gap> S0 := ContractionCentre(T,100,1000);
     Let <M>f</M> be an rcwa mapping of <M>\Z</M> with modulus <M>m</M>.
     Assume that the restriction of <M>f</M> to a residue class <M>r(m)</M>
     is given by <M>n \mapsto (a_{r(m)} \cdot n + b_{r(m)})/c_{r(m)}</M>.
-    Then we define the <E>image density</E> of <M>f</M> by
+    Then the <E>image density</E> of <M>f</M> is defined by
     <M>\sum_{r(m) \in \Z/m\Z} c_{r(m)}/a_{r(m)}</M>.
     Injective rcwa mappings have an image density of at most&nbsp;1, and the
     image density of a surjective rcwa mapping is at least&nbsp;1 -- thus in
     particular the image density of a bijective mapping equals&nbsp;1.
 <Example>
 <![CDATA[
-gap> ImageDensity(T);
-4/3
-gap> ImageDensity(a);
-1
-gap> ImageDensity(RcwaMapping([[2,0,1]]));
-1/2
+gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
+[ 4/3, 1, 1/2 ]
 ]]>
 </Example>
   </Description>
@@ -1153,47 +1135,16 @@ gap> ImageDensity(RcwaMapping([[2,0,1]]));
 
 <ManSection>
   <Filt Name="IsRcwaMapping" Arg="f" Label="f"/>
-  <Returns>
-    <C>true</C> if <A>f</A> is an rcwa mapping and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa mappings.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsIntegralRcwaMapping" Arg="f" Label="f"/>
-  <Returns>
-    <C>true</C> if <A>f</A> is an rcwa mapping of the ring of integers
-    and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa mappings of the ring of integers.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsSemilocalIntegralRcwaMapping" Arg="f" Label="f"/>
-  <Returns>
-    <C>true</C> if <A>f</A> is an rcwa mapping of a semilocalization of
-    the ring of integers and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all rcwa mappings of semilocalizations of the
-    ring of integers.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsModularRcwaMapping" Arg="f" Label="f"/>
   <Returns>
-    <C>true</C> if <A>f</A> is an rcwa mapping of a polynomial ring in one
-    variable over a finite field and <C>false</C> otherwise.
+    <C>true</C> if <A>f</A> is an rcwa mapping resp.
+    an rcwa mapping of the ring of integers resp.
+    an rcwa mapping of a semilocalization of the ring of integers resp.
+    an rcwa mapping of a polynomial ring in one variable over a finite field,
+    and <C>false</C> otherwise.
   </Returns>
-  <Description>
-    The category of all rcwa mappings of polynomial rings in one
-    variable over some finite field.
-  </Description>
 </ManSection>
 
 <ManSection>
