@@ -540,15 +540,15 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  RespectedClassPartition( <sigma> ) . . . . . .  respected class partition
+#A  RespectedPartition( <sigma> ) . . . . . . . . . . . . respected partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
-##  on which the bijective mapping <sigma> acts as a permutation.
-##  The partition is non-trivial as long as Modulus( <sigma> ) <> One( <R> ).
-##  Such a partition exists always if <sigma> is tame and <R> has the
-##  `class halving property'. 
+##  on which the bijective rcwa mapping <sigma> acts as a permutation, and on
+##  those elements <sigma> is affine. Provided that <R> has a residue class
+##  ring of cardinality 2, such a partition exists if and only if <sigma> is
+##  tame.
 ##
-DeclareAttribute( "RespectedClassPartition", IsRcwaMapping );
+DeclareAttribute( "RespectedPartition", IsRcwaMapping );
 
 #############################################################################
 ##

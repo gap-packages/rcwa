@@ -3184,15 +3184,15 @@ InstallMethod( LargestSourcesOfAffineMappings,
 
 #############################################################################
 ##
-#M  RespectedClassPartition( <sigma> ) . . .  for tame bijective rcwa mapping
+#M  RespectedPartition( <sigma> ) . . . . . . for tame bijective rcwa mapping
 ##
-InstallMethod( RespectedClassPartition,
+InstallMethod( RespectedPartition,
                "for tame bijective rcwa mappings (RCWA)", true,
                [ IsRcwaMapping ], 0,
 
   function ( sigma )
     if not IsBijective(sigma) then return fail; fi;
-    return RespectedClassPartition( Group( sigma ) );
+    return RespectedPartition( Group( sigma ) );
   end );
 
 #############################################################################
@@ -3445,7 +3445,7 @@ InstallMethod( CompatibleConjugate,
 
     if   not ForAll([g,h],f->IsBijective(f) and IsTame(f))
     then return fail; fi;
-    Pg := RespectedClassPartition(g); Ph := RespectedClassPartition(h);
+    Pg := RespectedPartition(g); Ph := RespectedPartition(h);
     lg := Length(Pg); lh := Length(Ph);
     l := Lcm(lg,lh); tg := l/lg; th := l/lh;
     PgNew := DividedPartition(Pg,g,tg); PhNew := DividedPartition(Ph,h,th);
@@ -3479,7 +3479,7 @@ InstallMethod( FactorizationIntoGenerators,
     if IsOne(g) then return [g]; fi;
     facts := [];
     if IsTame(g) then
-      P := RespectedClassPartition(g);
+      P := RespectedPartition(g);
       h := Permutation(g,P);
       cycs := Orbits(Group(h),MovedPoints(h));
       for cyc in cycs do

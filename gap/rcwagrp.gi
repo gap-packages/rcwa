@@ -670,9 +670,9 @@ CheckModulus := function ( G, m )
                   "the probabilistic modulus computation failed --\n",
                   "please send the generators of the group you tested ",
                   "to Stefan Kohl, kohl@mathematik.uni-stuttgart.de.\n");
-  R := Source(One(G)); P := RespectedClassPartition(G);
+  R := Source(One(G)); P := RespectedPartition(G);
   if   not IsZero(Lcm(List(P,Modulus)) mod m)
-    or not IsGroup(ActionOnClassPartition(G))
+    or not IsGroup(ActionOnRespectedPartition(G))
   then Error(errormessage); fi;
   gens := GeneratorsOfGroup(G);
   if   not ForAll(gens,g->ForAll(P,cl->IsAffine(g,cl)))
@@ -756,9 +756,9 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
-#M  RespectedClassPartition( <G> ) . . . . . . . . . . .  for tame rcwa group
+#M  RespectedPartition( <G> ) . . . . . . . . . . . . . . for tame rcwa group
 ##
-InstallOtherMethod( RespectedClassPartition,
+InstallOtherMethod( RespectedPartition,
                     "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
@@ -789,26 +789,26 @@ InstallOtherMethod( RespectedClassPartition,
 
 #############################################################################
 ##
-#M  ActionOnClassPartition( <G> ) . . . . . . . . . . . . for tame rcwa group
+#M  ActionOnRespectedPartition( <G> ) . . . . . . . . . . for tame rcwa group
 ##
-InstallMethod( ActionOnClassPartition,
+InstallMethod( ActionOnRespectedPartition,
                "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Action( G, RespectedClassPartition( G ) ) );
+               G -> Action( G, RespectedPartition( G ) ) );
 
 #############################################################################
 ##
-#M  RankOfKernelOfActionOnClassPartition( <G> )  for tame integral rcwa group
+#M  RankOfKernelOfActionOnRespectedPartition( <G> )  for tame rcwa gp. over Z
 ##
-InstallMethod( RankOfKernelOfActionOnClassPartition,
+InstallMethod( RankOfKernelOfActionOnRespectedPartition,
                "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
-               G -> Length( KernelOfActionOnClassPartitionHNFMat( G ) ) );
+               G -> Length( KernelOfActionOnRespectedPartitionHNFMat(G) ) );
 
 #############################################################################
 ##
-#M  KernelOfActionOnClassPartition( <G> ) . . .  for tame integral rcwa group
+#M  KernelOfActionOnRespectedPartition( <G> ) .  for tame integral rcwa group
 ##
-InstallMethod( KernelOfActionOnClassPartition,
+InstallMethod( KernelOfActionOnRespectedPartition,
                "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
@@ -817,9 +817,11 @@ InstallMethod( KernelOfActionOnClassPartition,
     local  P, K, H, M, L, l, LHNF, T, lng, ModG, g, h, nrgens,
            genK, genKHNF, elH, elG, elK, c, nr, lasthit, erg, i;
 
+    Info(InfoWarning,2,"Warning: `KernelOfActionOnRespectedPartition' ",
+                       "is probabilistic.");
     ModG := Modulus(G);
-    P := RespectedClassPartition(G);
-    H := ActionOnClassPartition(G);
+    P := RespectedPartition(G);
+    H := ActionOnRespectedPartition(G);
     g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
     nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
     lng := 0; nr := 1; lasthit := 1; genK := [];
@@ -830,7 +832,7 @@ InstallMethod( KernelOfActionOnClassPartition,
                   i -> c[Residues(P[i])[1] mod Modulus(elK) + 1][2]);
       if SolutionIntMat(L,l) = fail or (L = [] and not ForAll(l,IsZero)) then
         lng := lng + 1; Add(L,l); Add(genK,elK); lasthit := nr;
-        Info(InfoRCWA,3,"KernelOfActionOnClassPartition: gen. #",nr,
+        Info(InfoRCWA,3,"KernelOfActionOnRespectedPartition: gen. #",nr,
                         ", lng = ",lng);
       fi;
       i := Random([1..nrgens]); nr := nr + 1;
@@ -843,27 +845,27 @@ InstallMethod( KernelOfActionOnClassPartition,
                     i->Product(List([1..lng],j->genK[j]^T[i][j])));
     LHNF := Filtered(LHNF,l->not IsZero(l));
     genKHNF := Filtered(genKHNF,k->not IsOne(k));
-    SetKernelOfActionOnClassPartitionHNFMat(G,LHNF);
+    SetKernelOfActionOnRespectedPartitionHNFMat(G,LHNF);
     if genKHNF <> [] then K := Group(genKHNF);
                      else K := TrivialSubgroup(G); fi;
-    SetRespectedClassPartition(K,P);
-    SetKernelOfActionOnClassPartition(K,K);
-    SetRankOfKernelOfActionOnClassPartition(K,Length(genKHNF));
-    SetKernelOfActionOnClassPartitionHNFMat(K,LHNF);
+    SetRespectedPartition(K,P);
+    SetKernelOfActionOnRespectedPartition(K,K);
+    SetRankOfKernelOfActionOnRespectedPartition(K,Length(genKHNF));
+    SetKernelOfActionOnRespectedPartitionHNFMat(K,LHNF);
     return K;
   end );
 
 #############################################################################
 ##
-#M  KernelOfActionOnClassPartitionHNFMat( <G> )  for tame integral rcwa group
+#M  KernelOfActionOnRespectedPartitionHNFMat( <G> )  for tame rcwa gp. over Z
 ##
-InstallMethod( KernelOfActionOnClassPartitionHNFMat,
+InstallMethod( KernelOfActionOnRespectedPartitionHNFMat,
                "for tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
-    KernelOfActionOnClassPartition(G);
-    return KernelOfActionOnClassPartitionHNFMat(G);
+    KernelOfActionOnRespectedPartition(G);
+    return KernelOfActionOnRespectedPartitionHNFMat(G);
   end );
 
 #############################################################################
@@ -877,9 +879,10 @@ InstallMethod( IsomorphismPermGroup,
 
     local  H, phi;
 
-    if   not IsTame(G) or not IsTrivial(KernelOfActionOnClassPartition(G))
+    if   not IsTame(G)
+      or not IsTrivial(KernelOfActionOnRespectedPartition(G))
     then return fail; fi;
-    H   := ActionOnClassPartition(G);
+    H   := ActionOnRespectedPartition(G);
     phi := Immutable(GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
                                                      GeneratorsOfGroup(H)));
     if   not HasParent(G)
@@ -910,7 +913,7 @@ InstallMethod( IsomorphismMatrixGroup,
       od;
     fi;
     g := GeneratorsOfGroup(G);
-    P := RespectedClassPartition(G);
+    P := RespectedPartition(G);
     deg := 2 * Length(P);
     H := Action(G,P); h := GeneratorsOfGroup(H);
     m := [];
@@ -942,7 +945,7 @@ InstallMethod( NiceMonomorphism,
   function ( G )
 
     if   IsTame(G)
-    then if   IsTrivial(KernelOfActionOnClassPartition(G))
+    then if   IsTrivial(KernelOfActionOnRespectedPartition(G))
          then return IsomorphismPermGroup(G);
          else return IsomorphismMatrixGroup(G); fi;
     else TryNextMethod(); fi;
@@ -1011,21 +1014,21 @@ InstallMethod( \in,
         Info(InfoRCWA,3,"<G> is tame, but <g> is wild.");
         return false;
       fi;
-      P := RespectedClassPartition(G);
-      H := ActionOnClassPartition(G);
+      P := RespectedPartition(G);
+      H := ActionOnRespectedPartition(G);
       h := Permutation(g,P);
       if h = fail then
-        Info(InfoRCWA,3,"<g> does not act on RespectedClassPartition(<G>).");
+        Info(InfoRCWA,3,"<g> does not act on RespectedPartition(<G>).");
         return false;
       fi;
       if not h in H then
-        Info(InfoRCWA,3,"The action of <g> on RespectedClassPartition(<G>) ",
+        Info(InfoRCWA,3,"The action of <g> on RespectedPartition(<G>) ",
                         "is not an element of the one of <G>.");
         return false;
       fi;
       if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
       Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
-      Info(InfoRCWA,3,"on RespectedClassPartition(<G>).");
+      Info(InfoRCWA,3,"on RespectedPartition(<G>).");
       phi := EpimorphismFromFreeGroup(H);
       h   := PreImagesRepresentative(phi,h:NoStabChain);
       if h = fail then return false; fi;
@@ -1033,9 +1036,9 @@ InstallMethod( \in,
                           id->gens[AbsInt(id)]^SignInt(id)));
       k   := g/h;
       Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
-      Info(InfoRCWA,3,"the action of <g> on RespectedClassPartition(<G>).");
-      K := KernelOfActionOnClassPartition(G);
-      L := KernelOfActionOnClassPartitionHNFMat(G);
+      Info(InfoRCWA,3,"the action of <g> on RespectedPartition(<G>).");
+      K := KernelOfActionOnRespectedPartition(G);
+      L := KernelOfActionOnRespectedPartitionHNFMat(G);
       if L = [] then return IsOne(k); fi;
       Info(InfoRCWA,3,"The kernel has rank ",Length(L),".");
       c := Coefficients(k);
@@ -1079,12 +1082,12 @@ InstallMethod( \in,
 #M  Size( <G> ) . . . . . . . . . . . . . . . . . . . for integral rcwa group
 ##
 ##  This method checks whether <G> is tame and the kernel of the action of
-##  <G> on a respected class partition has rank 0 -- if so, it returns the
+##  <G> on a respected partition has rank 0 -- if so, it returns the
 ##  size of the permutation group induced on this partition, and if not it
 ##  returns infinity.
 ##
 InstallMethod( Size,
-               "for rcwa groups, use action on resp. class partition (RCWA)",
+               "for rcwa groups, use action on respected partition (RCWA)",
                true, [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -1093,10 +1096,11 @@ InstallMethod( Size,
     if   ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
     then return infinity; fi;
     if not IsTame(G) then return infinity; fi;
-    Info(InfoRCWA,1,"Size: use action on respected class partition.");
-    if RankOfKernelOfActionOnClassPartition(G) > 0 then return infinity; fi;
-    return   Size(ActionOnClassPartition(G))
-           * Size(KernelOfActionOnClassPartition(G));
+    Info(InfoRCWA,1,"Size: use action on respected partition.");
+    if   RankOfKernelOfActionOnRespectedPartition(G) > 0
+    then return infinity; fi;
+    return   Size(ActionOnRespectedPartition(G))
+           * Size(KernelOfActionOnRespectedPartition(G));
   end );
 
 #############################################################################
@@ -1165,7 +1169,7 @@ InstallMethod( IntegralizingConjugator,
     local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
     if IsIntegral(sigma) then return One(sigma); fi;
-    pcp := RespectedClassPartition(sigma); 
+    pcp := RespectedPartition(sigma); 
     if pcp = fail then return fail; fi;
     m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
     c := List([1..m],i->[1,0,1]);
@@ -1200,7 +1204,7 @@ InstallOtherMethod( IntegralizingConjugator,
     local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
     if IsIntegral(G) then return One(G); fi;
-    pcp := RespectedClassPartition(G); 
+    pcp := RespectedPartition(G); 
     if pcp = fail then return fail; fi;
     m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
     c := List([1..m],i->[1,0,1]);
@@ -1240,7 +1244,7 @@ InstallMethod( StandardizingConjugator,
       toflat := IntegralizingConjugator(sigma);
       flat   := sigma^toflat;
     else toflat := One(sigma); flat := sigma; fi;
-    m := Modulus(flat); pcp := RespectedClassPartition(flat);
+    m := Modulus(flat); pcp := RespectedPartition(flat);
     cycs := Cycles(flat,pcp); lngs := Set(List(cycs,Length));
     cohorts := List(lngs,l->Filtered(cycs,cyc->Length(cyc)=l));
     mtilde := Sum(lngs); c := List([1..m],i->[1,0,1]); rtilde := 0;
@@ -1452,7 +1456,7 @@ InstallOtherMethod( RepresentativeActionOp,
       g := RepresentativeAction(RCWA_Z,Flat(Buckets[1]),
                                        Flat(Buckets[2]):NC,IsTame:=false);
       SetIsTame(g,true);
-      SetRespectedClassPartition(g,Set(Flat(Buckets[1])));
+      SetRespectedPartition(g,Set(Flat(Buckets[1])));
       return g;
     fi;
   end );
@@ -1645,8 +1649,8 @@ InstallOtherMethod( OrbitOp,
     orb := ShortOrbits(G,[pnt],100);
     if orb <> [] then return orb[1]; fi;
     if IsFinite(G) or not IsTame(G) then TryNextMethod(); fi;
-    P := RespectedClassPartition(G);
-    M := KernelOfActionOnClassPartitionHNFMat(G);
+    P := RespectedPartition(G);
+    M := KernelOfActionOnRespectedPartitionHNFMat(G);
     if M <> [] then
       where := First([1..Length(P)],pos->pnt in P[pos]);
       delta := List(TransposedMat(M),Gcd)[where];
@@ -1885,7 +1889,7 @@ InstallMethod( IsSolvable,
   function ( G )
     if IsAbelian(G) then return true; fi;
     if not IsTame(G) then TryNextMethod(); fi;
-    return IsSolvable(ActionOnClassPartition(G));
+    return IsSolvable(ActionOnRespectedPartition(G));
   end );
 
 #############################################################################
@@ -1905,7 +1909,7 @@ InstallMethod( IsPerfect,
       then return false; fi;
     fi;
     if not IsTame(G) then TryNextMethod(); fi;
-    return IsPerfect(ActionOnClassPartition(G));
+    return IsPerfect(ActionOnRespectedPartition(G));
   end );
 
 #############################################################################

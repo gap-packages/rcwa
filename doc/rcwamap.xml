@@ -359,6 +359,10 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
   </Description>
 </ManSection>
 
+A factorization of a tame bijective rcwa mapping <A>g</A> of the integers
+into class shifts, class reflections and class transpositions can be
+obtained by <C>FactorizationIntoGenerators(<A>g</A>)</C>. <P/>
+
 In most cases an rcwa mapping is not determined uniquely by the output of
 the <C>ViewObj</C> method -- in these cases the output is enclosed in
 brackets. There are methods installed for <C>Display</C>, <C>Print</C>
@@ -540,9 +544,11 @@ available. <P/>
 <Heading>Determinant and sign</Heading>
 
 <ManSection>
-  <Meth Name="Determinant" Arg="f" Label="f"/>
-  <Meth Name="Determinant" Arg="f, S" Label="f, S"/>
-  <Returns> The determinant of the rcwa mapping&nbsp;<A>f</A>. </Returns>
+  <Meth Name="Determinant" Arg="sigma" Label="sigma"/>
+  <Meth Name="Determinant" Arg="sigma, S" Label="sigma, S"/>
+  <Returns>
+    The determinant of the bijective rcwa mapping&nbsp;<A>sigma</A>.
+  </Returns>
   <Description>
     The <E>determinant</E> of an affine mapping <M>n \mapsto (an+b)/c</M>
     whose source is a residue class <M>r(m)</M> is defined by <M>b/|a|m</M>.
@@ -568,7 +574,7 @@ available. <P/>
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
-    of <A>f</A> to&nbsp;<A>S</A>.
+    of <A>sigma</A> to&nbsp;<A>S</A>.
 <Example>
 <![CDATA[
 gap> nu := ClassShift(0,1);;
@@ -592,8 +598,10 @@ gap> Determinant(u^2*b^-3);
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Attr Name="Sign" Arg="f" Label="f"/>
-  <Returns> The sign of the rcwa mapping&nbsp;<A>f</A>. </Returns>
+  <Attr Name="Sign" Arg="sigma" Label="sigma"/>
+  <Returns>
+    The sign of the bijective rcwa mapping&nbsp;<A>sigma</A>.
+  </Returns>
   <Description>
     Using the notation from the definition of an rcwa mapping,
     the <E>sign</E> of a bijective rcwa mapping&nbsp;<M>\sigma</M>
@@ -1152,7 +1160,7 @@ The returned result can only be regarded as a rough guess.
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Oper Name="Divergence" Arg="f"/>
+  <Oper Name="Divergence" Arg="f" Label="f"/>
   <Returns>
     A floating point value, which should be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value

@@ -1245,18 +1245,18 @@ infinity
 gap> Modulus(G);
 18
 gap> ResidueClassUnionViewingFormat("short");
-gap> RespectedClassPartition(G);
+gap> RespectedPartition(G);
 [ 0(18), 1(18), 2(18), 4(18), 5(18), 7(18), 8(18), 9(18), 10(18), 11(18), 
   13(18), 14(18), 16(18), 17(18), 3(36), 6(36), 12(36), 15(36), 21(36), 
   24(36), 30(36), 33(36) ]
-gap> D := DerivedSubgroup(ActionOnClassPartition(G));;
+gap> D := DerivedSubgroup(ActionOnRespectedPartition(G));;
 gap> DegreeAction(D);
 20
 gap> IsPerfect(D);
 true
 gap> Size(D);
 928972800
-gap> RankOfKernelOfActionOnClassPartition(G);
+gap> RankOfKernelOfActionOnRespectedPartition(G);
 9
 ]]>
 </Example>

@@ -600,13 +600,13 @@ gap> IsTransitive(G,Integers);
 There is a `class shift' on the residue class 0(12).
 #I  Trying probabilistic random walk, initial m = 12
 #I  checking modulus ...
-#I  Size: use action on respected class partition.
-#I  KernelOfActionOnClassPartition: gen. #1, lng = 1
-#I  KernelOfActionOnClassPartition: gen. #2, lng = 2
+#I  Size: use action on respected partition.
+#I  KernelOfActionOnRespectedPartition: gen. #1, lng = 1
+#I  KernelOfActionOnRespectedPartition: gen. #2, lng = 2
 
                        [ ... ]
 
-#I  KernelOfActionOnClassPartition: gen. #14, lng = 10
+#I  KernelOfActionOnRespectedPartition: gen. #14, lng = 10
 #I  Searching for class shifts ...
 #I  ... in generators
 #I  ... in commutators of the generators
@@ -778,7 +778,7 @@ gap> P1^elm = P2;
 true
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 <tame rcwa mapping of Z with modulus 1152>
-gap> P := RespectedClassPartition(elm);;
+gap> P := RespectedPartition(elm);;
 gap> Length(P);
 313
 ]]>
@@ -1088,8 +1088,8 @@ some cases by other means also for wild groups). Often it is also feasible
 to compute the derived subgroup of a tame rcwa group. 
 
 <ManSection>
-  <Attr Name ="RespectedClassPartition" Arg="G" Label="G"/>
-  <Attr Name ="RespectedClassPartition" Arg="sigma" Label="sigma"/>
+  <Attr Name ="RespectedPartition" Arg="G" Label="G"/>
+  <Attr Name ="RespectedPartition" Arg="sigma" Label="sigma"/>
   <Returns>
     A <E>respected partition</E> of <A>G</A> resp. <A>sigma</A>.
   </Returns>
@@ -1107,7 +1107,7 @@ to compute the derived subgroup of a tame rcwa group.
 gap> G := Group(g,h);;
 gap> Size(G);
 infinity
-gap> rcp := RespectedClassPartition(G);
+gap> rcp := RespectedPartition(G);
 [ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
   2(24), 8(24), 14(24), 20(24) ]
 gap> Permutation(g,rcp);
@@ -1118,15 +1118,15 @@ gap> Permutation(g,rcp);
 </ManSection>
 
 <ManSection>
-  <Attr Name="ActionOnClassPartition" Arg="G" Label="G"/>
+  <Attr Name="ActionOnRespectedPartition" Arg="G" Label="G"/>
   <Returns>
     The action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedClassPartition(<A>G</A>)</C>.
+    <C>RespectedPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> H := ActionOnClassPartition(G);
+gap> H := ActionOnRespectedPartition(G);
 Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
     14,9) ])
 gap> H = Action(G,rcp);
@@ -1139,16 +1139,16 @@ gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
 </ManSection>
 
 <ManSection>
-  <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G" Label="G"/>
+  <Attr Name="RankOfKernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
   <Returns>
     The rank of the largest free abelian subgroup of the kernel of the
     action of the tame rcwa group&nbsp;<A>G</A> on the set of residue
-    classes <C>RespectedClassPartition(<A>G</A>)</C>.
+    classes <C>RespectedPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> RankOfKernelOfActionOnClassPartition(G);
+gap> RankOfKernelOfActionOnRespectedPartition(G);
 6
 ]]>
 </Example>
@@ -1156,15 +1156,15 @@ gap> RankOfKernelOfActionOnClassPartition(G);
 </ManSection>
 
 <ManSection>
-  <Attr Name="KernelOfActionOnClassPartition" Arg="G" Label="G"/>
+  <Attr Name="KernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
   <Returns>
     The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedClassPartition(<A>G</A>)</C>.
+    <C>RespectedPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> K := KernelOfActionOnClassPartition(G);
+gap> K := KernelOfActionOnRespectedPartition(G);
 <rcwa group over Z with 6 generators>
 gap> Modulus(K);
 12
@@ -1180,16 +1180,16 @@ gap> List(GeneratorsOfGroup(K),k->Factorization(G,k)); # Requires GAP >= 4.5.
 </ManSection>
 
 <ManSection>
-  <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G" Label="G"/>
+  <Attr Name="KernelOfActionOnRespectedPartitionHNFMat" Arg="G" Label="G"/>
   <Returns>
     A matrix of vectors in Hermite Normal Form spanning the lattice
     corresponding to the kernel of the action of the tame rcwa
-    group&nbsp;<A>G</A> on <C>RespectedClassPartition(<A>G</A>)</C>.
+    group&nbsp;<A>G</A> on <C>RespectedPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> L := KernelOfActionOnClassPartitionHNFMat(G);
+gap> L := KernelOfActionOnRespectedPartitionHNFMat(G);
 [ [ 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, -24, 0, -24 ], 
   [ 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, -24, 0, -24 ], 
   [ 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, -24, 0, -24 ], 

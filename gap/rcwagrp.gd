@@ -226,39 +226,38 @@ DeclareOperation( "RepresentativesActionPreImage",
 
 #############################################################################
 ##
-#A  ActionOnClassPartition( <G> ) . action of <G> on permuted class partition
+#A  ActionOnRespectedPartition( <G> ) .  action of <G> on respected partition
 ##
-##  Action of the tame group <G> on its permuted class partition.
+##  Action of the tame group <G> on its stored respected partition.
 ##
-DeclareAttribute( "ActionOnClassPartition", IsRcwaGroup );
+DeclareAttribute( "ActionOnRespectedPartition", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  RankOfKernelOfActionOnClassPartition( <G> )
+#A  RankOfKernelOfActionOnRespectedPartition( <G> )
 ##
 ##  Rank of the largest free abelian group fitting into the kernel of the
-##  action of <G> on its permuted class partition.
-##  The group <G> has to be tame.
+##  action of <G> on its respected partition. The group <G> has to be tame.
 ##
-DeclareAttribute( "RankOfKernelOfActionOnClassPartition", IsRcwaGroup );
+DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  KernelOfActionOnClassPartition( <G> )
+#A  KernelOfActionOnRespectedPartition( <G> )
 ##
-##  Kernel of the action of <G> on its permuted class partition.
+##  Kernel of the action of <G> on its respected partition.
 ##  The group <G> has to be tame.
 ##
-DeclareAttribute( "KernelOfActionOnClassPartition", IsRcwaGroup );
+DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  KernelOfActionOnClassPartitionHNFMat( <G> )
+#A  KernelOfActionOnRespectedPartitionHNFMat( <G> )
 ##
 ##  Matrix of row vectors spanning the lattice corresponding to
-##  KernelOfActionOnClassPartition( <G> ), in Hermite normal form.
+##  KernelOfActionOnRespectedPartition( <G> ), in Hermite normal form.
 ##
-DeclareAttribute( "KernelOfActionOnClassPartitionHNFMat",
+DeclareAttribute( "KernelOfActionOnRespectedPartitionHNFMat",
                   IsIntegralRcwaGroup );
 
 #############################################################################

@@ -786,7 +786,7 @@ gap> CoefficientsOnTrajectory(a,8,10,"length",true);
   [ 243, -24, 64 ], [ 729, -72, 128 ], [ 2187, -88, 512 ], 
   [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
 gap> G := Group(g,h);;
-gap> P := RespectedClassPartition(G);
+gap> P := RespectedPartition(G);
 [ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12),
   2(24), 8(24), 14(24), 20(24) ]
 gap> phi := IsomorphismMatrixGroup(G);;
@@ -796,7 +796,7 @@ gap> M := Image(phi);
 <matrix group with 2 generators>
 gap> M = NiceObject(G);
 true
-gap> H := ActionOnClassPartition(G);
+gap> H := ActionOnRespectedPartition(G);
 Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
     14,9) ])
 gap> Size(H);
@@ -806,11 +806,11 @@ gap> Size(D);
 161280
 gap> IsPerfect(D);
 true
-gap> RankOfKernelOfActionOnClassPartition(G);
+gap> RankOfKernelOfActionOnRespectedPartition(G);
 6
-gap> K := KernelOfActionOnClassPartition(G);
+gap> K := KernelOfActionOnRespectedPartition(G);
 <rcwa group over Z with 6 generators>
-gap> RankMat(KernelOfActionOnClassPartitionHNFMat(G));
+gap> RankMat(KernelOfActionOnRespectedPartitionHNFMat(G));
 6
 gap> IsAbelian(K);
 true
