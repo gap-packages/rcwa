@@ -27,7 +27,7 @@ RCWABuildManual := function ( )
   local  Manual, RcwaDir;
 
   RcwaDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/" );
-  StefansManualLayout( "rcwa" );
+  StefansManualLayout( "RCWA" );
   MyMakeGAPDocDoc( Concatenation( RcwaDir, "doc/" ), "rcwa.xml",
                    [ "../gap/rcwaaux.g",
                      "../gap/rcwamap.gd", "../gap/rcwamap.gi",
