@@ -24,11 +24,18 @@
   <Version>
     ( Version <#Include SYSTEM "../version"> )
   </Version>
-  <Author> Stefan Kohl
+  <Author>
+    Stefan Kohl
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
     <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
+    <Address>
+       Institut für Geometrie und Topologie <Br/>
+       Universität Stuttgart <Br/>
+       70550 Stuttgart <Br/>
+       Germany
+    </Address>
   </Author>
-  <Date>August 8, 2002</Date>
+  <Date>January 10, 2003</Date>
   <Copyright> &copyright; 2002 by Stefan Kohl <P/>
               After an official release, we adopt the copyright regulations of &GAP;
               as detailed in the copyright notice in the &GAP; manual.
