@@ -1175,8 +1175,8 @@ InstallMethod( LaTeXObj,
 
   function ( f )
 
-    local  c, m, mred, german, str, affs, maxafflng, t, poses, pos, res,
-           indent, append, i, j;
+    local  c, m, mred, german, str, affs, maxafflng, t, poses, pos,
+           res, src, cls, cl, indent, append, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
@@ -1202,17 +1202,18 @@ InstallMethod( LaTeXObj,
     for pos in poses do
       append( indent, "  ", affs[ pos[1] + 1 ],
               String( "", maxafflng - Length( affs[pos[1]+1] ) ) );
-      if german then append(" & \\falls n \\equiv ");
-                else append(" & \\text{if} \\ n \\equiv "); fi;
+      if german then append(" & \\falls n \\in ");
+                else append(" & \\text{if} \\ n \\in "); fi;
       mred := Minimum( Filtered( DivisorsInt(m),
                                  d -> ForAll(Collected(List(pos,j->j mod d)),
                                              t -> t[2] = m/d) ) );
       res := Set( List( pos, j -> j mod mred ) );
-      for i in res do
-        append(i);
-        if i <> res[Length(res)] then append(", "); fi;
+      src := ResidueClassUnion(Integers,mred,res);
+      cls := AsUnionOfFewClasses(src);
+      for cl in cls do
+        append(Residues(cl)[1],"(",Modulus(cl),")");
+        if cl <> cls[Length(cls)] then append(" \\cup "); fi;
       od;
-      append(" \\ (",mred,")");
       if   pos = poses[ Length(poses) ]
       then append(".\n");
       else append(", \\\\\n"); fi;
