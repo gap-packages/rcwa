@@ -26,7 +26,7 @@ Persons          := [
                            PostalAddress := "Stefan Kohl\nMathematisches Institut B, 2. Lehrstuhl\nPfaffenwaldring 57\nUniversität Stuttgart\n70550 Stuttgart\nGermany",
                            Place         := "Stuttgart / Germany",
                            Institution   := "University of Stuttgart"
-                          )
+                         )
                     ],
 Status           := "under development",
 CommunicatedBy   := "",
