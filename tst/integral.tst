@@ -56,9 +56,9 @@ gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,1,"stop"));
 gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3)
 gap> Image(T,A);
-Union of the residue classes 1(9), 4(9), 7(9) and 8(9)
+Union of the residue classes 1(3) and 8(9)
 gap> PreImage(T,A);
-Union of the residue classes 1(6), 3(6), 4(6) and 5(6)
+Union of the residue classes 1(2) and 4(6)
 gap> B := ResidueClass(Integers,3,1);;
 gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
 The residue class 1(3), +3/-3 elements
@@ -233,14 +233,14 @@ The residue class 1(3)
 gap> pre := PreImage(a,cl);
 The residue class 1(4)
 gap> PreImage(a,last);
-Union of the residue classes 1(16), 6(16), 7(16) and 14(16)
+Union of the residue classes 6(8), 1(16) and 7(16)
 gap> Image(a,pre);
 The residue class 1(3)
 gap> cl := ResidueClass(Integers,2,0);;
 gap> Image(a,cl);
 The residue class 0(3)
 gap> PreImage(a,cl);
-Union of the residue classes 0(8), 3(8), 4(8) and 5(8)
+Union of the residue classes 0(4), 3(8) and 5(8)
 gap> Image(a,PreImage(a,cl)) = cl;
 true
 gap> PreImage(a,Image(a,cl)) = cl;
@@ -336,7 +336,7 @@ Trivial integral rcwa group
 gap> orb := Orbit(G,1);
 [ 1, -3, -4, -12, -1, -5, -6, -2, -15, -7 ]
 gap> MovedPoints(G);
-<union of 8 residue classes (mod 9)>
+Union of the residue classes 1(3), 2(3), 3(9) and 6(9)
 gap> OrbitsModulo(G,9);
 [ [ 0 ], [ 1, 2, 3, 4, 5, 6, 7, 8 ] ]
 gap> H := Action(G,orb);;
@@ -474,7 +474,7 @@ gap> Difference(Integers,Image(nb));
 Union of the residue classes 2(12) and 6(12)
 gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
 gap> im := Image(pc);
-<union of 8 residue classes (mod 12), +1/-0 elements>
+Union of the residue classes 1(3), 3(6), 0(12) and 8(12), +1/-0 elements
 gap> Display(im);
  
 The union of the residue classes r ( mod 12 )  for r =
@@ -999,6 +999,7 @@ gap> STOP_TEST( "integral.tst", 3100000000 );
 #############################################################################
 ##
 #E  integral.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
