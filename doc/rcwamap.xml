@@ -359,7 +359,40 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
   </Description>
 </ManSection>
 
-A factorization of a tame bijective rcwa mapping <A>g</A> of the integers
+<ManSection>
+  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
+  <Returns>
+    The <E>prime switch</E> <M>\sigma_p := \tau_{0(8),1(2p)} \cdot
+    \tau_{4(8),-1(2p)} \cdot \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)}
+    \cdot \tau_{2(2p),1(4p)} \cdot \tau_{4(2p),2p+1(4p)}</M>.
+  </Returns>
+  <Description>
+    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
+    is a bijective rcwa mapping of <M>\Z</M> with multiplier <M>p</M>
+    and divisor&nbsp;2. The prime switches <M>\sigma_p</M> play an important
+    role in factoring non-balanced rcwa mappings into class shifts, class
+    reflections and class transpositions.
+<Example>
+<![CDATA[
+gap> Display(PrimeSwitch(3));
+
+Wild bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |           n^PrimeSwitch(3)
+---------------------------------------+--------------------------------------
+   0                                   | n/2
+   1  7                                | n + 1
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   4                                   | n - 3
+   5  8 11                             | n - 1
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+A factorization of a bijective rcwa mapping <A>g</A> of the integers
 into class shifts, class reflections and class transpositions can be
 obtained by <C>FactorizationIntoGenerators(<A>g</A>)</C>. <P/>
 
