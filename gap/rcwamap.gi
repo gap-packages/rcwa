@@ -1395,13 +1395,13 @@ InstallMethod( IsClassWiseOrderPreserving,
 
 #############################################################################
 ##
-#M  Trace( <f> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
+#M  Determinant( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
-InstallMethod( Trace,
-               "for rcwa mappings (RCWA)",
-               true, [ IsRcwaMapping ], 0,
-               f -> Sum( List( Coefficients( f ),
-                               c -> c[ 2 ] / c[ 1 ] ) ) / Modulus( f ) );
+InstallOtherMethod( Determinant,
+                    "for rcwa mappings (RCWA)",
+                    true, [ IsRcwaMapping ], 0,
+                    f -> Sum( List( Coefficients( f ),
+                                    c -> c[2] / c[1] ) ) / Modulus( f ) );
 
 #############################################################################
 ##
@@ -2281,10 +2281,10 @@ InstallOtherMethod( IsUnit,
 ##
 #M  Order( <f> ) . . . . . . . . . . . . . . . . .  for integral rcwa mapping
 ##
-##  The trace criterion.
+##  The determinant criterion.
 ##
 InstallMethod( Order,
-               "for integral rcwa mappings, trace criterion. (RCWA)",
+               "for integral rcwa mappings, determinant criterion. (RCWA)",
                true, [ IsIntegralRcwaMapping ], 100,
 
   function ( f )
@@ -2292,7 +2292,7 @@ InstallMethod( Order,
     local  R, mult, div;
 
     if   not IsBijective(f) or not IsClassWiseOrderPreserving(f)
-      or Trace(f) = 0
+      or Determinant(f) = 0
     then TryNextMethod(); else return infinity; fi;
   end );
 
