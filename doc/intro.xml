@@ -2,7 +2,7 @@
 <!-- ##                                                                             ## -->
 <!-- ##  intro.xml                 RCWA documentation                  Stefan Kohl  ## -->
 <!-- ##                                                                             ## -->
-<!-- ##  $Id$                                                                    ## -->
+<!-- ##  $Id$                      ## -->
 <!-- ##                                                                             ## -->
 <!-- ################################################################################# -->
 
@@ -17,7 +17,6 @@
 
   <Index Key="rcwa mapping">rcwa mapping</Index>
   <Index Key="rcwa mapping" Subkey="definition"></Index> 
-  <Index Key="residue class-wise affine" Subkey="definition"></Index>
   Let <M>R</M> be a commutative principal ideal domain without zero-divisors,
   such that for all non-zero ideals <M>I</M> of <M>R</M>,
   the quotient <M>|R/I|</M> is finite. <P/>
@@ -25,7 +24,7 @@
   We call a mapping <M>f</M> from <M>R</M> to itself
   <E>residue class-wise affine</E>
   if there is a non-zero ideal <M>I_f</M> of <M>R</M> such that <M>f</M>
-  is given on each residue class <M>r + I_f \in R/I_f</M> by
+  is given on each residue class <M>r + I_f \in R/I_f</M> by <P/>
   <Alt Not="LaTeX"> n  -->  ( a_r * n + b_r ) / c_r </Alt>
   <Alt Only="LaTeX">
     <Display>
@@ -77,7 +76,8 @@
   order-preserving. <P/>
 
   <Index Key="rcwa mapping" Subkey="graph"></Index>
-  We define the <E>graph</E> <M>\Gamma_f</M> associated to an
+  We define the <E>graph</E> <Alt Only="LaTeX"><M>\Gamma_f</M></Alt>
+  <Alt Not="LaTeX"><M>G_f</M></Alt> associated to an
   rcwa mapping <M>f</M> with  modulus <M>m</M> as follows:
 
   <Enum>
@@ -110,12 +110,12 @@
   or <M>c_r</M> (in the notation used above). <P/>
  
   We set
-  RCWA(<M>R</M>) <M>\ := \ \{ \ g \in</M> Sym(<M>R</M>) <M>\ | \ g</M>
-  is residue class-wise affine <M>\}</M>. <P/>
+  RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>) <M>\ | \ g</M>
+  is residue class-wise affine <M>\}</M> }. <P/>
 
   The set RCWA(<M>R</M>) is closed under multiplication and taking
   inverses (this can be verified easily), hence forms a subgroup of
-  Sym}(<M>R</M>).
+  Sym(<M>R</M>).
   Since <M>R</M> contains no zero-divisors and the quotients <M>R/I</M> are
   all finite, this subgroup is proper. <P/>
 

@@ -21,7 +21,7 @@
       This function builds the manual of the RCWA package in the file formats
       &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
 
-      This is done using the &GAPDoc; package by Frank L¸beck and Max Neunhîffer.
+      This is done using the &GAPDoc; package by Frank LÅbeck and Max Neunh˜ffer.
     </Description>
   </ManSection>
 
@@ -33,7 +33,7 @@
 <Heading>The testing routine</Heading>
 
   <ManSection>
-    <Func Name="RCWATest" Arg="[ test1 [, test2 [, ... ]]]"/>
+    <Func Name="RCWATest" Arg="[ test1 [, test2 [, ... ] ] ]"/>
     <Returns>Nothing.</Returns>
     <Description>
       Performs tests of the <Package>RCWA</Package> package. <P/>
@@ -45,7 +45,7 @@
       <List>
         <Mark><C>"z&uscore;pi"</C></Mark>
         <Item>
-          Arithmetic in the rings <Math>\Z_\pi</Math>.
+          Arithmetic in the rings <M>\Z_\pi</M>.
         </Item>
         <Mark><C>"integral"</C></Mark>
         <Item>

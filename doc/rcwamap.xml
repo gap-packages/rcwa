@@ -69,10 +69,9 @@ rcwa mappings. <P/>
   </ManSection>
 
   <ManSection>
-    <Func Name="ModularRcwaMappingsFamily" Arg="R"/>
+    <Func Name="ModularRcwaMappingsFamily" Arg="q"/>
     <Description>
-      The family of rcwa mappings over the ring <A>R</A>, which has to be a
-      polynomial ring in one variable over a finite field.
+      The family of rcwa mappings over the ring GF( <A>q</A> )[ <M>x</M> ].
     </Description>
   </ManSection>
 
@@ -109,8 +108,8 @@ rcwa mappings. <P/>
         <Mark>(c)</Mark>
         <Item>
           with modulus <A>modulus</A> and with values prescribed by the list
-          <A>val</A>, which consists of 2 \* <A>modulus</A> pairs giving preimage
-          and image for 2 points per residue class (mod <A>modulus</A>).
+          <A>val</A>, which consists of 2<M>\cdot</M><A>modulus</A> pairs giving
+          preimage and image for 2 points per residue class (mod <A>modulus</A>).
         </Item>
       </List>
       In case (a), <A>coeffs</A> is a list of <A>m</A> lists of 3 integers each
@@ -135,7 +134,7 @@ gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 gap> T := RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]); # The same, by mod. and values.
 <integral rcwa mapping with modulus 2>
 gap> t := RcwaMapping(1,[[-1,1],[1,-1]]); # The involution n -> -n.
-<integral rcwa mapping with modulus 1>
+Integral rcwa mapping: n -> -n
 ]]>
 </Example>
 
@@ -152,9 +151,9 @@ gap> t := RcwaMapping(1,[[-1,1],[1,-1]]); # The involution n -> -n.
 <Example>
 <![CDATA[
 gap> d := RcwaMapping([2],[[1/3,0,1]]);
-<2 - local integral rcwa mapping: n -> 1/3 n>
+Rcwa mapping of Z_[ 2 ]: n -> 1/3 n
 gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
-<2, 3 - semilocal integral rcwa mapping with modulus 2>
+<rcwa mapping of Z_[ 2, 3 ] with modulus 2>
 ]]>
 </Example>
 
@@ -162,7 +161,7 @@ gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
     <Func Name="ModularRcwaMapping" Arg="q, modulus, coeffs"/>
     <Func Name="RcwaMapping" Arg="q, modulus, coeffs"/>
     <Description>
-      Construction of the rcwa mapping of GF(<A>q</A>)[<A>x</A>] with modulus
+      Construction of the rcwa mapping of GF( <A>q</A> )[ <A>x</A> ] with modulus
       <A>modulus</A> and coefficients <A>coeffs</A>.
     </Description>
   </ManSection>
@@ -177,7 +176,7 @@ gap> r := ModularRcwaMapping( 2, x^2 + e,
 >                               [ x^2 + x + e, x      , x^2 + e ],
 >                               [ x^2 + x + e, x^2    , x^2 + e ],
 >                               [ x^2 + x + e, x^2 + x, x^2 + e ] ] );
-<rcwa mapping of GF(2)[x], with modulus Z(2)^0+x^2>
+<rcwa mapping of GF(2)[x] with modulus Z(2)^0+x^2>
 ]]>
 </Example>
 
@@ -188,15 +187,15 @@ gap> r := ModularRcwaMapping( 2, x^2 + e,
     <Func Name="AllGFqPolynomialsModDegree" Arg="q, d, x"/>
     <Description>
       Returns a sorted list of all residues modulo a polynomial of degree <A>d</A>
-      over GF(<A>q</A>) in the variable <A>x</A>.
+      over GF( <A>q</A> ) in the variable <A>x</A>.
       This gives also the ordering in which the coefficients of a modular rcwa
       mapping are stored; thus, if <A>f</A> is a modular rcwa mapping over
-      GF(<A>q</A>)[<A>x</A>] with coefficients list <A>c</A>, whose modulus
+      GF( <A>q</A> )[ <A>x</A> ] with coefficients list <A>c</A>, whose modulus
       <A>m</A> has degree <A>d</A>, then <A>f</A> maps a polynomial <A>P</A>
       with <A>P</A> mod <A>m</A> = <A>r</A> to <P/>
       <C>
       ( c[ Position( res, r ) ][ 1 ] * P + c[ Position( res, r ) ][ 2 ] ) /
-        c[ Position( res, r ) ][ 3 ]]]>
+        c[ Position( res, r ) ][ 3 ]
       </C> <P/>
       where <A>res</A> denotes the list of residues returned by this function.
     </Description>
@@ -436,7 +435,7 @@ Integral rcwa mapping with modulus 5
 gap> SetName(r,"r");
 gap> Display(r);
  
-Rcwa mapping of GF(2)[x], with modulus Z(2)^0+x^2
+Rcwa mapping of GF(2)[x] with modulus Z(2)^0+x^2
  
       P mod Z(2)+x^2      |                        P^r
 --------------------------+---------------------------------------------------
@@ -457,7 +456,7 @@ Rcwa mapping of GF(2)[x], with modulus Z(2)^0+x^2
   <Index Key="rcwa mapping" Subkey="evaluation"></Index>
   <ManSection>
     <Meth Name="ImageElm" Arg="f, n"/>
-    <Meth Name="POW" Arg="f, n"/>
+    <Meth Name="\^" Arg="f, n"/>
     <Description>
       Computes the image of the integer <A>n</A> under the rcwa mapping <A>f</A>.
     </Description>
@@ -552,9 +551,9 @@ true
 gap> IsBijective(u);
 true
 gap> a_2 := RcwaMapping([2],[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
-<2 - local integral rcwa mapping with modulus 4>
+<rcwa mapping of Z_[ 2 ] with modulus 4>
 gap> a_23 := RcwaMapping([2,3],[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
-<2, 3 - semilocal integral rcwa mapping with modulus 4>
+<rcwa mapping of Z_[ 2, 3 ] with modulus 4>
 gap> IsInjective(a_2);
 false
 gap> IsSurjective(a_2);
@@ -608,10 +607,10 @@ Integral rcwa mapping with modulus 4
   1                                    | -3
 
 gap> d+d+d;
-<identity 2 - local integral rcwa mapping>
+IdentityMapping( Z_[ 2 ] )
 gap> e := One(r);;
 gap> e+e;
-<zero rcwa mapping of GF(2)[x]>
+ZeroMapping( GF(2)[x], GF(2)[x] )
 gap> p^(r+e) = p^r + p;
 true
 ]]>
@@ -645,14 +644,14 @@ Integral rcwa mapping with modulus 16
   15                                   | (9n - 7)/16
 
 gap> s := RcwaMapping(2,x,[[One(R),Zero(R),One(R)],[x,Zero(R),One(R)]]);
-<rcwa mapping of GF(2)[x], with modulus x>
+<rcwa mapping of GF(2)[x] with modulus x>
 gap> s^2=s;
 true   # a non-trivial idempotent
 gap> IsInjective(s) or IsSurjective(s);
 false  # certainly not a group element ...
 gap> Display(s*r-r*s);
  
-Rcwa mapping of GF(2)[x], with modulus x+x^3
+Rcwa mapping of GF(2)[x] with modulus x+x^3
  
        P mod x+x^3        |                        P^f
 --------------------------+---------------------------------------------------
@@ -698,7 +697,7 @@ Bijective integral rcwa mapping with modulus 9
 
 gap> Display(Inverse(r));
  
-Bijective rcwa mapping of GF(2)[x], with modulus Z(2)^0+x+x^2
+Bijective rcwa mapping of GF(2)[x] with modulus Z(2)^0+x+x^2
  
      P mod Z(2)+x+x^2     |                        P^f
 --------------------------+---------------------------------------------------
@@ -711,7 +710,7 @@ Bijective rcwa mapping of GF(2)[x], with modulus Z(2)^0+x+x^2
 
   <Index Key="rcwa mapping" Subkey="conjugate"></Index>
   <ManSection>
-    <Meth Name="POW" Arg="f, g"/>
+    <Meth Name="\^" Arg="f, g"/>
     <Description>
       Computes the conjugate <M>f^g = g^{-1}fg</M> of <A>f</A> under <A>g</A>.
     </Description>
@@ -720,10 +719,10 @@ Bijective rcwa mapping of GF(2)[x], with modulus Z(2)^0+x+x^2
 <Example>
 <![CDATA[
 gap> T^u;
-<integral rcwa mapping with modulus 18>
+<surjective integral rcwa mapping with modulus 18>
 gap> Display(s^r);
  
-Rcwa mapping of GF(2)[x], with modulus x+x^2+x^3
+Rcwa mapping of GF(2)[x] with modulus x+x^2+x^3
  
      P mod x+x^2+x^3      |                        P^f
 --------------------------+---------------------------------------------------
@@ -748,9 +747,9 @@ Rcwa mapping of GF(2)[x], with modulus x+x^2+x^3
 <Example>
 <![CDATA[
 gap> Zero(a);
-<zero integral rcwa mapping>
+ZeroMapping( Integers, Integers )
 gap> Zero(r);
-<zero rcwa mapping of GF(2)[x]>
+ZeroMapping( GF(2)[x], GF(2)[x] )
 ]]>
 </Example>
 
@@ -767,9 +766,9 @@ gap> Zero(r);
 <Example>
 <![CDATA[
 gap> One(a);
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> One(d);
-<identity 2 - local integral rcwa mapping>
+IdentityMapping( Z_[ 2 ] )
 ]]>
 </Example>
 
@@ -781,10 +780,10 @@ gap> One(d);
   </Index>
   Caution: The set of rcwa mappings over a ring does not form a ring under
   addition and multiplication -- it holds only the left distibutive law
-  (<M>a*(b+c) = a*b + a*c</M>, but not necessary <M>(a+b)*c = a*c + b*c</M>),
-  and the zero mapping multiplicatively is only a right zero element 
-  (<M>a*0 = 0</M> for all <M>a</M>, but <M>0*a = 0</M> if and only if
-  <M>0^a = 0</M>).
+  ( <M>a \cdot (b + c) = a \cdot b + a \cdot c</M>, but not
+  necessary <M>(a + b) \cdot c = a \cdot c + b \cdot c</M> ), and the zero mapping
+  multiplicatively is only a right zero element ( <M>a \cdot 0 = 0</M> for
+  all <M>a</M>, but <M>0 \cdot a = 0</M> if and only if <M>0^a = 0</M> ).
 
 </Section>
 
@@ -946,7 +945,8 @@ gap> PrimeSet(r);
 gap> ShortCycles(a,2);
 [ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ] ]
 gap> ShortCycles(a,5);
-[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], [ -9, -7, -5, -4, -6 ] ]
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ],
+  [ -9, -7, -5, -4, -6 ] ]
 gap> ShortCycles(u,2);
 [ [ 0 ], [ -1 ], [ 1, 2 ], [ 3, 5 ], [ -10, -6 ] ]
 gap> ShortCycles(Comm(a,b),10);
@@ -1012,7 +1012,7 @@ gap> Order(w_std);
 gap> ShortCycles(w_std,8);
 [ [ 0, 1, 2, 3 ] ]
 gap> ab := Comm(a,b);
-<integral rcwa mapping with modulus 18>
+<bijective integral rcwa mapping with modulus 18>
 gap> ab_std := StandardConjugate(ab);
 <integral rcwa mapping with modulus 7>
 gap> Display(ab_std);
@@ -1076,7 +1076,7 @@ Integral rcwa mapping with modulus 18
 gap> ab^ab_tostd = ab_std;
 true
 gap> f_tostd := StandardizingConjugator(f);
-<bijective integral rcwa mapping with modulus 16>
+<integral rcwa mapping with modulus 16>
 gap> Display(f_tostd);
 
 Integral rcwa mapping with modulus 16
@@ -1117,6 +1117,8 @@ false
 gap> IsConjugate(RCWA(Integers),ab,ab_std);
 true
 </Example>
+
+  <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
 

@@ -89,7 +89,7 @@ infinity
 gap> IsFinitelyGeneratedGroup(RCWA_Z);
 false
 gap> One(RCWA_Z);
-<identity integral rcwa mapping>
+IdentityMapping( Integers )
 gap> IsSubgroup(RCWA_Z, Group(RcwaMapping([[-1,0,1]]),
 >                             RcwaMapping((1,2,3),[1..4]),
 >                             RcwaMapping(2,[[0,1],[1,0],[2,3],[3,2]])));
@@ -240,7 +240,7 @@ Bijective integral rcwa mapping with modulus 4
   </ManSection>
 
 <Example>
-gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);; 
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> u in H;
 false
 </Example>
@@ -367,7 +367,7 @@ gap> PrimeSet(H);
   </ManSection>
 
 <Example>
-gap> IsFlat(AlternatingGroup(IsRcwaGroup,5));
+gap> IsFlat(AlternatingGroup(IsIntegralRcwaGroup,5));
 true
 gap> IsFlat(Group(a,b));
 false
@@ -515,6 +515,8 @@ gap> Size(G);
 48
 ]]>
 </Example>
+
+  <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
 

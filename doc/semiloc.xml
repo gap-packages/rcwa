@@ -116,6 +116,34 @@ gap> StandardAssociate(U,36/13);
   </ManSection>
 
   <ManSection>
+    <Meth Name="GcdOp" Arg="R, x, y"/>
+    <Description>
+      Returns the greatest common divisor of <A>x</A> and <A>y</A>
+      in the semilocalization <A>R</A> of the integers.
+<Example>
+gap> GcdOp(S,-10/3,8/13);
+2
+gap> Gcd(S,90/3,60/17,120/33);
+10
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="LcmOp" Arg="R, x, y"/>
+    <Description>
+      Returns the least common multiple of <A>x</A> and <A>y</A>
+      in the semilocalization <A>R</A> of the integers.
+<Example>
+gap> LcmOp(S,-10/3,8/13);
+40
+gap> Lcm(S,90/3,60/17,120/33);
+40
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="Factors" Arg="R, x"/>
     <Description>
       Computes a prime factorization of <A>x</A> in the semilocalization
@@ -160,6 +188,8 @@ fail
 </Example>
     </Description>
   </ManSection>
+
+  <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
 
