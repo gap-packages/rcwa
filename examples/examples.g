@@ -15,32 +15,37 @@ md := f -> [Multiplier(f),Divisor(f)];
 
 #############################################################################
 ##
-##  `A wild rcwa mapping all of those cycles seem to be finite'
+##  `Three involutions whose product has coprime multiplier and divisor'
 ##
-sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);
-sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
-                       [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
-                       [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
-sigma  := sigma1 * sigma2;
-sigma0 := FactorizationOnConnectedComponents(sigma,36)[3];
-sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
-                        [1, 0,1], [1, 1,3], [3, 6,2], [1, 0,1],
-                        [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1],
-                        [2, 0,1], [1, 0,1], [1, 1,1], [3,-3,2],
-                        [1, 0,1], [1, 1,1], [3, 6,2], [1, 0,1],
-                        [1, 0,1], [2, 0,1], [1, 0,1], [1, 0,1],
-                        [1,-9,3], [1, 0,1], [1, 1,1], [3,-3,2],
-                        [1, 0,1], [2, 2,1], [3, 6,2], [1, 0,1],
-                        [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1]]);
-sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
-                        [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]);
-sigmas := sigma1 * sigmas2;
-comm := Comm(sigmas,sigma1); SetName(comm,"comm");
+f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]); SetName(f1,"f1");
+f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]); SetName(f2,"f2");
+f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]); SetName(f3,"f3");
 
-SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
-SetName(sigma,"sigma");
-SetName(sigma0,"sigma0"); SetName(sigma_r,"sigma_r");
-SetName(sigmas,"sigmas"); SetName(sigmas2,"sigmas2");
+f12 := f1*f2; SetName(f12,"f12");
+f23 := f2*f3; SetName(f23,"f23"); # Only finite cycles (?)
+f13 := f1*f3; SetName(f13,"f13"); #  "     "      "    (?)
+
+f := f1*f2*f3; SetName(f,"f");
+
+# Two tame mappings (of orders 3 and 2, respectively), whose product is not
+# balanced.
+
+g1 := RcwaMapping([[6,2,1],[1,-1,1],[1,4,6],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1]]);
+
+g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
+
+SetName(g1,"g1"); SetName(g2,"g2");
+
+# Two mappings with non-balanced commutator.
+
+c1 := Restriction(RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]),
+                  RcwaMapping([[2,0,1]]));
+c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);
+SetName(c1,"c1"); SetName(c2,"c2");
 
 #############################################################################
 ##
@@ -123,37 +128,37 @@ SetName(f5_12,"f5_12");
 
 #############################################################################
 ##
-##  `Three involutions whose product has coprime multiplier and divisor'
+##  `A wild rcwa mapping which has only finite cycles'
 ##
-f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]); SetName(f1,"f1");
-f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]); SetName(f2,"f2");
-f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]); SetName(f3,"f3");
+kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                      [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                      [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);
+SetName(kappa,"kappa");
 
-f12 := f1*f2; SetName(f12,"f12");
-f23 := f2*f3; SetName(f23,"f23"); # Only finite cycles (?)
-f13 := f1*f3; SetName(f13,"f13"); #  "     "      "    (?)
+# A few other related examples.
 
-f := f1*f2*f3; SetName(f,"f");
+sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);
+sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
+                       [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+                       [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
+sigma  := sigma1 * sigma2;
+sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
+                        [1, 0,1], [1, 1,3], [3, 6,2], [1, 0,1],
+                        [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1],
+                        [2, 0,1], [1, 0,1], [1, 1,1], [3,-3,2],
+                        [1, 0,1], [1, 1,1], [3, 6,2], [1, 0,1],
+                        [1, 0,1], [2, 0,1], [1, 0,1], [1, 0,1],
+                        [1,-9,3], [1, 0,1], [1, 1,1], [3,-3,2],
+                        [1, 0,1], [2, 2,1], [3, 6,2], [1, 0,1],
+                        [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1]]);
+sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
+                        [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]);
+sigmas := sigma1 * sigmas2;
+comm := Comm(sigmas,sigma1); SetName(comm,"comm");
 
-# Two tame mappings (of orders 3 and 2, respectively), whose product is not
-# balanced.
-
-g1 := RcwaMapping([[6,2,1],[1,-1,1],[1,4,6],[6,2,1],[1,-1,1],[1,0,1],
-                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1],
-                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1]]);
-
-g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
-                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
-                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
-
-SetName(g1,"g1"); SetName(g2,"g2");
-
-# Two mappings with non-balanced commutator.
-
-c1 := Restriction(RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]),
-                  RcwaMapping([[2,0,1]]));
-c2 := RcwaMapping([[1,0,2,],[2,1,1],[1,-1,1],[2,1,1]]);
-SetName(c1,"c1"); SetName(c2,"c2");
+SetName(sigma1,"sigma1"); SetName(sigma2,"sigma2");
+SetName(sigma,"sigma");   SetName(sigma_r,"sigma_r");
+SetName(sigmas,"sigmas"); SetName(sigmas2,"sigmas2");
 
 #############################################################################
 ##
