@@ -609,6 +609,14 @@ InstallMethod( IsFlat,
 
 #############################################################################
 ##
+#M  IsIntegral( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa group
+##
+InstallOtherMethod( IsIntegral,
+                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0, 
+                    G -> ForAll( GeneratorsOfGroup( G ), IsIntegral ) );
+
+#############################################################################
+##
 #M  IsClassWiseOrderPreserving( <G> ) . . . . . for rational-based rcwa group
 ##
 ##  We say that a rational-based rcwa group is *class-wise order-preserving*
@@ -1389,5 +1397,6 @@ InstallOtherMethod( Restriction,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 

@@ -257,6 +257,16 @@ DeclareProperty( "IsFlat", IsRcwaMapping );
 
 #############################################################################
 ##
+#P  IsIntegral( <f> ) . . . . . . .  indicates whether or not <f> is integral
+##
+##  We say that an rcwa mapping is *integral* if and only if its divisor is
+##  equal to 1. This should not be confused with the term ``integral rcwa
+##  mapping'' for an rcwa mapping of the integers.
+##
+DeclareProperty( "IsIntegral", IsRcwaMapping );
+
+#############################################################################
+##
 #P  IsBalanced( <f> ) . .  indicates whether or not <f> is a balanced mapping
 ##
 ##  We say that an rcwa mapping is *balanced* if and only if its multiplier
@@ -500,11 +510,28 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 
 #############################################################################
 ##
+#A  ImageDensity( <f> ) . . . . . . . . . . . . . . . .  image density of <f>
+##
+##  The image density of the rcwa mapping <f>.
+##  The image density of an rcwa mapping measures how ``dense'' its image is
+##  -- an image density > 1 implies that there have to be ``overlaps'', i.e.
+##  that the mapping cannot be injective, a surjective mapping always
+##  has image density \ge 1, and the image density of a bijective mapping
+##  is equal to 1.
+##
+DeclareAttribute( "ImageDensity", IsRcwaMapping );
+
+#############################################################################
+##
+#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
+##
+##  Computes some mapping <h>^<r> such that there is a partition which is
+##  respected by both <g> and <h>^<r>, hence such that the group generated
+##  by <g> and <h>^<r> is tame. Methods may return any such mapping.
+##
+DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
-
-
 

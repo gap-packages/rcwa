@@ -1434,6 +1434,14 @@ InstallMethod( IsFlat,
 
 #############################################################################
 ##
+#M  IsIntegral( <f> ) . . . . . . . . . . . . . . . .. . . . for rcwa mapping
+##
+InstallMethod( IsIntegral,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               f -> IsOne( Divisor( f ) ) );
+
+#############################################################################
+##
 #M  IsBalanced( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( IsBalanced,
@@ -3110,13 +3118,71 @@ InstallMethod( Divergence,
 
 #############################################################################
 ##
+#M  ImageDensity( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( ImageDensity,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+
+    local  R, c, m;
+
+    R := Source(f); c := Coefficients(f);
+    m := Length(AllResidues(R,Modulus(f)));
+    return Sum(List([1..m],r->Length(AllResidues(R,c[r][3]))/
+                              Length(AllResidues(R,c[r][1]))))/m;
+  end );
+
+#############################################################################
+##
+#M  CompatibleConjugate( <g>, <h> ) . . . . . . .  for integral rcwa mappings
+##
+InstallMethod( CompatibleConjugate,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
+
+  function ( g, h )
+
+    local DividedPartition, Pg, Ph, PgNew, PhNew, lg, lh, l, tg, th,
+          remg, remh, cycg, cych, sigma, c, m, i, r;
+
+    DividedPartition := function ( P, g, t )
+
+      local  PNew, rem, cyc, m, r;
+
+      PNew := []; rem := P;
+      while rem <> [] do
+        cyc := Cycle(g,rem[1]);
+        rem := Difference(rem,cyc);
+        m := Modulus(cyc[1]); r := Residues(cyc[1])[1];
+        PNew := Union(PNew,
+                      Flat(List([0..t-1],
+                                k->Cycle(g,ResidueClass(Integers,
+                                                        t*m,k*m+r)))));
+      od;
+      return PNew;
+    end;
+
+    if not ForAll([g,h],f->IsBijective(f) and IsTame(f)) then return fail; fi;
+    Pg := RespectedClassPartition(g); Ph := RespectedClassPartition(h);
+    lg := Length(Pg); lh := Length(Ph);
+    l := Lcm(lg,lh); tg := l/lg; th := l/lh;
+    PgNew := DividedPartition(Pg,g,tg); PhNew := DividedPartition(Ph,h,th);
+    c := []; m := Lcm(List(PhNew,Modulus));
+    for i in [1..l] do
+      for r in Filtered([0..m-1],s->s mod Modulus(PhNew[i])
+                                        = Residues(PhNew[i])[1]) do
+        c[r+1] := [  Modulus(PgNew[i]),
+                     Modulus(PhNew[i])*Residues(PgNew[i])[1]
+                   - Modulus(PgNew[i])*Residues(PhNew[i])[1],
+                     Modulus(PhNew[i]) ];
+      od;
+    od;
+    sigma := RcwaMapping(c);
+    return h^sigma;
+  end );
+
+#############################################################################
+##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
-
-
-
-
 
