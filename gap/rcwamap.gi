@@ -716,6 +716,46 @@ DisplayModularAffineMapping := function ( t, maxlng )
 end;
 MakeReadOnlyGlobal( "DisplayModularAffineMapping" );
 
+LaTeXIntegralAffineMapping := function ( t )
+
+  local  str, a, b, c, append;
+ 
+  append := function ( arg )
+    str := CallFuncList(Concatenation,
+                        Concatenation([str],List(arg,String)));
+  end;
+
+  a := t[1]; b := t[2]; c := t[3]; str := "";
+  if   c = 1
+  then if   a = 0
+       then append(b);
+       else if   AbsInt(a) <> 1 then append(a);
+            elif a = -1         then append("-");
+            fi;
+            append("n");
+            if   b > 0 then append(" + ", b);
+            elif b < 0 then append(" - ",-b);
+            fi;
+       fi;
+  elif b = 0 then append("\\frac{");
+                  if   AbsInt(a) <> 1 then append(a);
+                  elif a = -1         then append("-");
+                  fi;
+                  append("n}{",c,"}");
+  else append("\\frac{");
+       if   AbsInt(a) <> 1 then append(a);
+       elif a = -1         then append("-");
+       fi;
+       append("n");
+       if   b > 0 then append(" + ", b);
+       elif b < 0 then append(" - ",-b);
+       fi;
+       append("}{",c,"}");
+  fi;
+  return str;
+end;
+MakeReadOnlyGlobal( "LaTeXIntegralAffineMapping" );
+
 #############################################################################
 ##
 #M  String( <f> ) . . . . . . . . . . . . . . . . . for integral rcwa mapping
@@ -953,6 +993,52 @@ InstallMethod( Display,
          fi;
     fi;
     if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
+  end );
+
+#############################################################################
+##
+#M  LaTeXObj( <f> ) . . . . . . . . . . . . . . . . for integral rcwa mapping
+##
+InstallMethod( LaTeXObj,
+               "for integral rcwa mappings", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  c, m, mred, str, affs, maxafflng, t, poses, pos, res,
+           append, i, j;
+
+    append := function ( arg )
+      str := CallFuncList(Concatenation,
+                          Concatenation([str],List(arg,String)));
+    end;
+
+    c := Coefficients(f); m := Length(c);
+    str := "n \\ \\mapsto \\\n\\begin{cases}\n";
+    poses := AsSortedList( List( Set(c),
+                                 t -> Filtered( [0..m-1],
+                                                i -> c[i+1] = t ) ) );
+    affs := List( c, LaTeXIntegralAffineMapping );
+    maxafflng := Maximum( List( affs, Length ) );
+    for pos in poses do
+      append( "  ", affs[ pos[1] + 1 ],
+              String( " ", maxafflng - Length( affs[pos[1]+1] ) + 1 ) );
+      append(" & \\text{if} \\ n \\equiv ");
+      mred := Minimum( Filtered( DivisorsInt(m),
+                                 d -> ForAll(Collected(List(pos,j->j mod d)),
+                                             t -> t[2] = m/d) ) );
+      res := Set( List( pos, j -> j mod mred ) );
+      for i in res do
+        append(i);
+        if i <> res[Length(res)] then append(", "); fi;
+      od;
+      append(" \\ (",mred,")");
+      if   pos = poses[ Length(poses) ]
+      then append(".\n");
+      else append(", \\\\\n"); fi;
+    od;
+    append("\\end{cases}\n");
+    return str;
   end );
 
 #############################################################################
