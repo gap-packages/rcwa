@@ -406,7 +406,7 @@ gap> Difference(l,Intersection(F,[-20..20]));
     <Meth Name="\+" Arg="U, x"/>
     <Meth Name="\+" Arg="x, U"/>
     <Returns>
-      the set of sums <M>u + x, u \in U</M>.
+      the set of sums <M>u + x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
 <Example>
@@ -427,8 +427,9 @@ true
     <Meth Name="\-" Arg="x, U"/>
     <Meth Name="\-" Arg="U"/>
     <Returns>
-      the set of differences <M>u - x, u \in U</M> resp. the set of differences
-      <M>x - u, u \in U</M> resp. the set of the additive inverses of the elements of U.
+      the set of differences <M>u - x</M>, <M>u \in U</M> resp. the set of differences
+      <M>x - u</M>, <M>u \in U</M> resp. the set of the additive inverses of the
+      elements of <M>U</M>.
     </Returns>
     <Description>
 <Example>
@@ -446,7 +447,7 @@ The residue class Z(7)^4 ( mod x+Z(7)^0 ) of GF(7)[x]
     <Meth Name="\*" Arg="U, x"/>
     <Meth Name="\*" Arg="x, U"/>
     <Returns>
-      the set of products <M>x \cdot u, u \in U</M>.
+      the set of products <M>x \cdot u</M>, <M>u \in U</M>.
     </Returns>
     <Description>
 <Example>
@@ -465,7 +466,7 @@ The residue class 0(2), +0/-3 elements
   <ManSection>
     <Meth Name="\/" Arg="U, x"/>
     <Returns>
-      the set of quotients <M>u/x, u \in U</M>.
+      the set of quotients <M>u/x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
       If the result is not a subset of the underlying ring, the method gives up.
