@@ -68,10 +68,10 @@ Revision.rcwamap_gi :=
 
 #############################################################################
 ##
-#F  RCWAInfo . . . . . . . . . . . . . . . . . . set info level of `RcwaInfo'
+#F  RCWAInfo . . . . . . . . . . . . . . . . . . set info level of `InfoRCWA'
 ##
 InstallGlobalFunction( RCWAInfo,
-                       function ( n ) SetInfoLevel( RcwaInfo, n ); end );
+                       function ( n ) SetInfoLevel( InfoRCWA, n ); end );
 
 #############################################################################
 ##
@@ -1933,7 +1933,7 @@ InstallMethod( Order,
       if m2 > m1 or IsOne(g) then TryNextMethod(); fi;
       if   ForAny([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
                                 and c[n][2] mod m2 = 0)
-      then Info(RcwaInfo,1,"The ",Ordinal(e)," power of ",f," is ",g,
+      then Info(InfoRCWA,1,"The ",Ordinal(e)," power of ",f," is ",g,
                            "; this mapping shifts a residue class ",
                            "(modulo ",m2," (its modulus)) non-identically ",
                            "onto itself, hence its order is infinite.");
@@ -1974,7 +1974,7 @@ InstallMethod( Order,
         m := m^f; CycLng := CycLng + 1;
       until m = n or CycLng > MaxFiniteCycleLength;
       if CycLng > MaxFiniteCycleLength then
-        Info(RcwaInfo,1,"The mapping ",f," has a cycle longer than 2 times ",
+        Info(InfoRCWA,1,"The mapping ",f," has a cycle longer than 2 times ",
                         "the square of its modulus, hence we claim its ",
                         "order is infinite, although the validity of this ",
                         "criterium has not been proved so far.");
@@ -2063,7 +2063,7 @@ InstallMethod( IsTame,
       pow := pow * pow; m := Modulus(pow); exp := exp * 2;
     until exp > maxexp or m > maxmod;
     if m > maxmod then
-      Info(RcwaInfo,1,"The ",Ordinal(exp)," power of ",f," has Modulus ",m,
+      Info(InfoRCWA,1,"The ",Ordinal(exp)," power of ",f," has Modulus ",m,
                       "; this is larger than the square of the modulus of ",
                       "the base, so we claim the mapping is wild, although ",
                       "the validity of this criterium has not yet been ",
@@ -2193,7 +2193,7 @@ InstallMethod( StandardConjugate,
     fi;
     if not IsBijective(f) then TryNextMethod(); fi;
     ord := Order(f); if ord = infinity then TryNextMethod(); fi;
-    Info(RcwaInfo,2,"StandardConjugate for ",f);
+    Info(InfoRCWA,2,"StandardConjugate for ",f);
     c := Coefficients(f);
     d := Divisor(f); mf := Modulus(Group(f)); m := d * mf;
     RcwaCycles := [];
@@ -2228,16 +2228,16 @@ InstallMethod( StandardConjugate,
     NonHalved  := Difference(RcwaCycles,Halved);
     Sort(Halved,IncreasingLength); Sort(NonHalved,IncreasingLength);
     NonHalved := List(NonHalved, cyc -> cyc.pts);
-    Info(RcwaInfo,2,"A set of representatives for the series of ",
+    Info(InfoRCWA,2,"A set of representatives for the series of ",
                     "`halved' cycles is ",Halved,".");
-    Info(RcwaInfo,2,"A set of representatives for the series of ",
+    Info(InfoRCWA,2,"A set of representatives for the series of ",
                     "`non-halved' cycles is ",NonHalved,".");
     HalvedLng      := List(Halved, cyc -> Length(cyc.pts));
     NonHalvedLng   := Set(List(NonHalved,Length));
     NonHalvedByLng := List(NonHalvedLng,
                            l -> Filtered(NonHalved, cyc -> Length(cyc) = l));
     SetCycleType(f,[HalvedLng,NonHalvedLng]);
-    Info(RcwaInfo,2,"The cycle type is ",CycleType(f),".");
+    Info(InfoRCWA,2,"The cycle type is ",CycleType(f),".");
     StdCoeffs := []; rescount := 0;
     for cyc in Halved do
       l := Length(cyc.pts);
@@ -2252,7 +2252,7 @@ InstallMethod( StandardConjugate,
     od;
     Std  := RcwaMapping(StdCoeffs);
     if Std = f then
-      Info(RcwaInfo,2,"The mapping is already in standard form.");
+      Info(InfoRCWA,2,"The mapping is already in standard form.");
       SetStandardizingConjugator(f,IdentityIntegralRcwaMapping);
       return Std;
     fi;
@@ -2286,7 +2286,7 @@ InstallMethod( StandardConjugate,
         fi;
       od;
     od;
-    Info(RcwaInfo,3,"The `non-halved' cycles as they are mapped to ",
+    Info(InfoRCWA,3,"The `non-halved' cycles as they are mapped to ",
                     "cycles of\nthe standard conjugate:\n",
                     NonHalvedByLng,".");
     for cycs in NonHalvedByLng do
@@ -2303,7 +2303,7 @@ InstallMethod( StandardConjugate,
       od;
       rescount := rescount + l;
     od;
-    Info(RcwaInfo,2,"[Preimage, image] - pairs defining a standardizing ",
+    Info(InfoRCWA,2,"[Preimage, image] - pairs defining a standardizing ",
                     "conjugator are ",ToStdVals,".");
     ToStd := RcwaMapping(m,ToStdVals);
     Assert(1,f^ToStd = Std);

@@ -15,7 +15,7 @@
 <Heading>The Info class of the package</Heading>
 
   <ManSection>
-    <InfoClass Name="RcwaInfo"/>
+    <InfoClass Name="InfoRCWA"/>
     <Description>
       This is the Info class of the <Package>RCWA</Package> package
       (see section <E>Info Functions</E> in the &GAP;
@@ -27,8 +27,8 @@
     <Func Name="RCWAInfo" Arg="n"/>
     <Returns> Nothing. </Returns>
     <Description>
-      For convenience: <C>RCWAInfo(</C><A>n</A><C>)</C> is a shorthand for
-      <C>SetInfoLevel(RcwaInfo</C>,<A>n</A><C>)</C>.
+      For convenience: <C>RCWAInfo(</C> <A>n</A> <C>)</C> is a shorthand for
+      <C>SetInfoLevel( InfoRCWA</C>, <A>n</A> <C>)</C>.
 
 <Log>
 <![CDATA[

@@ -12,12 +12,12 @@ Revision.rcwamap_gd :=
 
 #############################################################################
 ##
-#V  RcwaInfo . . . . . . . . . . . . . . . . . .  info class for RCWA package
+#V  InfoRCWA . . . . . . . . . . . . . . . . . .  info class for RCWA package
 ##
 ##  This is the Info class of the RCWA package (see~"ref:Info Functions" 
 ##  in the {\GAP} Reference Manual for a description of the Info mechanism).
 ##
-DeclareInfoClass( "RcwaInfo" );
+DeclareInfoClass( "InfoRCWA" );
 
 #############################################################################
 ##
