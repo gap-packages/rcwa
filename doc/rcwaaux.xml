@@ -44,14 +44,6 @@
 
       Available tests are:
       <List>
-        <Mark><C>"z&uscore;pi"</C></Mark>
-        <Item>
-          Arithmetic in the rings <M>\Z_\pi</M>.
-        </Item>
-        <Mark><C>"resclasses"</C></Mark>
-        <Item>
-          Computations with residue classes.
-        </Item>
         <Mark><C>"integral"</C></Mark>
         <Item>
           Computations with integral rcwa mappings and

@@ -10,7 +10,7 @@
 
   This package for &GAP; 4 (at least version 4.3) provides routines for 
   computations with <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine
-  mappings of <M>\Z</M>, its semilocalizations <M>\Z_\pi</M> and the
+  mappings of <M>\Z</M>, its semilocalizations <M>\Z_{(\pi)}</M> and the
   polynomial rings GF( <M>q</M> )[ <M>x</M> ], hence it can be used for
   computations in certain types of infinite permutation groups.
 

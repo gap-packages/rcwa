@@ -86,8 +86,8 @@ DeclareGlobalVariable( "IntegralRcwaMappingsFamily" );
 ##
 #F  SemilocalIntegralRcwaMappingsFamily( <primes> )
 ##
-##  Family of semilocal integral rcwa mappings with underlying ring $\Z_\pi$,
-##  where the set $\pi$ is given by the list <primes>.
+##  Family of semilocal integral rcwa mappings with underlying ring
+##  $\Z_{(\pi)}$, where the set $\pi$ is given by the list <primes>.
 ##
 DeclareGlobalFunction( "SemilocalIntegralRcwaMappingsFamily" );
 

@@ -44,7 +44,7 @@
 ##               <coeffs>[<a> + 1][3]>.
 ##  $$
 ##  A semilocal integral rcwa mapping object <f> (here, the underlying ring
-##  is $\Z_{\pi}$ for a set of primes $\pi$) stores the same information.
+##  is $\Z_{(\pi)}$ for a set of primes $\pi$) stores the same information.
 ##  The ring which <f> acts on can be accessed as `Source(<f>)'.
 ##
 ##  Some remarks concerning the implementation of rcwa mappings of
@@ -1309,8 +1309,8 @@ InstallMethod( ImageElm,
 ##
 #M  ImageElm( <f>, <n> ) . . for semilocal int. rcwa mapping and Z_pi-element
 ##
-##  Image of the element <n> of the ring $\Z_\pi$ for suitable <pi> under the
-##  rcwa mapping <f>. 
+##  Image of the element <n> of the ring $\Z_{(\pi)}$ for suitable <pi> under
+##  the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
                "for semilocal integral rcwa mapping and element of Z_pi",

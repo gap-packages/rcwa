@@ -106,7 +106,7 @@
   <Index Key="rcwa group" Subkey="rational-based"></Index>
   In case that the underlying ring <M>R</M> is the ring of integers, we call
   an rcwa mapping <M>f</M> an <E>integral rcwa mapping</E>, in case
-  <M>R = \Z_\pi</M> for a set of primes <M>\pi</M> we call <M>f</M>
+  <M>R = \Z_{(\pi)}</M> for a set of primes <M>\pi</M> we call <M>f</M>
   a <E>semilocal integral rcwa mapping</E> and in case <M>R</M> is a
   polynomial ring in one variable over a finite field we call <M>f</M> a
   <E>modular rcwa mapping</E>. Since integral and semilocal integral rcwa

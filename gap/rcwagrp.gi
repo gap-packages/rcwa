@@ -110,7 +110,7 @@ InstallMethod( RCWACons,
 ##
 #M  RCWACons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . . .  RCWA( Z_pi )
 ##
-##  Group formed by all bijective rcwa mappings over Z_pi.
+##  Group formed by all bijective rcwa mappings over $\Z_{(\pi)}$.
 ##
 InstallMethod( RCWACons,
                "natural RCWA(Z_pi)", true, [ IsRcwaGroup, IsZ_pi ], 0,
@@ -184,7 +184,8 @@ InstallMethod( IsNaturalRCWA_Z,
 ##
 #M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . . .  RCWA(Z_pi)
 ##
-##  The groups RCWA(Z_pi) can only be obtained by the above constructor.
+##  The groups RCWA($\Z_{(\pi)}$) can only be obtained by the above
+##  constructor.
 ##
 InstallMethod( IsNaturalRCWA_Z_pi,
                "for rcwa groups", true, [ IsRcwaGroup ], 0, ReturnFalse );

@@ -56,7 +56,7 @@ rcwa mappings. <P/>
   <ManSection>
     <Func Name="SemilocalIntegralRcwaMappingsFamily" Arg="primes"/>
     <Returns>
-      the family of rcwa mappings over <M>\Z_\pi</M>, where <M>\pi</M>
+      the family of rcwa mappings over <M>\Z_{(\pi)}</M>, where <M>\pi</M>
       is the set of primes given as argument <A>primes</A>.
     </Returns>
   </ManSection>
@@ -143,7 +143,7 @@ Integral rcwa mapping: n -> -n
     <Func Name="SemilocalIntegralRcwaMapping" Arg="primes, coeffs"/>
     <Func Name="RcwaMapping" Arg="pi, coeffs"/>
     <Returns>
-      the rcwa mapping of <M>\Z_\pi</M> with coefficients
+      the rcwa mapping of <M>\Z_{(\pi)}</M> with coefficients
       <A>coeffs</A>, where the set of primes <M>\pi</M> is given as argument
       <A>primes</A>.
     </Returns>
@@ -151,9 +151,9 @@ Integral rcwa mapping: n -> -n
 <Example>
 <![CDATA[
 gap> d := RcwaMapping([2],[[1/3,0,1]]);
-Rcwa mapping of Z_[ 2 ]: n -> 1/3 n
+Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> RcwaMapping([2,3],ShallowCopy(Coefficients(T)));
-<rcwa mapping of Z_[ 2, 3 ] with modulus 2>
+<rcwa mapping of Z_( 2, 3 ) with modulus 2>
 ]]>
 </Example>
     </Description>
@@ -709,9 +709,9 @@ true
 gap> IsBijective(u);
 true
 gap> a_2 := RcwaMapping([2],[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
-<rcwa mapping of Z_[ 2 ] with modulus 4>
+<rcwa mapping of Z_( 2 ) with modulus 4>
 gap> a_23 := RcwaMapping([2,3],[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);
-<rcwa mapping of Z_[ 2, 3 ] with modulus 4>
+<rcwa mapping of Z_( 2, 3 ) with modulus 4>
 gap> IsInjective(a_2);
 false
 gap> IsSurjective(a_2);
@@ -764,7 +764,7 @@ Integral rcwa mapping with modulus 4
   1                                    | -3
 
 gap> d+d+d;
-IdentityMapping( Z_[ 2 ] )
+IdentityMapping( Z_( 2 ) )
 gap> e := One(r);;
 gap> e+e;
 ZeroMapping( GF(2)[x], GF(2)[x] )
@@ -938,7 +938,7 @@ ZeroMapping( GF(2)[x], GF(2)[x] )
 gap> One(a);
 IdentityMapping( Integers )
 gap> One(d);
-IdentityMapping( Z_[ 2 ] )
+IdentityMapping( Z_( 2 ) )
 ]]>
 </Example>
     </Description>
