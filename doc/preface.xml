@@ -10,88 +10,66 @@
 
 <!-- #################################################################### -->
 
-<Section Label="sec:motivation"><Heading>Motivation</Heading>
+<Section Label="sec:motivation">
+<Heading>Motivation</Heading>
 
 <Index Key="Collatz conjecture">Collatz conjecture</Index>
 <Index Key="Collatz conjecture">Collatz mapping</Index>
-In the 1930s Lothar Collatz proposed the following procedure:
+The development of this package has been motivated by the famous
+<M>3n+1</M> - Conjecture, which states that iterated application of the
+Collatz mapping
+<Alt Only="Text"> 
+  <![CDATA[
 
-<List>
+                       /
+                      | n/2      if n even,
+   T: Z -> Z, n |--> <
+                      | (3n+1)/2 if n odd
+                       \
 
-  <Mark>1.</Mark>
-  <Item>
-    Choose a positive integer <M>n</M>.
-  </Item>
+  ]]>
+</Alt>
+<Alt Only="HTML">
+  T (see &LaTeX; version of the manual)
+</Alt>
+<Alt Only="LaTeX">
+  <Display>
+  <![CDATA[
+    T: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
+    n \ \longmapsto \
+    \begin{cases}
+      \frac{n}{2}    & \text{if} \ n \ \text{even}, \\
+      \frac{3n+1}{2} & \text{if} \ n \ \text{odd}
+    \end{cases}
+  ]]>
+  </Display>
+</Alt>
+to any given positive integer eventually yields&nbsp;1. <P/>
 
-  <Mark>2.</Mark>
-  <Item>
-    Divide <M>n</M> by 2 if it is even, and multiply it by&nbsp;3
-    and add&nbsp;1 otherwise.
-  </Item>
+This has been conjectured by Lothar Collatz in the 1930s, and is still
+an unsolved problem today.
+Replacing the Collatz mapping <M>T</M> by its conjugate under some
+permutation <M>\sigma</M> of <M>\mathbb{Z}</M> fixing&nbsp;1 and setwisely
+fixing the positive integers turns the <M>3n+1</M> - Conjecture into the
+following equivalent conjecture: <M>\forall n \in \mathbb{N} \ \exists
+k \in \mathbb{N}_0: \ n^{(T^\sigma)^k} = 1</M>.
+The <M>3n+1</M> - Conjecture is true if and only if there is such a
+permutation <M>\sigma</M> such that <M>T^\sigma</M> maps all integers
+<M>n > 1</M> to smaller ones. Hence the problem is to find a suitable normal
+form for the Collatz mapping&nbsp;<M>T</M>. <P/>
 
-  <Mark>3.</Mark>
-  <Item>
-    Terminate if <M>n = 1</M> and continue with step&nbsp;2 otherwise.
-  </Item>
+Investigating arbitrary permutations of finite sets is both theoretically
+and computationally a hard problem. It is straightforward to restrict the
+considerations to permutations which are <Q>similar</Q> to the Collatz
+mapping. Probably the most natural class of such mappings is the class
+of residue class-wise affine permutations. <P/>
 
-</List>
-
-He conjectured that this process eventually terminates regardless of the
-choice of the starting value&nbsp;<M>n</M>.
-
-To give an easy example: starting at 15, we get the sequence 15, 46, 23, 70,
-35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1.
-
-In fact, Collatz' problem is still unsolved today, despite the fact that
-there have been more than 100 publications treating aspects of it so far --
-for an annotated bibliography listing many of them see
-<Cite Key="Lagarias04"/>.
-
-We look at the mapping introduced in step&nbsp;2 above and ask for
-generalizations. There are several obvious things we can do:
-
-<List>
-
-  <Mark>1.</Mark>
-  <Item>
-    We can replace the mappings <M>n \mapsto n/2</M> and
-    <M>n \mapsto 3n+1</M> by <Q>suitable</Q> other
-    mappings.
-  </Item>
-
-  <Mark>2.</Mark>
-  <Item>
-    Instead of making the choice of the mapping depend
-    on whether <M>n</M> is even or odd, we can introduce more
-    alternatives and make it depend on <M>n</M>&nbsp;mod&nbsp;<M>m</M>
-    for some modulus&nbsp;<M>m</M> greater than&nbsp;2.
-  </Item>
-
-  <Mark>3.</Mark>
-  <Item>
-    The Collatz mapping is defined over the ring of integers --
-    there may be other rings which admit similar mappings.
-  </Item>
-
-</List>
-
-<Index Key="dynamical systems">dynamical systems</Index>
-<Index Key="Markov chains">Markov chains</Index>
-It seems that so far nobody has studied generalizations of the Collatz
-mapping from an algebraic point of view, although there have been some
-publications which shed light on the topic by investigating related
-dynamical systems and Markov chains.
-In this context I would like to mention a monograph by
-Günther&nbsp;J. Wirsching&nbsp;<Cite Key="Wirsching98"/> and an article by
-G.&nbsp;Venturini&nbsp;<Cite Key="Venturini92"/>.
-Permutation group-theoretic work which might be considered to be weakly
-related to this topic has been done by Hans Läuchli and
-Peter&nbsp;M. Neumann&nbsp;<Cite Key="LaeuchliNeumann88"/>.
-<Index Key="permutation groups">permutation groups</Index>
-<Index Key="permutation groups" Subkey="over rings"></Index> 
-<Index Key="permutation groups" Subkey="countable"></Index>
-For a general survey of results concerning infinite permutation groups
-see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
+Jeffrey C. Lagarias has written and maintains a commented bibliography
+<Cite Key="Lagarias04"/>, which currently lists 193&nbsp;references
+to publications related to the <M>3n+1</M> - Conjecture.
+None of the articles which are referenced there tries to attack the
+problem by means of group theory or investigates the structure of
+groups generated by bijective residue class-wise affine mappings.
 
 </Section>
 
@@ -99,117 +77,68 @@ see <Cite Key="BhattacharjeeMacphersonMoellerNeumann98"/>. <P/>
 
 <!-- #################################################################### -->
 
-<Section Label="sec:basicdefinitions"><Heading>Basic definitions</Heading>
+<Section Label="sec:purpose">
+<Heading>Purpose of this package</Heading>
 
-The considerations in the last section are the motivation for the
-following definitions: <P/>
+The purpose of this package is to serve as a tool for computational
+investigations of residue class-wise affine mappings and -groups. <P/>
 
-<Index Key="rcwa mapping" Subkey="definition"></Index> 
-Let <M>R</M> be an infinite euclidean domain which is not a field and all
-of whose proper residue class rings are finite.
-We call a mapping <M>f</M> from <M>R</M> into itself <E>residue class-wise
-affine</E>, or in short an <E>rcwa</E> mapping, if there is a non-zero
-modulus <M>m \in R</M> such that for any residue class <M>r(m) \in R/mR</M>
-there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
-the restriction of <M>f</M> to the set&nbsp;<M>r(m)</M> is given by <P/>
-<Alt Only="Text"> 
-  <![CDATA[
+Perhaps the only sensible reason for using this package is being fascinated
+by the mathematical beauty of the objects it helps to investigate. <P/>
 
-                      n  -->  ( a_r(m) * n + b_r(m) ) / c_r(m).
-
-  ]]>
-</Alt>
-<Alt Only="HTML">
-  <![CDATA[
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    n  -->  ( a_r(m) * n + b_r(m) ) / c_r(m).
-  ]]>
-</Alt>
-<Alt Only="LaTeX">
-  <Display>
-    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
-  </Display>
-</Alt>
-We always assume that all fractions are reduced, i.e. that
-<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that we have chosen
-the multiplicatively smallest possible modulus <M>m</M>.
-Apart from the restrictions imposed by the condition that the image of any
-residue class <M>r(m)</M> under <M>f</M> must be a subset of <M>R</M> and
-that we cannot divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>,
-<M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements.
-<Index Key="rcwa mapping" Subkey="modulus"></Index>
-We call <M>m</M> the <E>modulus</E> of <M>f</M>.
-When talking about the <E>product</E> of some rcwa mappings we always mean
-their composition as mappings, and by the inverse of a bijective rcwa mapping
-we mean its inverse mapping. <P/>
-
-The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>)
-<M>\ | \ g</M> is residue class-wise affine <M>\}</M> } is closed under
-multiplication and taking inverses (this can be verified easily), hence
-forms a subgroup of Sym(<M>R</M>). By comparing cardinalities we find that
-this subgroup is proper.
-<Index Key="rcwa group" Subkey="definition"></Index>
-We call a subgroup of RCWA(<M>R</M>) a <E>residue class-wise affine</E>
-group, or in short an <E>rcwa</E> group. <P/>
+This manual is pure software documentation, and as such it does not contain
+any theorems or proofs. The theoretical background for the subject can be
+found in the author's Thesis&nbsp;<Cite Key="Kohl05"/>.
 
 </Section>
 
 <!-- #################################################################### -->
 
-<Section Label="sec:about"><Heading>About the package</Heading>
+<Section Label="sec:noteaboutcontents">
+<Heading>Scope of this package</Heading>
 
-This package provides functionality for computing with rcwa mappings of
-the ring of integers, its semilocalizations and of polynomial rings in one
-variable over a finite field, as well as with rcwa groups over these rings.
-The reasons for choosing the given rings are basically the following:
-The Collatz conjecture is a question about the integers, thus we clearly
-want to look at these. The ring <M>\mathbb{Z}</M> has characteristic&nbsp;0
-and infinitely many prime elements. A natural question which arises is what
-happens when moving to some ring with characteristic <M>p</M> or with only
-finitely many prime elements.
-The rings GF(<M>q</M>)[<M>x</M>] and <M>\mathbb{Z}_{(\pi)}</M> are probably
-the examples which permit the most efficient computational treatment. <P/>
-
-<Index Key="rcwa group" Subkey="modulus"></Index>
-We define the <E>modulus</E> of an rcwa group by the lcm of the moduli of
-its elements in case such an lcm exists, and by&nbsp;0 otherwise. <P/>
-
-There are relatively elaborate methods for dealing with rcwa groups which
-have a comparatively easy structure, namely those having non-zero modulus.
-We call such groups and the mappings generating cyclic such groups
-<E>tame</E>. Computing with tame rcwa groups is comparatively easy.
-Understanding tame rcwa groups is a prerequisite for being able to
-investigate those which are not tame. <P/>
+There are relatively elaborate methods for dealing with residue class-wise
+affine groups whose elements have a bounded number of different affine
+partial mappings. These groups have a relatively easy structure. Hence they
+are called <E>tame</E>. Understanding tame residue class-wise affine groups
+is a necessary prerequisite for being able to investigate those which are
+not tame. <P/>
 
 The groups which are not tame are much more difficult to examine.
-In general, it is difficult to find out something about the structure
-of a given such group. Thus we call these groups and the mappings
-generating cyclic such groups <E>wild</E>. 
-Nevertheless, some computations can be done also in these groups --
+In general, it is quite difficult to find out something about the structure
+of a given such group. Hence these groups are called <E>wild</E>. 
+Nevertheless, some computations can be done also in them --
 there is e.g. an algorithm for factoring elements into generators,
 which usually works reasonably well if the resulting word is not
-<Q>too long</Q>.
-In any case please note that also tame mappings can generate wild groups --
-given two or more arbitrary tame mappings it is quite likely that the
-group generated by them is wild. <P/>
+<Q>too long</Q>. <P/>
 
-The main reason for me to develop this package was the desire to get a
-suitable tool for investigating a large number of examples and getting deep
-enough insight into the structure of residue class-wise affine mappings and
-groups to be able to start building a theory of them from the bottom in my
-Thesis&nbsp;<Cite Key="Kohl05"/>. If you use &RCWA; in some work leading
-to a publication, I ask you to cite it just as you would cite a journal
-article. <P/>
+It cannot be said in a few sentences what can be found out with this package
+about which mappings or groups. The best way to get an idea about this is to
+experiment yourself with the examples discussed in this manual and included
+in the file <File>pkg/rcwa/examples/examples.g</File>. Another useful source
+of examples is the <C>Random</C> - function. For many -- if not most --
+problems the package does not provide an out-of-the-box solution.
+At the beginning you will probably be bored by extremely long runtimes for
+seemingly trivial things. But with some experience you will learn to estimate
+in advance how long something will take. Quite often it is possible to find
+an answer for a given question by using an interactive trial-and-error
+approach.
 
-At this point I would like to thank Bettina&nbsp;Eick for her kind help in
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:acknowledgements">
+<Heading>Acknowledgements</Heading>
+
+I would like to thank Bettina&nbsp;Eick for her kind help in
 trying to make this package and in particular its documentation more
 useful and more interesting for a larger number of people. <P/>
 
-I would be grateful for any bug reports, comments or suggestions and
-of course for reports of results found with the help of this package.
+If you use &RCWA; in some work leading to a publication, I ask you to cite
+it just as you would cite a journal article. I would be grateful for any
+bug reports, comments or suggestions and of course for reports of results
+found with the help of this package.
 
 <Alt Only="Text"> </Alt>
 <Alt Only="HTML">

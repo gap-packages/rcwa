@@ -35,11 +35,10 @@
        Germany
     </Address>
   </Author>
-  <Date>June 11, 2004</Date>
-  <Copyright> &copyright; 2003, 2004, 2005 by Stefan Kohl <P/>
-              After an official release we adopt the copyright regulations
-              of &GAP; as detailed in the copyright notice in the
-              &GAP; manual.
+  <Date>February 7, 2005</Date>
+  <Copyright> &copyright; 2003 - 2005 by Stefan Kohl <P/>
+              This package is distributed under the same conditions as the
+              &GAP; system.
   </Copyright>
   <#Include SYSTEM "abstract.xml">
 </TitlePage>

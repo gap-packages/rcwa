@@ -14,11 +14,9 @@ The &RCWA; Package provides methods for computations with the so-called
 mappings of this type.
 
 The rcwa mappings are a type of mappings of certain euclidian rings
-<M>R</M> into themselves, e.g. the integers form an example for a possible
-ring <M>R</M>. The bijective rcwa mappings of <M>R</M> form a proper
-subgroup of Sym(<M>R</M>). It is quite likely that this subgroup is
-simple, but this is still an open problem.
-In general, the computation with arbitrary mappings from 
+<M>R</M> into themselves. A possible choice is <M>R = \mathbb{Z}</M>.
+The bijective rcwa mappings of <M>R</M> form a proper subgroup of
+Sym(<M>R</M>). In general, computing with arbitrary mappings from 
 <Alt Only="LaTeX"><M>\mathbb{Z}</M></Alt><Alt Not="LaTeX"><M>Z</M></Alt> into
 <Alt Only="LaTeX"><M>\mathbb{Z}</M></Alt><Alt Not="LaTeX"><M>Z</M></Alt>
 is an algorithmically difficult task. The rcwa mappings provide a class of

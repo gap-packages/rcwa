@@ -25,7 +25,7 @@ binaries.
 
 It needs the package &ResClasses; for dealing with set-theoretic unions
 of residue classes, and the package <Package>GRAPE</Package>
-<Cite Key="GRAPE"/> for dealing with certain graphs we associate
+<Cite Key="GRAPE"/> for dealing with certain graphs associated
 to rcwa mappings (cp. <Ref Oper="TransitionGraph"/>).
 The binaries of <Package>GRAPE</Package> are not needed, thus &RCWA; runs
 under Windows and on the MacIntosh as well. Warnings concerning missing
