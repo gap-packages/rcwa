@@ -158,7 +158,21 @@ kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
                       [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);
 SetName(kappa,"kappa");
 
-# A slight modification which also has only finite cycles.
+# An example of a mapping with an infinite cycle traversing the residue
+# classes (mod 12) acyclically, but having positive density as a subset of Z
+# (apparently 3/8).
+
+kappatilde := RcwaMapping([[2,-4,1],[3, 33,1],[3,2,2],[1,-1,1],
+                           [2, 0,1],[3,-39,1],[3,2,2],[1,-1,1],
+                           [1, 1,3],[3, 33,1],[3,2,2],[1, 4,3]]);
+SetName(kappatilde,"kappatilde");
+
+# Slight modifications which also have only finite cycles.
+
+kappa12_fincyc := RcwaMapping([[2,-4,1],[3,-3,1],[3,2,2],[1,-1,1],
+                               [2, 0,1],[3,-3,1],[3,2,2],[1,-1,1],
+                               [1, 1,3],[3,-3,1],[3,2,2],[1, 4,3]]);
+SetName(kappa12_fincyc,"kappa12_fincyc");
 
 kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
                                [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
@@ -168,9 +182,9 @@ kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
                                [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]);
 SetName(kappa24_fincyc,"kappa24_fincyc");
 
-# A mapping which has finite cycles of unbounded length and apparently
-# one `chaotically behaving' infinite cycle which has positive density
-# (about 0.22917) as a subset of Z.
+# A mapping which has finite cycles of unbounded length and, like the
+# mapping `kappatilde' above, apparently one `chaotically behaving' infinite
+# cycle which has positive density (apparently 11/48) as a subset of Z.
 
 kappa24_densecyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
                                  [3, 4,2],[1,-1,1],[6,4,1],[1, 23,1],
