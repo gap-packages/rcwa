@@ -1400,7 +1400,7 @@ InstallMethod( IsClassWiseOrderPreserving,
 InstallMethod( Trace,
                "for rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
-               f -> Sum( List( Coefficients( f ), c -> c[ 2 ] ) ) );
+               f -> Sum( List( Coefficients( f ), c -> c[ 2 ] / c[ 1 ] ) ) );
 
 #############################################################################
 ##
