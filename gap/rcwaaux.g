@@ -21,16 +21,14 @@ Revision.rcwaaux_g :=
 ##
 RCWABuildManual := function ( )
 
-  local  Manual, RcwaDir;
+  local  Manual, RCWADir;
 
-  RcwaDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/" );
-  # StefansManualLayout( "RCWA" );
-  MyMakeGAPDocDoc( Concatenation( RcwaDir, "doc/" ), "rcwa.xml",
-                   [ "../gap/rcwaaux.g",
-                     "../gap/rcwamap.gd", "../gap/rcwamap.gi",
-                     "../gap/rcwagrp.gd", "../gap/rcwagrp.gi",
-                     "../gap/rcwalib.gi" ], "RCWA", "../../../" );
-  # ResetManualLayout( );
+  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+  MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
+                 [ "../gap/rcwaaux.g",
+                   "../gap/rcwamap.gd", "../gap/rcwamap.gi",
+                   "../gap/rcwagrp.gd", "../gap/rcwagrp.gi",
+                   "../gap/rcwalib.gi" ], "RCWA", "../../../" );
 end;
 MakeReadOnlyGlobal( "RCWABuildManual" );
 
@@ -64,13 +62,14 @@ MakeReadOnlyGlobal( "RCWABuildManual" );
 ##
 RCWATest := function ( arg )
 
-  local  alltests, tests, test, dir;
+  local  alltests, tests, test, RCWADir, dir;
 
   alltests := [ "integral", "semilocal", "modular" ];
   if   arg = [] or not IsSubset( alltests, arg )
   then tests := [ "all" ]; else tests := arg; fi;
   if IsString(tests) then tests := [ tests ]; fi;
-  dir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/tst/" );
+  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+  dir := Concatenation( RCWADir, "/tst/" );
   for test in tests do
     if   test = "all" then Read( Concatenation( dir, "testall.g" ) );
     elif test = "integral"
@@ -90,14 +89,18 @@ MakeReadOnlyGlobal( "RCWATest" );
 ##
 RCWAReadExamples := function ( )
 
-  local  dir;
+  local  RCWADir;
 
-  dir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/examples/" );
-  Read( Concatenation( dir, "examples.g" ) );
+  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+  Read( Concatenation( RCWADir, "/examples/examples.g" ) );
 end;
 MakeReadOnlyGlobal( "RCWAReadExamples" );
 
 #############################################################################
 ##
 #E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
+
+
+
 
