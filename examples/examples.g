@@ -144,6 +144,10 @@ f := RcwaMapping( [ [ 5, 0, 6 ], [ 5, 3, 4 ], [ 5,-4, 6 ], [ 5,-3, 4 ],
                     [ 5, 4, 6 ], [ 5, 3, 4 ], [ 5, 0, 6 ], [ 5,-3, 4 ],
                     [ 5,-4, 6 ], [ 5, 3, 4 ], [ 5, 4, 6 ], [ 5,-3, 4 ] ] );
 
+# An interesting probably contracting mapping (long trajectories ...).
+
+T7 := RcwaMapping([[1,0,6],[7,1,2],[1,0,2],[1,0,3],[1,0,2],[7,1,2]]);
+
 # Some other rcwa mappings.
 
 nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
@@ -152,3 +156,5 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
