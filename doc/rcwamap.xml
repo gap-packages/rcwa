@@ -9,8 +9,8 @@
 <Chapter Label="ch:RcwaMappings">
 <Heading>Residue Class-Wise Affine Mappings</Heading>
 
-This chapter describes the functionality available for computing with
-residue class-wise affine mappings. <P/>
+This chapter describes the functionality provided by this package for
+computing with residue class-wise affine mappings. <P/>
 
 <!-- #################################################################### -->
 
@@ -58,7 +58,8 @@ It is understood that all fractions are reduced, i.e. that
 Apart from the restrictions imposed by the condition that the image of any
 residue class <M>r(m)</M> under <M>f</M> must be a subset of <M>R</M> and
 that one cannot divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>,
-<M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements.
+<M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements. <P/>
+
 When talking about the <E>product</E> of some rcwa mappings, it is always
 meant their composition as mappings, and by the inverse of a bijective
 rcwa mapping it is meant its inverse mapping. Products are evaluated from
@@ -73,6 +74,8 @@ A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or in short an <E>rcwa</E> group. <P/>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -117,44 +120,7 @@ In order to define an rcwa mapping we need to know about the following:
 
 </List>
   
-<ManSection>
-  <Func Name="AllResidues" Arg="R, m" Label="R, m"/>
-  <Returns>
-    A sorted list of all residues modulo&nbsp;<A>m</A>
-    in the ring&nbsp;<A>R</A>.
-  </Returns>
-  <Description>
-    The list returned by this function defines the ordering in which the
-    coefficients of an rcwa mapping are stored,
-    cp. <Ref Meth="RcwaMapping"/>.  Thus if <A>f</A> is an rcwa mapping
-    of&nbsp;<A>R</A> with modulus&nbsp;<A>m</A> and coefficients
-    list&nbsp;<A>c</A>, then <A>f</A> maps an element <A>n</A> of
-    <A>R</A> satisfying <A>n</A>&nbsp;mod&nbsp;<A>m</A>&nbsp;=&nbsp;<A>r</A>
-    to <C>(c[Position(res,r)][1]*n + c[Position(res,r)][2]) /
-           c[Position(res,r)][3]</C>,
-    where <C>res = AllResidues(<A>R</A>,<A>m</A>)</C> denotes the list
-    of residues returned by this function. <P/>
 
-    Remark: This function is part of the &ResClasses; package, but is
-    documented here since in &ResClasses; it is used for internal
-    purposes only.
-<Example>
-<![CDATA[
-gap> AllResidues(Integers,6);
-[ 0 .. 5 ]
-gap> AllResidues(Z_pi([3,5,7]),700);
-[ 0 .. 174 ]
-gap> x := Indeterminate(GF(2),1);; SetName(x,"x");;
-gap> R := PolynomialRing(GF(2),1); e := One(R);; z := Zero(R);;
-GF(2)[x]
-gap> AllResidues(R,x^4+x^2);
-[ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3, 
-  x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x, 
-  x^3+x^2+x+Z(2)^0 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
 
 <ManSection>
   <Meth Name="RcwaMapping" Arg="R, modulus, coeffs"
