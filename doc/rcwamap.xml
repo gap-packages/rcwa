@@ -82,71 +82,51 @@ group, or in short an <E>rcwa</E> group. <P/>
 <Section Label="sec:ConstructingRcwaMappings">
 <Heading>Entering rcwa mappings</Heading>
 
-In order to define an rcwa mapping we need to know about the following:
-<List>
+In order to define an rcwa mapping, it is necessary to specify the underlying
+ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
+<M>a_{r(m)}</M>, <M>b_{r(m)}</M> and&nbsp;<M>c_{r(m)}</M> for <M>r(m)</M>
+running over the residue classes (mod&nbsp;<M>m</M>). <P/>
 
-  <Mark>Underlying Ring</Mark>
-  <Item>
-    The underlying ring&nbsp;<M>R</M> is stored as the <C>UnderlyingRing</C>
-    of the family the rcwa mapping object belongs to, and as the value of
-    the attribute <C>Source</C>.
-  </Item>
+A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
+<M>|R/mR|</M> coefficient triples <C>[ a_rm, b_rm, c_rm ]</C>. Their ordering
+is determined by the ordering of the representatives of the residue classes
+(mod&nbsp;<M>m</M>) in the sorted list returned by <C>AllResidues(<M>R</M>,
+<M>m</M>)</C>. For <M>R = \mathbb{Z}</M>, this means that the coefficient
+triple for the residue class <M>0(m)</M> comes first, then comes the one for
+<M>1(m)</M>, the one for <M>2(m)</M> and so on. <P/>
 
-  <Mark>Modulus</Mark>
-  <Item>
-    The <E>Modulus</E> of an rcwa mapping&nbsp;<M>f</M> is the standard
-    associate of a multiplicatively smallest ring element <M>m</M> such
-    that the restriction of <M>f</M> to any residue class
-    (mod&nbsp;<M>m</M>) is affine.
-
-    The modulus is stored as a component <A>modulus</A> in any rcwa mapping
-    object.
-  </Item>
-
-  <Mark>Coefficients</Mark>
-  <Item>
-    The list of coefficients is stored as a component <A>coeffs</A>
-    in any rcwa mapping object. The component <A>coeffs</A> is a list of
-    <M>|R</M>/<A>modulus</A><M>R|</M> lists of three elements
-    of&nbsp;<A>R</A>, each, giving the coefficients <M>a_r</M>, <M>b_r</M>
-    and&nbsp;<M>c_r</M> (cp. the definition of an rcwa mapping in the
-    Preface&nbsp;(<Ref Label="ch:preface"/>)) for <M>r</M> running through a
-    set of representatives for the residue classes (mod&nbsp;<A>modulus</A>).
-    The ordering of these triples is defined by the ordering of the
-    residues <M>r</M>&nbsp;mod&nbsp;<A>modulus</A> in the return value of
-    <C>AllResidues(<A>R</A>,<A>modulus</A>)</C>
-    (see <Ref Func="AllResidues"/>).
-  </Item>
-
-</List>
-  
-
+In the sequel, the general-purpose constructor for rcwa mappings is given.
+This might look a bit technical on a first glance. For getting started, the
+reader may find it easier to look first at the functions for constructing
+some kinds of particularly simple-structured bijective rcwa mappings of
+<M>\mathbb{Z}</M> described afterwards.
 
 <ManSection>
-  <Meth Name="RcwaMapping" Arg="R, modulus, coeffs"
-        Label="R, modulus, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="R, m, coeffs"
+        Label="R, m, coeffs"/>
   <Meth Name="RcwaMapping" Arg="R, coeffs"
         Label="R, coeffs"/>
   <Meth Name="RcwaMapping" Arg="coeffs"
         Label="coeffs"/>
   <Meth Name="RcwaMapping" Arg="perm, range"
         Label="perm, range"/>
-  <Meth Name="RcwaMapping" Arg="modulus, values"
-        Label="modulus, values"/>
+  <Meth Name="RcwaMapping" Arg="m, values"
+        Label="m, values"/>
   <Meth Name="RcwaMapping" Arg="pi, coeffs"
         Label="pi, coeffs"/>
-  <Meth Name="RcwaMapping" Arg="q, modulus, coeffs"
-        Label="q, modulus, coeffs"/>
+  <Meth Name="RcwaMapping" Arg="q, m, coeffs"
+        Label="q, m, coeffs"/>
   <Meth Name="RcwaMapping" Arg="P1, P2"
         Label="P1, P2"/>
   <Meth Name="RcwaMapping" Arg="cycles"
         Label="cycles"/>
   <Returns> An rcwa mapping. </Returns>
   <Description>
-    Construction of an rcwa mapping.
-    In all cases the arguments&nbsp;<A>R</A> (the underlying ring),
-    <A>modulus</A> and <A>coeffs</A>, as far as they occur, have the
-    meaning described above. In case one or several of these arguments
+    Construction of an rcwa mapping. <P/>
+
+    In all cases the argument&nbsp;<A>R</A> is the underlying ring,
+    <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list
+    as described above. In case one or several of these arguments
     are omitted or replaced by other arguments, they are either derived
     from the latter or default values are taken. The meaning of the other
     arguments is given in the detailed description of the particular
@@ -172,30 +152,36 @@ In order to define an rcwa mapping we need to know about the following:
       </Item>
       <Mark>(d)</Mark>
       <Item>
+        of <A>R</A> = <M>\mathbb{Z}</M>, acting on any set
+        <C><A>range</A> + k*Length(<A>range</A>)</C> like the
+        permutation <A>perm</A> on the range <A>range</A>, resp.
+      </Item>
+      <Mark>(e)</Mark>
+      <Item>
         of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>modulus</A> and
         values prescribed by the list <A>val</A>, which consists of
         2<M>\cdot</M><A>modulus</A> pairs giving preimage and image for
         2 points per residue class (mod <A>modulus</A>), resp.
       </Item>
-      <Mark>(e)</Mark>
+      <Mark>(f)</Mark>
       <Item>
         of <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
         and coefficients <A>coeffs</A> (the set of primes <M>\pi</M> 
         denoting the underlying ring is given as argument <A>pi</A>), resp.
       </Item>
-      <Mark>(f)</Mark>
+      <Mark>(g)</Mark>
       <Item>
         of GF(<A>q</A>)[<A>x</A>] with modulus
         <A>modulus</A> and coefficients <A>coeffs</A>, resp.
       </Item>
-     <Mark>(g)</Mark>
+      <Mark>(h)</Mark>
       <Item>
         an arbitrary rcwa mapping which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of <A>R</A> into disjoint
         single residue classes and which is affine on the elements
         of <A>P1</A>, resp.
       </Item>
-      <Mark>(h)</Mark>
+      <Mark>(i)</Mark>
       <Item>
         an arbitrary rcwa mapping with <Q>residue class cycles</Q> as given
         by <A>cycles</A>. The latter is a list of lists of disjoint residue
@@ -209,6 +195,12 @@ In order to define an rcwa mapping we need to know about the following:
 <![CDATA[
 gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
 <rcwa mapping of Z with modulus 2>
+gap> f = RcwaMapping((2,3),[2..3]);
+true
+gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
+<rcwa mapping of Z with modulus 17>
+gap> Action(Group(g),[4..20]);
+Group([ (5,6) ])
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 <rcwa mapping of Z with modulus 2>
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
@@ -249,6 +241,9 @@ gap> Cycle(a,44);
 </Example>
   </Description>
 </ManSection>
+
+Some kinds of very simple-structured rcwa mappings are of particular
+interest:
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
