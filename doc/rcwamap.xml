@@ -1161,6 +1161,48 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 
 <!-- ################################################################################# -->
 
+<Section Label="sec:ActionOfMappingOnClasses">
+<Heading>The action of an rcwa mapping on the set of residue classes</Heading>
+
+  <ManSection>
+    <Attr Name="PermutedClassPartition" Arg="sigma"
+          Label="Permuted class partition for rcwa mapping"/>
+    <Description>
+      A partition of the base ring <M>R</M> into a finite number of residue classes,
+      on which the bijective mapping <A>sigma</A> acts as a permutation. 
+      The partition is non-trivial as long as the modulus of <A>sigma</A> is not
+      equal to 1.
+      Such a partition exists always if <A>sigma</A> is tame and <M>R</M> has the
+      <Q>class halving property</Q>. <P/>
+
+      See also <Ref Attr="PermutedClassPartition"
+      Label="Permuted class partition for rcwa group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
+gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
+gap> pcp := PermutedClassPartition(g);
+[ The residue class 0(6), The residue class 1(6), The residue class 3(6),
+  The residue class 4(6), The residue class 5(6), The residue class 2(12),
+  The residue class 8(12) ]
+gap> G := Group(g,h);
+<integral rcwa group with 2 generators>
+gap> Action(G,pcp);
+Group([ (1,6,2,5,3,7,4), (1,6,2,5)(3,7,4) ])
+gap> Size(last);
+5040
+gap> Size(G);
+infinity
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- ################################################################################# -->
+
 <Section Label="sec:NormalFormOfRcwaMapping">
 <Heading>The normal form of an rcwa mapping</Heading>
 
@@ -1200,6 +1242,183 @@ gap> ShortCycles(w,10);
   </ManSection>
 
   <ManSection>
+    <Attr Name="FlatConjugate" Arg="f" Label="Flat conjugate for rcwa mapping"/>
+    <Description>
+      Some flat representative of the conjugacy class of the tame
+      bijective rcwa mapping <A>f</A> in the whole group RCWA(<M>R</M>).
+      Since this is not defined uniquely, methods for this operation
+      will just choose one such mapping. <P/>
+
+      See also <Ref Attr="FlatConjugate" Label="Flat conjugate for rcwa group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> g_flat := FlatConjugate(g);
+<bijective integral rcwa mapping with modulus 7, of order 7>
+gap> Display(g_flat);
+ 
+Bijective integral rcwa mapping with modulus 7, of order 7
+ 
+                n mod 7                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n + 5
+  1                                    | n + 3
+  2                                    | n + 4
+  3 6                                  | n - 3
+  4                                    | n - 2
+  5                                    | n - 4
+
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Attr Name="FlateningConjugator" Arg="f"
+          Label="Flatening conjugator for rcwa mapping"/>
+    <Description>
+      An rcwa mapping mapping <A>x</A> such that <A>f</A>&circum;<A>x</A>
+      is flat. This is certainly not defined uniquely, but it holds
+      that <C>f&circum;FlateningConjugator(f) = FlatConjugate(f)</C>. <P/>
+
+      See also <Ref Attr="FlateningConjugator"
+                Label="Flatening conjugator for rcwa group"/>
+      for rcwa groups.
+<Example>
+<![CDATA[
+gap> g_toflat := FlateningConjugator(g);
+<bijective integral rcwa mapping with modulus 12>
+gap> Display(g_toflat);
+ 
+Bijective integral rcwa mapping with modulus 12
+ 
+               n mod 12                |                 n^f
+---------------------------------------+-----------------------------
+   0  6                                | 7n/6
+   1  7                                | (7n - 1)/6
+   2                                   | (7n + 46)/12
+   3  9                                | (7n - 9)/6
+   4 10                                | (7n - 10)/6
+   5 11                                | (7n - 11)/6
+   8                                   | (7n + 16)/12
+
+gap> g^g_toflat = g_flat;
+true
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Attr Name="StandardConjugate" Arg="f"/>
+    <Description>
+      Some <Q>nice</Q> canonical representative of the conjugacy class of the
+      bijective integral rcwa mapping <A>f</A> in the whole group RCWA(<M>\Z</M>).
+      Two integral rcwa mappings are conjugate in RCWA(<M>\Z</M>) if and only if
+      their <Q>standard conjugates</Q> are equal.
+<Example>
+<![CDATA[
+gap> w_std := StandardConjugate(w);
+<integral rcwa mapping with modulus 4>
+gap> Order(w_std);
+8
+gap> ShortCycles(w_std,8);
+[ [ 0, 1, 2, 3 ] ]
+gap> ab := Comm(a,b);
+<bijective integral rcwa mapping with modulus 18>
+gap> ab_std := StandardConjugate(ab);
+<integral rcwa mapping with modulus 7>
+gap> Display(ab_std);
+
+Bijective integral rcwa mapping with modulus 7, of order 6
+ 
+                n mod 7                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n
+  1 2 3 4 5                            | n + 1
+  6                                    | n - 5
+
+gap> f := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
+>                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);
+<integral rcwa mapping with modulus 8>
+gap> f_std := StandardConjugate(f);
+<integral rcwa mapping with modulus 3>
+gap> Display(f_std);
+
+Bijective integral rcwa mapping with modulus 3, of order 3
+ 
+                n mod 3                |                 n^f
+---------------------------------------+--------------------------------------
+  0 1                                  | n + 1
+  2                                    | n - 2
+
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Attr Name="StandardizingConjugator" Arg="f"/>
+    <Description>
+      An rcwa mapping mapping <A>x</A>, such that <A>f</A>&circum;<A>x</A>
+      is the <Q>standard</Q> representative of the conjugacy class of the
+      bijective integral rcwa mapping <A>f</A> in the whole integral residue
+      class-wise affine group.
+<Example>
+<![CDATA[
+gap> ab_tostd := StandardizingConjugator(ab);
+<integral rcwa mapping with modulus 18>
+gap> Display(ab_tostd);
+
+Integral rcwa mapping with modulus 36
+ 
+               n mod 36                |                 n^f
+---------------------------------------+--------------------------------------
+   0  9 18 27                          | 28n/9
+   1 19                                | (7n + 2)/9
+   2 11 20 29                          | (28n + 7)/9
+   3 12 21 30                          | (28n + 42)/9
+   4 22                                | (7n + 44)/9
+   5 23                                | (7n + 73)/9
+   6                                   | (7n + 192)/18
+   7 25                                | (7n + 32)/9
+   8 17 26 35                          | (28n - 35)/9
+  10 28                                | (7n + 20)/9
+  13 31                                | (7n + 80)/9
+  14 32                                | (7n + 55)/9
+  15                                   | (7n + 93)/18
+  16 34                                | (7n + 68)/9
+  24                                   | (7n + 156)/18
+  33                                   | (7n + 57)/18
+
+gap> ab^ab_tostd = ab_std;
+true
+gap> f_tostd := StandardizingConjugator(f);
+<integral rcwa mapping with modulus 16>
+gap> Display(f_tostd);
+
+Bijective integral rcwa mapping with modulus 16
+
+               n mod 16                |                 n^f
+---------------------------------------+--------------------------------------
+   0  8                                | 9n/8
+   1  9                                | (9n - 1)/8
+   2 10                                | (9n + 6)/8
+   3 11                                | (9n + 5)/8
+   4                                   | (9n + 44)/16
+   5 13                                | (9n - 29)/8
+   6 14                                | (9n - 6)/8
+   7 15                                | (9n - 7)/8
+  12                                   | (9n + 20)/16
+
+gap> f^f_tostd = f_std;
+true
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
     <Attr Name="CycleType" Arg="f"/>
     <Description>
       The <E>cycle type</E> of a tame integral rcwa mapping <A>f</A> is denoted
@@ -1227,116 +1446,12 @@ gap> CycleType(Comm(a,b));
   </ManSection>
 
   <ManSection>
-    <Attr Name="StandardConjugate" Arg="f"/>
-    <Description>
-      Some <Q>nice</Q> canonical representative of the conjugacy class of the
-      bijective integral rcwa mapping <A>f</A> in the whole group RCWA(<M>\Z</M>).
-      Two integral rcwa mappings are conjugate in RCWA(<M>\Z</M>) if and only if
-      their <Q>standard conjugates</Q> are equal.
-<Example>
-<![CDATA[
-gap> w_std := StandardConjugate(w);
-<integral rcwa mapping with modulus 4>
-gap> Order(w_std);
-8
-gap> ShortCycles(w_std,8);
-[ [ 0, 1, 2, 3 ] ]
-gap> ab := Comm(a,b);
-<bijective integral rcwa mapping with modulus 18>
-gap> ab_std := StandardConjugate(ab);
-<integral rcwa mapping with modulus 7>
-gap> Display(ab_std);
-
-Integral rcwa mapping with modulus 7
-
-                n mod 7                |                 n^f
----------------------------------------+--------------------------------------
-  0                                    | n
-  1 2 3 4 5                            | n + 1
-  6                                    | n - 5
-
-gap> f := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
->                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);
-<integral rcwa mapping with modulus 8>
-gap> f_std := StandardConjugate(f);
-<integral rcwa mapping with modulus 3>
-gap> Display(f_std);
-
-Integral rcwa mapping with modulus 3
-
-                n mod 3                |                 n^f
----------------------------------------+--------------------------------------
-  0 1                                  | n + 1
-  2                                    | n - 2
-
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Attr Name="StandardizingConjugator" Arg="f"/>
-    <Description>
-      An rcwa mapping mapping <A>x</A>, such that <A>f</A>&circum;<A>x</A>
-      is the <Q>standard</Q> representative of the conjugacy class of the
-      bijective integral rcwa mapping <A>f</A> in the whole integral residue
-      class-wise affine group.
-<Example>
-<![CDATA[
-gap> ab_tostd := StandardizingConjugator(ab);
-<integral rcwa mapping with modulus 18>
-gap> Display(ab_tostd);
-
-Integral rcwa mapping with modulus 18
-
-               n mod 18                |                 n^f
----------------------------------------+--------------------------------------
-   0  9                                | 28n/9
-   1 10                                | (7n + 2)/9
-   2 11                                | (28n + 7)/9
-   3 12                                | (28n + 42)/9
-   4 13                                | (7n + 80)/9
-   5 14                                | (7n + 55)/9
-   6                                   | (7n + 156)/18
-   7 16                                | (7n + 68)/9
-   8 17                                | (28n - 35)/9
-  15                                   | (7n + 57)/18
-
-gap> ab^ab_tostd = ab_std;
-true
-gap> f_tostd := StandardizingConjugator(f);
-<integral rcwa mapping with modulus 16>
-gap> Display(f_tostd);
-
-Integral rcwa mapping with modulus 16
-
-               n mod 16                |                 n^f
----------------------------------------+--------------------------------------
-   0  8                                | 9n/8
-   1  9                                | (9n - 1)/8
-   2 10                                | (9n + 6)/8
-   3 11                                | (9n + 5)/8
-   4                                   | (9n + 44)/16
-   5 13                                | (9n - 29)/8
-   6 14                                | (9n - 6)/8
-   7 15                                | (9n - 7)/8
-  12                                   | (9n + 20)/16
-
-gap> f^f_tostd = f_std;
-true
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Meth Name="IsConjugate" Arg="R, f, g"/>
     <Description>
-      Checks whether the bijective integral rcwa mappings <A>f</A> and <A>g</A>
-      are conjugate in the whole group RCWA(<M>\Z</M>), e.g. via comparing
+      Checks whether the bijective rcwa mappings <A>f</A> and <A>g</A>
+      are conjugate in the whole group RCWA(<M>R</M>), e.g. via comparing
       their <Q>standard conjugates</Q>.
       This may fail or run into an infinite loop.
-      The argument <A>R</A> has to be <C>RCWA( Integers )</C>.
 <Example>
 gap> IsConjugate(RCWA(Integers),w,w_std);
 true
