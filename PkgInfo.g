@@ -60,7 +60,10 @@ Dependencies     := rec(
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,
-Autoload         := true,
+BannerString     := Concatenation( "\nLoading RCWA 1.0",
+                                   " ([R]esidue [C]lass-[W]ise [A]ffine mappings and groups)",
+                                   "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
+AutoLoad         := false,
 TestFile         := "tst/testall.g",
 Keywords         := [ "Infinite permutation groups", "Permutation groups over rings" ]
 
