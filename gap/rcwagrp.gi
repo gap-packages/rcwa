@@ -427,20 +427,20 @@ InstallMethod( \in,
 
     Info(InfoRCWA,2,"\\in for integral rcwa mapping and -rcwa group");
     if not IsBijective(g)
-    then Info(InfoRCWA,3,"<g> is not bijective."); return false; fi;
+    then Info(InfoRCWA,4,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);
     if IsOne(g) or g in gens or g^-1 in gens then
-      Info(InfoRCWA,3,"<g> = 1 or one of <g> or <g>^-1 ",
+      Info(InfoRCWA,4,"<g> = 1 or one of <g> or <g>^-1 ",
                       "in generator list of <G>.");
       return true;
     fi;
     if not IsSubset(PrimeSet(G),PrimeSet(g)) then
-      Info(InfoRCWA,3,"<g> and <G> have incompatible prime sets.");
+      Info(InfoRCWA,4,"<g> and <G> have incompatible prime sets.");
       return false;
     fi;
     if        IsClassWiseOrderPreserving(G)
       and not IsClassWiseOrderPreserving(g) then
-      Info(InfoRCWA,3,"<G> is class-wise order-preserving, <g> is not.");
+      Info(InfoRCWA,4,"<G> is class-wise order-preserving, <g> is not.");
       return false;
     fi;
     if not IsTame(G) then
@@ -455,7 +455,7 @@ InstallMethod( \in,
       TryNextMethod();
     else
       if   Modulus(G) mod Modulus(g) <> 0 then
-        Info(InfoRCWA,3,"Mod(<g>) does not divide Mod(<G>).");
+        Info(InfoRCWA,4,"Mod(<g>) does not divide Mod(<G>).");
         return false;
       fi;
       if   IsFinite(G) and Order(g) = infinity then
@@ -536,28 +536,44 @@ InstallMethod( Modulus,
 
   function ( G )
 
-    local  m, oldm, maxfinmod, g, gens, step, maxstep;
+    local  m, oldm, maxfinmod, g, gens, els, step, maxstep;
 
     if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
-    if   Length(GeneratorsOfGroup(G)) = 1
-    then gens := GeneratorsOfGroup(G);
-    else gens := Union(List(GeneratorsOfGroup(G), g -> [g, g^-1])); fi;
-    m := 1;
-    for step in [1..2] do
-      m := Maximum(m, Maximum(List(Tuples(gens,step),
-                                   t -> Modulus(Product(t)))));
-    od;
+    gens := GeneratorsOfGroup(G);
+    if IsFlat(G) then
+      Info(InfoRCWA,3,"Modulus: <G> is flat.");
+      m := Lcm(List(gens,Modulus));
+      SetModulusOfRcwaGroup(G,m); return m;
+    fi;
+    if not ForAll(gens,IsTame) then
+      Info(InfoRCWA,3,"Modulus: <G> has a wild generator.");
+      SetModulusOfRcwaGroup(G,0); return 0;
+    fi;
+    if Length(gens) = 1 then
+      Info(InfoRCWA,3,"Modulus: <G> is cyclic and the generator is tame.");
+      m := Lcm(Modulus(gens[1]),   Modulus(gens[1]^-1),
+               Modulus(gens[1]^17),Modulus(gens[1]^97)); # probabilistic.
+      SetModulusOfRcwaGroup(G,m); return m;
+    fi;
+    els := Union(gens,List(Tuples(gens,2),t->t[1]*t[2]),
+                      List(Tuples(gens,2),t->Comm(t[1],t[2])));
+    if not ForAll(els,IsTame) then
+      Info(InfoRCWA,3,"Modulus: <G> has a wild 2-generator product ",
+                      "or 2-generator commutator.");
+      SetModulusOfRcwaGroup(G,0); return 0;
+    fi;
+    m := Lcm(List(els,Modulus));
+    Info(InfoRCWA,1,"Trying highly probabilistic random walk, ",
+                    "initial m = ",m);
     oldm := m; maxfinmod := 10 * m;
     step := 1; maxstep   := 10 * Length(gens);
     g := gens[1];
-    repeat
+    repeat # probabilistic.
       g := g * Random(gens); step := step + 1;
       if Modulus(g) > oldm then oldm := m; m := Modulus(g); step := 1; fi;
-      if m > maxfinmod then return 0; fi;
+      if m > maxfinmod then SetModulusOfRcwaGroup(G,0); return 0; fi;
     until step > maxstep;
-
-    SetModulusOfRcwaGroup(G,m);
-    return m;
+    SetModulusOfRcwaGroup(G,m); return m;
   end );
 
 #############################################################################

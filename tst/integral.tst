@@ -405,7 +405,7 @@ gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
 gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> k := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1],[1,1,1],[1,-1,1]]);;
 gap> std := StandardConjugate(k);
-<bijective integral rcwa mapping with modulus 5, of order 6>
+<bijective integral rcwa mapping with modulus 5>
 gap> tostd := StandardizingConjugator(k);
 <bijective integral rcwa mapping with modulus 5>
 gap> k^tostd = std;
@@ -821,7 +821,7 @@ gap> RankMat(KernelOfActionOnClassPartitionHNFMat(G));
 6
 gap> IsAbelian(K);
 true
-gap> RCWAInfo(3);
+gap> RCWAInfo(4);
 gap> g in G;
 #I  \in for integral rcwa mapping and -rcwa group
 #I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
@@ -829,7 +829,7 @@ true
 gap> RCWAInfo(0);
 gap> g*h^3*g^-2*h in G;
 true
-gap> RCWAInfo(3);
+gap> RCWAInfo(4);
 gap> a in G;
 #I  \in for integral rcwa mapping and -rcwa group
 #I  IsTame:`factors of multiplier and divisor' criterion.
@@ -849,14 +849,10 @@ gap> ac^-1 in G;
 #I  \in for integral rcwa mapping and -rcwa group
 #I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
 true
+gap> RCWAInfo(0);
 gap> ab*bc^2*ac^-3 in G;
-#I  \in for integral rcwa mapping and -rcwa group
-#I  IsTame:`factors of multiplier and divisor' criterion.
-#I  IsTame:`dead end' criterion.
-#I  IsTame:`finite order or flat power' criterion.
-#I  Checking membership of <g>^Order(<h>) in the kernel of RespectedClassParti\
-tion(<G>).
 true
+gap> RCWAInfo(4);
 gap> a in G;
 #I  \in for integral rcwa mapping and -rcwa group
 #I  Mod(<g>) does not divide Mod(<G>).
@@ -885,6 +881,7 @@ gap> G := Group(a,b);
 <integral rcwa group with 2 generators>
 gap> a*b in G;
 #I  \in for integral rcwa mapping and -rcwa group
+#I  Modulus: <G> has a wild generator.
 #I  <G> is wild, trying some short products of gen's...
 #I  <g> identified as some short gen.-product.
 true

@@ -2488,6 +2488,9 @@ InstallMethod( IsTame,
 
     local  R, mult, div;
 
+    if IsFlat(f)
+    then Info(InfoRCWA,4,"IsTame: mapping is flat, hence tame.");
+         return true; fi;
     if not IsBijective(f) then TryNextMethod(); fi;
     Info(InfoRCWA,1,"IsTame:`factors of multiplier and divisor' criterion.");
     R := Source(f); mult := Multiplier(f); div := Divisor(f);
@@ -2511,7 +2514,7 @@ InstallMethod( IsTame,
 
     if   not IsRationalBasedRcwaMapping(f) or not IsBijective(f)
     then TryNextMethod(); fi; # TransitionGraph f. mod. map's curr. not impl.
-    Info(InfoRCWA,1,"IsTame:`dead end' criterion.");
+    Info(InfoRCWA,2,"IsTame:`dead end' criterion.");
     gamma := TransitionGraph(f,Modulus(f));
     for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
     delta := UnderlyingGraph(gamma);
@@ -2533,7 +2536,7 @@ InstallMethod( IsTame,
 
     local  pow, exp, e;
 
-    Info(InfoRCWA,1,"IsTame:`finite order or flat power' criterion.");
+    Info(InfoRCWA,2,"IsTame:`finite order or flat power' criterion.");
     if IsBijective(f) and Order(f) <> infinity then return true; fi;
     pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
     for e in exp do
@@ -2568,7 +2571,7 @@ InstallMethod( IsTame,
       pow := pow * pow; m := Modulus(pow); exp := exp * 2;
     until exp > maxexp or m > maxmod;
     if m > maxmod then
-      Info(InfoRCWA,2,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
+      Info(InfoRCWA,3,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
                       "Modulus ",m,"; this is larger than the square of the",
                       " modulus of the base, so we claim the mapping is ",
                       "wild, although the validity of this criterium has ",
