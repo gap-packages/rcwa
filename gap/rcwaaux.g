@@ -96,7 +96,8 @@ RCWAReadExamples := function ( )
 end;
 MakeReadOnlyGlobal( "RCWAReadExamples" );
 
+ResidueClassUnionViewingFormat( "short" );
+
 #############################################################################
 ##
 #E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-

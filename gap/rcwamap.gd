@@ -5,7 +5,63 @@
 #H  @(#)$Id$
 ##
 ##  This file contains declarations of functions, operations etc. for
-##  computing with residue class-wise affine mappings.
+##  computing with rcwa mappings.
+##
+##  Let $R$ be an infinite euclidean domain which is not a field and all of
+##  whose proper residue class rings are finite. We call a mapping $f$ from
+##  $R$ into itself *residue class-wise affine*, or in short an
+##  *rcwa* mapping, if there is a non-zero modulus $m \in R$ such that
+##  for any residue class $r(m) \in R/mR$ there are coefficients
+##  $a_r, b_r, c_r \in R$ such that the restriction of $f$ to $r(m)$ is
+##  given by
+##  $$
+##    n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r}.
+##  $$
+##  We always assume that all fractions are reduced, i.e. that
+##  $\gcd( a_r, b_r, c_r ) = 1$, and that $m$ is minimal w.r.t. the given
+##  property. Apart from the restrictions imposed by the condition that the
+##  image of any residue class $r(m)$ under $f$ must be a subset of $R$ and
+##  that we cannot divide by 0, the coefficients $a_r$, $b_r$ and $c_r$ can
+##  be any ring elements. We call $m$ the *modulus* of $f$. When talking
+##  about the *product* of some rcwa mappings we always mean their
+##  composition as mappings, and by the inverse of a bijective rcwa mapping
+##  we mean its inverse mapping. 
+##
+##  The set RCWA($R$) $ \ := \ $ $\{ \ g \in$ Sym($R$) $\ | \ g$ is residue
+##  class-wise affine $\}$ is closed under multiplication and taking
+##  inverses (this can be verified easily), hence forms a subgroup of
+##  Sym($R$). While computing with permutations of infinite sets in general
+##  is a very difficult task, the rcwa mappings form a class of permutations
+##  which is accessible to computations.
+##
+##  In order to define an rcwa mapping we need to know about the following:
+##
+##  \beginitems
+##    <Underlying Ring>& The underlying ring $R$ is stored as the
+##    `UnderlyingRing' of the family the rcwa mapping object belongs to,
+##    and as the value of the attribute `Source'.
+##
+##    <Modulus>& The modulus is stored as a component <modulus> in any
+##    rcwa mapping object. 
+##
+##    <Coefficients>& The list of coefficients is stored as a component
+##    <coeffs> in any rcwa mapping object. The component <coeffs> is a list
+##    of $|R$/<modulus>$R|$ lists of three elements of $R$, each, giving
+##    the coefficients $a_r$, $b_r$ and $c_r$ for $r$ running through a set
+##    of representatives for the residue classes (mod <modulus>).
+##    The ordering of these triples is defined by the ordering of the
+##    residues $r$ mod <modulus> in the return value of
+##    `AllResidues( <R>, <modulus> )'.
+##  \enditems
+##
+##  It is always taken care that the entries of the stored coefficient
+##  triples of an rcwa mapping are coprime, that the third entry of any
+##  coefficient triple equals its standard conjugate and that the number of
+##  stored coefficient triples equals the number of residue classes modulo
+##  the modulus of the mapping. Given this, an rcwa mapping determines its
+##  internal representation uniquely -- thus testing rcwa mappings for
+##  equality is computationally very cheap. The above also prevents
+##  unnecessary coefficient explosion.
 ##
 Revision.rcwamap_gd :=
   "@(#)$Id$";
@@ -101,38 +157,21 @@ DeclareGlobalFunction( "ModularRcwaMappingsFamily" );
 
 #############################################################################
 ##
-#R  IsRationalBasedRcwaDenseRep . ."dense" rep. of "rat.-based" rcwa mappings
+#R  IsRcwaMappingStandardRep . . . "standard" representation of rcwa mappings
 ##
-##  Representation of integral rcwa mappings and semilocal integral rcwa
-##  mappings by modulus <modulus> and coefficient list <coeffs>.
+##  Representation of rcwa mappings by modulus <modulus> (in the following
+##  denoted by $m$) and coefficient list <coeffs>.
 ##
-##  The coefficient list is a list of <modulus> lists of 3 integers,
-##  defining the mapping on the residue classes
-##  0 .. <modulus> - 1 (mod <modulus>), in this order.
-##  If <n> mod <modulus> = <r>, then <n> is mapped to
-##  (<coeffs>[<r>+1][1] * <n> + <coeffs>[<r>+1][2])/<coeffs>[<r>+1][3].
+##  The component <coeffs> is a list of $|R/mR|$ lists of three elements of
+##  the underlying ring $R$, each, giving the coefficients $a_r$, $b_r$ and
+##  $c_r$ for $r$ running through a set of representatives for the residue
+##  classes (mod $m$).
 ##
-DeclareRepresentation( "IsRationalBasedRcwaDenseRep",
+##  The ordering of these triples is defined by the ordering of the residues
+##  $r$ mod $m$ in the return value of `AllResidues( <R>, <m> )'.
+##
+DeclareRepresentation( "IsRcwaMappingStandardRep",
                        IsComponentObjectRep and IsAttributeStoringRep,
-                       [ "modulus", "coeffs" ] );
-
-#############################################################################
-##
-#R  IsModularRcwaDenseRep . .`dense' representation of integral rcwa mappings
-##
-##  Representation of modular rcwa mappings by finite field size <q>,
-##  modulus <modulus> and coefficient list <coeffs>.
-##
-##  The coefficient list is a list of <q>^<d> lists of 3 polynomials,
-##  where <d> denotes the degree of <modulus>, defining the mapping on the
-##  residue classes (mod <modulus>), in `natural' order. 
-##  If <P> mod <modulus> = <r>, then <P> is mapped to
-##  (<coeffs>[<pos(r)>][1]*<P>+<coeffs>[<pos(r)>][2])/<coeffs>[<pos(r)>][3],
-##  where <pos(r)> denotes the position of <r> in the sorted list of
-##  polynomials of degree less than <d> over GF(<q>).
-##
-DeclareRepresentation( "IsModularRcwaDenseRep", 
-                       IsComponentObjectRep and IsAttributeStoringRep, 
                        [ "modulus", "coeffs" ] );
 
 #############################################################################
@@ -157,31 +196,32 @@ DeclareRepresentation( "IsModularRcwaDenseRep",
 ##  Construction of the rcwa mapping 
 ##
 ##  \beginlist
-##  \item{(a)}
-##    with modulus <modulus> and coefficients <coeffs> over the ring <R>
-##    resp.
-##  \item{(b)}
-##    with coefficients <coeffs> over the ring <R>, if this information is
-##    sufficient resp.
-##  \item{(c)}
-##    with coefficients <coeffs>, if already this information is sufficient
-##    resp.
-##  \item{(d)}
-##    acting on the translates of <range> by integral multiples
-##    of the length of <range> as the translates of the finite permutation
-##    <perm> to the respective intervals resp.
-##  \item{(e)}
-##    with modulus <modulus> with values prescribed by the list <values>,
-##    which consists of 2 * <modulus> pairs giving preimage and image for
-##    2 points per residue class (mod <modulus>) resp.
-##  \item{(f)}
-##    with coefficients <coeffs> over $\Z_{<pi>}$ resp.
-##  \item{(g)}
-##    with modulus <modulus> and coefficients <coeffs> over GF(<q>)[<x>]
-##    resp.
-##  \item{(h)}
-##    an arbitrary rcwa mapping with residue class cycles as given by
-##    <cycles>.
+##    \item{(a)}
+##      of <R> with modulus <modulus> and coefficients <coeffs>, resp.
+##    \item{(b)}
+##      of $R = \Z$ or $R = \Z_\pi$ with modulus `Length( <coeffs> )'
+##      and coefficients <coeffs>, resp.
+##    \item{(c)}
+##      of $R = \Z$ with modulus `Length( <coeffs> )' and coefficients
+##      <coeffs>, resp.
+##    \item{(d)}
+##      of $R = \Z$, acting on the translates of <range> by integral
+##      multiples of the length of <range> as the translates of the finite
+##      permutation <perm> to the respective intervals resp.
+##    \item{(e)}
+##      of $R = \Z$ with modulus <modulus> and values prescribed by the
+##      list <values>, which consists of 2 * <modulus> pairs giving preimage
+##      and image for 2 points per residue class (mod <modulus>) resp.
+##    \item{(f)}
+##      of $R = \Z_\pi$ with with modulus `Length( <coeffs> )' and
+##      coefficients <coeffs>, resp.
+##    \item{(g)}
+##      of GF(<q>)[<x>] with modulus <modulus> and coefficients <coeffs>, 
+##      resp.
+##    \item{(h)}
+##      an arbitrary rcwa mapping with residue class cycles as given by
+##      <cycles>. The latter is a list of lists of disjoint residue classes
+##      which the mapping should permute cyclically, each.
 ##  \endlist
 ##
 ##  The difference between `RcwaMapping' and `RcwaMappingNC'
@@ -208,9 +248,8 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 ##
 #A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f>
 ##
-##  We define the *multiplier* of an rcwa mapping <f> as the standard
-##  associate of the least common multiple of the coefficients $a_r$
-##  (cp. chapter `introduction' in the manual).
+##  We define the *multiplier* of an rcwa mapping <f> by the standard
+##  associate of the least common multiple of the coefficients $a_r$.
 ##
 DeclareAttribute( "Multiplier", IsRcwaMapping );
 
@@ -218,9 +257,8 @@ DeclareAttribute( "Multiplier", IsRcwaMapping );
 ##
 #A  Divisor( <f> ) . . . . . . . . . . .  the divisor of the rcwa mapping <f>
 ##
-##  We define the *divisor* of an rcwa mapping <f> as the standard
-##  associate of the least common multiple of the coefficients $c_r$
-##  (cp. chapter `introduction' in the manual).
+##  We define the *divisor* of an rcwa mapping <f> by the standard
+##  associate of the least common multiple of the coefficients $c_r$.
 ##
 DeclareAttribute( "Divisor", IsRcwaMapping );
 
@@ -230,7 +268,7 @@ DeclareAttribute( "Divisor", IsRcwaMapping );
 ##
 ##  Prime set of rcwa mapping <f>.
 ##
-##  We define the prime set of an rcwa mapping <f> as the set of all primes
+##  We define the *prime set* of an rcwa mapping <f> by the set of all primes
 ##  dividing the modulus of <f> or some coefficient occuring as factor in the
 ##  numerator or as denominator.
 ##
@@ -410,7 +448,7 @@ DeclareAttribute( "CycleType", IsRcwaMapping );
 
 #############################################################################
 ##
-#A  RespectedClassPartition( <sigma> ) . . . . . . . permuted class partition
+#A  RespectedClassPartition( <sigma> ) . . . . . .  respected class partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
 ##  on which the bijective mapping <sigma> acts as a permutation. 
@@ -434,7 +472,7 @@ DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 ##
 #O  ContractionCentre( <f>, <maxn>, <bound> ) . . . . . .  contraction centre
 ##
-##  Tries to compute the `contraction centre' of an rcwa mapping --
+##  Tries to compute the *contraction centre* of the rcwa mapping <f> --
 ##  assuming its existence this is the uniquely-defined finite subset $S_0$
 ##  of the base ring <R> which is mapped bijectively onto itself under <f>
 ##  and where for any $x \in R$ there is an integer $k$ such that
@@ -465,9 +503,9 @@ DeclareAttribute( "Divergence", IsRcwaMapping );
 #A  ImageDensity( <f> ) . . . . . . . . . . . . . . . .  image density of <f>
 ##
 ##  The image density of the rcwa mapping <f>.
-##  The image density of an rcwa mapping measures how ``dense'' its image is
-##  -- an image density > 1 implies that there have to be ``overlaps'', i.e.
-##  that the mapping cannot be injective, a surjective mapping always
+##  The *image density* of an rcwa mapping measures how ``dense'' its image
+##  is -- an image density > 1 implies that there have to be ``overlaps'',
+##  i.e. that the mapping cannot be injective, a surjective mapping always
 ##  has image density \ge 1, and the image density of a bijective mapping
 ##  is equal to 1.
 ##
@@ -486,4 +524,3 @@ DeclareOperation( "Restriction",
 #############################################################################
 ##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-

@@ -4,64 +4,11 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains implementations of methods and functions for
-##  computing with rcwa mappings.
+##  This file contains implementations of methods and functions for computing
+##  with rcwa mappings of the ring of integers, its semilocalizations and of
+##  polynomial rings in one variable over a finite field.
 ##
-##  We define *residue class-wise affine* mappings (*rcwa mappings*) of a
-##  PID $R$ without zero-divisors such that for any non-zero ideal $I$ of $R$
-##  the quotient $R/I$ is finite, as mappings $f : R \rightarrow R$ whose
-##  restrictions to the residue classes modulo some ideal $I = <m>$ are
-##  restrictions of affine mappings of the quotient field of $R$ to the
-##  respective class. We call $m$ the modulus of $f$. 
-##
-##  The (pointwise) sum and the product (composition) of two such mappings
-##  is an rcwa mapping again (in general certainly not with the same modulus
-##  as the operands).
-##  The bijective rcwa mappings form a multiplicative group that we call
-##  the *rcwa group* of the ring $R$. We write RCWA($R$).
-##  It obviously holds that RCWA($R$) \< Sym($R$), hence the set of elements
-##  of RCWA($R$) can be considered as a class of, usually infinite,
-##  permutations.
-##  We call a group homomorphism $\phi : G \rightarrow$ RCWA($R$), where $G$
-##  is an arbitrary (possibly infinite) group, an $R$-*rcwa-representation*
-##  of $G$.
-##
-##  Caution: The zero mapping multiplicatively is only a right zero element
-##           ($a*0 = 0$ for all $a$, but $0*a = 0$ if and only if
-##           $0^a = 0$), and it holds only the left distributive law
-##           ($a*(b+c) = a*b+a*c$, but not necessary $(a+b)*c = a*c+b*c$).
-##
-##  Some remarks concerning the implementation of rcwa mappings of
-##  the ring of integers and its semilocalizations:
-##
-##  An integral rcwa mapping object <f> just stores the modulus <modulus>
-##  and a coefficients list <coeffs>.
-##  The list <coeffs> consists of <modulus> lists of length 3, where
-##  <coeffs>[<a> + 1]> gives the coefficients of the mapping on the residue
-##  class <a> mod <modulus>, hence if <n> mod <modulus> = <a>, we have 
-##  $$
-##    <n>^<f> = (<coeffs>[<a> + 1][1] * <n> + <coeffs>[<a> + 1][2]) /
-##               <coeffs>[<a> + 1][3]>.
-##  $$
-##  A semilocal integral rcwa mapping object <f> (here, the underlying ring
-##  is $\Z_{(\pi)}$ for a set of primes $\pi$) stores the same information.
-##  The ring which <f> acts on can be accessed as `Source(<f>)'.
-##
-##  Some remarks concerning the implementation of rcwa mappings of
-##  GF(<q>)[<x>] (modular rcwa mappings):
-## 
-##  A modular rcwa mapping object <f> also stores the modulus <modulus> and
-##  a coefficients list <coeffs>.
-##  The meaning of <modulus> and <coeffs> is completely analogous to the
-##  above, where the residue classes for <coeffs> are sorted according to
-##  the default order of their smallest-degree representatives in {\GAP}.
-##  The ring which <f> acts on can again be accessed as `Source(<f>)'.
-##
-##  The following applies to all kinds of rcwa mappings:
-##
-##  To prevent unnecessary coefficient explosion, the mapping <f> is always
-##  represented with the smallest possible modulus, and the 3 coefficients
-##  of <f> on a specific residue class are ensured to be coprime.
+##  See the definitions given in the file `rcwamap.gd'.
 ##
 Revision.rcwamap_gi :=
   "@(#)$Id$";
@@ -183,6 +130,19 @@ InstallTrueMethod( IsRationalBasedRcwaMapping, IsIntegralRcwaMapping );
 InstallTrueMethod( IsRationalBasedRcwaMapping,
                    IsSemilocalIntegralRcwaMapping );
 InstallTrueMethod( IsRcwaMapping, IsModularRcwaMapping );
+
+# Shorthands for commonly used filters.
+
+BindGlobal( "IsRcwaMappingInStandardRep",
+            IsRcwaMapping and IsRcwaMappingStandardRep );
+BindGlobal( "IsIntegralRcwaMappingInStandardRep",
+            IsIntegralRcwaMapping and IsRcwaMappingStandardRep );
+BindGlobal( "IsSemilocalIntegralRcwaMappingInStandardRep",
+            IsSemilocalIntegralRcwaMapping and IsRcwaMappingStandardRep );
+BindGlobal( "IsRationalBasedRcwaMappingInStandardRep",
+            IsRationalBasedRcwaMapping and IsRcwaMappingStandardRep );
+BindGlobal( "IsModularRcwaMappingInStandardRep",
+            IsModularRcwaMapping and IsRcwaMappingStandardRep );
 
 # Bring the rcwa mapping <f> to normalized, reduced form.
 
@@ -324,8 +284,7 @@ InstallOtherMethod( RcwaMappingNC,
     if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
     then TryNextMethod( ); fi;
     Result := Objectify( NewType(    IntegralRcwaMappingsFamily,
-                                     IsIntegralRcwaMapping
-                                 and IsRationalBasedRcwaDenseRep ),
+                                     IsIntegralRcwaMappingInStandardRep ),
                          rec( coeffs  := coeffs,
                               modulus := Length(coeffs) ) );
     SetSource(Result, Integers);
@@ -521,9 +480,8 @@ InstallOtherMethod( RcwaMappingNC,
     if   not IsList(pi) or not ForAll(pi,IsInt) or not ForAll(coeffs,IsList)
     then TryNextMethod(); fi;
     R := Z_pi(pi); fam := RcwaMappingsFamily( R );
-    f := Objectify( NewType(    fam,
-                                IsSemilocalIntegralRcwaMapping
-                            and IsRationalBasedRcwaDenseRep ),
+    f := Objectify( NewType( fam,
+                             IsSemilocalIntegralRcwaMappingInStandardRep ),
                     rec( coeffs  := coeffs,
                          modulus := Length(coeffs) ) );
     SetSource(f,R); SetRange(f,R);
@@ -582,8 +540,7 @@ InstallOtherMethod( RcwaMappingNC,
     ind := IndeterminateNumberOfLaurentPolynomial( coeffs[1][1] );
     R   := PolynomialRing( GF( q ), [ ind ] );
     fam := RcwaMappingsFamily( R );
-    f   := Objectify( NewType( fam, IsModularRcwaMapping
-                               and IsModularRcwaDenseRep ),
+    f   := Objectify( NewType( fam, IsModularRcwaMappingInStandardRep ),
                       rec( coeffs  := coeffs,
                            modulus := modulus ) );
     SetUnderlyingField( f, CoefficientsRing( R ) );
@@ -856,7 +813,7 @@ MakeReadOnlyGlobal( "LaTeXIntegralAffineMapping" );
 ##
 InstallMethod( String,
                "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsIntegralRcwaMappingInStandardRep ], 0,
 
   function ( arg )
 
@@ -874,8 +831,7 @@ InstallMethod( String,
 ##
 InstallMethod( String,
                "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping
-                       and IsRationalBasedRcwaDenseRep ], 0,
+               true, [ IsSemilocalIntegralRcwaMappingInStandardRep ], 0,
 
   function ( arg )
 
@@ -895,7 +851,7 @@ InstallMethod( String,
 ##
 InstallMethod( String,
                "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               true, [ IsModularRcwaMappingInStandardRep ], 0,
 
   function ( arg )
 
@@ -915,8 +871,7 @@ InstallMethod( String,
 ##
 InstallMethod( PrintObj,
                "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ],
-               SUM_FLAGS,
+               [ IsIntegralRcwaMappingInStandardRep ], SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ", f!.coeffs, " )" );
@@ -927,9 +882,8 @@ InstallMethod( PrintObj,
 #M  PrintObj( <f> ) . . . . . . . . . . . for semilocal integral rcwa mapping
 ##
 InstallMethod( PrintObj,
-               "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], SUM_FLAGS,
+               "for semilocal integral rcwa mappings (RCWA)", true,
+               [ IsSemilocalIntegralRcwaMappingInStandardRep ],  SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ",
@@ -942,7 +896,7 @@ InstallMethod( PrintObj,
 ##
 InstallMethod( PrintObj,
                "for modular rcwa mappings (RCWA)", true,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep ], SUM_FLAGS,
+               [ IsModularRcwaMappingInStandardRep ], SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ", Size(UnderlyingField(f)),
@@ -955,14 +909,13 @@ InstallMethod( PrintObj,
 ##
 InstallMethod( ViewObj,
                "for rational-based and modular rcwa mappings (RCWA)",
-               true, [ IsRcwaMapping ], 0,
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
     if IsZero(f) or IsOne(f) then View(f); return; fi;
     if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
-    if not (IsRationalBasedRcwaDenseRep(f) or IsModularRcwaDenseRep(f))
-    then TryNextMethod(); fi;
+    if not IsRcwaMappingStandardRep(f) then TryNextMethod(); fi;
     Print("<");
     if   HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f)))
     then if IsTame(f) then Print("tame "); else Print("wild "); fi; fi;
@@ -988,7 +941,7 @@ InstallMethod( ViewObj,
 ##
 InstallMethod( Display,
                "for rational-based and modular rcwa mappings (RCWA)",
-               true, [ IsRcwaMapping ], 0,
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -996,8 +949,7 @@ InstallMethod( Display,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
-    if not (IsRationalBasedRcwaDenseRep(f) or IsModularRcwaDenseRep(f))
-    then TryNextMethod(); fi;
+    if not IsRcwaMappingStandardRep(f) then TryNextMethod(); fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then name := Name(f); else name := "f"; fi;
     prefix := false; RingString := RingToString(Source(f));
@@ -1151,10 +1103,8 @@ InstallMethod( LaTeXObj,
 InstallMethod( \=,
                "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [     IsRationalBasedRcwaMapping
-                 and IsRationalBasedRcwaDenseRep,
-                     IsRationalBasedRcwaMapping
-                 and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsRationalBasedRcwaMappingInStandardRep,
+                 IsRationalBasedRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     return f!.coeffs = g!.coeffs;
@@ -1167,9 +1117,8 @@ InstallMethod( \=,
 InstallMethod( \=,
                "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep,
-                 IsModularRcwaMapping and IsModularRcwaDenseRep ],
-               0,
+               [ IsModularRcwaMappingInStandardRep,
+                 IsModularRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     return f!.modulus = g!.modulus and f!.coeffs = g!.coeffs;
@@ -1184,8 +1133,8 @@ InstallMethod( \=,
 ##  rcwa mappings than by modulus <modulus> and coefficients list <coeffs>.
 ##
 InstallMethod( \<,
-               "for two rcwa mappings (RCWA)",
-               IsIdenticalObj, [ IsRcwaMapping, IsRcwaMapping ], 0,
+               "for two rcwa mappings (RCWA)", IsIdenticalObj,
+               [ IsRcwaMappingInStandardRep, IsRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     if   f!.modulus <> g!.modulus
@@ -1215,7 +1164,7 @@ SetIsOne( IdentityIntegralRcwaMapping, true );
 ##
 InstallMethod( ZeroOp,
                "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsIntegralRcwaMappingInStandardRep ], 0,
                f -> ZeroIntegralRcwaMapping );
 
 #############################################################################
@@ -1226,8 +1175,8 @@ InstallMethod( ZeroOp,
 ##
 InstallMethod( ZeroOp,
                "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
+               true, [ IsSemilocalIntegralRcwaMappingInStandardRep ], 0,
+
   function ( f )
 
     local  zero;
@@ -1244,7 +1193,7 @@ InstallMethod( ZeroOp,
 ##
 InstallMethod( ZeroOp,
                "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               true, [ IsModularRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -1261,8 +1210,9 @@ InstallMethod( ZeroOp,
 ## 
 ##  <f> = zero rcwa mapping ? 
 ## 
-InstallMethod( IsZero, 
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( IsZero,
+               "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0,
                f -> f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) ) );  
 
 #############################################################################
@@ -1273,7 +1223,7 @@ InstallMethod( IsZero,
 ##
 InstallMethod( OneOp,
                "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsIntegralRcwaMappingInStandardRep ], 0,
                f -> IdentityIntegralRcwaMapping );
 
 #############################################################################
@@ -1284,12 +1234,12 @@ InstallMethod( OneOp,
 ##
 InstallMethod( OneOp,
                "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
+               true, [ IsSemilocalIntegralRcwaMappingInStandardRep ], 0,
+
   function ( f )
 
     local  one;
- 
+
     one := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[1,0,1]] );
     SetIsOne( one, true ); return one;
   end );
@@ -1303,7 +1253,7 @@ InstallMethod( OneOp,
 ##
 InstallMethod( OneOp,
                "for modular rcwa mappings (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               true, [ IsModularRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -1321,40 +1271,33 @@ InstallMethod( OneOp,
 ##  <f> = identity rcwa mapping ? 
 ## 
 InstallMethod( IsOne, 
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0,
                f -> f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) ) );  
-
-#############################################################################
-##
-##  For the following operations `Coefficients', `Modulus', `Multiplier' and
-##  `Divisor', it will be necessary to introduce separate methods for
-##  integral, semilocal integral and modular rcwa mappings, as soon as there
-##  will be other representations than IsRationalBasedRcwaDenseRep resp.
-##  IsModularRcwaDenseRep.
-##
 
 #############################################################################
 ##
 #M  Coefficients( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallOtherMethod( Coefficients,
-                    "for rcwa mappings (RCWA)",
-                    true, [ IsRcwaMapping ], 0, f -> f!.coeffs );
+                    "for rcwa mappings (RCWA)", true,
+                    [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
 
 #############################################################################
 ##
 #M  Modulus( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 InstallMethod( Modulus,
-               "for rcwa mappings (RCWA)",
-               true, [ IsRcwaMapping ], 0, f -> f!.modulus );
+               "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0, f -> f!.modulus );
 
 #############################################################################
 ##
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( Multiplier,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
 
 #############################################################################
@@ -1363,8 +1306,8 @@ InstallMethod( Multiplier,
 ##
 InstallMethod( Multiplier,
                "for semilocal integral rcwa mappings (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping
-                       and IsRationalBasedRcwaDenseRep ], 10,
+               true, [ IsSemilocalIntegralRcwaMappingInStandardRep ], 10,
+
 
   f -> Lcm( List( f!.coeffs,
                   c -> StandardAssociate( Source( f ), c[1] ) ) ) );
@@ -1375,7 +1318,7 @@ InstallMethod( Multiplier,
 ##
 InstallMethod( Divisor,
                "for rcwa mappings (RCWA)",
-               true, [ IsRcwaMapping ], 0,
+               true, [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( List( f!.coeffs, c -> c[ 3 ] ) ) );
 
 #############################################################################
@@ -1426,8 +1369,7 @@ InstallMethod( IsBalanced,
 ##
 InstallMethod( IsClassWiseOrderPreserving,
                "for rational-based rcwa mappings (RCWA)",
-               true, [     IsRationalBasedRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep ], 0,
+               true, [ IsRationalBasedRcwaMappingInStandardRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] >= 0 ) );
 
 #############################################################################
@@ -1475,8 +1417,7 @@ InstallOtherMethod( MovedPoints,
 ##
 InstallMethod( ImageElm,
                "for integral rcwa mapping and integer (RCWA)",
-               true, [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                       IsInt ], 0,
+               true, [ IsIntegralRcwaMappingInStandardRep, IsInt ], 0,
 
   function ( f, n )
 
@@ -1495,8 +1436,8 @@ InstallMethod( ImageElm,
 ##
 InstallMethod( ImageElm,
                "for semilocal integral rcwa mapping and el. of Z_pi (RCWA)",
-               true, [     IsSemilocalIntegralRcwaMapping 
-                       and IsRationalBasedRcwaDenseRep, IsRat ], 0,
+               true, [ IsSemilocalIntegralRcwaMappingInStandardRep, IsRat ],
+               0,
 
   function ( f, n )
 
@@ -1515,8 +1456,7 @@ InstallMethod( ImageElm,
 ##
 InstallMethod( ImageElm,
                "for modular rcwa mapping and polynomial (RCWA)",
-               true, [ IsModularRcwaMapping and IsModularRcwaDenseRep,
-                       IsPolynomial ], 0,
+               true, [ IsModularRcwaMappingInStandardRep, IsPolynomial ], 0,
 
   function ( f, p )
 
@@ -1617,8 +1557,7 @@ InstallMethod( PreImageElm,
 ##
 InstallMethod( PreImagesElm,
                "for integral rcwa mapping and integer (RCWA)", true, 
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                 IsInt ], 0,
+               [ IsIntegralRcwaMappingInStandardRep, IsInt ], 0,
 
   function ( f, n )
     
@@ -1650,8 +1589,7 @@ InstallMethod( PreImagesElm,
 ##
 InstallMethod( PreImagesRepresentative,
                "for integral rcwa mapping and integer (RCWA)", true, 
-               [ IsIntegralRcwaMapping and IsRationalBasedRcwaDenseRep,
-                 IsInt ], 0,
+               [ IsIntegralRcwaMappingInStandardRep, IsInt ], 0,
 
   function ( f, n )
     
@@ -1739,9 +1677,8 @@ InstallMethod( PreImagesSet,
 InstallMethod( \+,
                "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep,
-                IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep],
-               0,
+               [ IsRationalBasedRcwaMappingInStandardRep,
+                 IsRationalBasedRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     
@@ -1776,8 +1713,8 @@ InstallMethod( \+,
 InstallMethod( \+,
                "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep,
-                 IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               [ IsModularRcwaMappingInStandardRep,
+                 IsModularRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     
@@ -1823,9 +1760,8 @@ InstallMethod( AdditiveInverseOp,
 InstallMethod( CompositionMapping2,
                "for two rational-based rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep,
-                IsRationalBasedRcwaMapping and IsRationalBasedRcwaDenseRep],
-               SUM_FLAGS,
+               [ IsRationalBasedRcwaMappingInStandardRep,
+                 IsRationalBasedRcwaMappingInStandardRep ], SUM_FLAGS,
 
   function ( g, f )
 
@@ -1871,8 +1807,8 @@ InstallMethod( CompositionMapping2,
 InstallMethod( CompositionMapping2,
                "for two modular rcwa mappings (RCWA)",
                IsIdenticalObj,
-               [IsModularRcwaMapping and IsModularRcwaDenseRep,
-                IsModularRcwaMapping and IsModularRcwaDenseRep], SUM_FLAGS,
+               [ IsModularRcwaMappingInStandardRep,
+                 IsModularRcwaMappingInStandardRep ], SUM_FLAGS,
 
   function ( g, f )
 
@@ -1932,8 +1868,7 @@ InstallMethod( \*,
 ##
 InstallMethod( InverseOp,
                "for rational-based rcwa mappings (RCWA)", true,
-               [     IsRationalBasedRcwaMapping 
-                 and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsRationalBasedRcwaMappingInStandardRep ], 0,
                
   function ( f )
 
@@ -1974,7 +1909,7 @@ InstallMethod( InverseOp,
 ##
 InstallMethod( InverseOp,
                "for modular rcwa mappings (RCWA)", true,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               [ IsModularRcwaMappingInStandardRep ], 0,
                
   function ( f )
 
@@ -2081,6 +2016,8 @@ InstallMethod( \^,
                else pow := POW(Inverse( f ),-n:UseKernelPOW);
     fi;
 
+    if HasIsTame(f) then SetIsTame(pow,IsTame(f)); fi;
+
     if HasOrder(f) then
       if Order(f) = infinity then SetOrder(pow,infinity); else
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
@@ -2096,8 +2033,7 @@ InstallMethod( \^,
 ##
 InstallMethod( IsInjective,
                "for rational-based rcwa mappings (RCWA)", true,
-               [     IsRationalBasedRcwaMapping 
-                 and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsRationalBasedRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -2131,8 +2067,8 @@ InstallMethod( IsInjective,
 ##
 InstallMethod( IsInjective,
                "for modular rcwa mappings (RCWA)", true,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
-               
+               [ IsModularRcwaMappingInStandardRep ], 0,
+
   function ( f )
 
     local  c, cInv, m, mInv, d, dInv, R, q, x, respols, res, resInv, r, n,
@@ -2174,8 +2110,7 @@ InstallMethod( IsInjective,
 ##
 InstallMethod( IsSurjective,
                "for rational-based rcwa mappings (RCWA)", true,
-               [     IsRationalBasedRcwaMapping 
-                 and IsRationalBasedRcwaDenseRep ], 0,
+               [ IsRationalBasedRcwaMappingInStandardRep ], 0, 
 
   function ( f )
 
@@ -2205,7 +2140,7 @@ InstallMethod( IsSurjective,
 ##
 InstallMethod( IsSurjective,
                "for modular rcwa mappings (RCWA)", true,
-               [ IsModularRcwaMapping and IsModularRcwaDenseRep ], 0,
+               [ IsModularRcwaMappingInStandardRep ], 0,
                
   function ( f )
 
@@ -2274,13 +2209,12 @@ InstallMethod( Order,
 ##
 ##  This method tests whether <f> satisfies one sufficient criterium for
 ##  having infinite order: it checks whether there is a small, smooth
-##  exponent <e> such that <f>^<e> shifts one residue class mod. the modulus
+##  exponent <e> such that <f>^<e> maps one residue class mod. the modulus
 ##  non-identically onto itself; in case <f> does not, it gives up.
 ##
 InstallMethod( Order,
                "for rat.-based rcwa map's, arith. progression method (RCWA)",
-               true, [     IsRationalBasedRcwaMapping
-                       and IsRationalBasedRcwaDenseRep ], 20,
+               true, [ IsRationalBasedRcwaMappingInStandardRep ], 20,
 
   function ( f )
 
@@ -2599,7 +2533,7 @@ InstallMethod( IsTame,
     Info(InfoRCWA,1,"IsTame:`factors of multiplier and divisor' criterion.");
     R := Source(f); mult := Multiplier(f); div := Divisor(f);
     if   Set(Factors(R,mult)) <> Set(Factors(R,div))
-    then return false; else TryNextMethod(); fi;
+    then SetOrder(f,infinity); return false; else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -2625,7 +2559,7 @@ InstallMethod( IsTame,
     delta := UnderlyingGraph(gamma);
     C := ConnectedComponents(delta);
     if   Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
-    then return false; else TryNextMethod(); fi;
+    then SetOrder(f,infinity); return false; else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -2996,7 +2930,8 @@ InstallMethod( CompatibleConjugate,
       return PNew;
     end;
 
-    if not ForAll([g,h],f->IsBijective(f) and IsTame(f)) then return fail; fi;
+    if   not ForAll([g,h],f->IsBijective(f) and IsTame(f))
+    then return fail; fi;
     Pg := RespectedClassPartition(g); Ph := RespectedClassPartition(h);
     lg := Length(Pg); lh := Length(Ph);
     l := Lcm(lg,lh); tg := l/lg; th := l/lh;
