@@ -4,7 +4,8 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains the rcwa mappings used in the examples in the manual.
+##  This file contains the rcwa mappings used in the examples in the manual,
+##  as well as a number of other interesting or illustrative examples.
 ##
 
 # First of all a few useful abbreviations.
@@ -144,9 +145,9 @@ c := Comm(sigmas,sigma1);
 # The following mapping is wild, but all cycles of integers |n| < 29 are
 # finite.
 
-f := RcwaMapping( [ [ 5, 0, 6 ], [ 5, 3, 4 ], [ 5,-4, 6 ], [ 5,-3, 4 ],
-                    [ 5, 4, 6 ], [ 5, 3, 4 ], [ 5, 0, 6 ], [ 5,-3, 4 ],
-                    [ 5,-4, 6 ], [ 5, 3, 4 ], [ 5, 4, 6 ], [ 5,-3, 4 ] ] );
+f5_12 := RcwaMapping([[5, 0,6],[5,3,4],[5,-4,6],[5,-3,4],
+                      [5, 4,6],[5,3,4],[5, 0,6],[5,-3,4],
+                      [5,-4,6],[5,3,4],[5, 4,6],[5,-3,4]]);
 
 
 # An interesting probably contracting mapping (long trajectories ...).
@@ -177,6 +178,26 @@ g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
 f6 := RcwaMapping([[1,0,6],[5,1,6],[7,-2,6],[11,3,6],[11,-2,6],[11,-1,6]]);
 
 
+# Some other probably contracting mappings with divergence very close to 1.
+
+f5 := RcwaMapping([[7,0,5],[7,-2,5],[3,-1,5],[3,1,5],[7,2,5]]);
+f7 := RcwaMapping([[5,0,7],[9,-2,7],[9,3,7],
+                           [5,-1,7],[5,1,7],
+                           [9,-3,7],[9,2,7]]);
+f9 := RcwaMapping([[ 5, 0,9],[16, 2,9],[10,-2,9],
+                   [11, 3,9],[ 5,-2,9],[ 5, 2,9],
+                   [11,-3,9],[10, 2,9],[16,-2,9]]);
+
+
+# Three involutions whose product has coprime multiplier and divisor.
+
+f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]);
+f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]);
+f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]);
+
+f  := f1*f2*f3;
+
+
 # Some other rcwa mappings.
 
 nu := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
@@ -185,6 +206,9 @@ t  := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
+
 
 
 
