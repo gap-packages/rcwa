@@ -2362,23 +2362,76 @@ InstallMethod( PrimeSet,
 
 #############################################################################
 ##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . .  for bijective rcwa mapping
 ##
 ##  The `factors of multiplier and divisor' criterion.
 ##  This is only applicable for bijective mappings, e.g. n -> 2n
 ##  certainly isn't wild.
 ##
 InstallMethod( IsTame,
-               "for bijective rcwa mappings", true, [ IsRcwaMapping ], 50,
+               "for bijective rcwa mappings", true, [ IsRcwaMapping ], 100,
 
   function ( f )
 
     local  R, mult, div;
 
     if not IsBijective(f) then TryNextMethod(); fi;
-    R := Source(f); mult := Multiplier(f:NonZero); div := Divisor(f);
-    if Set(Factors(R,mult)) <> Set(Factors(R,div))
+    Info(InfoRCWA,1,"IsTame:`factors of multiplier and divisor' criterion.");
+    R := Source(f); mult := Multiplier(f); div := Divisor(f);
+    if   Set(Factors(R,mult)) <> Set(Factors(R,div))
     then return false; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . .  for bijective rcwa mapping
+##
+##  The `dead end' criterion.
+##  This is only applicable for bijective mappings.
+##
+InstallMethod( IsTame,
+               "for bijective rcwa mappings", true, [ IsRcwaMapping ], 50,
+
+  function ( f )
+
+    local  gamma, delta, C, r;
+
+    if   not IsRationalBasedRcwaMapping(f) or not IsBijective(f)
+    then TryNextMethod(); fi; # RcwaGraph for mod. mappings curr. not impl.
+    Info(InfoRCWA,1,"IsTame:`dead end' criterion.");
+    gamma := RcwaGraph(f);
+    for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
+    delta := UnderlyingGraph(gamma);
+    C := ConnectedComponents(delta);
+    if   Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
+    then return false; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+##  The `finite order or flat power' criterion.
+##
+InstallMethod( IsTame,
+               "for rcwa mappings", true, [ IsRcwaMapping ], 30,
+
+  function ( f )
+
+    local  pow, exp, e;
+
+    Info(InfoRCWA,1,"IsTame:`finite order or flat power' criterion.");
+    if IsBijective(f) and Order(f) <> infinity then return true; fi;
+    pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
+    for e in exp do
+      pow := pow^e;
+      if IsFlat(pow) then return true; fi;
+      if   IsRationalBasedRcwaMapping(f) and Modulus(pow) > 6 * Modulus(f)
+        or     IsModularRcwaMapping(f)
+           and   DegreeOfLaurentPolynomial(Modulus(pow))
+               > DegreeOfLaurentPolynomial(Modulus(f)) + 2
+      then TryNextMethod(); fi;
+    od;
   end );
 
 #############################################################################
@@ -2396,12 +2449,13 @@ InstallMethod( IsTame,
     local  pow, maxmod, exp, maxexp, m;
 
     if IsBijective(f) and Order(f) < infinity then return true; fi;
+    Info(InfoRCWA,1,"IsTame: probabilistic method.");
     maxmod := Modulus(f)^2; maxexp := maxmod; exp := 1; pow := f;
     repeat
       pow := pow * pow; m := Modulus(pow); exp := exp * 2;
     until exp > maxexp or m > maxmod;
     if m > maxmod then
-      Info(InfoRCWA,1,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
+      Info(InfoRCWA,2,"IsTame: the ",Ordinal(exp)," power of ",f," has ",
                       "Modulus ",m,"; this is larger than the square of the",
                       " modulus of the base, so we claim the mapping is ",
                       "wild, although the validity of this criterium has ",
