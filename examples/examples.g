@@ -137,6 +137,12 @@ sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
 sigmas := sigma1 * sigmas2;
 c := Comm(sigmas,sigma1);
 
+# The following mapping is wild, but all cycles of integers |n| < 29 are
+# finite.
+
+f := RcwaMapping( [ [ 5, 0, 6 ], [ 5, 3, 4 ], [ 5,-4, 6 ], [ 5,-3, 4 ],
+                    [ 5, 4, 6 ], [ 5, 3, 4 ], [ 5, 0, 6 ], [ 5,-3, 4 ],
+                    [ 5,-4, 6 ], [ 5, 3, 4 ], [ 5, 4, 6 ], [ 5,-3, 4 ] ] );
 
 # Some other rcwa mappings.
 
