@@ -68,6 +68,8 @@ gap> StandardizingConjugator(v);
     </Description>
   </ManSection>
 
+  <Alt Only="HTML">&nbsp;</Alt>
+
 </Section>
 
 <!-- ################################################################################# -->
