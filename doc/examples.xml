@@ -112,19 +112,6 @@ about <M>3 \cdot 10^{2197}</M> before descending again this might require
 roughly 10GB (of course when I computed this sequence I did not store all
 the iterates ...).
 
-An heuristic <Q>explanation</Q> of this behaviour is that the divergence
-of <C>f6</C> is much closer to&nbsp;1 than the one of the Collatz
-mapping&nbsp;<M>T</M>:
-
-<Log>
-<![CDATA[
-gap> Divergence(T);
-0.866025
-gap> Divergence(f6);
-0.999746
-]]>
-</Log>
-
 In order to construct the mapping <C>f6</C> we have chosen the denominators
 of the partial mappings to be equal and the numerators to be numbers
 coprime to the common denominator whose product is just a little bit

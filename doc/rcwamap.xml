@@ -327,6 +327,8 @@ The following method makes it unnecessary to typeset rcwa mappings of
     A &LaTeX; representation of the integral rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
+    The output makes use of the &LaTeX; macro package
+    <Package>amsmath</Package>.
     An indentation by <A>Indentation</A> characters can be specified by
     setting this option value accordingly.
     This only applies to rcwa mappings with modulus larger than 1.
@@ -1098,20 +1100,6 @@ Rcwa mapping of GF(2)[x] with modulus x^3+x
   </Description>
 </ManSection>
 
-Multiplying rcwa mappings of the integers and (finite) permutations is
-forbidden, since &GAP;-permutations can only move positive integers
-less than <M>2^{28}</M>; more precisely, one would encounter problems like
-the following:
-
-<Log>
-<![CDATA[
-gap> (1,2)^RcwaMapping([[-1,0,1]]);
-(-2,-1)
-gap> (1,2)^RcwaMapping([[1,2^28,1]]);
-(268435457,268435458)
-]]>
-</Log>
-
 <ManSection>
   <Meth Name="Inverse" Arg="f"/>
   <Returns>
@@ -1623,51 +1611,6 @@ gap> DecreasingOn(a^3);
 gap> S0 := ContractionCentre(T,100,1000);
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Attr Name="Divergence" Arg="f"/>
-  <Returns>
-    A floating point approximation of the <E>divergence</E> of the
-    rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    Ths divergence is conjectured to be a measure for how fast an rcwa
-    mapping contracts (if its divergence is smaller than&nbsp;1) or how
-    fast its trajectories diverge (if its divergence is larger
-    than&nbsp;1), provided that its transition graph for modulus
-    Mod(<A>f</A>) is weakly-connected. <P/>
-
-    We do not give a definition here as in the future it may turn out
-    that defining the divergence in another way than we currently do
-    is more suitable.
-<Example>
-<![CDATA[
-gap> Divergence(T);
-0.866025
-gap> Rat(last^2);
-3/4
-gap> Divergence(g);
-1
-gap> Divergence(a);
-1.06066
-gap> Rat(last^2);
-9/8
-gap> Divergence(a^-1);
-1.05827
-gap> Rat(last^3);
-32/27
-gap> Divergence(u);
-1.15991
-gap> Rat(last^5);
-6561/3125
-gap> Divergence(a)*Divergence(u);
-1.23027
-gap> Divergence(a*u);
-1.23027
 ]]>
 </Example>
   </Description>

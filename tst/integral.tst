@@ -221,6 +221,7 @@ gap> t in G;
 true
 gap> T in G;
 false
+gap> if not IsBound(rc) then rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end; fi;
 gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
@@ -1040,11 +1041,11 @@ gap> AsOrdinaryUnionOfResidueClasses(last);
 2(4) U 3(4)
 gap> PreImagesSet(T,last2);
 [1/8] U [7/8] U [4/24] U [6/24] U [12/24] U [14/24] U [20/24] U [22/24]
-gap> Rho(last);            
+gap> DELTA(last);            
 1/4
 gap> PreImagesSet(T,last2);
 <union of 16 residue classes with fixed rep's>
-gap> Rho(last);            
+gap> DELTA(last);            
 5/4
 gap> AsOrdinaryUnionOfResidueClasses(last2);
 <union of 8 residue classes (mod 16)>

@@ -120,6 +120,9 @@ InstallMethod( RCWACons,
     SetOne( G, IdentityIntegralRcwaMapping );
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
+    SetCentre( G, TrivialIntegralRcwaGroup );
+    SetIsSolvableGroup( G, false );
+    SetIsPerfectGroup( G, false );
     SetRepresentative( G, RcwaMapping( [ [ -1, 0, 1 ] ] ) );
     SetName( G, "RCWA(Z)" );
     return G;
@@ -149,6 +152,8 @@ InstallMethod( RCWACons,
     SetOne( G, id );
     SetIsFinite( G, false ); SetSize( G, infinity );
   # SetIsFinitelyGeneratedGroup( G, false ); ???
+    SetCentre( G, TrivialIntegralRcwaGroup );
+    SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
     SetName( G, Concatenation( "RCWA(", Name(R), ")" ) );
     return G;
@@ -179,6 +184,8 @@ InstallMethod( RCWACons,
     SetOne( G, id );
     SetIsFinite( G, false ); SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
+    SetCentre( G, TrivialIntegralRcwaGroup );
+    SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
     SetName( G, Concatenation( "RCWA(GF(", String(q), ")[x])" ) );
     return G;
