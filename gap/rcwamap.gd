@@ -610,14 +610,14 @@ DeclareSynonym( "ContractionCenter", ContractionCentre );
 
 #############################################################################
 ##
-#A  Divergence( <f> ) . . . . . . . . . . . . . . . . . . . divergence of <f>
+#O  Divergence( <f> ) . . . . . . . . . . . . . . . . . . . divergence of <f>
 ##
 ##  The divergence of the rcwa mapping <f>.
 ##  This is conjectured to be a measure for how fast an rcwa mapping
 ##  contracts (if its divergence is smaller than 1) or how fast its
 ##  trajectories diverge (if its divergence is larger than 1).
 ##
-DeclareAttribute( "Divergence", IsRcwaMapping );
+DeclareOperation( "Divergence", [ IsRcwaMapping ] );
 
 #############################################################################
 ##

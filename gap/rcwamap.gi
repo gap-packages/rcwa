@@ -3354,6 +3354,8 @@ InstallMethod( Divergence,
 
     local  R, pow, m, c, M, approx, prev, facts, p, NrRes, exp, eps, prec;
 
+    Info(InfoWarning,1,"Warning: Divergence: no particular return value ",
+                       "is guaranteed.");
     R := Source(f);
     prec := 10^8; eps := Float(1/prec);
     pow := f; exp := 1; approx := Float(0);
