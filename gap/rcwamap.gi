@@ -1784,6 +1784,35 @@ InstallMethod( AdditiveInverseOp,
 
 #############################################################################
 ##
+#M  \+( <f>, <n> ) . . . . . . . . . . . .  for rcwa mapping and ring element
+##
+##  Pointwise sum of the rcwa mapping <f> and the constant rcwa mapping with
+##  value <n>.
+##
+InstallMethod( \+,
+               "for an rcwa mapping and a ring element (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
+
+  function ( f, n )
+
+    local  R;
+
+    R := Source(f);
+    if not n in R then TryNextMethod(); fi;
+    return f + RcwaMapping(R,One(R),[[0,n,1]]*One(R));
+  end );
+
+#############################################################################
+##
+#M  \+( <n>, <f> ) . . . . . . . . . . . .  for ring element and rcwa mapping
+##
+InstallMethod( \+,
+               "for a ring element and an rcwa mapping (RCWA)",
+               ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
+               function ( n, f ) return f + n; end );
+
+#############################################################################
+##
 #M  CompositionMapping2( <g>, <f> ) . .  for two rational-based rcwa mappings
 ##
 ##  Product (composition) of the rcwa mappings <f> and <g>.
