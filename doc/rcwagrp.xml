@@ -1,13 +1,13 @@
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  rcwagrp.xml                RCWA documentation                 Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                   ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  rcwagrp.xml         RCWA documentation           Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$      ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
 
 <Chapter Label="ch:RcwaGroups">
 <Heading>Residue Class-Wise Affine Groups</Heading>
@@ -15,7 +15,7 @@
 This chapter describes the functionality available for calculating with
 rcwa groups. <P/>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:CategoriesOfRcwaGroups">
 <Heading>The categories of rcwa groups</Heading>
@@ -77,7 +77,8 @@ rcwa groups. <P/>
   <ManSection>
     <Func Name="RCWA" Arg="R"/>
     <Returns>
-      the group RCWA(<A>R</A>) of all bijective rcwa mappings over the ring <A>R</A>.
+      the group RCWA(<A>R</A>) of all bijective rcwa mappings
+      over the ring <A>R</A>.
     </Returns>
     <Description>
       This group is (at least in general) not finitely generated,
@@ -103,7 +104,7 @@ true
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:ContructingRcwaGroups">
 <Heading>Constructing rcwa groups</Heading>
@@ -111,8 +112,8 @@ true
   Rcwa groups can be constructed using either <C>Group</C>,
   <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>, as usual
   (see reference manual).
-  Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C> only
-  finitely generated rcwa groups are supported.
+  Note that currently except of the whole groups <C>RCWA( <A>R</A> )</C>
+  only finitely generated rcwa groups are supported.
 
 <Example>
 <![CDATA[
@@ -225,7 +226,7 @@ Bijective integral rcwa mapping with modulus 4
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:ComputingWithRcwaGroups">
 <Heading>Computing with rcwa groups</Heading>
@@ -235,9 +236,10 @@ Bijective integral rcwa mapping with modulus 4
     <Meth Name="\in" Arg="g, G"/>
     <Description>
       Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
-      This will be successful if <A>G</A> is tame. For wild groups only a number
-      of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C> the method will
-      give information about reasons why <A>g</A> is an element of <A>G</A> or not.
+      This will be successful if <A>G</A> is tame. For wild groups only a
+      number of easy cases are covered. On <C>InfoLevel(InfoRCWA) = 3</C>
+      the method will give information about reasons why <A>g</A> is an
+      element of <A>G</A> or not.
 <Example>
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> u in H;
@@ -252,10 +254,10 @@ false
       Tries to compute the order of the rcwa group <A>G</A>. <P/>
 
       This is a probabilistic method.
-      It may return the size of a proper factor group of <A>G</A>, or run in an
-      infinite loop. You can increase the option value <A>Steps</A> to decrease
-      the probability of getting a wrong result. The default value for
-      <A>Steps</A> is 10.
+      It may return the size of a proper factor group of <A>G</A>,
+      or run in an infinite loop. You can increase the option value
+      <A>Steps</A> to decrease the probability of getting a wrong result.
+      The default value for <A>Steps</A> is 10.
 <Example>
 <![CDATA[
 gap> g1 := RcwaMapping((1,2),[1..2]);
@@ -378,7 +380,8 @@ gap> PrimeSet(H);
     <Description>
       Indicates whether or not the rcwa group <A>G</A> is flat. <P/>
 
-      See also <Ref Prop="IsFlat" Label="Flat rcwa mapping"/> for rcwa mappings.
+      See also <Ref Prop="IsFlat" Label="Flat rcwa mapping"/>
+      for rcwa mappings.
 <Example>
 gap> IsFlat(AlternatingGroup(IsIntegralRcwaGroup,5));
 true
@@ -417,7 +420,8 @@ false
     <Description>
       Indicates whether or not the rcwa group <A>G</A> is tame. <P/>
 
-      See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/> for rcwa mappings.
+      See also <Ref Prop="IsTame" Label="Tame rcwa mapping"/>
+      for rcwa mappings.
 <Example>
 gap> IsTame(G);
 true
@@ -447,8 +451,9 @@ gap> MovedPoints(Group(Comm(a,b),Comm(a,c)));
   <ManSection>
     <Oper Name="ShortOrbits" Arg="G, S, maxlng"/>
     <Returns>
-      a list of all finite orbits of the rcwa group <A>G</A> of maximal length
-      <A>maxlng</A>, which intersect non-trivially with the set <A>S</A>.
+      a list of all finite orbits of the rcwa group <A>G</A> of maximal
+      length <A>maxlng</A>, which intersect non-trivially with the set
+      <A>S</A>.
     </Returns>
     <Description>
 <Example>
@@ -478,16 +483,17 @@ gap> ShortOrbits(Group(u),[-30..30],100);
   </ManSection>
 
   <ManSection>
-    <Meth Name="OrbitsModulo" Arg="G, m" Label="OrbitsModulo for rcwa group"/>
+    <Meth Name="OrbitsModulo" Arg="G, m"
+          Label="OrbitsModulo for rcwa group"/>
     <Returns>
-      `the set of orbits on the set of residue classes (mod <A>m</A>) under the
-      action of <A>G</A>'.
+      `the set of orbits on the set of residue classes (mod <A>m</A>)
+      under the action of <A>G</A>'.
     </Returns>
     <Description>
       This method computes a partition of <C>[0..<A>m</A>-1]</C>, such that
-      <M>i</M> and <M>j</M> lie in the same subset if and only if there is an element
-      <M>g</M> in <A>G</A> such that <M>M_{i,j} = 1</M>, where <M>M</M> is the
-      transition matrix of degree <A>m</A> of <M>g</M>. <P/>
+      <M>i</M> and <M>j</M> lie in the same subset if and only if there is an
+      element <M>g</M> in <A>G</A> such that <M>M_{i,j} = 1</M>, where
+      <M>M</M> is the transition matrix of degree <A>m</A> of <M>g</M>. <P/>
 
       See also <Ref Oper="OrbitsModulo" Label="OrbitsModulo for rcwa mapping"/>
       for rcwa mappings.
@@ -506,9 +512,9 @@ gap> OrbitsModulo(G,72);
     <Attr Name="RespectedClassPartition" Arg="G"
           Label="Respected class partition for rcwa group"/>
     <Description>
-      A partition of the base ring <M>R</M> into a finite number of residue classes,
-      on which the group <A>G</A> acts as a permutation group, and on those elements
-      all elements of <A>G</A> are affine. 
+      A partition of the base ring <M>R</M> into a finite number of residue
+      classes, on which the group <A>G</A> acts as a permutation group, and
+      on those elements all elements of <A>G</A> are affine. 
       The partition is non-trivial as long as the modulus of <A>G</A> is not
       equal to 1. Such a partition exists always if <A>G</A> is tame.
 
@@ -588,8 +594,9 @@ true
   <ManSection>
     <Attr Name="RankOfKernelOfActionOnClassPartition" Arg="G"/>
     <Description>
-      The rank of the largest free abelian subgroup of the kernel of the action
-      of the tame rcwa group <A>G</A> on <C>RespectedClassPartition( <A>G</A> )</C>.
+      The rank of the largest free abelian subgroup of the kernel of the
+      action of the tame rcwa group <A>G</A> on
+      <C>RespectedClassPartition( <A>G</A> )</C>.
 <Example>
 <![CDATA[
 gap> RankOfKernelOfActionOnClassPartition(G);
@@ -621,8 +628,8 @@ true
     <Attr Name="KernelOfActionOnClassPartitionHNFMat" Arg="G"/>
     <Description>
       A matrix of vectors in Hermite Normal Form spanning the lattice
-      corresponding to the kernel of the action of the tame rcwa group <A>G</A>
-      on <C>RespectedClassPartition( <A>G</A> )</C>.
+      corresponding to the kernel of the action of the tame rcwa group
+      <A>G</A> on <C>RespectedClassPartition( <A>G</A> )</C>.
 <Log>
 <![CDATA[
 gap> L := KernelOfActionOnClassPartitionHNFMat(G);
@@ -638,14 +645,16 @@ gap> L := KernelOfActionOnClassPartitionHNFMat(G);
   </ManSection>
 
   <ManSection>
-    <Attr Name="FlatConjugate" Arg="G" Label="Flat conjugate for rcwa group"/>
+    <Attr Name="FlatConjugate" Arg="G"
+          Label="Flat conjugate for rcwa group"/>
     <Description>
       Some flat conjugate of the tame rcwa group <A>G</A> in the whole group
       RCWA(<M>R</M>).
       Since this is not defined uniquely, methods for this operation
       will just choose one such group. <P/>
 
-      See also <Ref Attr="FlatConjugate" Label="Flat conjugate for rcwa mapping"/>
+      See also <Ref Attr="FlatConjugate"
+                    Label="Flat conjugate for rcwa mapping"/>
       for rcwa mappings.
 <Example>
 <![CDATA[
@@ -773,7 +782,7 @@ gap> RCWAInfo(0);
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:PropertiesOfRCWA_Z">
 <Heading>Properties of RCWA(Z)</Heading>
@@ -796,7 +805,7 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:PredefinedRcwaGroups">
 <Heading>Predefined rcwa groups</Heading>
@@ -843,8 +852,8 @@ gap> Size(G);
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 </Chapter>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

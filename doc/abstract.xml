@@ -1,32 +1,34 @@
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  abstract.xml                RCWA documentation                Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                   ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  abstract.xml         RCWA documentation          Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$      ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
 
 <Abstract>
 
   This package for &GAP; 4 (at least version 4.3) provides routines for 
-  computations with <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine mappings
-  of <M>\Z</M>, its semilocalizations <M>\Z_\pi</M> and the polynomial
-  rings GF( <M>q</M> )[ <M>x</M> ], hence it can be used for computations in certain
-  types of infinite permutation groups.
+  computations with <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine
+  mappings of <M>\Z</M>, its semilocalizations <M>\Z_\pi</M> and the
+  polynomial rings GF( <M>q</M> )[ <M>x</M> ], hence it can be used for
+  computations in certain types of infinite permutation groups.
 
   It is completely written in the &GAP; language and contains /
   requires no external binaries.
 
+  The package &ResClasses; is needed for dealing with all of the basic
+  residue classes stuff, and the package <Package>GRAPE</Package>
+  <Cite Key="GRAPE"/> is needed for dealing with graphs of rcwa mappings.
+
   For the documentation, the package &GAPDoc; <Cite Key="GAPDoc"/> is needed.
 
-  The package <Package>GRAPE</Package><Cite Key="GRAPE"/> is needed for dealing with
-  graphs of rcwa mappings.
-
-  &RCWA; must be installed in the <F>pkg</F> subdirectory of the &GAP; distribution.
+  &RCWA; must be installed in the <F>pkg</F> subdirectory of the
+  &GAP; distribution.
 
 </Abstract>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

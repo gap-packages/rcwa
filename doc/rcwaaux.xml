@@ -1,36 +1,37 @@
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  rcwaaux.xml                RCWA documentation                 Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                    ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  rcwaaux.xml         RCWA documentation           Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$       ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
 
 <Chapter Label="ch:AuxiliaryFunctions">
 <Heading>Auxiliary functions</Heading>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:BuildingTheManual">
 <Heading>Building the manual</Heading>
 
   <ManSection>
-    <Func Name="BuildRCWAManual" Arg=""/>
+    <Func Name="RCWABuildManual" Arg=""/>
     <Returns>Nothing.</Returns>
     <Description>
-      This function builds the manual of the &RCWA; package in the file formats
-      &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
+      This function builds the manual of the &RCWA; package in the file
+      formats &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
 
-      This is done using the &GAPDoc; package by Frank Lübeck and Max Neunhöffer.
+      This is done using the &GAPDoc; package by Frank Lübeck and
+      Max Neunhöffer.
     </Description>
   </ManSection>
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:TheTestingRoutine">
 <Heading>The testing routine</Heading>
@@ -83,13 +84,13 @@
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:ReadingTheExamples">
 <Heading>Reading the examples file</Heading>
 
   <ManSection>
-    <Func Name="ReadRCWAExamples" Arg=""/>
+    <Func Name="RCWAReadExamples" Arg=""/>
     <Returns>Nothing.</Returns>
     <Description>
       This function reads the examples file of the &RCWA; package
@@ -99,22 +100,8 @@
 
 </Section>
 
-<!-- ################################################################################# -->
-
-<Section Label="sec:TheColorMarkup">
-<Heading>The color markup</Heading>
-
-  By default, &RCWA; switches on coloring of &GAP; prompts and user input and uses
-  colored markup for displaying its online help texts. <P/>
-
-  If you do not like this or if your system does not support it, you can switch this
-  off by setting the option value <C>BlackAndWhite</C> to <C>true</C> when loading
-  the package: <C>RequirePackage( "rcwa" : BlackAndWhite );</C>.
-
-</Section>
-
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 </Chapter>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

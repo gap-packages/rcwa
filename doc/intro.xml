@@ -1,17 +1,17 @@
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  intro.xml                 RCWA documentation                  Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                      ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  intro.xml          RCWA documentation            Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$         ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
 
 <Chapter Label="ch:Introduction"><Heading>Introduction</Heading>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Section Label="sec:Definitions"><Heading>Definitions</Heading>
 
@@ -45,22 +45,22 @@
   generating the ideal <M>I_f</M>,
   <Index Key="rcwa mapping" Subkey="multiplier"></Index>
   the <E>multiplier</E> Mult(<M>f</M>) of <M>f</M> as the standard
-  associate of the least common multiple of the coefficients <M>a_r</M> in the
-  numerators,
+  associate of the least common multiple of the coefficients <M>a_r</M> in
+  the numerators,
   <Index Key="rcwa mapping" Subkey="divisor"></Index>
   the <E>divisor</E> Div(<M>f</M>) of <M>f</M> as the standard
-  associate of the least common multiple of the coefficients <M>c_r</M> in the
-  denominators and
+  associate of the least common multiple of the coefficients <M>c_r</M> in
+  the denominators and
   <Index Key="rcwa mapping" Subkey="flat"></Index>
   we say that an rcwa mapping is <E>flat</E> in case its multiplier
   and divisor are both equal to 1.
   <Index Key="rcwa mapping" Subkey="prime set"></Index>
-  We call the set of all prime divisors of the modulus, the multiplier and the divisor
-  of an rcwa mapping <M>f</M> the <E>prime set</E> of <M>f</M>.
+  We call the set of all prime divisors of the modulus, the multiplier and
+  the divisor of an rcwa mapping <M>f</M> the <E>prime set</E> of <M>f</M>.
   <Index Key="rcwa mapping" Subkey="graph"></Index>
-  We define the <E>transition graph</E> <Alt Only="LaTeX"><M>\Gamma_f</M></Alt>
-  <Alt Not="LaTeX"><M>G_f</M></Alt> for modulus <M>m</M> of an rcwa mapping <M>f</M>
-  as follows:
+  We define the <E>transition graph</E>
+  <Alt Only="LaTeX"><M>\Gamma_f</M></Alt> <Alt Not="LaTeX"><M>G_f</M></Alt>
+  for modulus <M>m</M> of an rcwa mapping <M>f</M> as follows:
   <Enum>
     <Item>
       The vertices are the residue classes (mod <M>m</M>).
@@ -75,18 +75,18 @@
   <Index Key="rcwa mapping" Subkey="transitional rank"></Index>
   <Index Key="rcwa mapping" Subkey="transitional determinant"></Index>
   We define the <E>transition matrix</E> <M>M</M> of degree <M>d</M> of the
-  integral or semilocal integral rcwa mapping <M>f</M> by <M>M_{i+1,j+1} = 1</M> if
-  there is an <M>n \equiv i</M> (mod <M>d</M>) such that <M>n^f \equiv j</M>
-  (mod <M>d</M>), and 0 if not.
-  Their rank, trace and the absolute value of its determinant does not depend on the
-  particular assignment of the residue classes (mod <M>d</M>) to rows/columns, hence
-  accordingly, we can define the <E>transitional rank</E>, the <E>transitional trace</E>
-  resp. the <E>transitional determinant</E> of <M>f</M> of degree <M>d</M> for any
-  rcwa mapping. <P/>
+  integral or semilocal integral rcwa mapping <M>f</M> by
+  <M>M_{i+1,j+1} = 1</M> if there is an <M>n \equiv i</M> (mod <M>d</M>) such
+  that <M>n^f \equiv j</M> (mod <M>d</M>), and 0 if not.
+  Their rank, trace and the absolute value of its determinant does not depend
+  on the particular assignment of the residue classes (mod <M>d</M>) to
+  rows/columns, hence accordingly, we can define the <E>transitional
+  rank</E>, the <E>transitional trace</E> resp. the <E>transitional
+  determinant</E> of <M>f</M> of degree <M>d</M> for any rcwa mapping. <P/>
  
   We set
-  RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>) <M>\ | \ g</M>
-  is residue class-wise affine <M>\}</M> }.
+  RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>) <M>\ |
+  \ g</M> is residue class-wise affine <M>\}</M> }.
   The set RCWA(<M>R</M>) is closed under multiplication and taking
   inverses (this can be verified easily), hence forms a subgroup of
   Sym(<M>R</M>).
@@ -107,22 +107,22 @@
   <Index Key="rcwa group" Subkey="semilocal integral"></Index>
   <Index Key="rcwa group" Subkey="modular"></Index>
   <Index Key="rcwa group" Subkey="rational-based"></Index>
-  In case that the underlying ring <M>R</M> is the ring of integers, we call an
-  rcwa mapping <M>f</M> an <E>integral rcwa mapping</E>, in case
+  In case that the underlying ring <M>R</M> is the ring of integers, we call
+  an rcwa mapping <M>f</M> an <E>integral rcwa mapping</E>, in case
   <M>R = \Z_\pi</M> for a set of primes <M>\pi</M> we call <M>f</M>
-  a <E>semilocal integral rcwa mapping</E> and in case <M>R</M> is a polynomial
-  ring in one variable over a finite field we call <M>f</M> a <E>modular rcwa
-  mapping</E>. Since integral and semilocal integral rcwa mappings share many
-  important properties, we make use of the generic term <E>rational-based rcwa
-  mapping</E>. In the same way we define integral, semilocal integral, modular
-  and rational-based rcwa groups.
+  a <E>semilocal integral rcwa mapping</E> and in case <M>R</M> is a
+  polynomial ring in one variable over a finite field we call <M>f</M> a
+  <E>modular rcwa mapping</E>. Since integral and semilocal integral rcwa
+  mappings share many important properties, we make use of the generic term
+  <E>rational-based rcwa mapping</E>. In the same way we define integral,
+  semilocal integral, modular and rational-based rcwa groups.
   <Index Key="rcwa mapping" Subkey="class-wise order-preserving"></Index>
-  We call a rational-based rcwa mapping <E>class-wise order-preserving</E> if
-  its restriction to any residue class modulo its modulus is
+  We call a rational-based rcwa mapping <E>class-wise order-preserving</E>
+  if its restriction to any residue class modulo its modulus is
   order-preserving, and
   <Index Key="rcwa group" Subkey="class-wise order-preserving"></Index>
-  we call a rational-based rcwa group <E>class-wise order-preserving</E> if all of
-  its elements are. <P/>
+  we call a rational-based rcwa group <E>class-wise order-preserving</E> if
+  all of its elements are. <P/>
 
   <Index Key="rcwa group" Subkey="prime set"></Index>
   We define the <E>prime set</E> of an rcwa group as the union of the prime
@@ -143,15 +143,15 @@
 
   <Index Key="rcwa representation">rcwa representation</Index>
   <Index Key="rcwa representation" Subkey="definition"></Index>
-  We define an (<M>R</M>-) <E>rcwa representation</E> of a group <M>G</M> as an
-  homomorphism from <M>G</M> to RCWA(<M>R</M>). <P/>
+  We define an (<M>R</M>-) <E>rcwa representation</E> of a group <M>G</M> as
+  an homomorphism from <M>G</M> to RCWA(<M>R</M>). <P/>
 
   For an introduction to this topic, see <Cite Key="Kohl02" />.
 
 </Section>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 </Chapter>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

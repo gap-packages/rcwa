@@ -1,23 +1,23 @@
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  preface.xml                RCWA documentation                 Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                    ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  preface.xml         RCWA documentation           Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$       ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
 
 <Chapter Label="ch:preface"><Heading>Preface</Heading>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 This package deals with a certain kind of infinite permutations,
 namely the <Q>residue class-wise affine</Q> ones.
 In particular, it provides functionality for doing computations with such
-mappings over the ring of integers, its semilocalizations and over polynomial
-rings in one variable over a finite field.
+mappings over the ring of integers, its semilocalizations and over
+polynomial rings in one variable over a finite field.
 In the introduction, I will give brief definitions. <P/>
 
 It seems that there is just no literature concerning this topic,
@@ -38,8 +38,8 @@ representations of groups seem to be an interesting topic of its own. <P/>
 
 I would be grateful for any bug reports, comments or suggestions.
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 </Chapter>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

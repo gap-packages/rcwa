@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
- [ <!ENTITY RCWA "<Package>RCWA</Package>"> ] >
+ [ <!ENTITY RCWA "<Package>RCWA</Package>">
+   <!ENTITY ResClasses "<Package>ResClasses</Package>"> ] >
 
-<!-- ################################################################################# -->
-<!-- ##                                                                             ## -->
-<!-- ##  rcwa.xml                  RCWA documentation                  Stefan Kohl  ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  $Id$                       ## -->
-<!-- ##                                                                             ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,                 ## -->
-<!-- ##  Universit\"at Stuttgart, Germany                                           ## -->
-<!-- ##                                                                             ## -->
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  rcwa.xml           RCWA documentation            Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$          ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
      
 <Book Name="RCWA"> 
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <TitlePage>
   <Title>RCWA</Title>
@@ -37,24 +38,23 @@
   </Author>
   <Date>January 10, 2003</Date>
   <Copyright> &copyright; 2002 by Stefan Kohl <P/>
-              After an official release, we adopt the copyright regulations of &GAP;
-              as detailed in the copyright notice in the &GAP; manual.
+              After an official release, we adopt the copyright regulations
+              of &GAP; as detailed in the copyright notice in the
+              &GAP; manual.
   </Copyright>
   <#Include SYSTEM "abstract.xml">
 </TitlePage>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <TableOfContents/>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Body>
 
 <#Include SYSTEM "preface.xml">
 <#Include SYSTEM "intro.xml">
-<#Include SYSTEM "z_pi.xml">
-<#Include SYSTEM "resclass.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
 <#Include SYSTEM "rcwainfo.xml">
@@ -63,14 +63,14 @@
 
 </Body>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 <Bibliography Databases="rcwa.bib"/>
 
 <TheIndex/>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->
 
 </Book>
 
-<!-- ################################################################################# -->
+<!-- #################################################################### -->

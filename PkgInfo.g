@@ -16,7 +16,7 @@ SetPackageInfo( rec(
 
 PkgName          := "RCWA",
 Version          := "1.0",
-Date             := "21/12/2002",
+Date             := "21/02/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -55,12 +55,13 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
-                         NeededOtherPackages    := [ ["GAPDoc",">=0.99"], ["GRAPE",">=4.0"] ],
+                         NeededOtherPackages    := [ ["ResClasses", ">=1.0"], ["GRAPE",">=4.0"],
+                                                     ["GAPDoc",">=0.99"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,
-BannerString     := Concatenation( "\nLoading RCWA 1.0",
+BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue [C]lass-[W]ise [A]ffine mappings and groups)",
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 AutoLoad         := false,

@@ -9,7 +9,8 @@ computations in certain types of infinite permutation groups.
 It is completely written in the GAP language and contains /
 requires no external binaries.
 
-Recent versions of the packages `GAPDoc' and `GRAPE' are needed.
+Recent versions of the packages `ResClasses', `GRAPE' and `GAPDoc'
+are needed.
 
 The package `RCWA' must be installed in the pkg/ - subdirectory
 of the GAP distribution.
@@ -17,7 +18,7 @@ of the GAP distribution.
 After extracting the distribution file in the proper place,
 you can load the package via RequirePackage( "rcwa" );
 
-Then you can build the manual by issueing BuildRCWAManual( );
+Then you can build the manual by issueing RCWABuildManual( );
 (this works only under UNIX, but should not be necessary
 unless you got the package from CVS, since the distribution file
 already contains all files produced by this function).
@@ -29,3 +30,4 @@ If you have problems with this package, wish to make comments
 or suggestions, or if you find bugs, please send e-mail to
 
 Stefan Kohl, kohl@mathematik.uni-stuttgart.de
+
