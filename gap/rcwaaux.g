@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  rcwa.g                  GAP4 Package `RCWA'                   Stefan Kohl
+#W  rcwaaux.g                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
 #H  @(#)$Id$
 ##
@@ -9,13 +9,137 @@
 ##
 ##  This file contains auxiliary functions for the RCWA package.
 ##
-Revision.rcwa_g :=
+Revision.rcwaaux_g :=
   "@(#)$Id$";
 
 # Missing `String' method for Integers.
 
 InstallMethod( String, "for Integers", true, [ IsIntegers ], 0,
                Ints -> "Integers" );
+
+#############################################################################
+##
+#F  ExtRepOfPolynomial_String( <obj>, <names>, [<bra>] )
+##
+##  If the optional third argument is `true', brackets are put around the
+##  expression if any summands occur.
+##  If the optional fourth argument is `true' then brackets are put around
+##  the expression if at least one `\*' sign occurs in the string.
+##
+##  Reverse monomial ordering in GAP 4.3. The leading term should be printed
+##  first. This function is taken from ratfun.gi in the library, and will
+##  be included in GAP 4.4.
+##
+if not CompareVersionNumbers( VERSION, "4r4" ) then
+
+  MakeReadWriteGlobal( "ExtRepOfPolynomial_String" );
+
+  ExtRepOfPolynomial_String := function(arg)
+
+  local fam,ext,zero,one,mone,i,j,ind,bra,str,s,b,c, mbra,le;
+
+    fam:=arg[1]; ext:=arg[2]; bra:=false; mbra:= false; str:="";
+    zero := fam!.zeroCoefficient; one := fam!.oneCoefficient; mone := -one;
+    le:=Length(ext); if le=0 then return String(zero); fi;
+    for i in [ le-1,le-3..1] do
+      if i<le-1 then
+        # this is the second summand, so arithmetic will occur
+        bra:=true;
+      fi;
+      if ext[i+1]=one then
+        if i<le-1 then Add(str,'+'); fi; c:=false;
+      elif ext[i+1]=mone then Add(str,'-'); c:=false;
+      else
+        s:=String(ext[i+1]); b:=false;
+        if not (IsRat(ext[i+1]) or IsFFE(ext[i+1])) then
+	  # do 1-st level arithmetics occur in s?
+          # we could do better by checking bracketing as well, but this
+	  # would be harder.
+          j:=2;
+          while j<=Length(s) do
+            if s[j]='+' or s[j]='-' then b:=true; j:=Length(s)+1; fi;
+            j:=j+1;
+          od;
+	  if b then s:=Concatenation("(",s,")"); fi;
+        fi;
+        if i<le-1 and s[1]<>'-' then Add(str,'+'); fi;
+        Append(str,s); c:=true;
+      fi;
+      if Length(ext[i])<2 then
+        # trivial monomial. Do we have to add a '1'?
+        if c=false then Append(str,String(one)); fi;
+      else
+        if c then Add(str,'*'); mbra:= true; fi;
+        for j  in [ 1, 3 .. Length(ext[i])-1 ]  do
+	  if 1 < j  then Add(str,'*'); mbra:= true; fi;
+          ind:=ext[i][j];
+          if HasIndeterminateName(fam,ind) then
+            Append(str,IndeterminateName(fam,ind));
+          else Append(str,"x_"); Append(str,String(ind)); fi;
+          if 1 <> ext[i][j+1] then
+            Add(str,'^'); Append(str,String(ext[i][j+1]));
+	  fi;
+        od;
+      fi;
+    od;
+    if    ( bra and Length( arg ) >= 3 and arg[3] = true )
+       or ( mbra and Length( arg ) = 4 and arg[4] = true ) then
+      str:=Concatenation("(",str,")");
+    fi;
+    return str;
+  end;
+
+  MakeReadOnlyGlobal( "ExtRepOfPolynomial_String" );
+
+  # Another function for the same purpose, taken from lib/ratfunul.gi.
+
+  MakeReadWriteGlobal( "DoPrintUnivariateLaurent" );
+
+  DoPrintUnivariateLaurent := function(fam,cofs,val,ind)
+
+  local zero,one,mone,i,c,name,lc;
+
+    if HasIndeterminateName(fam,ind) then
+      name:=IndeterminateName(fam,ind);
+    else
+      name:=Concatenation("x_",String(ind));
+    fi;
+    zero := fam!.zeroCoefficient; one := fam!.oneCoefficient;
+    mone := -one;
+    if Length(cofs)=0 then Print(zero); fi;
+    lc:=Length(cofs);
+    for i  in [ lc,lc-1..1 ]  do
+      if cofs[i] <> zero  then
+        # print a '+' if necessary
+        c := "*";
+        if i <lc  then
+          if IsRat(cofs[i]) then
+            if   cofs[i] = one  then Print( "+" ); c := "";
+            elif cofs[i] > 0    then Print( "+", cofs[i] );
+            elif cofs[i] = mone then Print( "-" ); c := "";
+            else Print( cofs[i] );
+            fi;
+          elif cofs[i] = one  then Print( "+" ); c := "";
+          elif cofs[i] = mone then Print( "-" ); c := "";
+          else Print( "+", cofs[i] );
+          fi;
+        elif cofs[i] = one  then c := "";
+        elif cofs[i] = mone then Print("-"); c := "";
+        else Print(cofs[i]);
+        fi;
+        if i+val <> 1 then
+          Print( c, name );
+          if i+val <> 2 then Print( "^", i+val-1 ); fi;
+        elif cofs[i] = one  then Print(one);
+        elif cofs[i] = mone then Print(one);
+        fi;
+      fi;
+    od;
+  end;
+
+  MakeReadOnlyGlobal( "DoPrintUnivariateLaurent" );
+
+fi;
 
 #############################################################################
 ##
@@ -84,7 +208,8 @@ fi;
 ##  This function builds the manual of the RCWA package in the file formats
 ##  &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank LÅbeck and Max Neunhˆffer.
+##  This is done using the GAPDoc package by Frank L\"ubeck and
+##  Max Neunh\"offer.
 ##
 BuildRCWAManual := function ( )
 
@@ -92,7 +217,7 @@ BuildRCWAManual := function ( )
 
   RcwaDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "rcwa/" );
   MakeGAPDocDoc( Concatenation( RcwaDir, "doc/" ), "rcwa.xml",
-                 [ "../gap/rcwa.g",
+                 [ "../gap/rcwaaux.g",
                    "../gap/z_pi.gd", "../gap/z_pi.gi",
                    "../gap/resclass.gd", "../gap/resclass.gi",
                    "../gap/rcwamap.gd", "../gap/rcwamap.gi",
@@ -174,4 +299,4 @@ MakeReadOnlyGlobal( "ReadRCWAExamples" );
 
 #############################################################################
 ##
-#E  rcwa.g . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+#E  rcwaaux.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
