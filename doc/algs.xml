@@ -120,7 +120,7 @@ They are listed in alphabetical order.
     <C>Divisor(<A>f</A>)</C>
   </Mark>
   <Item>
-    Gcd of coefficients, as indicated.
+    Lcm of coefficients, as indicated.
   </Item>
 
   <Mark>
@@ -435,7 +435,7 @@ They are listed in alphabetical order.
     <C>Multiplier(<A>f</A>)</C>
   </Mark>
   <Item>
-    Gcd of coefficients, as indicated.
+    Lcm of coefficients, as indicated.
   </Item>
 
   <Mark>

@@ -1107,10 +1107,10 @@ to compute the derived subgroup of a tame rcwa group.
 gap> G := Group(g,h);;
 gap> Size(G);
 infinity
-gap> rcp := RespectedPartition(G);
+gap> P := RespectedPartition(G);
 [ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
   2(24), 8(24), 14(24), 20(24) ]
-gap> Permutation(g,rcp);
+gap> Permutation(g,P);
 (1,11,2,5,3,12,4)(6,13,7,10,8,14,9)
 ]]>
 </Example>
@@ -1129,7 +1129,7 @@ gap> Permutation(g,rcp);
 gap> H := ActionOnRespectedPartition(G);
 Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
     14,9) ])
-gap> H = Action(G,rcp);
+gap> H = Action(G,P);
 true
 gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
 [ 322560, 161280, true ]
