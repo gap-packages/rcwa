@@ -983,8 +983,8 @@ InstallMethod( KernelOfActionOnClassPartition,
       elH := elH * h[i];
       elG := elG * g[i];
     until rank = RankOfKernelOfActionOnClassPartition(G)
-          and nr - lasthit > 100; # lasthit check just as a confirmation ... 
-    erg := HermiteNormalFormIntegerMatTransforms(L{[1..rank]});
+          and nr - lasthit > 100; # lasthit check just as a confirmation ...
+    erg := HermiteNormalFormIntegerMatTransform(L{[1..rank]});
     LHNF := erg.normal; T := erg.rowtrans;
     genKHNF := List([1..rank],
                     i->Product(List([1..rank],j->genK[j]^T[i][j])));
@@ -1156,3 +1156,5 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 #############################################################################
 ##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
