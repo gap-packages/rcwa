@@ -376,15 +376,15 @@ infinity
 gap> h in G;
 false
 gap> std := StandardConjugate(g);
-<integral rcwa mapping with modulus 7>
+<bijective integral rcwa mapping with modulus 7, of order 7>
 gap> tostd := StandardizingConjugator(g);
-<integral rcwa mapping with modulus 12>
+<bijective integral rcwa mapping with modulus 12>
 gap> g^tostd = std;
 true
 gap> std := StandardConjugate(ab);
-<integral rcwa mapping with modulus 7>
+<bijective integral rcwa mapping with modulus 7, of order 6>
 gap> tostd := StandardizingConjugator(ab);
-<integral rcwa mapping with modulus 18>
+<bijective integral rcwa mapping with modulus 36>
 gap> ab^tostd = std;
 true
 gap> r := g^ab;
@@ -396,36 +396,22 @@ IdentityMapping( Integers )
 gap> k := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
 >                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);;
 gap> std := StandardConjugate(k);
-<integral rcwa mapping with modulus 3>
+<bijective integral rcwa mapping with modulus 3, of order 3>
 gap> tostd := StandardizingConjugator(k);
-<integral rcwa mapping with modulus 16>
+<bijective integral rcwa mapping with modulus 16>
 gap> k^tostd = std;
 true
 gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
 gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
-gap> CycleType(k);
-[ [  ], [ 3 ] ]
-gap> CycleType(ab);
-[ [  ], [ 1, 6 ] ]
-gap> CycleType(v);
-[ [ 6 ], [  ] ]
-gap> CycleType(w);
-[ [ 8 ], [  ] ]
-gap> CycleType(g);
-[ [  ], [ 7 ] ]
-gap> CycleType(h);
-[ [  ], [ 3, 4 ] ]
 gap> k := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1],[1,1,1],[1,-1,1]]);;
-gap> CycleType(k);
-[ [ 6 ], [ 2 ] ]
 gap> std := StandardConjugate(k);
-<integral rcwa mapping with modulus 5>
+<bijective integral rcwa mapping with modulus 5, of order 6>
 gap> tostd := StandardizingConjugator(k);
-<integral rcwa mapping with modulus 5>
+<bijective integral rcwa mapping with modulus 5>
 gap> k^tostd = std;
 true
 gap> Order(tostd);
-2
+6
 gap> Image(k,ResidueClass(Integers,3,2));
 Union of the residue classes 1(15), 9(15), 10(15), 12(15) and 13(15)
 gap> PreImage(k,last);
@@ -588,14 +574,13 @@ gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
 gap> G := Group(g1,g2);
 <integral rcwa group with 2 generators>
 gap> H := NiceObject(G);
-Group([ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ])
-gap> phi := NiceMonomorphism(G);  # Produces different output in 4.2.
-[ <bijective integral rcwa mapping with modulus 2, of order 2>,
-  <bijective integral rcwa mapping with modulus 3, of order 3> ] ->
-[ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ]
+<matrix group with 2 generators>
+gap> phi := NiceMonomorphism(G);;
 gap> IsBijective(phi);
 true
-gap> phi = IsomorphismPermGroup(G);
+gap> Size(Image(phi));
+24
+gap> phi = IsomorphismMatrixGroup(G);
 true
 gap> IdGroup(G);
 [ 24, 12 ]
@@ -738,7 +723,7 @@ gap> sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],
 >                           [1, 0,1],[1,0,1],[1,0,1]]);;
 gap> sigma1 := StandardConjugate(sigma2);;
 gap> sigma := sigma1*sigma2;
-<integral rcwa mapping with modulus 36>
+<bijective integral rcwa mapping with modulus 36>
 gap> fact := FactorizationOnConnectedComponents(sigma,36);;
 gap> List(fact,MovedPoints);
 [ Union of the residue classes 33(36), 34(36) and 35(36), 
@@ -804,6 +789,108 @@ gap> G := PSL(IsIntegralRcwaGroup,2,3);
 <integral rcwa group with 2 generators>
 gap> Size(G);
 12
+gap> G := Group(g,h);;
+gap> P := PermutedClassPartition(G);
+[ The residue class 0(12), The residue class 1(12), The residue class 3(12),
+  The residue class 4(12), The residue class 5(12), The residue class 6(12),
+  The residue class 7(12), The residue class 9(12), The residue class 10(12),
+  The residue class 11(12), The residue class 2(24), The residue class 8(24),
+  The residue class 14(24), The residue class 20(24) ]
+gap> phi := IsomorphismMatrixGroup(G);;
+gap> phi = NiceMonomorphism(G);
+true
+gap> M := Image(phi);
+<matrix group with 2 generators>
+gap> M = NiceObject(G);
+true
+gap> H := PermutationAction(G);
+Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
+    14,9) ])
+gap> Size(H);
+322560
+gap> D := DerivedSubgroup(H);;
+gap> Size(D);
+161280
+gap> IsPerfect(D);
+true
+gap> K := KernelOfPermutationAction(G);
+<integral rcwa group with 6 generators>
+gap> RankMat(KernelOfPermutationActionHNFMat(G));
+6
+gap> IsAbelian(K);
+true
+gap> RCWAInfo(3);
+gap> g in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
+true
+gap> RCWAInfo(0);
+gap> g*h^3*g^-2*h in G;
+true
+gap> RCWAInfo(3);
+gap> a in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  IsTame:`factors of multiplier and divisor' criterion.
+#I  <G> is tame, but <g> is wild.
+false
+gap> G := Group(ab,ac);
+<integral rcwa group with 2 generators>
+gap> One(G) in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
+true
+gap> ab in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
+true
+gap> ac^-1 in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> = 1 or one of <g> or <g>^-1 in generator list of <G>.
+true
+gap> ab*bc^2*ac^-3 in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  IsTame:`factors of multiplier and divisor' criterion.
+#I  IsTame:`dead end' criterion.
+#I  IsTame:`finite order or flat power' criterion.
+#I  Checking membership of <g>^Order(<h>) in the kernel of PermutedClassPartit\
+ion(<G>).
+true
+gap> a in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  Mod(<g>) does not divide Mod(<G>).
+false
+gap> t in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <G> is class-wise order-preserving, <g> is not.
+false
+gap> u in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> and <G> have incompatible prime sets.
+false
+gap> T in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> is not bijective.
+false
+gap> nu^a in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <G> is finite, but <g> has infinite order.
+false
+gap> g in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> does not act on PermutedClassPartition(<G>).
+false
+gap> G := Group(a,b);
+<integral rcwa group with 2 generators>
+gap> a*b in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <G> is wild, trying some short products of gen's...
+#I  <g> identified as some short gen.-product.
+true
+gap> u in G;
+#I  \in for integral rcwa mapping and -rcwa group
+#I  <g> and <G> have incompatible prime sets.
+false
+gap> RCWAInfo(0);
 gap> STOP_TEST( "integral.tst", 3100000000 );
 
 #############################################################################

@@ -263,6 +263,28 @@ gap> Intersection(Integers,ResidueClass(Integers,6,1));
 The residue class 1(6)
 gap> Difference(Integers,[]) = Integers;
 true
+gap> Modulus(Integers);
+1
+gap> Modulus(Z_pi([2]));
+1
+gap> Modulus(R);
+Z(7)^0
+gap> Residues(Integers);
+[ 0 ]
+gap> Residues(Z_pi([2,7]));
+[ 0 ]
+gap> Residues(R);
+[ 0*Z(7) ]
+gap> IncludedElements(Integers);
+[  ]
+gap> IncludedElements(R);
+[  ]
+gap> IncludedElements([1,2,3]);
+[ 1, 2, 3 ]
+gap> ExcludedElements(Integers);
+[  ]
+gap> ExcludedElements([1,2,3]);
+[  ]
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################
