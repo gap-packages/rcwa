@@ -414,10 +414,10 @@ statement as the Collatz conjecture has not been proved so far!):
 <Example>
 <![CDATA[
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
-gap> S0 := ContractionCentre(T,100,1000);
-#I  Warning: `ContractionCentre' is highly probabilistic.
+gap> S0 := LikelyContractionCentre(T,100,1000);
+#I  Warning: `LikelyContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
- See ?ContractionCentre for information on how to improve this guess.
+See ?LikelyContractionCentre for information on how to improve this guess.
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
 gap> S0^T = S0; # This holds by definition of the contraction centre.
@@ -461,8 +461,8 @@ Integral rcwa mapping with modulus 6
   4                                    | (11n - 2)/6
   5                                    | (11n - 1)/6
 
-gap> S0 := ContractionCentre(f6,1000,100000);;
-#I  Warning: `ContractionCentre' is highly probabilistic.
+gap> S0 := LikelyContractionCentre(f6,1000,100000);;
+#I  Warning: `LikelyContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
 gap> Trajectory(f6,25,S0,"stop");
 [ 25, 21, 39, 72, 12, 2 ]

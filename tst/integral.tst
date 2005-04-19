@@ -850,7 +850,7 @@ gap> a*b in G;
 true
 gap> u in G;
 false
-gap> S0 := ContractionCentre(T,100,1000);
+gap> S0 := LikelyContractionCentre(T,100,1000);
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0,
   1, 2 ]
 gap> f1 := RcwaMapping([[2,0,1]]);
@@ -891,11 +891,11 @@ gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 <rcwa group over Z with 2 generators>
 gap> MovedPoints(G);
 3(5) \ [ -2, 3 ]
-gap> Divergence(g);
+gap> GuessedDivergence(g);
 1
-gap> Divergence(a);
+gap> GuessedDivergence(a);
 1.06066
-gap> Divergence(u);
+gap> GuessedDivergence(u);
 1.15991
 gap> G := Group(g,h);
 <rcwa group over Z with 2 generators>

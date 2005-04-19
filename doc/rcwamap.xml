@@ -1232,7 +1232,7 @@ gap> List([1..3],k->IncreasingOn(a^k));
 </Heading>
 
 <ManSection>
-  <Oper Name="ContractionCentre"
+  <Oper Name="LikelyContractionCentre"
         Arg="f, maxn, bound" Label="f, maxn, bound"/>
   <Returns> A list of ring elements -- see below. </Returns>
   <Description>
@@ -1252,10 +1252,10 @@ gap> List([1..3],k->IncreasingOn(a^k));
     level of <C>InfoRCWA</C> is given.
 <Example>
 <![CDATA[
-gap> S0 := ContractionCentre(T,100,1000);
-#I  Warning: `ContractionCentre' is highly probabilistic.
+gap> S0 := LikelyContractionCentre(T,100,1000);
+#I  Warning: `LikelyContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
- See ?ContractionCentre for information on how to improve this guess.
+See ?LikelyContractionCentre for information on how to improve this guess.
 [ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 
   1, 2 ]
 ]]>
@@ -1266,7 +1266,7 @@ The returned result can only be regarded as a rough guess.
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Oper Name="Divergence" Arg="f" Label="f"/>
+  <Oper Name="GuessedDivergence" Arg="f" Label="f"/>
   <Returns>
     A floating point value, which should be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value
@@ -1276,9 +1276,9 @@ The returned result can only be regarded as a rough guess.
     Nothing particular is guaranteed.
 <Example>
 <![CDATA[
-gap> List( [ T, a ], Divergence );
-#I  Warning: Divergence: no particular return value is guaranteed.
-#I  Warning: Divergence: no particular return value is guaranteed.
+gap> List( [ T, a ], GuessedDivergence );
+#I  Warning: GuessedDivergence: no particular return value is guaranteed.
+#I  Warning: GuessedDivergence: no particular return value is guaranteed.
 [ 0.866025, 1.06066 ]
 ]]>
 </Example>

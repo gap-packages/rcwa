@@ -604,7 +604,7 @@ DeclareGlobalFunction( "DecreasingOn" );
 
 #############################################################################
 ##
-#O  ContractionCentre( <f>, <maxn>, <bound> ) . . . . . .  contraction centre
+#O  LikelyContractionCentre( <f>, <maxn>, <bound> ) likely contraction centre
 ##
 ##  Tries to compute the *contraction centre* of the rcwa mapping <f> --
 ##  assuming its existence this is the uniquely-defined finite subset $S_0$
@@ -617,20 +617,20 @@ DeclareGlobalFunction( "DecreasingOn" );
 ##  If the limit <bound> is exceeded, an Info message on some Info level
 ##  of InfoRCWA is given.
 ##
-DeclareOperation( "ContractionCentre",
+DeclareOperation( "LikelyContractionCentre",
                   [ IsRcwaMapping, IsRingElement, IsPosInt ] );
-DeclareSynonym( "ContractionCenter", ContractionCentre );
+DeclareSynonym( "LikelyContractionCenter", LikelyContractionCentre );
 
 #############################################################################
 ##
-#O  Divergence( <f> ) . . . . . . . . . . . . . . . . . . . divergence of <f>
+#O  GuessedDivergence( <f> ) . . . . . . . . . . .  guessed divergence of <f>
 ##
-##  The divergence of the rcwa mapping <f>.
+##  Guesses the "divergence" of the rcwa mapping <f>.
 ##  This is conjectured to be a measure for how fast an rcwa mapping
 ##  contracts (if its divergence is smaller than 1) or how fast its
 ##  trajectories diverge (if its divergence is larger than 1).
 ##
-DeclareOperation( "Divergence", [ IsRcwaMapping ] );
+DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
 
 #############################################################################
 ##

@@ -729,13 +729,12 @@ InstallMethod( Modulus,
       if not IsZero(m mod Modulus(g)) then
         m := Lcm(m,Modulus(g)); step := 1;
       fi;
-      if Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod)) then
-        Info(InfoWarning,1,"Warning: probabilistic method for computing\n",
-             "the modulus of an rcwa group may return wrong result.");
-        SetModulusOfRcwaGroup(G,Zero(R)); return Zero(R);
-      fi;
+      if   Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod))
+      then TryNextMethod(); fi; # Here the modulus is likely 0.
     until step > maxstep;
-    SetModulusOfRcwaGroup(G,m); CheckModulus(G,m); return m;
+    SetModulusOfRcwaGroup(G,m);
+    CheckModulus(G,m); # Verification of probabilistic result.
+    return m;
   end );
 
 #############################################################################
@@ -1128,32 +1127,6 @@ InstallMethod( Size,
       then return infinity; fi;
     od;
     TryNextMethod();
-  end );
-
-#############################################################################
-##
-#M  Size( <G> ) . . . . . . . . . . . . . . . . . . . . . . .  for rcwa group
-##
-##  Generic method -- size of the image on a superset of a set of
-##  representatives for the set of residue classes (mod Mod( <G> )).
-##
-InstallMethod( Size,
-               "for rcwa groups, use action on a finite set (RCWA)",
-               true, [ IsRcwaGroup ], 0,
-
-  function ( G )
-
-    local  R, S, m, res;
-
-    Info(InfoWarning,1,"Warning: Probabilistic method for `Size' may\n",
-                       "return wrong result.");
-    R := Source(One(G)); m := Modulus(G);
-    if IsZero(m) then return infinity; fi;
-    Info(InfoRCWA,1,"Size: use action on a finite set.");
-    res := AllResidues(R,m);
-    S := Union(ShortOrbits(G,res,100));
-    if not IsSubset(S,res) then TryNextMethod(); fi;
-    return Size(Action(G,S));
   end );
 
 #############################################################################
@@ -1604,9 +1577,7 @@ InstallOtherMethod( IsPrimitive,
     if   not ForAll(GeneratorsOfGroup(G),g->S^g=S)
     then Error("IsPrimitive: <G> must act on <S>.\n"); fi;
     if not IsTransitive(G,S) or IsTame(G) then return false; fi;
-    Info(InfoWarning,1,
-         "IsPrimitive: result `true' depends on an unproven conjecture.");
-    return true;
+    TryNextMethod(); # Conjecture: true.
   end );
 
 #############################################################################
