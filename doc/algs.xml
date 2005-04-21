@@ -194,11 +194,9 @@ They are listed in alphabetical order.
     (see <C>RespectedPartition</C>).
     Check whether <A>g</A> permutes <C>P</C>. If not, return <C>false</C>.
     Let <C>h</C> be the permutation induced by <A>g</A> on <C>P</C>.
-    Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>.
-    If <A>G</A> is not class-wise order-preserving, and membership has not
-    yet been decided, give up at this point. Otherwise proceed as follows:
-    <P/>
+    Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>. <P/>
 
+    If <A>G</A> is class-wise order-preserving, do the following:
     Compute an element <C>g1</C> of <A>G</A> which acts on <C>P</C> like
     <A>g</A>. For this purpose, factor <A>h</A> into generators of <C>H</C>
     using <C>PreImagesRepresentative</C>. Compute the corresponding product
@@ -210,7 +208,14 @@ They are listed in alphabetical order.
     coefficient vector (second entry of each triple) of <C>k</C> in the
     lattice spanned by the rows of the matrix
     <C>KernelOfActionOnRespectedPartitionHNFMat(<A>G</A>)</C>.
-    If it is contained, return <C>true</C>, otherwise return <C>false</C>.
+    If it is contained, return <C>true</C>. <P/>
+
+    If membership still has not been decided yet, try to factor <A>g</A>
+    into generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
+    If successful, return <C>true</C>.  If <A>g</A> is in <A>G</A>, this
+    terminates after a finite number of steps. Both runtime and memory
+    requirements are exponential in the word length. If <A>g</A> is not in
+    <A>G</A>, it runs into an infinite loop.
   </Item>
 
   <Mark>
