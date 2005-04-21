@@ -469,10 +469,9 @@ approximately exponentially with the exponent. How expensive multiplying
 a couple of wild mappings is, varies very much. In any case, the amount of
 memory required for storing an rcwa mapping is proportional to its modulus.
 Whether a given mapping is tame or wild can be determined by the operation
-<C>IsTame</C>. Sometimes this uses probabilistic methods. If so, a warning
-is issued at <C>InfoWarning</C> level&nbsp;1. There are methods for
-<C>Order</C>, which can not only compute a finite order, but are also
-suitable for detecting infinite order. <P/>
+<C>IsTame</C>. There are methods for <C>Order</C>, which can not only
+compute a finite order, but are also suitable for detecting infinite order.
+<P/>
 
 <Example>
 <![CDATA[
