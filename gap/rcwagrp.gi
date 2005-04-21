@@ -671,9 +671,9 @@ CheckModulus := function ( G, m )
     return Length(Set(c{List(cls,clm->Position(res,Residues(clm)[1]))})) = 1;
   end;
 
-  Info(InfoRCWA,2,"checking modulus ...");
+  Info(InfoRCWA,2,"Checking modulus ...");
   errormessage := Concatenation(
-                  "the probabilistic modulus computation failed --\n",
+                  "the modulus computation failed --\n",
                   "please send the generators of the group you tested ",
                   "to Stefan Kohl, kohl@mathematik.uni-stuttgart.de.\n");
   R := Source(One(G)); P := RespectedPartition(G);
@@ -690,7 +690,7 @@ MakeReadOnlyGlobal( "CheckModulus" );
 ##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
 ##
-##  Modulus of rcwa group <G>, probabilistic method.
+##  Modulus of rcwa group <G>.
 ##
 ##  We define the modulus of an rcwa group <G> by the least common multiple
 ##  of the moduli of its elements.
@@ -1363,7 +1363,8 @@ InstallOtherMethod( IsConjugate,
 #M  IsConjugate( RCWA( Z_pi( <pi> ) ), <f>, <g> ) 
 ##
 ##  For semilocal integral rcwa mappings, in the full group
-##  `RCWA( Z_pi( <pi> ) )'. Probabilistic method.
+##  `RCWA( Z_pi( <pi> ) )'. Only trivial checks are done.
+##  The method cannot find a positive result unless <f> and <g> are equal.
 ##
 InstallOtherMethod( IsConjugate,
                     Concatenation("for two semilocal integral rcwa ",
