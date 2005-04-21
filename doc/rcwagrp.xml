@@ -221,10 +221,6 @@ gap> Size(H);; List(DerivedSeries(H),Size);
     The <E>Modulus</E> of an rcwa group is the lcm of the moduli of its
     elements in case such an lcm exists and 0 otherwise. <P/>
 
-    Some methods for computing the modulus of an rcwa group are
-    probabilistic. If such a method is used, a warning at warning
-    level&nbsp;1 is issued. If the returned modulus is not equal
-    to zero the result is always certain.
     See also <Ref Prop="IsTame" Label="G"/>.
 <Example>
 <![CDATA[
@@ -265,12 +261,7 @@ gap> Modulus(Group(a,b));
   </Returns>
   <Description>
     An rcwa group is called <E>tame</E> if its modulus is not equal
-    to&nbsp;0. <P/>
-
-    Some methods for determining whether an rcwa group is tame are
-    probabilistic. If such a method is used, a warning at warning
-    level&nbsp;1 is issued. A positive result (return value is <C>true</C>)
-    is always correct.
+    to&nbsp;0.
 <Example>
 <![CDATA[
 gap> IsTame(G);
@@ -305,6 +296,8 @@ if all of its elements are so. There are corresponding methods available
 for <C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>.
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -341,8 +334,6 @@ false
   <Meth Name="Size" Arg="G" Label="G"/>
   <Returns> The order of the rcwa group&nbsp;<A>G</A>. </Returns>
   <Description>
-    Sometimes this is probabilistic. If a probabilistic method is used,
-    a warning at <C>InfoWarning</C> level&nbsp;1 is issued.
 <Example>
 <![CDATA[
 gap> Size(G);
