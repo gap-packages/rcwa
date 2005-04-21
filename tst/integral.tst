@@ -600,7 +600,7 @@ gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
 gap> G := Group(g1,g2);
 <rcwa group over Z with 2 generators>
 gap> H := NiceObject(G);
-Group([ (1,6)(2,3)(4,5), (1,5,6)(2,3,4) ])
+Group([ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ])
 gap> phi := NiceMonomorphism(G);;
 gap> IsBijective(phi);
 true

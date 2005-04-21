@@ -1308,7 +1308,7 @@ gap> IsPerfect(D);
 true
 gap> Size(D);
 928972800
-gap> RankOfKernelOfActionOnRespectedPartition(G);
+gap> RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed);
 9
 ]]>
 </Example>

@@ -25,6 +25,12 @@ EpimorphismByGenerators := function ( F, G )
 end;
 MakeReadOnlyGlobal( "EpimorphismByGenerators" );
 
+EpimorphismByGeneratorsNC := function ( F, G )
+  return GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),
+                                         GeneratorsOfGroup(G));
+end;
+MakeReadOnlyGlobal( "EpimorphismByGeneratorsNC" );
+
 # Some implications.
 
 InstallTrueMethod( IsGroup,     IsRcwaGroup );
@@ -807,8 +813,13 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 ##
 #M  KernelOfActionOnRespectedPartition( <G> ) .  for tame integral rcwa group
 ##
+##  This is a probabilistic method, i.e. it may return a proper subgroup of
+##  the actual kernel. In particular, it is not taken care of torsion
+##  elements in the kernel, which can occur is <G> is not class-wise order-
+##  preserving.
+##  
 InstallMethod( KernelOfActionOnRespectedPartition,
-               "for tame integral rcwa groups (RCWA)", true,
+               "for cwop. tame integral rcwa groups (RCWA)", true,
                [ IsIntegralRcwaGroup ], 0,
 
   function ( G )
@@ -816,8 +827,12 @@ InstallMethod( KernelOfActionOnRespectedPartition,
     local  P, K, H, M, L, l, LHNF, T, lng, ModG, g, h, nrgens,
            genK, genKHNF, elH, elG, elK, c, nr, lasthit, erg, i;
 
-    Info(InfoWarning,2,"Warning: `KernelOfActionOnRespectedPartition' ",
-                       "is probabilistic.");
+    if ValueOption("ProperSubgroupAllowed") <> true then
+      if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
+      Info(InfoWarning,1,"Warning: `KernelOfActionOnRespectedPartition' ",
+                         "is probabilistic.");
+    fi;
+
     ModG := Modulus(G);
     P := RespectedPartition(G);
     H := ActionOnRespectedPartition(G);
@@ -876,14 +891,35 @@ InstallMethod( IsomorphismPermGroup,
 
   function ( G )
 
-    local  H, phi;
+    local  phi, H, orb, S, S_old, g;
 
-    if   not IsTame(G)
-      or not IsTrivial(KernelOfActionOnRespectedPartition(G))
+    if ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity) or not IsTame(G)
+    or RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed) > 0
     then return fail; fi;
-    H   := ActionOnRespectedPartition(G);
-    phi := Immutable(GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
-                                                     GeneratorsOfGroup(H)));
+
+    # Note that a class reflection of a residue class r(m) can fix
+    # one element in r(m), but not two. This means that <G> acts
+    # faithfully on the orbit containing the following set <S>:
+
+    if   IsClassWiseOrderPreserving(G)
+    then S := List(RespectedPartition(G),Representative);
+    else S := Flat(List(RespectedPartition(G),
+                        cl->[0,Modulus(cl)]+Representative(cl)));
+    fi;
+
+    repeat
+      S_old := ShallowCopy(S);
+      for g in GeneratorsOfGroup(G) do S := Union(S,S^g); od;
+      if   Length(S) > 10 * Length(RespectedPartition(G))
+      then TryNextMethod(); fi;
+    until S = S_old;
+    H   := Action(G,S); # Now, <G> must act faithfully on <S>.
+    orb := First(Orbits(H,MovedPoints(H)),M->Size(Action(H,M))=Size(H));
+    if orb <> fail then
+      H := GroupWithGenerators(List(GeneratorsOfGroup(H),
+                                    h->Permutation(h,orb)));
+    fi;
+    phi := Immutable(EpimorphismByGeneratorsNC(G,H));
     if   not HasParent(G)
     then SetNiceMonomorphism(G,phi); SetNiceObject(G,H); fi;
 
@@ -1001,11 +1037,11 @@ InstallMethod( \in,
       phi := EpimorphismFromFreeGroup(G);
       return PreImagesRepresentative(phi,g) <> fail;
     else
-      if   Modulus(G) mod Modulus(g) <> 0 then
+      if Modulus(G) mod Modulus(g) <> 0 then
         Info(InfoRCWA,4,"Mod(<g>) does not divide Mod(<G>).");
         return false;
       fi;
-      if   IsFinite(G) and Order(g) = infinity then
+      if IsFinite(G) and Order(g) = infinity then
         Info(InfoRCWA,3,"<G> is finite, but <g> has infinite order.");
         return false;
       fi;
@@ -1025,24 +1061,38 @@ InstallMethod( \in,
                         "is not an element of the one of <G>.");
         return false;
       fi;
-      if not IsClassWiseOrderPreserving(G) then TryNextMethod(); fi;
-      Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
-      Info(InfoRCWA,3,"on RespectedPartition(<G>).");
-      phi := EpimorphismFromFreeGroup(H);
-      h   := PreImagesRepresentative(phi,h:NoStabChain);
-      if h = fail then return false; fi;
-      h   := Product(List(LetterRepAssocWord(h),
-                          id->gens[AbsInt(id)]^SignInt(id)));
-      k   := g/h;
-      Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
-      Info(InfoRCWA,3,"the action of <g> on RespectedPartition(<G>).");
-      K := KernelOfActionOnRespectedPartition(G);
-      L := KernelOfActionOnRespectedPartitionHNFMat(G);
-      if L = [] then return IsOne(k); fi;
-      Info(InfoRCWA,3,"The kernel has rank ",Length(L),".");
-      c := Coefficients(k);
-      l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
-      return SolutionIntMat(L,l) <> fail;
+
+      # The following uses the operation `KernelOfActionOnClassPartition',
+      # for which currently only a probabilistic method is available.
+      # The group returned by this function can be a proper subgroup
+      # of the actual kernel. Thus, membership can only be decided to the
+      # positive here.
+
+      if IsClassWiseOrderPreserving(G) then
+        Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
+        Info(InfoRCWA,3,"on RespectedPartition(<G>).");
+        phi := EpimorphismFromFreeGroup(H);
+        h   := PreImagesRepresentative(phi,h:NoStabChain);
+        if h = fail then return false; fi;
+        h   := Product(List(LetterRepAssocWord(h),
+                            id->gens[AbsInt(id)]^SignInt(id)));
+        k   := g/h;
+        Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
+        Info(InfoRCWA,3,"the action of <g> on RespectedPartition(<G>).");
+        K:=KernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed);
+        L:=KernelOfActionOnRespectedPartitionHNFMat(G:ProperSubgroupAllowed);
+        if L = [] then return IsOne(k); fi;
+        Info(InfoRCWA,3,"The kernel has rank ",Length(L),".");
+        c := Coefficients(k);
+        l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
+        if SolutionIntMat(L,l) <> fail then return true; fi;
+      fi;
+
+      # Finally, a brute force factorization attempt:
+
+      Info(InfoRCWA,3,"Trying to factor <g> into gen's ...");
+      phi := EpimorphismFromFreeGroup(G);
+      return PreImagesRepresentative(phi,g) <> fail;
     fi;
   end );
 
@@ -1091,15 +1141,42 @@ InstallMethod( Size,
 
   function ( G )
 
+    local  S, S_old, g;
+
+    # A few `trivial' checks.
+
     if IsTrivial(G) then return 1; fi;
-    if   ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
+    if ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
     then return infinity; fi;
     if not IsTame(G) then return infinity; fi;
+
+    # Look for an infinite cyclic subgroup in the kernel of the action
+    # of <G> on a respected partition.
+
     Info(InfoRCWA,1,"Size: use action on respected partition.");
-    if   RankOfKernelOfActionOnRespectedPartition(G) > 0
+    if RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed) > 0
     then return infinity; fi;
-    return   Size(ActionOnRespectedPartition(G))
-           * Size(KernelOfActionOnRespectedPartition(G));
+
+    # If we have not found one, the group <G> is likely finite.
+
+    # Note that a class reflection of a residue class r(m) can fix
+    # one element in r(m), but not two. This means that <G> acts
+    # faithfully on the orbit containing the following set <S>:
+
+    if   IsClassWiseOrderPreserving(G)
+    then S := List(RespectedPartition(G),Representative);
+    else S := Flat(List(RespectedPartition(G),
+                        cl->[0,Modulus(cl)]+Representative(cl)));
+    fi;
+
+    repeat
+      S_old := ShallowCopy(S);
+      for g in GeneratorsOfGroup(G) do S := Union(S,S^g); od;
+      if   Length(S) > 10 * Length(RespectedPartition(G))
+      then TryNextMethod(); fi;
+    until S = S_old;
+
+    return Size(Action(G,S)); # Now, <G> must act faithfully on <S>.
   end );
 
 #############################################################################

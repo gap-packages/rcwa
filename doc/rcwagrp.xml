@@ -366,7 +366,7 @@ gap> H := Group(g1,g2);
 gap> phi := IsomorphismPermGroup(H);
 [ <bijective rcwa mapping of Z with modulus 2, of order 2>, 
   <bijective rcwa mapping of Z with modulus 3, of order 3> ] -> 
-[ (1,6)(2,3)(4,5), (1,5,6)(2,3,4) ]
+[ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ]
 ]]>
 </Example>
   </Description>
