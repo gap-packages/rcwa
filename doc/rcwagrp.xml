@@ -1129,68 +1129,7 @@ gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
   </Description>
 </ManSection>
 
-<ManSection>
-  <Attr Name="RankOfKernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
-  <Returns>
-    The rank of the largest free abelian subgroup of the kernel of the
-    action of the tame rcwa group&nbsp;<A>G</A> on the set of residue
-    classes <C>RespectedPartition(<A>G</A>)</C>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> RankOfKernelOfActionOnRespectedPartition(G);
-6
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Attr Name="KernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
-  <Returns>
-    The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedPartition(<A>G</A>)</C>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> K := KernelOfActionOnRespectedPartition(G);
-<rcwa group over Z with 6 generators>
-gap> Modulus(K);
-12
-gap> IsAbelian(K);
-true
-gap> List(GeneratorsOfGroup(K),k->Factorization(G,k)); # Requires GAP >= 4.5.
-[ h^-3*g^2*h^-1*g^-1*h*g*h, g^3*h^2*g^-1*h^-1*g*h*g^2, 
-  g^-1*h^-2*g^2*h^-1*g^-1*h*g^2, g^-3*h^-1*g*h*g^-2*h^2*g^2, 
-  h^-3*g^3*h^-2*g^-1*h*g^2, g^2*h^-1*g^-1*h*g*h^-2 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Attr Name="KernelOfActionOnRespectedPartitionHNFMat" Arg="G" Label="G"/>
-  <Returns>
-    A matrix of vectors in Hermite Normal Form spanning the lattice
-    corresponding to the kernel of the action of the tame rcwa
-    group&nbsp;<A>G</A> on <C>RespectedPartition(<A>G</A>)</C>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> L := KernelOfActionOnRespectedPartitionHNFMat(G);
-[ [ 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, -24, 0, -24 ], 
-  [ 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, 0, -24, 0, -24 ], 
-  [ 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, 0, -24, 0, -24 ], 
-  [ 0, 0, 0, 12, 0, 0, 0, 0, 12, 0, 0, -24, 0, -24 ], 
-  [ 0, 0, 0, 0, 12, 0, 0, 0, 0, 12, 0, -24, 0, -24 ], 
-  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, -24, 24, -24 ] ]
-]]>
-</Example>
-  </Description>
-</ManSection>
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Attr Name ="IntegralConjugate" Arg="G" Label="G"/>
