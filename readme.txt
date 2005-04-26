@@ -21,6 +21,9 @@ The rcwa groups can be finite or infinite and they form a class of
 subgroups of Sym(R). Their investigation is the central aim of this
 package.
 
+The development of this package has been motivated partially by
+the Collatz conjecture.
+
 
                             Installation
 

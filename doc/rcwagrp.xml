@@ -730,20 +730,22 @@ a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
 </ManSection>
 
 <ManSection>
-  <Meth Name="RepresentativeAction" Arg="G, P1, P2" Label="G, P1, P2"/>
+  <Meth Name="RepresentativeAction" Arg="RCWA_Z, P1, P2"
+                                    Label="RCWA( Integers ), P1, P2"/>
   <Returns>
-    An element of <A>G</A> which maps the partition&nbsp;<A>P1</A>
+    An element of RCWA(<M>\Z</M>) which maps the partition&nbsp;<A>P1</A>
     to&nbsp;<A>P2</A>.
   </Returns>
   <Description>
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
     underlying ring <M>R</M> into the same number of disjoint
     residue classes.
-    This method covers the case <M>R = \mathbb{Z}</M> and
-    <C><A>G</A> = RCWA( Integers )</C>.
     It recognizes the option <C>IsTame</C> -- if this option is set,
     the returned mapping is tame provided that there is a tame
     mapping satisfying the required condition.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;

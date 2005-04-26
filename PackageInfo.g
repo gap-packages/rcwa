@@ -9,9 +9,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Groups",
-Version          := "0.2.0",
-Date             := "01/03/2005",
-ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-0.2.0",
+Version          := "1.0.0",
+Date             := "26/04/2005",
+ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-1.0.0",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -30,9 +30,9 @@ Persons          := [
                            Institution   := "University of Stuttgart"
                          )
                     ],
-Status           := "dev",
-CommunicatedBy   := "",
-AcceptDate       := "",
+Status           := "accepted",
+CommunicatedBy   := "Bettina Eick (Braunschweig)",
+AcceptDate       := "04/2005",
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
 PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PackageInfo.g",
 AbstractHTML     := "This package deals with some kind of infinite permutation groups over rings.",
@@ -48,8 +48,8 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4",
-                         NeededOtherPackages    := [ ["ResClasses", ">=2.0.1"], ["GRAPE",">=4.0"],
-                                                     ["GAPDoc",">=0.99"] ],
+                         NeededOtherPackages    := [ ["ResClasses", ">=2.0.4"], ["GRAPE",">=4.0"],
+                                                     ["GAPDoc",">=0.999"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
