@@ -2703,7 +2703,7 @@ InstallMethod( Order,
     exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
     for n in exp do
       c := g!.coeffs; m2 := g!.modulus;
-      if m2 > m1 or IsOne(g) then TryNextMethod(); fi;
+      if m2 > 6 * m1 or IsOne(g) then TryNextMethod(); fi;
       r := First([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
                                and c[n][2] mod m2 = 0);
       if   r <> fail
