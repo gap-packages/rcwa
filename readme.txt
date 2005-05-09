@@ -14,7 +14,7 @@ into themselves. A possible choice is R = Z. Similar classes of mappings
 are known as Generalized Collatz Mappings, Periodically Linear Functions
 or Number Theoretic Functions with Periodic Rational Coefficients.
 In fact, the development of this package has partially been motivated
-by the 3n+1 - conjecture. 
+by the Collatz- (3n+1-) conjecture. 
 
 The bijective rcwa mappings of R form a proper subgroup of Sym(R), called
 RCWA(R). In general, the computation with arbitrary mappings from R into
