@@ -1850,7 +1850,7 @@ InstallOtherMethod( \^,
     cls := Flat(List(cls,cl->AsListOfClasses(cl)));
     abc := List(cls,cl->c[1 + Classes(cl)[1][2] mod m]);
     cls := List([1..Length(cls)],i->(abc[i][1]*cls[i]+abc[i][2])/abc[i][3]);
-    return Union(cls);
+    return RepresentativeStabilizingRefinement(Union(cls),0);
   end );
 
 #############################################################################
@@ -2002,7 +2002,7 @@ InstallOtherMethod( PreImagesSet,
 
   function ( f, U )
 
-    local  cls, rep, m, minv, clm, k, l;
+    local  preimage, cls, rep, m, minv, clm, k, l;
 
     m := Modulus(f); minv := Multiplier(f) * m;
     k := List(Classes(U),cl->minv/Gcd(minv,cl[1])); l := Length(k);
@@ -2018,7 +2018,8 @@ InstallOtherMethod( PreImagesSet,
                 i->List(cls[i],cl->[Modulus(cl),
                                     Intersection(rep[i],cl)[1]]));
     cls := Concatenation(cls);
-    return ResidueClassUnionWithFixedRepresentatives(Integers,cls);
+    preimage := ResidueClassUnionWithFixedRepresentatives(Integers,cls);
+    return RepresentativeStabilizingRefinement(preimage,0);
   end );
 
 #############################################################################

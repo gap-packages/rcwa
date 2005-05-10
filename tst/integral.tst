@@ -1050,15 +1050,15 @@ gap> last^T;
 gap> AsOrdinaryUnionOfResidueClasses(last);
 1(3) U 2(9) U 8(9)
 gap> PreImagesSet(T,cl);
-[3/4] U [2/12] U [6/12] U [10/12]
+[2/4] U [3/4]
 gap> AsOrdinaryUnionOfResidueClasses(last);
 2(4) U 3(4)
 gap> PreImagesSet(T,last2);
-[1/8] U [7/8] U [4/24] U [6/24] U [12/24] U [14/24] U [20/24] U [22/24]
+[1/8] U [4/8] U [6/8] U [7/8]
 gap> DELTA(last);            
 1/4
 gap> PreImagesSet(T,last2);
-<union of 16 residue classes with fixed rep's>
+[2/16] U [8/16] U [9/16] U [11/16] U [12/16] U [13/16] U [14/16] U [15/16]
 gap> DELTA(last);            
 5/4
 gap> AsOrdinaryUnionOfResidueClasses(last2);
