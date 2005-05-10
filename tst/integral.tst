@@ -1065,6 +1065,28 @@ gap> AsOrdinaryUnionOfResidueClasses(last2);
 <union of 8 residue classes (mod 16)>
 gap> Residues(last);
 [ 2, 8, 9, 11, 12, 13, 14, 15 ]
+gap> P2 := AllResidueClassesWithFixedRepsModulo(2);;
+gap> P3 := AllResidueClassesWithFixedRepsModulo(3);;
+gap> Product(List(P2,cl->RHO(cl)));
+-E(4)
+gap> Product(List(P3,cl->RHO(cl)));
+-E(4)
+gap> Product(List(P2,cl->RHO(cl^t)));
+E(4)
+gap> Product(List(P3,cl->RHO(cl^t)));
+E(4)
+gap> Product(List(P2,cl->RHO(cl^a)));
+-E(4)
+gap> Product(List(P3,cl->RHO(cl^a)));
+-E(4)
+gap> Product(List(P2,cl->RHO(cl^ClassReflection(0,2))));
+E(4)
+gap> Product(List(P3,cl->RHO(cl^ClassReflection(0,2))));
+E(4)
+gap> Product(List(P2,cl->RHO(cl^ClassTransposition(0,2,1,6))));
+-E(4)
+gap> Product(List(P3,cl->RHO(cl^ClassTransposition(0,2,1,6))));
+-E(4)
 gap> DecreasingOn(T);
 0(2)
 gap> DecreasingOn(T^2);
