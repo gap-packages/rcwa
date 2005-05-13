@@ -18,7 +18,7 @@ The rcwa mappings are a type of mappings of certain euclidian rings
 Similar classes of mappings are known as <E>Generalized Collatz Mappings</E>,
 <E>Periodically Linear Functions</E> or <E>Number Theoretic Functions with
 Periodic Rational Coefficients</E>. In fact, the development of this package
-has partially been motivated by the <M>3n+1</M> - conjecture.
+has partly been motivated by the <M>3n+1</M> - conjecture.
 A regularly updated comprehensive annotated bibliography for this conjecture
 which has been compiled by Jeffrey&nbsp;C. Lagarias can be found at
 <URL>http://arxiv.org/abs/math.NT/0309224</URL>. <P/>

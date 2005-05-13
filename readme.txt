@@ -13,7 +13,7 @@ The rcwa mappings are a type of mappings of certain euclidian rings R
 into themselves. A possible choice is R = Z. Similar classes of mappings
 are known as Generalized Collatz Mappings, Periodically Linear Functions
 or Number Theoretic Functions with Periodic Rational Coefficients.
-In fact, the development of this package has partially been motivated
+In fact, the development of this package has partly been motivated
 by the Collatz- (3n+1-) conjecture. 
 
 The bijective rcwa mappings of R form a proper subgroup of Sym(R), called
