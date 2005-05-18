@@ -43,7 +43,7 @@ AbstractHTML     := Concatenation("This package provides methods for computation
                                   "type.</p>\n",
                                   "<p>The rcwa mappings are a type of mappings of certain ",
                                   "euclidian rings <em>R</em> into themselves, e.g. the integers ",
-                                  "form an example for a possible ring&nbsp;<em>R</em>.",
+                                  "form an example for a possible ring&nbsp;<em>R</em>. ",
                                   "Similar classes of mappings are known as <em>Generalized ",
                                   "Collatz Mappings</em>, <em>Periodically Linear Functions</em> ",
                                   "or <em>Number Theoretic Functions with Periodic Rational ",
