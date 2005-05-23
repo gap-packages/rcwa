@@ -2019,4 +2019,62 @@ InstallMethod( DirectProductOp,
 
 #############################################################################
 ##
+#M  ViewObj( <RG> ) . . . . . . . . . . . . . .  for group ring of rcwa group
+##
+InstallMethod( ViewObj,
+               "for group rings of rcwa groups (RCWA)",
+               ReturnTrue, [ IsGroupRing ], 100,
+
+  function ( RG )
+
+    local  R, G;
+
+    R := LeftActingDomain(RG); G := UnderlyingGroup(RG);
+    if not IsRcwaGroup(G) or R <> Source(One(G)) then TryNextMethod(); fi;
+    Print(RingToString(R)," "); ViewObj(G);
+  end );
+
+#############################################################################
+##
+#M  ViewObj( <elm> ) . . . . . . . .  for element of group ring of rcwa group
+##
+InstallMethod( ViewObj,
+               "for elements of group rings of rcwa groups (RCWA)",
+               ReturnTrue, [ IsElementOfFreeMagmaRing ], 100,
+
+  function ( elm )
+
+    local  l, grpelms, coeffs, supplng, g, i;
+
+    l       := CoefficientsAndMagmaElements(elm);
+    grpelms := l{[1,3..Length(l)-1]};
+    coeffs  := l{[2,4..Length(l)]};
+    supplng := Length(grpelms);
+    if not ForAll(grpelms,IsRcwaMapping) then TryNextMethod(); fi;
+    if supplng = 0 then Print("0"); return; fi;
+    for i in [1..supplng] do
+      if coeffs[i] < 0 then
+        if i > 1 then Print(" - "); else Print("-"); fi;
+      else
+        if i > 1 then Print(" + "); fi;
+      fi;
+      if AbsInt(coeffs[i]) > 1 then Print(AbsInt(coeffs[i]),"*"); fi;
+      g := grpelms[i];
+      if IsOne(g) then Print("id"); continue; fi;
+      Print("<",Mod(g),",",Mult(g),",",Div(g),",",Sign(g),",");
+      if   IsClassWiseOrderPreserving(g)
+      then Print(Determinant(g),","); else Print("-,"); fi;
+      if Mod(g) <= 36 or IsIntegral(g)
+        or Set(Factors(Mult(g))) <> Set(Factors(Div(g)))
+      then 
+        if   Order(g) = infinity then Print("inf,");
+        else Print(Order(g),","); fi;
+        if IsTame(g) then Print("tame"); else Print("wild"); fi;
+      else Print("?,?"); fi;
+      Print(">");
+    od;
+  end );
+
+#############################################################################
+##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
