@@ -1055,11 +1055,11 @@ gap> AsOrdinaryUnionOfResidueClasses(last);
 2(4) U 3(4)
 gap> PreImagesSet(T,last2);
 [1/8] U [4/8] U [6/8] U [7/8]
-gap> DELTA(last);            
+gap> Delta(last);            
 1/4
 gap> PreImagesSet(T,last2);
 [2/16] U [8/16] U [9/16] U [11/16] U [12/16] U [13/16] U [14/16] U [15/16]
-gap> DELTA(last);            
+gap> Delta(last);            
 5/4
 gap> AsOrdinaryUnionOfResidueClasses(last2);
 <union of 8 residue classes (mod 16)>
@@ -1067,25 +1067,25 @@ gap> Residues(last);
 [ 2, 8, 9, 11, 12, 13, 14, 15 ]
 gap> P2 := AllResidueClassesWithFixedRepsModulo(2);;
 gap> P3 := AllResidueClassesWithFixedRepsModulo(3);;
-gap> Product(List(P2,cl->RHO(cl)));
+gap> Product(List(P2,cl->Rho(cl)));
 -E(4)
-gap> Product(List(P3,cl->RHO(cl)));
+gap> Product(List(P3,cl->Rho(cl)));
 -E(4)
-gap> Product(List(P2,cl->RHO(cl^t)));
+gap> Product(List(P2,cl->Rho(cl^t)));
 E(4)
-gap> Product(List(P3,cl->RHO(cl^t)));
+gap> Product(List(P3,cl->Rho(cl^t)));
 E(4)
-gap> Product(List(P2,cl->RHO(cl^a)));
+gap> Product(List(P2,cl->Rho(cl^a)));
 -E(4)
-gap> Product(List(P3,cl->RHO(cl^a)));
+gap> Product(List(P3,cl->Rho(cl^a)));
 -E(4)
-gap> Product(List(P2,cl->RHO(cl^ClassReflection(0,2))));
+gap> Product(List(P2,cl->Rho(cl^ClassReflection(0,2))));
 E(4)
-gap> Product(List(P3,cl->RHO(cl^ClassReflection(0,2))));
+gap> Product(List(P3,cl->Rho(cl^ClassReflection(0,2))));
 E(4)
-gap> Product(List(P2,cl->RHO(cl^ClassTransposition(0,2,1,6))));
+gap> Product(List(P2,cl->Rho(cl^ClassTransposition(0,2,1,6))));
 -E(4)
-gap> Product(List(P3,cl->RHO(cl^ClassTransposition(0,2,1,6))));
+gap> Product(List(P3,cl->Rho(cl^ClassTransposition(0,2,1,6))));
 -E(4)
 gap> DecreasingOn(T);
 0(2)
