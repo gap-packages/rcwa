@@ -44,10 +44,6 @@ subdirectory of the GAP distribution. This is accomplished by extracting
 the distribution file in this directory. When you have done this you can
 load the package as usual via LoadPackage( "rcwa" );.
 
-If you got the package from CVS, you have to build the manual by issueing
-RCWABuildManual( ); then. Otherwise this is not necessary since the
-distribution file already contains all files produced by this function.
-
 For further advice on questions of technical nature please see the
 chapter `Auxiliary functions' in the manual.
 
