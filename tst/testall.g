@@ -115,7 +115,7 @@ Print("-------------------------------------------\n");
 infoRead1 := InfoRead1;  InfoRead1 := Ignore;
 infoRead2 := InfoRead2;  InfoRead2 := Ignore;
 
-TestDir := Concatenation(DirectoriesLibrary("pkg")[1]![1],"rcwa/tst/");
+TestDir := Concatenation(PackageInfo("rcwa")[1].InstallationPath,"/tst/");
 TestDir := [ Directory(TestDir) ];
 
 for i  in [ 1 .. Length(TEST_FILES) ]  do
