@@ -453,7 +453,7 @@ gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
 
 The <C>Display</C> method recognizes the option <A>DVI</A>. If this option
 is set, the given rcwa mapping is displayed in an <Package>xdvi</Package>
-window. For this purpose, the return value of the <C>LaTeXObj</C> - method
+window. For this purpose, the string returned by the <C>LaTeXObj</C> - method
 described above is inserted into a &LaTeX; template file. This file is
 &LaTeX;'ed, and the result is shown with <Package>xdvi</Package>. This works
 only on a UNIX system, and requires suitable installations of &LaTeX; and
