@@ -1127,7 +1127,7 @@ InstallMethod( ViewObj,
 
 LaTeXAndXDVIRcwaMapping := function ( f )
 
-  local  tmpdir, file, stream, str,  latex, dvi;
+  local  tmpdir, file, stream, str, latex, dvi, m, sizes, size, ind;
 
   tmpdir := DirectoryTemporary( );
   file   := Filename(tmpdir,"rcwamap.tex");
@@ -1139,10 +1139,20 @@ LaTeXAndXDVIRcwaMapping := function ( f )
                   "\\setlength{\\textwidth}{80cm}\n",
                   "\\setlength{\\paperheight}{59.5cm}\n",
                   "\\setlength{\\textheight}{57cm}\n\n", 
-                  "\\begin{document}\n\n\\begin{align*}\n");
-  str := LaTeXObj(f:Indentation:=2);
-  AppendTo(stream,str);
-  AppendTo(stream,"\\end{align*}\n\n\\end{document}\n");
+                  "\\begin{document}\n\n");
+  sizes := ["Huge","huge","Large","large"];
+  m := Length(AllResidues(Source(f),Modulus(f)));
+  if   ValueOption("Factorization") <> true
+  then size := LogInt(Int(m/16)+1,2)+1;
+  else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
+  if   size < 5
+  then ind := 4; AppendTo(stream,"\\begin{",sizes[size],"}\n\n");
+  else ind := 2; fi;
+  AppendTo(stream,String("",ind-2),"\\begin{align*}\n");
+  str := LaTeXObj(f:Indentation:=ind);
+  AppendTo(stream,str,String("",ind-2),"\\end{align*}");
+  if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
+  AppendTo(stream,"\n\n\\end{document}\n");
   latex := Filename(DirectoriesSystemPrograms( ),"latex");
   Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
   dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
