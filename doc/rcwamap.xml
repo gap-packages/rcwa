@@ -443,7 +443,7 @@ n \ \longmapsto \
   \frac{3n - 1}{4} & \text{if} \ n \in 3(4).
 \end{cases}
 gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
-       \nu_{8(12)} \cdot \nu_{0(12)}^{-1}
+      &\nu_{8(12)} \cdot \nu_{0(12)}^{-1}
  \cdot \tau_{0(12),6(12)} \cdot \tau_{0(12),4(12)}
  \cdot \tau_{0(12),8(12)}
 ]]>
