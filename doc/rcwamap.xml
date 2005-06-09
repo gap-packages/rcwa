@@ -413,7 +413,7 @@ Wild bijective rcwa mapping of Z with modulus 12
 In most cases an rcwa mapping is not determined uniquely by the output of
 the <C>ViewObj</C> method -- in these cases the output is enclosed in
 brackets. There are methods installed for <C>Display</C>, <C>Print</C>
-and <C>String</C>. The <C>Print</C>ed representation of an rcwa mapping
+and <C>String</C>.  The <C>Print</C>ed representation of an rcwa mapping
 is &GAP; - readable if and only if the <C>Print</C>ed representation of
 the elements of the underlying ring is so. There is also a method for
 <C>LaTeXObj</C>:
@@ -451,6 +451,14 @@ gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
   </Description>
 </ManSection>
 
+The <C>Display</C> method recognizes the option <A>DVI</A>. If this option
+is set, the given rcwa mapping is displayed in an <Package>xdvi</Package>
+window. For this purpose, the return value of the <C>LaTeXObj</C> - method
+described above is inserted into a &LaTeX; template file. This file is
+&LaTeX;'ed, and the result is shown with <Package>xdvi</Package>. This works
+only on a UNIX system, and requires suitable installations of &LaTeX; and
+<Package>xdvi</Package>.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -473,25 +481,17 @@ Whether a given mapping is tame or wild can be determined by the operation
 compute a finite order, but are also suitable for detecting infinite order.
 <P/>
 
-<Example>
-<![CDATA[
-gap> List([-6..6],k->Modulus(f^k));
-[ 324, 108, 108, 36, 36, 12, 1, 12, 24, 48, 96, 192, 384 ]
-gap> Order(f);
-infinity
-]]>
-</Example>
-
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
+gap> List([-6..6],k->Modulus(f^k)); Order(f);
+[ 324, 108, 108, 36, 36, 12, 1, 12, 24, 48, 96, 192, 384 ]
+infinity
 gap> List( [ a, u, f ], IsTame );
 [ false, false, false ]
 gap> f^2*u;         
 <bijective rcwa mapping of Z with modulus 120>
-gap> f^2*u*a;
-<bijective rcwa mapping of Z with modulus 240>
 gap> f^2*u*a^2*f^-1;
 <bijective rcwa mapping of Z with modulus 3840>
 gap> Comm(f,ClassShift(6,12)*f)^1000;
