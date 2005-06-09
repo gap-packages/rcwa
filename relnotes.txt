@@ -1,0 +1,21 @@
+
+                       Version history of the RCWA package
+                       ===================================
+
+Initial version: 1.0.0 (April 26, 2005)
+
+Changes between version 1.0.0 and version 1.0.2:
+
+ - Several cosmetic improvements, no new functionality.
+
+Changes between version 1.0.2 and version 1.0.3:
+
+ - Added `View' - methods for certain group rings of rcwa groups and their
+   elements (compact form to save space; not documented yet).
+
+Changes between version 1.0.3 and version 1.?
+
+ - The `Display' - method for an rcwa mapping now recognizes an option `DVI'.
+   If this option is set, a LaTeX representation of the rcwa mapping is
+   written to a file, LaTeX'ed and shown with xdvi.
+
