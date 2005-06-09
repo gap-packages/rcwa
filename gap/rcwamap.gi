@@ -1108,7 +1108,6 @@ InstallMethod( ViewObj,
 
     if IsZero(f) or IsOne(f) then View(f); return; fi;
     if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
-    if not IsRcwaMappingStandardRep(f) then TryNextMethod(); fi;
     Print("<");
     if   HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f)))
     then if IsTame(f) then Print("tame "); else Print("wild "); fi; fi;
@@ -1126,6 +1125,32 @@ InstallMethod( ViewObj,
     Print(">");
   end );
 
+LaTeXAndXDVIRcwaMapping := function ( f )
+
+  local  tmpdir, file, stream, str,  latex, dvi;
+
+  tmpdir := DirectoryTemporary( );
+  file   := Filename(tmpdir,"rcwamap.tex");
+  stream := OutputTextFile(file,false);
+  SetPrintFormattingStatus(stream,false);
+  AppendTo(stream,"\\documentclass[fleqn]{article}\n",
+                  "\\usepackage{amsmath}\n\n",
+                  "\\setlength{\\paperwidth}{84cm}\n",
+                  "\\setlength{\\textwidth}{80cm}\n",
+                  "\\setlength{\\paperheight}{59.5cm}\n",
+                  "\\setlength{\\textheight}{57cm}\n\n", 
+                  "\\begin{document}\n\n\\[\n");
+  str := LaTeXObj(f:Indentation:=2);
+  AppendTo(stream,str);
+  AppendTo(stream,"\\]\n\n\\end{document}\n");
+  latex := Filename(DirectoriesSystemPrograms( ),"latex");
+  Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
+  dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
+  Process(tmpdir,dvi,InputTextNone( ),OutputTextNone( ), 
+          ["-paper","a1r","rcwamap.dvi"]);
+end;
+MakeReadOnlyGlobal( "LaTeXAndXDVIRcwaMapping" );
+
 #############################################################################
 ##
 #M  Display( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
@@ -1142,7 +1167,8 @@ InstallMethod( Display,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
-    if not IsRcwaMappingStandardRep(f) then TryNextMethod(); fi;
+    if   true in List(["dvi","DVI"],ValueOption)
+    then LaTeXAndXDVIRcwaMapping(f); return; fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then
       name := Name(f);
