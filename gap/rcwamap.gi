@@ -1139,10 +1139,10 @@ LaTeXAndXDVIRcwaMapping := function ( f )
                   "\\setlength{\\textwidth}{80cm}\n",
                   "\\setlength{\\paperheight}{59.5cm}\n",
                   "\\setlength{\\textheight}{57cm}\n\n", 
-                  "\\begin{document}\n\n\\[\n");
+                  "\\begin{document}\n\n\\begin{align*}\n");
   str := LaTeXObj(f:Indentation:=2);
   AppendTo(stream,str);
-  AppendTo(stream,"\\]\n\n\\end{document}\n");
+  AppendTo(stream,"\\end{align*}\n\n\\end{document}\n");
   latex := Filename(DirectoriesSystemPrograms( ),"latex");
   Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
   dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
@@ -1290,13 +1290,14 @@ InstallMethod( LaTeXObj,
     str := indent;
     if ValueOption("Factorization") = true and IsBijective(f) then
       gens := List(FactorizationIntoGenerators(f),LaTeXName);
-      append("       ");
+      append("      &");
       for pos in [1..Length(gens)] do
         append(gens[pos]);
         if pos < Length(gens) then
           if pos mod 5 = 0 then append(" \\\\\n"); fi;
           if pos mod 5 in [2,4] then append("\n"); fi;
           append(" \\cdot ");
+          if pos mod 5 = 0 then append("&"); fi;
         else append("\n"); fi;
       od;
       return str;
