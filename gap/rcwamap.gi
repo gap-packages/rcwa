@@ -1135,7 +1135,7 @@ InstallMethod( LaTeXObj, "for infinity (RCWA)", true, [ IsInfinity ], 0,
 LaTeXAndXDVIRcwaMapping := function ( f )
 
   local  tmpdir, file, stream, str, latex, dvi, m, sizes, size,
-         jectivity, cwop, ind, ind0;
+         jectivity, cwop;
 
   tmpdir := DirectoryTemporary( );
   file   := Filename(tmpdir,"rcwamap.tex");
@@ -1154,23 +1154,20 @@ LaTeXAndXDVIRcwaMapping := function ( f )
   if   ValueOption("Factorization") <> true
   then size := LogInt(Int(m/16)+1,2)+1;
   else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
-  if   size < 5
-  then ind := 4; AppendTo(stream,"\\begin{",sizes[size],"}\n\n");
-  else ind := 2; fi;
-  ind0 := String("",ind-2);
+  if size < 5 then AppendTo(stream,"\\begin{",sizes[size],"}\n\n"); fi;
   if   IsBijective(f)  then jectivity := " bijective";
   elif IsInjective(f)  then jectivity := "n injective, but not surjective";
   elif IsSurjective(f) then jectivity := " surjective, but not injective";
   else jectivity := " neither injective nor surjective"; fi;
   if   IsClassWiseOrderPreserving(f)
   then cwop := " class-wise order-preserving"; else cwop := ""; fi;
-  AppendTo(stream,ind0,"\\noindent A",jectivity,cwop,
+  AppendTo(stream,"\\noindent A",jectivity,cwop,
            " rcwa mapping of \\(\\mathbb{Z}\\) \\newline\nwith modulus ",
            String(Modulus(f)),", multiplier ",String(Multiplier(f)),
            " and divisor ",String(Divisor(f)),", given by\n");
-  AppendTo(stream,ind0,"\\begin{align*}\n");
-  str := LaTeXObj(f:Indentation:=ind);
-  AppendTo(stream,str,ind0,"\\end{align*}");
+  AppendTo(stream,"\\begin{align*}\n");
+  str := LaTeXObj(f);
+  AppendTo(stream,str,"\\end{align*}");
   if HasIsTame(f) then
     if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
                  else AppendTo(stream,"\nThis mapping is wild."); fi;
@@ -1178,6 +1175,17 @@ LaTeXAndXDVIRcwaMapping := function ( f )
   if HasOrder(f) then
     AppendTo(stream,"\nThe order of this mapping is \\(",
              LaTeXObj(Order(f)),"\\).");
+  fi;
+  if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
+  if IsBijective(f) then
+    if IsClassWiseOrderPreserving(f) then
+      AppendTo(stream,"\n\\noindent The determinant of this mapping is ",
+               String(Determinant(f)),", and its sign is ",
+               String(Sign(f)),".");
+    else
+      AppendTo(stream,"\n\\noindent The sign of this mapping is ",
+               String(Sign(f)),".");
+    fi;
   fi;
   if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
   AppendTo(stream,"\n\n\\end{document}\n");
