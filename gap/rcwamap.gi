@@ -1177,7 +1177,7 @@ InstallMethod( Display,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
-    if   true in List(["dvi","DVI"],ValueOption)
+    if   ValueOption("xdvi") = true
     then LaTeXAndXDVIRcwaMapping(f); return; fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then
