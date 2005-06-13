@@ -1125,32 +1125,60 @@ InstallMethod( ViewObj,
     Print(">");
   end );
 
+#############################################################################
+##
+#M  LaTeXObj( infinity ) . . . . . . . . . . . . . . . . . . . . for infinity
+##
+InstallMethod( LaTeXObj, "for infinity (RCWA)", true, [ IsInfinity ], 0,
+               inf -> "\\infty" );
+
 LaTeXAndXDVIRcwaMapping := function ( f )
 
-  local  tmpdir, file, stream, str, latex, dvi, m, sizes, size, ind;
+  local  tmpdir, file, stream, str, latex, dvi, m, sizes, size,
+         jectivity, cwop, ind, ind0;
 
   tmpdir := DirectoryTemporary( );
   file   := Filename(tmpdir,"rcwamap.tex");
   stream := OutputTextFile(file,false);
   SetPrintFormattingStatus(stream,false);
   AppendTo(stream,"\\documentclass[fleqn]{article}\n",
-                  "\\usepackage{amsmath}\n\n",
+                  "\\usepackage{amsmath}\n",
+                  "\\usepackage{amssymb}\n\n",
                   "\\setlength{\\paperwidth}{84cm}\n",
                   "\\setlength{\\textwidth}{80cm}\n",
                   "\\setlength{\\paperheight}{59.5cm}\n",
                   "\\setlength{\\textheight}{57cm}\n\n", 
                   "\\begin{document}\n\n");
   sizes := ["Huge","huge","Large","large"];
-  m := Length(AllResidues(Source(f),Modulus(f)));
+  m := Modulus(f);
   if   ValueOption("Factorization") <> true
   then size := LogInt(Int(m/16)+1,2)+1;
   else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
   if   size < 5
   then ind := 4; AppendTo(stream,"\\begin{",sizes[size],"}\n\n");
   else ind := 2; fi;
-  AppendTo(stream,String("",ind-2),"\\begin{align*}\n");
+  ind0 := String("",ind-2);
+  if   IsBijective(f)  then jectivity := " bijective";
+  elif IsInjective(f)  then jectivity := "n injective, but not surjective";
+  elif IsSurjective(f) then jectivity := " surjective, but not injective";
+  else jectivity := " neither injective nor surjective"; fi;
+  if   IsClassWiseOrderPreserving(f)
+  then cwop := " class-wise order-preserving"; else cwop := ""; fi;
+  AppendTo(stream,ind0,"\\noindent A",jectivity,cwop,
+           " rcwa mapping of \\(\\mathbb{Z}\\) \\newline\nwith modulus ",
+           String(Modulus(f)),", multiplier ",String(Multiplier(f)),
+           " and divisor ",String(Divisor(f)),", given by\n");
+  AppendTo(stream,ind0,"\\begin{align*}\n");
   str := LaTeXObj(f:Indentation:=ind);
-  AppendTo(stream,str,String("",ind-2),"\\end{align*}");
+  AppendTo(stream,str,ind0,"\\end{align*}");
+  if HasIsTame(f) then
+    if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
+                 else AppendTo(stream,"\nThis mapping is wild."); fi;
+  fi;
+  if HasOrder(f) then
+    AppendTo(stream,"\nThe order of this mapping is \\(",
+             LaTeXObj(Order(f)),"\\).");
+  fi;
   if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
   AppendTo(stream,"\n\n\\end{document}\n");
   latex := Filename(DirectoriesSystemPrograms( ),"latex");
@@ -1177,7 +1205,7 @@ InstallMethod( Display,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
-    if   ValueOption("xdvi") = true
+    if   ValueOption("xdvi") = true and IsIntegers(Source(f))
     then LaTeXAndXDVIRcwaMapping(f); return; fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then
