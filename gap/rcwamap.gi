@@ -1166,7 +1166,7 @@ LaTeXAndXDVIRcwaMapping := function ( f )
            String(Modulus(f)),", multiplier ",String(Multiplier(f)),
            " and divisor ",String(Divisor(f)),", given by\n");
   AppendTo(stream,"\\begin{align*}\n");
-  str := LaTeXObj(f);
+  str := LaTeXObj(f:Indentation:=2);
   AppendTo(stream,str,"\\end{align*}");
   if HasIsTame(f) then
     if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
