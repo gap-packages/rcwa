@@ -13,9 +13,13 @@ Changes between version 1.0.2 and version 1.0.3:
  - Added `View' - methods for certain group rings of rcwa groups and their
    elements (compact form to save space; not documented yet).
 
-Changes between version 1.0.3 and version 1.?
+Changes between version 1.0.3 and version 1.1.0
 
  - The `Display' - method for an rcwa mapping now recognizes an option `DVI'.
    If this option is set, a LaTeX representation of the rcwa mapping is
    written to a file, LaTeX'ed and shown with xdvi.
+
+ - An example `A group which acts transitive on the positive integers'
+   has been added. In this example, the transitivity of the given
+   (wild) rcwa group is checked computationally.
 
