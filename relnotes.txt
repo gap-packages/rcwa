@@ -15,7 +15,7 @@ Changes between version 1.0.2 and version 1.0.3:
 
 Changes between version 1.0.3 and version 1.1.0
 
- - The `Display' - method for an rcwa mapping now recognizes an option `DVI'.
+ - The `Display' - method for rcwa mappings now recognizes an option `xdvi'.
    If this option is set, a LaTeX representation of the rcwa mapping is
    written to a file, LaTeX'ed and shown with xdvi.
 
