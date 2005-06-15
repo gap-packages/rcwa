@@ -129,15 +129,17 @@ about which mappings or groups. The best way to get an idea about this is to
 experiment yourself with the examples discussed in this manual and included
 in the file <File>pkg/rcwa/examples/examples.g</File>. Another useful source
 of examples is the <Ref Meth="Random" Label="RCWA( Integers )"/> - function.
-For many -- if not most -- problems the package does not provide an
-out-of-the-box solution.
-At the beginning you will probably be bored by extremely long runtimes for
+Often the package does not provide an out-of-the-box solution.
+At the beginning you will perhaps be bored by extremely long runtimes for
 seemingly trivial things. But with some experience you will learn to estimate
 in advance how long something will take and to see why raising some
 harmlessly-looking mapping to the 20th power would take terabytes of memory,
 while one can easily find out non-trivial things about some group which looks
-much more complicate. Quite often it is possible to find an answer for a
-given question by using an interactive trial-and-error approach. <P/>
+much more complicate. Provided that you have &LaTeX; and
+<Package>xdvi</Package> installed, you can nicely display examples of rcwa
+mappings by repeatedly issueing <C>Display(Random(RCWA(Integers)):xdvi);</C>.
+Quite often it is possible to find an answer for a given question by using an
+interactive trial-and-error approach. <P/>
 
 The author for example has found with substancial help of this package
 a non-trivial normal subgroup of the group of all residue class-wise affine
