@@ -2059,19 +2059,8 @@ InstallMethod( ViewObj,
         if i > 1 then Print(" + "); fi;
       fi;
       if AbsInt(coeffs[i]) > 1 then Print(AbsInt(coeffs[i]),"*"); fi;
-      g := grpelms[i];
-      if IsOne(g) then Print("id"); continue; fi;
-      Print("<",Mod(g),",",Mult(g),",",Div(g),",",Sign(g),",");
-      if   IsClassWiseOrderPreserving(g)
-      then Print(Determinant(g),","); else Print("-,"); fi;
-      if Mod(g) <= 36 or IsIntegral(g)
-        or Set(Factors(Mult(g))) <> Set(Factors(Div(g)))
-      then 
-        if   Order(g) = infinity then Print("inf,");
-        else Print(Order(g),","); fi;
-        if IsTame(g) then Print("tame"); else Print("wild"); fi;
-      else Print("?,?"); fi;
-      Print(">");
+      ViewObj(grpelms[i]);
+      if i < supplng then Print("\n"); fi;
     od;
   end );
 
