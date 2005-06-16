@@ -2019,6 +2019,15 @@ gap> Maximum(List(stabelm,f->Maximum(List(Coefficients(f),c->c[2]))));
 30305
 gap> Filtered([3..30305],n->Minimum(List(stabelm,elm->n^elm))>=n);
 [ 4 ]
+]]>
+</Example>
+
+We have to treat 4 separately:
+
+<Example>
+<![CDATA[
+gap> 1^(u*a*u^2*a^-1*u);
+1
 gap> 4^(u*a*u^2*a^-1*u);
 3
 ]]>
