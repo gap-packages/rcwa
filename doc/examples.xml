@@ -1841,8 +1841,8 @@ on the set of positive integers.
 Obviously, it acts on the set of positive integers.
 First we show that this action is transitive.
 
-We start by checking which sufficiently large positive integers are mapped
-to smaller ones by a suitable group element:
+We start by checking in which residue classes sufficiently large positive
+integers are mapped to smaller ones by a suitable group element:
 
 <Example>
 <![CDATA[
