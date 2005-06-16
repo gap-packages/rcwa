@@ -15,11 +15,13 @@ Changes between version 1.0.2 and version 1.0.3:
 
 Changes between version 1.0.3 and version 1.1.0
 
- - The `Display' - method for rcwa mappings now recognizes an option `xdvi'.
-   If this option is set, a LaTeX representation of the rcwa mapping is
-   written to a file, LaTeX'ed and shown with xdvi.
+ - The `Display' - method for rcwa mappings over the integers now recognizes
+   an option `xdvi'. If this option is set, a LaTeX representation of the
+   rcwa mapping is written to a file, LaTeX'ed and shown with xdvi.
+   Try e.g. Display(Random(RCWA(Integers)):xdvi);.
 
  - An example `A group which acts 2-transitive on the positive integers'
    has been added. In this example, the transitivity of the given
    (wild) rcwa group is checked computationally.
+
 
