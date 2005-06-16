@@ -13,7 +13,7 @@ Changes between version 1.0.2 and version 1.0.3:
  - Added `View' - methods for certain group rings of rcwa groups and their
    elements (compact form to save space; not documented yet).
 
-Changes between version 1.0.3 and version 1.1.0
+Changes between version 1.0.3 and version 1.1.0 (June 16, 2005)
 
  - The `Display' - method for rcwa mappings over the integers now recognizes
    an option `xdvi'. If this option is set, a LaTeX representation of the
