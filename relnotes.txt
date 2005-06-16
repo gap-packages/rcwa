@@ -21,7 +21,7 @@ Changes between version 1.0.3 and version 1.1.0 (June 16, 2005)
    Try e.g. Display(Random(RCWA(Integers)):xdvi);.
 
  - An example `A group which acts 2-transitive on the positive integers'
-   has been added. In this example, the 2-transitivity of the given
-   (wild) rcwa group is checked computationally.
+   has been added. In this example, the 2-transitivity of a given (wild)
+   rcwa group is checked computationally.
 
 
