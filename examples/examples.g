@@ -19,7 +19,7 @@ md := f -> [Multiplier(f),Divisor(f)];
 ##
 nu  := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
 t   := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
-tau := RcwaMapping([[1,1,1],[1,-1,1]]);
+tau := RcwaMapping([[1,1,1],[1,-1,1]]); SetName(tau,"tau");
 
 #############################################################################
 ##
@@ -427,6 +427,14 @@ T5 := RcwaMapping([[1,0,2],[5,-1,2]]); SetName(T5,"T5");
 ##
 T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
+
+#############################################################################
+##
+##  Section 4.15: A group which acts 2-transitive on the positive integers
+##
+a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
+u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
+SetName(u,"u");
 
 #############################################################################
 ##
