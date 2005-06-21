@@ -1822,7 +1822,7 @@ gap> List(S,Si->Float(Density(Si)));
 
 <!-- #################################################################### -->
 
-<Section Label="sec:OrbitOfWildGroup">
+<Section Label="sec:TwoTransitiveGroup">
 <Heading> A group which acts 2-transitive on the positive integers </Heading>
 
 In this section, we would like to show that the group <M>G</M> generated
