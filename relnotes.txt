@@ -21,7 +21,12 @@ Changes between version 1.0.3 and version 1.1.0 (June 16, 2005)
    Try e.g. Display(Random(RCWA(Integers)):xdvi);.
 
  - An example `A group which acts 2-transitive on the positive integers'
-   has been added. In this example, the 2-transitivity of a given (wild)
+   has been added. In this example, the 2-transitivity of a given wild
    rcwa group is checked computationally.
 
+Changes between version 1.1.0 and version ...
+
+ - An example `A group which acts 3-transitive, but not 4-transitive on Z'
+   has been added. In this example, the 3-transitivity and non-4-transitivity
+   of the action of a given wild rcwa group on Z is checked computationally.
 
