@@ -1418,6 +1418,53 @@ InstallOtherMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
+#M  RepresentativeActionOp( RCWA( Integers ), <S1>, <S2>, <act> ) 
+##
+##  An rcwa mapping <g> which maps <S1> to <S2>.
+##  The sets <S1> and <S2> have to be unions of residue classes of $\Z$.
+##  The argument <act> is ignored.
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and two residue class unions (RCWA)", true,
+                    [ IsNaturalRCWA_Z, IsUnionOfResidueClassesOfZ,
+                      IsUnionOfResidueClassesOfZ, IsFunction ], 0,
+
+  function ( RCWA_Z, S1, S2, act )
+
+    local  Refine, Refinement, S, C, g;
+
+    Refinement := function ( cls, lng )
+
+      local  m, M, k, splitcl, parts;
+
+      while Length(cls) <> lng do
+        m       := Minimum(List(cls,Modulus));
+        M       := Lcm(List(cls,Modulus));
+        splitcl := First(cls,cl->Modulus(cl)=m); RemoveSet(cls,splitcl);
+        k       := Maximum(Filtered(DivisorsInt(M/m),d->d<=lng-Length(cls)));
+        if k = 1 then k := 2; fi;
+        parts   := SplittedClass(splitcl,k);
+        cls     := Union(cls,parts);
+      od;
+      return cls;
+    end;
+
+    Refine := function ( S )
+      if   Length(S[1]) > Length(S[2])
+      then S[2] := Refinement(S[2],Length(S[1]));
+      elif Length(S[2]) > Length(S[1])
+      then S[1] := Refinement(S[1],Length(S[2])); fi;
+    end;
+
+    S := List([S1,S2],AsUnionOfFewClasses);
+    C := List([S1,S2],Si->AsUnionOfFewClasses(Difference(Integers,Si)));
+    Refine(S); Refine(C);
+    g := RcwaMapping(Concatenation(S[1],C[1]),Concatenation(S[2],C[2]));
+    return g;
+  end );
+
+#############################################################################
+##
 #M  RepresentativeActionOp( RCWA( Integers ), <P1>, <P2>, <act> ) 
 ##
 ##  An rcwa mapping <g> which maps <P1> to <P2> and is
