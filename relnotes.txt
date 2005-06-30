@@ -30,3 +30,6 @@ Changes between version 1.1.0 and version ...
    has been added. In this example, the 3-transitivity and non-4-transitivity
    of the action of a given wild rcwa group on Z is checked computationally.
 
+ - A `RepresentativeAction' method for RCWA(Z) and two unions of residue
+   classes has been added.
+
