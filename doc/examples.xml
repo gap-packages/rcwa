@@ -2052,7 +2052,8 @@ gap> phi := EpimorphismFromFreeGroup(G);
 gap> F := Source(phi);
 <free group on the generators [ a, u ]>
 gap> words := List([3..20],
->                  n->RepresentativeActionPreImage(G,[1,2,3],[1,2,n],OnTuples,F));
+>                  n->RepresentativeActionPreImage(G,[1,2,3],
+>                                                    [1,2,n],OnTuples,F));
 [ <identity ...>, u^-1*a^4*u, u^-1*a^-2*u^3*a^-2, u^-1*a^-2*u^3, 
   u^-1*a^-4*u^-1, u^-1*a^-2*u^-1*a^2, u^-1*a^2*u^-3, u^-1*a^2*u^-1, 
   u^-1*a^2*u, u^-1*a^2*u*a^2, u^-1*a^-2*u^-1*a^-2, u^-1*a*u^-2*a^-1*u, 
