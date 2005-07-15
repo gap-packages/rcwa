@@ -1832,6 +1832,7 @@ by the two wild mappings
 <![CDATA[
 gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);;
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
+gap> SetName(a,"a"); SetName(u,"u"); G := Group(a,u);;
 ]]>
 </Example>
 
@@ -1994,19 +1995,46 @@ gap> Lcm(last);
 ]]>
 </Example>
 
-Since the least common multiple of their moduli is as large as 174960000,
-directly forming the union of these unions of residue classes and checking
-whether it is equal to the set of integers would take too much time and
-memory. But it suffices to check whether for any residue class
-(mod&nbsp;174960000), a representative lies in one of these sets
-(this takes still some time!):
+Since the least common multiple of the moduli of these unions of residue
+classes is as large as 174960000, directly forming their union and
+checking whether it is equal to the set of integers would take relatively
+much time and memory. Checking that the intersection of the complements is
+empty is much more efficient, in particular when we carefully choose which
+sets to intersect:
 
-<Log>
+<Example>
 <![CDATA[
-gap> ForAny([0..174960000-1], n -> not ForAny(decs, dec -> n in dec));
-false
+gap> decsc := List(decs,dec->Difference(Integers,dec));;
+gap> inds := [ 1, 2, 4, 5, 6, 10, 11, 12, 18, 25, 29, 30, 33, 
+>             35, 36, 37, 38, 39, 41, 44, 82, 88, 91, 98 ];;
+gap> S := Integers;;
+gap> for i in inds do S := Intersection(S,decsc[i]); ViewObj(S); Print("\n"); od;
+0(2)
+2(6) U 4(6)
+<union of 42 residue classes (mod 150)>
+<union of 84 residue classes (mod 450)>
+<union of 21 residue classes (mod 450)>
+<union of 15 residue classes (mod 450)>
+<union of 13 residue classes (mod 450)>
+<union of 12 residue classes (mod 450)>
+<union of 44 residue classes (mod 1800)>
+<union of 74 residue classes (mod 3600)>
+<union of 50 residue classes (mod 3600)>
+4(450) U 58(450) U 148(450) U 274(450) U 364(450)
+4(450) U 58(450) U 148(450) U 364(450)
+<union of 96 residue classes (mod 12150)>
+<union of 32 residue classes (mod 12150)>
+<union of 20 residue classes (mod 12150)>
+<union of 60 residue classes (mod 48600)>
+<union of 100 residue classes (mod 97200)>
+<union of 60 residue classes (mod 97200)>
+<union of 40 residue classes (mod 97200)>
+<union of 20 residue classes (mod 97200)>
+<union of 10 residue classes (mod 97200)>
+2254(97200) U 14404(97200) U 38704(97200) U 50854(97200) U 87304(97200)
+[  ]
 ]]>
-</Log>
+</Example>
 
 Similar as above, it remains to check that the <Q>small</Q> integers all
 lie in the orbit containing&nbsp;2. Obviously, it is sufficient to check
@@ -2040,8 +2068,6 @@ as&nbsp;2, thus that this stabilizer acts transitive on
 the 2-transitivity of the action of <M>G</M> on&nbsp;<M>\mathbb{N}</M>,
 as promised. <P/>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 There is even evidence that the degree of transitivity of the action of
 <M>G</M> on the positive integers is higher than&nbsp;2:
 
@@ -2068,6 +2094,13 @@ gap> List(elms,elm->List([1,2,3],n->n^elm));
   [ 1, 2, 8 ], [ 1, 2, 9 ], [ 1, 2, 10 ], [ 1, 2, 11 ], [ 1, 2, 12 ], 
   [ 1, 2, 13 ], [ 1, 2, 14 ], [ 1, 2, 15 ], [ 1, 2, 16 ], [ 1, 2, 17 ], 
   [ 1, 2, 18 ], [ 1, 2, 19 ], [ 1, 2, 20 ] ]
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
 gap> words := List([4..20],
 >                  n->RepresentativeActionPreImage(G,[1,2,3,4],
 >                                                    [1,2,3,n],OnTuples,F));
