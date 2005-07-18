@@ -1133,8 +1133,8 @@ gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
   ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18),
   ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18),
   ClassReflection(0,3) ]
-gap> elm := RepresentativeAction(G,ResidueClass(1,2),
->                                  ResidueClassUnion(Integers,5,[2,3]));;
+gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
+>                                ResidueClassUnion(Integers,5,[2,3]));;
 gap> ResidueClass(1,2)^elm;
 2(5) U 3(5)
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
