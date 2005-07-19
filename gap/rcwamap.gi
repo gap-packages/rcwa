@@ -2227,6 +2227,9 @@ InstallMethod( CompositionMapping2,
     m1 := f!.modulus; m2 := g!.modulus;
     m3 := Minimum( Lcm( m1, m2 ) * Divisor( f ), m1 * m2 );
 
+    if   ValueOption("RMPROD_NO_EXPANSION") = true
+    then m3 := Maximum(m1,m2); fi;
+
     c3 := [];
     for n in [0 .. m3 - 1] do
       n1 := n mod m1 + 1;
@@ -3768,7 +3771,8 @@ InstallMethod( FactorizationIntoGenerators,
               Add(multswitches,q); SaveState();
               DivideBy(PrimeSwitch(q,k[q])^-1);
             fi;
-          elif 2 in [p,q] then DivideBy(ClassTransposition(0,2,1,4)); fi;
+          elif 2 in [p,q]
+          then DivideBy(ClassTransposition(0,2,1,4):RMPROD_NO_EXPANSION); fi;
 
         od;
 
@@ -3868,7 +3872,7 @@ InstallMethod( FactorizationIntoGenerators,
             if   Sum(List(Flat(disjoint),Density))
                > Density(Union(Flat(disjoint)))
             then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
-            DivideBy(List(disjoint,ClassTransposition));
+            DivideBy(List(disjoint,ClassTransposition):RMPROD_NO_EXPANSION);
             pairs := Difference(pairs,disjoint);
           until pairs = [];
 
