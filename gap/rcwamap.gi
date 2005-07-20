@@ -3652,18 +3652,25 @@ InstallMethod( FactorizationIntoGenerators,
 
     DivideBy := function ( l )
 
-      local  fact;
+      local  fact, prod, arects;
 
+      arects := ValueOption("ct") = true; 
       if not IsList(l) then l := [l]; fi;
       for fact in l do # Factors in divisors list must commute.
         Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
       od;
       if direction = "from the right" then
-        g          := g * Product(Reversed(l))^-1;
+        if   arects
+        then prod  := Product(l);
+        else prod  := Product(Reversed(l))^-1; fi;
+        g          := PROD(g,prod:RMPROD_NO_EXPANSION:=arects);
         rightfacts := Concatenation(Reversed(l),rightfacts);
       else
-        g         := Product(l)^-1 * g;
-        leftfacts := Concatenation(leftfacts,l);
+        if   arects
+        then prod  := Product(Reversed(l));
+        else prod  := Product(l)^-1; fi;
+        g          := PROD(prod,g:RMPROD_NO_EXPANSION:=arects);
+        leftfacts  := Concatenation(leftfacts,l);
       fi;
       StateInfo();
     end;
@@ -3772,7 +3779,7 @@ InstallMethod( FactorizationIntoGenerators,
               DivideBy(PrimeSwitch(q,k[q])^-1);
             fi;
           elif 2 in [p,q]
-          then DivideBy(ClassTransposition(0,2,1,4):RMPROD_NO_EXPANSION); fi;
+          then DivideBy(ClassTransposition(0,2,1,4):ct); fi;
 
         od;
 
@@ -3872,7 +3879,7 @@ InstallMethod( FactorizationIntoGenerators,
             if   Sum(List(Flat(disjoint),Density))
                > Density(Union(Flat(disjoint)))
             then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
-            DivideBy(List(disjoint,ClassTransposition):RMPROD_NO_EXPANSION);
+            DivideBy(List(disjoint,ClassTransposition):ct);
             pairs := Difference(pairs,disjoint);
           until pairs = [];
 
