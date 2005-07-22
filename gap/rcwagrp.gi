@@ -1639,7 +1639,7 @@ InstallOtherMethod( IsTransitive,
     if   (IsModularRcwaGroup(G) or IsZ_pi(R))
       and IsFinitelyGeneratedGroup(G) and HasIsTame(G) and IsTame(G)
     then return false; fi;
-    if   R = Integers or IsZ_pi(R)
+    if   IsIntegers(R) or IsZ_pi(R)
     then ranges := [[-10..10],[-30..30],[-100..100]];
     elif IsPolynomialRing(R) then
       x := IndeterminatesOfPolynomialRing(R)[1];
@@ -1655,7 +1655,7 @@ InstallOtherMethod( IsTransitive,
     if   (IsModularRcwaGroup(G) or IsZ_pi(R))
       and IsFinitelyGeneratedGroup(G) and IsTame(G)
     then return false; fi;
-    if R = Integers then 
+    if IsIntegers(R) then 
       Info(InfoRCWA,1,"Searching for class shifts ...");
       Info(InfoRCWA,2,"... in generators");
       gen := GeneratorsOfGroup(G); cl := ShiftedClass(gen);
@@ -1683,6 +1683,264 @@ InstallOtherMethod( IsTransitive,
       Info(InfoRCWA,1,"... this method gives up ...");
       TryNextMethod();
     fi;
+  end );
+
+#############################################################################
+##
+#M  Transitivity( <G>, Integers ) . . . . . . . . for rcwa group over Z and Z
+#M  Transitivity( <G>, NonnegativeIntegers )
+#M  Transitivity( <G>, PositiveIntegers )
+##
+##  This method might fail or run into an infinite loop.
+##
+InstallOtherMethod( Transitivity,
+                    "for rcwa group over Z and one of Z, N_0 or N (RCWA)",
+                    ReturnTrue, [ IsIntegralRcwaGroup, IsCollection ], 0,
+
+  function ( G, D )
+
+    local  gens, g, tups, tup, tupslng, invpairs, max, dom, finorb,
+           stab, stabelm, decs, dec, decsp, decsm, bound, trs,
+           S0, S, S_old, old_S, maxind, orb, oldorb, k, l, l0, m, str, i, j;
+
+    if not (   IsIntegers(D) or IsNonnegativeIntegers(D)
+            or IsPositiveIntegers(D))
+    then TryNextMethod(); fi;
+
+    gens := Set(GeneratorsAndInverses(G));
+    invpairs := List([1..Length(gens)],i->[i,Position(gens,gens[i]^-1)]);
+
+    if   IsIntegers(D)
+    then Info(InfoRCWA,1,"Testing whether the group is tame ..."); fi;
+
+    # Tame groups act at most 1-transitive.
+    if IsIntegers(D) and IsTame(G) then
+      Info(InfoRCWA,1,"Transitivity: The group is tame, and tame groups");
+      Info(InfoRCWA,1,"can act at most 1-transitive on Z.");
+      if IsTransitive(G,Integers) then return 1; else return 0; fi;
+    fi;
+
+    if HasIsTame(G) then
+      if IsTame(G) then Info(InfoRCWA,1,"The group is tame.");
+                   else Info(InfoRCWA,1,"The group is wild."); fi;
+    fi;
+
+    # Only class-wise order-preserving groups can act on N or N_0.
+    if not IsIntegers(D) and not IsClassWiseOrderPreserving(G) then
+      Info(InfoRCWA,1,"Transitivity: The group is not class-wise ",
+                      "order-preserving,");
+      Info(InfoRCWA,1,"thus does not act on ",D,".");
+      return fail;
+    fi;
+
+    # If D = N or N_0: Check whether images under generators can be negative.
+    if not IsIntegers(D) then
+      max := -Minimum(List(gens,g->Minimum(List(Coefficients(g),c->c[2]))));
+      if IsPositiveIntegers(D) then dom := [1..max];
+                               else dom := [0..max]; fi;
+      if not ForAll(gens,g->IsSubset(D,dom^g)) then
+        Info(InfoRCWA,1,"Transitivity: The group does not act on ",D,".");
+        return fail;
+      fi;
+    fi;
+
+    # If whole residue classes are fixed, the action cannot be transitive.
+    if Size(Difference(Integers,MovedPoints(G))) = infinity then
+      Info(InfoRCWA,1,"Transitivity: The group fixes a residue class.");
+      return 0;
+    fi;
+
+    # Check whether there are obvious finite orbits.
+    finorb := ShortOrbits(G,Intersection([-144..144],D),36);
+    if finorb <> [] then
+      Info(InfoRCWA,1,"Transitivity: There are finite orbits.");
+      Info(InfoRCWA,2,"These are e.g. ",finorb);
+      return 0;
+    fi;
+
+    k := 1; tupslng := 2;
+
+    while true do
+
+      Info(InfoRCWA,1,"Transitivity: Checking for ",k,"-transitivity ...");
+
+      tups := Concatenation(List([1..tupslng],
+                                 k->Tuples([1..Length(gens)],k)));
+      tups := Filtered(tups,
+                       tup->ForAll(invpairs,
+                                   pair->PositionSublist(tup,pair)=fail));
+
+      Info(InfoRCWA,2,"There are ",Length(tups)," tuples of generators ",
+                      "of length at most ",tupslng,".");
+
+      if k = 1 then
+        Info(InfoRCWA,2,"Computing their products ... ");
+        stab := tups;
+      else
+        stab := [];
+        if   IsPositiveIntegers(D)
+        then l0 := [1..k-1]; else l0 := [0..k-2]; fi;
+        for tup in tups do
+          l := l0;
+          for i in tup do l := List(l,n->n^gens[i]); od;
+          if l = l0 then Add(stab,tup); fi;
+        od;
+        if   k = 2 then str := "1"; elif k = 3 then str := "1 and 2";
+        elif k = 4 then str := "1, 2 and 3";
+        else str := Concatenation("1, 2, ... , ",String(k-1)); fi; 
+        Info(InfoRCWA,2,"The products of ",
+                        Length(stab)," of these stabilize ",str,".");
+        if stab = [] then
+          Info(InfoRCWA,2,"Increment maximum generator tuple length ...");
+          tupslng := tupslng + 1;
+          continue;
+        fi;
+        Info(InfoRCWA,2,"Computing stabilizer elements ... ");
+      fi;
+
+      stabelm := List(stab,tup->Product(List(tup,i->gens[i])));
+      Info(InfoRCWA,2,"The moduli of the computed stabilizer elements are\n",
+                      List(stabelm,Modulus));
+      Info(InfoRCWA,2,"Computing sets on which they are `decreasing' ... ");
+      decs := List(stabelm,DecreasingOn);
+      SortParallel(decs,stabelm,
+        function(S1,S2)
+          if   S1 = [] or S2 = [] then return false;
+          else return First([1..100],k->Factorial(k) mod Modulus(S1) = 0)
+                    < First([1..100],k->Factorial(k) mod Modulus(S2) = 0);
+          fi;
+        end);
+
+      Info(InfoRCWA,2,"The moduli of the sets on which they are ",
+                      "`decreasing' are\n",List(decs,Modulus));
+      Info(InfoRCWA,2,"Checking whether the union of these sets is Z,");
+      Info(InfoRCWA,2,"by successively subtracting them from Z.");
+
+      S := Integers;
+      for i in [1..Length(decs)] do
+        S_old := S; S := Difference(S,decs[i]);
+        if InfoLevel(InfoRCWA) >= 2 and S <> S_old then
+          Print(i,": "); ViewObj(S); Print("\n");
+        fi;
+        if S = [] then maxind := i; break; fi;
+      od;
+
+      if S <> [] then
+
+        Info(InfoRCWA,2,"Their union is NOT the whole of Z.");
+
+        if not IsBound(old_S) or S <> old_S or Length(tups) < 10000 then
+          Info(InfoRCWA,2,"Increment maximum generator tuple length ...");
+          tupslng := tupslng + 1;
+          old_S := S;
+          continue;
+        fi;
+
+        bound := Maximum(List(stabelm,
+                              f->Maximum(List(Coefficients(f),
+                                              c->AbsInt(c[2])))));
+        bound := Maximum(bound,k+1,Lcm(List(stabelm,Modulus)));
+
+        decsp := List(stabelm,elm->Filtered([bound+1..2*bound],n->n^elm<n));
+        trs := Union(decsp) = [bound+1..2*bound];
+        if IsIntegers(D) and trs then
+          decsm := List(stabelm,
+                        elm->Filtered([-2*bound..-bound-1],n->n^elm>n));
+          if Union(decsm) <> [-2*bound..-bound-1] then trs := false; fi;
+        fi;
+
+        if trs then
+
+          if IsPositiveIntegers(D) then S := [k]; else S := [k-1]; fi;
+          S0 := Intersection(D,[-bound..bound]);
+          if IsPositiveIntegers(D) then S0 := Difference(S0,[1..k-1]);
+                                   else S0 := Difference(S0,[0..k-2]); fi;
+          repeat
+            S_old := ShallowCopy(S);
+            for g in stabelm do
+              S := Union(S,S^g);
+              Info(InfoRCWA,1,"|S| = ",Length(S),".");
+              if IsSubset(S,S0) then break; fi;
+            od;
+          until IsSubset(S,S0) or S = S_old;
+
+          if IsSubset(S,S0) then
+            Info(InfoRCWA,1,"Transitivity: ",k,
+                            " - transitivity has been proved.");
+          else trs := false; fi;
+
+        fi;
+
+        m := Lcm(List(gens,Modulus)) * Lcm(List(gens,Divisor));
+        if m^k >= 1000000 then
+          Info(InfoRCWA,1,"Can neither prove nor disprove ",k,
+                          " - transitivity. Giving up.");
+          return Concatenation("At least ",String(k-1),
+                               ", but otherwise don't know.");
+        fi;
+
+        Info(InfoRCWA,2,"Checking transitivity on ",k,
+                        " - tuples (mod ",m,") ...");
+        orb := [[1..k]];;
+        repeat
+          Info(InfoRCWA,2,"Orbit length >= ",Length(orb),".");
+          oldorb := ShallowCopy(orb);
+          for g in gens do
+            orb := Union(orb,List(orb,l->List(l,n->n^g) mod m));
+          od;
+        until orb = oldorb;
+
+        if Length(orb) < m^k then
+          Info(InfoRCWA,2,"The action is not transitive on ",k,
+                          " - tuples (mod ",m,").");
+          Info(InfoRCWA,1,"Transitivity: ",k,
+                          " - transitivity has been disproved.");
+        else
+          Info(InfoRCWA,2,"The action is transitive on ",k,
+                          " - tuples (mod ",m,").");
+          Info(InfoRCWA,1,"Can neither prove nor disprove ",k,
+                          " - transitivity. Giving up.");
+          return Concatenation("At least ",String(k-1),
+                               ", but otherwise don't know.");
+        fi;
+
+      else
+
+        bound := Maximum(List(stabelm{[1..maxind]},
+                         f->Maximum(List(Coefficients(f),c->c[2]))));
+        Info(InfoRCWA,1,"The upper bound on `small' points is ",bound,".");
+
+        if IsPositiveIntegers(D) then S := [k]; else S := [k-1]; fi;
+        S0 := Intersection(D,[-bound..bound]);
+        if IsPositiveIntegers(D) then S0 := Difference(S0,[1..k-1]);
+                                 else S0 := Difference(S0,[0..k-2]); fi;
+        repeat
+          S_old := ShallowCopy(S);
+          for g in stabelm do
+            S := Union(S,S^g);
+            Info(InfoRCWA,1,"|S| = ",Length(S),".");
+            if IsSubset(S,S0) then break; fi;
+          od;
+        until IsSubset(S,S0) or S = S_old;
+
+        if not IsSubset(S,S0) then
+          Info(InfoRCWA,1,"Not all points below the bound ",
+                          "lie in one orbit.");
+          Info(InfoRCWA,1,"This means that the action is not ",k,
+                          " - transitive.");
+          return k - 1;
+        fi;
+
+        Info(InfoRCWA,1,"All points below the bound lie in one orbit.");
+        Info(InfoRCWA,1,"This means that ",k,
+                        " - transitivity has been proved.");
+
+        k := k + 1;
+
+      fi;
+
+    od;
+
   end );
 
 #############################################################################
