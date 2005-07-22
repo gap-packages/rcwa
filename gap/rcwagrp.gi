@@ -1785,9 +1785,15 @@ InstallOtherMethod( Transitivity,
           for i in tup do l := List(l,n->n^gens[i]); od;
           if l = l0 then Add(stab,tup); fi;
         od;
-        if   k = 2 then str := "1"; elif k = 3 then str := "1 and 2";
-        elif k = 4 then str := "1, 2 and 3";
-        else str := Concatenation("1, 2, ... , ",String(k-1)); fi; 
+        if IsPositiveIntegers(D) then
+          if   k = 2 then str := "1"; elif k = 3 then str := "1 and 2";
+          elif k = 4 then str := "1, 2 and 3";
+          else str := Concatenation("1, 2, ... , ",String(k-1)); fi;
+        else
+          if   k = 2 then str := "0"; elif k = 3 then str := "0 and 1";
+          elif k = 4 then str := "0, 1 and 2";
+          else str := Concatenation("0, 1, ... , ",String(k-2)); fi;
+        fi;
         Info(InfoRCWA,2,"The products of ",
                         Length(stab)," of these stabilize ",str,".");
         if stab = [] then
@@ -1836,10 +1842,14 @@ InstallOtherMethod( Transitivity,
           continue;
         fi;
 
+        Info(InfoRCWA,2,"Looking which numbers can be `decreased' ",
+                        "additively ...");
+
         bound := Maximum(List(stabelm,
                               f->Maximum(List(Coefficients(f),
                                               c->AbsInt(c[2])))));
         bound := Maximum(bound,k+1,Lcm(List(stabelm,Modulus)));
+        Info(InfoRCWA,2,"Bound = ",bound);
 
         decsp := List(stabelm,elm->Filtered([bound+1..2*bound],n->n^elm<n));
         trs := Union(decsp) = [bound+1..2*bound];
@@ -1851,6 +1861,8 @@ InstallOtherMethod( Transitivity,
 
         if trs then
 
+          Info(InfoRCWA,2,"Numbers larger than ",bound," can be decreased.");
+          Info(InfoRCWA,2,"Checking smaller numbers ...");
           if IsPositiveIntegers(D) then S := [k]; else S := [k-1]; fi;
           S0 := Intersection(D,[-bound..bound]);
           if IsPositiveIntegers(D) then S0 := Difference(S0,[1..k-1]);
@@ -1867,6 +1879,8 @@ InstallOtherMethod( Transitivity,
           if IsSubset(S,S0) then
             Info(InfoRCWA,1,"Transitivity: ",k,
                             " - transitivity has been proved.");
+            k := k + 1;
+            continue;
           else trs := false; fi;
 
         fi;
@@ -1895,6 +1909,7 @@ InstallOtherMethod( Transitivity,
                           " - tuples (mod ",m,").");
           Info(InfoRCWA,1,"Transitivity: ",k,
                           " - transitivity has been disproved.");
+          return k-1;
         else
           Info(InfoRCWA,2,"The action is transitive on ",k,
                           " - tuples (mod ",m,").");
