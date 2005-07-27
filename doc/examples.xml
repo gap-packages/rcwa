@@ -1822,8 +1822,8 @@ gap> List(S,Si->Float(Density(Si)));
 
 <!-- #################################################################### -->
 
-<Section Label="sec:ThreeTransitiveGroup">
-<Heading> A group which acts 3-transitive on the positive integers </Heading>
+<Section Label="sec:FourTransitiveGroup">
+<Heading> A group which acts 4-transitive on the positive integers </Heading>
 
 In this section, we would like to show that the group <M>G</M> generated
 by the two wild mappings
@@ -1836,7 +1836,7 @@ gap> SetName(a,"a"); SetName(u,"u"); G := Group(a,u);;
 ]]>
 </Example>
 
-which we have already investigated in earlier examples acts 3-transitive
+which we have already investigated in earlier examples acts 4-transitive
 on the set of positive integers.
 
 Obviously, it acts on the set of positive integers.
@@ -2110,7 +2110,7 @@ gap> S := Integers;;
 gap> for i in [1..Length(decs)] do
 >      S_old := S; S := Difference(S,decs[i]);
 >      if S <> S_old then ViewObj(S); Print("\n"); fi;
->      if S = [] then maxind := i; break; fi;
+>      if S = [] then break; fi;
 >    od;
 0(2) U 3(8) U 5(8)
 <union of 151 residue classes (mod 240)>
@@ -2156,16 +2156,136 @@ gap> for i in [1..Length(decs)] do
 
 <Example>
 <![CDATA[
-gap> Maximum(List(stabelm{[1..maxind]},
->                 f->Maximum(List(Coefficients(f),c->c[2]))));
-28511
-gap> Filtered([4..28511],n->Minimum(List(stabelm,elm->n^elm))>=n);
+gap> Maximum(List(stabelm,f->Maximum(List(Coefficients(f),c->c[2]))));
+515816
+gap> smallnum := [4..515816];;
+gap> for i in [1..Length(stabelm)] do
+>      smallnum := Filtered(smallnum,n->n^stabelm[i]>=n);
+>    od;
+gap> smallnum;
 [  ]
 ]]>
 </Example>
 
-There is even evidence that the degree of transitivity of the action of
-<M>G</M> on the positive integers is higher than&nbsp;3:
+The same for 4-transitivity:
+
+<Example>
+<![CDATA[
+gap> tups := Concatenation(List([1..8],k->Tuples([1..4],k)));;
+gap> tups := Filtered(tups,tup->ForAll([[1,3],[3,1],[2,4],[4,2]],
+>                                      l->PositionSublist(tup,l)=fail));;
+gap> stab := [];;
+gap> for tup in tups do
+>      l := [1,2,3];
+>      for i in tup do l := List(l,n->n^gens[i]); od;
+>      if l = [1,2,3] then Add(stab,tup); fi;
+>    od;
+gap> Length(stab);
+528
+gap> stabelm := [];;
+gap> for i in [1..Length(stab)] do
+>      elm := One(G);
+>      for j in stab[i] do
+>        if Modulus(elm) > 10000 then elm := fail; break; fi;
+>        elm := elm * gens[j];
+>      od;
+>      if elm <> fail then Add(stabelm,elm); fi;
+>    od;
+gap> Length(stabelm);
+334
+gap> decs := List(stabelm,DecreasingOn);;
+gap> SortParallel(decs,stabelm,
+>                 function(S1,S2)
+>                   return First([1..100],k->Factorial(k) mod Modulus(S1) = 0)
+>                        < First([1..100],k->Factorial(k) mod Modulus(S2) = 0);
+>                 end);
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
+gap> S := Integers;;
+gap> for i in [1..Length(decs)] do
+>      S_old := S; S := Difference(S,decs[i]);
+>      if S <> S_old then ViewObj(S); Print("\n"); fi;
+>      if S = [] then maxind := i; break; fi;
+>    od;
+0(2) U 3(8) U 5(8)
+<union of 46 residue classes (mod 72)>
+<union of 20 residue classes (mod 72)>
+4(18)
+<union of 28 residue classes (mod 576)>
+<union of 22 residue classes (mod 576)>
+<union of 21 residue classes (mod 576)>
+40(72) U 4(144) U 94(144) U 346(576) U 418(576)
+<union of 16 residue classes (mod 576)>
+<union of 15 residue classes (mod 576)>
+4(144) U 94(144) U 346(576) U 418(576)
+<union of 30 residue classes (mod 5184)>
+<union of 26 residue classes (mod 5184)>
+<union of 6 residue classes (mod 1296)>
+<union of 504 residue classes (mod 129600)>
+<union of 324 residue classes (mod 129600)>
+<union of 282 residue classes (mod 129600)>
+<union of 239 residue classes (mod 129600)>
+<union of 218 residue classes (mod 129600)>
+<union of 194 residue classes (mod 129600)>
+<union of 154 residue classes (mod 129600)>
+<union of 97 residue classes (mod 129600)>
+<union of 85 residue classes (mod 129600)>
+<union of 77 residue classes (mod 129600)>
+<union of 67 residue classes (mod 129600)>
+<union of 125 residue classes (mod 259200)>
+<union of 108 residue classes (mod 259200)>
+<union of 107 residue classes (mod 259200)>
+<union of 101 residue classes (mod 259200)>
+<union of 100 residue classes (mod 259200)>
+<union of 84 residue classes (mod 259200)>
+<union of 80 residue classes (mod 259200)>
+<union of 76 residue classes (mod 259200)>
+<union of 70 residue classes (mod 259200)>
+<union of 66 residue classes (mod 259200)>
+<union of 54 residue classes (mod 259200)>
+<union of 53 residue classes (mod 259200)>
+<union of 47 residue classes (mod 259200)>
+<union of 43 residue classes (mod 259200)>
+<union of 31 residue classes (mod 259200)>
+<union of 24 residue classes (mod 259200)>
+<union of 23 residue classes (mod 259200)>
+<union of 13 residue classes (mod 259200)>
+<union of 6 residue classes (mod 259200)>
+<union of 14 residue classes (mod 777600)>
+57406(259200) U 187006(259200) U 192676(259200) U 250276(259200)
+<union of 8 residue classes (mod 777600)>
+316606(777600) U 451876(777600) U 509476(777600) U 705406(777600) U 768676(
+777600)
+<union of 18 residue classes (mod 3110400)>
+<union of 17 residue classes (mod 3110400)>
+<union of 13 residue classes (mod 3110400)>
+<union of 9 residue classes (mod 3110400)>
+<union of 7 residue classes (mod 3110400)>
+<union of 14 residue classes (mod 9331200)>
+<union of 7 residue classes (mod 9331200)>
+<union of 7 residue classes (mod 27993600)>
+<union of 14 residue classes (mod 83980800)>
+<union of 7 residue classes (mod 83980800)>
+[  ]
+gap> Maximum(List(stabelm{[1..maxind]},
+>                 f->Maximum(List(Coefficients(f),c->c[2]))));
+58975
+gap> smallnum := [5..58975];;
+gap> for i in [1..maxind] do
+>      smallnum := Filtered(smallnum,n->n^stabelm[i]>=n);
+>    od;
+gap> smallnum;
+[  ]
+]]>
+</Example>
+
+There is even some evidence that the degree of transitivity of the action of
+<M>G</M> on the positive integers is higher than&nbsp;4:
 
 <Example>
 <![CDATA[
@@ -2173,22 +2293,6 @@ gap> phi := EpimorphismFromFreeGroup(G);
 [ a, u ] -> [ a, u ]
 gap> F := Source(phi);
 <free group on the generators [ a, u ]>
-gap> words := List([4..20],
->                  n->RepresentativeActionPreImage(G,[1,2,3,4],
->                                                    [1,2,3,n],OnTuples,F));
-[ <identity ...>, a^4, a^-4, a^-2, a^-2*u^2, a^2, a^2*u^2, u^-2*a^-2, u^-2, 
-  a*u^-2*a, u^2, a^-3*u^2*a, u^2*a^2, a^-4*u^-2, a^-2*u^-2*a^-2, a^-3*u^-2*a, 
-  a^-2*u^-2 ]
-gap> elms := List(words,word->Image(phi,word));;
-gap> List(elms,Modulus);
-[ 1, 256, 81, 9, 225, 16, 400, 729, 81, 432, 25, 675, 400, 6561, 6561, 2187, 
-  729 ]
-gap> List(elms,elm->List([1,2,3,4],n->n^elm));
-[ [ 1, 2, 3, 4 ], [ 1, 2, 3, 5 ], [ 1, 2, 3, 6 ], [ 1, 2, 3, 7 ], 
-  [ 1, 2, 3, 8 ], [ 1, 2, 3, 9 ], [ 1, 2, 3, 10 ], [ 1, 2, 3, 11 ], 
-  [ 1, 2, 3, 12 ], [ 1, 2, 3, 13 ], [ 1, 2, 3, 14 ], [ 1, 2, 3, 15 ], 
-  [ 1, 2, 3, 16 ], [ 1, 2, 3, 17 ], [ 1, 2, 3, 18 ], [ 1, 2, 3, 19 ], 
-  [ 1, 2, 3, 20 ] ]
 gap> words := List([5..20],
 >                  n->RepresentativeActionPreImage(G,[1,2,3,4,5],
 >                                                    [1,2,3,4,n],OnTuples,F));
