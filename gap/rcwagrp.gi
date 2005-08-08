@@ -1707,6 +1707,16 @@ InstallOtherMethod( Transitivity,
             or IsPositiveIntegers(D))
     then TryNextMethod(); fi;
 
+    if ValueOption("rcwatest") <> true then
+      Info(InfoWarning,1,
+           "`Transitivity' for rcwa groups is not yet supported.");
+      Info(InfoWarning,1,
+           "If you want to try experimental code, set the option `rcwatest");
+      Info(InfoWarning,1,
+           "and set the info level of `InfoRCWA' at least equal to 2.");
+      TryNextMethod();
+    fi;
+
     gens := Set(GeneratorsAndInverses(G));
     invpairs := List([1..Length(gens)],i->[i,Position(gens,gens[i]^-1)]);
 
