@@ -681,7 +681,7 @@ InstallOtherMethod( RcwaMappingNC,
     if   IsIntegers(R) or IsZ_pi(R)
     then return RcwaMappingNC(R,coeffs);
     elif IsPolynomialRing(R)
-    then return RcwaMappingNC(Size(UnderlyingField(R)),modulus,coeffs);
+    then return RcwaMappingNC(Size(LeftActingDomain(R)),modulus,coeffs);
     else TryNextMethod(); fi;
   end );
 
@@ -699,7 +699,7 @@ InstallOtherMethod( RcwaMapping,
     if   IsIntegers(R) or IsZ_pi(R)
     then return RcwaMapping(R,coeffs);
     elif IsPolynomialRing(R)
-    then return RcwaMapping(Size(UnderlyingField(R)),modulus,coeffs);
+    then return RcwaMapping(Size(LeftActingDomain(R)),modulus,coeffs);
     else TryNextMethod(); fi;
   end );
 
