@@ -24,7 +24,7 @@ Changes between version 1.0.3 and version 1.1.0 (June 16, 2005)
    has been added. In this example, the 2-transitivity of a given wild
    rcwa group is checked computationally.
 
-Changes between version 1.1.0 and version ...
+Changes between version 1.1.0 and version 1.2.0 (August 8, 2005)
 
  - An example `A group which acts 3-transitive, but not 4-transitive on Z'
    has been added. In this example, the 3-transitivity and non-4-transitivity
@@ -36,5 +36,6 @@ Changes between version 1.1.0 and version ...
 
  - A `RepresentativeAction' method for RCWA(Z) and two unions of residue
    classes has been added.
+
 
 
