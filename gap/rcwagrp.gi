@@ -1707,13 +1707,13 @@ InstallOtherMethod( Transitivity,
             or IsPositiveIntegers(D))
     then TryNextMethod(); fi;
 
-    if ValueOption("rcwatest") <> true then
+    if ValueOption("RCWADevel") <> true then
       Info(InfoWarning,1,
-           "`Transitivity' for rcwa groups is not yet supported.");
+        "`Transitivity' for rcwa groups is not yet supported.");
       Info(InfoWarning,1,
-           "If you want to try experimental code, set the option `rcwatest");
+        "If you want to try experimental code, set the option `RCWADevel'");
       Info(InfoWarning,1,
-           "and set the info level of `InfoRCWA' at least equal to 2.");
+        "and set the info level of `InfoRCWA' at least equal to 2.");
       TryNextMethod();
     fi;
 
