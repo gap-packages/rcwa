@@ -134,12 +134,6 @@ DeclareGlobalFunction( "RcwaMappingsFamily" );
 
 #############################################################################
 ##
-#V  IntegralRcwaMappingsFamily . . . the family of all integral rcwa mappings
-##
-DeclareGlobalVariable( "IntegralRcwaMappingsFamily" );
-
-#############################################################################
-##
 #F  SemilocalIntegralRcwaMappingsFamily( <primes> )
 ##
 ##  Family of semilocal integral rcwa mappings with underlying ring

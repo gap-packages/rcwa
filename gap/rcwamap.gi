@@ -24,13 +24,14 @@ InstallGlobalFunction( RCWAInfo,
 ##
 #V  IntegralRcwaMappingsFamily . . . the family of all integral rcwa mappings
 ##
-InstallValue( IntegralRcwaMappingsFamily,
-              NewFamily( "RcwaMappingsFamily( Integers )",
-                         IsIntegralRcwaMapping,
-                         CanEasilySortElements, CanEasilySortElements ) );
+IntegralRcwaMappingsFamily :=
+  NewFamily( "RcwaMappingsFamily( Integers )",
+             IsIntegralRcwaMapping,
+             CanEasilySortElements, CanEasilySortElements );
 SetFamilySource( IntegralRcwaMappingsFamily, FamilyObj( 1 ) );
 SetFamilyRange ( IntegralRcwaMappingsFamily, FamilyObj( 1 ) );
 SetUnderlyingRing( IntegralRcwaMappingsFamily, Integers );
+MakeReadOnlyGlobal( "IntegralRcwaMappingsFamily" );
 
 # Internal variables storing the rcwa mapping families used in the
 # current GAP session.
