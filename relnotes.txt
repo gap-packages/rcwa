@@ -37,5 +37,9 @@ Changes between version 1.1.0 and version 1.2.0 (August 8, 2005)
  - A `RepresentativeAction' method for RCWA(Z) and two unions of residue
    classes has been added.
 
+Changes between version 1.2.0 and version 1.2.1
+
+ - Adapt to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
+   for families.
 
 
