@@ -39,7 +39,7 @@ Changes between version 1.1.0 and version 1.2.0 (August 8, 2005)
 
 Changes between version 1.2.0 and version 1.2.1
 
- - Adapt to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
+ - Adapted to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
    for families.
 
 
