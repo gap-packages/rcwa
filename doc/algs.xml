@@ -706,7 +706,7 @@ They are listed in alphabetical order.
     <C>TransitionGraph(<A>f</A>,<A>m</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q> -- just run over a suffiently long interval.
+    <Q>Straight forward</Q> -- just check a sufficiently long interval.
   </Item>
 
   <Mark>
