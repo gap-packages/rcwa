@@ -2522,6 +2522,99 @@ true
 Needless to say that the latter kind of argumentation is not suitable
 for proving, but only for disproving <M>k</M>-transitivity. 
 
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:GrigorchukGroups">
+<Heading>
+  Grigorchuk groups
+</Heading>
+
+In this section, we show how construct finite quotients of the two infinite
+periodic groups introduced by Rostislav Grigorchuk
+in&nbsp;<Cite Key="Grigorchuk80"/> with the help of &RCWA;.
+
+The first of these, nowadays known as <Q>Grigorchuk group</Q>, is
+investigated in an example given on the &GAP; website -- see
+<URL>http://www.gap-system.org/Doc/Examples/grigorchuk.html</URL>.
+
+The &RCWA; package permits a simpler and more elegant construction
+of the finite quotients of this group: The function <C>TopElement</C>
+given on the mentioned webpage gets unnecessary, and the function
+<C>SequenceElement</C> can be simplified as follows:
+
+<Listing>
+<![CDATA[
+SequenceElement := function ( r, level )
+
+  return Permutation(Product(Filtered([1..level-1],k->k mod 3 <> r),
+                             k->ClassTransposition(    2^(k-1)-1, 2^(k+1),
+                                                   2^k+2^(k-1)-1, 2^(k+1))),
+                     [0..2^level-1]);
+end;
+]]>
+</Listing>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+The actual constructors for the generators are modified as follows:
+
+<Listing>
+<![CDATA[
+a := level -> Permutation(ClassTransposition(0,2,1,2),[0..2^level-1]);
+b := level -> SequenceElement(0,level);
+c := level -> SequenceElement(2,level);
+d := level -> SequenceElement(1,level);
+]]>
+</Listing>
+
+All computations given on the webpage can now be done just as with the
+<Q>original</Q> construction of the quotients of the Grigorchuk group.
+In the sequel, finite quotients of the second group introduced
+in&nbsp;<Cite Key="Grigorchuk80"/> are constructed:
+
+<Example>
+<![CDATA[
+gap> FourCycle := RcwaMapping((4,5,6,7),[4..7]);
+<rcwa mapping of Z with modulus 4>
+gap> GrigorchukGroup2Generator := function ( level )
+>      if level = 1 then return FourCycle; else
+>        return   Restriction(FourCycle, RcwaMapping([[4,1,1]]))
+>               * Restriction(FourCycle, RcwaMapping([[4,3,1]]))
+>               * Restriction(GrigorchukGroup2Generator(level-1),
+>                             RcwaMapping([[4,0,1]]));
+>      fi;
+>    end;;
+gap> GrigorchukGroup2 := level -> Group(FourCycle,
+>                                       GrigorchukGroup2Generator(level));;
+]]>
+</Example>
+
+We can do similar things as shown in the example on the &GAP; webpage
+for the <Q>first</Q> Grigorchuk group:
+
+<Example>
+<![CDATA[
+gap> G := List([1..4],lev->GrigorchukGroup2(lev)); # The first 4 quotients.
+[ <rcwa group over Z with 2 generators>, <rcwa group over Z with 2 generators>
+    , <rcwa group over Z with 2 generators>, 
+  <rcwa group over Z with 2 generators> ]
+gap> H := List([1..4],lev->Action(G[lev],[0..4^lev-1])); # Isomorphic perm.-gps.
+[ Group([ (1,2,3,4), (1,2,3,4) ]), 
+  Group([ (1,2,3,4)(5,6,7,8)(9,10,11,12)(13,14,15,16), 
+      (1,5,9,13)(2,6,10,14)(4,8,12,16) ]), 
+  <permutation group with 2 generators>, 
+  <permutation group with 2 generators> ]
+gap> List(H,Size);
+[ 4, 1024, 4294967296, 1329227995784915872903807060280344576 ]
+gap> List(last,n->Collected(Factors(n)));
+[ [ [ 2, 2 ] ], [ [ 2, 10 ] ], [ [ 2, 32 ] ], [ [ 2, 120 ] ] ]
+gap> List(H,NilpotencyClassOfGroup);      
+[ 1, 6, 14, 40 ]
+]]>
+</Example>
+
 <Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
