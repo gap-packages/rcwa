@@ -75,7 +75,7 @@ PackageDoc       := rec(
                          Autoload  := false
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.4",
+                         GAP                    := ">=4.4.6",
                          NeededOtherPackages    := [ ["ResClasses", ">=2.1.1"], ["GRAPE",">=4.0"],
                                                      ["GAPDoc",">=0.999"] ],
                          SuggestedOtherPackages := [ ],

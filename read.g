@@ -5,11 +5,6 @@
 #H  @(#)$Id$
 ##
 
-# Load the rudimentary functionality for floats, if not already available
-# from the library.
-
-if not IsBound( IsFloat ) then ReadPackage( "rcwa", "gap/float.g" ); fi;
-
 # Read the implementation part of the package.
 
 ReadPackage( "rcwa", "gap/rcwaaux.g" );
