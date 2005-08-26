@@ -68,15 +68,6 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>ContractionCentre(<A>f</A>,<A>maxn</A>,<A>bound</A>)</C>
-  </Mark>
-  <Item>
-    Compute trajectories with starting values from a given interval, until
-    a cycle is reached. Abort if the trajectory exceeds the prescribed bound.
-    Form the union of the detected cycles.
-  </Item>
-
-  <Mark>
     <C>DecreasingOn(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -110,14 +101,6 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>Divergence(<A>f</A>)</C>
-  </Mark>
-  <Item>
-    Numerical computation of the limit of some series, which seems to
-    converge <Q>often</Q>. Caution!!!
-  </Item>
-
-  <Mark>
     <C>Divisor(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -148,6 +131,14 @@ They are listed in alphabetical order.
     transition graph, and then compute a partition of the suitably
     <Q>blown up</Q> coefficient list corresponding to the connected
     components.
+  </Item>
+
+  <Mark>
+    <C>GuessedDivergence(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Numerical computation of the limit of some series, which seems to
+    converge <Q>often</Q>. Caution!!!
   </Item>
 
   <Mark>
@@ -412,6 +403,15 @@ They are listed in alphabetical order.
   <Item>
     Collect residue classes those corresponding coefficient triples
     are equal.
+  </Item>
+
+  <Mark>
+    <C>LikelyContractionCentre(<A>f</A>,<A>maxn</A>,<A>bound</A>)</C>
+  </Mark>
+  <Item>
+    Compute trajectories with starting values from a given interval, until
+    a cycle is reached. Abort if the trajectory exceeds the prescribed bound.
+    Form the union of the detected cycles.
   </Item>
 
   <Mark>
