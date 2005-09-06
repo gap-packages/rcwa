@@ -368,7 +368,7 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>JoinedRightInverse(<A>l</A>,<A>r</A>)</C>
+    <C>JointRightInverse(<A>l</A>,<A>r</A>)</C>
   </Mark>
   <Item>
     <Q>straight forward</Q> if one knows how to compute images of residue

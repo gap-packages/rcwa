@@ -1137,8 +1137,8 @@ gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
 >                                ResidueClassUnion(Integers,5,[2,3]));;
 gap> ResidueClass(1,2)^elm;
 2(5) U 3(5)
-gap> Display(JoinedRightInverse(RcwaMapping([[2,0,1]]),
->                               RcwaMapping([[2,1,1]])));
+gap> Display(JointRightInverse(RcwaMapping([[2,0,1]]),
+>                              RcwaMapping([[2,1,1]])));
 
 Rcwa mapping of Z with modulus 2
 
