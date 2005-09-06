@@ -1137,6 +1137,16 @@ gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
 >                                ResidueClassUnion(Integers,5,[2,3]));;
 gap> ResidueClass(1,2)^elm;
 2(5) U 3(5)
+gap> Display(JoinedRightInverse(RcwaMapping([[2,0,1]]),
+>                               RcwaMapping([[2,1,1]])));
+
+Rcwa mapping of Z with modulus 2
+
+                n mod 2                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n/2
+  1                                    | (n - 1)/2
+
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
