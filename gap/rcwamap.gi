@@ -3612,9 +3612,9 @@ InstallMethod( CompatibleConjugate,
 
 #############################################################################
 ##
-#M  JoinedInverse( <l>, <r> ) . . . . . . . . . .  for integral rcwa mappings
+#M  JoinedRightInverse( <l>, <r> ) . . . . . . . . for integral rcwa mappings
 ##
-InstallMethod( JoinedInverse,
+InstallMethod( JoinedRightInverse,
                "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
 

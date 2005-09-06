@@ -54,7 +54,7 @@ Changes between version 1.2.1 and version 1.2.2
 
 Changes between version 1.2.2 and version ...
 
- - A new operation `JoinedInverse' and a corresponding method for
+ - A new operation `JoinedRightInverse' and a corresponding method for
    rcwa mappings of the integers have been added.
 
 
