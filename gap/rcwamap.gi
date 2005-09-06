@@ -3612,6 +3612,48 @@ InstallMethod( CompatibleConjugate,
 
 #############################################################################
 ##
+#M  JoinedInverse( <l>, <r> ) . . . . . . . . . .  for integral rcwa mappings
+##
+InstallMethod( JoinedInverse,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
+
+  function ( l, r )
+
+    local  d, imgl, imgr, coeffs, m, c, r1, r2;
+
+    if not ForAll([l,r],IsInjective) or Intersection(Image(l),Image(r)) <> []
+       or Union(Image(l),Image(r)) <> Integers
+    then return fail; fi;
+
+    imgl := AllResidueClassesModulo(Modulus(l))^l;
+    imgr := AllResidueClassesModulo(Modulus(r))^r;
+
+    m := Lcm(List(Concatenation(imgl,imgr),Modulus));
+
+    coeffs := List([0..m-1],r1->[1,0,1]);
+
+    for r1 in [0..Length(imgl)-1] do
+      c := Coefficients(l)[r1+1];
+      for r2 in Intersection(imgl[r1+1],[0..m-1]) do
+        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
+      od;
+    od;
+
+    for r1 in [0..Length(imgr)-1] do
+      c := Coefficients(r)[r1+1];
+      for r2 in Intersection(imgr[r1+1],[0..m-1]) do
+        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
+      od;
+    od;
+
+    d := RcwaMapping(coeffs);
+    return d;
+
+  end );
+
+#############################################################################
+##
 #M  FactorizationIntoGenerators( <g> ) . . . . . . for integral rcwa mappings
 ##
 InstallMethod( FactorizationIntoGenerators,

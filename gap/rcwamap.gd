@@ -650,6 +650,16 @@ DeclareGlobalFunction( "InjectiveAsMappingFrom" );
 
 #############################################################################
 ##
+#O  JoinedInverse( <l>, <r> ) . . . . . . . . mapping <d> s.th. $ld = rd = 1$
+##
+##  Returns a mapping <d> such that $ld = rd = 1$.
+##  The mappings <l> and <r> must be injective, and their images must form
+##  a partition of the underlying ring.
+##
+DeclareOperation( "JoinedInverse", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 ##
 ##  Computes the restriction of the rcwa mapping <g> by (i.e. to the image

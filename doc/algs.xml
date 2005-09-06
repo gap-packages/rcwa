@@ -368,6 +368,15 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
+    <C>JoinedInverse(<A>l</A>,<A>r</A>)</C>
+  </Mark>
+  <Item>
+    <Q>straight forward</Q> if one knows how to compute images of residue
+    classes under affine mappings, and how to compute inverses of
+    affine mappings.
+  </Item>
+
+  <Mark>
     <C>KernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>

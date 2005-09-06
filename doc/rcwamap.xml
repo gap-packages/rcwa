@@ -1306,6 +1306,30 @@ gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="JoinedInverse" Arg="l, r" Label="l, r"/>
+  <Returns>
+    A mapping <M>d</M> such that <A>l</A><M>d</M> = <A>r</A><M>d</M> = 1.
+  </Returns>
+  <Description>
+    The mappings <A>l</A> and <A>r</A> must be injective, and their images
+    must form a partition of the underlying ring.
+<Example>
+<![CDATA[
+gap> Display(JoinedInverse(RcwaMapping([[2,0,1]]),RcwaMapping([[2,1,1]])));
+
+Rcwa mapping of Z with modulus 2
+
+                n mod 2                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n/2
+  1                                    | (n - 1)/2
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
