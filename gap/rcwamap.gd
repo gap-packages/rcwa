@@ -650,6 +650,15 @@ DeclareGlobalFunction( "InjectiveAsMappingFrom" );
 
 #############################################################################
 ##
+#A  RightInverse( <f> ) . . . . . . . . . . . . . . . .  right inverse of <f>
+##
+##  The right inverse of <f>, i.e. a mapping <g> such that $fg = 1$.
+##  The mapping <f> must be injective.
+##
+DeclareAttribute( "RightInverse", IsRcwaMapping );
+
+#############################################################################
+##
 #O  JointRightInverse( <l>, <r> ) . . . . . . mapping <d> s.th. $ld = rd = 1$
 ##
 ##  Returns a mapping <d> such that $ld = rd = 1$.
@@ -662,11 +671,22 @@ DeclareOperation( "JointRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 ##
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 ##
-##  Computes the restriction of the rcwa mapping <g> by (i.e. to the image
-##  of) the rcwa mapping <f>.
+##  Computes the *restriction* of the rcwa mapping <g> by (i.e. to the image
+##  of) the rcwa mapping <f>. The mapping <f> must be injective.
 ##
-DeclareOperation( "Restriction",
-                  [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
+#O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
+##
+##  Computes the *induction* of the rcwa mapping <g> by the rcwa mapping <f>.
+##  The mapping <f> must be injective, and both the support of <g> and its
+##  image under <g> must lie in the image of <f>.
+##  It holds `Induction( Restriction( <g>, <f> ), <f> ) = <g>',
+##  thus induction is the one-sided inverse operation of restriction.
+##
+DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##

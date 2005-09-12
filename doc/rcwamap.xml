@@ -1307,6 +1307,31 @@ gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
 </ManSection>
 
 <ManSection>
+  <Attr Name ="RightInverse" Arg="f" Label = "f"/>
+  <Returns>
+    A right inverse of the injective rcwa mapping&nbsp;<A>f</A>,
+    i.e. a mapping <M>g</M> such that <A>f</A><M>g</M>&nbsp;=&nbsp;1.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> RcwaMapping([[2,0,1]]);                       
+Rcwa mapping of Z: n -> 2n
+gap> Display(RightInverse(last));
+
+Rcwa mapping of Z with modulus 2
+
+                n mod 2                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n/2
+  1                                    | n
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Oper Name="JointRightInverse" Arg="l, r" Label="l, r"/>
   <Returns>
     A mapping <M>d</M> such that <A>l</A><M>d</M> = <A>r</A><M>d</M> = 1.

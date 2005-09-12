@@ -3478,7 +3478,75 @@ InstallOtherMethod( RestrictedPerm,
   function ( g, R )
     if R = Source(g) then return g; else TryNextMethod(); fi;
   end );
-  
+
+#############################################################################
+##
+#M  RightInverse( <f> ) . . . . . . . . . . . . .  for integral rcwa mappings
+##
+InstallMethod( RightInverse,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  inv, mf, cf, minv, cinv, imgs, r1, r2;
+
+    if not IsInjective(f) then return fail; fi;
+    mf := Modulus(f); cf := Coefficients(f);
+    imgs := AllResidueClassesModulo(mf)^f;
+    minv := Lcm(List(imgs,Modulus));
+    cinv := List([1..minv],r->[1,0,1]); 
+    for r1 in [1..mf] do
+      for r2 in Intersection([0..minv-1],imgs[r1]) do
+        cinv[r2+1] := [cf[r1][3],-cf[r1][2],cf[r1][1]];
+      od;
+    od;
+    inv := RcwaMapping(cinv);
+    return inv;
+  end );
+
+#############################################################################
+##
+#M  JointRightInverse( <l>, <r> ) . . . . . . . .  for integral rcwa mappings
+##
+InstallMethod( JointRightInverse,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
+
+  function ( l, r )
+
+    local  d, imgl, imgr, coeffs, m, c, r1, r2;
+
+    if not ForAll([l,r],IsInjective) or Intersection(Image(l),Image(r)) <> []
+       or Union(Image(l),Image(r)) <> Integers
+    then return fail; fi;
+
+    imgl := AllResidueClassesModulo(Modulus(l))^l;
+    imgr := AllResidueClassesModulo(Modulus(r))^r;
+
+    m := Lcm(List(Concatenation(imgl,imgr),Modulus));
+
+    coeffs := List([0..m-1],r1->[1,0,1]);
+
+    for r1 in [0..Length(imgl)-1] do
+      c := Coefficients(l)[r1+1];
+      for r2 in Intersection(imgl[r1+1],[0..m-1]) do
+        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
+      od;
+    od;
+
+    for r1 in [0..Length(imgr)-1] do
+      c := Coefficients(r)[r1+1];
+      for r2 in Intersection(imgr[r1+1],[0..m-1]) do
+        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
+      od;
+    od;
+
+    d := RcwaMapping(coeffs);
+    return d;
+
+  end );
+
 #############################################################################
 ##
 #M  Restriction( <g>, <f> ) . . . . . . . . . . .  for integral rcwa mappings
@@ -3489,18 +3557,40 @@ InstallMethod( Restriction,
 
   function ( g, f )
 
-    local  mgf, gf, c, fixed, r;
+    local  gf;
 
     if not IsInjective(f) then return fail; fi;
-    mgf := Multiplier(f) * Modulus(f)^2 * Modulus(g); c := [];
-    for r in [0..2*mgf-1] do
-      Append(c,[[r^f,(r^g)^f],[(r+mgf)^f,((r+mgf)^g)^f]]);
-    od;
-    fixed := Difference([0..mgf-1],Set(List(c,t->t[1] mod mgf)));
-    for r in fixed do c := Concatenation(c,[[r,r],[r+mgf,r+mgf]]); od; 
-    gf := RcwaMapping(mgf,c);
-    if   g*f <> f*gf
-    then Error("Restriction: Diagram does not commute.\n"); fi;
+
+    gf := RestrictedPerm( RightInverse(f) * g * f, Image(f) );
+
+    Assert(1,g*f=f*gf,"Restriction: Diagram does not commute.\n");
+
+    if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
+    if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
+    if HasIsTame(g)       then SetIsTame(gf,IsTame(g)); fi;
+    if HasOrder(g)        then SetOrder(gf,Order(g)); fi;
+
+    return gf;
+  end );
+
+#############################################################################
+##
+#M  Induction( <g>, <f> ) . . . . . . . . . . . .  for integral rcwa mappings
+##
+InstallMethod( Induction,
+               "for integral rcwa mappings (RCWA)", true,
+               [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
+
+  function ( g, f )
+
+    local  gf;
+
+    if    not IsInjective(f) or not IsSubset(Image(f),MovedPoints(g))
+       or not IsSubset(Image(f),MovedPoints(g)^g) then return fail; fi;
+
+    gf := f * g * RightInverse(f);
+
+    Assert(1,gf*f=f*g,"Induction: Diagram does not commute.\n");
 
     if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
     if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
@@ -3608,48 +3698,6 @@ InstallMethod( CompatibleConjugate,
     od;
     sigma := RcwaMapping(c);
     return h^sigma;
-  end );
-
-#############################################################################
-##
-#M  JointRightInverse( <l>, <r> ) . . . . . . . .  for integral rcwa mappings
-##
-InstallMethod( JointRightInverse,
-               "for integral rcwa mappings (RCWA)", true,
-               [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
-
-  function ( l, r )
-
-    local  d, imgl, imgr, coeffs, m, c, r1, r2;
-
-    if not ForAll([l,r],IsInjective) or Intersection(Image(l),Image(r)) <> []
-       or Union(Image(l),Image(r)) <> Integers
-    then return fail; fi;
-
-    imgl := AllResidueClassesModulo(Modulus(l))^l;
-    imgr := AllResidueClassesModulo(Modulus(r))^r;
-
-    m := Lcm(List(Concatenation(imgl,imgr),Modulus));
-
-    coeffs := List([0..m-1],r1->[1,0,1]);
-
-    for r1 in [0..Length(imgl)-1] do
-      c := Coefficients(l)[r1+1];
-      for r2 in Intersection(imgl[r1+1],[0..m-1]) do
-        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
-      od;
-    od;
-
-    for r1 in [0..Length(imgr)-1] do
-      c := Coefficients(r)[r1+1];
-      for r2 in Intersection(imgr[r1+1],[0..m-1]) do
-        coeffs[r2+1] := [ c[3], -c[2], c[1] ];
-      od;
-    od;
-
-    d := RcwaMapping(coeffs);
-    return d;
-
   end );
 
 #############################################################################

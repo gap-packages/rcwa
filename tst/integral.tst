@@ -1137,6 +1137,8 @@ gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
 >                                ResidueClassUnion(Integers,5,[2,3]));;
 gap> ResidueClass(1,2)^elm;
 2(5) U 3(5)
+gap> 2*a*RightInverse(2*a);
+IdentityMapping( Integers )
 gap> Display(JointRightInverse(RcwaMapping([[2,0,1]]),
 >                              RcwaMapping([[2,1,1]])));
 
@@ -1147,6 +1149,12 @@ Rcwa mapping of Z with modulus 2
   0                                    | n/2
   1                                    | (n - 1)/2
 
+gap> Induction(Restriction(kappa,RcwaMapping([[5,3,1],[5,2,1]])),
+>              RcwaMapping([[5,3,1],[5,2,1]])) = kappa;
+true
+gap> Induction(Restriction(Group(a,b),RcwaMapping([[5,3,1]])),
+>              RcwaMapping([[5,3,1]])) = Group(a,b);
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

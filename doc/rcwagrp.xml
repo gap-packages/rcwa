@@ -982,19 +982,23 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 
 <!-- #################################################################### -->
 
-<Section Label="sec:RestrictionMonomorphisms">
-<Heading>Restriction monomorphisms</Heading>
+<Section Label="sec:RestrictionAndInduction">
+<Heading>Restriction and induction</Heading>
 
 <ManSection>
   <Oper Name ="Restriction" Arg="g, f" Label = "g, f"/>
-  <Returns> The <E>restriction</E> of <A>g</A> by&nbsp;<A>f</A>. </Returns>
+  <Returns>
+    The <E>restriction</E> of the rcwa mapping <A>g</A> by
+    the injective rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
   <Description>
-    By definition, the restriction <M>g_f</M> of <A>g</A> by <A>f</A>
-    is the uniquely-determined rcwa mapping satisfying
-    <M>f \cdot g_f = g \cdot f</M> and pointwisely fixing the complement of
-    the image of <A>f</A>. The mapping <A>f</A> has to be injective.
-    If <A>f</A> is bijective, the returned mapping is just the conjugate
-    of <A>g</A> by <A>f</A>.
+    By definition, the restriction <M>g_f</M> of the rcwa mapping
+    <A>g</A> by the injective rcwa mapping&nbsp;<A>f</A> is the
+    uniquely determined rcwa mapping which satisfies
+    <M>f \cdot g_f = g \cdot f</M> and fixes the complement of
+    the image of <A>f</A> pointwise.
+    If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
+    is just the conjugate of <A>g</A> by <A>f</A>.
     See also <Ref Oper="Restriction" Label="G, f"/> for rcwa groups.
 <Example>
 <![CDATA[
@@ -1008,15 +1012,16 @@ IdentityMapping( Integers )
 
 <ManSection>
   <Oper Name ="Restriction" Arg="G, f" Label="G, f"/>
-  <Returns> The restriction of <A>G</A> by&nbsp;<A>f</A>. </Returns>
+  <Returns>
+    The <E>restriction</E> of the rcwa group <A>G</A> by
+    the injective rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
   <Description>
-    The mapping <A>f</A> has to be injective.
-    The returned group acts on the image of <A>f</A> and fixes its
-    complement pointwise. If <A>f</A> is bijective the returned
-    group is just the conjugate of <A>G</A> by <A>f</A>. <P/>
-    The elements of the restricted group are the restrictions
-    of the elements of <A>G</A> by <A>f</A>. For a definition see
-    <Ref Oper="Restriction" Label="g, f"/> for rcwa mappings.
+    By definition, the restriction of the rcwa group <A>G</A>
+    by the injective rcwa mapping&nbsp;<A>f</A> consists of the
+    restrictions of its elements by&nbsp;<A>f</A>.
+    The restriction of <A>G</A> by <A>f</A> acts on the image of
+    <A>f</A> and fixes its complement pointwise.
 <Example>
 <![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
@@ -1028,7 +1033,31 @@ gap> MovedPoints(G);
   </Description>
 </ManSection>
 
-Restriction monomorphisms allow to form direct products of any
+<ManSection>
+  <Oper Name ="Induction" Arg="g, f" Label = "g, f"/>
+  <Oper Name ="Induction" Arg="G, f" Label = "G, f"/>
+  <Returns>
+    The <E>induction</E> of the rcwa mapping <A>g</A> resp. the rcwa
+    group <A>G</A> by the injective rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    By definition, induction is the right inverse of restriction.
+    This means that we always have
+    <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C>,
+    resp.
+    <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
+    The mapping <A>g</A> resp. the group <A>G</A> must not move points
+    outside the image of&nbsp;<A>f</A>.
+<Example>
+<![CDATA[
+gap> Induction(G,RcwaMapping([[5,3,1]])) = Group(a,b);
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Restriction monomorphisms permit forming direct products of any
 rcwa groups (regardless of whether they are tame or not):
 
 <ManSection>
@@ -1047,16 +1076,10 @@ gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));;
 gap> Embedding(G,1);
 [ g, h ] -> [ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
   <bijective rcwa mapping of Z with modulus 18, of order 12> ]
-gap> Projection(G,2);
-[ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
-  <bijective rcwa mapping of Z with modulus 18, of order 12>, 
-  <wild bijective rcwa mapping of Z with modulus 12>, 
-  <wild bijective rcwa mapping of Z with modulus 12>, 
-  <bijective rcwa mapping of Z with modulus 15> ] -> 
-[ IdentityMapping( Integers ), IdentityMapping( Integers ), a, b, 
-  IdentityMapping( Integers ) ]
 gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 [ 0(3), 1(3) \ [ -2, 1 ], 2(3) \ [ -1, 2 ] ]
+gap> Image(Projection(G,2)) = Group(a,b);
+true
 ]]>
 </Example>
   </Description>

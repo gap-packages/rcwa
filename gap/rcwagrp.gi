@@ -2289,7 +2289,7 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 #M  Restriction( <G>, <f> ) . . . . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallOtherMethod( Restriction,
-                    "RCWA: for rcwa groups (RCWA)", ReturnTrue,
+                    "for rcwa groups (RCWA)", ReturnTrue,
                     [ IsRcwaGroup, IsRcwaMapping ], 0,
 
   function ( G, f )
@@ -2300,6 +2300,30 @@ InstallOtherMethod( Restriction,
     then return fail; fi;
 
     Gf := GroupByGenerators(List(GeneratorsOfGroup(G),g->Restriction(g,f)));
+
+    if HasIsTame(G) then SetIsTame(Gf,IsTame(G)); fi;
+    if HasSize(G)   then SetSize(Gf,Size(G)); fi;
+
+    return Gf;
+  end );
+
+#############################################################################
+##
+#M  Induction( <G>, <f> ) . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallOtherMethod( Induction,
+                    "for rcwa groups (RCWA)", ReturnTrue,
+                    [ IsRcwaGroup, IsRcwaMapping ], 0,
+
+  function ( G, f )
+
+    local Gf;
+
+    if Source(One(G)) <> Source(f) or not IsInjective(f)
+      or not IsSubset(Image(f),MovedPoints(G))
+    then return fail; fi;
+
+    Gf := GroupByGenerators(List(GeneratorsOfGroup(G),g->Induction(g,f)));
 
     if HasIsTame(G) then SetIsTame(Gf,IsTame(G)); fi;
     if HasSize(G)   then SetSize(Gf,Size(G)); fi;
