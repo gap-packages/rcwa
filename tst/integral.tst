@@ -1162,7 +1162,7 @@ gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
 [ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<rcwa mapping of Z with modulus 120>
+<tame rcwa mapping of Z with modulus 120>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
 [ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
