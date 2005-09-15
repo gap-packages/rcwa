@@ -1467,13 +1467,16 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 #M  RepresentativeActionOp( RCWA( Integers ), <P1>, <P2>, <act> ) 
 ##
-##  An rcwa mapping <g> which maps <P1> to <P2> and is
+##  An rcwa mapping <g> which maps the partition <P1> to the partition <P2>
+##  and is
 ##
-##  - affine on the elements of <P1>, if the option `IsTame' is not set,
+##  - affine on the elements of <P1>, if the option `IsTame' is not set
+##    and all elements of both partitions <P1> and <P2> are single residue
+##    classes, and
 ##  - tame, if the option `IsTame' is set.
 ##
 ##  The arguments <P1> and <P2> must be partitions of $\Z$ into equally many
-##  disjoint residue classes, and the argument <act> is ignored.
+##  disjoint residue class unions, and the argument <act> is ignored.
 ##
 InstallOtherMethod( RepresentativeActionOp,
                     "for RCWA(Z) and two class partitions (RCWA)", true,
@@ -1481,7 +1484,7 @@ InstallOtherMethod( RepresentativeActionOp,
 
   function ( RCWA_Z, P1, P2, act )
 
-    local  SplitClass, g, tame, m, c, P, Phat, Buckets, b,
+    local  SplitClass, g, tame, m, c, P, min, minpos, Phat, Buckets, b,
            k, ri, mi, rtildei, mtildei, ar, br, cr, r, i, j;
 
     SplitClass := function ( i, j )
@@ -1506,9 +1509,39 @@ InstallOtherMethod( RepresentativeActionOp,
                                  ResidueClass(Integers,mtilde,r2)]);
     end;
 
-    g := RcwaMapping(P1,P2); # Do this always. If tame, just to check arg's.
+    if   Length(P1) <> Length(P2)
+      or not ForAll(P1,IsUnionOfResidueClassesOfZ)
+      or not ForAll(P2,IsUnionOfResidueClassesOfZ)
+      or [Union(List(P1,IncludedElements)),Union(List(P1,ExcludedElements)),
+          Union(List(P2,IncludedElements)),Union(List(P2,ExcludedElements))]
+         <> [[],[],[],[]]
+      or Sum(List(P1,Density)) <> 1 or Sum(List(P2,Density)) <> 1
+      or Union(P1) <> Integers or Union(P2) <> Integers
+    then TryNextMethod(); fi;
 
-    if ValueOption("IsTame") = true then
+    if   not ForAll(P1,S->Length(Residues(S)) = 1)
+      or not ForAll(P2,S->Length(Residues(S)) = 1)
+    then
+      P1 := List(P1,AsUnionOfFewClasses);
+      P2 := List(P2,AsUnionOfFewClasses);
+      P  := [P1,P2];
+      for j in [1..Length(P1)] do
+        if Length(P[1][j]) <> Length(P[2][j]) then
+          if Length(P[1][j]) < Length(P[2][j]) then i := 1; else i := 2; fi;
+          repeat
+            min    := Minimum(List(P[i][j],Modulus));
+            minpos := Position(List(P[i][j],Modulus),min);
+            P[i][j][minpos] := SplittedClass(P[i][j][minpos],2);
+            P[i][j] := Flat(P[i][j]);
+          until Length(P[1][j]) = Length(P[2][j]);
+        fi;
+      od;
+      P1 := Flat(P[1]); P2 := Flat(P[2]);
+    fi;
+
+    if ValueOption("IsTame") <> true then
+      g := RcwaMapping(P1,P2);
+    else
       k       := Length(P1);
       m       := Lcm(List(Union(P1,P2),Modulus));
       P       := [P1,P2];

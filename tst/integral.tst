@@ -1155,6 +1155,16 @@ true
 gap> Induction(Restriction(Group(a,b),RcwaMapping([[5,3,1]])),
 >              RcwaMapping([[5,3,1]])) = Group(a,b);
 true
+gap> P1 := [rc(1,3),Union(rc(0,3),rc(2,3))];;
+gap> P2 := [Union(rc(2,5),rc(4,5)),Union(rc(0,5),rc(1,5),rc(3,5))];;
+gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
+<rcwa mapping of Z with modulus 6>
+gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
+[ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
+gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
+<rcwa mapping of Z with modulus 120>
+gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
+[ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

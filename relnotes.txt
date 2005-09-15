@@ -57,4 +57,10 @@ Changes between version 1.2.2 and version ...
  - Operations `Induction', `RightInverse' and `JointRightInverse'
    have been added.
 
+ - The code for `Restriction' has been improved.
+
+ - RepresentativeAction(RCWA(Integers),P1,P2) works now also in cases
+   where P1 and P2 do not consist entirely of single residue classes,
+   but of unions of residue classes.
+
 
