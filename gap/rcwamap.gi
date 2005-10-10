@@ -2226,7 +2226,7 @@ InstallMethod( CompositionMapping2,
 
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
-    m3 := Minimum( Lcm( m1, m2 ) * Divisor( f ), m1 * m2 );
+    m3 := Gcd( Lcm( m1, m2 ) * Divisor( f ), m1 * m2 );
 
     if   ValueOption("RMPROD_NO_EXPANSION") = true
     then m3 := Maximum(m1,m2); fi;
@@ -2338,7 +2338,7 @@ InstallMethod( InverseOp,
 
     c := f!.coeffs; m := f!.modulus;
     cInv := [];
-    mInv := Multiplier( f ) * m / Gcd( m, Gcd( List( c, t -> t[3] ) ) );
+    mInv := Multiplier( f ) * m / Gcd( List( c, t -> t[3] ) );
     for n in [ 1 .. m ] do
       t := [c[n][3], -c[n][2], c[n][1]]; if t[3] = 0 then return fail; fi;
       tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
