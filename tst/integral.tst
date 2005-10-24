@@ -1139,8 +1139,8 @@ gap> ResidueClass(1,2)^elm;
 2(5) U 3(5)
 gap> 2*a*RightInverse(2*a);
 IdentityMapping( Integers )
-gap> Display(JointRightInverse(RcwaMapping([[2,0,1]]),
->                              RcwaMapping([[2,1,1]])));
+gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),
+>                               RcwaMapping([[2,1,1]])));
 
 Rcwa mapping of Z with modulus 2
 

@@ -54,7 +54,7 @@ Changes between version 1.2.1 and version 1.2.2
 
 Changes between version 1.2.2 and version ...
 
- - Operations `Induction', `RightInverse' and `JointRightInverse'
+ - Operations `Induction', `RightInverse' and `CommonRightInverse'
    have been added.
 
  - The code for `Restriction' has been improved.

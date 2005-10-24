@@ -1332,7 +1332,7 @@ Rcwa mapping of Z with modulus 2
 </ManSection>
 
 <ManSection>
-  <Oper Name="JointRightInverse" Arg="l, r" Label="l, r"/>
+  <Oper Name="CommonRightInverse" Arg="l, r" Label="l, r"/>
   <Returns>
     A mapping <M>d</M> such that <A>l</A><M>d</M> = <A>r</A><M>d</M> = 1.
   </Returns>
@@ -1341,8 +1341,8 @@ Rcwa mapping of Z with modulus 2
     must form a partition of the underlying ring.
 <Example>
 <![CDATA[
-gap> Display(JointRightInverse(RcwaMapping([[2,0,1]]),
->                              RcwaMapping([[2,1,1]])));
+gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),
+>                               RcwaMapping([[2,1,1]])));
 
 Rcwa mapping of Z with modulus 2
 

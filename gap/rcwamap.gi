@@ -3507,9 +3507,9 @@ InstallMethod( RightInverse,
 
 #############################################################################
 ##
-#M  JointRightInverse( <l>, <r> ) . . . . . . . .  for integral rcwa mappings
+#M  CommonRightInverse( <l>, <r> ) . . . . . . . . for integral rcwa mappings
 ##
-InstallMethod( JointRightInverse,
+InstallMethod( CommonRightInverse,
                "for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping, IsIntegralRcwaMapping ], 0,
 

@@ -659,13 +659,13 @@ DeclareAttribute( "RightInverse", IsRcwaMapping );
 
 #############################################################################
 ##
-#O  JointRightInverse( <l>, <r> ) . . . . . . mapping <d> s.th. $ld = rd = 1$
+#O  CommonRightInverse( <l>, <r> ) . . . . .  mapping <d> s.th. $ld = rd = 1$
 ##
 ##  Returns a mapping <d> such that $ld = rd = 1$.
 ##  The mappings <l> and <r> must be injective, and their images must form
 ##  a partition of the underlying ring.
 ##
-DeclareOperation( "JointRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "CommonRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
