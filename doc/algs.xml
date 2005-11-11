@@ -10,8 +10,8 @@
 <Heading>The Algorithms Implemented in RCWA</Heading>
 
 Almost all mathematically interesting algorithms implemented in this
-package will be described in the author's forthcoming
-thesis&nbsp;<Cite Key="Kohl05"/> in the form of constructive proofs.
+package are described in the author's thesis&nbsp;<Cite Key="Kohl05"/>
+in the form of constructive proofs.
 This chapter provides references to the corresponding theorems, and lists
 short descriptions of the other algorithms and methods implemented in this
 package. The word <Q>trivial</Q> as a description means that essentially
@@ -331,7 +331,7 @@ They are listed in alphabetical order.
   </Mark>
   <Item>
     Application of the criteria given in Corollary&nbsp;2.5.10
-    and&nbsp;2.5.12 and Theorem&nbsp;B.8 and&nbsp;B.11
+    and&nbsp;2.5.12 and Theorem&nbsp;A.8 and&nbsp;A.11
     in&nbsp;<Cite Key="Kohl05"/>. For applying the last-mentioned criterium
     (existence of weakly-connected components of the transition graph which
     are not strongly-connected), <Package>GRAPE</Package> is needed. <P/>
