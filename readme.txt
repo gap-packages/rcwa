@@ -26,6 +26,12 @@ package.
 An object of particular interest is the group RCWA(Z) of all residue
 class-wise affine bijections of the integers.
 
+Residue class-wise affine groups are introduced in the author's thesis
+`Restklassenweise affine Gruppen'. This thesis is available at
+http://elib.uni-stuttgart.de/opus/volltexte/2005/2448/.
+A copy of it as well as an english translation is distributed with this
+package (see thesis/thesis.pdf resp. thesis/thesis_e.pdf).
+
 
                               Requirements
 

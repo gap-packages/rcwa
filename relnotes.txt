@@ -52,7 +52,7 @@ Changes between version 1.2.1 and version 1.2.2
  - An example has been added to the manual in which finite quotients of
    Grigorchuk groups are constructed.
 
-Changes between version 1.2.2 and version ...
+Changes between version 1.2.2 and version 1.3.0 (November 22, 2005)
 
  - Operations `Induction', `RightInverse' and `CommonRightInverse'
    have been added.
@@ -65,5 +65,8 @@ Changes between version 1.2.2 and version ...
 
  - The multiplication of rcwa mappings is now slightly faster due to making
    use of a better bound for the modulus of the product.
+
+ - The archive file now includes a copy of the author's thesis
+   `Restklassenweise affine Gruppen' as well as an english translation of it.
 
 

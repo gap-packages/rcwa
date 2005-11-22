@@ -678,10 +678,10 @@ in&nbsp;1932, and whose cycle structure is unknown so far.
         \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
       </Display>
     </Alt>
-    In the author's forthcoming PhD thesis, it will be proved that
-    the determinant induces an epimorphism from the group of all
-    class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
-    onto <M>(\Z,+)</M>. <P/>
+    In the author's thesis it is shown that the determinant mapping is an
+    epimorphism from the group of all class-wise order-preserving bijective
+    rcwa mappings of <M>\Z</M> onto <M>(\Z,+)</M> (see Theorem&nbsp;2.11.9).
+    <P/>
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
@@ -722,11 +722,11 @@ gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
         \right)}}.
       </Display>
     </Alt>
-    In the author's forthcoming PhD thesis, it will be proved that
-    the sign induces an epimorphism from RCWA(<M>\Z</M>) onto
-    the group <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>. This means that
-    the kernel of the sign mapping is a normal subgroup of
-    RCWA(<M>\Z</M>) of index&nbsp;2.
+    In the author's thesis it is shown that the sign mapping is an
+    epimorphism from RCWA(<M>\Z</M>) onto the group <M>\Z^\times</M> of
+    units of&nbsp;<M>\Z</M> (see Theorem&nbsp;2.12.8).
+    This means that the kernel of the sign mapping is a normal subgroup
+    of RCWA(<M>\Z</M>) of index&nbsp;2.
 <Example>
 <![CDATA[
 gap> List( [ nu, nu^2, nu^3 ], Sign );

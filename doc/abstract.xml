@@ -32,7 +32,14 @@ them is the central aim of this package. <P/>
 
 An object of particular interest is the group RCWA(<Alt Only="LaTeX">
 <M>\mathbb{Z}</M></Alt><Alt Not="LaTeX"><M>Z</M></Alt>) of all residue
-class-wise affine bijections of the integers.
+class-wise affine bijections of the integers. <P/>
+
+Residue class-wise affine groups are introduced in the author's thesis
+<E>Restklassenweise affine Gruppen</E>. This thesis is available at
+<URL>http://elib.uni-stuttgart.de/opus/volltexte/2005/2448/</URL>.
+A copy of it as well as an english translation is distributed with this
+package (see <F>thesis/thesis.pdf</F> resp.
+<F>thesis/thesis&uscore;e.pdf</F>).
 
 </Abstract>
 
