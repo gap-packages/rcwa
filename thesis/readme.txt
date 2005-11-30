@@ -11,3 +11,7 @@ thesis_e.pdf: An english translation of that thesis.
               or refer to page 64, the target is the same regardless of whether
               you use the original or the translation.
 
+errata.txt: A list of errata as known on release date.
+            They have been corrected in the files distributed together with
+            this package.
+

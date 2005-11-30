@@ -1,0 +1,25 @@
+
+            Errata for my Thesis 'Restklassenweise affine Gruppen'
+            =====================================================
+
+                         (As known on release date.)
+
+  @(#)$Id$
+
+  - In Beispiele 1.1.3, Teil (1) on page 2 it must read '{(2n-1)/3,2n}'
+    instead of '{(3n-1)/2,2n}'.
+
+  - On page 79 in line 3 of Section B.1, it is wrongly claimed that in
+    Beispiele 1.8.5, Teil (4) it would be conjectured that alpha and beta
+    generate a free group of rank 2.
+    (The conjecture itself may be true or not -- I don't know.)
+ 
+  - On page 97 the word 'packages' in the URL of my RCWA package must be
+    capitalized.
+    The correct URL is http://www.gap-system.org/Packages/rcwa.html.
+
+
+  All errors found so far are harmless.
+  They are corrected in the files distributed together with this package.
+
+
