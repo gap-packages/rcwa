@@ -430,11 +430,48 @@ a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 
 #############################################################################
 ##
-##  Section 4.15: A group which acts 2-transitive on the positive integers
+##  Section 4.15: A group which acts 4-transitive on the positive integers
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
 SetName(u,"u");
+
+#############################################################################
+##
+##  Section 4.16: A group which acts 3-transitive, but not 4-transitive on Z
+##
+##  This example does not define rcwa mappings whose inclusion here would
+##  save any typing.
+##
+
+#############################################################################
+##
+##  Section 4.17: Grigorchuk groups
+##
+##  The definition of a, b, c and d is omitted in order to avoid overwriting
+##  the previous values of these variables.
+##
+SequenceElement := function ( r, level )
+
+  return Permutation(Product(Filtered([1..level-1],k->k mod 3 <> r),
+                             k->ClassTransposition(    2^(k-1)-1, 2^(k+1),
+                                                   2^k+2^(k-1)-1, 2^(k+1))),
+                     [0..2^level-1]);
+end;
+
+FourCycle := RcwaMapping((4,5,6,7),[4..7]);
+
+GrigorchukGroup2Generator := function ( level )
+  if level = 1 then return FourCycle; else
+    return   Restriction(FourCycle, RcwaMapping([[4,1,1]]))
+           * Restriction(FourCycle, RcwaMapping([[4,3,1]]))
+           * Restriction(GrigorchukGroup2Generator(level-1),
+                         RcwaMapping([[4,0,1]]));
+  fi;
+end;
+
+GrigorchukGroup2 := level -> Group(FourCycle,
+                                   GrigorchukGroup2Generator(level));
 
 #############################################################################
 ##
