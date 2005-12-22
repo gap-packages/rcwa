@@ -40,13 +40,13 @@ AbstractHTML     := Concatenation("This package provides methods for investigati
                                   " groups</a> by means of computation."),
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.html",
 PackageDoc       := rec(
-                         BookName  := "RCWA",
+                         BookName         := "RCWA",
                          ArchiveURLSubset := ["doc"],
-                         HTMLStart := "doc/chap0.html",
-                         PDFFile   := "doc/manual.pdf",
-                         SixFile   := "doc/manual.six",
-                         LongTitle := "[R]esidue [C]lass-[W]ise [A]ffine groups",
-                         Autoload  := false
+                         HTMLStart        := "doc/chap0.html",
+                         PDFFile          := "doc/manual.pdf",
+                         SixFile          := "doc/manual.six",
+                         LongTitle        := "[R]esidue [C]lass-[W]ise [A]ffine groups",
+                         Autoload         := false
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4.6",
