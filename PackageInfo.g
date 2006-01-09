@@ -46,7 +46,7 @@ PackageDoc       := rec(
                          PDFFile          := "doc/manual.pdf",
                          SixFile          := "doc/manual.six",
                          LongTitle        := "[R]esidue [C]lass-[W]ise [A]ffine groups",
-                         Autoload         := false
+                         Autoload         := true
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4.6",
