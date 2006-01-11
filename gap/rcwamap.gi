@@ -3102,7 +3102,7 @@ InstallMethod( PermutationOpNC,
     local  rep, img, i, j;
 
     if act <> OnPoints or not ForAll(P,IsUnionOfResidueClasses)
-    then TryNextMethod(); fi;
+    then return PermutationOp(sigma,P,act); fi;
     rep := List(P,cl->Representative(cl)^sigma);
     img := [];
     for i in [1..Length(P)] do
