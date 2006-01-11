@@ -559,6 +559,13 @@ DeclareAttribute( "RespectedPartition", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  PermutationOpNC( <sigma>, <P>, <act> )
+##
+DeclareOperation( "PermutationOpNC",
+                  [ IsObject, IsListOrCollection, IsFunction ] );
+
+#############################################################################
+##
 #O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
 ##
 ##  Computes some mapping <h>^<r> such that there is a partition which is

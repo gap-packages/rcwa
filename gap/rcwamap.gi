@@ -3091,6 +3091,30 @@ InstallGlobalFunction( SearchCycle,
 
 #############################################################################
 ##
+#M  PermutationOpNC( <sigma>, <P>, <act> ) . .  for rcwa map. and resp. part.
+##
+InstallMethod( PermutationOpNC,
+               "for rcwa mapping and respected partition (RCWA)", true,
+               [ IsRcwaMapping, IsList, IsFunction ], 0,
+
+  function ( sigma, P, act )
+
+    local  rep, img, i, j;
+
+    if act <> OnPoints or not ForAll(P,IsUnionOfResidueClasses)
+    then TryNextMethod(); fi;
+    rep := List(P,cl->Representative(cl)^sigma);
+    img := [];
+    for i in [1..Length(P)] do
+      j := 0;
+      repeat j := j + 1; until rep[i] in P[j];
+      img[i] := j;
+    od;
+    return PermList(img);
+  end );
+
+#############################################################################
+##
 #M  PrimeSet( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( PrimeSet,
@@ -3743,27 +3767,30 @@ InstallMethod( FactorizationIntoGenerators,
 
     DivideBy := function ( l )
 
-      local  fact, prod, arects;
+      local  fact, prod, arects, noexpansion;
 
-      arects := ValueOption("ct") = true; 
+      arects := ValueOption("ct") = true;
       if not IsList(l) then l := [l]; fi;
       for fact in l do # Factors in divisors list must commute.
         Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
       od;
       if direction = "from the right" then
         if   arects
-        then prod  := Product(l);
-        else prod  := Product(Reversed(l))^-1; fi;
-        g          := PROD(g,prod:RMPROD_NO_EXPANSION:=arects);
-        rightfacts := Concatenation(Reversed(l),rightfacts);
+        then prod   := Product(l);
+        else prod   := Product(Reversed(l))^-1; fi;
+        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
+        g           := PROD(g,prod:RMPROD_NO_EXPANSION:=noexpansion);
+        rightfacts  := Concatenation(Reversed(l),rightfacts);
       else
         if   arects
-        then prod  := Product(Reversed(l));
-        else prod  := Product(l)^-1; fi;
-        g          := PROD(prod,g:RMPROD_NO_EXPANSION:=arects);
-        leftfacts  := Concatenation(leftfacts,l);
+        then prod   := Product(Reversed(l));
+        else prod   := Product(l)^-1; fi;
+        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
+        g           := PROD(prod,g:RMPROD_NO_EXPANSION:=noexpansion);
+        leftfacts   := Concatenation(leftfacts,l);
       fi;
       StateInfo();
+      Assert(2,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
     end;
 
     if not IsBijective(g) then return fail; fi;
@@ -3820,7 +3847,7 @@ InstallMethod( FactorizationIntoGenerators,
       fi;
 
       if   ValueOption("ShortenPartition") <> false
-      then h := Permutation(g,P);
+      then h := PermutationOpNC(g,P,OnPoints);
       else h := PermList(List([0..Modulus(g)-1],i->i^g mod Modulus(g) + 1));
       fi;
       cycs := Orbits(Group(h),MovedPoints(h));
