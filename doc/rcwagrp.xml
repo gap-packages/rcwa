@@ -565,7 +565,7 @@ if such elements exist.
 <ManSection>
   <Meth Name="IsTransitive" Arg="G, Integers" Label="G, Integers"/>
   <Returns>
-    <C>true</C> if the rcwa group&nbsp;<A>G</A> acts transitive
+    <C>true</C> if the rcwa group&nbsp;<A>G</A> acts transitively
     on&nbsp;<M>\Z</M> and <C>false</C> otherwise.
   </Returns>
   <Description>
