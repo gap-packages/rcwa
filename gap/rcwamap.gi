@@ -3871,6 +3871,9 @@ InstallMethod( FactorizationIntoGenerators,
           if   not IsSubset(multfacts,divfacts)
           then q := Maximum(Difference(divfacts,multfacts)); fi;
 
+          if   Maximum(p,q) < Maximum(Union(multfacts,divfacts))
+          then break; fi;
+
           if Maximum(p,q) >= 3 then
             if p > q then # Additional prime p in multiplier.
               if p in multswitches then RevertDirectionAndJumpBack(); fi;
