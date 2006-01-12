@@ -3101,7 +3101,7 @@ InstallMethod( PermutationOpNC,
 
     local  rep, img, i, j;
 
-    if act <> OnPoints or not ForAll(P,IsUnionOfResidueClasses)
+    if   act <> OnPoints or not ForAll(P,IsUnionOfResidueClasses)
     then return PermutationOp(sigma,P,act); fi;
     rep := List(P,cl->Representative(cl)^sigma);
     img := [];
@@ -3317,21 +3317,6 @@ InstallMethod( ShortCycles,
       fi;
     od;
     return cycles;
-  end );
-
-#############################################################################
-##
-#M  CycleType( <f> ) . . . . . . . . . . . . . for tame integral rcwa mapping
-##
-InstallMethod( CycleType,
-               "for tame integral rcwa mappings (RCWA)",
-               true, [ IsIntegralRcwaMapping ], 0,
-               
-  function ( f )
-
-    if not IsTame(f) then TryNextMethod(); fi;
-    StandardConjugate(f);
-    return CycleType(f);
   end );
 
 #############################################################################
@@ -3736,8 +3721,8 @@ InstallMethod( FactorizationIntoGenerators,
 
     local  DivideBy, SaveState, RevertDirectionAndJumpBack, StateInfo,
            facts, gbuf, leftfacts, leftfactsbuf, rightfacts, rightfactsbuf,
-           elm, direction, sgn, log, loop, rev, revert,
-           affsrc, P, h, cycs, cyc, gfixP, cl, rest, c, m, r,
+           elm, direction, sgn, log, loop, rev, revert, affsrc, P, oldP,
+           newP, parts, block, h, cycs, cyc, gfixP, cl, rest, c, m, r,
            multfacts, divfacts, p, q, Smult, Sdiv, clSmult, clSdiv,
            pairs, pair, diffs, largeprimes, splitpair, splittedpairs,
            splittedpair, d, dpos, disjoint, ctchunk,
@@ -3820,25 +3805,29 @@ InstallMethod( FactorizationIntoGenerators,
 
       affsrc := Union(List(LargestSourcesOfAffineMappings(g),
                            AsUnionOfFewClasses));
+      m := Modulus(g);
 
       Info(InfoRCWA,1,"Computing respected partition.");
 
       if ValueOption("ShortenPartition") <> false then
-        P := [];
-        for cl in affsrc do
-          cyc := [cl];
-          repeat
-            Add(cyc,cyc[Length(cyc)]^g);
-          until    cyc[Length(cyc)] = cl
-                or Length(Residues(cyc[Length(cyc)])) > 1;
-          if    cyc[Length(cyc)] = cl
-            and ForAll(cyc,cl2->ForAny(affsrc,cl3->IsSubset(cl3,cl2)))
-          then
-            P := Union(P,cyc{[1..Length(cyc)-1]});
-            if Union(P) = Integers then break; fi;
-          fi;
-        od;
-        if Union(P) <> Integers then P := RespectedPartition(g); fi;
+        h := PermList(List([0..m-1],i->i^g mod m + 1));
+        P := Set(List(affsrc,S->Intersection(S,[0..m-1]))) + 1;
+        repeat
+          oldP := ShallowCopy(P); newP := [];
+          P    := List(P,block->OnSets(block,h));
+          for i in [1..Length(P)] do
+            if P[i] in oldP then Add(newP,P[i]); else # split
+              parts := List([1..Length(oldP)],j->Intersection(P[i],oldP[j]));
+              parts := Filtered(parts,block->not IsEmpty(block));
+              newP  := Concatenation(newP,parts);
+            fi;
+          od;
+          P := Set(newP);
+        until P = oldP;
+        P := Set(P,res->ResidueClassUnion(Integers,m,res-1));
+        Assert(2,Union(P)=Integers);
+        if   not ForAll(P,block->Length(Residues(block))=1)
+        then P := AllResidueClassesModulo(Modulus(g)); fi;
       else P := AllResidueClassesModulo(Modulus(g)); fi;
 
       if InfoLevel(InfoRCWA) >= 1 then
@@ -3851,6 +3840,7 @@ InstallMethod( FactorizationIntoGenerators,
       else h := PermList(List([0..Modulus(g)-1],i->i^g mod Modulus(g) + 1));
       fi;
       cycs := Orbits(Group(h),MovedPoints(h));
+      cycs := List(cycs,cyc->Cycle(h,Minimum(cyc)));
       for cyc in cycs do
         for i in [2..Length(cyc)] do
           Add(facts,ClassTransposition(P[cyc[1]],P[cyc[i]]));

@@ -535,18 +535,6 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
-#A  CycleType( <f> ) . . . . . . . . . . . . . . . . . . .  cycle type of <f>
-##
-##  The *cycle type* of a tame rcwa mapping <f> is denoted by a list of two
-##  lists, where the first list is the set of the cycle lengths which occur
-##  infinitely often, and the second list contains the cycle lengths which
-##  occur only finitely often, with the respective multiplicities and sorted
-##  by increasing length.
-##
-DeclareAttribute( "CycleType", IsRcwaMapping );
-
-#############################################################################
-##
 #A  RespectedPartition( <sigma> ) . . . . . . . . . . . . respected partition
 ##
 ##  A partition of the base ring <R> into a finite number of residue classes,
