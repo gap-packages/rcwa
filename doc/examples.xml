@@ -75,9 +75,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 3(6), 5(12), 7(12), 8(12), 0(48) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 6(8) ]
 #I  Found 5 pairs.
 #I  After filtering and splitting: 5 pairs.
@@ -94,9 +94,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 7(12), 8(12), 0(96) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 6(8) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 3 pairs.
@@ -109,9 +109,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 7(12), 0(192) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 2(4) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
@@ -122,18 +122,18 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 48, Divisor(<g>) = 12
 #I  p = 3, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 0(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 2(4) ]
 #I  Found 1 pairs.
 #I  After filtering and splitting: 1 pairs.
 #I  Dividing by ClassTransposition(2,4,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 128, Divisor(<g>) = 4
 #I  p = 2, kmult = 7, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 384(1536) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 2(4), 3(6), 1(12), 11(12) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 5 pairs.
@@ -148,9 +148,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(11,12,384,1536) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
 #I  p = 2, kmult = 5, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 0(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 3(6), 1(12), 6(12), 10(12), 11(12) ]
 #I  Found 4 pairs.
 #I  After filtering and splitting: 4 pairs.
@@ -163,9 +163,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(11,12,0,384) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
 #I  p = 2, kmult = 4, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 48(192), 192(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 3(6), 6(12), 10(12), 11(12) ]
 #I  Found 3 pairs.
 #I  After filtering and splitting: 3 pairs.
@@ -176,9 +176,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(11,12,48,192) from the right.
 #I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
 #I  p = 2, kmult = 4, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 192(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 3(6), 10(12), 11(12) ]
 #I  Splitting classes being divided by q*p^kdiv.
 #I  Found 4 pairs.
@@ -192,9 +192,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(23,24,192,384) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
 #I  p = 2, kmult = 3, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 72(96), 96(192), 0(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 3(6), 11(12), 22(24) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
@@ -202,9 +202,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(22,24,96,192) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
 #I  p = 2, kmult = 3, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 0(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 3(6) ]
 #I  Splitting classes being divided by q*p^kdiv.
 #I  Splitting classes being divided by q*p^kdiv.
@@ -228,9 +228,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(45,48,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
 #I  p = 2, kmult = 2, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 44(48), 48(96), 192(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 9(12), 15(24), 27(48) ]
 #I  Found 2 pairs.
 #I  After filtering and splitting: 2 pairs.
@@ -238,9 +238,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(15,24,48,96) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
 #I  p = 2, kmult = 2, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 192(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 27(48) ]
 #I  Splitting classes being divided by q*p^kdiv.
 #I  Found 2 pairs.
@@ -250,18 +250,18 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(75,96,192,384) from the right.
 #I  Modulus(<g>) = 384, Multiplier(<g>) = 2, Divisor(<g>) = 4
 #I  p = 2, kmult = 1, kdiv = 2
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 4(24), 17(24), 24(48), 96(192), 0(384) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 75(96) ]
 #I  Found 1 pairs.
 #I  After filtering and splitting: 1 pairs.
 #I  Dividing by ClassTransposition(75,96,0,384) from the right.
 #I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
 #I  p = 2, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 4(24), 17(24), 24(48), 96(192) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 7(12), 5(24), 12(24), 16(24), 75(96) ]
 #I  Found 6 pairs.
 #I  After filtering and splitting: 6 pairs.
@@ -276,9 +276,9 @@ gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
 #I  Dividing by ClassTransposition(75,96,96,192) from the right.
 #I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
 #I  p = 2, kmult = 1, kdiv = 1
-#I  Image of classes being multiplied by q*p^kmult:
+#I  Images of classes being multiplied by q*p^kmult:
 #I  [ 17(24) ]
-#I  Image of classes being divided by q*p^kdiv:
+#I  Images of classes being divided by q*p^kdiv:
 #I  [ 12(24), 16(24) ]
 #I  Splitting classes being multiplied by q*p^kmult.
 #I  Found 4 pairs.

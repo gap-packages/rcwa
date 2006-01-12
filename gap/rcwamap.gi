@@ -3910,11 +3910,11 @@ InstallMethod( FactorizationIntoGenerators,
 
         if InfoLevel(InfoRCWA) >= 1 then
           if   direction = "from the right"
-          then Print("#I  Image of c"); else Print("#I  C"); fi;
+          then Print("#I  Images of c"); else Print("#I  C"); fi;
           Print("lasses being multiplied by q*p^kmult:\n#I  ");
           ViewObj(clSmult);
           if   direction = "from the right"
-          then Print("\n#I  Image of c"); else Print("\n#I  C"); fi;
+          then Print("\n#I  Images of c"); else Print("\n#I  C"); fi;
           Print("lasses being divided by q*p^kdiv:\n#I  ");
           ViewObj(clSdiv); Print("\n");
         fi;
