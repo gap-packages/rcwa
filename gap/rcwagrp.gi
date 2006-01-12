@@ -1519,9 +1519,7 @@ InstallOtherMethod( RepresentativeActionOp,
       or Union(P1) <> Integers or Union(P2) <> Integers
     then TryNextMethod(); fi;
 
-    if   not ForAll(P1,S->Length(Residues(S)) = 1)
-      or not ForAll(P2,S->Length(Residues(S)) = 1)
-    then
+    if not ForAll(P1,IsResidueClass) or not ForAll(P2,IsResidueClass) then
       P1 := List(P1,AsUnionOfFewClasses);
       P2 := List(P2,AsUnionOfFewClasses);
       P  := [P1,P2];

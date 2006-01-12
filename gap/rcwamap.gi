@@ -238,9 +238,7 @@ MakeReadOnlyGlobal( "ReduceModularRcwaMapping" );
 CheckClassCycles := function ( R, cycles )
 
   if not (    ForAll(cycles,IsList)
-          and ForAll(Flat(cycles),S->    IsUnionOfResidueClasses(S)
-                                     and Length(Residues(S))=1
-                                     and IsSubset(R,S)))
+          and ForAll(Flat(cycles),S->IsResidueClass(S) and IsSubset(R,S)))
      or  ForAny(Combinations(Flat(cycles),2),
                 s->Intersection(s[1],s[2]) <> [])
   then Error("there is no rcwa mapping of ",R," having the class ",
@@ -503,12 +501,10 @@ InstallOtherMethod( RcwaMapping,
 
     local R;
 
-    if not    (ForAll(Concatenation(P1,P2),
-                      S ->     IsUnionOfResidueClasses(S)
-                           and Length(Residues(S)) = 1)
-           and Length(P1) = Length(P2)
-           and Sum(List(P1,Density)) = 1
-           and Union(P1) = UnderlyingRing(FamilyObj(P1[1])))
+    if not (     ForAll(Concatenation(P1,P2),IsResidueClass)
+             and Length(P1) = Length(P2)
+             and Sum(List(P1,Density)) = 1
+             and Union(P1) = UnderlyingRing(FamilyObj(P1[1])))
     then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(P1[1]));
     return RcwaMappingNC(P1,P2);
@@ -717,7 +713,7 @@ InstallGlobalFunction( ClassShift,
     local  result, coeff, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsUnionOfResidueClasses(arg[1]) and Length(Residues(arg[1])) = 1
+    if   IsResidueClass(arg[1])
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
     r := arg[1]; m := arg[2];
@@ -746,7 +742,7 @@ InstallGlobalFunction( ClassReflection,
     local  result, coeff, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsUnionOfResidueClasses(arg[1]) and Length(Residues(arg[1])) = 1
+    if   IsResidueClass(arg[1])
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
     r := arg[1]; m := arg[2];
@@ -776,8 +772,7 @@ InstallGlobalFunction( ClassTransposition,
     local  result, r1, m1, r2, m2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if Length(arg) = 2 and ForAll(arg,IsUnionOfResidueClasses)
-      and ForAll(arg,cl->Length(Residues(cl)) = 1)
+    if   Length(arg) = 2 and ForAll(arg,IsResidueClass)
     then arg := [Residues(arg[1])[1],Modulus(arg[1]),
                  Residues(arg[2])[1],Modulus(arg[2])]; fi;
     if Length(arg) <> 4 or not ForAll(arg,IsInt) then return fail; fi;
@@ -3826,7 +3821,7 @@ InstallMethod( FactorizationIntoGenerators,
         until P = oldP;
         P := Set(P,res->ResidueClassUnion(Integers,m,res-1));
         Assert(2,Union(P)=Integers);
-        if   not ForAll(P,block->Length(Residues(block))=1)
+        if   not ForAll(P,IsResidueClass)
         then P := AllResidueClassesModulo(Modulus(g)); fi;
       else P := AllResidueClassesModulo(Modulus(g)); fi;
 
