@@ -3747,27 +3747,31 @@ InstallMethod( FactorizationIntoGenerators,
 
     DivideBy := function ( l )
 
-      local  fact, prod, arects, noexpansion;
+      local  fact, prod, gbuf, areCTs, noexpansion;
 
-      arects := ValueOption("ct") = true;
+      areCTs := ValueOption("ct") = true;
       if not IsList(l) then l := [l]; fi;
       for fact in l do # Factors in divisors list must commute.
         Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
       od;
       if direction = "from the right" then
-        if   arects
+        if   areCTs
         then prod   := Product(l);
         else prod   := Product(Reversed(l))^-1; fi;
-        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
-        g           := PROD(g,prod:RMPROD_NO_EXPANSION:=noexpansion);
         rightfacts  := Concatenation(Reversed(l),rightfacts);
+        noexpansion := areCTs and Modulus(g) mod Modulus(prod) = 0;
+        gbuf        := PROD(g,prod:RMPROD_NO_EXPANSION:=areCTs);
+        if   noexpansion or IsBijective(gbuf)
+        then g := gbuf; else g := g * prod; fi;
       else
-        if   arects
+        if   areCTs
         then prod   := Product(Reversed(l));
         else prod   := Product(l)^-1; fi;
-        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
-        g           := PROD(prod,g:RMPROD_NO_EXPANSION:=noexpansion);
         leftfacts   := Concatenation(leftfacts,l);
+        noexpansion := areCTs and Modulus(g) mod Modulus(prod) = 0;
+        gbuf        := PROD(prod,g:RMPROD_NO_EXPANSION:=areCTs);
+        if   noexpansion or IsBijective(gbuf)
+        then g := gbuf; else g := prod * g; fi;
       fi;
       StateInfo();
       Assert(2,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
