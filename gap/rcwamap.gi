@@ -3747,26 +3747,24 @@ InstallMethod( FactorizationIntoGenerators,
 
     DivideBy := function ( l )
 
-      local  fact, prod, arects, noexpansion;
+      local  fact, prod, areCTs;
 
-      arects := ValueOption("ct") = true;
+      areCTs := ValueOption("ct") = true;
       if not IsList(l) then l := [l]; fi;
       for fact in l do # Factors in divisors list must commute.
         Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
       od;
       if direction = "from the right" then
-        if   arects
+        if   areCTs
         then prod   := Product(l);
         else prod   := Product(Reversed(l))^-1; fi;
-        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
-        g           := PROD(g,prod:RMPROD_NO_EXPANSION:=noexpansion);
+        g           := g * prod;
         rightfacts  := Concatenation(Reversed(l),rightfacts);
       else
-        if   arects
+        if   areCTs
         then prod   := Product(Reversed(l));
         else prod   := Product(l)^-1; fi;
-        noexpansion := arects and Modulus(g) mod Modulus(prod) = 0;
-        g           := PROD(prod,g:RMPROD_NO_EXPANSION:=noexpansion);
+        g           := prod * g;
         leftfacts   := Concatenation(leftfacts,l);
       fi;
       StateInfo();
@@ -3777,7 +3775,7 @@ InstallMethod( FactorizationIntoGenerators,
     if IsOne(g) then return [g]; fi;
 
     leftfacts := []; rightfacts := []; facts := []; elm := g;
-    direction := ValueOption("Direction"); 
+    direction := ValueOption("Direction");
     if direction <> "from the left" then direction := "from the right"; fi;
     multswitches := []; divswitches := []; log := []; loop := false;
 
