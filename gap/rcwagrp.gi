@@ -1416,6 +1416,82 @@ InstallOtherMethod( RepresentativeActionOp,
     return StandardizingConjugator(f) * StandardizingConjugator(g)^-1;
   end );
 
+BindGlobal( "RefinedPartition",
+
+  function ( P, k )
+
+    local  l, mods, min, pos;
+
+    P := ShallowCopy(P); l := Length(P);
+    while l < k do
+      mods   := List(P,Modulus);
+      min    := Minimum(mods);
+      pos    := Position(mods,min);
+      P[pos] := SplittedClass(P[pos],2);
+      P      := Flat(P);
+      l      := l + 1;
+    od;
+    return P;
+  end );
+
+#############################################################################
+##
+#M  RepresentativeActionOp( RCWA( Integers ), <f>, <g>, <act> ) 
+##
+##  Special method for products of the same numbers of class shifts, inverses
+##  of class shifts, class reflections and class transpositions, each, whose
+##  supports are pairwisely disjoint and do not entirely cover Z up to a
+##  finite complement.
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and products of disjoint CS/CR/CT (RCWA)",
+                    true,
+                    [ IsNaturalRCWA_Z, 
+                      IsIntegralRcwaMapping, IsIntegralRcwaMapping,
+                      IsFunction ], 100,
+
+  function ( RCWA_Z, f, g, act )
+
+    local  Sorted, facts_f, facts_g, P1, P2, l, sigma, i;
+
+    Sorted := l -> [Filtered(l,f->Name(f)[6] = 'S'),
+                    Filtered(l,f->Name(f)[6] = 'R'),
+                    Filtered(l,f->Name(f)[6] = 'T')];              
+
+    if act <> OnPoints then TryNextMethod(); fi;
+    if f = g then return One(f); fi;
+    if not ForAll([f,g],IsTame) then TryNextMethod(); fi;
+    if Order(f) <> Order(g) then return fail; fi;
+    facts_f := FactorizationIntoGenerators(f);
+    facts_g := FactorizationIntoGenerators(g);
+    if    Length(facts_f) <> Length(facts_g)
+       or Density(MovedPoints(f)) = 1 or Density(MovedPoints(g)) = 1
+       or    Density(MovedPoints(f))
+          <> Sum(List(facts_f,fact->Density(MovedPoints(fact))))
+       or    Density(MovedPoints(g))
+          <> Sum(List(facts_g,fact->Density(MovedPoints(fact))))
+    then TryNextMethod(); fi;
+    facts_f := Sorted(facts_f); facts_g := Sorted(facts_g);
+    if List(facts_f,Length) <> List(facts_g,Length) then TryNextMethod(); fi;
+    P1 := AsUnionOfFewClasses(Difference(Integers,MovedPoints(f)));
+    P2 := AsUnionOfFewClasses(Difference(Integers,MovedPoints(g)));
+    l  := Maximum(Length(P1),Length(P2));
+    if l > Length(P1) then P1 := RefinedPartition(P1,l); fi;
+    if l > Length(P2) then P2 := RefinedPartition(P2,l); fi;
+    Append(P1,Flat(List(Flat(facts_f),
+                        fact->AsUnionOfFewClasses(MovedPoints(fact)))));
+    Append(P2,Flat(List(Flat(facts_g),
+                        fact->AsUnionOfFewClasses(MovedPoints(fact)))));
+    sigma := RcwaMapping(P1,P2);
+    for i in [1..Length(facts_f[1])] do
+      if   Number([PositionSublist(Name(facts_f[1][i]),"-1"),
+                   PositionSublist(Name(facts_g[1][i]),"-1")],IsInt) = 1
+      then sigma := ClassReflection(MovedPoints(facts_f[1][i])) * sigma; fi;
+    od;
+    if f^sigma <> g then Error("`RepresentativeAction' failed.\n"); fi;
+    return sigma;
+  end );
+
 #############################################################################
 ##
 #M  RepresentativeActionOp( RCWA( Integers ), <S1>, <S2>, <act> ) 
