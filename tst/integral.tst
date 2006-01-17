@@ -1165,6 +1165,12 @@ gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 <tame rcwa mapping of Z with modulus 120>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
 [ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
+gap> Modulus(RepresentativeAction(RCWA(Integers),
+>            ClassShift(0,2) * ClassTransposition(1,6,3,18)
+>          * ClassShift(5,12)^-1 * ClassReflection(11,12),
+>            ClassShift(3,5) * ClassTransposition(2,5,1,10)
+>          * ClassShift(4,10) * ClassReflection(9,10)));
+36
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
