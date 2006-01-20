@@ -227,6 +227,14 @@ omega := RcwaMapping(
             [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]);
 SetName(omega,"omega");
 
+# Similar, but with smaller modulus and with only one fixed point and only
+# one transposition:
+
+kappaOneCycle := RcwaMapping([[2, 8,1],[1,-1,1],[3,2,2],[1, 2,1],
+                              [1, 9,1],[1,-3,1],[3,2,2],[1, 2,1],
+                              [1, 1,3],[1,-3,1],[3,2,2],[2,-2,1]]);
+SetName(kappaOneCycle,"kappaOneCycle");
+
 # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group all of
 # whose orbits on Z seem to be finite.
 
