@@ -149,6 +149,11 @@ kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
                       [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);
 SetName(kappa,"kappa");
 
+kappaZ := RcwaMapping([[2,8,1],[1,-1,1],[3,2,2],[1,2,1],
+                       [1,-3,1],[1,-3,1],[3,2,2],[1,2,1],
+                       [1,1,3],[1,-3,1],[3,2,2],[2,-2,1]]);
+SetName(kappaZ,"kappaZ");
+
 # An example of a mapping with an infinite cycle traversing the residue
 # classes (mod 12) acyclically, but having positive density as a subset of Z
 # (apparently 3/8).
