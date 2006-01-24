@@ -27,8 +27,22 @@ They are listed in alphabetical order.
   </Mark>
   <Item>
     <Q>Straight forward</Q> after having computed a respected partition
-    by using <C>RespectedPartition</C>. One only needs to know how
-    to compute images of residue classes under affine mappings.
+    by <C>RespectedPartition</C>. One only needs to know how to compute
+    images of residue classes under affine mappings.
+  </Item>
+
+  <Mark>
+    <C>Ball(<A>G</A>,<A>g</A>,<A>d</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straight forward</Q>.
+  </Item>
+
+  <Mark>
+    <C>Ball(<A>G</A>,<A>p</A>,<A>d</A>,<A>act</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straight forward</Q>.
   </Item>
 
   <Mark>
