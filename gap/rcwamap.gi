@@ -1761,6 +1761,22 @@ InstallOtherMethod( MovedPoints,
 
 #############################################################################
 ##
+#M  NrMovedPoints( <obj> ) . . . . . . . . . . . . . . . . . . generic method
+##
+InstallOtherMethod( NrMovedPoints,
+                    "generic method (RCWA)", true, [ IsObject ], 0,
+                    obj -> Size( MovedPoints( obj ) ) );
+
+#############################################################################
+##
+#M  Support( <g> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
+##
+InstallOtherMethod( Support,
+                    "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+                    MovedPoints );
+
+#############################################################################
+##
 #M  ImageElm( <f>, <n> ) . . . . . . .  for integral rcwa mapping and integer
 ##
 ##  Image of the integer <n> under the rcwa mapping <f>. 

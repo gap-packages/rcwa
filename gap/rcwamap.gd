@@ -293,6 +293,12 @@ DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
 
 #############################################################################
 ##
+#A  Support( <G>|<g> )  support (moved points) of perm.-group <G> / perm. <g>
+##  
+DeclareAttribute( "Support", IsGroup );
+
+#############################################################################
+##
 #A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f>
 ##
 ##  We define the *multiplier* of an rcwa mapping <f> by the standard

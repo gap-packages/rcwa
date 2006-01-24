@@ -523,6 +523,14 @@ InstallOtherMethod( MovedPoints,
 
 #############################################################################
 ##
+#M  Support( <G> ) . . . . . . . . . . . . . . . .  generic method for groups
+##
+InstallMethod( Support,
+               "generic method for groups (RCWA)", true, [ IsGroup ], 0,
+               MovedPoints );
+
+#############################################################################
+##
 #M  IsomorphismIntegralRcwaGroup( <G> ) . . . . .  rcwa representation of <G>
 #M  IsomorphismRcwaGroup( <G> )
 ##
