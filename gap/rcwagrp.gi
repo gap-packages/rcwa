@@ -1652,6 +1652,50 @@ InstallOtherMethod( RepresentativeActionOp,
   end );
 
 #############################################################################
+##
+#M  Ball( <G>, <g>, <d> ) . . . . . . . . . . . . for group and group element
+##
+##  As element tests can be expensive, this method does not check whether
+##  <g> is indeed an element of <G>.
+##
+InstallMethod( Ball,
+               "for a group and an element thereof (RCWA)", ReturnTrue,
+               [ IsGroup, IsMultiplicativeElement, IsPosInt ], 0,
+
+  function ( G, g, d )
+
+    local  ball, gens, k;
+
+    if not IsCollsElms(FamilyObj(G),FamilyObj(g)) then TryNextMethod(); fi;
+    ball := [g];
+    gens := Set(GeneratorsAndInverses(G));
+    for k in [1..d] do
+      ball := Union(ball,Union(List(gens,gen->ball*gen)));
+    od;
+    return ball;
+  end );
+
+#############################################################################
+##
+#M  Ball( <G>, <g>, <d> ) . . . . . . . . . . for permutation group and point
+##
+InstallOtherMethod( Ball,
+                    "for a permutation group and a point (RCWA)", ReturnTrue,
+                    [ IsGroup, IsObject, IsPosInt, IsFunction ], 0,
+
+  function ( G, p, d, act )
+
+    local  ball, gens, k;
+
+    ball := [p];
+    gens := Set(GeneratorsAndInverses(G));
+    for k in [1..d] do
+      ball := Union(ball,Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+    od;
+    return ball;
+  end );
+
+#############################################################################
 ## 
 #M  OrbitUnion( <G>, <S> ) . . . . . . . . . . . . . . for rcwa group and set
 ##

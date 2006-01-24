@@ -347,4 +347,13 @@ DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
 
 #############################################################################
 ##
+#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
+#O  Ball( <G>, <p>, <d> )        "      the point <p> under the action of <G>
+##
+##  All balls are understood w.r.t. the stored generators of the group <G>.
+##
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
+
+#############################################################################
+##
 #E  rcwagrp.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
