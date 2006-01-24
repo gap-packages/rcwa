@@ -1171,6 +1171,23 @@ gap> Modulus(RepresentativeAction(RCWA(Integers),
 >            ClassShift(3,5) * ClassTransposition(2,5,1,10)
 >          * ClassShift(4,10) * ClassReflection(9,10)));
 36
+gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),(),2);
+[ (), (5,6), (4,5), (4,5,6), (4,6,5), (3,4), (3,4)(5,6), (3,4,5), (3,5,4),
+  (2,3), (2,3)(5,6), (2,3)(4,5), (2,3,4), (2,4,3), (1,2), (1,2)(5,6),
+  (1,2)(4,5), (1,2)(3,4), (1,2,3), (1,3,2) ]
+gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),1,3,OnPoints);
+[ 1, 2, 3, 4 ]
+gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),[1,2,3],1,OnTuples);
+[ [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 2 ], [ 2, 1, 3 ] ]
+gap> Ball(G,[1,2,3],2,OnTuples);
+[ [ -5, 2, 3 ], [ -3, 5, 4 ], [ -1, 1, 8 ], [ 0, -1, 4 ], [ 0, -1, 7 ],
+  [ 0, -1, 8 ], [ 0, 4, 1 ], [ 0, 4, 8 ], [ 1, 2, 0 ], [ 1, 2, 3 ],
+  [ 1, 2, 6 ], [ 2, 0, 4 ], [ 2, 0, 5 ], [ 3, 5, 4 ], [ 5, 1, 8 ],
+  [ 6, -1, 4 ], [ 7, 2, 3 ] ]
+gap> Length(Ball(G,[1,2,3],4,OnTuples));
+133
+gap> Length(Ball(G,[1,2,3],4,OnSets));
+130
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
