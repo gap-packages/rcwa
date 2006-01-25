@@ -6,12 +6,13 @@ Initial version: 1.0.0 (April 26, 2005)
 
 Changes between version 1.0.0 and version 1.0.2:
 
- - Several cosmetic improvements, no new functionality.
+ - Several cosmetic improvements have been made; no new functionality
+   has been added.
 
 Changes between version 1.0.2 and version 1.0.3:
 
- - Added `View' - methods for certain group rings of rcwa groups and their
-   elements (compact form to save space; not documented yet).
+ - `View' - methods for certain group rings of rcwa groups and their elements
+   have been added (compact form to save space; not documented yet).
 
 Changes between version 1.0.3 and version 1.1.0 (June 16, 2005)
 
@@ -40,8 +41,8 @@ Changes between version 1.1.0 and version 1.2.0 (August 8, 2005)
 
 Changes between version 1.2.0 and version 1.2.1
 
- - Adapted to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
-   for families.
+ - An adaptation to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
+   for families has been made.
 
 Changes between version 1.2.1 and version 1.2.2
 
@@ -71,35 +72,38 @@ Changes between version 1.2.2 and version 1.3.0 (November 22, 2005)
 
 Changes between version 1.3.0 and version 1.3.1
 
- - Added a list of a few (harmless!) errata for the author's thesis.
+ - A list of a few (harmless!) errata for the author's thesis has been added.
 
 Changes between version 1.3.1 and version 1.3.4
 
- - Corrected errata known on 29/12/2005 in the copy of the thesis
-   distributed with this package.
+ - The errata known on 29/12/2005 have been corrected in the copy of the
+   thesis distributed with this package.
 
- - Corrected a bunch of typo's in the english translation of the thesis.
+ - A bunch of typo's in the english translation of the thesis has been
+   corrected.
 
 Changes between version 1.3.4 and version 1.3.5
 
- - Made package documentation autoloaded.
+ - The package documentation has been made autoloaded.
 
 Changes between version 1.3.5 and version 1.3.6
 
- - Fixed a bug in `FactorizationIntoGenerators',
-   which caused an infinite loop under certain circumstances.
+ - A bug in `FactorizationIntoGenerators' which caused an infinite loop under
+   certain circumstances has been fixed.
 
- - Made shortening of the respected partition in the last factoring step
-   in `FactorizationIntoGenerators' much faster.
+ - The shortening of the respected partition in the last factoring step in
+   `FactorizationIntoGenerators' has been made much faster.
 
- - Added a special method for `RepresentativeActionOp'.
+ - A special method for `RepresentativeActionOp' has been added.
 
- - Added the test file tst/Ngens.tst (corresponds to a preprint on minimal
-   normal subgroups of RCWA(Z)).
+ - A new test file tst/Ngens.tst has been added (corresponds to a preprint on
+   minimal normal subgroups of RCWA(Z)).
 
-Changes between version 1.3.6 and version ...
+Changes between version 1.3.6 and version 1.4.0 (January 26, 2006)
 
- - Added a synonym `Support' for `MovedPoints', a generic method
-   for `NrMovedPoints' and an operation `Ball'.
+ - Some parts of the documentation have been rewritten.
+
+ - A synonym `Support' for `MovedPoints', a generic method
+   for `NrMovedPoints' and an operation `Ball' have been added.
 
 
