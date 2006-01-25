@@ -23,16 +23,18 @@ classes (mod&nbsp;<M>m</M>) are all affine.
 This means that for any residue class <M>r(m) \in \Z/m\Z</M> there
 are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \Z</M> such that
 the restriction of the mapping&nbsp;<M>f</M> to the set
-<M>r(m) = \{r + km | k \in \Z\}</M> is given&nbsp;by
+<M>r(m) = \{{r + km | k \in \Z\}}</M> is given&nbsp;by
 <Alt Only = "LaTeX">
   <Display>
     f|_{r(m)}: \ \ r(m) \rightarrow \Z, \ \ \
     n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
   </Display>
 </Alt>
-<Alt Not = "LaTeX">
-  f|_r(m): r(m) -> Z, n |-> (a_r(m) * n + b_r(m))/c_r(m).
-</Alt>
+<Alt Only = "Text,HTML"><Verb>
+                                        a_r(m) * n + b_r(m)
+           f|_r(m):  r(m) -> Z,  n |->  -------------------.
+                                              c_r(m)
+</Verb></Alt>
 Residue class-wise affine groups are countable. <Q>Many</Q> of them act
 multiply transitively on&nbsp;<M>\Z</M> or on subsets thereof. Only
 relatively basic facts about their structure are known so far. This package
