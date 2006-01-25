@@ -91,7 +91,7 @@ are included in the distribution file anyway, users will not need it.
     formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text.
     This is accomplished using the &GAPDoc; package by Frank Lübeck and
     Max Neunhöffer. Building the manual is possible only on UNIX systems
-    and requires &LaTeX;, PDF&LaTeX; and <C>dvips</C>.
+    and requires &LaTeX;, PDF&LaTeX; and <Package>dvips</Package>.
   </Description>
 </ManSection>
 
