@@ -5,10 +5,10 @@
 
                                   Abstract
 
-RCWA is a  GAP 4  package which provides methods for investigating  [R]esidue
+RCWA is a  GAP 4  package which provides methods  for investigating [R]esidue
 [C]lass-[W]ise [A]ffine groups by means of computation.
 
-Residue class-wise affine groups are permutation groups  acting on the  inte-
+Residue class-wise affine groups are  permutation groups  acting on the inte-
 gers, whose elements are bijective residue class-wise affine mappings.  Typi-
 cally they are infinite.
 
