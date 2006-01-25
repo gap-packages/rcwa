@@ -28,7 +28,7 @@ of whose proper residue class rings are finite. A mapping
 <M>f: R \rightarrow R</M> is called <E>residue class-wise affine</E>, or for
 short an <E>rcwa</E> mapping, if there is an <M>m \in R \setminus \{0\}</M>
 such that the restrictions of <M>f</M> to the residue classes <M>r(m) \in
-R/mR</M> are affine. This means that for any residue class <M>r(m)</M>
+R/mR</M> are all affine. This means that for any residue class <M>r(m)</M>
 there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
 the restriction of the mapping <M>f</M> to the set
 <M>r(m) = \{{ r+km | k \in R\}}</M> is given by
