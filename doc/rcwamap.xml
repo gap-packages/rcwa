@@ -17,42 +17,34 @@ computing with residue class-wise affine mappings.
 <Section Label="sec:basicdefinitions">
 <Heading>Basic definitions</Heading>
 
+In the abstract, there was already a brief definition of residue class-wise
+affine groups over the ring of integers. In the sequel, a slightly
+generalized and more formal version of this definition is given. In the same
+time, some useful notation is introduced. <P/>
+
 <Index Key="rcwa mapping" Subkey="definition"></Index> 
 Let <M>R</M> be an infinite euclidean domain which is not a field and all
 of whose proper residue class rings are finite. A mapping
-<M>f: R \rightarrow R</M> is called <E>residue class-wise affine</E>, or in
+<M>f: R \rightarrow R</M> is called <E>residue class-wise affine</E>, or for
 short an <E>rcwa</E> mapping, if there is an <M>m \in R \setminus \{0\}</M>
 such that the restrictions of <M>f</M> to the residue classes <M>r(m) \in
 R/mR</M> are affine. This means that for any residue class <M>r(m)</M>
-there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M>, such that
+there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
 the restriction of the mapping <M>f</M> to the set
-<M>r(m) = \{ r+km | k \in R\}</M> is given by <P/>
-<Alt Only="Text"> 
-  <![CDATA[
-
-        f|_r(m):   r(m) -> R,   n -> ( a_r(m) * n + b_r(m) ) / c_r(m).
-
-  ]]>
-</Alt>
-<Alt Only="HTML">
-  <![CDATA[
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    f|_r(m):&nbsp;&nbsp;&nbsp;&nbsp;r(m)&nbsp;->&nbsp;R,
-    &nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;->&nbsp;(&nbsp;a_r(m)&nbsp;*&nbsp;n
-    &nbsp;+&nbsp;b_r(m)&nbsp;)&nbsp;/&nbsp;c_r(m).
-  ]]>
-</Alt>
+<M>r(m) = \{{ r+km | k \in R\}}</M> is given by
 <Alt Only="LaTeX">
   <Display>
     f|_{r(m)}: \ r(m) \rightarrow R, \ \ \
-    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}} \ .
+    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
   </Display>
 </Alt>
+<Alt Only="Text,HTML"><Verb>
+                                        a_r(m) * n + b_r(m)
+           f|_r(m):  r(m) -> R,  n |->  -------------------.
+                                              c_r(m)
+</Verb></Alt>
 <Index Key="rcwa mapping" Subkey="modulus"></Index>
-The value <M>m</M> is called the <E>modulus</E> of <M>f</M>.
+The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
 It is understood that all fractions are reduced, i.e. that
 <M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that
 <M>m</M> is chosen multiplicatively minimal. <P/>
@@ -73,7 +65,7 @@ multiplication and taking inverses (this can be verified easily), hence
 forms a subgroup of Sym(<M>R</M>).
 <Index Key="rcwa group" Subkey="definition"></Index>
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
-group, or in short an <E>rcwa</E> group. <P/>
+group, or for short an <E>rcwa</E> group. <P/>
 
 </Section>
 
