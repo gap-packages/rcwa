@@ -13,6 +13,9 @@ The rcwa mappings mentioned in this chapter can be found in the file
 <F>pkg/rcwa/examples/examples.g</F>, so there is no need to extract them
 from the manual files. This file can be read into the current &GAP; session
 by issueing <C>RCWAReadExamples( );</C>.
+All of these examples show different aspects of the package, and the order
+in which they appear in this chapter is entirely arbitrary. In particular,
+they are not ordered by degree of interestingness or difficulty.
 
 <!-- #################################################################### -->
 
@@ -27,8 +30,7 @@ of the integers:
 <Example>
 <![CDATA[
 gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
-gap> SetName(Collatz,"Collatz");
-gap> Display(Collatz);
+gap> SetName(Collatz,"Collatz"); Display(Collatz);
 
 Rcwa mapping of Z with modulus 3
 
@@ -49,11 +51,9 @@ the cycle containing 8 is finite or infinite.
 <![CDATA[
 gap> List(ShortOrbits(Group(Collatz),[-100..100],100),
 >         orb->Cycle(Collatz,Minimum(orb)));
-[ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ], 
-  [ -9, -6, -4, -5, -7 ], [ -3, -2 ], [ -1 ], [ 0 ], [ 1 ], [ 2, 3 ], 
+[ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ],
+  [ -9, -6, -4, -5, -7 ], [ -3, -2 ], [ -1 ], [ 0 ], [ 1 ], [ 2, 3 ],
   [ 4, 5, 7, 9, 6 ], [ 44, 59, 79, 105, 70, 93, 62, 83, 111, 74, 99, 66 ] ]
-gap> List(last,Length);
-[ 12, 5, 2, 1, 1, 1, 2, 5, 12 ]
 ]]>
 </Example>
 
