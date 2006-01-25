@@ -31,7 +31,7 @@ the restriction of the mapping&nbsp;<M>f</M> to the set
   </Display>
 </Alt>
 <Alt Not = "LaTeX">
-  f|_r(m): r(m) -> Z, n |-> (a_r(m) * n + b_r(m))/c_r(m)
+  f|_r(m): r(m) -> Z, n |-> (a_r(m) * n + b_r(m))/c_r(m).
 </Alt>
 Residue class-wise affine groups are countable. <Q>Many</Q> of them act
 multiply transitively on&nbsp;<M>\Z</M> or on subsets thereof. Only
