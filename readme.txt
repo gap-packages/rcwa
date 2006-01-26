@@ -70,7 +70,7 @@ usual via LoadPackage( "rcwa" );.
 For further advice  on questions of technical nature  please see the  chapter
 `Auxiliary functions' in the manual.
 
-                                   ---
+                                    ---
 
 If you have problems with this package, wish to make comments or suggestions,
 or if you find bugs, please send e-mail to
