@@ -1269,9 +1269,9 @@ gap> List([1..3],k->IncreasingOn(a^k));
         Arg="f, maxn, bound" Label="f, maxn, bound"/>
   <Returns> A list of ring elements (see below). </Returns>
   <Description>
-    This operation tries to compute the <E>contraction centre</E> of an rcwa
-    mapping. Assuming its existence this is the uniquely-determined finite
-    subset <M>S_0</M> of the source of&nbsp;<A>f</A> on which <A>f</A>
+    This operation tries to compute the <E>contraction centre</E> of the rcwa
+    mapping <A>f</A>. Assuming its existence this is the uniquely-determined
+    finite subset <M>S_0</M> of the source of&nbsp;<A>f</A> on which <A>f</A>
     induces a permutation and which intersects nontrivially with
     any trajectory of&nbsp;<A>f</A>. The mapping&nbsp;<A>f</A> is assumed
     to be <E>contracting</E>, i.e. to have such a contraction centre.
