@@ -589,7 +589,7 @@ gap> RestrictedPerm(f,ResidueClassUnion(Integers,36,[7,8]));
 </Example>
 
 Rcwa mappings can be added and subtracted pointwisely. However, please note
-that the set of rcwa mappings of some ring does not form a ring under
+that the set of rcwa mappings of a ring does not form a ring under
 <C>+</C> and <C>*</C>. <P/>
 
 <Example>
@@ -622,7 +622,7 @@ available. <P/>
 
 Factoring group elements into elements of some <Q>nice</Q> set of generators
 is often helpful. The following can be seen as an attempt towards getting
-a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
+a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
 
 <ManSection>
   <Attr Name="FactorizationIntoGenerators" Arg="g" Label="g"/>
@@ -632,8 +632,8 @@ a satisfactory solution to this problem for the group RCWA(<M>\Z</M>):
     that such a factorization exists and the method finds it.
   </Returns>
   <Description>
-    This may return <C>fail</C>, stop with an error message or run into an
-    infinite loop. If it returns a result, this result is always correct.
+    The method may return <C>fail</C>, stop with an error message or run into
+    an infinite loop. If it returns a result, this result is always correct.
     By default, prime switches are taken as one factor. 
     If the option <A>ExpandPrimeSwitches</A> is set, they are each
     decomposed into the 6 class transpositions given in
@@ -747,7 +747,7 @@ gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
       </Display>
     </Alt>
     In the author's thesis it is shown that the sign mapping is an
-    epimorphism from RCWA(<M>\Z</M>) onto the group <M>\Z^\times</M> of
+    epimorphism from RCWA(<M>\Z</M>) to the group <M>\Z^\times</M> of
     units of&nbsp;<M>\Z</M> (see Theorem&nbsp;2.12.8).
     This means that the kernel of the sign mapping is a normal subgroup
     of RCWA(<M>\Z</M>) of index&nbsp;2.
@@ -855,8 +855,12 @@ gap> List( [ u, t, RcwaMapping([[2,0,1],[3,5,1]]) ], IsIntegral );
     order-preserving and <C>false</C> otherwise.
   </Returns>
   <Description>
-    The term <E>class-wise order-preserving</E> is defined only
-    for rcwa mappings of ordered rings, e.g.&nbsp;<M>\mathbb{Z}</M>.
+    The term <E>class-wise order-preserving</E> is defined only for rcwa
+    mappings of ordered rings, e.g.&nbsp;<M>\mathbb{Z}</M>.
+    In the notation introduced in the definition of an rcwa mapping,
+    <A>f</A> is class-wise order-preserving if and only if all coefficients
+    <M>a_{r(m)}</M> in the numerators of the affine partial mappings are
+    positive.
 <Example>
 <![CDATA[
 gap> List( [ g, u, T, t, d ], IsClassWiseOrderPreserving );
@@ -910,6 +914,9 @@ gap> LargestSourcesOfAffineMappings(r);
     The union of the residue classes <M>r(m)</M> such that
     <M>p^k||a_{r(m)}</M> if <M>k \geq 0</M>, and the union of the residue
     classes <M>r(m)</M> such that <M>p^k||c_{r(m)}</M> if <M>k \leq 0</M>.
+    In this context, <M>m</M> denotes the modulus and <M>a_{r(m)}</M>
+    and <M>c_{r(m)}</M> denote the coefficients of&nbsp;<A>f</A> as
+    introduced in the definition of an rcwa mapping.
   </Returns>
   <Description>
 <Example>
@@ -963,11 +970,12 @@ gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 <ManSection>
   <Oper Name="TransitionGraph" Arg="f, m" Label="f, m"/>
   <Returns>
-    The transition graph for modulus&nbsp;<A>m</A>
-    of the rcwa mapping&nbsp;<A>f</A>.
+    The transition graph of the rcwa mapping&nbsp;<A>f</A>
+    for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
     <Index Key="rcwa mapping" Subkey="transition graph"></Index>
+    <Alt Only="LaTeX">\noindent</Alt>
     The <E>transition graph</E> <M>\Gamma_{f,m}</M> of&nbsp;<M>f</M> for
     modulus&nbsp;<M>m</M> is defined as follows:
     <Enum>
@@ -976,14 +984,15 @@ gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
       </Item>
       <Item>
         There is an edge from <M>r_1(m)</M> to <M>r_2(m)</M> if and only if
-        there is some <M>n_1 \in r_1(m)</M> such that
-        <M>n_1^f \in r_2(m)</M>.
+        there is some <M>n \in r_1(m)</M> such that
+        <M>n^f \in r_2(m)</M>.
       </Item>
     </Enum>
     The assignment of the residue classes (mod&nbsp;<M>m</M>) to the
     vertices of the graph is given by the ordering of the residues in
     <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>.
-    The result is returned as a <Package>GRAPE</Package>-graph.
+    The result is returned in the format used by the package
+    <Package>GRAPE</Package>.
 <Example>
 <![CDATA[
 gap> TransitionGraph(a,Modulus(a));
@@ -1001,7 +1010,7 @@ rec( isGraph := true, order := 4, group := Group(()),
   <Returns>
     The partition of <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>
     corresponding to the weakly-connected components of the transition
-    graph for modulus&nbsp;<A>m</A> of the rcwa mapping&nbsp;<A>f</A>.
+    graph of the rcwa mapping&nbsp;<A>f</A> for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
     See also <Ref Meth="OrbitsModulo" Label="G, m"/> for rcwa groups.
@@ -1022,8 +1031,8 @@ gap> OrbitsModulo(Comm(a,b),9);
     weakly-connected components of its transition graph <M>\Gamma_{f,m}</M>.
   </Returns>
   <Description>
-    These mappings have pairwisely disjoint supports, hence any two
-    of them commute, and their product equals&nbsp;<A>f</A>.
+    The product of the returned mappings is&nbsp;<A>f</A>.
+    They have pairwisely disjoint supports, hence any two of them commute.
 <Example>
 <![CDATA[
 gap> sigma := RcwaMapping([[1, 0,1],[1, 1,1],[2,2,1],[3,-3,2],
@@ -1128,8 +1137,8 @@ gap> Display(TransitionMatrix(T,19)*One(GF(7)));
 <ManSection>
   <Func Name="Trajectory" Arg="f, n, val, cond" Label="f, n, val, cond"/>
   <Returns>
-    The trajectory of the ring element&nbsp;<A>n</A>
-    under the rcwa mapping&nbsp;<A>f</A>.
+    The trajectory of the rcwa mapping&nbsp;<A>f</A> starting
+    at&nbsp;<A>n</A>.
   </Returns>
   <Description>
     Depending on whether <C><A>cond</A> = "length"</C> or
@@ -1137,8 +1146,8 @@ gap> Display(TransitionMatrix(T,19)*One(GF(7)));
     length of the sequence to be computed or is a <Q>stopping set</Q> such
     that the computation stops when some iterate
     <C><A>n</A>&circum;(<A>f</A>&circum;k) in <A>val</A></C> is reached.
-    In place of the ring element&nbsp;<A>n</A>, a union of residue
-    classes is permitted, also.
+    In place of the ring element&nbsp;<A>n</A>, a finite set of ring elements
+    or a union of residue classes can be given.
 <Example>
 <![CDATA[
 gap> Trajectory(T,27,[1],"stop");
@@ -1185,9 +1194,10 @@ gap> TrajectoryModulo(T,27,2,100);
   <Func Name="CoefficientsOnTrajectory"
         Arg="f, n, val, cond, all" Label="f, n, val, cond, all"/>
   <Returns>
-    A list <C>c</C> of coefficient triples, such that for any&nbsp;<C>k</C>
-    it holds that <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
-    (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C>, or its last entry.
+    Either the list <C>c</C> of triples of coprime coefficients such that
+    for any&nbsp;<C>k</C> it holds that
+    <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
+    (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C> or the last entry of that list.
   </Returns>
   <Description>
     The meaning of the arguments <A>val</A> and <A>cond</A> is the same as
@@ -1257,22 +1267,21 @@ gap> List([1..3],k->IncreasingOn(a^k));
 <ManSection>
   <Oper Name="LikelyContractionCentre"
         Arg="f, maxn, bound" Label="f, maxn, bound"/>
-  <Returns> A list of ring elements -- see below. </Returns>
+  <Returns> A list of ring elements (see below). </Returns>
   <Description>
-    Tries to compute the <E>contraction centre</E> of an rcwa mapping -
-    assuming its existence this is the uniquely-defined finite subset
-    <M>S_0</M> of the base ring&nbsp;<M>R</M> which is mapped bijectively
-    onto itself under&nbsp;<A>f</A> and where for any <M>x</M>
-    in&nbsp;<M>R</M> there is an integer&nbsp;<M>k</M> such that the image
-    of <M>x</M> under the <M>k</M>-th power of <M>f</M> lies in <M>S_0</M>.
-    The mapping&nbsp;<A>f</A> is assumed to be <E>contracting</E>, i.e.
-    to have such a contraction centre.
-    As this problem seems to be computationally undecidable methods will be
-    probabilistic. The argument <A>maxn</A> is a bound on the starting
+    This operation tries to compute the <E>contraction centre</E> of an rcwa
+    mapping. Assuming its existence this is the uniquely-determined finite
+    subset <M>S_0</M> of the source of&nbsp;<A>f</A> on which <A>f</A>
+    induces a permutation and which intersects nontrivially with
+    any trajectory of&nbsp;<A>f</A>. The mapping&nbsp;<A>f</A> is assumed
+    to be <E>contracting</E>, i.e. to have such a contraction centre.
+    As in general contraction centres seem to be not computable, the methods
+    for this operation are probabilistic and may return wrong results.
+    The argument <A>maxn</A> is a bound on the starting
     value and <A>bound</A> is a bound on the elements of the sequences
     to be searched.
-    If the limit <A>bound</A> is exceeded, an Info message on some Info
-    level of <C>InfoRCWA</C> is given.
+    If the limit <A>bound</A> is exceeded, an Info message on Info
+    level&nbsp;3 of <C>InfoRCWA</C> is given.
 <Example>
 <![CDATA[
 gap> S0 := LikelyContractionCentre(T,100,1000);
@@ -1291,7 +1300,7 @@ See ?LikelyContractionCentre for information on how to improve this guess.
 <ManSection>
   <Oper Name="GuessedDivergence" Arg="f" Label="f"/>
   <Returns>
-    A floating point value, which should be a rough guess on how fast
+    A floating point value which should be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value
     greater than&nbsp;1) or converge (return value smaller than&nbsp;1).
   </Returns>
@@ -1315,12 +1324,12 @@ gap> List( [ T, a ], GuessedDivergence );
   </Returns>
   <Description>
     In the notation introduced in the definition of an rcwa mapping,
-    the <E>image density</E> of <M>f</M> is defined by
+    the <E>image density</E> of an rcwa mapping&nbsp;<M>f</M> is defined by
     <M>\frac{1}{m} \sum_{r(m) \in R/mR} |R/c_{r(m)}R|/|R/a_{r(m)}R|</M>.
-    Injective rcwa mappings have an image density of at most&nbsp;1, and
-    the image density of a surjective rcwa mapping is at least&nbsp;1
-    (this can be seen easily) -- thus in particular the image density of
-    a bijective mapping equals&nbsp;1.
+    The image density of an injective rcwa mapping is <M>\leq 1</M>, and
+    the image density of a surjective rcwa mapping is <M>\geq 1</M>
+    (this can be seen easily). Thus in particular the image density of
+    a bijective rcwa mapping is&nbsp;1.
 <Example>
 <![CDATA[
 gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
@@ -1362,7 +1371,7 @@ Rcwa mapping of Z with modulus 2
   </Returns>
   <Description>
     The mappings <A>l</A> and <A>r</A> must be injective, and their images
-    must form a partition of the underlying ring.
+    must form a partition of their source.
 <Example>
 <![CDATA[
 gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),
