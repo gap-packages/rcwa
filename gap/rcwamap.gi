@@ -1669,7 +1669,7 @@ InstallMethod( IsBalanced,
 InstallMethod( IsClassWiseOrderPreserving,
                "for rational-based rcwa mappings (RCWA)",
                true, [ IsRationalBasedRcwaMappingInStandardRep ], 0,
-               f -> ForAll( f!.coeffs, c -> c[ 1 ] >= 0 ) );
+               f -> ForAll( f!.coeffs, c -> c[ 1 ] > 0 ) );
 
 #############################################################################
 ##
