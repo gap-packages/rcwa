@@ -17,10 +17,10 @@ computing with residue class-wise affine mappings.
 <Section Label="sec:basicdefinitions">
 <Heading>Basic definitions</Heading>
 
-In the abstract, there was already a brief definition of residue class-wise
+The abstract already gave a brief definition of residue class-wise
 affine groups over the ring of integers. In the sequel, a slightly
-generalized and more formal version of this definition is given. In the same
-time, some useful notation is introduced. <P/>
+generalized and more formal version of this definition is given. In the
+same time, some useful notation is introduced. <P/>
 
 <Index Key="rcwa mapping" Subkey="definition"></Index> 
 Let <M>R</M> be an infinite euclidean domain which is not a field and all
@@ -43,8 +43,8 @@ the restriction of the mapping <M>f</M> to the set
            f|_r(m):  r(m) -> R,  n |->  -------------------.
                                               c_r(m)
 </Verb></Alt>
-<Index Key="rcwa mapping" Subkey="modulus"></Index>
 The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
+<Index Key="rcwa mapping" Subkey="modulus"></Index>
 It is understood that all fractions are reduced, i.e. that
 <M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that
 <M>m</M> is chosen multiplicatively minimal. <P/>
@@ -54,13 +54,13 @@ residue class <M>r(m)</M> under <M>f</M> must be a subset of <M>R</M> and
 that one cannot divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>,
 <M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements. <P/>
 
-When talking about the <E>product</E> of some rcwa mappings, it is always
-meant their composition as mappings, and by the inverse of a bijective
-rcwa mapping it is meant its inverse mapping. Products are evaluated from
-the left to the right. <P/>
+When talking about the <E>product</E> <M>f \cdot g</M> of some rcwa mappings
+<M>f</M> and&nbsp;<M>g</M> it is always meant their composition as mappings,
+where <M>f</M> is applied first. By the inverse of a bijective rcwa mapping
+it is meant its inverse mapping. <P/>
 
-The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ g \in</M> Sym(<M>R</M>)
-<M>\ | \ g</M> is residue class-wise affine <M>\}</M> } is closed under
+The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ \sigma \in</M> Sym(<M>R</M>)
+<M>\ | \ \sigma</M> is residue class-wise affine <M>\}</M> } is closed under
 multiplication and taking inverses (this can be verified easily), hence
 forms a subgroup of Sym(<M>R</M>).
 <Index Key="rcwa group" Subkey="definition"></Index>
@@ -74,56 +74,207 @@ group, or for short an <E>rcwa</E> group. <P/>
 <!-- #################################################################### -->
 
 <Section Label="sec:EnteringRcwaMappings">
-<Heading>Entering rcwa mappings</Heading>
+<Heading>Entering residue class-wise affine mappings</Heading>
 
-In order to define an rcwa mapping, it is necessary to specify the underlying
-ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
+Entering an rcwa mapping into &RCWA; in general requires specifying the
+underlying ring&nbsp;<M>R</M>, the modulus&nbsp;<M>m</M> and the coefficients
 <M>a_{r(m)}</M>, <M>b_{r(m)}</M> and&nbsp;<M>c_{r(m)}</M> for <M>r(m)</M>
-running over the residue classes (mod&nbsp;<M>m</M>). <P/>
+running over the residue classes (mod&nbsp;<M>m</M>). For the sake of
+simplicity, in this section we describe how to enter rcwa mappings of
+<M>R = \Z</M>. This is likely the most prominent and certainly the
+best-supported case. For the general constructor for rcwa mappings,
+see <Ref Meth="RcwaMapping" Label = "coeffs"/>. <P/>
 
-A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
-<M>|R/mR|</M> coefficient triples
-<C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,&nbsp;c&uscore;rm&nbsp;]</C>.
-Their ordering is determined by the ordering of the representatives of the
-residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
-<C>AllResidues(<A>R</A>, <A>m</A>)</C>. For <M>R = \mathbb{Z}</M>, this means
-that the coefficient triple for the residue class <M>0(m)</M> comes first,
-then comes the one for <M>1(m)</M>, the one for <M>2(m)</M> and so on. <P/>
+The easiest way to enter an rcwa mapping of <M>\Z</M> is by
+<C>RcwaMapping( <A>coeffs</A> )</C>. Here <A>coeffs</A> is a list
+of <M>m</M> coefficient triples <C>coeffs[</C><M>r+1</M><C>]&nbsp;=
+[</C><M>a_{r(m)}</M>, <M>b_{r(m)}</M>, <M>c_{r(m)}</M><C>]</C>,
+where <M>r</M> runs from 0 to&nbsp;<M>m-1</M>. <P/>
 
-The easiest way to enter a given rcwa mapping is by <C>RcwaMapping(
-[ <A>R</A>, <A>m</A>, ] <A>coeffs</A> )</C>. If the arguments <A>R</A> and
-<A>m</A> are omitted, they default to <C>Integers</C> resp. the length of
-the coefficient list <A>coeffs</A>. If the given coefficients would enforce
-a division by zero or images of elements of <A>R</A> outside&nbsp;<A>R</A>,
-an error message is printed and a break loop is entered. For example, the
-coefficient triple <C>[1,1,3]</C> at the first position is not allowed
-if <A>R</A> is the ring of integers. The reason for this is that not all
-integers congruent to 0&nbsp;+&nbsp;1&nbsp;=&nbsp;1&nbsp;mod&nbsp;<A>m</A>
-are divisible by&nbsp;3.
+If some coefficient <M>c_{r(m)}</M> is zero or if images of some integers
+under the mapping to be defined would not be integers, an error message is
+printed and a break loop is entered. For example, the coefficient triple
+<C>[1,1,3]</C> is not allowed at the first position.
+The reason for this is that not all integers congruent to
+0&nbsp;+&nbsp;1&nbsp;=&nbsp;1&nbsp;mod&nbsp;<M>m</M> are divisible by&nbsp;3.
 
 <Example>
 <![CDATA[
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 <rcwa mapping of Z with modulus 2>
+gap> [ IsSurjective(T), IsInjective(T) ];
+[ true, false ]
 gap> SetName(T,"T"); Display(T);
 
-Rcwa mapping of Z with modulus 2
+Surjective rcwa mapping of Z with modulus 2
 
                 n mod 2                |                 n^T
 ---------------------------------------+--------------------------------------
   0                                    | n/2
   1                                    | (3n + 1)/2
 
+gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
+<rcwa mapping of Z with modulus 4>
+gap> IsBijective(a); # Check whether this is a permutation.
+true
+gap> Display(a);
+
+Bijective rcwa mapping of Z with modulus 4
+
+                n mod 4                |                 n^a
+---------------------------------------+--------------------------------------
+  0 2                                  | 3n/2
+  1                                    | (3n + 1)/4
+  3                                    | (3n - 1)/4
+
+gap> MovedPoints(a);
+Z \ [ -1, 0, 1 ]
+gap> Cycle(a,44);
+[ 44, 66, 99, 74, 111, 83, 62, 93, 70, 105, 79, 59 ]
 ]]>
 </Example>
 
-In the sequel, a description of the general-purpose constructor for rcwa
-mappings is given. This might look a bit technical on a first glance.
-For getting started, the reader may find it easier to look first at the
-functions for constructing some kinds of particularly simple-structured
-bijective rcwa mappings of <M>\mathbb{Z}</M> described afterwards.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Alt Only="LaTeX">\noindent</Alt>
+There is computational evidence for the conjecture that any residue
+class-wise affine permutation of&nbsp;<M>\Z</M> can be factored into members
+of the following series of rcwa mappings of particularly simple structure
+(cp. <Ref Attr="FactorizationIntoGenerators" Label="g"/>):
+
+<ManSection>
+  <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
+  <Returns> The <E>class shift</E> <M>\nu_{r(m)}</M>. </Returns>
+  <Description>
+    The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping of
+    <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
+    and fixes <M>\mathbb{Z} \setminus r(m)</M> pointwisely.
+    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
+    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    Enclosing the argument list in list brackets is permitted.
+<Example>
+<![CDATA[
+gap> Display(ClassShift(5,12));    
+
+Tame bijective rcwa mapping of Z with modulus 12, of order infinity
+
+               n mod 12                |          n^ClassShift(5,12)
+---------------------------------------+--------------------------------------
+   0  1  2  3  4  6  7  8  9 10 11     | n
+   5                                   | n + 12
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
+  <Returns> The <E>class reflection</E> <M>\varsigma_{r(m)}</M>. </Returns>
+  <Description>
+    The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
+    of <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
+    and fixes <M>\mathbb{Z}&nbsp;\setminus&nbsp;r(m)</M> pointwisely.
+    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
+    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    Enclosing the argument list in list brackets is permitted.
+<Example>
+<![CDATA[
+gap> Display(ClassReflection(5,9));
+
+Bijective rcwa mapping of Z with modulus 9, of order 2
+
+                n mod 9                |        n^ClassReflection(5,9)
+---------------------------------------+--------------------------------------
+  0 1 2 3 4 6 7 8                      | n
+  5                                    | -n + 10
+
+]]>
+</Example>
+  </Description>
+</ManSection>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<ManSection>
+  <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
+                                  Label="r1, m1, r2, m2"/>
+  <Returns>
+    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
+  </Returns>
+  <Description>
+    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an
+    rcwa mapping of <M>\mathbb{Z}</M> of order&nbsp;2 which interchanges
+    the disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of
+    <M>\mathbb{\Z}</M> and fixes the complement of their union pointwisely.
+    The residue classes <C>ResidueClass(<A>r1</A>,<A>m1</A>)</C>
+    and <C>ResidueClass(<A>r2</A>,<A>m2</A>)</C> themselves
+    can be given in place of the arguments <A>r1</A>, <A>m1</A>,
+    <A>r2</A> and <A>m2</A>. Enclosing the argument list in list brackets
+    is permitted.
+<Example>
+<![CDATA[
+gap> Display(ClassTransposition(1,2,8,10));
+
+Bijective rcwa mapping of Z with modulus 10, of order 2
+
+               n mod 10                |    n^ClassTransposition(1,2,8,10)
+---------------------------------------+--------------------------------------
+   0  2  4  6                          | n
+   1  3  5  7  9                       | 5n + 3
+   8                                   | (n - 3)/5
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
+  <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
+  <Returns>
+    In the one-argument form the <E>prime switch</E>
+    <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
+    \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
+    \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
+    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>
+    (cp.&nbsp;<Ref Oper="Restriction" Label = "g, f"/>).
+  </Returns>
+  <Description>
+    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
+    is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
+    multiplier&nbsp;<M>p</M> (see <Ref Attr="Multiplier" Label="f"/>) and
+    divisor&nbsp;2 (see <Ref Attr="Divisor" Label="f"/>).
+    The prime switches <M>\sigma_p</M> play an important role in factoring
+    rcwa mappings into class shifts, class reflections and class
+    transpositions (cp. <Ref Attr="FactorizationIntoGenerators" Label="g"/>).
+<Example>
+<![CDATA[
+gap> Display(PrimeSwitch(3));
+
+Wild bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |           n^PrimeSwitch(3)
+---------------------------------------+--------------------------------------
+   0                                   | n/2
+   1  7                                | n + 1
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   4                                   | n - 3
+   5  8 11                             | n - 1
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Alt Only="LaTeX">\noindent</Alt>
+In the sequel, a description of the general-purpose constructor for rcwa
+mappings is given. This might look a bit technical on a first glance,
+but knowing all possible ways of entering an rcwa mapping is by no means
+necessary for understanding this manual or for using this package.
 
 <ManSection>
   <Meth Name="RcwaMapping" Arg="R, m, coeffs"
@@ -146,15 +297,21 @@ bijective rcwa mappings of <M>\mathbb{Z}</M> described afterwards.
         Label="cycles"/>
   <Returns> An rcwa mapping. </Returns>
   <Description>
-    Construction of an rcwa mapping. <P/>
-
     In all cases the argument&nbsp;<A>R</A> is the underlying ring,
-    <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list
-    as described above. In case one or several of these arguments
-    are omitted or replaced by other arguments, they are either derived
-    from the latter or default values are taken. The meaning of the other
-    arguments is defined in the detailed description of the particular
-    methods given in the sequel.
+    <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list.
+    A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
+    <M>|R/mR|</M> coefficient triples
+    <C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,&nbsp;c&uscore;rm&nbsp;]</C>.
+    Their ordering is determined by the ordering of the representatives of
+    the residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
+    <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \mathbb{Z}</M>
+    this means that the coefficient triple for the residue class <M>0(m)</M>
+    comes first, then comes the one for <M>1(m)</M>, the one for <M>2(m)</M>
+    and so on. In case one or several of the arguments <A>R</A>, <A>m</A>
+    and <A>coeffs</A> are omitted or replaced by other arguments, they are
+    either derived from the latter or default values are taken.
+    The meaning of the other arguments is defined in the detailed
+    description of the particular methods given in the sequel.
 
     The above methods return the rcwa mapping
     <List>
@@ -189,13 +346,13 @@ bijective rcwa mappings of <M>\mathbb{Z}</M> described afterwards.
       </Item>
       <Mark>(f)</Mark>
       <Item>
-        of <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
+        of <A>R</A> = <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
         and coefficients <A>coeffs</A> (the set of primes <M>\pi</M> 
         denoting the underlying ring is given as argument <A>pi</A>), resp.
       </Item>
       <Mark>(g)</Mark>
       <Item>
-        of GF(<A>q</A>)[<A>x</A>] with modulus
+        of <A>R</A> = GF(<A>q</A>)[<A>x</A>] with modulus
         <A>modulus</A> and coefficients <A>coeffs</A>, resp.
       </Item>
       <Mark>(h)</Mark>
@@ -257,144 +414,10 @@ gap> f := f1*f2*f3;
 <bijective rcwa mapping of Z with modulus 12>
 gap> Order(f);
 infinity
-gap> a := RcwaMapping([rc(0,2),rc(1,4),rc(3,4)],[rc(0,3),rc(1,3),rc(2,3)]);
-<rcwa mapping of Z with modulus 4>
+gap> a = RcwaMapping([rc(0,2),rc(1,4),rc(3,4)],[rc(0,3),rc(1,3),rc(2,3)]);
+true
 gap> [rc(0,2),rc(1,4),rc(3,4)]^a;
 [ 0(3), 1(3), 2(3) ]
-gap> Cycle(a,44);
-[ 44, 66, 99, 74, 111, 83, 62, 93, 70, 105, 79, 59 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Alt Only="LaTeX">\noindent</Alt>
-Some kinds of very simple-structured rcwa mappings are of particular interest:
-
-<ManSection>
-  <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
-  <Returns> The <E>class shift</E> <M>\nu_{r(m)}</M>. </Returns>
-  <Description>
-    The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping of
-    <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and fixes <M>\mathbb{Z} \setminus r(m)</M> pointwise.
-    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
-    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
-    Enclosing the argument list in list brackets is permitted.
-<Example>
-<![CDATA[
-gap> Display(ClassShift(5,12));    
-
-Tame bijective rcwa mapping of Z with modulus 12, of order infinity
-
-               n mod 12                |          n^ClassShift(5,12)
----------------------------------------+--------------------------------------
-   0  1  2  3  4  6  7  8  9 10 11     | n
-   5                                   | n + 12
-
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
-  <Returns> The <E>class reflection</E> <M>\varsigma_{r(m)}</M>. </Returns>
-  <Description>
-    The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
-    of <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and fixes <M>\mathbb{Z}&nbsp;\setminus&nbsp;r(m)</M> pointwise.
-    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
-    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
-    Enclosing the argument list in list brackets is permitted.
-<Example>
-<![CDATA[
-gap> Display(ClassReflection(5,9));
-
-Bijective rcwa mapping of Z with modulus 9, of order 2
-
-                n mod 9                |        n^ClassReflection(5,9)
----------------------------------------+--------------------------------------
-  0 1 2 3 4 6 7 8                      | n
-  5                                    | -n + 10
-
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<ManSection>
-  <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
-                                  Label="r1, m1, r2, m2"/>
-  <Returns>
-    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
-  </Returns>
-  <Description>
-    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an
-    rcwa mapping of <M>\mathbb{Z}</M> of order&nbsp;2 which interchanges
-    the disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of
-    <M>\mathbb{\Z}</M> and fixes the complement of their union pointwise.
-    The residue classes <C>ResidueClass(<A>r1</A>,<A>m1</A>)</C>
-    and <C>ResidueClass(<A>r2</A>,<A>m2</A>)</C> themselves
-    can be given in place of the arguments <A>r1</A>, <A>m1</A>,
-    <A>r2</A> and <A>m2</A>. Enclosing the argument list in list brackets
-    is permitted.
-<Example>
-<![CDATA[
-gap> Display(ClassTransposition(1,2,8,10));
-
-Bijective rcwa mapping of Z with modulus 10, of order 2
-
-               n mod 10                |    n^ClassTransposition(1,2,8,10)
----------------------------------------+--------------------------------------
-   0  2  4  6                          | n
-   1  3  5  7  9                       | 5n + 3
-   8                                   | (n - 3)/5
-
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
-  <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
-  <Returns>
-    In the one-argument form the <E>prime switch</E>
-    <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
-    \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
-    \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
-    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>
-    (cp.&nbsp;<Ref Oper="Restriction" Label = "g, f"/>).
-  </Returns>
-  <Description>
-    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
-    is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
-    multiplier&nbsp;<M>p</M> (see <Ref Attr="Multiplier" Label="f"/>) and
-    divisor&nbsp;2 (see <Ref Attr="Divisor" Label="f"/>).
-    The prime switches <M>\sigma_p</M> play an important role in factoring
-    non-balanced rcwa mappings into class shifts, class reflections and
-    class transpositions (cp. <Ref Attr="FactorizationIntoGenerators"
-    Label="g"/>).
-<Example>
-<![CDATA[
-gap> Display(PrimeSwitch(3));
-
-Wild bijective rcwa mapping of Z with modulus 12
-
-               n mod 12                |           n^PrimeSwitch(3)
----------------------------------------+--------------------------------------
-   0                                   | n/2
-   1  7                                | n + 1
-   2  6 10                             | (3n + 4)/2
-   3  9                                | n
-   4                                   | n - 3
-   5  8 11                             | n - 1
-
 ]]>
 </Example>
   </Description>
