@@ -67,6 +67,15 @@ forms a subgroup of Sym(<M>R</M>).
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or for short an <E>rcwa</E> group. <P/>
 
+There are two entirely different classes of rcwa mappings and -groups.
+One of these classes comprises what could be called the <Q>trivial cases</Q>.
+The members of the other have typically a quite complicate structure and are
+in often very difficult to investigate. Accordingly, the former are
+called <E>tame</E> and the latter are called <E>wild</E>.
+By definition, an rcwa mapping is <E>tame</E> if the set of moduli of its
+powers is bounded, and an rcwa group is <E>tame</E> if the set of moduli
+of its elements is bounded.
+
 </Section>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
@@ -301,7 +310,7 @@ necessary for understanding this manual or for using this package.
     <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list.
     A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
     <M>|R/mR|</M> coefficient triples
-    <C>[&nbsp;a&uscore;rm,&nbsp;b&uscore;rm,&nbsp;c&uscore;rm&nbsp;]</C>.
+    <C>[</C><M>a_{r(m)}</M>, <M>b_{r(m)}</M>, <M>c_{r(m)}</M><C>]</C>.
     Their ordering is determined by the ordering of the representatives of
     the residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
     <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \mathbb{Z}</M>
@@ -425,8 +434,9 @@ gap> [rc(0,2),rc(1,4),rc(3,4)]^a;
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
+<Alt Only="LaTeX">\noindent</Alt>
 In most cases an rcwa mapping is not determined uniquely by the output of
-the <C>ViewObj</C> method -- in these cases the output is enclosed in
+the <C>ViewObj</C> method. In these cases the output is enclosed in
 brackets. There are methods installed for <C>Display</C>, <C>Print</C>
 and <C>String</C>.  The <C>Print</C>ed representation of an rcwa mapping
 is &GAP; - readable if and only if the <C>Print</C>ed representation of
@@ -436,7 +446,7 @@ the elements of the underlying ring is so. There is also a method for
 <ManSection>
   <Meth Name="LaTeXObj" Arg="f" Label="f"/>
   <Returns>
-    A &LaTeX; representation of the integral rcwa mapping&nbsp;<A>f</A>.
+    A &LaTeX; representation of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
     The output makes use of the &LaTeX; macro package
@@ -471,7 +481,7 @@ is set, the given rcwa mapping is displayed in an <Package>xdvi</Package>
 window. For this purpose, the string returned by the <C>LaTeXObj</C> - method
 described above is inserted into a &LaTeX; template file. This file is
 &LaTeX;'ed, and the result is shown with <Package>xdvi</Package>. This works
-only on a UNIX system, and requires suitable installations of &LaTeX; and
+only on UNIX systems, and requires suitable installations of &LaTeX; and
 <Package>xdvi</Package>.
 
 </Section>
@@ -485,16 +495,15 @@ Checking whether two rcwa mappings are equal is cheap.
 Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
 Bijective rcwa mappings can also be inverted, thus there is a method for
 <C>Inverse</C>. The latter method is usually accessed by raising a mapping
-to some power with negative exponent. Multiplying, inverting and
-exponentiating tame rcwa mappings is cheap. Computing powers of wild mappings
+to some power with negative exponent. Multiplying, inverting and computing
+powers of tame rcwa mappings is cheap. Computing powers of wild mappings
 is usually expensive -- runtime and memory requirements normally grow
 approximately exponentially with the exponent. How expensive multiplying
 a couple of wild mappings is, varies very much. In any case, the amount of
 memory required for storing an rcwa mapping is proportional to its modulus.
 Whether a given mapping is tame or wild can be determined by the operation
 <C>IsTame</C>. There are methods for <C>Order</C>, which can not only
-compute a finite order, but are also suitable for detecting infinite order.
-<P/>
+compute a finite order, but can also detect infinite order. <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
