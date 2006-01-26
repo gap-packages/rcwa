@@ -61,10 +61,11 @@ the author feels that this is a gap which is worth to be filled.
 <Section Label="sec:purpose">
 <Heading>Purpose of this package</Heading>
 
-So far, only relatively basic facts about the structure of residue
-class-wise affine groups are known. This package is intended to serve as
-a tool for obtaining a better understanding of their rich and interesting
-group theoretical and combinatorial structure. <P/>
+So far, compared to classes of groups like for example matrix groups,
+finite permutation groups or polycyclic groups, only relatively basic facts
+about residue class-wise affine groups are known. This package is intended
+to serve as a tool for obtaining a better understanding of their rich and
+interesting group theoretical and combinatorial structure. <P/>
 
 This manual is pure software documentation, and as such it does not contain
 any theorems or proofs. In a few places, where this is absolutely necessary
@@ -102,7 +103,7 @@ beginning you will perhaps notice extremely long runtimes for seemingly
 trivial things. But with some experience you will learn to estimate in
 advance how long something will take and to see why raising some
 harmlessly-looking mapping to the 20th power would take terabytes of memory,
-while one can easily find out non-trivial things about some group which
+while one can easily find out nontrivial things about some group which
 looks much more complicate. Quite often it is possible to find an answer for
 a given question by using an interactive trial-and-error approach. <P/>
 
