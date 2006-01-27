@@ -8,14 +8,14 @@
 
 <Chapter Label="ch:Examples"><Heading>Examples</Heading>
 
-This chapter lists some <Q>nice</Q> examples of rcwa mappings and -groups.
-The rcwa mappings mentioned in this chapter can be found in the file
+This chapter discusses a number of <Q>nice</Q> examples of rcwa mappings
+and -groups in detail. All of them show different aspects of the package,
+and the order in which they appear is entirely arbitrary. In particular,
+they are not ordered by degree of interestingness or difficulty.
+The rcwa mappings defined in this chapter can be found in the file
 <F>pkg/rcwa/examples/examples.g</F>, so there is no need to extract them
 from the manual files. This file can be read into the current &GAP; session
 by issueing <C>RCWAReadExamples( );</C>.
-All of these examples show different aspects of the package, and the order
-in which they appear in this chapter is entirely arbitrary. In particular,
-they are not ordered by degree of interestingness or difficulty.
 
 <!-- #################################################################### -->
 
