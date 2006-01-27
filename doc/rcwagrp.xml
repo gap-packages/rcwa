@@ -19,8 +19,7 @@ computing with residue class-wise affine groups.
 
 Residue class-wise affine groups can be constructed using either
 <C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>,
-as usual (see the reference manual). Note that currently except of the
-groups RCWA(<M>R</M>) only finitely generated rcwa groups are supported.
+as usual (see the &GAP; reference manual).
 
 <Example>
 <![CDATA[
@@ -39,18 +38,18 @@ infinity
 ]]>
 </Example>
 
-For rcwa groups, there are methods available for the operations
-<C>Display</C> and <C>Print</C>. <P/>
+There are methods for the operations <C>Display</C> and <C>Print</C>
+which are applicable to rcwa groups. <P/>
 
 All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
-constructed as described above. It is handled as a special case:
+constructed in the way described above. It is handled as a special case:
 
 <ManSection>
   <Func Name="RCWA" Arg="R" Label="R"/>
   <Returns>
-    The group RCWA(<A>R</A>) of all bijective rcwa mappings
-    of the ring&nbsp;<A>R</A>.
+    The group RCWA(<A>R</A>) of all residue class-wise affine
+    permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
@@ -174,19 +173,22 @@ Rcwa mapping of Z with modulus 2
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
-Another possible way to get an rcwa group is by taking the image of an
-rcwa representation, or by <Q>translating</Q> a permutation group:
+<Alt Only="LaTeX">\noindent</Alt>
+Another way of constructing an rcwa group is taking the image of an
+rcwa representation:
 
 <ManSection>
   <Attr Name="IsomorphismRcwaGroup" Arg="G" Label="G"/>
   <Func Name="RcwaGroupByPermGroup" Arg="G" Label="G"/>
   <Returns>
-    A monomorphism from the finite group <A>G</A> to&nbsp;RCWA(<M>\Z</M>),
-    resp. an rcwa group over <M>\mathbb{Z}</M>, which is isomorphic to the
-    (finite) permutation group&nbsp;<A>G</A>, and acts on the range
-    <C>[1..LargestMovedPoint(</C><A>G</A><C>)]</C> as <A>G</A> does.
+    A monomorphism from the group <A>G</A> to&nbsp;RCWA(<M>\Z</M>),
+    resp. an rcwa group over&nbsp;<M>\mathbb{Z}</M> which is isomorphic
+    to the finite-degree permutation group&nbsp;<A>G</A> and acts on the
+    range <C>[1..LargestMovedPoint(</C><A>G</A><C>)]</C>
+    as&nbsp;<A>G</A>&nbsp;does.
   </Returns>
   <Description>
+    Currently, <C>IsomorphismRcwaGroup</C> works only for finite groups.
 <Example>
 <![CDATA[
 gap> G := GL(2,5);;
@@ -276,12 +278,13 @@ true
 </ManSection>
 
 <ManSection>
-  <Oper Name="PrimeSet" Arg="G" Label="G"/>
+  <Attr Name="PrimeSet" Arg="G" Label="G"/>
   <Returns> The prime set of the rcwa group&nbsp;<A>G</A>. </Returns>
   <Description>
     The <E>prime set</E> of an rcwa group is the union of the prime
-    sets of its elements. See also&nbsp;<Ref Oper="PrimeSet" Label="f"/>
-    for rcwa mappings.
+    sets of its elements. <P/>
+
+    See also&nbsp;<Ref Attr="PrimeSet" Label="f"/> for rcwa mappings.
 <Example>
 <![CDATA[
 gap> [ PrimeSet(G), PrimeSet(H) ];
@@ -291,9 +294,10 @@ gap> [ PrimeSet(G), PrimeSet(H) ];
   </Description>
 </ManSection>
 
-An rcwa group is called integral resp. class-wise order-preserving
-if all of its elements are so. There are corresponding methods available
-for <C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>.
+An rcwa group is called <E>integral</E> resp. <E>class-wise
+order-preserving</E> if all of its elements are so.
+There are corresponding methods available for <C>IsIntegral</C>
+and <C>IsClassWiseOrderPreserving</C>.
 
 </Section>
 
@@ -315,11 +319,12 @@ for <C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>.
     rcwa group&nbsp;<A>G</A> and <C>false</C> if not.
   </Returns>
   <Description>
-    Tries to figure out whether <A>g</A> is an element of <A>G</A> or not.
-    This will be successful if <A>G</A> is tame and class-wise
-    order-preserving. For wild groups only a number of easy cases are
-    covered. On <C>InfoLevel(InfoRCWA) = 3</C> the method will give
-    information about reasons why <A>g</A> is an element of <A>G</A> or not.
+    This method tries to decide whether <A>g</A> is an element
+    of&nbsp;<A>G</A> or not. It can always decide this question if <A>G</A>
+    is tame and class-wise order-preserving. For wild groups only a number
+    of easy cases are covered. On Info level&nbsp;3 of <C>InfoRCWA</C> the
+    method gives information on reasons why <A>g</A> is an element
+    of&nbsp;<A>G</A> or&nbsp;not.
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
@@ -346,8 +351,8 @@ gap> Size(G);
 <ManSection>
   <Meth Name="IsomorphismPermGroup" Arg="G" Label="G"/>
   <Returns>
-    An isomorphism from the finite rcwa group&nbsp;<A>G</A> to some
-    permutation group.
+    An isomorphism from the finite rcwa group&nbsp;<A>G</A> to
+    a finite-degree permutation group.
   </Returns>
   <Description>
 <Example>
@@ -368,11 +373,10 @@ gap> phi := IsomorphismPermGroup(H);
 <ManSection>
   <Attr Name="IsomorphismMatrixGroup" Arg="G" Label="G"/>
   <Returns>
-    An isomorphism from the rcwa group&nbsp;<A>G</A> to some matrix group.
+    An isomorphism from the rcwa group&nbsp;<A>G</A> to a matrix group.
   </Returns>
   <Description>
-    Currently, there is only a method installed which works for
-    tame rcwa groups.
+    Currently, this works only for tame rcwa groups.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
@@ -439,9 +443,9 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
   </Returns>
   <Description>
     This method can be used for factoring elements of rcwa groups
-    over <M>\mathbb{Z}</M> into generators, and for finding non-trivial
-    relations among the generators if the respective group is not free
-    and the method returns a factorization which does not happen to be
+    over <M>\mathbb{Z}</M> into generators. It can also be used for finding
+    nontrivial relations among the generators if the respective group is not
+    free and the method returns a factorization which does not happen to be
     equal to one which is known a priori.
     The homomorphism <A>phi</A> must map the generators of the free
     group to the generators of the rcwa group one-by-one.
@@ -498,8 +502,8 @@ IdentityMapping( Integers )
     computing just one, i.e. often several preimages are found
     simultaneously. This operation is called by
     <Ref Meth ="PreImagesRepresentative" Label="phi, g"/>,
-    which simply chooses the shortest representative -- for a slightly
-    more concise description see there.
+    which simply chooses the shortest representative.
+    For a slightly more concise description see there.
 <Example>
 <![CDATA[
 gap> G := Group(g,h);
@@ -554,11 +558,11 @@ IdentityMapping( Integers )
 <Heading>The action of an rcwa group on the underlying ring R</Heading>
 
 The support (set of moved points) of an rcwa group can be determined by
-<C>MovedPoints</C>. <P/>
+<C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 
-In some cases -- in particular in the case that the group in question is
-tame -- testing for transitivity on the underlying ring is feasible.
-Furthermore it is often possible to determine group elements which map a
+Sometimes testing for transitivity on the underlying ring is feasible.
+This is e.g. the case for tame groups over&nbsp;<M>\Z</M>.
+Further it is often possible to determine group elements which map a
 given tuple of elements of the underlying ring to a given other tuple,
 if such elements exist.
 
@@ -569,8 +573,7 @@ if such elements exist.
     on&nbsp;<M>\Z</M> and <C>false</C> otherwise.
   </Returns>
   <Description>
-    Depending on the particular group this might fail or run into an
-    infinite loop, but for tame groups things should work.
+    If <A>G</A> is wild, this may fail or run into an infinite loop.
 <Log>
 <![CDATA[
 gap> G := Group(g,h);;
