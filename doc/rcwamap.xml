@@ -806,12 +806,12 @@ gap> List( [ g, u, T, d, r ], Divisor );
 </ManSection>
 
 <ManSection>
-  <Oper Name="PrimeSet" Arg="f" Label="f"/>
+  <Attr Name="PrimeSet" Arg="f" Label="f"/>
   <Returns> The prime set of the rcwa mapping&nbsp;<A>f</A>. </Returns>
   <Description>
     The <E>prime set</E> of an rcwa mapping is the set of prime divisors
     of the product of its modulus, its multiplier and its divisor.
-    See also&nbsp;<Ref Oper="PrimeSet" Label="G"/> for rcwa groups.
+    See also&nbsp;<Ref Attr="PrimeSet" Label="G"/> for rcwa groups.
 <Example>
 <![CDATA[
 gap> PrimeSet(T);
