@@ -10,17 +10,15 @@
 
 The &RCWA; package provides methods for investigating
 <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine groups
-(<E>rcwa</E> groups for short) by means of computation. <P/>
-
+by means of computation.
 Residue class-wise affine groups are permutation groups acting on the
 integers, whose elements are bijective residue class-wise affine mappings.
 Typically they are infinite. <P/>
 
 A mapping <M>f: \Z \rightarrow \Z</M> is called <E>residue class-wise
-affine</E> (or an <E>rcwa</E> mapping for short) if there is a positive
-integer <M>m</M> such that the restrictions of <M>f</M> to the residue
-classes (mod&nbsp;<M>m</M>) are all affine.
-This means that for any residue class <M>r(m) \in \Z/m\Z</M> there
+affine</E> provided that there is a positive integer <M>m</M> such that the
+restrictions of <M>f</M> to the residue classes (mod&nbsp;<M>m</M>) are all
+affine. This means that for any residue class <M>r(m) \in \Z/m\Z</M> there
 are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \Z</M> such that
 the restriction of the mapping&nbsp;<M>f</M> to the set
 <M>r(m) = \{{r + km | k \in \Z\}}</M> is given&nbsp;by
@@ -54,7 +52,7 @@ comes from the famous <M>3n+1</M> Conjecture, which is an assertion about
 a surjective, but not injective residue class-wise affine mapping. <P/>
 
 Residue class-wise affine groups are introduced in the author's thesis
-<E>Restklassenweise affine Gruppen</E>. This thesis is available at
+<E>Restklassenweise affine Gruppen</E>. This thesis is published at
 <URL>http://deposit.ddb.de/cgi-bin/dokserv?idn=977164071</URL>
 (Archivserver Deutsche Bibliothek) and at
 <URL>http://elib.uni-stuttgart.de/opus/volltexte/2005/2448/</URL>

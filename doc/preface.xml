@@ -89,19 +89,18 @@ with this package (see <F>thesis/thesis.pdf</F> resp.
 This package being a research tool which can be applied in various ways to
 various different problems, it is simply not possible to say what can be
 found out with it about which mappings or groups. The best way to get an idea
-about this is likely to experiment yourself with the examples discussed in
-this manual and included in the file
-<File>pkg/rcwa/examples/examples.g</File>.
-Another useful source of examples is the <Ref Meth="Random"
-Label="RCWA( Integers )"/> - function. Provided that you have &LaTeX; and
-<Package>xdvi</Package> installed, you can nicely display examples of rcwa
-mappings by repeatedly issueing <C>Display(Random(RCWA(Integers)):xdvi);</C>.
-<P/>
+about this is likely to experiment with the examples discussed in this
+manual and included in the file <File>pkg/rcwa/examples/examples.g</File>.
+Another source of examples is the <Ref Meth="Random"
+Label="RCWA( Integers )"/> - function. If you have &LaTeX; and
+<Package>xdvi</Package> installed, you can nicely display examples of
+residue class-wise affine mappings by repeatedly issueing
+<C>Display(Random(RCWA(Integers)):xdvi);</C>. <P/>
 
-Often the package does not provide an out-of-the-box solution. At the
-beginning you will perhaps notice extremely long runtimes for seemingly
-trivial things. But with some experience you will learn to estimate in
-advance how long something will take and to see why raising some
+Often the package does not provide an out-of-the-box solution for a given
+problem. At the beginning you will perhaps notice extremely long runtimes
+for seemingly trivial things. But with some experience you will learn to
+estimate in advance how long something will take and to see why raising some
 harmlessly-looking mapping to the 20th power would take terabytes of memory,
 while one can easily find out nontrivial things about some group which
 looks much more complicate. Quite often it is possible to find an answer for
