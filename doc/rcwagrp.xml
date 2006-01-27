@@ -628,9 +628,9 @@ gap> RCWAInfo(0);
     either returns <C>fail</C> or runs into an infinite loop.
     The problem of whether <A>src</A> and <A>dest</A> lie in the same
     orbit under the action of <A>G</A> in general seems to be hard.
-    The given method is based on <Ref Oper="RepresentativeActionPreImage"
+    The method is based on <Ref Oper="RepresentativeActionPreImage"
     Label="G, src, dest, act, F"/>, and it basically just computes an image
-    under an homomorphism. As this involves multiplications of rcwa mappings,
+    under an epimorphism. As this involves multiplications of rcwa mappings,
     this can be quite expensive if the group <A>G</A> is wild, the preimage
     is a rather long word and coefficient explosion happens to occur.
 <Example>
@@ -683,25 +683,25 @@ gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
   <Oper Name="RepresentativeActionPreImage"
         Arg="G, src, dest, act, F" Label="G, src, dest, act, F"/>
   <Returns>
-    The result of <C>RepresentativeAction( <A>G</A>, <A>src</A>,
-    <A>dest</A>, <A>act</A> )</C> as a word in the generators.
+    The result of
+    <C>RepresentativeAction(<A>G</A>,<A>src</A>,<A>dest</A>,<A>act</A>)</C>
+    as word in generators.
   </Returns>
   <Description>
-    The argument <A>F</A> is a free group to be used to express the
-    resulting word. Note that the dependency is just the other way round
-    than suggested above (<C>RepresentativeAction</C> calls
-    <C>RepresentativeActionPreImage</C>) and that the evaluation of the
-    word sometimes takes much more time than its determination (the latter
-    however depends very much on the particular case and is hard to
-    predict). This causes <C>RepresentativeActionPreImage</C> sometimes to
+    The argument <A>F</A> is a free group whose generators are used as
+    letters of the returned word. Note that the dependency is just in the
+    opposite direction than suggested above (<C>RepresentativeAction</C>
+    calls <C>RepresentativeActionPreImage</C>) and that the evaluation of the
+    word sometimes takes much more time than its determination.
+    This causes <C>RepresentativeActionPreImage</C> sometimes to
     be much faster than <C>RepresentativeAction</C>.
-    The employed algorithm is not inefficient, as the last two of the
-    examples below suggest -- it is based on separate progressive
-    computations of the orbits of <A>src</A> and <A>dest</A> until they
-    intersect non-trivially. It avoids multiplying rcwa mappings.
+    The used algorithm is not inefficient, as the last two of the
+    examples below suggest. It is based on computing balls of increasing
+    radius around <A>src</A> and <A>dest</A> until they
+    intersect nontrivially. It avoids multiplying rcwa mappings.
     Of course the other warnings given in the description of
     <Ref Meth="RepresentativeAction" Label="G, src, dest, act"/>
-    apply to this operation, too.
+    apply to this operation as well.
 <Example>
 <![CDATA[
 gap> F := FreeGroup("a","b");;
@@ -743,9 +743,9 @@ a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
     underlying ring <M>R</M> into the same number of disjoint
     unions of residue classes.
-    The method recognizes the option <C>IsTame</C> -- if this option
+    The method recognizes the option <C>IsTame</C>. If this option
     is set, the returned mapping is tame provided that there is a tame
-    mapping satisfying the required condition.
+    mapping which satisfies the given condition.
     If the option <C>IsTame</C> is not set and the partitions <A>P1</A>
     and <A>P2</A> both consist entirely of single residue classes,
     then the returned mapping is affine on any residue class
@@ -797,7 +797,7 @@ gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
   <Oper Name="ShortOrbits" Arg="G, S, maxlng" Label="G, S, maxlng"/>
   <Returns>
     A list of all finite orbits of the rcwa group&nbsp;<A>G</A> of maximal
-    length&nbsp;<A>maxlng</A>, which intersect non-trivially with the
+    length&nbsp;<A>maxlng</A>, which intersect nontrivially with the
     set&nbsp;<A>S</A>.
   </Returns>
   <Description>
@@ -836,7 +836,7 @@ gap> ShortOrbits(Group(u),[-30..30],100);
 <ManSection>
   <Meth Name ="OrbitsModulo" Arg="G, m" Label="G, m"/>
   <Returns>
-    A partition of <C>[0..<A>m</A>-1]</C>, such that <M>i</M> and
+    A partition of <C>[0..<A>m</A>-1]</C> such that <M>i</M> and
     <M>j</M> lie in the same subset if and only if there is an element
     <M>g</M> of <A>G</A> which moves an element from the residue class
     <M>i(m)</M> to the residue class <M>j(m)</M>.
@@ -982,16 +982,15 @@ Bijective rcwa mapping of Z with modulus 24, of order 12
     of length at most <A>maxlng</A>.
   </Returns>
   <Description>
-    In this context, <Q>single</Q> finite cycles are finite cycles not
-    belonging to an infinite series, i.e. there is no constant <M>m</M>
-    such that adding any multiple of <M>m</M> to the elements of the
-    cycle always yields a new cycle. <P/>
-
+    In this context, <Q>single</Q> finite cycles are finite cycles which do
+    not belong to an infinite series. This means that there is no
+    constant&nbsp;<M>m</M> such that adding any multiple of&nbsp;<M>m</M>
+    to the elements of the cycle always yields another cycle.
     Since &GAP;-permutations cannot move negative integers, rationals
-    or even polynomials, the cycles are returned as lists. For example,
+    or polynomials, the cycles are returned as lists. For example,
     the list <C>[-3,1,2,-2]</C> denotes the cycle <C>(-3,1,2,-2)</C>.
-    Mappings having different sets of finite cycle lengths are obviously
-    not conjugate in RCWA(<M>R</M>).
+    Permutations with different sets of finite cycle lengths are
+    obviously not conjugate.
 <Example>
 <![CDATA[
 gap> ShortCycles(a,5);
@@ -1050,9 +1049,9 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
     <A>g</A> by the injective rcwa mapping&nbsp;<A>f</A> is the
     uniquely determined rcwa mapping which satisfies
     <M>f \cdot g_f = g \cdot f</M> and fixes the complement of
-    the image of <A>f</A> pointwise.
+    the image of <A>f</A> pointwisely.
     If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
-    is just the conjugate of <A>g</A> by <A>f</A>.
+    is just the conjugate of <A>g</A> under&nbsp;<A>f</A>.
     See also <Ref Oper="Restriction" Label="G, f"/> for rcwa groups.
 <Example>
 <![CDATA[
@@ -1071,11 +1070,12 @@ IdentityMapping( Integers )
     the injective rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    By definition, the restriction of the rcwa group <A>G</A>
+    By definition, the restriction of the rcwa group&nbsp;<A>G</A>
     by the injective rcwa mapping&nbsp;<A>f</A> consists of the
-    restrictions of its elements by&nbsp;<A>f</A>.
-    The restriction of <A>G</A> by <A>f</A> acts on the image of
-    <A>f</A> and fixes its complement pointwise.
+    restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
+    The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
+    image of&nbsp;<A>f</A> and fixes its complement pointwisely.
+    See also <Ref Oper="Restriction" Label="g, f"/> for rcwa mappings.
 <Example>
 <![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
@@ -1096,12 +1096,12 @@ gap> MovedPoints(G);
   </Returns>
   <Description>
     By definition, induction is the right inverse of restriction.
-    This means that we always have
-    <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C>,
+    This means that it is
+    <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C>
     resp.
     <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
-    The mapping <A>g</A> resp. the group <A>G</A> must not move points
-    outside the image of&nbsp;<A>f</A>.
+    The mapping&nbsp;<A>g</A> resp. the group&nbsp;<A>G</A> must not move
+    points outside the image of&nbsp;<A>f</A>.
 <Example>
 <![CDATA[
 gap> Induction(G,RcwaMapping([[5,3,1]])) = Group(a,b);
@@ -1111,8 +1111,8 @@ true
   </Description>
 </ManSection>
 
-Restriction monomorphisms permit forming direct products of any
-rcwa groups (regardless of whether they are tame or not):
+Restriction monomorphisms permit forming direct products of
+rcwa groups, regardless of whether they are tame or not:
 
 <ManSection>
   <Oper Name ="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
@@ -1150,7 +1150,7 @@ There is a couple of attributes which a priori make only sense for tame
 rcwa groups. In the sequel, these attributes are described in detail. <P/>
 
 With their help, various structural information about a given tame rcwa
-group can be obtained. For example, there are methods for <C>IsSolvable</C>
+group can be obtained. For example there are methods for <C>IsSolvable</C>
 and <C>IsPerfect</C> available for tame rcwa groups (the latter works in
 some cases by other means also for wild groups). Often it is also feasible
 to compute the derived subgroup of a tame rcwa group. 
@@ -1162,12 +1162,12 @@ to compute the derived subgroup of a tame rcwa group.
     A <E>respected partition</E> of <A>G</A> resp. <A>sigma</A>.
   </Returns>
   <Description>
-    This is a partition of the base ring&nbsp;<M>R</M> into a finite number
-    of residue classes which the group&nbsp;<A>G</A> resp. the permutation
-    <A>sigma</A> acts on, and on those elements all elements
-    of&nbsp;<A>G</A> resp. the group generated by <A>sigma</A> are affine.
-    <P/>
-
+    A <E>respected partition</E> of&nbsp;<A>G</A> resp.&nbsp;<A>sigma</A>
+    is a partition of the underlying ring&nbsp;<M>R</M> into a finite
+    number of residue classes on which&nbsp;<A>G</A> resp. the cyclic
+    group generated by&nbsp;<A>sigma</A> acts in a natural way as
+    a permutation group, and on whose elements all elements
+    of&nbsp;<A>G</A> resp. all powers of&nbsp;<A>sigma</A> are affine.
     In the author's thesis it is shown that such a partition exists if and
     only if <A>G</A> resp. <A>sigma</A> is tame (see Theorem&nbsp;2.5.8).
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
@@ -1215,9 +1215,9 @@ gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
     RCWA(<M>\mathbb{Z}</M>).
   </Returns>
   <Description>
-    In the author's thesis it is shown that such a representative exists
-    (see Theorem&nbsp;2.5.14). Since there is usually not only one such
-    mapping, methods for this operation will just choose one of them.
+    In the author's thesis it is shown that such a conjugate exists
+    (see Theorem&nbsp;2.5.14). There are usually infinitely many such
+    conjugates, and methods for this operation may choose any of them.
 <Example>
 <![CDATA[
 gap> Order(IntegralConjugate(g));
@@ -1243,7 +1243,8 @@ true
     <A>G</A>&circum;<A>x</A> resp. <A>f</A>&circum;<A>x</A> is integral. 
   </Returns>
   <Description>
-    This is of course not defined uniquely, but it holds that
+    While there are usually infinitely many such rcwa mappings,
+    it is taken care that the returned ones always satisfy the relations
     <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
     IntegralConjugate(<A>G</A>)</C> resp.
     <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
