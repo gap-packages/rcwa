@@ -346,7 +346,7 @@ InstallMethod( Random,
     if Result = 1 then Result := One(RCWA_Z); fi;
     GenFactors := Concatenation(ClassTranspositions,ClassShifts,
                                 ClassReflections);
-    if not tame then SetFactorizationIntoGenerators(Result,GenFactors); fi;
+    if not tame then SetFactorizationIntoCSCRCT(Result,GenFactors); fi;
     if tame then
       deg := Random([6,6,6,6,6,6,6,6,12,12,12,18]);
       g := Random(SymmetricGroup(deg));

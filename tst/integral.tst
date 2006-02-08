@@ -1099,14 +1099,14 @@ gap> DecreasingOn(a^2);
 1(8) U 7(8)
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
-gap> FactorizationIntoGenerators(ab);
+gap> FactorizationIntoCSCRCT(ab);
 [ ClassShift(7,9), ClassShift(1,9)^-1, ClassTransposition(1,9,4,9),
   ClassTransposition(1,9,7,9), ClassTransposition(6,18,15,18),
   ClassTransposition(5,9,15,18), ClassTransposition(4,9,15,18),
   ClassTransposition(5,9,6,18), ClassTransposition(4,9,6,18) ]
 gap> Product(last) = ab;
 true
-gap> FactorizationIntoGenerators(Comm(g,h));
+gap> Factorization(Comm(g,h));
 [ ClassShift(3,6)^2, ClassShift(2,3)^-2, ClassTransposition(0,6,3,6) ]
 gap> Product(last) = Comm(g,h);
 true
@@ -1116,11 +1116,11 @@ gap> FactorizationIntoGenerators(nu*nu^a);
   ClassTransposition(0,6,4,6), ClassTransposition(0,6,2,6),
   ClassTransposition(2,3,3,6), ClassTransposition(1,3,3,6),
   ClassTransposition(2,3,0,6), ClassTransposition(1,3,0,6) ]
-gap> List([t,nu,tau,nu^2,nu^-1,t*nu],FactorizationIntoGenerators);
+gap> List([t,nu,tau,nu^2,nu^-1,t*nu],Factorization);
 [ [ ClassReflection(0,1) ], [ ClassShift(0,1) ],
   [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,1)^2 ],
   [ ClassShift(0,1)^-1 ], [ ClassReflection(0,1), ClassShift(0,1) ] ]
-gap> FactorizationIntoGenerators(g^ClassReflection(0,4));
+gap> Factorization(g^ClassReflection(0,4));
 [ ClassShift(8,12), ClassShift(3,6), ClassTransposition(1,6,5,6),
   ClassTransposition(1,6,3,6), ClassTransposition(0,12,10,12),
   ClassTransposition(0,12,6,12), ClassTransposition(0,12,8,12),
@@ -1128,7 +1128,7 @@ gap> FactorizationIntoGenerators(g^ClassReflection(0,4));
   ClassTransposition(10,12,4,24), ClassTransposition(8,12,4,24),
   ClassTransposition(1,6,4,12), ClassTransposition(1,6,2,12),
   ClassReflection(4,6), ClassReflection(2,24) ]
-gap> FactorizationIntoGenerators((ClassShift(1,3)*ClassReflection(0,2))^a);
+gap> FactorizationIntoCSCRCT((ClassShift(1,3)*ClassReflection(0,2))^a);
 [ ClassShift(15,18), ClassTransposition(1,9,5,9),
   ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18),
   ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18),

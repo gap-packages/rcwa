@@ -66,7 +66,7 @@ afterwards):
 <Example>
 <![CDATA[
 gap> RCWAInfo(2); # Switch Info output on.
-gap> Reversed(FactorizationIntoGenerators(Collatz^-1:ExpandPrimeSwitches));
+gap> Reversed(Factorization(Collatz^-1:ExpandPrimeSwitches));
 #I  Modulus(<g>) = 4, Multiplier(<g>) = 3, Divisor(<g>) = 4
 #I  Dividing by PrimeSwitch(3) from the right.
 #I  Modulus(<g>) = 16, Multiplier(<g>) = 3, Divisor(<g>) = 4

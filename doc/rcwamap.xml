@@ -149,7 +149,7 @@ gap> Cycle(a,44);
 There is computational evidence for the conjecture that any residue
 class-wise affine permutation of&nbsp;<M>\Z</M> can be factored into members
 of the following series of rcwa mappings of particularly simple structure
-(cp. <Ref Attr="FactorizationIntoGenerators" Label="g"/>):
+(cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
@@ -256,7 +256,7 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
     divisor&nbsp;2 (see <Ref Attr="Divisor" Label="f"/>).
     The prime switches <M>\sigma_p</M> play an important role in factoring
     rcwa mappings into class shifts, class reflections and class
-    transpositions (cp. <Ref Attr="FactorizationIntoGenerators" Label="g"/>).
+    transpositions (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>).
 <Example>
 <![CDATA[
 gap> Display(PrimeSwitch(3));
@@ -453,7 +453,7 @@ the elements of the underlying ring is so. There is also a method for
     <Package>amsmath</Package>.
     If the option <A>Factorization</A> is set, a factorization of <A>f</A>
     into class shifts, class reflections, class transpositions and prime
-    switches is printed (cp. <Ref Attr="FactorizationIntoGenerators"
+    switches is printed (cp. <Ref Attr="FactorizationIntoCSCRCT"
     Label="g"/>).
     For rcwa mappings with modulus larger than&nbsp;1, an indentation by
     <A>Indentation</A> characters can be specified by setting this option
@@ -625,7 +625,8 @@ is often helpful. The following can be seen as an attempt towards getting
 a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
 
 <ManSection>
-  <Attr Name="FactorizationIntoGenerators" Arg="g" Label="g"/>
+  <Attr Name="FactorizationIntoCSCRCT" Arg="g" Label="g"/>
+  <Meth Name="Factorization" Arg="g" Label="g"/>
   <Returns>
     A factorization of the bijective rcwa mapping&nbsp;<A>g</A> into
     class shifts, class reflections and class transpositions, provided
@@ -656,7 +657,7 @@ a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
     the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
 <Example>
 <![CDATA[
-gap> FactorizationIntoGenerators(Comm(a,b));
+gap> Factorization(Comm(a,b));
 [ ClassShift(7,9), ClassShift(1,9)^-1, ClassTransposition(1,9,4,9), 
   ClassTransposition(1,9,7,9), ClassTransposition(6,18,15,18), 
   ClassTransposition(5,9,15,18), ClassTransposition(4,9,15,18), 
@@ -715,10 +716,8 @@ in&nbsp;1932, and whose cycle structure is unknown so far.
 gap> nu := ClassShift(0,1);;
 gap> List( [ nu, a, b, u ], Determinant );
 [ 1, 0, 1, 0 ]
-gap> Determinant(u^2*b^-3);
--3
-gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
-5
+gap> [ Determinant(u^2*b^-3), Determinant(nu^7*a^2*nu^-1*b^-1*a^-3) ];
+[ -3, 5 ]
 ]]>
 </Example>
   </Description>

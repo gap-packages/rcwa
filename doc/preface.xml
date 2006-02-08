@@ -111,7 +111,7 @@ has found a non-trivial normal subgroup of the group of all residue
 class-wise affine permutations of the integers. Interactive sessions with
 this package have also lead to the development of a method for factoring
 residue class-wise affine permutations into involutions which have a
-particularly simple structure (see <Ref Attr="FactorizationIntoGenerators"
+particularly simple structure (see <Ref Attr="FactorizationIntoCSCRCT"
 Label="g"/>).
 
 </Section>

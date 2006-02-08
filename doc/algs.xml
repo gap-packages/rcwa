@@ -122,12 +122,12 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>FactorizationIntoGenerators(<A>f</A>)</C>
+    <C>FactorizationIntoCSCRCT(<A>g</A>)</C>
   </Mark>
   <Item>
-    This uses a rather sophisticated method which will perhaps
+    This uses a rather sophisticated method which will likely
     some time be published elsewhere. At the moment, termination is not
-    guaranteed. But if it terminates, the result is certain.
+    guaranteed. But in case of termination the result is certain.
     The strategy is roughly first to make the mapping class-wise
     order-preserving and balanced, and then to remove all prime factors
     from multiplier and divisor one after the other in decreasing order

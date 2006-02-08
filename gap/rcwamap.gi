@@ -725,7 +725,7 @@ InstallGlobalFunction( ClassShift,
     SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
     SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
                                                String(m),")}"));
-    SetFactorizationIntoGenerators(result,[result]);
+    SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
 
@@ -755,7 +755,7 @@ InstallGlobalFunction( ClassReflection,
                                  String(r),",",String(m),")"));
     SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
                                                      String(m),")}"));
-    SetFactorizationIntoGenerators(result,[result]);
+    SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
 
@@ -789,7 +789,7 @@ InstallGlobalFunction( ClassTransposition,
     SetLaTeXName(result,
                  Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
                                          String(r2),"(",String(m2),")}"));
-    SetFactorizationIntoGenerators(result,[result]);
+    SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
 
@@ -819,7 +819,7 @@ InstallGlobalFunction( PrimeSwitch,
     if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
     SetName(result,Concatenation("PrimeSwitch(",String(p),kstr,")"));
     SetLaTeXName(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
-    SetFactorizationIntoGenerators(result,facts);
+    SetFactorizationIntoCSCRCT(result,facts);
     return result;
   end );
 
@@ -3722,10 +3722,10 @@ InstallMethod( CompatibleConjugate,
 
 #############################################################################
 ##
-#M  FactorizationIntoGenerators( <g> ) . . . . . . for integral rcwa mappings
+#M  FactorizationIntoCSCRCT( <g> ) . .  generic method for int. rcwa mappings
 ##
-InstallMethod( FactorizationIntoGenerators,
-               "for integral rcwa mappings (RCWA)", true,
+InstallMethod( FactorizationIntoCSCRCT,
+               "generic method for integral rcwa mappings (RCWA)", true,
                [ IsIntegralRcwaMapping ], 0,
 
   function ( g )
@@ -4046,6 +4046,15 @@ InstallMethod( FactorizationIntoGenerators,
     return facts;
 
   end );
+
+#############################################################################
+##
+#M  Factorization( <g> ) . . into class shifts / reflections / transpositions
+##
+InstallOtherMethod( Factorization,
+                    "into class shifts / reflections / transpositions (RCWA)"
+                    , true, [ IsIntegralRcwaMapping ], 0,
+                    FactorizationIntoCSCRCT );
 
 #############################################################################
 ##

@@ -256,19 +256,13 @@ DeclareGlobalFunction( "PrimeSwitch" );
 
 #############################################################################
 ##
-#A  LaTeXName( obj ) . . . . . . . . . . . . .  LaTeX string for object <obj>
+#A  FactorizationIntoCSCRCT( <g> )
 ##
-DeclareAttribute( "LaTeXName", IsObject );
-
-#############################################################################
-##
-#A  FactorizationIntoGenerators( <g> ) . . .  factorization into genenerators
-##
-##  A factorization of the group element <g> into generators.
-##  In particular a factorization of an element of RCWA(Z) into class shifts,
+##  A factorization of an element of RCWA(Z) into class shifts,
 ##  class reflections and class transpositions.
 ##
-DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
+DeclareAttribute( "FactorizationIntoCSCRCT", IsMultiplicativeElement );
+DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 
 #############################################################################
 ##
@@ -278,7 +272,7 @@ DeclareAttribute( "FactorizationIntoGenerators", IsMultiplicativeElement );
 ##  complement of <S>.
 ##
 DeclareGlobalFunction( "ClassUnionShift" );
- 
+
 #############################################################################
 ##
 #V  ZeroIntegralRcwaMapping . . . . . . . . . . .  zero integral rcwa mapping
@@ -688,6 +682,12 @@ DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
 ##  thus induction is the one-sided inverse operation of restriction.
 ##
 DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
+#A  LaTeXName( obj ) . . . . . . . . . . . . .  LaTeX string for object <obj>
+##
+DeclareAttribute( "LaTeXName", IsObject );
 
 #############################################################################
 ##
