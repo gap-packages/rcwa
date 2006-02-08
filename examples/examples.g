@@ -624,6 +624,9 @@ L := f*l*finv; SetName(L,"L");
 R := f*r*finv; SetName(R,"R");
 D := f*d*finv; SetName(D,"D");
 
+# The function `LRWord' is a bijection from the positive integers to the
+# free monoid F if and only if the 3n+1 Conjecture holds.
+
 F := FreeMonoid("L","R");
 
 LRWord := function ( n )
@@ -640,6 +643,10 @@ LRWord := function ( n )
   od;
   return Product(w);
 end;
+
+# The functions `TreeSortingPerm' and `TreeSortingPermInverse' describe
+# mutually inverse permutations of the positive integers if and only if
+# the 3n+1 Conjecture holds.
 
 TreeSortingPerm := function ( n )
 
