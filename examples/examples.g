@@ -773,7 +773,7 @@ ct2   := function(r1,m1,r2,m2)
 ##  are not necessarily disjoint (of course there must not be a proper subset
 ##  relation between them!):
 ##
-cs := function(r1,m1,r2,m2)
+ClassSwitch := function( r1, m1, r2, m2 )
 
   local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
 
