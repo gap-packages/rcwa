@@ -62,36 +62,16 @@ gap> A := ResidueClass(Integers,3,2);
 gap> Image(T,A);
 1(3) U 8(9)
 gap> PreImage(T,A);
-1(2) U 4(6)
+Z \ 0(6) U 2(6)
 gap> B := ResidueClass(Integers,3,1);;
 gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
 1(3) U [ 2, 5, 14 ] \ [ 1, 4, 10 ]
 gap> Display(Image(T,M));
- 
-The residue class 2 ( mod 3 ) of Z
- 
-and the elements
- 
- 1 7
- 
-without the elements
- 
- 2 5
-
+2(3) U [ 1, 7 ] \ [ 2, 5 ]
 gap> PreImage(T,M);
 2(6) U [ 1, 3, 4, 9, 10, 28 ] \ [ 2, 8, 20 ]
 gap> Display(last);
- 
-The residue class 2 ( mod 6 ) of Z
- 
-and the elements
- 
-  1  3  4  9 10 28
- 
-without the elements
- 
-  2  8 20
-
+2(6) U [ 1, 3, 4, 9, 10, 28 ] \ [ 2, 8, 20 ]
 gap> t := RcwaMapping([[-1,0,1]]);
 Rcwa mapping of Z: n -> -n
 gap> Order(t);
@@ -144,14 +124,6 @@ gap> PreImage(k,[0,1,4,8,14]);
 [ 0, 2, 4 ]
 gap> PreImage(k,[0,1,3,4,8,14]);
 1(2) U [ 0, 2, 4 ]
-gap> Display(last);
- 
-The residue class 1 ( mod 2 ) of Z
- 
-and the elements
- 
- 0 2 4
-
 gap> ZeroOne := RcwaMapping([[0,0,1],[0,1,1]]);;
 gap> PreImagesElm(ZeroOne,6);
 [  ]
@@ -360,7 +332,7 @@ Trivial rcwa group over Z
 gap> orb := Orbit(G,1);
 [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
 gap> MovedPoints(G);
-1(3) U 2(3) U 3(9) U 6(9)
+Z \ 0(9)
 gap> OrbitsModulo(G,9);
 [ [ 0 ], [ 1, 2, 3, 4, 5, 6, 7, 8 ] ]
 gap> H := Action(G,orb);;
@@ -500,16 +472,6 @@ gap> Difference(Integers,Image(nb));
 gap> pc := RcwaMapping([[3,2,2],[2,-2,3],[3,2,2],[1,0,1],[3,2,2],[0,2,1]]);;
 gap> im := Image(pc);
 1(3) U 3(6) U 0(12) U 8(12) U [ 2 ]
-gap> Display(im);
- 
-The union of the residue classes r ( mod 12 ) of Z for r =
- 
-  0  1  3  4  7  8  9 10
- 
-and the element
- 
- 2
-
 gap> PreImage(pc,Difference(im,[4]));
 Z \ [ 2, 7 ]
 gap> CompositionMapping(a,b) = b*a;
@@ -1048,7 +1010,7 @@ gap> last^T;
 gap> last^T;
 [1/3] U [1/9] U [2/9] U [8/9] U [13/27] U [17/27] U [20/27] U [80/81]
 gap> AsOrdinaryUnionOfResidueClasses(last);
-1(3) U 2(9) U 8(9)
+Z \ 0(3) U 5(9)
 gap> PreImagesSet(T,cl);
 [2/4] U [3/4]
 gap> AsOrdinaryUnionOfResidueClasses(last);
@@ -1090,7 +1052,7 @@ gap> Product(List(P3,cl->Rho(cl^ClassTransposition(0,2,1,6))));
 gap> DecreasingOn(T);
 0(2)
 gap> DecreasingOn(T^2);
-0(2) U 1(4)
+Z \ 3(4)
 gap> DecreasingOn(T^3);
 0(4) U 2(8) U 5(8)
 gap> DecreasingOn(a);
@@ -1160,11 +1122,11 @@ gap> P2 := [Union(rc(2,5),rc(4,5)),Union(rc(0,5),rc(1,5),rc(3,5))];;
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
 <rcwa mapping of Z with modulus 6>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
-[ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
+[ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 <tame rcwa mapping of Z with modulus 120>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
-[ 2(5) U 4(5), 0(5) U 1(5) U 3(5) ]
+[ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> Modulus(RepresentativeAction(RCWA(Integers),
 >            ClassShift(0,2) * ClassTransposition(1,6,3,18)
 >          * ClassShift(5,12)^-1 * ClassReflection(11,12),
