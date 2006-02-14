@@ -564,7 +564,7 @@ many residue classes under an rcwa mapping can be computed using
 gap> [ PreImageElm(d,37/17), PreImagesElm(T,8), PreImagesElm(Zero(T),0) ];
 [ 111/17, [ 5, 16 ], Integers ]
 gap> PreImage(T,ResidueClass(Integers,3,2));
-1(2) U 4(6)
+Z \ 0(6) U 2(6)
 gap> M := [1];; l := [1];;
 gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
 [ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, 277, 
@@ -923,7 +923,7 @@ gap> LargestSourcesOfAffineMappings(r);
 gap> [ Multpk(T,2,-1), Multpk(T,3,1) ];
 [ Integers, 1(2) ]
 gap> [ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];
-[ [  ], 0(5) U 2(5), 1(5) U 3(5) U 4(5), Integers ]
+[ [  ], 0(5) U 2(5), Z \ 0(5) U 2(5), Integers ]
 gap> [ Multpk(kappa,2,1), Multpk(kappa,2,-1), Multpk(kappa,3,1),
 >      Multpk(kappa,3,-1) ];
 [ 4(12) U 11(12), 2(4), 2(4), 8(12) ]
@@ -1158,7 +1158,7 @@ gap> Trajectory(T,27,[1],"stop");
 gap> Trajectory(T,ResidueClass(Integers,3,0),Integers,"stop");
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
   <union of 20 residue classes (mod 27)>, <union of 73 residue classes (mod 
-    81)>, <union of 79 residue classes (mod 81)>, Integers ]
+    81)>, Z \ 10(81) U 37(81), Integers ]
 gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1],"stop"));
 307
 ]]>
@@ -1246,9 +1246,9 @@ gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
 gap> List([1..3],k->IncreasingOn(T^k));
 [ 1(2), 3(4), 3(4) U 1(8) U 6(8) ]
 gap> List([1..3],k->DecreasingOn(T^k));
-[ 0(2), 0(2) U 1(4), 0(4) U 2(8) U 5(8) ]
+[ 0(2), Z \ 3(4), 0(4) U 2(8) U 5(8) ]
 gap> List([1..3],k->IncreasingOn(a^k));
-[ 0(2), 0(2) U 3(8) U 5(8), 0(4) U 2(16) U 5(16) U 11(16) U 14(16) ]
+[ 0(2), Z \ 1(8) U 7(8), 0(4) U 2(16) U 5(16) U 11(16) U 14(16) ]
 ]]>
 </Example>
   </Description>
