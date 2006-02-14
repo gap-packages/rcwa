@@ -4051,7 +4051,15 @@ InstallMethod( FactorizationIntoCSCRCT,
 ##
 #M  Factorization( <g> ) . . into class shifts / reflections / transpositions
 ##
-if IsOperation(Factorization) then
+if not IsOperation( Factorization ) then
+  GenericFactorization := Factorization;
+  MakeReadWriteGlobal( "Factorization" ); Unbind( Factorization );
+  DeclareOperation( "Factorization",
+                  [ IsGroup, IsMultiplicativeElementWithInverse ] );
+  InstallMethod( Factorization,"generic method", true,
+               [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
+               GenericFactorization );
+fi;
 
 InstallMethod( Factorization,
                "into class shifts / reflections / transpositions (RCWA)",
@@ -4062,8 +4070,6 @@ InstallOtherMethod( Factorization,
                     "into class shifts / reflections / transpositions (RCWA)"
                     , true, [ IsIntegralRcwaMapping ], 0,
                     FactorizationIntoCSCRCT );
-
-fi;
 
 #############################################################################
 ##
