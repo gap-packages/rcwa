@@ -4051,10 +4051,19 @@ InstallMethod( FactorizationIntoCSCRCT,
 ##
 #M  Factorization( <g> ) . . into class shifts / reflections / transpositions
 ##
+if IsOperation(Factorization) then
+
+InstallMethod( Factorization,
+               "into class shifts / reflections / transpositions (RCWA)",
+               true, [ IsNaturalRCWA_Z, IsIntegralRcwaMapping ], 0,
+               function(RCWA_Z,g) return FactorizationIntoCSCRCT(g); end );
+
 InstallOtherMethod( Factorization,
                     "into class shifts / reflections / transpositions (RCWA)"
                     , true, [ IsIntegralRcwaMapping ], 0,
                     FactorizationIntoCSCRCT );
+
+fi;
 
 #############################################################################
 ##
