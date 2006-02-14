@@ -126,8 +126,8 @@ They are listed in alphabetical order.
   </Mark>
   <Item>
     This uses a rather sophisticated method which will likely
-    some time be published elsewhere. At the moment, termination is not
-    guaranteed. But in case of termination the result is certain.
+    some time be published elsewhere. At the moment termination is not
+    guaranteed, but in case of termination the result is certain.
     The strategy is roughly first to make the mapping class-wise
     order-preserving and balanced, and then to remove all prime factors
     from multiplier and divisor one after the other in decreasing order
@@ -221,7 +221,7 @@ They are listed in alphabetical order.
     If successful, return <C>true</C>.  If <A>g</A> is in <A>G</A>, this
     terminates after a finite number of steps. Both runtime and memory
     requirements are exponential in the word length. If <A>g</A> is not in
-    <A>G</A>, it runs into an infinite loop.
+    <A>G</A>, the method runs into an infinite loop.
   </Item>
 
   <Mark>
