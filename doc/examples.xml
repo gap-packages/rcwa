@@ -43,9 +43,9 @@ Rcwa mapping of Z with modulus 3
 ]]>
 </Example>
 
-This permutation has a few finite cycles, but its cycle structure
-has not been determined yet. In particular it is not known whether
-the cycle containing 8 is finite or infinite.
+The cycle structure of this permutation has not been completely determined
+yet. In particular it is not known whether the cycle containing&nbsp;8 is
+finite or infinite. There are a few finite cycles:
 
 <Example>
 <![CDATA[
@@ -393,8 +393,8 @@ gap> RCWAInfo(0); # Switch Info output off again.
 </Example>
 
 See the end of Section <Ref Label="sec:WildButFiniteCycles"/> for a much
-smaller factorization task performed <Q>manually</Q> for purposes of
-illustration.
+smaller factorization task which is performed <Q>manually</Q> for purposes
+of illustration.
  
 </Section>
 
