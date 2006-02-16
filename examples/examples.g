@@ -834,6 +834,11 @@ ClassSwitch := function( r1, m1, r2, m2 )
   return Restriction(tau,rest);
 end;
 
+# An auxiliary function which returns the list of all products of
+# <k> elements from a list <gens>.
+
+Products := function(gens,k) return List(Tuples(gens,k),Product); end;
+
 #############################################################################
 ##
 #E  examples.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
