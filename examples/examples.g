@@ -699,8 +699,8 @@ D3 := CommonRightInverse(L3,R3); SetName(D3,"D3");
 # A pair (L,R) which spans a tree which definitely has not all positive
 # integers as vertices.
 
-L4 := RcwaMapping(List([[0,2],[1, 4],[3, 8],[7,8]],ResidueClass),
-                  List([[4,8],[8,16],[0,16],[2,4]],ResidueClass));
+L4 := RcwaMapping(List([[0, 2],[1,4],[3, 8],[7,8]],ResidueClass),
+                  List([[0,16],[4,8],[8,16],[2,4]],ResidueClass));
 SetName(L4,"L4");
 R4 := RcwaMapping(List([[0,2],[1, 4],[ 3, 8],[7,8]],ResidueClass),
                   List([[1,8],[5,16],[13,16],[3,4]],ResidueClass));
