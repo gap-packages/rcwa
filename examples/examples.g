@@ -8,11 +8,6 @@
 ##  as well as a number of other interesting or illustrative examples.
 ##
 
-# First of all a few useful abbreviations.
-
-rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
-md := f -> [Multiplier(f),Divisor(f)];
-
 #############################################################################
 ##
 ##  Some basic `building blocks'.
@@ -89,9 +84,12 @@ Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
 ##  This has been removed from the manual, since PrimeSwitch'es can now
 ##  be generated easily by just a function call.
 ##
-f1 := RcwaMapping([[rc(1,6),rc(0, 8)],[rc(5,6),rc(4, 8)]]); SetName(f1,"f1");
-f2 := RcwaMapping([[rc(1,6),rc(0, 4)],[rc(5,6),rc(2, 4)]]); SetName(f2,"f2");
-f3 := RcwaMapping([[rc(2,6),rc(1,12)],[rc(4,6),rc(7,12)]]); SetName(f3,"f3");
+f1 := RcwaMapping([List([[1,6],[0, 8]],ResidueClass),
+                   List([[5,6],[4, 8]],ResidueClass)]); SetName(f1,"f1");
+f2 := RcwaMapping([List([[1,6],[0, 4]],ResidueClass),
+                   List([[2,4],[5, 6]],ResidueClass)]); SetName(f2,"f2");
+f3 := RcwaMapping([List([[2,6],[1,12]],ResidueClass),
+                   List([[4,6],[7,12]],ResidueClass)]); SetName(f3,"f3");
 
 f12 := f1*f2; SetName(f12,"f12");
 f23 := f2*f3; SetName(f23,"f23"); # Only finite cycles (?)
@@ -344,7 +342,7 @@ SetName(g,"g"); SetName(h,"h");
 # A factorization of `a' (see above) into two balanced mappings,
 # where one of them is an involution.
 
-a_2 := RcwaMapping([[rc(1,2),rc(36,72)]]); a_1 := a/a_2;
+a_2 := RcwaMapping([List([[1,2],[36,72]],ResidueClass)]); a_1 := a/a_2;
 SetName(a_1,"a_1"); SetName(a_2,"a_2");
 
 #############################################################################
@@ -691,20 +689,22 @@ R2 := RcwaMapping([[3,1,1],[3,5,2],[3,1,1],[3,-1,4]]); SetName(R2,"R2");
 D2 := CommonRightInverse(L2,R2); SetName(D2,"D2");
 
 L3 := RcwaMapping([[3,0,1]]); SetName(L3,"L3");
-R3 := RcwaMapping([rc( 0, 2),rc( 3, 4),rc( 1,20),
-                   rc( 5,20),rc( 9,20),rc(13,20),rc(17,20)],
-                  [rc( 1, 6),rc( 2, 3),rc( 4,12),
-                   rc(10,48),rc(22,48),rc(34,48),rc(46,48)]);
+R3 := RcwaMapping(List([[0, 2],[ 3, 4],[ 1,20],[5,20],
+                        [9,20],[13,20],[17,20]],ResidueClass),
+                  List([[ 1, 6],[ 2, 3],[ 4,12],[10,48],
+                        [22,48],[34,48],[46,48]],ResidueClass));
 SetName(R3,"R3");
 D3 := CommonRightInverse(L3,R3); SetName(D3,"D3");
 
 # A pair (L,R) which spans a tree which definitely has not all positive
 # integers as vertices.
 
-L4 := RcwaMapping([rc(0,2),rc(1, 4),rc( 3, 8),rc(7,8)],
-                  [rc(4,8),rc(8,16),rc( 0,16),rc(2,4)]); SetName(L4,"L4");
-R4 := RcwaMapping([rc(0,2),rc(1, 4),rc( 3, 8),rc(7,8)],
-                  [rc(1,8),rc(5,16),rc(13,16),rc(3,4)]); SetName(R4,"R4");
+L4 := RcwaMapping(List([[0,2],[1, 4],[3, 8],[7,8]],ResidueClass),
+                  List([[4,8],[8,16],[0,16],[2,4]],ResidueClass));
+SetName(L4,"L4");
+R4 := RcwaMapping(List([[0,2],[1, 4],[ 3, 8],[7,8]],ResidueClass),
+                  List([[1,8],[5,16],[13,16],[3,4]],ResidueClass));
+SetName(R4,"R4");
 D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
 
 #############################################################################
@@ -713,8 +713,8 @@ D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
 ##
 ##  The following factorization has been determined interactively, before
 ##  the general factorization routine `FactorizationIntoGenerators' has been
-##  implemented. In fact the determination of this factorization gave the
-##  necessary insights to develop a general method.
+##  implemented. The determination of this factorization gave the necessary
+##  insights to develop a general method.
 ##
 INTEGRAL_PART_COEFFS :=
 [ -3, -26, -47, -40, 47, -1, 0, 17, 0, -4, 0, 28, 19, 12, 0, 2, -7, 20, 0,
@@ -732,6 +732,8 @@ INTEGRAL_PART_COEFFS :=
   0, 37, -3, -26, 0, -40, -9, -1, 0, 17, 0, -4, 0, 28, 38, 12, 0, 2, 3, 20,
   0, -3, 0, -214, 0, -24, 19, 4, 0, 13, -7, -1, 0, 17, 0, 2, 0, -52, -3, 12,
   0, 2, -9, -26, 0, -30, 0, -57, 0, -35 ];
+
+rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 
 FactorsOfa := [
   RcwaMapping(List(INTEGRAL_PART_COEFFS,b_rm->[1,b_rm,1])), nu^-4,
@@ -807,7 +809,7 @@ ClassSwitch := function( r1, m1, r2, m2 )
 
   local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
 
-  cl := [rc(r1,m1),rc(r2,m2)];
+  cl  := List([[r1,m1],[r2,m2]],ResidueClass);
   int := Intersection(cl);
   if int = [] then return ClassTransposition(r1,m1,r2,m2); fi;
   diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
@@ -817,8 +819,8 @@ ClassSwitch := function( r1, m1, r2, m2 )
     if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
     for i in [1..AbsInt(lng[1]-lng[2])] do
       clsp := diff[pos][1];
-      sp   := [rc(Residues(clsp)[1],              2*Modulus(clsp)),
-               rc(Residues(clsp)[1]+Modulus(clsp),2*Modulus(clsp))];
+      sp := [ResidueClass(Residues(clsp)[1],              2*Modulus(clsp)),
+             ResidueClass(Residues(clsp)[1]+Modulus(clsp),2*Modulus(clsp))];
       diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
     od;
   fi;
