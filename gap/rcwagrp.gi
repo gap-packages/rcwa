@@ -1487,9 +1487,11 @@ InstallOtherMethod( RepresentativeActionOp,
     if l > Length(P1) then P1 := RefinedPartition(P1,l); fi;
     if l > Length(P2) then P2 := RefinedPartition(P2,l); fi;
     Append(P1,Flat(List(Flat(facts_f),
-                        fact->AsUnionOfFewClasses(MovedPoints(fact)))));
+                        fact->Filtered(LargestSourcesOfAffineMappings(fact),
+                                  cl->Intersection(Support(fact),cl)<>[]))));
     Append(P2,Flat(List(Flat(facts_g),
-                        fact->AsUnionOfFewClasses(MovedPoints(fact)))));
+                        fact->Filtered(LargestSourcesOfAffineMappings(fact),
+                                  cl->Intersection(Support(fact),cl)<>[]))));
     sigma := RcwaMapping(P1,P2);
     for i in [1..Length(facts_f[1])] do
       if   Number([PositionSublist(Name(facts_f[1][i]),"-1"),
