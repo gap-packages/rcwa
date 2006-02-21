@@ -654,7 +654,7 @@ end;
 
 TreeSortingPerm := MappingByFunction( PositiveIntegers, PositiveIntegers,
 
-function ( n ) # The mapping ...
+function ( n ) # The conjectured permutation ...
 
   local  l, imL, imR, m, i;
 
@@ -669,7 +669,7 @@ function ( n ) # The mapping ...
   return m;
 end,
 
-function ( n ) # ... and its conjectured inverse.
+function ( n ) # ... and its inverse.
 
   local  l, m, i;
 
