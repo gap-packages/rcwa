@@ -649,11 +649,12 @@ LRWord := function ( n )
   return Product(w);
 end;
 
-# The functions `TreeSortingPerm' and `TreeSortingPermInverse' describe
-# mutually inverse permutations of the positive integers if and only if
-# the 3n+1 Conjecture holds.
+# The mapping `TreeSortingPerm' is a permutation of the positive integers if
+# and only if the 3n+1 Conjecture holds.
 
-TreeSortingPerm := function ( n )
+TreeSortingPerm := MappingByFunction( PositiveIntegers, PositiveIntegers,
+
+function ( n ) # The mapping ...
 
   local  l, imL, imR, m, i;
 
@@ -666,9 +667,9 @@ TreeSortingPerm := function ( n )
     if l[i] in imL then m := 2*m; else m := 2*m+1; fi;
   od;
   return m;
-end;
+end,
 
-TreeSortingPermInverse := function ( n )
+function ( n ) # ... and its conjectured inverse.
 
   local  l, m, i;
 
@@ -680,7 +681,7 @@ TreeSortingPermInverse := function ( n )
     if l[i] = 0 then m := m^L; else m := m^R; fi;
   od;
   return m;
-end;
+end );
 
 # Other pairs of mappings like (L,R).
 
