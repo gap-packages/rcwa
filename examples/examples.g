@@ -835,6 +835,31 @@ ClassSwitch := function( r1, m1, r2, m2 )
   return Restriction(tau,rest);
 end;
 
+#############################################################################
+##
+##  Given two class transpositions <ct1> and <ct2> which are both not equal
+##  to n -> n + (-1)^n, the function `ConjugatingCTs' returns a list <cts>
+##  of six class transpositions such that the conjugate of <ct1> under
+##  Product(<cts>) equals <ct2>. No argument checks are performed.
+##
+ConjugatingCTs := function ( ct1, ct2 )
+
+  local  cls, D, supd;
+
+  cls := Concatenation(List([ct1,ct2],ct->
+                            Filtered(LargestSourcesOfAffineMappings(ct),
+                                     cl->IsSubset(Support(ct),cl))));
+  supd := 1 - Sum(List(cls{[3,4]},Density));
+  D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[1,2]})))[1];
+  D := SplittedClass(D,Int(Density(D)/supd)+1)[1];
+  Append(cls,SplittedClass(D,2));
+  D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[3..6]})));
+  if Length(D) = 1 then D := SplittedClass(D[1],2); fi;
+  Append(cls,D{[1,2]});
+  return List([cls{[1,5]},cls{[2,6]},cls{[5,7]},
+               cls{[6,8]},cls{[3,7]},cls{[4,8]}],ClassTransposition);
+end;
+
 # An auxiliary function which returns the list of all products of
 # <k> elements from a list <gens>.
 
