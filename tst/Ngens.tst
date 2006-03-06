@@ -38,6 +38,9 @@ true
 gap> ClassTransposition(1,3,2,3)^gamma3 * ClassTransposition(1,3,2,3)^gamma4
 >  = tau;
 true
+gap> Comm(ClassShift(1,2),ClassShift(1,3))^Comm(ClassShift(0,2),ClassShift(0,3))
+>  * Comm(ClassShift(0,2),ClassShift(2,3)) = ClassTransposition(1,3,2,3);
+true
 gap> STOP_TEST( "Ngens.tst", 1000000 );
 
 #############################################################################
