@@ -128,6 +128,12 @@ DeclareCategory( "IsModularRcwaMapping", IsRingElement );
 
 #############################################################################
 ##
+#A  UnderlyingField( <f> ) . . . . . . coefficient field of the source of <f>
+##
+DeclareAttribute( "UnderlyingField", IsModularRcwaMapping );
+
+#############################################################################
+##
 #F  RcwaMappingsFamily( <R> ) . . . family of rcwa mappings over the ring <R>
 ##
 DeclareGlobalFunction( "RcwaMappingsFamily" );
