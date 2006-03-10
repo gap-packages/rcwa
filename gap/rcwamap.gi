@@ -3332,6 +3332,29 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
+#A  FixedPointsOfAffinePartialMappings( <f> ) . . for rat.-based rcwa mapping
+##
+InstallMethod( FixedPointsOfAffinePartialMappings,
+               "for rational-based rcwa mappings (RCWA)", true,
+               [ IsRationalBasedRcwaMapping ], 0,
+
+  function ( f )
+
+    local  m, c, fixedpoints, r;
+
+    m := Modulus(f); c := Coefficients(f);
+    fixedpoints := [];
+    for r in [1..m] do
+      if   c[r][1] = c[r][3]
+      then if c[r][2] = 0 then fixedpoints[r] := Rationals;
+                          else fixedpoints[r] := []; fi;
+      else fixedpoints[r] := [ c[r][2]/(c[r][3]-c[r][1]) ]; fi;
+    od;
+    return fixedpoints;
+  end );
+
+#############################################################################
+##
 #M  LargestSourcesOfAffineMappings( <f> ) . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( LargestSourcesOfAffineMappings,

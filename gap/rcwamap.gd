@@ -570,6 +570,15 @@ DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
+#A  FixedPointsOfAffinePartialMappings( <f> )
+##
+##  The fixed points of the affine partial mappings of the rcwa mapping <f>
+##  in the quotient field of the source.
+##
+DeclareAttribute( "FixedPointsOfAffinePartialMappings", IsRcwaMapping );
+
+#############################################################################
+##
 #A  LargestSourcesOfAffineMappings( <f> ) .  partition on which <f> is affine
 ##
 ##  The coarsest partition of the base ring <R> on whose elements the rcwa
