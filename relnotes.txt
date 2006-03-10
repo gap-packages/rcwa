@@ -125,7 +125,7 @@ Changes between version 1.4.0 and version 1.4.1
 Changes between version 1.4.1 and version 1.4.2
 
  - Functions `ConjugatingCTs' and `TreeSortingPerm' have been added to
-   the examples file (rcwa/examples/examples.g).
+   the examples file (rcwa/examples/examples.g):
  
    `ConjugatingCTs' is a function which, given two class transpositions
                     ct1 and ct2, returns a 6-tuple of class transpositions
