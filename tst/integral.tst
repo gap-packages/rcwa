@@ -1150,6 +1150,16 @@ gap> Length(Ball(G,[1,2,3],4,OnTuples));
 133
 gap> Length(Ball(G,[1,2,3],4,OnSets));
 130
+gap> FixedPointsOfAffinePartialMappings(ClassShift(0,2));
+[ [  ], Integers ]
+gap> List([1..3],k->FixedPointsOfAffinePartialMappings(T^k));
+[ [ [ 0 ], [ -1 ] ], [ [ 0 ], [ 1 ], [ 2 ], [ -1 ] ], 
+  [ [ 0 ], [ -7 ], [ 2/5 ], [ -5 ], [ 4/5 ], [ 1/5 ], [ -10 ], [ -1 ] ] ]
+gap> FixedPointsOfAffinePartialMappings(a^-3);
+[ [ 0 ], [ 1 ], [ -17/5 ], [ 6/11 ], [ 13/37 ], [ -2/5 ], [ 3/5 ], [ -4/11 ], 
+  [ -14/5 ], [ -9/11 ], [ 19/37 ], [ 1/5 ], [ -21/5 ], [ -5/37 ], [ 5/37 ], 
+  [ 21/5 ], [ -1/5 ], [ -19/37 ], [ 9/11 ], [ 14/5 ], [ 4/11 ], [ -3/5 ], 
+  [ 2/5 ], [ -13/37 ], [ -6/11 ], [ 17/5 ], [ -1 ] ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
