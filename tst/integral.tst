@@ -1151,7 +1151,7 @@ gap> Length(Ball(G,[1,2,3],4,OnTuples));
 gap> Length(Ball(G,[1,2,3],4,OnSets));
 130
 gap> FixedPointsOfAffinePartialMappings(ClassShift(0,2));
-[ [  ], Integers ]
+[ [  ], Rationals ]
 gap> List([1..3],k->FixedPointsOfAffinePartialMappings(T^k));
 [ [ [ 0 ], [ -1 ] ], [ [ 0 ], [ 1 ], [ 2 ], [ -1 ] ], 
   [ [ 0 ], [ -7 ], [ 2/5 ], [ -5 ], [ 4/5 ], [ 1/5 ], [ -10 ], [ -1 ] ] ]
