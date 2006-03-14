@@ -234,6 +234,17 @@ DeclareOperation( "RcwaMappingNC", [ IsObject ] );
 
 #############################################################################
 ##
+#F  LocalizedRcwaMapping( <f>, <p> )
+#F  SemilocalizedRcwaMapping( <f>, <pi> )
+##
+##  These functions return the rcwa mapping of $\Z_{(p)}$ resp. $\Z_{(\pi)}$
+##  with the same coefficients as <f>.
+##
+DeclareGlobalFunction( "LocalizedRcwaMapping" );
+DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
+
+#############################################################################
+##
 #F  ClassShift( <r>, <m> ) . . . . . . . . . . . . . . .  class shift nu_r(m)
 #F  ClassShift( [ <r>, <m> ] )
 ##
@@ -269,6 +280,18 @@ DeclareGlobalFunction( "PrimeSwitch" );
 ##
 DeclareAttribute( "FactorizationIntoCSCRCT", IsMultiplicativeElement );
 DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
+
+#############################################################################
+##
+#F  mKnot( <m> ) . . . . . . . . . . rcwa mapping of Timothy P. Keller's type
+##
+##  Given an odd integer <m>, this function returns the bijective rcwa
+##  mapping $g_m$ as defined in
+##
+##  Timothy P. Keller. Finite Cycles of Certain Periodically Linear
+##  Permutations. Missouri J. Math. Sci. 11(1999), no. 3, 152-157.
+##
+DeclareGlobalFunction( "mKnot" );
 
 #############################################################################
 ##

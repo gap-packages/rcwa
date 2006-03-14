@@ -702,6 +702,29 @@ InstallOtherMethod( RcwaMapping,
 
 #############################################################################
 ##
+#F  LocalizedRcwaMapping( <f>, <p> )
+##
+InstallGlobalFunction( LocalizedRcwaMapping,
+
+  function ( f, p )
+    return SemilocalizedRcwaMapping( f, [ p ] );
+  end );
+
+#############################################################################
+##
+#F  SemilocalizedRcwaMapping( <f>, <pi> )
+##
+InstallGlobalFunction( SemilocalizedRcwaMapping,
+
+  function ( f, pi )
+    if    IsIntegralRcwaMapping(f) and IsList(pi) and ForAll(pi,IsPosInt)
+      and ForAll(pi,IsPrimeInt) and IsSubset(pi,Factors(Modulus(f)))
+    then return RcwaMapping(Z_pi(pi),ShallowCopy(Coefficients(f)));
+    else return fail; fi;
+  end );
+
+#############################################################################
+##
 #F  ClassShift( r, m ) . . . . . . . . . . . . . . . . .  class shift nu_r(m)
 #F  ClassShift( ResidueClass( r, m ) )
 #F  ClassShift( [ r, m ] )
@@ -821,6 +844,17 @@ InstallGlobalFunction( PrimeSwitch,
     SetLaTeXName(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
     SetFactorizationIntoCSCRCT(result,facts);
     return result;
+  end );
+
+#############################################################################
+##
+#F  mKnot( <m> ) . . . . . . . . . . rcwa mapping of Timothy P. Keller's type
+##
+InstallGlobalFunction ( mKnot,
+
+  function ( m )
+    if not IsPosInt(m) or m mod 2 <> 1 or m = 1 then return fail; fi;
+    return RcwaMapping(List([0..m-1],r->[m+(-1)^r,(-1)^(r+1)*r,m]));
   end );
 
 #############################################################################

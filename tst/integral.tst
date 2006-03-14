@@ -1160,6 +1160,14 @@ gap> FixedPointsOfAffinePartialMappings(a^-3);
   [ -14/5 ], [ -9/11 ], [ 19/37 ], [ 1/5 ], [ -21/5 ], [ -5/37 ], [ 5/37 ], 
   [ 21/5 ], [ -1/5 ], [ -19/37 ], [ 9/11 ], [ 14/5 ], [ 4/11 ], [ -3/5 ], 
   [ 2/5 ], [ -13/37 ], [ -6/11 ], [ 17/5 ], [ -1 ] ]
+gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
+[ 131/13, 203/13, 311/13, 473/13, 716/13, 358/13, 179/13, 275/13, 419/13, 
+  635/13, 959/13, 1445/13, 2174/13, 1087/13, 1637/13, 2462/13, 1231/13, 
+  1853/13, 2786/13, 1393/13, 2096/13, 1048/13, 524/13, 262/13 ]
+gap> last = Cycle(SemilocalizedRcwaMapping(T,[2,3]),131/13);
+true
+gap> Length(Cycle(mKnot(7),1621));
+265
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

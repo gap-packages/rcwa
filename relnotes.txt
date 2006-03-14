@@ -145,3 +145,12 @@ Changes between version 1.4.2 and version 1.4.3:
 
  - An attribute `FixedPointsOfAffinePartialMappings' has been introduced.
 
+ - Functions `LocalizedRcwaMapping' and `SemilocalizedRcwaMapping' have been
+   added.
+
+ - A function `mKnot' has been added. This function constructs bijective
+   rcwa mappings of the type discussed in
+
+   Timothy P. Keller. Finite Cycles of Certain Periodically Linear
+   Permutations. Missouri J. Math. Sci. 11(1999), no. 3, 152-157.
+
