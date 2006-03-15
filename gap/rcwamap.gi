@@ -741,10 +741,9 @@ InstallGlobalFunction( ClassShift,
     if   IsResidueClass(arg[1])
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
-    r := arg[1]; m := arg[2];
-    if   not IsInt(r) or not IsPosInt(m)
+    if   Length(arg) <> 2 or not IsInt(arg[1]) or not IsPosInt(arg[2])
     then Error("usage: see ?ClassShift( r, m )\n"); fi;
-    r := r mod m;
+    r := arg[1]; m := arg[2]; r := r mod m;
     coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
     result := RcwaMapping(coeff);
     SetIsBijective(result,true);
@@ -758,7 +757,7 @@ InstallGlobalFunction( ClassShift,
 
 #############################################################################
 ##
-#F  ClassReflection( r, m ) . . . . . . . . . . class reflection varsigma_r(m)
+#F  ClassReflection( r, m ) . . . . . . . . .  class reflection varsigma_r(m)
 #F  ClassReflection( ResidueClass( r, m ) )
 #F  ClassReflection( [ r, m ] )
 ##
@@ -772,10 +771,9 @@ InstallGlobalFunction( ClassReflection,
     if   IsResidueClass(arg[1])
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
-    r := arg[1]; m := arg[2];
-    if   not IsInt(r) or not IsPosInt(m)
+    if   Length(arg) <> 2 or not IsInt(arg[1]) or not IsPosInt(arg[2])
     then Error("usage: see ?ClassReflection( r, m )\n"); fi;
-    r := r mod m;
+    r := arg[1]; m := arg[2]; r := r mod m;
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
     result := RcwaMapping(coeff);
