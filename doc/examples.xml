@@ -1385,7 +1385,7 @@ the mapping <C>a</C> from the previous examples):
 
 <Example>
 <![CDATA[
-gap> a2 := RcwaMapping(Z_pi(2),ShallowCopy(Coefficients(a)));
+gap> a2 := LocalizedRcwaMapping(a,2);
 <rcwa mapping of Z_( 2 ) with modulus 4>
 gap> IsSurjective(a2); # As expected
 true
@@ -1405,7 +1405,7 @@ Moving to <M>\mathbb{Z}_{(2,3)}</M> solves this problem:
 
 <Example>
 <![CDATA[
-gap> a23 := RcwaMapping(Z_pi([2,3]),ShallowCopy(Coefficients(a)));
+gap> a23 := SemilocalizedRcwaMapping(a,[2,3]);
 <rcwa mapping of Z_( 2, 3 ) with modulus 4>
 gap> IsBijective(a23);
 true
@@ -1441,8 +1441,8 @@ a group with prime set <M>\{2,3\}</M> from <M>\Z</M> to <M>\Z_{(2,3)}</M>:
 
 <Example>
 <![CDATA[
-gap> b23 := RcwaMapping(Z_pi([2,3]),ShallowCopy(Coefficients(b)));;
-gap> c23 := RcwaMapping(Z_pi([2,3]),ShallowCopy(Coefficients(c)));;
+gap> b23 := SemilocalizedRcwaMapping(b,[2,3]);;
+gap> c23 := SemilocalizedRcwaMapping(c,[2,3]);;
 gap> ab23 := Comm(a23,b23);
 <rcwa mapping of Z_( 2, 3 ) with modulus 18>
 gap> ac23 := Comm(a23,c23);
@@ -1502,7 +1502,7 @@ gap> Image(v);
 Z \ 4(12) U 8(12)
 gap> Difference(Integers,last);
 4(12) U 8(12)
-gap> v2 := RcwaMapping(Z_pi(2),ShallowCopy(Coefficients(v)));
+gap> v2 := LocalizedRcwaMapping(v,2);
 <rcwa mapping of Z_( 2 ) with modulus 8>
 gap> IsBijective(v2);
 true
