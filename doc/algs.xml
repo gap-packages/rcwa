@@ -9,7 +9,9 @@
 <Chapter Label="ch:algorithms">
 <Heading>The Algorithms Implemented in RCWA</Heading>
 
-Almost all mathematically interesting algorithms implemented in this
+Apart from the method for factoring residue class-wise affine permutations
+of&nbsp;<M>\Z</M> into class transpositions, class shifts and class
+reflections, most mathematically interesting algorithms implemented in this
 package are described in the author's thesis&nbsp;<Cite Key="Kohl05"/>
 in the form of constructive proofs.
 This chapter provides references to the corresponding theorems, and lists
@@ -133,7 +135,7 @@ They are listed in alphabetical order.
     from multiplier and divisor one after the other in decreasing order
     by dividing by appropriate class transpositions.
     The remaining integral mapping can be factored almost similarly
-    easy as a permutation of a finite set can be factored into
+    easily as a permutation of a finite set can be factored into
     transpositions.
   </Item>
 
