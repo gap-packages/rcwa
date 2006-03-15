@@ -860,9 +860,17 @@ InstallGlobalFunction( PrimeSwitch,
 InstallGlobalFunction ( mKnot,
 
   function ( m )
+
+    local  result;
+
     if   not IsPosInt(m) or m mod 2 <> 1 or m = 1
     then Error("usage: see ?mKnot( m )\n"); fi;
-    return RcwaMapping(List([0..m-1],r->[m+(-1)^r,(-1)^(r+1)*r,m]));
+    result := RcwaMapping(List([0..m-1],r->[m+(-1)^r,(-1)^(r+1)*r,m]));
+    SetIsBijective(result,true);
+    SetIsTame(result,false); SetOrder(result,infinity);
+    SetName(result,Concatenation("mKnot(",String(m),")"));
+    SetLaTeXName(result,Concatenation("\\kappa_{",String(m),"}"));
+    return result;
   end );
 
 #############################################################################
