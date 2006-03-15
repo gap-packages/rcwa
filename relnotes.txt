@@ -141,7 +141,7 @@ Changes between version 1.4.1 and version 1.4.2:
    introduced features of ResClasses are now used. RCWA requires now
    ResClasses 2.2.1.
 
-Changes between version 1.4.2 and version 1.4.3:
+Changes between version 1.4.2 and version 1.4.4:
 
  - An attribute `FixedPointsOfAffinePartialMappings' has been introduced.
 
