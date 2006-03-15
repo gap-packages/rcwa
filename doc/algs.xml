@@ -84,6 +84,15 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
+    <C>CommonRightInverse(<A>l</A>,<A>r</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straight forward</Q> if one knows how to compute images of residue
+    classes under affine mappings, and how to compute inverses of
+    affine mappings.
+  </Item>
+
+  <Mark>
     <C>DecreasingOn(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -147,6 +156,13 @@ They are listed in alphabetical order.
     transition graph, and then compute a partition of the suitably
     <Q>blown up</Q> coefficient list corresponding to the connected
     components.
+  </Item>
+
+  <Mark>
+    <C>FixedPointsOfAffinePartialMappings(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straight forward</Q>.
   </Item>
 
   <Mark>
@@ -384,15 +400,6 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>CommonRightInverse(<A>l</A>,<A>r</A>)</C>
-  </Mark>
-  <Item>
-    <Q>straight forward</Q> if one knows how to compute images of residue
-    classes under affine mappings, and how to compute inverses of
-    affine mappings.
-  </Item>
-
-  <Mark>
     <C>KernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -437,6 +444,21 @@ They are listed in alphabetical order.
     Compute trajectories with starting values from a given interval, until
     a cycle is reached. Abort if the trajectory exceeds the prescribed bound.
     Form the union of the detected cycles.
+  </Item>
+
+  <Mark>
+    <C>LocalizedRcwaMapping(<A>f</A>,<A>p</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>mKnot(<A>m</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straight forward</Q>, following the definition given in
+    <Cite Key="Keller99"/>.
   </Item>
 
   <Mark>
@@ -663,6 +685,13 @@ They are listed in alphabetical order.
   <Item>
     Get a set of generators by applying <C>Restriction(<A>g</A>,<A>f</A>)</C>
     to the generators <A>g</A> of&nbsp;<A>G</A>.
+  </Item>
+
+  <Mark>
+    <C>SemilocalizedRcwaMapping(<A>f</A>,<A>pi</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
