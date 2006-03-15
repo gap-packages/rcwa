@@ -1405,8 +1405,14 @@ gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
 
 <Section Label="sec:BehaviourOfTrajectories">
 <Heading>
-  Getting information on the behaviour of trajectories
+  Probabilistic guesses on the behaviour of trajectories
 </Heading>
+
+This section describes some functionality for getting something like
+<Q>educated guesses</Q> concerning the overall behaviour of the
+trajectories of a given rcwa mapping. The description of these functions
+has deliberately been separated from the documentation of the
+non-probabilistic functionality related to trajectories of rcwa mappings.
 
 <ManSection>
   <Oper Name="LikelyContractionCentre"
@@ -1461,6 +1467,8 @@ gap> List( [ T, a ], GuessedDivergence );
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
