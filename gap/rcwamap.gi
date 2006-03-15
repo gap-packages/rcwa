@@ -707,6 +707,8 @@ InstallOtherMethod( RcwaMapping,
 InstallGlobalFunction( LocalizedRcwaMapping,
 
   function ( f, p )
+    if   not IsIntegralRcwaMapping(f) or not IsInt(p) or not IsPrimeInt(p)
+    then Error("usage: see ?LocalizedRcwaMapping( f, p )\n"); fi;
     return SemilocalizedRcwaMapping( f, [ p ] );
   end );
 
@@ -720,7 +722,7 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
     if    IsIntegralRcwaMapping(f) and IsList(pi) and ForAll(pi,IsPosInt)
       and ForAll(pi,IsPrimeInt) and IsSubset(pi,Factors(Modulus(f)))
     then return RcwaMapping(Z_pi(pi),ShallowCopy(Coefficients(f)));
-    else return fail; fi;
+    else Error("usage: see ?SemilocalizedRcwaMapping( f, pi )\n"); fi;
   end );
 
 #############################################################################
@@ -740,7 +742,9 @@ InstallGlobalFunction( ClassShift,
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
     r := arg[1]; m := arg[2];
-    if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
+    if   not IsInt(r) or not IsPosInt(m)
+    then Error("usage: see ?ClassShift( r, m )\n"); fi;
+    r := r mod m;
     coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
     result := RcwaMapping(coeff);
     SetIsBijective(result,true);
@@ -769,7 +773,9 @@ InstallGlobalFunction( ClassReflection,
     then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
     if IsIntegers(arg[1]) then arg := [0,1]; fi;
     r := arg[1]; m := arg[2];
-    if not IsInt(r) or not IsPosInt(m) then return fail; fi; r := r mod m;
+    if   not IsInt(r) or not IsPosInt(m)
+    then Error("usage: see ?ClassReflection( r, m )\n"); fi;
+    r := r mod m;
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
     result := RcwaMapping(coeff);
@@ -798,9 +804,12 @@ InstallGlobalFunction( ClassTransposition,
     if   Length(arg) = 2 and ForAll(arg,IsResidueClass)
     then arg := [Residues(arg[1])[1],Modulus(arg[1]),
                  Residues(arg[2])[1],Modulus(arg[2])]; fi;
-    if Length(arg) <> 4 or not ForAll(arg,IsInt) then return fail; fi;
+    if   Length(arg) <> 4 or not ForAll(arg,IsInt)
+    then Error("usage: see ?ClassTransposition( r1, m1, r2, m2 )\n"); fi;
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
-    if m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then return fail; fi;
+    if   m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then
+      Error("ClassTransposition: The residue classes must be disjoint.\n");
+    fi;
     if   m1 > m2 or (m1 = m2 and r1 > r2)
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
     result := RcwaMapping([[ResidueClass(Integers,m1,r1),
@@ -827,10 +836,10 @@ InstallGlobalFunction( PrimeSwitch,
 
     local  p, k, result, facts, kstr;
 
-    if not Length(arg) in [1,2] then return fail; fi;
+    if not Length(arg) in [1,2] then Error("usage: see ?PrimeSwitch\n"); fi;
     p := arg[1]; if Length(arg) = 2 then k := arg[2]; else k := 1; fi;
     if   not IsPosInt(p) or not IsPrimeInt(p) or not IsPosInt(k)
-    then return fail; fi;
+    then Error("usage: see ?PrimeSwitch\n"); fi;
     facts := [ ClassTransposition(k,2*k*p,0,8*k),
                ClassTransposition(2*k*p-k,2*k*p,4*k,8*k),
                ClassTransposition(0,4*k,k,2*k*p),
@@ -853,7 +862,8 @@ InstallGlobalFunction( PrimeSwitch,
 InstallGlobalFunction ( mKnot,
 
   function ( m )
-    if not IsPosInt(m) or m mod 2 <> 1 or m = 1 then return fail; fi;
+    if   not IsPosInt(m) or m mod 2 <> 1 or m = 1
+    then Error("usage: see ?mKnot( m )\n"); fi;
     return RcwaMapping(List([0..m-1],r->[m+(-1)^r,(-1)^(r+1)*r,m]));
   end );
 
