@@ -247,13 +247,13 @@ gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;
 gap> f := RcwaMapping(9,One(R),[[0,x^2+One(R),One(R)]]*One(R));
-Constant rcwa mapping of GF(9)[x] with value x^2+Z(3)^0
+Constant rcwa mapping of GF(3^2)[x] with value x^2+Z(3)^0
 gap> Display(f);
-Constant rcwa mapping of GF(9)[x] with value x^2+Z(3)^0
+Constant rcwa mapping of GF(3^2)[x] with value x^2+Z(3)^0
 gap> String(f);
 "RcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), x^2+Z(3)^0, Z(3)^0 ] ] )"
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
-Rcwa mapping of GF(9)[x]: P -> Z(3^2)*P
+Rcwa mapping of GF(3^2)[x]: P -> Z(3^2)*P
 gap> LargestSourcesOfAffineMappings(r);
 [ 0*Z(2) ( mod x^2+Z(2)^0 ), Z(2)^0 ( mod x^2+Z(2)^0 ), x ( mod x^2+Z(2)^0 ), 
   x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
