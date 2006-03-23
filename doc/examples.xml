@@ -1029,22 +1029,22 @@ We start by defining this group:
 <![CDATA[
 gap> x := Indeterminate(GF(4),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(4),1);
-GF(4)[x]
+GF(2^2)[x]
 gap> e := One(GF(4));;
 gap> p := x^2 + x + e;;    q := x^2 + e;;
 gap> r := x^2 + x + Z(4);; s := x^2 + x + Z(4)^2;;
 gap> cg := List( AllResidues(R,x^2), pol -> [ p, p * pol mod q, q ] );;
 gap> ch := List( AllResidues(R,x^2), pol -> [ r, r * pol mod s, s ] );;
 gap> g := RcwaMapping( R, q, cg );
-<rcwa mapping of GF(4)[x] with modulus x^2+Z(2)^0>
+<rcwa mapping of GF(2^2)[x] with modulus x^2+Z(2)^0>
 gap> h := RcwaMapping( R, s, ch );
-<rcwa mapping of GF(4)[x] with modulus x^2+x+Z(2^2)^2>
+<rcwa mapping of GF(2^2)[x] with modulus x^2+x+Z(2^2)^2>
 gap> List([g,h],Order);
 [ infinity, infinity ]
 gap> List([g,h],IsTame);
 [ false, false ]
 gap> G := Group(g,h);
-<rcwa group over GF(4)[x] with 2 generators>
+<rcwa group over GF(2^2)[x] with 2 generators>
 gap> IsAbelian(G);
 true
 ]]>
@@ -1084,7 +1084,7 @@ gap> cg[1][2] := cg[1][2] + (x^2 + e) * p * q;;
 gap> ch[7][2] := ch[7][2] + x * r * s;;
 gap> g := RcwaMapping( R, q, cg );; h := RcwaMapping( R, s, ch );;
 gap> G := Group(g,h);
-<rcwa group over GF(4)[x] with 2 generators>
+<rcwa group over GF(2^2)[x] with 2 generators>
 gap> orb := Orbit(G,Zero(R));;
 gap> Length(orb);
 87
