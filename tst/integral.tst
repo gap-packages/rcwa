@@ -10,11 +10,11 @@ gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> oldwarninglevel := InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning,0);
 gap> ResidueClassUnionViewingFormat("short");
-gap> IdentityIntegralRcwaMapping;
+gap> IdentityRcwaMappingOfZ;
 IdentityMapping( Integers )
-gap> ZeroIntegralRcwaMapping;
+gap> ZeroRcwaMappingOfZ;
 ZeroMapping( Integers, Integers )
-gap> Order(IdentityIntegralRcwaMapping);
+gap> Order(IdentityRcwaMappingOfZ);
 1
 gap> RcwaMapping(Integers,[[2,0,1]]);
 Rcwa mapping of Z: n -> 2n
@@ -166,7 +166,7 @@ gap> PreImageElm(u,8);
 4
 gap> PreImagesElm(T,8);
 [ 5, 16 ]
-gap> PreImagesElm(ZeroIntegralRcwaMapping,0);
+gap> PreImagesElm(ZeroRcwaMappingOfZ,0);
 Integers
 gap> d := RcwaMapping([[0,0,1],[0,1,1]]);;
 gap> PreImagesRepresentative(d,1);
@@ -187,7 +187,7 @@ gap> One(G);
 IdentityMapping( Integers )
 gap> Representative(G);
 Rcwa mapping of Z: n -> -n
-gap> IsSubgroup(RCWA(Integers),TrivialIntegralRcwaGroup);
+gap> IsSubgroup(RCWA(Integers),TrivialRcwaGroupOverZ);
 true
 gap> IsSimple(G);
 false
@@ -532,7 +532,7 @@ gap> h*(a*b) = (h*a)*b;
 true
 gap> u*(ac^-1*g) = (u*ac^-1)*g;
 true
-gap> u*g*(u*g)^-1 = IdentityIntegralRcwaMapping;
+gap> u*g*(u*g)^-1 = IdentityRcwaMappingOfZ;
 true
 gap> a*(b+c) = a*b + a*c;
 true
