@@ -154,9 +154,22 @@ Changes between version 1.4.2 and version 1.4.4:
    Timothy P. Keller. Finite Cycles of Certain Periodically Linear
    Permutations. Missouri J. Math. Sci. 11(1999), no. 3, 152-157.
 
-Changes between version 1.4.4 and version 1.4.5:
+Changes between version 1.4.4 and version 1.5.0:
 
  - Attributes `Sources', `Sinks' and `Loops' have been introduced.
+
+ - A larger number of method descriptions has been made more intuitive.
+
+ - The names of some filters and one family have been changed in order to
+   make the naming scheme more consistent and more intuitive. These are:
+
+   `IsIntegralRcwaMapping'          -> `IsRcwaMappingOfZ'
+   `IsSemilocalIntegralRcwaMapping' -> `IsRcwaMappingOfZ_pi'
+   `IsModularRcwaMapping'           -> `IsRcwaMappingOfGFqx'
+
+   `IsIntegralRcwaGroup'            -> `IsRcwaGroupOverZ'
+   `IsSemilocalIntegralRcwaGroup'   -> `IsRcwaGroupOverZ_pi'
+   `IsModularRcwaGroup'             -> `IsRcwaGroupOverGFqx'
 
  - Some minor adjustments to output formatting improvements in
    ResClasses 2.2.2 have been made. RCWA requires now ResClasses 2.2.2.
