@@ -12,9 +12,9 @@
 ##
 ##  Some basic `building blocks'.
 ##
-nu  := RcwaMapping([[ 1, 1, 1]]); SetName(nu,"nu");
-t   := RcwaMapping([[-1, 0, 1]]); SetName(t,"t");
-tau := RcwaMapping([[1,1,1],[1,-1,1]]); SetName(tau,"tau");
+nu  := ClassShift(Integers);        SetName(nu,"nu");
+t   := ClassReflection(Integers);   SetName(t,"t");
+tau := ClassTransposition(0,2,1,2); SetName(tau,"tau");
 
 #############################################################################
 ##
@@ -551,7 +551,7 @@ SetName(V7,"V7"); SetName(V8,"V8");
 ##  An example by H. M. Farkas.
 ##
 ##  The following mapping has no divergent trajectories, but trajectories
-##  which ascent any given number of consecutive steps. Proof: elementary.
+##  which ascend any given number of consecutive steps. Proof: elementary.
 ##
 Farkas := RcwaMapping([[1,0,3],[1,1,2],[1,0,1],[1,0,3],
                        [1,0,1],[1,1,2],[1,0,3],[3,1,2],
@@ -707,6 +707,19 @@ R4 := RcwaMapping(List([[0,2],[1, 4],[ 3, 8],[7,8]],ResidueClass),
                   List([[1,8],[5,16],[13,16],[3,4]],ResidueClass));
 SetName(R4,"R4");
 D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
+
+#############################################################################
+##
+##  The following groups are isomorphic to the free group of rank 2,
+##  resp. to the modular group PSL(2,Z).
+##
+F2 := Group((tau*ClassTransposition(0,2,1,4))^2,
+            (tau*ClassTransposition(0,2,3,4))^2);
+SetName(F2,"F_2");
+
+PSL2Z := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
+               ClassTransposition(1,3,0,6)*ClassTransposition(2,3,3,6));
+SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
