@@ -1167,6 +1167,78 @@ gap> Display(TransitionMatrix(T,19)*One(GF(7)));
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<ManSection>
+  <Attr Name="Sources" Arg="f"  Label = "f"/>
+  <Returns>
+    A list of unions of residue classes modulo the modulus&nbsp;<M>m</M>
+    of the rcwa mapping&nbsp;<A>f</A>, as described below.
+  </Returns>
+  <Description>
+   The returned list contains an entry for any strongly connected component
+   of the transition graph of&nbsp;<A>f</A> for modulus&nbsp;<M>m</M> which
+   has only outgoing edges. The list entry corresponding to a given such
+   strongly connected component is the union of the vertices which belong
+   to the respective component.
+<Example>
+<![CDATA[
+gap> [ Sources(kappa), Sources(a) ];
+[ [  ], [  ] ]
+gap> Sources(nu*nu^a);
+[ 2(6) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Attr Name="Sinks" Arg="f"  Label = "f"/>
+  <Returns>
+    A list of unions of residue classes modulo the modulus&nbsp;<M>m</M>
+    of the rcwa mapping&nbsp;<A>f</A>, as described below.
+  </Returns>
+  <Description>
+   The returned list contains an entry for any strongly connected component
+   of the transition graph of&nbsp;<A>f</A> for modulus&nbsp;<M>m</M> which
+   has only ingoing edges. The list entry corresponding to a given such
+   strongly connected component is the union of the vertices which belong
+   to the respective component.
+<Example>
+<![CDATA[
+gap> [ Sinks(kappa), Sinks(a) ];
+[ [  ], [  ] ]
+gap> Sinks(nu*nu^a);
+[ 3(6) ]
+gap> Sinks(Product(List([[1,4,2,4],[1,4,3,4],[3,6,7,12],[2,4,3,6]],
+>                       ClassTransposition)));
+[ 3(6) U 1(12) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Attr Name="Loops" Arg="f"  Label = "f"/>
+  <Returns>
+    The list of non-isolated vertices of the transition graph of the
+    rcwa mapping&nbsp;<A>f</A> for modulus <C>Modulus(<A>f</A>)</C>
+    which carry a loop.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> Loops(kappa);
+[ 10(12) ]
+gap> Loops(a);
+[ 0(4), 1(4), 3(4) ]
+gap> Loops(nu*nu^a);
+[ 2(6), 3(6) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 </Section>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
