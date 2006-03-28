@@ -3010,6 +3010,71 @@ InstallMethod( FactorizationOnConnectedComponents,
     return Set(Filtered(factors,f->not IsOne(f)));
   end );
 
+
+############################################################################
+##
+#M  Sources( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( Sources,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  sources, comps, adj, res;
+
+    res   := AllResidues(Source(f),Modulus(f));
+    adj   := TransitionGraph(f,Modulus(f)).adjacencies;
+    comps := List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(adj),
+                  comp->ResidueClassUnion(Source(f),Modulus(f),res{comp}));
+    sources := Filtered(comps,comp ->    IsSubset(comp,PreImagesSet(f,comp))
+                                     and IsSubset(comp^f,comp)
+                                     and comp^f <> comp);
+    return sources;
+  end );
+
+############################################################################
+##
+#M  Sinks( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( Sinks,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsIntegralRcwaMapping ], 0,
+
+  function ( f )
+
+    local  sinks, comps, adj, res;
+
+    res   := AllResidues(Source(f),Modulus(f));
+    adj   := TransitionGraph(f,Modulus(f)).adjacencies;
+    comps := List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(adj),
+                  comp->ResidueClassUnion(Source(f),Modulus(f),res{comp}));
+    sinks := Filtered(comps,comp ->    IsSubset(PreImagesSet(f,comp),comp)
+                                   and IsSubset(comp,comp^f)
+                                   and comp <> comp^f);
+    return sinks;
+  end );
+
+############################################################################
+##
+#M  Loops( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mapping
+##
+InstallMethod( Loops,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+
+    local  cls, cl, img, loops;
+
+    cls   := AllResidueClassesModulo(Source(f),Modulus(f));
+    loops := [];
+    for cl in cls do
+      img := cl^f;
+      if img <> cl and Intersection(img,cl) <> [] then Add(loops,cl); fi; 
+    od;
+    return loops;
+  end );
+
 #############################################################################
 ##
 #F  Trajectory( <f>, <n>, <end>, <cond> )

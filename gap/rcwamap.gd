@@ -12,20 +12,20 @@
 ##  $R$ into itself *residue class-wise affine*, or in short an
 ##  *rcwa* mapping, if there is a non-zero modulus $m \in R$ such that
 ##  for any residue class $r(m) \in R/mR$ there are coefficients
-##  $a_r, b_r, c_r \in R$ such that the restriction of $f$ to $r(m)$ is
-##  given by
+##  $a_{r(m)}, b_{r(m)}, c_{r(m)} \in R$ such that the restriction of $f$
+##  to the set $r(m) = \{r + km | k \in R\}$ is given by
 ##  $$
-##    n \ \mapsto \ \frac{a_r \cdot n + b_r}{c_r}.
+##    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
 ##  $$
-##  We always assume that all fractions are reduced, i.e. that
-##  $\gcd( a_r, b_r, c_r ) = 1$, and that $m$ is minimal w.r.t. the given
-##  property. Apart from the restrictions imposed by the condition that the
-##  image of any residue class $r(m)$ under $f$ must be a subset of $R$ and
-##  that we cannot divide by 0, the coefficients $a_r$, $b_r$ and $c_r$ can
-##  be any ring elements. We call $m$ the *modulus* of $f$. When talking
-##  about the *product* of some rcwa mappings we always mean their
-##  composition as mappings, and by the inverse of a bijective rcwa mapping
-##  we mean its inverse mapping. 
+##  We always assume that $c_{r(m)} > 0$, that all fractions are reduced,
+##  i.e. that $\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1$, and that $m$ is
+##  chosen multiplicatively minimal. Apart from the restrictions imposed by
+##  the condition that the image of any residue class $r(m)$ under $f$ must
+##  be a subset of $R$ and that we cannot divide by 0, the coefficients
+##  $a_{r(m)}$, $b_{r(m)}$ and $c_{r(m)}$ can be any ring elements.
+##  We call $m$ the *modulus* of $f$. By *products* of rcwa mappings we
+##  always mean their compositions as mappings, and by the *inverse* of
+##  a bijective rcwa mapping we mean its inverse mapping. 
 ##
 ##  The set RCWA($R$) $ \ := \ $ $\{ \ g \in$ Sym($R$) $\ | \ g$ is residue
 ##  class-wise affine $\}$ is closed under multiplication and taking
@@ -41,17 +41,16 @@
 ##    `UnderlyingRing' of the family the rcwa mapping object belongs to,
 ##    and as the value of the attribute `Source'.
 ##
-##    <Modulus>& The modulus is stored as a component <modulus> in any
+##    <Modulus>& The modulus $m$ is stored as a component <modulus> in any
 ##    rcwa mapping object. 
 ##
 ##    <Coefficients>& The list of coefficients is stored as a component
 ##    <coeffs> in any rcwa mapping object. The component <coeffs> is a list
-##    of $|R$/<modulus>$R|$ lists of three elements of $R$, each, giving
-##    the coefficients $a_r$, $b_r$ and $c_r$ for $r$ running through a set
-##    of representatives for the residue classes (mod <modulus>).
-##    The ordering of these triples is defined by the ordering of the
-##    residues $r$ mod <modulus> in the return value of
-##    `AllResidues( <R>, <modulus> )'.
+##    of $|R/mR|$ lists of three elements of $R$, each, giving
+##    the coefficients $a_{r(m)}$, $b_{r(m)}$ and $c_{r(m)}$ for $r(m)$
+##    running through all residue classes (mod $m$). The ordering of
+##    these triples is defined by the ordering of the residues $r$ mod $m$
+##    in `AllResidues( <R>, <m> )'.
 ##  \enditems
 ##
 ##  It is always taken care that the entries of the stored coefficient
@@ -163,9 +162,9 @@ DeclareGlobalFunction( "ModularRcwaMappingsFamily" );
 ##  denoted by $m$) and coefficient list <coeffs>.
 ##
 ##  The component <coeffs> is a list of $|R/mR|$ lists of three elements of
-##  the underlying ring $R$, each, giving the coefficients $a_r$, $b_r$ and
-##  $c_r$ for $r$ running through a set of representatives for the residue
-##  classes (mod $m$).
+##  the underlying ring $R$, each, giving the coefficients $a_{r(m)}$,
+##  $b_{r(m)}$ and $c_{r(m)}$ for $r(m)$ running through all residue classes
+##  (mod $m$).
 ##
 ##  The ordering of these triples is defined by the ordering of the residues
 ##  $r$ mod $m$ in the return value of `AllResidues( <R>, <m> )'.
@@ -325,7 +324,7 @@ DeclareAttribute( "Support", IsGroup );
 #A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f>
 ##
 ##  We define the *multiplier* of an rcwa mapping <f> by the standard
-##  associate of the least common multiple of the coefficients $a_r$.
+##  associate of the least common multiple of the coefficients $a_{r(m)}$.
 ##
 DeclareAttribute( "Multiplier", IsRcwaMapping );
 DeclareSynonym( "Mult", Multiplier );
@@ -335,7 +334,7 @@ DeclareSynonym( "Mult", Multiplier );
 #A  Divisor( <f> ) . . . . . . . . . . .  the divisor of the rcwa mapping <f>
 ##
 ##  We define the *divisor* of an rcwa mapping <f> by the standard
-##  associate of the least common multiple of the coefficients $c_r$.
+##  associate of the least common multiple of the coefficients $c_{r(m)}$.
 ##
 DeclareAttribute( "Divisor", IsRcwaMapping );
 DeclareSynonym( "Div", Divisor );
@@ -419,9 +418,10 @@ DeclareAttribute( "Sign", IsRcwaMapping );
 ##
 #O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
 ##
-##  The set of elements $n$ of the base ring $R$, which are mapped to
-##  $(a_r n + b_r)/c_r$, where $p^k||a_r$ if $k \gt 0$, resp. $p^{-k}||c_r$
-##  if $k \lt 0$ resp. $p \nmid a_r, c_r$ if $k = 0$.
+##  The set of elements $n$ of the base ring $R$ which <f> maps to
+##  $(a_{r(m)} n + b_{r(m)})/c_{r(m)}$, where $p^k||a_{r(m)}$ if $k \gt 0$,
+##  resp. $p^{-k}||c_{r(m)}$ if $k \lt 0$ resp. $p \nmid a_{r(m)}, c_{r(m)}$
+##  if $k = 0$.
 ##
 DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
@@ -491,6 +491,30 @@ DeclareOperation( "OrbitsModulo", [ IsRcwaMapping, IsRingElement ] );
 ##
 DeclareOperation( "FactorizationOnConnectedComponents",
                   [ IsRcwaMapping, IsRingElement ] );
+
+#############################################################################
+##
+#A  Sources
+#A  Sinks
+#A  Loops
+##
+##  Let <f> be an rcwa mapping with modulus <m>. Then, `Sources(<f>)' and
+##  `Sinks(<f>)' are lists of unions of residue classes (mod <m>), and
+##  `Loops(<f>)' is a list of residue classes (mod <m>).
+##
+##  The list `Sources(<f>)' contains an entry for any strongly connected
+##  component of the transition graph of <f> for modulus <m> which has only
+##  outgoing edges. The list entry corresponding to a given such strongly
+##  connected component is just the union of its vertices. The description of
+##  the list `Sinks(<f>)' is obtained by replacing "outgoing" by "ingoing".
+##
+##  The entries of the list `Loops(<f>)' are the residue classes (mod <m>)
+##  which are not setwisely fixed by <f>, but which intersect nontrivially
+##  with their images under <f>.
+##
+DeclareAttribute( "Sources", IsRcwaMapping );
+DeclareAttribute( "Sinks", IsRcwaMapping );
+DeclareAttribute( "Loops", IsRcwaMapping );
 
 #############################################################################
 ##
