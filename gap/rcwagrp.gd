@@ -28,59 +28,58 @@ DeclareSynonym( "IsRcwaGroup",
 
 #############################################################################
 ##
-#C  IsIntegralRcwaGroup . . . . . . . . . . . . . . . .  integral rcwa groups
+#C  IsRcwaGroupOverZ . . . . . . . . . . . . . . . . . . . rcwa groups over Z
 ##
-##  The category of all integral rcwa groups.
+##  The category of all rcwa groups over $\Z$.
 ##
-DeclareSynonym( "IsIntegralRcwaGroup",
-                 CategoryCollections(IsIntegralRcwaMapping) and IsGroup );
+DeclareSynonym( "IsRcwaGroupOverZ",
+                 CategoryCollections(IsRcwaMappingOfZ) and IsGroup );
 
 #############################################################################
 ##
-#C  IsSemilocalIntegralRcwaGroup . . . . . . . semilocal integral rcwa groups
+#C  IsRcwaGroupOverZ_pi . . . . . . . . . . . . . . . rcwa groups over Z_(pi)
 ##
-##  The category of all semilocal integral rcwa groups.
+##  The category of all rcwa groups over semilocalizations of $\Z$.
 ##
-DeclareSynonym( "IsSemilocalIntegralRcwaGroup",
-                 CategoryCollections(IsSemilocalIntegralRcwaMapping)
-                 and IsGroup );
+DeclareSynonym( "IsRcwaGroupOverZ_pi",
+                 CategoryCollections(IsRcwaMappingOfZ_pi) and IsGroup );
 
 #############################################################################
 ##
-#C  IsRationalBasedRcwaGroup . . . . . . . . . . . rational-based rcwa groups
+#C  IsRcwaGroupOverZOrZ_pi . . . . . . . . . . . rcwa groups over Z or Z_(pi)
 ##
-##  The category of all integral or semilocal integral rcwa groups.
-##  This is the union of the categories `IsIntegralRcwaGroup' and
-##  `IsSemilocalIntegralRcwaGroup'.
+##  The category of all rcwa groups over the ring $\Z$ or semilocalizations
+##  thereof. This is the union of the categories `IsRcwaGroupOverZ' and
+##  `IsRcwaGroupOverZ_pi'.
 ##
-DeclareSynonym( "IsRationalBasedRcwaGroup",
-                 CategoryCollections(IsRationalBasedRcwaMapping)
-                 and IsGroup );
+DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
+                 CategoryCollections(IsRcwaMappingOfZOrZ_pi) and IsGroup );
 
 #############################################################################
 ##
-#C  IsModularRcwaGroup . . . . . . . . . . . . . . . . .  modular rcwa groups
+#C  IsRcwaGroupOverGFqx . . . . . . . . . . . . . . rcwa groups over GF(q)[x]
 ##
-##  The category of all modular rcwa groups.
+##  The category of all rcwa groups over polynomial rings in one variable
+##  over finite fields.
 ##
-DeclareSynonym( "IsModularRcwaGroup",
-                 CategoryCollections(IsModularRcwaMapping) and IsGroup );
+DeclareSynonym( "IsRcwaGroupOverGFqx",
+                 CategoryCollections(IsRcwaMappingOfGFqx) and IsGroup );
 
 #############################################################################
 ##
-#C  CategoryCollections( IsIntegralRcwaMapping ) . . .  integral rcwa domains
+#C  CategoryCollections( IsRcwaMappingOfZ ) . . . . . . . rcwa domains over Z
 ##
-##  The category of all domains formed out of integral rcwa mappings.
+##  The category of all domains formed out of rcwa mappings of Z.
 ##
-DeclareCategoryCollections( "IsIntegralRcwaMapping" );
+DeclareCategoryCollections( "IsRcwaMappingOfZ" );
 
 #############################################################################
 ##
-#V  TrivialIntegralRcwaGroup( <G> ) . . . . . . . trivial integral rcwa group
+#V  TrivialRcwaGroupOverZ( <G> ) . . . . . . . . .  trivial rcwa group over Z
 #V  TrivialRcwaGroup( <G> )
 ##
-DeclareGlobalVariable( "TrivialIntegralRcwaGroup" );
-DeclareSynonym( "TrivialRcwaGroup", TrivialIntegralRcwaGroup );
+DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );
+DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
 
 #############################################################################
 ##
@@ -166,10 +165,10 @@ DeclareProperty( "IsIntegral", IsRcwaGroup );
 ##
 ##  Indicates whether <G> is class-wise order-preserving or not.
 ##
-##  We say that an integral rcwa group <G> is *class-wise order-preserving*
+##  We say that an rcwa group <G> over $\Z$ is *class-wise order-preserving*
 ##  if all of its elements are.
 ##
-DeclareProperty( "IsClassWiseOrderPreserving", IsIntegralRcwaGroup ); 
+DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaGroupOverZ ); 
 
 #############################################################################
 ##
@@ -258,7 +257,7 @@ DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
 ##  KernelOfActionOnRespectedPartition( <G> ), in Hermite normal form.
 ##
 DeclareAttribute( "KernelOfActionOnRespectedPartitionHNFMat",
-                  IsIntegralRcwaGroup );
+                  IsRcwaGroupOverZ );
 
 #############################################################################
 ##
@@ -268,24 +267,26 @@ DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
 
 #############################################################################
 ##
-#A  IsomorphismIntegralRcwaGroup( <G> ) . . . . .  rcwa representation of <G>
+#A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . rcwa representation of <G>
 #A  IsomorphismRcwaGroup( <G> )
 ##
-##  A faithful integral rcwa representation of the group <G>.
+##  A faithful rcwa representation of the group <G> over $\Z$.
 ##
-DeclareAttribute( "IsomorphismIntegralRcwaGroup", IsGroup );
-DeclareSynonym( "IsomorphismRcwaGroup", IsomorphismIntegralRcwaGroup );
+DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
+DeclareSynonym( "IsomorphismRcwaGroup", IsomorphismRcwaGroupOverZ );
+DeclareSynonym( "IsomorphismIntegralRcwaGroup", IsomorphismRcwaGroupOverZ );
 
 #############################################################################
 ##
-#F  IntegralRcwaGroupByPermGroup( <G> ) . . . .  rcwa group isomorphic to <G>
+#F  RcwaGroupOverZByPermGroup( <G> ) . . . . . . rcwa group isomorphic to <G>
 #F  RcwaGroupByPermGroup( <G> )
 ##
 ##  Constructs an integral rcwa group isomorphic to the permutation
 ##  group <G>, which acts on [ 1 .. LargestMovedPoint( <G> ) ] as <G> does.
 ##
-DeclareGlobalFunction( "IntegralRcwaGroupByPermGroup" );
-DeclareSynonym( "RcwaGroupByPermGroup", IntegralRcwaGroupByPermGroup );
+DeclareGlobalFunction( "RcwaGroupOverZByPermGroup" );
+DeclareSynonym( "RcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
+DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
 
 #############################################################################
 ##

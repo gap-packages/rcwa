@@ -93,43 +93,44 @@ DeclareCategory( "IsRcwaMapping", IsRingElement );
 
 #############################################################################
 ##
-#C  IsIntegralRcwaMapping . . . . . . . . . . . . . .  integral rcwa mappings
+#C  IsRcwaMappingOfZ . . . . . . . . . . . . . . . . . . . rcwa mappings of Z
 ##
-##  The category of all integral rcwa mappings.
+##  The category of all rcwa mappings of $\Z$.
 ##
-DeclareCategory( "IsIntegralRcwaMapping", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfZ", IsRingElement );
 
 #############################################################################
 ##
-#C  IsSemilocalIntegralRcwaMapping . . . . . semilocal integral rcwa mappings
+#C  IsRcwaMappingOfZ_pi . . . . . . . . . . . . . . . rcwa mappings of Z_(pi)
 ##
-##  The category of all semilocal integral rcwa mappings.
+##  The category of all rcwa mappings of semilocalizations of $\Z$.
 ##
-DeclareCategory( "IsSemilocalIntegralRcwaMapping", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfZ_pi", IsRingElement );
 
 #############################################################################
 ##
-#C  IsRationalBasedRcwaMapping . . . . . semilocal- or integral rcwa mappings
+#C  IsRcwaMappingOfZOrZ_pi . . . . . . . . . . . rcwa mappings of Z or Z_(pi)
 ##
-##  The category of all integral or semilocal integral rcwa mappings.
-##  This is the union of the categories `IsIntegralRcwaMapping' and
-##  `IsSemilocalIntegralRcwaMapping'.
+##  The category of all rcwa mappings of the ring $\Z$ or semilocalizations
+##  thereof. This is the union of the categories `IsRcwaMappingOfZ' and
+##  `IsRcwaMappingOfZ_pi'.
 ##
-DeclareCategory( "IsRationalBasedRcwaMapping", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfZOrZ_pi", IsRingElement );
 
 #############################################################################
 ##
-#C  IsModularRcwaMapping . . . . . . . . . . . . . . .  modular rcwa mappings
+#C  IsRcwaMappingOfGFqx . . . . . . . . . . . . . . rcwa mappings of GF(q)[x]
 ##
-##  The category of all modular rcwa mappings.
+##  The category of all rcwa mappings of polynomial rings in one variable
+##  over finite fields.
 ##
-DeclareCategory( "IsModularRcwaMapping", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfGFqx", IsRingElement );
 
 #############################################################################
 ##
 #A  UnderlyingField( <f> ) . . . . . . coefficient field of the source of <f>
 ##
-DeclareAttribute( "UnderlyingField", IsModularRcwaMapping );
+DeclareAttribute( "UnderlyingField", IsRcwaMappingOfGFqx );
 
 #############################################################################
 ##
@@ -139,20 +140,20 @@ DeclareGlobalFunction( "RcwaMappingsFamily" );
 
 #############################################################################
 ##
-#F  SemilocalIntegralRcwaMappingsFamily( <primes> )
+#F  RcwaMappingsOfZ_piFamily( <primes> )
 ##
-##  Family of semilocal integral rcwa mappings with underlying ring
-##  $\Z_{(\pi)}$, where the set $\pi$ is given by the list <primes>.
+##  Family of rcwa mappings with underlying ring $\Z_{(\pi)}$, where the set
+##  $\pi$ is given by the list <primes>.
 ##
-DeclareGlobalFunction( "SemilocalIntegralRcwaMappingsFamily" );
+DeclareGlobalFunction( "RcwaMappingsOfZ_piFamily" );
 
 #############################################################################
 ##
-#F  ModularRcwaMappingsFamily( <R> ) . . . .  family of modular rcwa mappings
+#F  RcwaMappingsOfGFqxFamily( <R> ) . family of rcwa mappings of R = GF(q)[x]
 ##
-##  Family of modular rcwa mappings with underlying polynomial ring <R>.
+##  Family of rcwa mappings of $R$ = GF($q$)[$x$].
 ##
-DeclareGlobalFunction( "ModularRcwaMappingsFamily" );
+DeclareGlobalFunction( "RcwaMappingsOfGFqxFamily" );
 
 #############################################################################
 ##
@@ -303,15 +304,15 @@ DeclareGlobalFunction( "ClassUnionShift" );
 
 #############################################################################
 ##
-#V  ZeroIntegralRcwaMapping . . . . . . . . . . .  zero integral rcwa mapping
+#V  ZeroRcwaMappingOfZ . . . . . . . . . . . . . . . . zero rcwa mapping of Z
 ##
-DeclareGlobalVariable( "ZeroIntegralRcwaMapping" );
+DeclareGlobalVariable( "ZeroRcwaMappingOfZ" );
 
 #############################################################################
 ##
-#V  IdentityIntegralRcwaMapping . . . . . . .  identity integral rcwa mapping
+#V  IdentityRcwaMappingOfZ . . . . . . . . . . . . identity rcwa mapping of Z
 ##
-DeclareGlobalVariable( "IdentityIntegralRcwaMapping" );
+DeclareGlobalVariable( "IdentityRcwaMappingOfZ" );
 
 #############################################################################
 ##
@@ -365,8 +366,7 @@ DeclareProperty( "IsTame", IsRcwaMapping );
 #P  IsIntegral( <f> ) . . . . . . .  indicates whether or not <f> is integral
 ##
 ##  We say that an rcwa mapping is *integral* if and only if its divisor is
-##  equal to 1. This should not be confused with the term ``integral rcwa
-##  mapping'' for an rcwa mapping of the integers.
+##  equal to 1.
 ##
 DeclareProperty( "IsIntegral", IsRcwaMapping );
 
@@ -383,10 +383,10 @@ DeclareProperty( "IsBalanced", IsRcwaMapping );
 ##
 #P  IsClassWiseOrderPreserving( <f> ) .  is <f> class-wise order-preserving ?
 ##
-##  Indicates whether or not the rational-based rcwa mapping <f> is
+##  Indicates whether or not the rcwa mapping <f> of $\Z$ or $\Z_{\pi}$ is
 ##  class-wise order-preserving.
 ##
-DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping ); 
+DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMappingOfZOrZ_pi ); 
 
 #############################################################################
 ##
@@ -399,15 +399,15 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRationalBasedRcwaMapping );
 ##  class-wise constant.
 ##
 DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
-                  IsRationalBasedRcwaMapping );
+                  IsRcwaMappingOfZOrZ_pi );
 DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderReversing",
-                  IsRationalBasedRcwaMapping );
+                  IsRcwaMappingOfZOrZ_pi );
 DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
-                  IsRationalBasedRcwaMapping );
+                  IsRcwaMappingOfZOrZ_pi );
 
 #############################################################################
 ##
-#A  Sign( <f> ) . . . . . . . . . . the sign of the integral rcwa mapping <f>
+#A  Sign( <f> ) . . . . . . . . . . . . the sign of the rcwa mapping <f> of Z
 ##
 ##  The *sign* of the rcwa mapping <f>. The sign mapping is an epimorphism
 ##  from RCWA($\Z$) to U($\Z$).
