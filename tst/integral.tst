@@ -1168,6 +1168,25 @@ gap> last = Cycle(SemilocalizedRcwaMapping(T,[2,3]),131/13);
 true
 gap> Length(Cycle(mKnot(7),1621));
 265
+gap> Sources(kappa);
+[  ]
+gap> Sources(a);
+[  ]
+gap> Sources(nu*nu^a);
+[ 2(6) ]
+gap> [ Sinks(kappa), Sinks(a) ];
+[ [  ], [  ] ]
+gap> Sinks(nu*nu^a);
+[ 3(6) ]
+gap> Sinks(Product(List([[1,4,2,4],[1,4,3,4],[3,6,7,12],[2,4,3,6]],
+>                       ClassTransposition)));
+[ 3(6) U 1(12) ]
+gap> Loops(kappa);
+[ 10(12) ]
+gap> Loops(a);
+[ 0(4), 1(4), 3(4) ]
+gap> Loops(nu*nu^a);
+[ 2(6), 3(6) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
