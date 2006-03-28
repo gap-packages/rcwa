@@ -450,7 +450,7 @@ gap> f6 := RcwaMapping([[ 1,0,6],[ 5, 1,6],[ 7,-2,6],
 gap> SetName(f6,"f6");
 gap> Display(f6);
 
-Integral rcwa mapping with modulus 6
+Rcwa mapping of Z with modulus 6
 
                 n mod 6                |                 n^f6
 ---------------------------------------+--------------------------------------

@@ -863,6 +863,8 @@ gap> PrimeSet(r);
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Prop Name="IsIntegral" Arg="f" Label="f"/>
   <Returns>
@@ -872,11 +874,7 @@ gap> PrimeSet(r);
   <Description>
     An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1,
     thus <Q>if no proper divisions occur</Q>. Computing with such mappings
-    is particularly easy. <P/>
-
-    Be careful not to confuse this with the term <E>integral rcwa mapping</E>
-    for rcwa mappings of the integers; normally it should be rather clear
-    what is meant.
+    is particularly easy.
 <Example>
 <![CDATA[
 gap> List( [ u, t, RcwaMapping([[2,0,1],[3,5,1]]) ], IsIntegral );
@@ -1549,9 +1547,9 @@ gap> List( [ T, a ], GuessedDivergence );
 
 <ManSection>
   <Filt Name="IsRcwaMapping" Arg="f" Label="f"/>
-  <Filt Name="IsIntegralRcwaMapping" Arg="f" Label="f"/>
-  <Filt Name="IsSemilocalIntegralRcwaMapping" Arg="f" Label="f"/>
-  <Filt Name="IsModularRcwaMapping" Arg="f" Label="f"/>
+  <Filt Name="IsRcwaMappingOfZ" Arg="f" Label="f"/>
+  <Filt Name="IsRcwaMappingOfZ_pi" Arg="f" Label="f"/>
+  <Filt Name="IsRcwaMappingOfGFqx" Arg="f" Label="f"/>
   <Returns>
     <C>true</C> if <A>f</A> is an rcwa mapping resp.
     an rcwa mapping of the ring of integers resp.
