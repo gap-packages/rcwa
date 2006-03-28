@@ -156,6 +156,9 @@ Changes between version 1.4.2 and version 1.4.4:
 
 Changes between version 1.4.4 and version 1.4.5:
 
+ - Attributes `Sources', `Sinks' and `Loops' have been introduced.
+
  - Some minor adjustments to output formatting improvements in
    ResClasses 2.2.2 have been made. RCWA requires now ResClasses 2.2.2.
+
 
