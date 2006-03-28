@@ -4,7 +4,7 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains the rcwa mappings used in the examples in the manual,
+##  This file contains the rcwa mappings used in the examples in the manual
 ##  as well as a number of other interesting or illustrative examples.
 ##
 
