@@ -14,7 +14,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-The &RCWA; package needs at least &GAP;&nbsp;4.4.6, &ResClasses;&nbsp;2.2.0,
+The &RCWA; package needs at least &GAP;&nbsp;4.4.6, &ResClasses;&nbsp;2.2.2,
 <Package>GRAPE</Package>&nbsp;4.0&nbsp;<Cite Key="GRAPE"/> and
 &GAPDoc;&nbsp;0.999&nbsp;<Cite Key="GAPDoc"/>.
 It can be used under UNIX, under Windows and on the MacIntosh.
