@@ -154,7 +154,7 @@ Changes between version 1.4.2 and version 1.4.4:
    Timothy P. Keller. Finite Cycles of Certain Periodically Linear
    Permutations. Missouri J. Math. Sci. 11(1999), no. 3, 152-157.
 
-Changes between version 1.4.4 and version 1.5.0:
+Changes between version 1.4.4 and version 1.5.1 (March 29, 2006):
 
  - Attributes `Sources', `Sinks' and `Loops' have been introduced.
 
