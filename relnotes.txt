@@ -180,4 +180,6 @@ Changes between version 1.5.1 and version 1.5.2:
    which transfers the construction of Schottky groups from PSL(2,C) to
    RCWA(Z).
 
+ - Added an example `A representation of the modular group PSL(2,Z)'.
+
 
