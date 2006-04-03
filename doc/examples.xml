@@ -2758,9 +2758,8 @@ We can do some checks:
 <Example>
 <![CDATA[
 gap> X1 := Union(D{[1,2]});; X2 := Union(D{[3,4]});;
-gap> IsSubset(X1,X2^gamma1) and IsSubset(X1,X2^(gamma1^-1));
-true
-gap> IsSubset(X2,X1^gamma2) and IsSubset(X2,X1^(gamma2^-1));
+gap>     IsSubset(X1,X2^gamma1) and IsSubset(X1,X2^(gamma1^-1))
+>    and IsSubset(X2,X1^gamma2) and IsSubset(X2,X1^(gamma2^-1));
 true
 ]]>
 </Example>
