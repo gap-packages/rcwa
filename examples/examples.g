@@ -717,9 +717,15 @@ F2 := Group((tau*ClassTransposition(0,2,1,4))^2,
             (tau*ClassTransposition(0,2,3,4))^2);
 SetName(F2,"F_2");
 
-PSL2Z := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
-               ClassTransposition(1,3,0,6)*ClassTransposition(2,3,3,6));
+PSL2Z := Group(ClassTransposition(0,3,1,3) * ClassTransposition(0,3,2,3),
+               ClassTransposition(1,3,0,6) * ClassTransposition(2,3,3,6));
 SetName(PSL2Z,"PSL(2,Z)");
+
+# Roots of generators of F2:
+
+r1 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4);
+r2 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,3,4);
+SetName(r1,"r1"); SetName(r2,"r2");
 
 #############################################################################
 ##
