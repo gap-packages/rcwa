@@ -174,4 +174,10 @@ Changes between version 1.4.4 and version 1.5.1 (March 29, 2006):
  - Some minor adjustments to output formatting improvements in
    ResClasses 2.2.2 have been made. RCWA requires now ResClasses 2.2.2.
 
+Changes between version 1.5.1 and version 1.5.2:
+
+ - Added an example `Representations of the free group of rank 2',
+   which transfers the construction of Schottky groups from PSL(2,C) to
+   RCWA(Z).
+
 
