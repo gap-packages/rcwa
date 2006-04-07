@@ -1162,7 +1162,8 @@ InstallMethod( Size,
 
     orbs := List(RespectedPartition(G),cl->[Representative(cl)]);
     if IsClassWiseOrderPreserving(G) then maxpts := 1; else
-      orbs   := Concatenation(orbs,orbs+List(RespectedPartition(G),Modulus));
+      orbs   := Concatenation(orbs,orbs+List(RespectedPartition(G),
+                                             cl->[Modulus(cl)]));
       maxpts := 2;
     fi;
     gens := GeneratorsAndInverses(G);
