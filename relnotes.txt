@@ -176,12 +176,12 @@ Changes between version 1.4.4 and version 1.5.1 (March 29, 2006):
 
 Changes between version 1.5.1 and version 1.5.2:
 
- - An example `Representations of the free group of rank 2' has been added.
-   This example shows a transfer of the construction of the Schottky groups
-   from PSL(2,C) to RCWA(Z).
+ - An example `Representations of the free group of rank 2' has been added
+   to the manual. This example shows a transfer of the construction of the
+   Schottky groups from PSL(2,C) to RCWA(Z).
 
  - An example `A representation of the modular group PSL(2,Z)' has been
-   added.
+   added to the manual.
 
  - A bug in the `Size' method for tame finite rcwa groups which are not
    class-wise order-preserving has been fixed. In certain situations this
