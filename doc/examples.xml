@@ -2619,8 +2619,6 @@ gap> List(H,NilpotencyClassOfGroup);
 ]]>
 </Example>
 
-<Alt Only="HTML">&nbsp;</Alt>
-
 </Section>
 
 <!-- #################################################################### -->
@@ -2723,8 +2721,6 @@ gap> k;
 17
 ]]>
 </Example>
-
-<Alt Only="HTML">&nbsp;</Alt>
 
 </Section>
 
