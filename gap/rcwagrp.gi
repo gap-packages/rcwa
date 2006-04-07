@@ -1145,7 +1145,7 @@ InstallMethod( Size,
 
   function ( G )
 
-    local  S, S_old, g;
+    local  orbs, orbs_old, gens, g, maxpts;
 
     # A few `trivial' checks.
 
@@ -1154,33 +1154,27 @@ InstallMethod( Size,
     then return infinity; fi;
     if not IsTame(G) then return infinity; fi;
 
-    # Look for an infinite cyclic subgroup in the kernel of the action
-    # of <G> on a respected partition.
+    # On the one hand, an orbit of a finite tame group <G> can intersect
+    # at most in 1 resp. 2 points with any residue class in a respected
+    # partition, depending on whether <G> is class-wise order-preserving
+    # or not. On the other, if <G> is infinite, one of its orbits contains
+    # an entire residue class from the respected partition.
 
-    Info(InfoRCWA,1,"Size: use action on respected partition.");
-    if RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed) > 0
-    then return infinity; fi;
-
-    # If we have not found one, the group <G> is likely finite.
-
-    # Note that a class reflection of a residue class r(m) can fix
-    # one element in r(m), but not two. This means that <G> acts
-    # faithfully on the orbit containing the following set <S>:
-
-    if   IsClassWiseOrderPreserving(G)
-    then S := List(RespectedPartition(G),Representative);
-    else S := Flat(List(RespectedPartition(G),
-                        cl->[0,Modulus(cl)]+Representative(cl)));
+    orbs := List(RespectedPartition(G),cl->[Representative(cl)]);
+    if IsClassWiseOrderPreserving(G) then maxpts := 1; else
+      orbs   := Concatenation(orbs,orbs+List(RespectedPartition(G),Modulus));
+      maxpts := 2;
     fi;
-
+    gens := GeneratorsAndInverses(G);
     repeat
-      S_old := ShallowCopy(S);
-      for g in GeneratorsOfGroup(G) do S := Union(S,S^g); od;
-      if   Length(S) > 10 * Length(RespectedPartition(G))
-      then TryNextMethod(); fi;
-    until S = S_old;
+      orbs_old := List(orbs,ShallowCopy);
+      for g in gens do orbs := List(orbs,orb->Union(orb,orb^g)); od;
+    until orbs = orbs_old
+       or ForAny(orbs,orb->ForAny(RespectedPartition(G),
+                                  cl->Length(Intersection(cl,orb))>maxpts));
 
-    return Size(Action(G,S)); # Now, <G> must act faithfully on <S>.
+    if orbs = orbs_old then return Size(Action(G,Union(orbs)));
+                       else return infinity; fi;
   end );
 
 #############################################################################

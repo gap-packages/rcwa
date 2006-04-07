@@ -182,4 +182,8 @@ Changes between version 1.5.1 and version 1.5.2:
 
  - Added an example `A representation of the modular group PSL(2,Z)'.
 
+ - Fixed a bug in the `Size' method for non-class-wise order-preserving
+   tame finite rcwa groups. In certain situations this bug falsely caused
+   the method to return `infinity'.
+
 

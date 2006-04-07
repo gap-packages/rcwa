@@ -1187,6 +1187,10 @@ gap> Loops(a);
 [ 0(4), 1(4), 3(4) ]
 gap> Loops(nu*nu^a);
 [ 2(6), 3(6) ]
+gap> G := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
+>               ClassTransposition(0,3,1,3),ClassReflection(0,3));;
+gap> Size(G);
+48
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
