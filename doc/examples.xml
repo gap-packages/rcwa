@@ -2581,7 +2581,7 @@ in&nbsp;<Cite Key="Grigorchuk80"/> are constructed:
 <Example>
 <![CDATA[
 gap> FourCycle := RcwaMapping((4,5,6,7),[4..7]);
-<rcwa mapping of Z with modulus 4>
+<rcwa mapping of Z with modulus 4, of order 4>
 gap> GrigorchukGroup2Generator := function ( level )
 >      if level = 1 then return FourCycle; else
 >        return   Restriction(FourCycle, RcwaMapping([[4,1,1]]))

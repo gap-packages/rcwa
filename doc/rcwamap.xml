@@ -397,7 +397,7 @@ gap> f := RcwaMapping([[1,1,1],[1,-1,1],[1,1,1],[1,-1,1]]);
 gap> f = RcwaMapping((2,3),[2..3]);
 true
 gap> g := RcwaMapping((1,2,3)(8,9),[4..20]);
-<rcwa mapping of Z with modulus 17>
+<rcwa mapping of Z with modulus 17, of order 2>
 gap> Action(Group(g),[4..20]);
 Group([ (5,6) ])
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
@@ -1503,7 +1503,6 @@ non-probabilistic functionality related to trajectories of rcwa mappings.
     to be searched.
     If the limit <A>bound</A> is exceeded, an Info message on Info
     level&nbsp;3 of <C>InfoRCWA</C> is given.
-
 <Example>
 <![CDATA[
 gap> S0 := LikelyContractionCentre(T,100,1000);
