@@ -187,4 +187,18 @@ Changes between version 1.5.1 and version 1.5.2:
    order-preserving has been fixed. In certain situations this bug falsely
    caused the method to return `infinity'.
 
+Changes between version 1.5.2 and version 1.6.0 (April 18, 2006)
+
+ - Two Methods for `WreathProduct' have been added:
+
+     * for an rcwa group over Z and a finite permutation group, and
+     * for an rcwa group over Z and an infinite cyclic group.
+
+ - An `IsomorphismRcwaGroup' method for free groups has been added.
+
+ - Properties `IsClassShift', `IsClassReflection', `IsClassTransposition'
+   and `IsPrimeSwitch' have been introduced.
+
+ - An attribute `TransposedClasses' for class transpositions has been
+   introduced.
 

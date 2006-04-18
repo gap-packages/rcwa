@@ -179,16 +179,22 @@ rcwa representation:
 
 <ManSection>
   <Attr Name="IsomorphismRcwaGroup" Arg="G" Label="G"/>
-  <Func Name="RcwaGroupByPermGroup" Arg="G" Label="G"/>
   <Returns>
-    A monomorphism from the group <A>G</A> to&nbsp;RCWA(<M>\Z</M>),
-    resp. an rcwa group over&nbsp;<M>\mathbb{Z}</M> which is isomorphic
-    to the finite-degree permutation group&nbsp;<A>G</A> and acts on the
-    range <C>[1..LargestMovedPoint(</C><A>G</A><C>)]</C>
-    as&nbsp;<A>G</A>&nbsp;does.
+    A monomorphism from the group <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
   </Returns>
   <Description>
-    Currently, <C>IsomorphismRcwaGroup</C> works only for finite groups.
+    Currently, <C>IsomorphismRcwaGroup</C> works only for finite groups
+    and for free groups. The method for free groups uses an adaptation
+    of the construction given on page&nbsp;27
+    in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,<M>\mathbb{C}</M>) to
+    RCWA(<M>\mathbb{Z}</M>). <P/>
+
+    In case <A>G</A> is a finite-degree permutation group,
+    the image under a specific embedding can be obtained by
+    <C>RcwaGroupByPermGroup(<A>G</A>)</C>.
+    The resulting group&nbsp;<C>H</C> satisfies the relation
+    <C>Action(H&circum;ClassShift(0,1),[1..LargestMovedPoint(<A>G</A>)])
+    =&nbsp;G</C>.
 <Example>
 <![CDATA[
 gap> G := GL(2,5);;
@@ -203,6 +209,13 @@ gap> H := RcwaGroupByPermGroup(Group((1,2),(3,4),(5,6),(7,8),
 <rcwa group over Z with 6 generators>
 gap> Size(H);; List(DerivedSeries(H),Size);
 [ 384, 96, 32, 2, 1 ]
+gap> phi := IsomorphismRcwaGroup(FreeGroup(2)); F2 := Image(phi);;
+[ f1, f2 ] -> [ <wild bijective rcwa mapping of Z with modulus 8>, 
+  <wild bijective rcwa mapping of Z with modulus 8> ]
+gap> Difference(Integers,ResidueClass(0,4))^F2.1;
+1(4)
+gap> Difference(Integers,ResidueClass(2,4))^F2.2;
+3(4)
 ]]>
 </Example>
   </Description>
@@ -224,6 +237,9 @@ gap> Size(H);; List(DerivedSeries(H),Size);
     elements in case such an lcm exists and 0 otherwise. <P/>
 
     See also <Ref Prop="IsTame" Label="G"/>.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> Modulus(Group(g,h));
@@ -234,13 +250,6 @@ gap> g2 := RcwaMapping((1,2,3),[1..3]);
 <rcwa mapping of Z with modulus 3>
 gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
 <rcwa mapping of Z with modulus 5>
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> G := Group(g1,g2,g3);
 <rcwa group over Z with 3 generators>
 gap> Modulus(G);
@@ -805,8 +814,8 @@ gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
 <![CDATA[
 gap> A5 := RcwaGroupByPermGroup(AlternatingGroup(5));;
 gap> ShortOrbits(A5,[-10..10],100);
-[ [ -14, -13, -12, -11, -10 ], [ -9, -8, -7, -6, -5 ], [ -4, -3, -2, -1, 0 ], 
-  [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ]
+[ [ -10, -9, -8, -7, -6 ], [ -5, -4, -3, -2, -1 ], [ 0, 1, 2, 3, 4 ], 
+  [ 5, 6, 7, 8, 9 ], [ 10, 11, 12, 13, 14 ] ]
 gap> Action(A5,last[2]);
 Group([ (1,2,3,4,5), (3,4,5) ])
 ]]>
@@ -1111,19 +1120,23 @@ true
   </Description>
 </ManSection>
 
-Restriction monomorphisms permit forming direct products of
-rcwa groups, regardless of whether they are tame or not:
+Restriction monomorphisms permit forming direct products and
+wreath products of rcwa groups, regardless of whether they are
+tame or not:
 
 <ManSection>
-  <Oper Name ="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
+  <Meth Name="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
   <Returns>
-    The direct product of the rcwa groups over&nbsp;<M>\Z</M>
-    given as arguments.
+    An rcwa group isomorphic to the direct product of the rcwa groups
+    over&nbsp;<M>\mathbb{Z}</M> given as arguments.
   </Returns>
   <Description>
-    As there is no unique or canonical way to embed a direct product
-    of rcwa groups into RCWA(<M>\mathbb{Z}</M>), this method may choose
-    any such embedding.
+    There is certainly no unique or canonical way to embed a direct
+    product of rcwa groups into RCWA(<M>\mathbb{Z}</M>). 
+    This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
+    <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
+    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;..., where
+    <M>m</M> denotes the number of groups given as arguments.
 <Example>
 <![CDATA[
 gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));;
@@ -1134,6 +1147,58 @@ gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
 [ 0(3), 1(3) \ [ -2, 1 ], 2(3) \ [ -1, 2 ] ]
 gap> Image(Projection(G,2)) = Group(a,b);
 true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Meth Name="WreathProduct" Arg="G, P" Label="G, P"/>
+  <Meth Name="WreathProduct" Arg="G, Z" Label="G, Z"/>
+  <Returns>
+    An rcwa group isomorphic to the wreath product of the rcwa
+    group&nbsp;<A>G</A> over&nbsp;<M>\mathbb{Z}</M> with the finite
+    permutation group&nbsp;<A>P</A>, resp. with the infinite cyclic
+    group&nbsp;<A>Z</A>.
+  </Returns>
+  <Description>
+    There is certainly no unique or canonical way to embed a wreath product
+    of rcwa groups into RCWA(<M>\mathbb{Z}</M>). The first-mentioned method
+    embeds the <C>DegreeAction(<A>P</A>)</C>th direct power of&nbsp;<A>G</A>
+    using the method for <C>DirectProduct</C>, and lets the permutation
+    group&nbsp;<A>P</A> act naturally on the set of residue classes modulo
+    <C>DegreeAction(<A>P</A>)</C>. The second-mentioned method restricts
+    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
+    generator of the infinite cyclic group <A>Z</A> to
+    <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
+<Example>
+<![CDATA[
+gap> G := Group(g,h);;
+gap> IsTame(G); Size(G);    
+true
+infinity
+gap> H := WreathProduct(G,AlternatingGroup(5));
+<tame rcwa group over Z with 12 generators>
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
+gap> Embedding(H,1);
+[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
+  <bijective rcwa mapping of Z with modulus 30, of order 12> ]
+gap> Embedding(H,2);
+[ (1,2,3,4,5), (3,4,5) ] -> 
+[ <bijective rcwa mapping of Z with modulus 5, of order 5>, 
+  <bijective rcwa mapping of Z with modulus 5, of order 3> ]
+gap> H := WreathProduct(G,Group(ClassShift(0,1)));
+<wild rcwa group over Z with 3 generators>
+gap> Support(Image(Embedding(H,1)));
+3(4)
+gap> Embedding(H,2);
+[ ClassShift(0,1) ] -> [ <wild bijective rcwa mapping of Z with modulus 4> ]
 ]]>
 </Example>
   </Description>
@@ -1170,7 +1235,6 @@ to compute the derived subgroup of a tame rcwa group.
     of&nbsp;<A>G</A> resp. all powers of&nbsp;<A>sigma</A> are affine.
     In the author's thesis it is shown that such a partition exists if and
     only if <A>G</A> resp. <A>sigma</A> is tame (see Theorem&nbsp;2.5.8).
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> G := Group(g,h);; Size(G);
@@ -1249,26 +1313,30 @@ true
     IntegralConjugate(<A>G</A>)</C> resp.
     <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
     IntegralConjugate(<A>f</A>)</C>.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
-gap> Print(LaTeXObj(IntegralizingConjugator(g)));
-n \ \longmapsto \
-\begin{cases}
-  \frac{7n}{6}        & \text{if} \ n \in 0(12), \\
-  \frac{7n - 1}{6}    & \text{if} \ n \in 1(12), \\
-  \frac{7n + 106}{12} & \text{if} \ n \in 2(24), \\
-  \frac{7n - 9}{6}    & \text{if} \ n \in 3(12), \\
-  \frac{7n - 10}{6}   & \text{if} \ n \in 4(12), \\
-  \frac{7n - 11}{6}   & \text{if} \ n \in 5(12), \\
-  \frac{7n - 12}{6}   & \text{if} \ n \in 6(12), \\
-  \frac{7n - 13}{6}   & \text{if} \ n \in 7(12), \\
-  \frac{7n + 76}{12}  & \text{if} \ n \in 8(24), \\
-  \frac{7n - 21}{6}   & \text{if} \ n \in 9(12), \\
-  \frac{7n - 22}{6}   & \text{if} \ n \in 10(12), \\
-  \frac{7n - 23}{6}   & \text{if} \ n \in 11(12), \\
-  \frac{7n + 46}{12}  & \text{if} \ n \in 14(24), \\
-  \frac{7n + 16}{12}  & \text{if} \ n \in 20(24).
-\end{cases}
+gap> Display(IntegralizingConjugator(g));
+
+Bijective rcwa mapping of Z with modulus 24
+
+               n mod 24                |                 n^f
+---------------------------------------+--------------------------------------
+   0 12                                | 7n/6
+   1 13                                | (7n - 1)/6
+   2                                   | (7n + 106)/12
+   3 15                                | (7n - 9)/6
+   4 16                                | (7n - 10)/6
+   5 17                                | (7n - 11)/6
+   6 18                                | (7n - 12)/6
+   7 19                                | (7n - 13)/6
+   8                                   | (7n + 76)/12
+   9 21                                | (7n - 21)/6
+  10 22                                | (7n - 22)/6
+  11 23                                | (7n - 23)/6
+  14                                   | (7n + 46)/12
+  20                                   | (7n + 16)/12
+
 ]]>
 </Example>
   </Description>

@@ -247,29 +247,39 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 ##
 #F  ClassShift( <r>, <m> ) . . . . . . . . . . . . . . .  class shift nu_r(m)
 #F  ClassShift( [ <r>, <m> ] )
+#P  IsClassShift( <sigma> )
 ##
 DeclareGlobalFunction( "ClassShift" );
+DeclareProperty( "IsClassShift", IsRcwaMapping );
 
 #############################################################################
 ##
 #F  ClassReflection( <r>, <m> ) . . . . . . .  class reflection varsigma_r(m)
 #F  ClassReflection( [ <r>, <m> ] )
+#P  IsClassReflection( <sigma> )
 ##
 DeclareGlobalFunction( "ClassReflection" );
+DeclareProperty( "IsClassReflection", IsRcwaMapping );
 
 #############################################################################
 ##
 #F  ClassTransposition( <r1>, <m1>, <r2>, <m2> ) . . . .  class transposition
 #F  ClassTransposition( [ <r1>, <m1>, <r2>, <m2> ] )
+#P  IsClassTransposition( <sigma> )
+#A  TransposedClasses( <ct> )
 ##
 DeclareGlobalFunction( "ClassTransposition" );
+DeclareProperty( "IsClassTransposition", IsRcwaMapping );
+DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 
 #############################################################################
 ##
 #F  PrimeSwitch( <p> ) .  rcwa mapping of Z with multiplier <p> and divisor 2
 #F  PrimeSwitch( <p>, <k> )
+#P  IsPrimeSwitch( <sigma> )
 ##
 DeclareGlobalFunction( "PrimeSwitch" );
+DeclareProperty( "IsPrimeSwitch", IsRcwaMapping );
 
 #############################################################################
 ##

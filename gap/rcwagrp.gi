@@ -530,7 +530,7 @@ InstallMethod( Support,
 #M  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . . . . . . for finite group
 #M  IsomorphismRcwaGroup( <G> )
 ##
-##  This is a rather simple-minded method.
+##  This is a simple method which just embeds <G> into Sym($\Z/m\Z$).
 ##
 InstallMethod( IsomorphismRcwaGroupOverZ,
                "generic method for finite groups (RCWA)", true,
@@ -543,11 +543,10 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
     if IsRcwaGroupOverZ(G) then return IdentityMapping(G); fi;
     if   not IsPermGroup(G) 
     then phi1 := IsomorphismPermGroup(G); G2 := Image(phi1);
-    else phi1 := IdentityMapping(G);      G2 := G;
-    fi;
+    else phi1 := IdentityMapping(G);      G2 := G; fi;
     n := LargestMovedPoint(G2);
     H := GroupWithGenerators(List(GeneratorsOfGroup(G2),
-                                  g -> RcwaMapping(g,[1..n])));
+           g -> RcwaMapping(g,[1..n])))^(ClassShift(0,1)^-1);
     phi2 := GroupHomomorphismByImagesNC(G2,H,GeneratorsOfGroup(G2),
                                              GeneratorsOfGroup(H));
     return Immutable(CompositionMapping(phi2,phi1));
@@ -572,8 +571,6 @@ InstallGlobalFunction( RcwaGroupOverZByPermGroup,
     SetIsomorphismPermGroup(H,phi_1);
     SetNiceMonomorphism(H,phi_1);
     SetNiceObject(H,G);
-    # SetIsHandledByNiceMonomorphism(H,true);
-
     return H;
   end );
 
@@ -1215,7 +1212,7 @@ InstallMethod( IntegralizingConjugator,
 
   function ( sigma )
 
-    local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
+    local  result, pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
 
     if IsIntegral(sigma) then return One(sigma); fi;
     pcp := RespectedPartition(sigma); 
@@ -1229,7 +1226,9 @@ InstallMethod( IntegralizingConjugator,
         c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
       od;
     od;
-    return RcwaMapping(c);
+    result := RcwaMapping(c);
+    SetIsBijective(result,true);
+    return result;
   end );
 
 #############################################################################
@@ -2164,6 +2163,54 @@ InstallOtherMethod( OrbitOp,
     return OrbitUnion(G,S);
   end );
 
+
+#############################################################################
+##
+#M  ViewObj( <RG> ) . . . . . . . . . . . . . .  for group ring of rcwa group
+##
+InstallMethod( ViewObj,
+               "for group rings of rcwa groups (RCWA)",
+               ReturnTrue, [ IsGroupRing ], 100,
+
+  function ( RG )
+
+    local  R, G;
+
+    R := LeftActingDomain(RG); G := UnderlyingGroup(RG);
+    if not IsRcwaGroup(G) or R <> Source(One(G)) then TryNextMethod(); fi;
+    Print(RingToString(R)," "); ViewObj(G);
+  end );
+
+#############################################################################
+##
+#M  ViewObj( <elm> ) . . . . . . . .  for element of group ring of rcwa group
+##
+InstallMethod( ViewObj,
+               "for elements of group rings of rcwa groups (RCWA)",
+               ReturnTrue, [ IsElementOfFreeMagmaRing ], 100,
+
+  function ( elm )
+
+    local  l, grpelms, coeffs, supplng, g, i;
+
+    l       := CoefficientsAndMagmaElements(elm);
+    grpelms := l{[1,3..Length(l)-1]};
+    coeffs  := l{[2,4..Length(l)]};
+    supplng := Length(grpelms);
+    if not ForAll(grpelms,IsRcwaMapping) then TryNextMethod(); fi;
+    if supplng = 0 then Print("0"); return; fi;
+    for i in [1..supplng] do
+      if coeffs[i] < 0 then
+        if i > 1 then Print(" - "); else Print("-"); fi;
+      else
+        if i > 1 then Print(" + "); fi;
+      fi;
+      if AbsInt(coeffs[i]) > 1 then Print(AbsInt(coeffs[i]),"*"); fi;
+      ViewObj(grpelms[i]);
+      if i < supplng then Print("\n"); fi;
+    od;
+  end );
+
 #############################################################################
 ##
 #M  EpimorphismFromFreeGroup( <G> ) . . . . . . . . . . . . .  for rcwa group
@@ -2511,7 +2558,7 @@ InstallMethod( DirectProductOp,
     then SetIsTame(D,true); fi;
     if   ForAny(groups,grp->HasIsTame(grp) and not IsTame(grp))
     then SetIsTame(D,false); fi;
-    if   ForAny(groups,grp->HasSize(grp) and Size(grp) = infinity)
+    if   ForAny(groups,grp->HasSize(grp) and not IsFinite(grp))
     then SetSize(D,infinity); fi;
     if   ForAll(groups,grp->HasSize(grp) and IsInt(Size(grp)))
     then SetSize(D,Product(List(groups,Size))); fi;
@@ -2521,49 +2568,132 @@ InstallMethod( DirectProductOp,
 
 #############################################################################
 ##
-#M  ViewObj( <RG> ) . . . . . . . . . . . . . .  for group ring of rcwa group
+#M  WreathProduct( <G>, <P> ) .  for rcwa group over Z and finite perm.-group
 ##
-InstallMethod( ViewObj,
-               "for group rings of rcwa groups (RCWA)",
-               ReturnTrue, [ IsGroupRing ], 100,
+InstallMethod( WreathProduct,
+               "for an rcwa group over Z and a finite perm.-group (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPermGroup ], 0,
 
-  function ( RG )
+  function ( G, P )
 
-    local  R, G;
+    local  prod, info, m, orbreps, blocks, base, h, nrgensG;
 
-    R := LeftActingDomain(RG); G := UnderlyingGroup(RG);
-    if not IsRcwaGroup(G) or R <> Source(One(G)) then TryNextMethod(); fi;
-    Print(RingToString(R)," "); ViewObj(G);
+    nrgensG := Length(GeneratorsOfGroup(G));
+    m       := DegreeAction(P);
+    orbreps := List(Orbits(P,MovedPoints(P)),Representative);
+    blocks  := AllResidueClassesModulo(m);
+    base    := DirectProduct(List([0..m-1],r->G));
+    h       := RcwaGroupByPermGroup(P);
+    prod    := Group(Concatenation(GeneratorsOfGroup(base),
+                                   GeneratorsOfGroup(h)));
+    info    := rec( groups := [ G, P ], alpha := IdentityMapping(P),
+                    base := base, basegens := GeneratorsOfGroup(base),
+                    I := P, degI := m, hgens := GeneratorsOfGroup(h),
+                    components := blocks,
+                    embeddings := [ GroupHomomorphismByImagesNC( G, prod,
+                                      GeneratorsOfGroup(G),
+                                      ~.basegens{[1..nrgensG]} ),
+                                    GroupHomomorphismByImagesNC( P, prod,
+                                      GeneratorsOfGroup(P), ~.hgens ) ] );
+    SetWreathProductInfo(prod,info);
+    if HasIsTame(G) then
+      if IsTame(G) then
+        SetIsTame(prod,true);
+        if HasRespectedPartition(G) then
+          SetRespectedPartition(prod,Union(List([0..m-1],
+                                     r->m*RespectedPartition(G)+r)));
+        fi;
+      else SetIsTame(prod,false); fi;
+    fi;
+    if HasSize(G) then
+      if IsFinite(G) then SetSize(prod,Size(G)^m*Size(P));
+                     else SetSize(prod,infinity); fi;
+    fi;
+    return prod;
   end );
 
 #############################################################################
 ##
-#M  ViewObj( <elm> ) . . . . . . . .  for element of group ring of rcwa group
+#M  WreathProduct( <G>, <Z> ) . . . . . . . . for rcwa group over Z and (Z,+)
 ##
-InstallMethod( ViewObj,
-               "for elements of group rings of rcwa groups (RCWA)",
-               ReturnTrue, [ IsElementOfFreeMagmaRing ], 100,
+InstallMethod( WreathProduct,
+               "for an rcwa group over Z and an infinite cyclic gp. (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsGroup and IsCyclic ], 0,
 
-  function ( elm )
+  function ( G, Z )
 
-    local  l, grpelms, coeffs, supplng, g, i;
+    local  prod, info, Gpi, z;
 
-    l       := CoefficientsAndMagmaElements(elm);
-    grpelms := l{[1,3..Length(l)-1]};
-    coeffs  := l{[2,4..Length(l)]};
-    supplng := Length(grpelms);
-    if not ForAll(grpelms,IsRcwaMapping) then TryNextMethod(); fi;
-    if supplng = 0 then Print("0"); return; fi;
-    for i in [1..supplng] do
-      if coeffs[i] < 0 then
-        if i > 1 then Print(" - "); else Print("-"); fi;
-      else
-        if i > 1 then Print(" + "); fi;
-      fi;
-      if AbsInt(coeffs[i]) > 1 then Print(AbsInt(coeffs[i]),"*"); fi;
-      ViewObj(grpelms[i]);
-      if i < supplng then Print("\n"); fi;
+    if   Length(GeneratorsOfGroup(Z)) <> 1 or IsFinite(Z)
+    then TryNextMethod(); fi;
+    Gpi := Restriction(G,RcwaMapping([[4,3,1]]));
+    z   := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4);
+    SetIsTame(z,false); SetOrder(z,infinity);
+    prod := Group(Concatenation(GeneratorsOfGroup(Gpi),[z]));
+    info := rec( groups := [ G, Z ], alpha := IdentityMapping(Z),
+                 I := Z, degI := infinity, hgens := [ z ],
+                 embeddings := [ GroupHomomorphismByImagesNC( G, prod,
+                                   GeneratorsOfGroup(G),
+                                   GeneratorsOfGroup(Gpi)),
+                                 GroupHomomorphismByImagesNC( Z, prod,
+                                   GeneratorsOfGroup(Z), [z] ) ] );
+    SetWreathProductInfo(prod,info);
+    SetIsTame(prod,false); SetSize(prod,infinity);
+    return prod;
+  end );
+
+#############################################################################
+##
+#M  Embedding( <W>, <i> ) . . . . . . . . . . . for wreath product and 1 or 2
+##
+InstallMethod( Embedding,
+               "for a wreath product and 1 or 2 (RCWA)",
+               ReturnTrue, [ HasWreathProductInfo, IsPosInt ], 0,
+
+  function ( W, i )
+    if not i in [1,2] then TryNextMethod(); fi;
+    return WreathProductInfo(W).embeddings[i];
+  end );
+
+#############################################################################
+##
+#M  IsomorphismRcwaGroupOverZ( <F> ) . . . . . . . . . . . . . for free group
+#M  IsomorphismRcwaGroup( <F> )
+##
+##  This method uses an adaptation of the construction given on page 27
+##  of the book Pierre de la Harpe: Topics in Geometric Group Theory from
+##  PSL(2,C) to RCWA(Z).
+##
+InstallMethod( IsomorphismRcwaGroupOverZ,
+               "for free groups (RCWA)", true, [ IsFreeGroup ], 0,
+
+  function ( F )
+
+    local  rank, m, D, gamma, RCWA_Z, phi, i;
+
+    rank := Length(GeneratorsOfGroup(F));
+    if rank = 1 then
+      phi := GroupHomomorphismByImagesNC(F,Group(ClassShift(0,1)),
+                                         [F.1],[ClassShift(0,1)]);
+      SetSize(Image(phi),infinity); SetIsTame(Image(phi),true);
+      SetIsBijective(phi,true);
+      return phi;
+    fi;
+    m      := 2 * rank;
+    D      := AllResidueClassesModulo(m);
+    RCWA_Z := RCWA(Integers);
+    gamma  := List([1..rank],
+                   k->RepresentativeAction(RCWA_Z,
+                                           Difference(Integers,D[2*k-1]),
+                                           D[2*k]));
+    for i in [1..rank] do
+      SetIsTame(gamma[i],false); SetOrder(gamma[i],infinity);
     od;
+    phi := GroupHomomorphismByImagesNC(F,Group(gamma),
+                                       GeneratorsOfGroup(F),gamma);
+    SetSize(Image(phi),infinity); SetIsTame(Image(phi),false);
+    SetIsBijective(phi,true);
+    return phi;
   end );
 
 #############################################################################

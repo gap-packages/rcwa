@@ -336,7 +336,7 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( perm, range )
 
-    local coeffs, min, max, m, n, r;
+    local  result, coeffs, min, max, m, n, r;
 
     min := Minimum(range); max := Maximum(range);
     m := max - min + 1; coeffs := [];
@@ -344,7 +344,9 @@ InstallOtherMethod( RcwaMappingNC,
       r := n mod m + 1;
       coeffs[r] := [1, n^perm - n, 1];
     od;
-    return RcwaMappingNC( coeffs );
+    result := RcwaMappingNC( coeffs );
+    SetOrder(result,Order(RestrictedPerm(perm,range)));
+    return result;
   end );
 
 #############################################################################
@@ -751,7 +753,7 @@ InstallGlobalFunction( ClassShift,
     r := arg[1]; m := arg[2]; r := r mod m;
     coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
     result := RcwaMapping(coeff);
-    SetIsBijective(result,true);
+    SetIsClassShift(result,true); SetIsBijective(result,true);
     SetOrder(result,infinity); SetIsTame(result,true);
     SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
     SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
@@ -759,6 +761,16 @@ InstallGlobalFunction( ClassShift,
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
+
+#############################################################################
+##
+#M  IsClassShift( <sigma> ) . . . . . . . . . . . . . . for rcwa mapping of Z
+##
+InstallMethod( IsClassShift,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+               sigma -> IsResidueClass(Support(sigma))
+                        and sigma = ClassShift(Support(sigma)) );
 
 #############################################################################
 ##
@@ -782,7 +794,8 @@ InstallGlobalFunction( ClassReflection,
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
     result := RcwaMapping(coeff);
-    SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
+    SetIsClassReflection(result,true); SetIsBijective(result,true);
+    SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassReflection(",
                                  String(r),",",String(m),")"));
     SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
@@ -790,6 +803,18 @@ InstallGlobalFunction( ClassReflection,
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
+
+#############################################################################
+##
+#M  IsClassReflection( <sigma> ) . . . . . . . . . . .  for rcwa mapping of Z
+##
+InstallMethod( IsClassReflection,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+               sigma -> IsResidueClass(Union(Support(sigma),
+                                       Union(ShortCycles(sigma,1)))) and
+               sigma = ClassReflection(Union(Support(sigma),
+                                       Union(ShortCycles(sigma,1)))) );
 
 #############################################################################
 ##
@@ -801,7 +826,7 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, r1, m1, r2, m2, h;
+    local  result, r1, m1, r2, m2, cl1, cl2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
     if   Length(arg) = 2 and ForAll(arg,IsResidueClass)
@@ -815,8 +840,11 @@ InstallGlobalFunction( ClassTransposition,
     fi;
     if   m1 > m2 or (m1 = m2 and r1 > r2)
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
-    result := RcwaMapping([[ResidueClass(Integers,m1,r1),
-                            ResidueClass(Integers,m2,r2)]]);
+    cl1    := ResidueClass(Integers,m1,r1);
+    cl2    := ResidueClass(Integers,m2,r2);
+    result := RcwaMapping([[cl1,cl2]]);
+    SetIsClassTransposition(result,true);
+    SetTransposedClasses(result,[cl1,cl2]);
     SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassTransposition(",
                                  String(r1),",",String(m1),",",
@@ -826,6 +854,40 @@ InstallGlobalFunction( ClassTransposition,
                                          String(r2),"(",String(m2),")}"));
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
+  end );
+
+#############################################################################
+##
+#M  IsClassTransposition( <sigma> ) . . . . . . . . . . for rcwa mapping of Z
+##
+InstallMethod( IsClassTransposition,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( sigma )
+
+    local  cls;
+
+    cls := AsUnionOfFewClasses(Support(sigma));
+    if Length(cls) = 1 then cls := SplittedClass(cls[1],2); fi;
+    if Length(cls) > 2 then return false; fi;
+    if   sigma = ClassTransposition(cls)
+    then SetTransposedClasses(sigma,cls); return true;
+    else return false; fi;
+  end );
+
+#############################################################################
+##
+#M  TransposedClasses( <sigma> ) . . . . . . . . . .  for class transposition
+##
+InstallMethod( TransposedClasses,
+               "for class transpositions (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( ct )
+    if   IsClassTransposition(ct)
+    then return TransposedClasses(ct);
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -849,7 +911,7 @@ InstallGlobalFunction( PrimeSwitch,
                ClassTransposition(2*k,4*k,2*k*p-k,2*k*p),
                ClassTransposition(2*k,2*k*p,k,4*k*p),
                ClassTransposition(4*k,2*k*p,2*k*p+k,4*k*p) ];
-    result := Product(facts);
+    result := Product(facts); SetIsPrimeSwitch(result,true);
     SetIsTame(result,false); SetOrder(result,infinity);
     if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
     SetName(result,Concatenation("PrimeSwitch(",String(p),kstr,")"));
@@ -857,6 +919,16 @@ InstallGlobalFunction( PrimeSwitch,
     SetFactorizationIntoCSCRCT(result,facts);
     return result;
   end );
+
+#############################################################################
+##
+#M  IsPrimeSwitch( <sigma> ) . . . . . . . . . . . . .  for rcwa mapping of Z
+##
+InstallMethod( IsPrimeSwitch,
+               "for rcwa mappings of Z (RCWA)", 
+               true, [ IsRcwaMappingOfZ ], 0,
+               sigma -> Multiplier(sigma) > 2 and IsPrime(Multiplier(sigma))
+                        and sigma = PrimeSwitch(Multiplier(sigma)) );
 
 #############################################################################
 ##

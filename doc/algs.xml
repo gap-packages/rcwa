@@ -340,8 +340,10 @@ They are listed in alphabetical order.
     <C>IsomorphismRcwaGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    Uses <C>RcwaMapping</C>, Part&nbsp;(d).
-    Currently this works only for finite groups. 
+    The method for finite groups uses <C>RcwaMapping</C>, Part&nbsp;(d).
+    The method for free groups uses an adaptation of the construction
+    given on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
+    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>).
   </Item>
 
   <Mark>
@@ -775,6 +777,25 @@ They are listed in alphabetical order.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>WreathProduct(<A>G</A>,<A>P</A>)</C>
+  </Mark>
+  <Item>
+    Uses <C>DirectProduct</C> to embed the <C>DegreeAction(<A>P</A>)</C>th
+    direct power of&nbsp;<A>G</A>, and <C>RcwaMapping</C>, Part&nbsp;(d)
+    to embed the finite permutation group&nbsp;<A>P</A>.
+  </Item>
+
+  <Mark>
+    <C>WreathProduct(<A>G</A>,<A>Z</A>)</C>
+  </Mark>
+  <Item>
+    Restricts <A>G</A> to the residue class&nbsp;3(4), and encodes the
+    generator of&nbsp;<A>Z</A> as <M>\tau_{0(2),1(2)} \cdot
+    \tau_{0(2),1(4)}</M>. It is used that the images of&nbsp;3(4) under
+    powers of this mapping are pairwise disjoint residue classes.
   </Item>
 
 </List>

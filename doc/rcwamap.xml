@@ -220,7 +220,8 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     and <C>ResidueClass(<A>r2</A>,<A>m2</A>)</C> themselves
     can be given in place of the arguments <A>r1</A>, <A>m1</A>,
     <A>r2</A> and <A>m2</A>. Enclosing the argument list in list brackets
-    is permitted.
+    is permitted. The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
+    are stored as an attribute <C>TransposedClasses</C>.
 <Example>
 <![CDATA[
 gap> Display(ClassTransposition(1,2,8,10));
@@ -254,8 +255,7 @@ transpositions (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
     <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
     \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
     \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
-    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>
-    (cp.&nbsp;<Ref Oper="Restriction" Label = "g, f"/>).
+    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
   </Returns>
   <Description>
     For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
@@ -282,9 +282,10 @@ Wild bijective rcwa mapping of Z with modulus 12
   </Description>
 </ManSection>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
+There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
+<C>IsClassTransposition</C> and <C>IsPrimeSwitch</C> which indicate
+whether a given rcwa mapping belongs to the corresponding series. <P/>
 
-<Alt Only="LaTeX">\noindent</Alt>
 In the sequel, a description of the general-purpose constructor for rcwa
 mappings is given. This might look a bit technical on a first glance,
 but knowing all possible ways of entering an rcwa mapping is by no means
@@ -348,8 +349,8 @@ necessary for understanding this manual or for using this package.
       <Mark>(d)</Mark>
       <Item>
         of <A>R</A> = <M>\mathbb{Z}</M>, acting on any set
-        <C><A>range</A> + k*Length(<A>range</A>)</C> like the
-        permutation <A>perm</A> on the range <A>range</A>, resp.
+        <C><A>range</A>+k*Length(<A>range</A>)</C> like the
+        permutation <A>perm</A> on <A>range</A>, resp.
       </Item>
       <Mark>(e)</Mark>
       <Item>
@@ -1088,7 +1089,7 @@ gap> OrbitsModulo(Comm(a,b),9);
   </Returns>
   <Description>
     The product of the returned mappings is&nbsp;<A>f</A>.
-    They have pairwisely disjoint supports, hence any two of them commute.
+    They have pairwise disjoint supports, hence any two of them commute.
 <Example>
 <![CDATA[
 gap> sigma :=   ClassTransposition(1,4,2,4)  * ClassTransposition(1,4,3,4)

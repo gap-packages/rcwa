@@ -21,7 +21,7 @@ Rcwa mapping of Z: n -> 2n
 gap> RcwaMapping(Integers,1,[[2,0,1]]);
 Rcwa mapping of Z: n -> 2n
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
-<rcwa mapping of Z with modulus 17>
+<rcwa mapping of Z with modulus 17, of order 2>
 gap> f * One(f) = f and One(f) * f = f;
 true
 gap> f * Zero(f) = Zero(f) and Zero(f) * f = Zero(f);
@@ -554,11 +554,11 @@ gap> G := Group(a*b,u^f,Comm(a,b));
 gap> PrimeSet(G);
 [ 2, 3, 5, 17 ]
 gap> g1 := RcwaMapping((1,2),[1..2]);
-<rcwa mapping of Z with modulus 2>
+<rcwa mapping of Z with modulus 2, of order 2>
 gap> g2 := RcwaMapping((1,2,3),[1..3]);
-<rcwa mapping of Z with modulus 3>
+<rcwa mapping of Z with modulus 3, of order 3>
 gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
-<rcwa mapping of Z with modulus 5>
+<rcwa mapping of Z with modulus 5, of order 5>
 gap> G := Group(g1,g2);
 <rcwa group over Z with 2 generators>
 gap> H := NiceObject(G);
@@ -1191,6 +1191,67 @@ gap> G := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
 >               ClassTransposition(0,3,1,3),ClassReflection(0,3));;
 gap> Size(G);
 48
+gap> M11 := MathieuGroup(11);;
+gap> Action(RcwaGroupByPermGroup(M11)^ClassShift(0,1),
+>           [1..LargestMovedPoint(M11)]) = M11;
+true
+gap> phi := IsomorphismRcwaGroup(FreeGroup(2)); F2 := Image(phi);;
+[ f1, f2 ] -> [ <wild bijective rcwa mapping of Z with modulus 8>, 
+  <wild bijective rcwa mapping of Z with modulus 8> ]
+gap> Difference(Integers,ResidueClass(0,4))^F2.1;
+1(4)
+gap> Difference(Integers,ResidueClass(2,4))^F2.2;
+3(4)
+gap> G := Group(g,h);;
+gap> IsTame(G); Size(G);
+true
+infinity
+gap> H := WreathProduct(G,AlternatingGroup(5));
+<tame rcwa group over Z with 12 generators, of size infinity>
+gap> Embedding(H,1);
+[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
+  <bijective rcwa mapping of Z with modulus 30, of order 12> ]
+gap> Embedding(H,2);
+[ (1,2,3,4,5), (3,4,5) ] -> 
+[ <bijective rcwa mapping of Z with modulus 5, of order 5>, 
+  <bijective rcwa mapping of Z with modulus 5, of order 3> ]
+gap> H := WreathProduct(G,Group(ClassShift(0,1)));
+<wild rcwa group over Z with 3 generators>
+gap> Support(Image(Embedding(H,1)));
+3(4)
+gap> Embedding(H,2);
+[ ClassShift(0,1) ] -> [ <wild bijective rcwa mapping of Z with modulus 4> ]
+gap> TransposedClasses(ClassTransposition(1,2,2,6));
+[ 1(2), 2(6) ]
+gap> TransposedClasses(RcwaMapping([[1,2,1],[1,0,1],[1,-2,1],[1,0,1]]));
+[ 0(4), 2(4) ]
+gap> TransposedClasses(RcwaMapping([[1,1,1],[1,-1,1]]));
+[ 0(2), 1(2) ]
+gap> IsClassTransposition(ClassTransposition(1,2,2,6));
+true
+gap> IsClassTransposition(g);
+false
+gap> IsClassTransposition(RcwaMapping([[1,1,1],[1,-1,1]]));
+true
+gap> IsClassTransposition(RcwaMapping([[1,2,1],[1,0,1],[1,-2,1],[1,0,1]]));
+true
+gap> IsClassShift(ClassShift(8,9)); IsClassShift(RcwaMapping([[1,1,1]]));
+true
+true
+gap> IsClassShift(h);
+false
+gap> IsClassReflection(RcwaMapping([[-1,0,1]]));
+true
+gap> IsClassReflection(a);
+false
+gap> HasIsClassReflection(ClassReflection(6,7));
+true
+gap> IsPrimeSwitch(ab);
+false
+gap> IsPrimeSwitch(PrimeSwitch(3));
+true
+gap> IsPrimeSwitch(Product(Factorization(PrimeSwitch(5))));
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
