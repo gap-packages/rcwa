@@ -187,7 +187,7 @@ Changes between version 1.5.1 and version 1.5.2:
    order-preserving has been fixed. In certain situations this bug falsely
    caused the method to return `infinity'.
 
-Changes between version 1.5.2 and version 1.6.0 (April 18, 2006)
+Changes between version 1.5.2 and version 1.6.0 (April 18, 2006):
 
  - Two Methods for `WreathProduct' have been added:
 
@@ -201,4 +201,9 @@ Changes between version 1.5.2 and version 1.6.0 (April 18, 2006)
 
  - An attribute `TransposedClasses' for class transpositions has been
    introduced.
+
+Changes between version 1.6.0 and version 1.6.1:
+
+ - Methods for `CyclicGroup', `DihedralGroup' and `AbelianGroup' have been
+   added.
 

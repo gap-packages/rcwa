@@ -85,15 +85,11 @@ DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
 ##
 #O  RCWACons( <R> ) . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
 ##
-##  Currently only implemented for <R> = `Integers'.
-##
 DeclareConstructor( "RCWACons", [ IsRcwaGroup, IsRing ] );
 
 #############################################################################
 ##
 #F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
-##
-##  Currently only implemented for <R> = `Integers'.
 ##
 DeclareGlobalFunction( "RCWA" );
 

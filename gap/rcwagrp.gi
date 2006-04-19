@@ -248,6 +248,80 @@ InstallMethod( IsNaturalRCWA_GF_q_x,
 
 #############################################################################
 ##
+#M  CyclicGroupCons( IsRcwaGroupOverZ, <n> )
+##
+InstallOtherMethod( CyclicGroupCons,
+                    "rcwa group over Z, for a positive integer (RCWA)",
+                    ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
+
+  function( filt, n )
+
+    local  result;
+
+    if n = 1 then return TrivialRcwaGroupOverZ; fi;
+    result := Image(IsomorphismRcwaGroupOverZ(CyclicGroup(IsPermGroup,n)));
+    SetSize(result,n); SetIsCyclic(result,true);
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  CyclicGroupCons( IsRcwaGroupOverZ, infinity )
+##
+InstallOtherMethod( CyclicGroupCons,
+                    "(Z,+) as an rcwa group (RCWA)", ReturnTrue,
+                    [ IsRcwaGroupOverZ, IsInfinity ], 0,
+
+  function( filt, infty )
+
+    local  result;
+
+    result := Group(ClassShift(0,1));
+    SetSize(result,infinity); SetIsCyclic(result,true);
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  DihedralGroupCons( IsRcwaGroupOverZ, infinity )
+##
+InstallOtherMethod( DihedralGroupCons,
+                    "the rcwa group < n |-> n+1, n |-> -n > (RCWA)",
+                    ReturnTrue, [ IsRcwaGroupOverZ, IsInfinity ], 0,
+
+  function( filt, infty )
+
+    local  result;
+
+    result := Group(ClassShift(0,1),ClassReflection(0,1));
+    SetSize(result,infinity); SetIsAbelian(result,true);
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  AbelianGroupCons( IsRcwaGroupOverZ, <invs> )
+##
+InstallOtherMethod( AbelianGroupCons,
+                    "rcwa group over Z, for list of abelian inv's (RCWA)",
+                    ReturnTrue, [ IsRcwaGroupOverZ, IsList ], 0,
+
+  function( filt, invs )
+
+    local  result;
+
+    if not ForAll(invs,n->IsInt(n) or n=infinity) then TryNextMethod(); fi;
+    result := DirectProduct(List(invs,n->CyclicGroup(IsRcwaGroupOverZ,n)));
+    SetSize(result,Product(invs));
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
 #M  IsSolvable( <G> ) . . . . . . . . . . . . . . . generic method for groups
 ##
 InstallMethod( IsSolvable,
