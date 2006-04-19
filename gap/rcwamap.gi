@@ -345,6 +345,8 @@ InstallOtherMethod( RcwaMappingNC,
       coeffs[r] := [1, n^perm - n, 1];
     od;
     result := RcwaMappingNC( coeffs );
+    SetIsBijective(result,true);
+    SetIsTame(result,true); SetIsIntegral(result,true);
     SetOrder(result,Order(RestrictedPerm(perm,range)));
     return result;
   end );

@@ -21,7 +21,7 @@ Rcwa mapping of Z: n -> 2n
 gap> RcwaMapping(Integers,1,[[2,0,1]]);
 Rcwa mapping of Z: n -> 2n
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
-<rcwa mapping of Z with modulus 17, of order 2>
+<bijective rcwa mapping of Z with modulus 17, of order 2>
 gap> f * One(f) = f and One(f) * f = f;
 true
 gap> f * Zero(f) = Zero(f) and Zero(f) * f = Zero(f);
@@ -554,11 +554,11 @@ gap> G := Group(a*b,u^f,Comm(a,b));
 gap> PrimeSet(G);
 [ 2, 3, 5, 17 ]
 gap> g1 := RcwaMapping((1,2),[1..2]);
-<rcwa mapping of Z with modulus 2, of order 2>
+<bijective rcwa mapping of Z with modulus 2, of order 2>
 gap> g2 := RcwaMapping((1,2,3),[1..3]);
-<rcwa mapping of Z with modulus 3, of order 3>
+<bijective rcwa mapping of Z with modulus 3, of order 3>
 gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
-<rcwa mapping of Z with modulus 5, of order 5>
+<bijective rcwa mapping of Z with modulus 5, of order 5>
 gap> G := Group(g1,g2);
 <rcwa group over Z with 2 generators>
 gap> H := NiceObject(G);
