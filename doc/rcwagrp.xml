@@ -317,8 +317,8 @@ gap> List( [ G, Group(a,b), Group(Comm(a,b),Comm(a,c)) ], IsTame );
     See also&nbsp;<Ref Attr="PrimeSet" Label="f"/> for rcwa mappings.
 <Example>
 <![CDATA[
-gap> [ PrimeSet(G), PrimeSet(H) ];
-[ [ 2, 3, 5 ], [ 2 ] ]
+gap> PrimeSet(G);
+[ 2, 3, 5 ]
 ]]>
 </Example>
   </Description>
