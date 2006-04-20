@@ -1287,6 +1287,57 @@ gap> List(GeneratorsOfGroup(G),Order);
 [ 2, 2, 3, 7, infinity ]
 gap> List(GeneratorsOfGroup(G),Support);
 [ 0(5), 1(5), 2(5), 3(5), 4(5) ]
+gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
+>                     SymmetricGroup(3));
+<fp group on the generators [ f1, f2, f3, f4, f5 ]>
+gap> phi := IsomorphismRcwaGroup(F);
+[ f1, f2, f3, f4, f5 ] -> [ <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 24>,
+  <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 72>,
+  <bijective rcwa mapping of Z with modulus 36> ]
+gap> G := Image(phi);
+<wild rcwa group over Z with 5 generators>
+gap> RelatorsOfFpGroup(F); # For illustrational purposes, do some checks:
+[ f1^2, f1^-1*f2*f1*f2^-1, f2^2, f3^3, f4^2, f5^2, f4*f5*f4*f5*f4*f5 ]
+gap> ForAll([ G.1^2, G.1^-1*G.2*G.1*G.2^-1, G.2^2, G.3^3,
+>             G.4^2, G.5^2, (G.4*G.5)^3 ], IsOne);
+true
+gap> S := AllResidueClassesModulo(3);
+[ 0(3), 1(3), 2(3) ]
+gap> nonids := grp->Difference(AsList(grp),[One(grp)]);;
+gap> List(S{[2,3]},Si->List(nonids(Group(G.1,G.2)),g->Si^g));
+[ [ 3(12), 6(24), 0(24) ], [ 9(12), 18(24), 12(24) ] ]
+gap> Union(Flat(last));
+0(3)
+gap> List(S{[1,3]},Si->List(nonids(Group(G.3)),g->Si^g));
+[ [ 1(12), 4(12) ], [ 7(12), 10(12) ] ]
+gap> Union(Flat(last));
+1(3)
+gap> List(S{[1,2]},Si->List(nonids(Group(G.4,G.5)),g->Si^g));
+[ [ 8(24), 5(36), 17(36), 2(24), 11(36) ],
+  [ 20(24), 23(36), 35(36), 14(24), 29(36) ] ]
+gap> Union(Flat(last));
+2(3)
+gap> psl := FreeProduct(Group((1,2,3)),Group((1,2)));
+<fp group on the generators [ f1, f2 ]>
+gap> phi := IsomorphismRcwaGroup(psl);
+[ f1, f2 ] -> [ <bijective rcwa mapping of Z with modulus 4>,
+  <bijective rcwa mapping of Z with modulus 2> ]
+gap> G := Image(phi);
+<wild rcwa group over Z with 2 generators>
+gap> S := AllResidueClassesModulo(2);
+[ 0(2), 1(2) ]
+gap> S[2]^G.1;
+0(4)
+gap> S[2]^(G.1^2);
+2(4)
+gap> S[1]^G.2;
+1(2)
+gap> Length(Ball(G,One(G),5));
+34
+gap> Length(Ball(G,One(G),8));
+106
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
