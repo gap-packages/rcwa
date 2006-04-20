@@ -2772,4 +2772,55 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
 #############################################################################
 ##
+#M  IsomorphismRcwaGroupOverZ( <F> ) . . . for free products of finite groups
+#M  IsomorphismRcwaGroup( <F> )
+##
+##  This method uses the Table-Tennis Lemma -- see e.g. Section II.B. in
+##  the book Pierre de la Harpe: Topics in Geometric Group Theory.
+##
+##  The method uses regular permutation representations of the factors G_r
+##  (r = 0..m-1) of the free product on residue classes modulo n_r := |G_r|.
+##
+##  The basic idea is that since point stabilizers in regular permutation
+##  groups are trivial, all non-identity elements map any of the permuted
+##  residue classes into their complements.
+##
+##  To get into a situation where the Table-Tennis Lemma is applicable,
+##  the method computes conjugates of the images of the mentioned permutation
+##  representations under bijective rcwa mappings g_r which satisfy
+##  0(n_r)^g_r = Z \ r(m).
+##
+InstallMethod( IsomorphismRcwaGroupOverZ,
+               "for free products of finite groups (RCWA)",
+               ReturnTrue, [ IsFpGroup and HasFreeProductInfo ], 0,
+
+  function ( F )
+
+    local  phi, img, gens, info, groups, degs, embs,
+           regreps, rcwareps, conjisos, conjelms, r, m, i;
+
+    info := FreeProductInfo(F); groups := Filtered(info.groups,IsNonTrivial);
+    if not ForAll(groups,IsFinite) or Length(groups) < 2
+      or ForAll(groups,G->Size(G)<=2) # We can use the Table-Tennis Lemma
+    then TryNextMethod(); fi;         # only if one group has order >= 3.
+    m := Length(groups); degs := List(groups,Size);
+    regreps  := List(groups,RegularActionHomomorphism);
+    rcwareps := List(regreps,phi->IsomorphismRcwaGroup(Image(phi)));
+    conjelms := List([0..m-1],r->RepresentativeAction(RCWA(Integers),
+                                 ResidueClass(0,degs[r+1]),
+                                 Difference(Integers,ResidueClass(r,m))));
+    conjisos := List([1..m],i->ConjugatorIsomorphism(Image(rcwareps[i]),
+                                                     conjelms[i]));
+    embs     := List([1..m],i->CompositionMapping(conjisos[i],rcwareps[i],
+                                                  regreps[i]));
+    gens     := Concatenation(List([1..m],
+                                   i->List(GeneratorsOfGroup(groups[i]),
+                                           gen->Image(embs[i],gen))));
+    img      := Group(gens); SetSize(img,infinity);  SetIsTame(img,false);
+    phi      := GroupHomomorphismByImagesNC(F,img,GeneratorsOfGroup(F),gens);
+    return phi;
+  end );
+
+#############################################################################
+##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

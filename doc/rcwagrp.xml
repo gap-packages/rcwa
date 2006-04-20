@@ -178,16 +178,19 @@ Another way of constructing an rcwa group is taking the image of an
 rcwa representation:
 
 <ManSection>
+  <Attr Name="IsomorphismRcwaGroupOverZ" Arg="G" Label="G"/>
   <Attr Name="IsomorphismRcwaGroup" Arg="G" Label="G"/>
   <Returns>
     A monomorphism from the group <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
   </Returns>
   <Description>
-    Currently, <C>IsomorphismRcwaGroup</C> works only for finite groups
-    and for free groups. The method for free groups uses an adaptation
-    of the construction given on page&nbsp;27
-    in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,<M>\mathbb{C}</M>) to
-    RCWA(<M>\mathbb{Z}</M>). <P/>
+    Currently, <C>IsomorphismRcwaGroup</C> works for finite groups, for
+    free products of finite groups and for free groups. The method for
+    free products of finite groups uses the Table-Tennis Lemma
+    (cp. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
+    method for free groups uses an adaptation of the construction given
+    on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
+    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>). <P/>
 
     In case <A>G</A> is a finite-degree permutation group,
     the image under a specific embedding can be obtained by

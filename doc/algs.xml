@@ -340,10 +340,27 @@ They are listed in alphabetical order.
     <C>IsomorphismRcwaGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    The method for finite groups uses <C>RcwaMapping</C>, Part&nbsp;(d).
+    The method for finite groups uses <C>RcwaMapping</C>, Part&nbsp;(d). <P/>
+
+    The method for free products of finite groups uses the Table-Tennis
+    Lemma (which is also known as <E>Ping-Pong Lemma</E>,
+    cp. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>).
+    It uses regular permutation representations of the factors
+    <M>G_r</M> (<M>r = 0, \dots ,m-1</M>) of the free product on residue
+    classes modulo <M>n_r := |G_r|</M>.
+    The basic idea is that since point stabilizers in regular permutation
+    groups are trivial, all non-identity elements map any of the permuted
+    residue classes into their complements.
+    To get into a situation where the Table-Tennis Lemma is applicable,
+    the method computes conjugates of the images of the mentioned permutation
+    representations under bijective rcwa mappings <M>\sigma_r</M> which
+    satisfy <M>0(n_r)^{\sigma_r} = \mathbb{Z} \setminus r(m)</M>. <P/>
+
     The method for free groups uses an adaptation of the construction
     given on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
     PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>).
+    As an equivalent for the closed discs used there, the method takes
+    the residue classes modulo two times the rank of the free group.
   </Item>
 
   <Mark>
