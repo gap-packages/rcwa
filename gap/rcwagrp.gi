@@ -2796,7 +2796,7 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
   function ( F )
 
-    local  phi, img, gens, info, groups, degs, embs,
+    local  phi, img, gens, gensF, info, groups, degs, embs, embsF, embnrs,
            regreps, rcwareps, conjisos, conjelms, r, m, i;
 
     info := FreeProductInfo(F); groups := Filtered(info.groups,IsNonTrivial);
@@ -2813,11 +2813,18 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
                                                      conjelms[i]));
     embs     := List([1..m],i->CompositionMapping(conjisos[i],rcwareps[i],
                                                   regreps[i]));
-    gens     := Concatenation(List([1..m],
-                                   i->List(GeneratorsOfGroup(groups[i]),
-                                           gen->Image(embs[i],gen))));
-    img      := Group(gens); SetSize(img,infinity);  SetIsTame(img,false);
+    gensF    := GeneratorsOfGroup(F);
+    embsF    := info.embeddings;
+    embnrs   := List(gensF,
+                     f->First([1..m],
+                              i->f in GeneratorsOfGroup(Image(embsF[i]))));
+    gens     := List([1..Length(gensF)],
+                     i->Image(embs[embnrs[i]],
+                              PreImagesRepresentative(embsF[embnrs[i]],
+                                                      gensF[i])));
+    img      := Group(gens); SetSize(img,infinity); SetIsTame(img,false);
     phi      := GroupHomomorphismByImagesNC(F,img,GeneratorsOfGroup(F),gens);
+    SetIsBijective(phi,true);
     return phi;
   end );
 
