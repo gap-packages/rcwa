@@ -1298,8 +1298,6 @@ gap> phi := IsomorphismRcwaGroup(F);
   <bijective rcwa mapping of Z with modulus 36> ]
 gap> G := Image(phi);
 <wild rcwa group over Z with 5 generators>
-gap> RelatorsOfFpGroup(F); # For illustrational purposes, do some checks:
-[ f1^2, f1^-1*f2*f1*f2^-1, f2^2, f3^3, f4^2, f5^2, f4*f5*f4*f5*f4*f5 ]
 gap> ForAll([ G.1^2, G.1^-1*G.2*G.1*G.2^-1, G.2^2, G.3^3,
 >             G.4^2, G.5^2, (G.4*G.5)^3 ], IsOne);
 true
