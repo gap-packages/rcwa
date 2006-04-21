@@ -1336,6 +1336,26 @@ gap> Length(Ball(G,One(G),5));
 34
 gap> Length(Ball(G,One(G),8));
 106
+gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2));;
+gap> phi := IsomorphismRcwaGroup(F);
+[ f1, f2 ] ->
+[ ClassReflection(0,1), Bijective rcwa mapping of Z: n -> -n + 1 ]
+gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2),CyclicGroup(2));
+<fp group on the generators [ f1, f2, f3 ]>
+gap> phi := IsomorphismRcwaGroup(F);
+[ f1, f2, f3 ] -> [ <bijective rcwa mapping of Z with modulus 8>,
+  <bijective rcwa mapping of Z with modulus 8>,
+  <bijective rcwa mapping of Z with modulus 8> ]
+gap> G := Image(phi);
+<wild rcwa group over Z with 3 generators>
+gap> List(GeneratorsOfGroup(G),Order);
+[ 2, 2, 2 ]
+gap> List(GeneratorsOfGroup(G),Factorization);
+[ [ ClassTransposition(2,4,4,8), ClassTransposition(1,2,0,8) ],
+  [ ClassTransposition(3,4,5,8), ClassTransposition(0,2,1,8) ],
+  [ ClassTransposition(0,4,6,8), ClassTransposition(1,2,2,8) ] ]
+gap> List([1..3],k->Length(Ball(G,One(G),k)));
+[ 4, 10, 22 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

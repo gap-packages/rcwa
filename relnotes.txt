@@ -202,7 +202,7 @@ Changes between version 1.5.2 and version 1.6.0 (April 18, 2006):
  - An attribute `TransposedClasses' for class transpositions has been
    introduced.
 
-Changes between version 1.6.0 and version 1.6.1:
+Changes between version 1.6.0 and version 1.6.2:
 
  - A method for `IsomorphismRcwaGroup' for free products of finite groups
    has been added.
