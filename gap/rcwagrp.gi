@@ -2830,4 +2830,43 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
 #############################################################################
 ##
+#M  IsomorphismRcwaGroupOverZ( <F> ) . . . . . . .  for free products of C2's
+#M  IsomorphismRcwaGroup( <F> )
+##
+##  This method covers the case that all factors of the free product are
+##  cyclic groups of order 2.
+##
+InstallMethod( IsomorphismRcwaGroupOverZ,
+               "for free products of cyclic groups of order 2 (RCWA)",
+               ReturnTrue, [ IsFpGroup and HasFreeProductInfo ], 0,
+
+  function ( F )
+
+    local  phi, phitilde, img, gens, genstilde, gensF, info,
+           groups, groupstilde, m, degs;
+
+    gensF  := GeneratorsOfGroup(F);
+    info   := FreeProductInfo(F);
+    groups := Filtered(info.groups,IsNonTrivial);
+    m      := Length(groups);
+    degs   := List(groups,Size);
+    if Set(degs) <> [2] then TryNextMethod(); fi;
+    if m = 1 then TryNextMethod(); elif m = 2 then
+      gens := [ClassReflection(0,1),ClassReflection(0,1)*ClassShift(0,1)];
+      img  := Group(gens); SetIsTame(img,true); SetSize(img,infinity);
+    else
+      groupstilde := Concatenation(groups,[CyclicGroup(3)]);
+      phitilde    := IsomorphismRcwaGroupOverZ(FreeProduct(groupstilde));
+      genstilde   := GeneratorsOfGroup(Image(phitilde));
+      gens        := genstilde{[1..Length(genstilde)-1]};
+      img         := Group(gens);
+      SetIsTame(img,false); SetSize(img,infinity);
+    fi;
+    phi := GroupHomomorphismByImagesNC(F,img,gensF,gens);
+    SetIsBijective(phi,true);
+    return phi;
+  end );
+
+#############################################################################
+##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
