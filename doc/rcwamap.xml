@@ -1254,8 +1254,8 @@ gap> Loops(nu*nu^a);
   <Meth Name="Trajectory" Arg="f, n, terminal, m" Label="f, n, terminal, m"/>
   <Returns>
     The first <A>length</A> iterates in the trajectory of the
-    rcwa mapping&nbsp;<A>f</A> starting at&nbsp;<A>n</A>,
-    resp. the part of the trajectory of the rcwa mapping&nbsp;<A>f</A>
+    rcwa mapping&nbsp;<A>f</A> starting at&nbsp;<A>n</A>, resp. the
+    initial part of the trajectory of the rcwa mapping&nbsp;<A>f</A>
     starting at&nbsp;<A>n</A> which ends at the first occurence of an
     iterate in the set <A>terminal</A>. If the argument <A>m</A> is given,
     the iterates are reduced (mod&nbsp;<A>m</A>).
@@ -1269,13 +1269,11 @@ gap> Loops(nu*nu^a);
     a finite set of ring elements or a union of residue classes.
 <Example>
 <![CDATA[
-gap> Trajectory(T,15,20);
-[ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1, 2, 1, 2, 1, 2, 1, 2 ]
-gap> Trajectory(T,15,20,2);
-[ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0 ]
-gap> Trajectory(T,15,[1]);
+gap> Trajectory(T,27,16); Trajectory(T,27,25,5);
+[ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155 ]
+[ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3, 0, 3, 0, 0, 3, 0, 3, 0, 0, 3 ]
+gap> Trajectory(T,15,[1]); Trajectory(T,15,[1],2);
 [ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1 ]
-gap> Trajectory(T,15,[1],2);
 [ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
@@ -1301,8 +1299,10 @@ gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
   </Returns>
   <Description>
     The meanings of the arguments <A>length</A> and <A>terminal</A> are
-    the same as in the methods for the operation <C>Trajectory</C> described
-    above.
+    the same as in the methods for the operation <C>Trajectory</C>
+    described above. In general, computing only the last coefficient triple
+    (<A>whichcoeffs</A> = <C>"LastCoeffs"</C>) needs considerably less
+    memory than computing the entire list.
 <Example>
 <![CDATA[
 gap> Trajectory(T,27,[1],"LastCoeffs");
