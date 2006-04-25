@@ -361,7 +361,7 @@ and <C>IsClassWiseOrderPreserving</C>.
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
-gap> u in H;
+gap> u in G;
 false
 ]]>
 </Example>
