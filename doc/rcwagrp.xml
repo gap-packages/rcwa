@@ -352,7 +352,12 @@ and <C>IsClassWiseOrderPreserving</C>.
     is tame and class-wise order-preserving. For wild groups only a number
     of easy cases are covered. On Info level&nbsp;3 of <C>InfoRCWA</C> the
     method gives information on reasons why <A>g</A> is an element
-    of&nbsp;<A>G</A> or&nbsp;not.
+    of&nbsp;<A>G</A> or&nbsp;not. <P/>
+
+    The direct product of two free groups of rank&nbsp;2 can faithfully be
+    represented as an rcwa group. In&nbsp;<Cite Key="Mihailova58"/>
+    it is shown that this implies that in general the membership problem
+    for rcwa groups is algorithmically undecidable.
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
