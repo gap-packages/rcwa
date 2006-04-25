@@ -55,7 +55,7 @@ Surjective rcwa mapping of Z with modulus 8
   6                                    | (9n + 10)/8
   7                                    | (27n + 19)/8
 
-gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,1,"stop"));
+gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1]));
 307
 gap> A := ResidueClass(Integers,3,2);
 2(3)
@@ -239,9 +239,9 @@ gap> Image(a,PreImage(a,cl)) = cl;
 true
 gap> PreImage(a,Image(a,cl)) = cl;
 true
-gap> TrajectoryModulo(a,8,20) = TrajectoryModulo(a,8,4,20);
+gap> Trajectory(a,8,20,4) = Trajectory(a,8,20) mod 4;
 true
-gap> TrajectoryModulo(a,8,10,100);
+gap> Trajectory(a,8,100,10);
 [ 8, 2, 8, 7, 0, 0, 5, 4, 1, 8, 7, 3, 2, 8, 2, 8, 2, 3, 2, 3, 5, 4, 1, 3, 0,
   5, 6, 9, 4, 6, 9, 7, 8, 2, 8, 2, 3, 0, 5, 9, 7, 0, 0, 5, 4, 6, 9, 4, 6, 4,
   6, 9, 7, 5, 1, 1, 1, 3, 2, 3, 2, 3, 7, 3, 5, 4, 1, 8, 7, 0, 5, 1, 8, 2, 3,
@@ -740,12 +740,16 @@ gap> fact := FactorizationOnConnectedComponents(sigma,36);;
 gap> List(fact,MovedPoints);
 [ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36),
   <union of 23 residue classes (mod 36)> \ [ -6, 3 ] ]
-gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
+gap> Trajectory(T,27,[1],"LastCoeffs");
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
-gap> List(CoefficientsOnTrajectory(sigma,37,37,"stop",true),
+gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
+[ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
+  <union of 20 residue classes (mod 27)>, <union of 73 residue classes (mod 
+    81)>, Z \ 10(81) U 37(81), Integers ]
+gap> List(Trajectory(sigma,37,37^(sigma^-1),"AllCoeffs"),
 >         c->(c[1]*37+c[2])/c[3]){[1..23]} = Cycle(sigma,37);
 true
-gap> CoefficientsOnTrajectory(a,8,10,"length",true);
+gap> Trajectory(a,8,10,"AllCoeffs");
 [ [ 1, 0, 1 ], [ 3, 0, 2 ], [ 9, 0, 4 ], [ 27, 0, 8 ], [ 81, -8, 32 ], 
   [ 243, -24, 64 ], [ 729, -72, 128 ], [ 2187, -88, 512 ], 
   [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]

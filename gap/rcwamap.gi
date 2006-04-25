@@ -3158,82 +3158,127 @@ InstallMethod( Loops,
 
 #############################################################################
 ##
-#F  Trajectory( <f>, <n>, <end>, <cond> )
+#M  Trajectory( <f>, <n>, <length> )
 ##
-InstallGlobalFunction( Trajectory,
+InstallMethod( Trajectory,
+               "for an rcwa mapping, given number of iterates (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsObject, IsPosInt ], 0,
 
-  function ( f, n, val, cond )
+  function ( f, n, length )
 
     local  seq, step;
 
-    if not (     IsRcwaMapping(f)
-            and (n in Source(f) or IsSubset(Source(f),n))
-            and (     cond = "stop"
-                  and (val in Source(f) or IsSubset(Source(f),val))
-                  or  cond = "length" and IsPosInt(val)))
-    then Error("for usage of `Trajectory' see manual.\n"); fi;
+    if not (n in Source(f) or IsSubset(Source(f),n)) then TryNextMethod(); fi;
     seq := [n];
-    if cond = "length" then
-      for step in [1..val-1] do Add(seq,seq[step]^f); od;
-    elif cond = "stop" then
-      if   IsListOrCollection(n) or not IsListOrCollection(val)
-      then val := [val]; fi;
-      while not seq[Length(seq)] in val do Add(seq,seq[Length(seq)]^f); od;
-    fi;
-    return seq;
-  end );
-
-#############################################################################
-##
-#F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
-#F  TrajectoryModulo( <f>, <n>, <lng> )
-##
-InstallGlobalFunction( TrajectoryModulo,
-
-  function ( arg )
-
-    local  usage, f, n, m, lng, seq, i;
-
-    usage := Concatenation("usage: TrajectoryModulo( <f>, <n>, [ <m> ], ",
-                           "<lng> ), where <f> is an rcwa mapping, <n> and ",
-                           "<m> are elements of its source and <lng> is a ",
-                           "positive integer.\n");
-    if not Length(arg) in [3,4] then Error(usage); fi;
-    f := arg[1]; n := arg[2];
-    if   Length(arg) = 3 then m := Modulus(f); lng := arg[3];
-                         else m := arg[3];     lng := arg[4]; fi;
-    if not (IsRcwaMapping(f) and IsSubset(Source(f),[m,n]) and IsPosInt(lng))
-    then Error(usage); fi;
-    seq := [];
-    for i in [1..lng] do
-      Add(seq,n mod m); n := n^f;
+    for step in [1..length-1] do
+      n := n^f;
+      Add(seq,n);
     od;
     return seq;
   end );
 
 #############################################################################
 ##
-#F  CoefficientsOnTrajectory( <f>, <n>, <end>, <cond>, <all> )
+#M  Trajectory( <f>, <n>, <length>, <m> )
 ##
-InstallGlobalFunction( CoefficientsOnTrajectory,
+InstallMethod( Trajectory,
+               Concatenation("for an rcwa mapping, given number of ",
+                             "iterates (mod <m>) (RCWA)"), ReturnTrue,
+               [ IsRcwaMapping, IsObject, IsPosInt, IsRingElement ], 0,
 
-  function ( f, n, val, cond, all )
+  function ( f, n, length, m )
 
-    local coeff, cycle, c, m, d, pos, res, r, deg, R, q, x;
+    local  seq, step;
 
-    if not (    IsRcwaMapping(f) and n in Source(f)
-            and (   val in Source(f) and cond = "stop"
-                 or IsPosInt(val) and cond = "length")
-            and all in [false,true])
-    then Error("for usage of `CoefficientsOnTrajectory' see manual.\n"); fi;
+    if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
+    then TryNextMethod(); fi;
+    seq := [n mod m];
+    for step in [1..length-1] do
+      n := n^f;
+      Add(seq,n mod m);
+    od;
+    return seq;
+  end );
+
+#############################################################################
+##
+#M  Trajectory( <f>, <n>, <terminal> )
+##
+InstallMethod( Trajectory,
+               "for an rcwa mapping, until a given set is entered (RCWA)",
+               ReturnTrue,
+               [ IsRcwaMapping, IsObject, IsListOrCollection ], 0,
+
+  function ( f, n, terminal )
+
+    local  seq;
+
+    if   not (n in Source(f) or IsSubset(Source(f),n))
+      or not IsSubset(Source(f),terminal)
+    then TryNextMethod(); fi;
+    seq := [n];
+    if   IsListOrCollection(n) or not IsListOrCollection(terminal)
+    then terminal := [terminal]; fi;
+    while not n in terminal do
+      n := n^f;
+      Add(seq,n);
+    od;
+    return seq;
+  end );
+
+#############################################################################
+##
+#M  Trajectory( <f>, <n>, <terminal>, <m> )
+##
+InstallMethod( Trajectory,
+               Concatenation("for an rcwa mapping, until a given set i",
+                             "s entered, (mod <m>) (RCWA)"), ReturnTrue,
+               [ IsRcwaMapping, IsObject,
+                 IsListOrCollection, IsRingElement ], 0,
+
+  function ( f, n, terminal, m )
+
+    local  seq;
+
+    if   not (n in Source(f) or IsSubset(Source(f),n))
+      or not IsSubset(Source(f),terminal) or IsZero(m)
+    then TryNextMethod(); fi;
+    seq := [n mod m];
+    if   IsListOrCollection(n) or not IsListOrCollection(terminal)
+    then terminal := [terminal]; fi;
+    while not n in terminal do
+      n := n^f;
+      Add(seq,n mod m);
+    od;
+    return seq;
+  end );
+
+############################################################################
+##
+#M  Trajectory( <f>, <n>, <length>, <whichcoeffs> )
+#M  Trajectory( <f>, <n>, <terminal>, <whichcoeffs> )
+##
+InstallMethod( Trajectory,
+               "for an rcwa mapping, coefficients (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsRingElement, IsObject, IsString ], 0,
+
+  function ( f, n, lngterm, whichcoeffs )
+
+    local  coeffs, triple, traj, length, terminal,
+           c, m, d, pos, res, r, deg, R, q, x;
+
+    if   IsPosInt(lngterm)           then length   := lngterm;
+    elif IsListOrCollection(lngterm) then terminal := lngterm;
+    else TryNextMethod(); fi;
+    if not n in Source(f)
+      or IsBound(terminal) and not IsSubset(Source(f),terminal)
+      or not whichcoeffs in ["AllCoeffs","LastCoeffs"]
+    then TryNextMethod(); fi;
     c := Coefficients(f); m := Modulus(f);
-    cycle := [n];
-    if   cond = "length"
-    then for pos in [2..val] do Add(cycle,cycle[pos-1]^f); od;
-    else repeat
-           Add(cycle,cycle[Length(cycle)]^f);
-         until cycle[Length(cycle)] = val;
-    fi;
+    traj := [n mod m];
+    if   IsBound(length)
+    then for pos in [2..length]  do n := n^f; Add(traj,n mod m); od;
+    else while not n in terminal do n := n^f; Add(traj,n mod m); od; fi;
     if IsRcwaMappingOfGFqx(f) then
       deg := DegreeOfLaurentPolynomial(m);
       R   := Source(f);
@@ -3241,16 +3286,16 @@ InstallGlobalFunction( CoefficientsOnTrajectory,
       x   := IndeterminatesOfPolynomialRing(R)[1];
       res := AllGFqPolynomialsModDegree(q,deg,x);
     else res := [0..m-1]; fi;
-    coeff := [[1,0,1]*One(Source(f))];
-    for pos in [1..Length(cycle)-1] do
-      r := Position(res,cycle[pos] mod m);
-      coeff[pos+1] := [ c[r][1] * coeff[pos][1],
-                        c[r][1] * coeff[pos][2] + c[r][2] * coeff[pos][3],
-                        c[r][3] * coeff[pos][3] ];
-      d := Gcd(coeff[pos+1]);
-      coeff[pos+1] := coeff[pos+1]/d;
+    triple := [1,0,1] * One(Source(f)); coeffs := [triple];
+    for pos in [1..Length(traj)-1] do
+      r := Position(res,traj[pos]);
+      triple := [ c[r][1] * triple[1],
+                  c[r][1] * triple[2] + c[r][2] * triple[3],
+                  c[r][3] * triple[3] ];
+      triple := triple/Gcd(triple);
+      if whichcoeffs = "AllCoeffs" then Add(coeffs,triple); fi;
     od;
-    if all then return coeff; else return coeff[Length(coeff)]; fi;
+    if whichcoeffs = "AllCoeffs" then return coeffs; else return triple; fi;
   end );
 
 #############################################################################
@@ -3623,7 +3668,7 @@ ReducedSetOfStartingValues := function ( S, f, lng )
   min := Minimum(S); max := Maximum(S);
   for n in [min..max] do
     if n in S then
-      traj := Set(Trajectory(f,n,lng,"length"){[2..lng]});
+      traj := Set(Trajectory(f,n,lng){[2..lng]});
       if not n in traj then S := Difference(S,traj); fi;
     fi;
   od;

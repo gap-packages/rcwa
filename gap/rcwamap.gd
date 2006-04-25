@@ -528,40 +528,32 @@ DeclareAttribute( "Loops", IsRcwaMapping );
 
 #############################################################################
 ##
-#F  Trajectory( <f>, <n>, <val>, <cond> )
+#O  Trajectory( <f>, <n>, <length> ) . . .  trajectory of <f> starting at <n>
+#O  Trajectory( <f>, <n>, <length>, <m> )
+#O  Trajectory( <f>, <n>, <length>, <whichcoeffs> )
+#O  Trajectory( <f>, <n>, <terminal> )
+#O  Trajectory( <f>, <n>, <terminal>, <m> )
+#O  Trajectory( <f>, <n>, <terminal>, <whichcoeffs> )
 ##
-##  This function computes the trajectory of <n> under the rcwa mapping <f>.
-##  The parameter <val> can either specify the length of the sequence to
-##  be computed or be a `stopping value' such that the function stops when
-##  it reaches some iterate <n>^(<f>^<k>) = <val>, depending on whether
-##  <cond> = `"length"' or <cond> = `"stop"'.
+##  In the first case, this operation computes the first <length> iterates in
+##  the trajectory of the rcwa mapping <f> starting at <n>. In the forth case
+##  it computes the part of the trajectory of <f> starting at <n> which ends
+##  at the first occurence of an iterate in the set <terminal>. In place of
+##  the ring element <n>, a finite set of ring elements or a union of residue
+##  classes can be given. In the second and fifth case the iterates are
+##  reduced (mod <m>) to save memory.
 ##
-DeclareGlobalFunction( "Trajectory" );
-
-#############################################################################
+##  In the third and sixth case the operation computes "accumulated coeffi-
+##  cients" on the trajectory of <n> under the rcwa mapping <f>. The term
+##  "accumulated coefficients" denotes the list <c> of coefficient triples
+##  such that for any <k> we have <n>^(<f>^(<k>-1)) = (<c>[<k>][1]*<n> +
+##  <c>[<k>][2])/<c>[<k>][3]. The argument <whichcoeffs> can either be
+##  "AllCoeffs" or "LastCoeffs", and determines whether the whole list of
+##  triples or only the last triple is computed.
 ##
-#F  TrajectoryModulo( <f>, <n>, <m>, <lng> ) . .  trajectory (mod <m>) of <f>
-#F  TrajectoryModulo( <f>, <n>, <lng> )
-##
-##  Returns the sequence $(n_i), i = 0, \dots, lng-1$ with $n_i := n^(f^i)$
-##  mod <m> as a list. If <m> is not given, it defaults to the modulus
-##  of <f>.
-##
-DeclareGlobalFunction( "TrajectoryModulo" );
-
-#############################################################################
-##
-#F  CoefficientsOnTrajectory( <f>, <n>, <val>, <cond>, <all> )
-##
-##  This function computes accumulated coefficients on the trajectory of <n>
-##  under the rcwa mapping <f>. More precisely: it computes a list <c> of
-##  coefficient triples such that for any <k>, we have
-##  <n>^(<f>^(<k>-1)) = (<c>[<k>][1]*<n> + <c>[<k>][2])/<c>[<k>][3].
-##  The meaning of the arguments <val> and <cond> is the same as in
-##  `Trajectory'; if <all> = `true', the whole sequence of coefficient
-##  triples is returned, otherwise the result is only the last triple.
-##
-DeclareGlobalFunction( "CoefficientsOnTrajectory" );
+DeclareOperation( "Trajectory", [ IsRcwaMapping, IsObject, IsObject ] );
+DeclareOperation( "Trajectory", [ IsRcwaMapping, IsObject, IsObject,
+                                                 IsObject ] );
 
 #############################################################################
 ##

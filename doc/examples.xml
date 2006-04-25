@@ -422,18 +422,18 @@ See ?LikelyContractionCentre for information on how to improve this guess.
   1, 2 ]
 gap> S0^T = S0; # This holds by definition of the contraction centre.
 true
-gap> Trajectory(T,27,S0,"stop");
+gap> Trajectory(T,27,S0);
 [ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
   233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
   425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
   3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
   23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2 ]
-gap> List([1..40],n->Length(Trajectory(T,n,S0,"stop")));
+gap> List([1..40],n->Length(Trajectory(T,n,S0)));
 [ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11, 
   11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7 ]
-gap> Maximum(List([1..1000],n->Length(Trajectory(T,n,S0,"stop"))));
+gap> Maximum(List([1..1000],n->Length(Trajectory(T,n,S0))));
 113
-gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0,"stop"))));
+gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0))));
 125252
 ]]>
 </Example>
@@ -464,15 +464,15 @@ Rcwa mapping of Z with modulus 6
 gap> S0 := LikelyContractionCentre(f6,1000,100000);;
 #I  Warning: `LikelyContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
-gap> Trajectory(f6,25,S0,"stop");
+gap> Trajectory(f6,25,S0);
 [ 25, 21, 39, 72, 12, 2 ]
-gap> List([1..100],n->Length(Trajectory(f6,n,S0,"stop")));
+gap> List([1..100],n->Length(Trajectory(f6,n,S0)));
 [ 2, 2, 3, 4, 2, 2, 3, 2, 2, 5, 7, 2, 8, 17, 3, 16, 2, 4, 17, 6, 5, 2, 5, 5, 
   6, 2, 4, 2, 15, 2, 2, 3, 2, 5, 13, 3, 2, 3, 4, 2, 8, 4, 4, 2, 7, 19, 23517, 
   3, 9, 3, 2, 18, 14, 2, 20, 23512, 14, 2, 6, 6, 2, 4, 19, 12, 23511, 8, 
   23513, 10, 2, 13, 13, 3, 2, 23517, 7, 20, 7, 9, 9, 6, 12, 8, 6, 18, 14, 
   23516, 31, 12, 23545, 4, 21, 19, 5, 2, 17, 17, 13, 19, 6, 23515 ]
-gap> Maximum(Trajectory(f6,47,S0,"stop"));;
+gap> Maximum(Trajectory(f6,47,S0));;
 736339177776247330443187705477107581873369010805146980871580925673774229545698\
 886054
 ]]>
@@ -592,14 +592,14 @@ gap> List([ML1,ML2],IsSurjective);
 [ true, true ]
 gap> List([ML1,ML2],IsInjective);
 [ false, false ]
-gap> traj1 := Trajectory(ML1,One(R),16,"length");
+gap> traj1 := Trajectory(ML1,One(R),16);
 [ Z(2)^0, x^2+x+Z(2)^0, x^4+x^2+x, x^3+x+Z(2)^0, x^5+x^4+x^2, x^4+x^3+x, 
   x^3+x^2+Z(2)^0, x^5+x^2+Z(2)^0, x^7+x^6+x^5+x^3+Z(2)^0, 
   x^9+x^7+x^6+x^5+x^3+x+Z(2)^0, x^11+x^10+x^8+x^7+x^6+x^5+x^2, 
   x^10+x^9+x^7+x^6+x^5+x^4+x, x^9+x^8+x^6+x^5+x^4+x^3+Z(2)^0, 
   x^11+x^8+x^7+x^6+x^4+x+Z(2)^0, x^13+x^12+x^11+x^8+x^7+x^6+x^4, 
   x^12+x^11+x^10+x^7+x^6+x^5+x^3 ]
-gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),16,"length");
+gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),16);
 [ x^3+x+Z(2)^0, x^4+x+Z(2)^0, x^5+x^3+x^2+x+Z(2)^0, x^6+x^3+Z(2)^0, 
   x^7+x^5+x^4+x^2+x, x^6+x^4+x^3+x+Z(2)^0, x^7+x^4+x^3+x+Z(2)^0, 
   x^8+x^6+x^5+x^4+x^3+x+Z(2)^0, x^9+x^6+x^3+x+Z(2)^0, 
@@ -619,8 +619,8 @@ Markov chains with the two states 0&nbsp;mod&nbsp;<M>x</M> and
 
 <Example>
 <![CDATA[
-gap> traj1modx := Trajectory(ML1,One(R),400,"length") mod x;;
-gap> traj2modx := Trajectory(ML2,(x^3+x+1)*One(R),600,"length") mod x;;
+gap> traj1modx := Trajectory(ML1,One(R),400,x);;
+gap> traj2modx := Trajectory(ML2,(x^3+x+1)*One(R),600,x);;
 gap> List(traj1modx{[1..200]},val->Position([Zero(R),One(R)],val)-1);
 [ 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 
   1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 

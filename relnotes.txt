@@ -210,3 +210,9 @@ Changes between version 1.6.0 and version 1.6.2:
  - Methods for `CyclicGroup', `DihedralGroup' and `AbelianGroup' have been
    added.
 
+Changes between version 1.6.2 and version ... :
+
+ - The functions `Trajectory', `TrajectoryModulo' and
+   `CoefficientsOnTrajectory' have been merged into an operation
+   `Trajectory'.
+

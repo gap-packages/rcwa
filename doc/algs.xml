@@ -768,11 +768,12 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>Trajectory(<A>f</A>,<A>n</A>,<A>val</A>,<A>cond</A>)</C>,
-    <C>TrajectoryModulo(<A>f</A>,<A>n</A>,<A>m</A>,<A>lng</A>)</C>
+    <C>Trajectory(<A>f</A>,<A>n</A>,...)</C>
   </Mark>
   <Item>
     Iterated application of an rcwa mapping.
+    In the methods computing <Q>accumulated coefficients</Q>
+    additionally composition of affine mappings.
   </Item>
 
   <Mark>

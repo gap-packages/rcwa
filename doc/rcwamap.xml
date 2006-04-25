@@ -1248,86 +1248,71 @@ gap> Loops(nu*nu^a);
 <Heading>Trajectories</Heading>
 
 <ManSection>
-  <Func Name="Trajectory" Arg="f, n, val, cond" Label="f, n, val, cond"/>
+  <Meth Name="Trajectory" Arg="f, n, length" Label="f, n, length"/>
+  <Meth Name="Trajectory" Arg="f, n, length, m" Label="f, n, length, m"/>
+  <Meth Name="Trajectory" Arg="f, n, terminal" Label="f, n, terminal"/>
+  <Meth Name="Trajectory" Arg="f, n, terminal, m" Label="f, n, terminal, m"/>
   <Returns>
-    The trajectory of the rcwa mapping&nbsp;<A>f</A> starting
-    at&nbsp;<A>n</A>.
+    The first <A>length</A> iterates in the trajectory of the
+    rcwa mapping&nbsp;<A>f</A> starting at&nbsp;<A>n</A>,
+    resp. the part of the trajectory of the rcwa mapping&nbsp;<A>f</A>
+    starting at&nbsp;<A>n</A> which ends at the first occurence of an
+    iterate in the set <A>terminal</A>. If the argument <A>m</A> is given,
+    the iterates are reduced (mod&nbsp;<A>m</A>).
   </Returns>
   <Description>
-    Depending on whether <C><A>cond</A> = "length"</C> or
-    <C><A>cond</A> = "stop"</C>, the parameter <A>val</A> either is the
-    length of the sequence to be computed or is a <Q>stopping set</Q> such
-    that the computation stops when some iterate
-    <C><A>n</A>&circum;(<A>f</A>&circum;k) in <A>val</A></C> is reached.
-    In place of the ring element&nbsp;<A>n</A>, a finite set of ring elements
-    or a union of residue classes can be given.
+    To save memory when computing long trajectories containing huge
+    iterates, the reduction (mod&nbsp;<A>m</A>) is done immediately after
+    any iteration.
+
+    In place of the ring element&nbsp;<A>n</A>, the methods also accept
+    a finite set of ring elements or a union of residue classes.
 <Example>
 <![CDATA[
-gap> Trajectory(T,27,[1],"stop");
-[ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
-  233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
-  425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
-  3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
-  23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1 ]
-gap> Trajectory(T,ResidueClass(Integers,3,0),Integers,"stop");
+gap> Trajectory(T,15,20);
+[ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1, 2, 1, 2, 1, 2, 1, 2 ]
+gap> Trajectory(T,15,20,2);
+[ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0 ]
+gap> Trajectory(T,15,[1]);
+[ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1 ]
+gap> Trajectory(T,15,[1],2);
+[ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
+gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
   <union of 20 residue classes (mod 27)>, <union of 73 residue classes (mod 
     81)>, Z \ 10(81) U 37(81), Integers ]
-gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1],"stop"));
-307
 ]]>
 </Example>
   </Description>
 </ManSection>
 
 <ManSection>
-  <Func Name="TrajectoryModulo" Arg="f, n, m, lng" Label="f, n, m, lng"/>
-  <Func Name="TrajectoryModulo" Arg="f, n, lng" Label="f, n, lng"/>
-  <Returns>
-    The sequence <M>(n_i), i = 0, \dots, lng-1</M> with
-    <M>n_i := n^{(f^i)}</M>&nbsp;mod&nbsp;<A>m</A> as a list.
-  </Returns>
-  <Description>
-    If <A>m</A> is not given it defaults to the modulus of&nbsp;<A>f</A>.
-<Example>
-<![CDATA[
-gap> TrajectoryModulo(a,8,25);
-[ 0, 0, 2, 3, 0, 2, 1, 2, 3, 2, 1, 3, 0, 0, 0, 0, 2, 3, 2, 1, 1, 2, 3, 1, 2 ]
-gap> TrajectoryModulo(T,27,2,100);
-[ 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 
-  0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 
-  1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 
-  0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Func Name="CoefficientsOnTrajectory"
-        Arg="f, n, val, cond, all" Label="f, n, val, cond, all"/>
+  <Meth Name="Trajectory" Arg="f, n, length, whichcoeffs"
+                          Label="f, n, length, whichcoeffs"/>
+  <Meth Name="Trajectory" Arg="f, n, terminal, whichcoeffs"
+                          Label="f, n, terminal, whichcoeffs"/>
   <Returns>
     Either the list <C>c</C> of triples of coprime coefficients such that
     for any&nbsp;<C>k</C> it holds that
     <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
-    (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C> or the last entry of that list.
+    (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C> or the last entry of that list,
+    depending on whether <A>whichcoeffs</A> is <C>"AllCoeffs"</C> or
+    <C>"LastCoeffs"</C>.
   </Returns>
   <Description>
-    The meaning of the arguments <A>val</A> and <A>cond</A> is the same as
-    in <Ref Func="Trajectory" Label="f, n, val, cond"/>.
-    If <C><A>all</A> = true</C>, the whole sequence of coefficient triples
-    is returned. Otherwise the result is only the last triple.
+    The meanings of the arguments <A>length</A> and <A>terminal</A> are
+    the same as in the methods for the operation <C>Trajectory</C> described
+    above.
 <Example>
 <![CDATA[
-gap> CoefficientsOnTrajectory(T,27,1,"stop",false);
+gap> Trajectory(T,27,[1],"LastCoeffs");
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
 gap> (last[1]*27+last[2])/last[3];
 1
-gap> CoefficientsOnTrajectory(r,x^3+x^2,x^3+x^2,"stop",true);
-[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ], 
-  [ x^4+x^2+Z(2)^0, x^4+x, x^4+Z(2)^0 ], 
-  [ x^6+x^5+x^3+x+Z(2)^0, x^6+x^4+x^3+x^2, x^6+x^4+x^2+Z(2)^0 ], 
-  [ x^8+x^4+Z(2)^0, x^7+x^6, x^8+Z(2)^0 ] ]
+gap> Trajectory(r,x^3,[x^3+x^2+x],"AllCoeffs");
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ],
+  [ x^4+x^2+Z(2)^0, x, x^4+Z(2)^0 ],
+  [ x^6+x^5+x^3+x+Z(2)^0, x^3+x^2+x, x^6+x^4+x^2+Z(2)^0 ] ]
 ]]>
 </Example>
   </Description>
@@ -1391,6 +1376,8 @@ gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -1479,10 +1466,9 @@ gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
   Probabilistic guesses on the behaviour of trajectories
 </Heading>
 
-This section describes some functionality for getting something like
-<Q>educated guesses</Q> concerning the overall behaviour of the
-trajectories of a given rcwa mapping. The description of these functions
-has deliberately been separated from the documentation of the
+This section describes some functionality for getting <Q>educated guesses</Q>
+concerning the overall behaviour of the trajectories of a given rcwa mapping.
+Its contents have deliberately been separated from the documentation of the
 non-probabilistic functionality related to trajectories of rcwa mappings.
 
 <ManSection>
@@ -1519,7 +1505,7 @@ See ?LikelyContractionCentre for information on how to improve this guess.
 <ManSection>
   <Oper Name="GuessedDivergence" Arg="f" Label="f"/>
   <Returns>
-    A floating point value which should be a rough guess on how fast
+    A floating point value which is intended to be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value
     greater than&nbsp;1) or converge (return value smaller than&nbsp;1).
   </Returns>
