@@ -219,3 +219,5 @@ Changes between version 1.6.2 and version ... :
  - The functions `IncreasingOn' and `DecreasingOn' have been turned
    into attributes.
 
+ - The function `TransitionMatrix' has been turned into an operation.
+

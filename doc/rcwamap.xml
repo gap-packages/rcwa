@@ -1103,7 +1103,7 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
 </ManSection>
 
 <ManSection>
-  <Func Name="TransitionMatrix" Arg="f, m" Label="f, m"/>
+  <Oper Name="TransitionMatrix" Arg="f, m" Label="f, m"/>
   <Returns>
     The transition matrix of the rcwa mapping&nbsp;<A>f</A> for
     modulus&nbsp;<A>m</A>.

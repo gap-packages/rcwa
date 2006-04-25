@@ -2981,17 +2981,19 @@ InstallMethod( Order,
 
 #############################################################################
 ##
-#F  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
+#M  TransitionMatrix( <f>, <m> ) .  for rcwa mapping and nonzero ring element
 ##
-InstallGlobalFunction( TransitionMatrix,
+InstallMethod( TransitionMatrix,
+               "for an rcwa mapping and an element<>0 of its source (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
 
   function ( f, m )
 
     local  T, R, mTest, Resm, ResmTest, n, i, j;
 
-    if not IsRcwaMapping(f) or not m in Source(f) then
+    if IsZero(m) or not m in Source(f) then
       Error("usage: TransitionMatrix( <f>, <m> ),\nwhere <f> is an ",
-            "rcwa mapping and <m> lies in the source of <f>.\n");
+            "rcwa mapping and <m> <> 0 lies in the source of <f>.\n");
     fi;
     R := Source(f); Resm := AllResidues(R,m);
     mTest := Modulus(f) * Lcm(m,Divisor(f));

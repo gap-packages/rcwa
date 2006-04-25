@@ -437,7 +437,7 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
-#F  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
+#O  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
 ##
 ##  The *transition matrix* <T> of <f> for modulus <m>.
 ##
@@ -446,7 +446,7 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 ##  The numbering of the residue classes is the same as in the corresponding
 ##  return value of the function `AllResidues'.
 ##
-DeclareGlobalFunction( "TransitionMatrix" );
+DeclareOperation( "TransitionMatrix", [ IsRcwaMapping, IsRingElement ] );
 
 #############################################################################
 ##
