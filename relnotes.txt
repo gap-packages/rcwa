@@ -216,3 +216,6 @@ Changes between version 1.6.2 and version ... :
    `CoefficientsOnTrajectory' have been merged into an operation
    `Trajectory'.
 
+ - The functions `IncreasingOn' and `DecreasingOn' have been turned
+   into attributes.
+

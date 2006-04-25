@@ -3627,9 +3627,10 @@ InstallMethod( RespectedPartition,
 
 #############################################################################
 ##
-#F  IncreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| >> |n|
+#F  IncreasingOn( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
-InstallGlobalFunction( IncreasingOn,
+InstallMethod( IncreasingOn,
+               "for an rcwa mapping (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -3638,16 +3639,17 @@ InstallGlobalFunction( IncreasingOn,
     R := Source(f); m := Modulus(f); c := Coefficients(f);
     numres := Length(AllResidues(R,m));
     return ResidueClassUnion(R,m,
-            AllResidues(R,m)
-              {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
-                                        < Length(AllResidues(R,c[r][1])))});
+             AllResidues(R,m)
+               {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
+                                         < Length(AllResidues(R,c[r][1])))});
   end );
 
 #############################################################################
 ##
-#F  DecreasingOn( <f> ) . . . . . . . . . . . set of n such that |n^f| << |n|
+#F  DecreasingOn( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
-InstallGlobalFunction( DecreasingOn,
+InstallMethod( DecreasingOn,
+               "for an rcwa mapping (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 

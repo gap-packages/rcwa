@@ -1319,8 +1319,8 @@ gap> Trajectory(r,x^3,[x^3+x^2+x],"AllCoeffs");
 </ManSection>
 
 <ManSection>
-  <Func Name="IncreasingOn" Arg="f" Label="f"/>
-  <Func Name="DecreasingOn" Arg="f" Label="f"/>
+  <Attr Name="IncreasingOn" Arg="f" Label="f"/>
+  <Attr Name="DecreasingOn" Arg="f" Label="f"/>
   <Returns>
     The union of all residue classes <M>r(m)</M> such that
     <M>|R/a_{r(m)}R| &gt; |R/c_{r(m)}R|</M> resp.
