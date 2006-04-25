@@ -537,11 +537,11 @@ DeclareAttribute( "Loops", IsRcwaMapping );
 ##
 ##  In the first case, this operation computes the first <length> iterates in
 ##  the trajectory of the rcwa mapping <f> starting at <n>. In the forth case
-##  it computes the part of the trajectory of <f> starting at <n> which ends
-##  at the first occurence of an iterate in the set <terminal>. In place of
-##  the ring element <n>, a finite set of ring elements or a union of residue
-##  classes can be given. In the second and fifth case the iterates are
-##  reduced (mod <m>) to save memory.
+##  it computes the initial part of the trajectory of <f> starting at <n>
+##  which ends at the first occurence of an iterate in the set <terminal>.
+##  In place of the ring element <n>, a finite set of ring elements or a
+##  union of residue classes can be given. In the second and fifth case the
+##  iterates are reduced (mod <m>) to save memory.
 ##
 ##  In the third and sixth case the operation computes "accumulated coeffi-
 ##  cients" on the trajectory of <n> under the rcwa mapping <f>. The term
