@@ -147,129 +147,6 @@ BindGlobal( "IsRcwaMappingOfZOrZ_piInStandardRep",
 BindGlobal( "IsRcwaMappingOfGFqxInStandardRep",
              IsRcwaMappingOfGFqx and IsRcwaMappingStandardRep );
 
-# Bring the rcwa mapping <f> to normalized, reduced form.
-
-ReduceRcwaMappingOfZ := function ( f )
-
-  local  c, m, fact, p, cRed, cRedBuf, n;
-
-  c := f!.coeffs; m := f!.modulus;
-  for n in [1..Length(c)] do
-    c[n] := c[n]/Gcd(c[n]);
-    if c[n][3] < 0 then c[n] := -c[n]; fi;
-  od;
-  fact := Set(FactorsInt(m)); cRed := c;
-  for p in fact do
-    repeat
-      cRedBuf := StructuralCopy(cRed);
-      cRed := List([1..p], i -> cRedBuf{[(i - 1) * m/p + 1 .. i * m/p]});
-      if   Length(Set(cRed)) = 1
-      then cRed := cRed[1]; m := m/p; else cRed := cRedBuf; fi;
-    until cRed = cRedBuf or m mod p <> 0;
-  od;
-  f!.coeffs  := Immutable(cRed);
-  f!.modulus := Length(cRed);
-end;
-MakeReadOnlyGlobal( "ReduceRcwaMappingOfZ" );
-
-ReduceRcwaMappingOfZ_pi := function ( f )
-
-  local  c, m, pi, d_pi, d_piprime, divs, d, cRed, n, i;
-
-  c := f!.coeffs; m := f!.modulus;
-  pi := NoninvertiblePrimes(Source(f));
-  for n in [1..Length(c)] do
-    if c[n][3] < 0 then c[n] := -c[n]; fi;
-    d_pi := Gcd(Product(Filtered(Factors(Gcd(NumeratorRat(c[n][1]),
-                                             NumeratorRat(c[n][2]))),
-                                 p -> p in pi or p = 0)),
-                NumeratorRat(c[n][3]));
-    d_piprime := c[n][3] / Product(Filtered(Factors(NumeratorRat(c[n][3])),
-                                            p -> p in pi));
-    c[n] := c[n] / (d_pi * d_piprime);
-  od;
-  divs := DivisorsInt(m); i := 1;
-  repeat
-    d := divs[i]; i := i + 1;
-    cRed := List([1..m/d], i -> c{[(i - 1) * d + 1 .. i * d]});
-  until Length(Set(cRed)) = 1;
-  f!.coeffs  := Immutable(cRed[1]);
-  f!.modulus := Length(cRed[1]);
-end;
-MakeReadOnlyGlobal( "ReduceRcwaMappingOfZ_pi" );
-
-ReduceRcwaMappingOfGFqx := function ( f )
-
-  local  c, m, F, q, x, deg, r, fact, d, degd,
-         sigma, csorted, numresred, numresd, mred, rred,
-         n, l, i;
-
-  c := f!.coeffs; m := f!.modulus;
-  for n in [1..Length(c)] do
-    d := Gcd(c[n]);
-    c[n] := c[n]/(d * LeadingCoefficient(c[n][3]));
-  od;
-  deg := DegreeOfLaurentPolynomial(m);
-  F := CoefficientsRing(UnderlyingRing(FamilyObj(f)));
-  q := Size(F);
-  x := UnderlyingIndeterminate(FamilyObj(f));
-  r := AllGFqPolynomialsModDegree(q,deg,x);
-  fact := Difference(Factors(m),[One(m)]);
-  for d in fact do 
-    degd := DegreeOfLaurentPolynomial(d);
-    repeat
-      numresd := q^degd; numresred := q^(deg-degd);
-      mred  := m/d;
-      rred  := List(r, P -> P mod mred);
-      sigma := SortingPerm(rred);
-      csorted := Permuted(c,sigma);
-      if   ForAll([1..numresred],
-                  i -> Length(Set(csorted{[(i-1)*numresd+1..i*numresd]}))=1)
-      then m   := mred;
-           deg := deg - degd;
-           r   := AllGFqPolynomialsModDegree(q,deg,x);
-           c   := csorted{[1, 1 + numresd .. 1 + (numresred-1) * numresd]};
-      fi;
-    until m <> mred or not IsZero(m mod d);
-  od;
-  f!.coeffs  := Immutable(c);
-  f!.modulus := m;
-end;
-MakeReadOnlyGlobal( "ReduceRcwaMappingOfGFqx" );
-
-CheckClassCycles := function ( R, cycles )
-
-  if not (    ForAll(cycles,IsList)
-          and ForAll(Flat(cycles),S->IsResidueClass(S) and IsSubset(R,S)))
-     or  ForAny(Combinations(Flat(cycles),2),
-                s->Intersection(s[1],s[2]) <> [])
-  then Error("there is no rcwa mapping of ",R," having the class ",
-             "cycles ",cycles,".\n"); 
-  fi;
-end;
-MakeReadOnlyGlobal( "CheckClassCycles" );
-
-CoeffsOfRcwaMappingByClassCycles := function ( R, cycles )
-
-  local  m, c, res, cyc, pre, im, affectedpos, pos, r1, r2, m1, m2, r, i;
-
-  m   := Lcm(List(Union(cycles),Modulus));
-  res := AllResidues(R,m);
-  c   := List(res,r->[1,0,1]*One(R));
-  for cyc in cycles do
-    if Length(cyc) <= 1 then continue; fi;
-    for pos in [1..Length(cyc)] do
-      pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
-      r1 := Residues(pre)[1]; m1 := Modulus(pre);
-      r2 := Residues(im )[1]; m2 := Modulus(im);
-      affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
-      for i in affectedpos do c[i] := [m2,m1*r2-m2*r1,m1]; od;
-    od;
-  od;
-  return c;
-end;
-MakeReadOnlyGlobal( "CoeffsOfRcwaMappingByClassCycles" );
-
 #############################################################################
 ##
 #F  RcwaMappingNC( <coeffs> )
@@ -280,7 +157,29 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( coeffs )
 
-    local Result;
+    local  ReduceRcwaMappingOfZ, Result;
+
+    ReduceRcwaMappingOfZ := function ( f )
+
+      local  c, m, fact, p, cRed, cRedBuf, n;
+
+      c := f!.coeffs; m := f!.modulus;
+      for n in [1..Length(c)] do
+        c[n] := c[n]/Gcd(c[n]);
+        if c[n][3] < 0 then c[n] := -c[n]; fi;
+      od;
+      fact := Set(FactorsInt(m)); cRed := c;
+      for p in fact do
+        repeat
+          cRedBuf := StructuralCopy(cRed);
+          cRed := List([1..p], i -> cRedBuf{[(i - 1) * m/p + 1 .. i * m/p]});
+          if   Length(Set(cRed)) = 1
+          then cRed := cRed[1]; m := m/p; else cRed := cRedBuf; fi;
+        until cRed = cRedBuf or m mod p <> 0;
+      od;
+      f!.coeffs  := Immutable(cRed);
+      f!.modulus := Length(cRed);
+    end;
 
     if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
     then TryNextMethod( ); fi;
@@ -304,7 +203,7 @@ InstallOtherMethod( RcwaMapping,
 
   function ( coeffs )
 
-    local quiet;
+    local  quiet;
 
     if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
     then TryNextMethod( ); fi;
@@ -361,7 +260,7 @@ InstallOtherMethod( RcwaMapping,
 
   function ( perm, range )
 
-    local quiet;
+    local  quiet;
 
     quiet := ValueOption("BeQuiet") = true;
     if   Permutation(perm,range) = fail
@@ -436,7 +335,27 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( cycles )
 
-    local R, coeffs;
+    local  CoeffsOfRcwaMappingByClassCycles, R, coeffs;
+
+    CoeffsOfRcwaMappingByClassCycles := function ( R, cycles )
+
+      local  m, c, res, cyc, pre, im, affectedpos, pos, r1, r2, m1, m2, r, i;
+
+      m   := Lcm(List(Union(cycles),Modulus));
+      res := AllResidues(R,m);
+      c   := List(res,r->[1,0,1]*One(R));
+      for cyc in cycles do
+        if Length(cyc) <= 1 then continue; fi;
+        for pos in [1..Length(cyc)] do
+          pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
+          r1 := Residues(pre)[1]; m1 := Modulus(pre);
+          r2 := Residues(im )[1]; m2 := Modulus(im);
+          affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
+          for i in affectedpos do c[i] := [m2,m1*r2-m2*r1,m1]; od;
+        od;
+      od;
+      return c;
+    end;
 
     if not IsUnionOfResidueClasses(cycles[1][1]) then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(cycles[1][1]));
@@ -459,7 +378,19 @@ InstallOtherMethod( RcwaMapping,
 
   function ( cycles )
 
-    local R;
+    local  CheckClassCycles, R;
+
+    CheckClassCycles := function ( R, cycles )
+
+      if not (    ForAll(cycles,IsList)
+              and ForAll(Flat(cycles),S->IsResidueClass(S)
+              and IsSubset(R,S)))
+         or  ForAny(Combinations(Flat(cycles),2),
+                    s->Intersection(s[1],s[2]) <> [])
+      then Error("there is no rcwa mapping of ",R," having the class ",
+                 "cycles ",cycles,".\n"); 
+      fi;
+    end;
 
     if not IsList(cycles[1]) or
        not IsUnionOfResidueClasses(cycles[1][1])
@@ -527,7 +458,32 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( pi, coeffs )
 
-    local  f, R, fam;
+    local  ReduceRcwaMappingOfZ_pi, f, R, fam;
+
+    ReduceRcwaMappingOfZ_pi := function ( f )
+
+      local  c, m, pi, d_pi, d_piprime, divs, d, cRed, n, i;
+
+      c := f!.coeffs; m := f!.modulus;
+      pi := NoninvertiblePrimes(Source(f));
+      for n in [1..Length(c)] do
+        if c[n][3] < 0 then c[n] := -c[n]; fi;
+        d_pi := Gcd(Product(Filtered(Factors(Gcd(NumeratorRat(c[n][1]),
+                                                 NumeratorRat(c[n][2]))),
+                                     p -> p in pi or p = 0)),
+                    NumeratorRat(c[n][3]));
+        d_piprime := c[n][3]/Product(Filtered(Factors(NumeratorRat(c[n][3])),
+                                              p -> p in pi));
+        c[n] := c[n] / (d_pi * d_piprime);
+      od;
+      divs := DivisorsInt(m); i := 1;
+      repeat
+        d := divs[i]; i := i + 1;
+        cRed := List([1..m/d], i -> c{[(i - 1) * d + 1 .. i * d]});
+      until Length(Set(cRed)) = 1;
+      f!.coeffs  := Immutable(cRed[1]);
+      f!.modulus := Length(cRed[1]);
+    end;
 
     if IsInt(pi) then pi := [pi]; fi;
     if   not IsList(pi) or not ForAll(pi,IsInt) or not ForAll(coeffs,IsList)
@@ -589,7 +545,45 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( q, modulus, coeffs )
 
-    local  f, R, fam, ind;
+    local  ReduceRcwaMappingOfGFqx, f, R, fam, ind;
+
+    ReduceRcwaMappingOfGFqx := function ( f )
+
+      local  c, m, F, q, x, deg, r, fact, d, degd,
+             sigma, csorted, numresred, numresd, mred, rred,
+             n, l, i;
+
+      c := f!.coeffs; m := f!.modulus;
+      for n in [1..Length(c)] do
+        d := Gcd(c[n]);
+        c[n] := c[n]/(d * LeadingCoefficient(c[n][3]));
+      od;
+      deg := DegreeOfLaurentPolynomial(m);
+      F := CoefficientsRing(UnderlyingRing(FamilyObj(f)));
+      q := Size(F);
+      x := UnderlyingIndeterminate(FamilyObj(f));
+      r := AllGFqPolynomialsModDegree(q,deg,x);
+      fact := Difference(Factors(m),[One(m)]);
+      for d in fact do 
+        degd := DegreeOfLaurentPolynomial(d);
+        repeat
+          numresd := q^degd; numresred := q^(deg-degd);
+          mred  := m/d;
+          rred  := List(r, P -> P mod mred);
+          sigma := SortingPerm(rred);
+          csorted := Permuted(c,sigma);
+          if ForAll([1..numresred],
+                    i->Length(Set(csorted{[(i-1)*numresd+1..i*numresd]}))=1)
+          then m   := mred;
+               deg := deg - degd;
+               r := AllGFqPolynomialsModDegree(q,deg,x);
+               c := csorted{[1, 1 + numresd .. 1 + (numresred-1) * numresd]};
+          fi;
+        until m <> mred or not IsZero(m mod d);
+      od;
+      f!.coeffs  := Immutable(c);
+      f!.modulus := m;
+    end;
 
     ind := IndeterminateNumberOfLaurentPolynomial( coeffs[1][1] );
     R   := PolynomialRing( GF( q ), [ ind ] );
@@ -969,162 +963,6 @@ InstallGlobalFunction( ClassUnionShift,
     return RcwaMapping(R,m,c);
   end );
 
-IdChars := function ( n, ch )
-  return Concatenation( ListWithIdenticalEntries( n, ch ) );
-end;
-MakeReadOnlyGlobal( "IdChars" );
-
-DisplayAffineMappingWithCoeffsInZ := function ( t )
-
-  local  a, b, c;
-
-  a := t[1]; b := t[2]; c := t[3];
-  if   c = 1
-  then if   a = 0
-       then Print(b);
-       else if   AbsInt(a) <> 1 then Print(a);
-            elif a = -1         then Print("-");
-            fi;
-            Print("n");
-            if   b > 0 then Print(" + ", b);
-            elif b < 0 then Print(" - ",-b);
-            fi;
-       fi;
-  elif b = 0 then if   AbsInt(a) <> 1 then Print(a);
-                  elif a = -1         then Print("-");
-                  fi;
-                  Print("n/",c);
-  else Print("(");
-       if   AbsInt(a) <> 1 then Print(a);
-       elif a = -1         then Print("-");
-       fi;
-       Print("n");
-       if   b > 0 then Print(" + ", b);
-       elif b < 0 then Print(" - ",-b);
-       fi;
-       Print(")/",c);
-  fi;
-end;
-MakeReadOnlyGlobal( "DisplayAffineMappingWithCoeffsInZ" );
-
-DisplayAffineMappingWithCoeffsInZ_pi := function ( t )
-
-  local  a, b, c;
-
-  a := t[1]; b := t[2]; c := t[3];
-  if   c = 1
-  then if   a = 0
-       then Print(b);
-       else if   AbsInt(a) <> 1 then Print(a," ");
-            elif a = -1         then Print("-");
-            fi;
-            Print("n");
-            if   b > 0 then Print(" + ", b);
-            elif b < 0 then Print(" - ",-b);
-            fi;
-       fi;
-  elif b = 0 then if   AbsInt(a) <> 1 then Print(a," ");
-                  elif a = -1         then Print("-");
-                  fi;
-                  Print("n / ",c);
-  else Print("(");
-       if   AbsInt(a) <> 1 then Print(a," ");
-       elif a = -1         then Print("-");
-       fi;
-       Print("n");
-       if   b > 0 then Print(" + ", b);
-       elif b < 0 then Print(" - ",-b);
-       fi;
-       Print(") / ",c);
-  fi;
-end;
-MakeReadOnlyGlobal( "DisplayAffineMappingWithCoeffsInZ_pi" );
-
-DisplayAffineMappingWithCoeffsInGFqx := function ( t, maxlng )
-
-  local  append, factorstr, str, a, b, c, one, zero, x;
-
-  append := function ( arg )
-    str := CallFuncList(Concatenation,
-                        Concatenation([str],List(arg,String)));
-  end;
-
-  factorstr := function ( p )
-    if   Length(CoefficientsOfLaurentPolynomial(p)[1]) <= 1
-    then return String(p);
-    else return Concatenation("(",String(p),")"); fi;
-  end;
-
-  a := t[1]; b := t[2]; c := t[3];
-  one := One(a); zero := Zero(a);
-  x := IndeterminateOfLaurentPolynomial(a);
-  str := "";
-  if   c = one
-  then if   a = zero
-       then append(b);
-       else if   not a in [-one,one] then append(factorstr(a),"*P");
-            elif a = one then append("P"); else append("-P"); fi;
-            if b <> zero then append(" + ",b); fi;
-       fi;
-  elif b = zero then if   not a in [-one,one] then append(factorstr(a),"*P");
-                     elif a = one then append("P"); else append("-P"); fi;
-                     append("/",factorstr(c));
-  else append("(");
-       if   not a in [-one,one]
-       then append(factorstr(a),"*P + ",b,")/",factorstr(c));
-       elif a <> one and a = -one
-       then append("-P + ",b,")/",factorstr(c));
-       else append("P + ",b,")/",factorstr(c));
-       fi;
-  fi;
-  if Length(str) > maxlng then str := "< ... >"; fi;
-  Print(str);
-end;
-MakeReadOnlyGlobal( "DisplayAffineMappingWithCoeffsInGFqx" );
-
-LaTeXAffineMappingWithCoeffsInZ := function ( t )
-
-  local  german, str, a, b, c, append;
- 
-  append := function ( arg )
-    str := CallFuncList(Concatenation,
-                        Concatenation([str],List(arg,String)));
-  end;
-
-  german := ValueOption("german") = true;
-  a := t[1]; b := t[2]; c := t[3]; str := "";
-  if   c = 1
-  then if   a = 0
-       then append(b);
-       else if   AbsInt(a) <> 1 then append(a);
-            elif a = -1         then append("-");
-            fi;
-            append("n");
-            if   b > 0 then append(" + ", b);
-            elif b < 0 then append(" - ",-b);
-            fi;
-       fi;
-  elif b = 0 then if german then append("\\linfrac{");
-                            else append("\\frac{"); fi;
-                  if   AbsInt(a) <> 1 then append(a);
-                  elif a = -1         then append("-");
-                  fi;
-                  append("n}{",c,"}");
-  else if german then append("\\afffrac{");
-                 else append("\\frac{"); fi;
-       if   AbsInt(a) <> 1 then append(a);
-       elif a = -1         then append("-");
-       fi;
-       append("n");
-       if   b > 0 then append(" + ", b);
-       elif b < 0 then append(" - ",-b);
-       fi;
-       append("}{",c,"}");
-  fi;
-  return str;
-end;
-MakeReadOnlyGlobal( "LaTeXAffineMappingWithCoeffsInZ" );
-
 #############################################################################
 ##
 #M  String( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mapping of Z
@@ -1252,78 +1090,6 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  LaTeXObj( infinity ) . . . . . . . . . . . . . . . . . . . . for infinity
-##
-InstallMethod( LaTeXObj, "for infinity (RCWA)", true, [ IsInfinity ], 0,
-               inf -> "\\infty" );
-
-LaTeXAndXDVIRcwaMapping := function ( f )
-
-  local  tmpdir, file, stream, str, latex, dvi, m, sizes, size,
-         jectivity, cwop;
-
-  tmpdir := DirectoryTemporary( );
-  file   := Filename(tmpdir,"rcwamap.tex");
-  stream := OutputTextFile(file,false);
-  SetPrintFormattingStatus(stream,false);
-  AppendTo(stream,"\\documentclass[fleqn]{article}\n",
-                  "\\usepackage{amsmath}\n",
-                  "\\usepackage{amssymb}\n\n",
-                  "\\setlength{\\paperwidth}{84cm}\n",
-                  "\\setlength{\\textwidth}{80cm}\n",
-                  "\\setlength{\\paperheight}{59.5cm}\n",
-                  "\\setlength{\\textheight}{57cm}\n\n", 
-                  "\\begin{document}\n\n");
-  sizes := ["Huge","huge","Large","large"];
-  m := Modulus(f);
-  if   ValueOption("Factorization") <> true
-  then size := LogInt(Int(m/16)+1,2)+1;
-  else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
-  if size < 5 then AppendTo(stream,"\\begin{",sizes[size],"}\n\n"); fi;
-  if   IsBijective(f)  then jectivity := " bijective";
-  elif IsInjective(f)  then jectivity := "n injective, but not surjective";
-  elif IsSurjective(f) then jectivity := " surjective, but not injective";
-  else jectivity := " neither injective nor surjective"; fi;
-  if   IsClassWiseOrderPreserving(f)
-  then cwop := " class-wise order-preserving"; else cwop := ""; fi;
-  AppendTo(stream,"\\noindent A",jectivity,cwop,
-           " rcwa mapping of \\(\\mathbb{Z}\\) \\newline\nwith modulus ",
-           String(Modulus(f)),", multiplier ",String(Multiplier(f)),
-           " and divisor ",String(Divisor(f)),", given by\n");
-  AppendTo(stream,"\\begin{align*}\n");
-  str := LaTeXObj(f:Indentation:=2);
-  AppendTo(stream,str,"\\end{align*}");
-  if HasIsTame(f) then
-    if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
-                 else AppendTo(stream,"\nThis mapping is wild."); fi;
-  fi;
-  if HasOrder(f) then
-    AppendTo(stream,"\nThe order of this mapping is \\(",
-             LaTeXObj(Order(f)),"\\).");
-  fi;
-  if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
-  if IsBijective(f) then
-    if IsClassWiseOrderPreserving(f) then
-      AppendTo(stream,"\n\\noindent The determinant of this mapping is ",
-               String(Determinant(f)),", and its sign is ",
-               String(Sign(f)),".");
-    else
-      AppendTo(stream,"\n\\noindent The sign of this mapping is ",
-               String(Sign(f)),".");
-    fi;
-  fi;
-  if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
-  AppendTo(stream,"\n\n\\end{document}\n");
-  latex := Filename(DirectoriesSystemPrograms( ),"latex");
-  Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
-  dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
-  Process(tmpdir,dvi,InputTextNone( ),OutputTextNone( ), 
-          ["-paper","a1r","rcwamap.dvi"]);
-end;
-MakeReadOnlyGlobal( "LaTeXAndXDVIRcwaMapping" );
-
-#############################################################################
-##
 #M  Display( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mapping
 ##
 ##  Display the rcwa mapping <f> as a nice, human-readable table.
@@ -1334,12 +1100,126 @@ InstallMethod( Display,
 
   function ( f )
 
-    local  m, c, pi, q, d, x, RingString, name, VarName,
+    local  DisplayAffineMappingWithCoeffsInZ,
+           DisplayAffineMappingWithCoeffsInZ_pi,
+           DisplayAffineMappingWithCoeffsInGFqx, IdChars,
+           m, c, pi, q, d, x, RingString, name, VarName,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
 
+    IdChars := function ( n, ch )
+      return Concatenation( ListWithIdenticalEntries( n, ch ) );
+    end;
+
+    DisplayAffineMappingWithCoeffsInZ := function ( t )
+
+      local  a, b, c;
+
+      a := t[1]; b := t[2]; c := t[3];
+      if   c = 1
+      then if   a = 0
+           then Print(b);
+           else if   AbsInt(a) <> 1 then Print(a);
+                elif a = -1         then Print("-");
+                fi;
+                Print("n");
+                if   b > 0 then Print(" + ", b);
+                elif b < 0 then Print(" - ",-b);
+                fi;
+           fi;
+      elif b = 0 then if   AbsInt(a) <> 1 then Print(a);
+                      elif a = -1         then Print("-");
+                      fi;
+                      Print("n/",c);
+      else Print("(");
+           if   AbsInt(a) <> 1 then Print(a);
+           elif a = -1         then Print("-");
+           fi;
+           Print("n");
+           if   b > 0 then Print(" + ", b);
+           elif b < 0 then Print(" - ",-b);
+           fi;
+           Print(")/",c);
+      fi;
+    end;
+
+    DisplayAffineMappingWithCoeffsInZ_pi := function ( t )
+
+      local  a, b, c;
+
+      a := t[1]; b := t[2]; c := t[3];
+      if   c = 1
+      then if   a = 0
+           then Print(b);
+           else if   AbsInt(a) <> 1 then Print(a," ");
+                elif a = -1         then Print("-");
+                fi;
+                Print("n");
+                if   b > 0 then Print(" + ", b);
+                elif b < 0 then Print(" - ",-b);
+                fi;
+           fi;
+      elif b = 0 then if   AbsInt(a) <> 1 then Print(a," ");
+                      elif a = -1         then Print("-");
+                      fi;
+                      Print("n / ",c);
+      else Print("(");
+           if   AbsInt(a) <> 1 then Print(a," ");
+           elif a = -1         then Print("-");
+           fi;
+           Print("n");
+           if   b > 0 then Print(" + ", b);
+           elif b < 0 then Print(" - ",-b);
+           fi;
+           Print(") / ",c);
+      fi;
+    end;
+
+    DisplayAffineMappingWithCoeffsInGFqx := function ( t, maxlng )
+
+      local  append, factorstr, str, a, b, c, one, zero, x;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      factorstr := function ( p )
+        if   Length(CoefficientsOfLaurentPolynomial(p)[1]) <= 1
+        then return String(p);
+        else return Concatenation("(",String(p),")"); fi;
+      end;
+
+      a := t[1]; b := t[2]; c := t[3];
+      one := One(a); zero := Zero(a);
+      x := IndeterminateOfLaurentPolynomial(a);
+      str := "";
+      if   c = one
+      then if   a = zero
+           then append(b);
+           else if   not a in [-one,one] then append(factorstr(a),"*P");
+                elif a = one then append("P"); else append("-P"); fi;
+                if b <> zero then append(" + ",b); fi;
+           fi;
+      elif b = zero then if   not a in [-one,one]
+                         then append(factorstr(a),"*P");
+                         elif a = one then append("P");
+                         else append("-P"); fi;
+                         append("/",factorstr(c));
+      else append("(");
+           if   not a in [-one,one]
+           then append(factorstr(a),"*P + ",b,")/",factorstr(c));
+           elif a <> one and a = -one
+           then append("-P + ",b,")/",factorstr(c));
+           else append("P + ",b,")/",factorstr(c));
+           fi;
+      fi;
+      if Length(str) > maxlng then str := "< ... >"; fi;
+      Print(str);
+    end;
+
     if   ValueOption("xdvi") = true and IsIntegers(Source(f))
-    then LaTeXAndXDVIRcwaMapping(f); return; fi;
+    then LaTeXAndXDVI(f); return; fi;
     m := f!.modulus; c := f!.coeffs;
     if HasName(f) then
       name := Name(f);
@@ -1450,12 +1330,55 @@ InstallMethod( LaTeXObj,
 
   function ( f )
 
-    local  c, m, mred, german, str, affs, maxafflng, t, poses, pos,
-           res, src, cls, cl, indent, append, gens, i, j;
+    local  LaTeXAffineMappingWithCoeffsInZ, append,
+           c, m, mred, german, str, affs, maxafflng, t, poses, pos,
+           res, src, cls, cl, indent, gens, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
                           Concatenation([str],List(arg,String)));
+    end;
+
+    LaTeXAffineMappingWithCoeffsInZ := function ( t )
+
+      local  german, str, a, b, c, append;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      german := ValueOption("german") = true;
+      a := t[1]; b := t[2]; c := t[3]; str := "";
+      if   c = 1
+      then if   a = 0
+           then append(b);
+           else if   AbsInt(a) <> 1 then append(a);
+                elif a = -1         then append("-");
+                fi;
+                append("n");
+                if   b > 0 then append(" + ", b);
+                elif b < 0 then append(" - ",-b);
+                fi;
+           fi;
+      elif b = 0 then if german then append("\\linfrac{");
+                                else append("\\frac{"); fi;
+                      if   AbsInt(a) <> 1 then append(a);
+                      elif a = -1         then append("-");
+                      fi;
+                      append("n}{",c,"}");
+      else if german then append("\\afffrac{");
+                     else append("\\frac{"); fi;
+           if   AbsInt(a) <> 1 then append(a);
+           elif a = -1         then append("-");
+           fi;
+           append("n");
+           if   b > 0 then append(" + ", b);
+           elif b < 0 then append(" - ",-b);
+           fi;
+           append("}{",c,"}");
+      fi;
+      return str;
     end;
 
     if HasLaTeXName(f) then return LaTeXName(f); fi;
@@ -1511,6 +1434,84 @@ InstallMethod( LaTeXObj,
     append(indent,"\\end{cases}\n");
     return str;
   end );
+
+#############################################################################
+##
+#M  LaTeXAndXDVI( <f> ) . . . . . . . . . . . . . . . . for rcwa mapping of Z
+##
+InstallMethod( LaTeXAndXDVI,
+               "for an rcwa mapping of Z", true, [ IsRcwaMappingOfZ ], 0,
+
+  function ( f )
+
+    local  tmpdir, file, stream, str, latex, dvi, m, sizes, size,
+           jectivity, cwop;
+
+    tmpdir := DirectoryTemporary( );
+    file   := Filename(tmpdir,"rcwamap.tex");
+    stream := OutputTextFile(file,false);
+    SetPrintFormattingStatus(stream,false);
+    AppendTo(stream,"\\documentclass[fleqn]{article}\n",
+                    "\\usepackage{amsmath}\n",
+                    "\\usepackage{amssymb}\n\n",
+                    "\\setlength{\\paperwidth}{84cm}\n",
+                    "\\setlength{\\textwidth}{80cm}\n",
+                    "\\setlength{\\paperheight}{59.5cm}\n",
+                    "\\setlength{\\textheight}{57cm}\n\n", 
+                    "\\begin{document}\n\n");
+    sizes := ["Huge","huge","Large","large"];
+    m := Modulus(f);
+    if   ValueOption("Factorization") <> true
+    then size := LogInt(Int(m/16)+1,2)+1;
+    else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
+    if size < 5 then AppendTo(stream,"\\begin{",sizes[size],"}\n\n"); fi;
+    if   IsBijective(f)  then jectivity := " bijective";
+    elif IsInjective(f)  then jectivity := "n injective, but not surjective";
+    elif IsSurjective(f) then jectivity := " surjective, but not injective";
+    else jectivity := " neither injective nor surjective"; fi;
+    if   IsClassWiseOrderPreserving(f)
+    then cwop := " class-wise order-preserving"; else cwop := ""; fi;
+    AppendTo(stream,"\\noindent A",jectivity,cwop,
+             " rcwa mapping of \\(\\mathbb{Z}\\) \\newline\nwith modulus ",
+             String(Modulus(f)),", multiplier ",String(Multiplier(f)),
+             " and divisor ",String(Divisor(f)),", given by\n");
+    AppendTo(stream,"\\begin{align*}\n");
+    str := LaTeXObj(f:Indentation:=2);
+    AppendTo(stream,str,"\\end{align*}");
+    if HasIsTame(f) then
+      if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
+                   else AppendTo(stream,"\nThis mapping is wild."); fi;
+    fi;
+    if HasOrder(f) then
+      AppendTo(stream,"\nThe order of this mapping is \\(",
+               LaTeXObj(Order(f)),"\\).");
+    fi;
+    if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
+    if IsBijective(f) then
+      if IsClassWiseOrderPreserving(f) then
+        AppendTo(stream,"\n\\noindent The determinant of this mapping is ",
+                 String(Determinant(f)),", and its sign is ",
+                 String(Sign(f)),".");
+      else
+        AppendTo(stream,"\n\\noindent The sign of this mapping is ",
+                 String(Sign(f)),".");
+      fi;
+    fi;
+    if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
+    AppendTo(stream,"\n\n\\end{document}\n");
+    latex := Filename(DirectoriesSystemPrograms( ),"latex");
+    Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
+    dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
+    Process(tmpdir,dvi,InputTextNone( ),OutputTextNone( ), 
+            ["-paper","a1r","rcwamap.dvi"]);
+  end );
+
+#############################################################################
+##
+#M  LaTeXObj( infinity ) . . . . . . . . . . . . . . . . . . . . for infinity
+##
+InstallMethod( LaTeXObj, "for infinity (RCWA)", true, [ IsInfinity ], 0,
+               inf -> "\\infty" );
 
 #############################################################################
 ##
@@ -3486,34 +3487,6 @@ InstallMethod( IsTame,
     TryNextMethod();
   end );
 
-# Single fixed points; <m> is the modulus of the group generated by <f>.
-
-FixedPointsOfRcwaMapping := function ( f, m )
- 
-  local  fixedpoints, c, r, fp;
-
-  c := Concatenation(List([1 .. m/f!.modulus], i -> f!.coeffs));
-  fixedpoints := [];
-  for r in [1..m] do
-    if   c[r][1] <> c[r][3]
-    then fp := -c[r][2] / (c[r][1] - c[r][3]);
-         if   fp in Source(f) and fp mod m = r - 1 
-         then Add(fixedpoints,fp); fi;
-    fi;
-  od;
-  return fixedpoints;
-end;
-MakeReadOnlyGlobal( "FixedPointsOfRcwaMapping" );
-
-# Whole fixed classes (mod <m>);
-# <m> is the modulus of the group generated by <f>.
-
-FixedClassesOfRcwaMapping := function ( f, m )
-  return Filtered([0..m - 1], r -> f!.coeffs[r mod f!.modulus + 1]
-                                 = [1,0,1]);
-end;
-MakeReadOnlyGlobal( "FixedClassesOfRcwaMapping" );
-
 #############################################################################
 ##
 #M  CycleOp( <sigma>, <n> )  for rcwa mapping of Z or Z_(pi) and ring element
@@ -3549,7 +3522,24 @@ InstallMethod( ShortCycles,
 
   function ( f, maxlng )
 
-    local  cycles, cyclesbuf, cycs, cyc, pow, exp, min, minshift, l, i;
+    local  FixedPointsOfRcwaMapping,
+           cycles, cyclesbuf, cycs, cyc, pow, exp, min, minshift, l, i;
+
+    FixedPointsOfRcwaMapping := function ( f, m ) # Single fixed points;
+                                                  # <m> is the modulus of the
+      local  fixedpoints, c, r, fp;               # group generated by <f>.
+
+      c := Concatenation(List([1 .. m/f!.modulus], i -> f!.coeffs));
+      fixedpoints := [];
+      for r in [1..m] do
+        if   c[r][1] <> c[r][3]
+        then fp := -c[r][2] / (c[r][1] - c[r][3]);
+             if   fp in Source(f) and fp mod m = r - 1 
+             then Add(fixedpoints,fp); fi;
+        fi;
+      od;
+      return fixedpoints;
+    end;
 
     cycles := []; pow := IdentityRcwaMappingOfZ;
     for exp in [1..maxlng] do
@@ -3663,65 +3653,6 @@ InstallMethod( DecreasingOn,
             AllResidues(R,m)
               {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
                                         > Length(AllResidues(R,c[r][1])))});
-  end );
-
-ReducedSetOfStartingValues := function ( S, f, lng )
-
-  local  n, min, max, traj;
-
-  min := Minimum(S); max := Maximum(S);
-  for n in [min..max] do
-    if n in S then
-      traj := Set(Trajectory(f,n,lng){[2..lng]});
-      if not n in traj then S := Difference(S,traj); fi;
-    fi;
-  od;
-  return S;
-end;
-MakeReadOnlyGlobal( "ReducedSetOfStartingValues" );
-
-#############################################################################
-##
-#M  LikelyContractionCentre( <f>, <maxn>, <bound> ) . . for rcwa mapping of Z
-##
-InstallMethod( LikelyContractionCentre,
-               "for rcwa mapping of Z and two positive integers (RCWA)",
-               true, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
-
-  function ( f, maxn, bound )
-
-    local  S0, S, n, n_i, i, seq;
-
-    Info(InfoWarning,1,"Warning: `LikelyContractionCentre' is highly ",
-                       "probabilistic.\nThe returned result can only be ",
-                       "regarded as a rough guess.\n",
-                       "See ?LikelyContractionCentre for information on ",
-                       "how to improve this guess.");
-    if IsBijective(f) then return fail; fi;
-    S := ReducedSetOfStartingValues([-maxn..maxn],f,8);
-    Info(InfoRCWA,1,"#Remaining values to be examined after first ",
-                    "reduction step: ",Length(S));
-    S := ReducedSetOfStartingValues(S,f,64);
-    Info(InfoRCWA,1,"#Remaining values to be examined after second ",
-                    "reduction step: ",Length(S));
-    S0 := [];
-    for n in S do
-      seq := []; n_i := n;
-      while AbsInt(n_i) <= bound do
-        if n_i in S0 then break; fi;
-        if n_i in seq then
-          S0 := Union(S0,Cycle(f,n_i));
-          Info(InfoRCWA,1,"|S0| = ",Length(S0));
-          break;
-        fi;
-        AddSet(seq,n_i);
-        n_i := n_i^f;
-        if   AbsInt(n_i) > bound
-        then Info(InfoRCWA,3,"Given bound exceeded, start value ",n); fi;
-      od;
-      if n >= maxn then break; fi;
-    od;
-    return S0;
   end );
 
 #############################################################################
@@ -3923,6 +3854,64 @@ InstallMethod( GuessedDivergence,
 
 #############################################################################
 ##
+#M  LikelyContractionCentre( <f>, <maxn>, <bound> ) . . for rcwa mapping of Z
+##
+InstallMethod( LikelyContractionCentre,
+               "for rcwa mapping of Z and two positive integers (RCWA)",
+               true, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
+
+  function ( f, maxn, bound )
+
+    local  ReducedSetOfStartingValues, S0, S, n, n_i, i, seq;
+
+    ReducedSetOfStartingValues := function ( S, f, lng )
+
+      local  n, min, max, traj;
+
+      min := Minimum(S); max := Maximum(S);
+      for n in [min..max] do
+        if n in S then
+          traj := Set(Trajectory(f,n,lng){[2..lng]});
+          if not n in traj then S := Difference(S,traj); fi;
+        fi;
+      od;
+      return S;
+    end;
+
+    Info(InfoWarning,1,"Warning: `LikelyContractionCentre' is highly ",
+                       "probabilistic.\nThe returned result can only be ",
+                       "regarded as a rough guess.\n",
+                       "See ?LikelyContractionCentre for information on ",
+                       "how to improve this guess.");
+    if IsBijective(f) then return fail; fi;
+    S := ReducedSetOfStartingValues([-maxn..maxn],f,8);
+    Info(InfoRCWA,1,"#Remaining values to be examined after first ",
+                    "reduction step: ",Length(S));
+    S := ReducedSetOfStartingValues(S,f,64);
+    Info(InfoRCWA,1,"#Remaining values to be examined after second ",
+                    "reduction step: ",Length(S));
+    S0 := [];
+    for n in S do
+      seq := []; n_i := n;
+      while AbsInt(n_i) <= bound do
+        if n_i in S0 then break; fi;
+        if n_i in seq then
+          S0 := Union(S0,Cycle(f,n_i));
+          Info(InfoRCWA,1,"|S0| = ",Length(S0));
+          break;
+        fi;
+        AddSet(seq,n_i);
+        n_i := n_i^f;
+        if   AbsInt(n_i) > bound
+        then Info(InfoRCWA,3,"Given bound exceeded, start value ",n); fi;
+      od;
+      if n >= maxn then break; fi;
+    od;
+    return S0;
+  end );
+
+#############################################################################
+##
 #M  ImageDensity( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mapping
 ##
 InstallMethod( ImageDensity,
@@ -3986,6 +3975,50 @@ InstallMethod( CompatibleConjugate,
     od;
     sigma := RcwaMapping(c);
     return h^sigma;
+  end );
+
+#############################################################################
+##
+#M  Root( <sigma>, <k> ) . . . .  for cwop. rcwa mapping of Z of finite order
+##
+InstallMethod( Root,
+               Concatenation("for a class-wise order-preserving rcwa mapp",
+                             "ing of Z of finite order and an integer > 0"),
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt ], 0,
+
+  function ( sigma, k )
+
+    local  root, g, x, m, cycs, cyc, rem, val, i, j;
+
+    if k = 1 then return sigma; fi;
+    if not IsClassWiseOrderPreserving(sigma) or not IsTame(sigma)
+      or Order(sigma) = infinity
+    then TryNextMethod(); fi;
+    g := IntegralConjugate(sigma);
+    x := IntegralizingConjugator(sigma);
+    m := Modulus(g);
+    cycs := [];
+    rem  := AllResidueClassesModulo(Integers,m);
+    repeat
+      cyc := Cycle(g,rem[1]);
+      Add(cycs,List(cyc,Representative));
+      rem := Difference(rem,cyc);
+    until IsEmpty(rem);
+    val := [];
+    for cyc in cycs do
+      for i in [1..Length(cyc)] do
+        for j in [1..k] do
+          if   j < k           then Add(val,[cyc[i]+(j-1)*m,cyc[i]+j*m]);
+          elif i < Length(cyc) then Add(val,[cyc[i]+(j-1)*m,cyc[i+1]]);
+                               else Add(val,[cyc[i]+(j-1)*m,cyc[1]]); fi;
+        od;
+      od;
+    od;
+    val  := Concatenation(val,val+k*m);
+    root := RcwaMapping(k*m,val);
+    if   root^k <> g  # We may need to conj. by some prod. of class shifts
+    then root := root^RepresentativeAction(RCWA(Integers),root^k,g); fi;
+    return root^(x^-1);
   end );
 
 #############################################################################

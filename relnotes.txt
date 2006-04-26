@@ -212,6 +212,12 @@ Changes between version 1.6.0 and version 1.6.2:
 
 Changes between version 1.6.2 and version ... :
 
+ - A method for `Root' which extracts k-th roots of class-wise
+   order-preserving rcwa mappings of finite order has been added.
+
+ - Methods for `RepresentativeAction' for RCWA(Z) and two integers
+   and for RCWA(Z) and two tuples of integers have been added.
+
  - The functions `Trajectory', `TrajectoryModulo' and
    `CoefficientsOnTrajectory' have been merged into an operation
    `Trajectory'.
@@ -221,6 +227,7 @@ Changes between version 1.6.2 and version ... :
 
  - The function `TransitionMatrix' has been turned into an operation.
 
- - Methods for `RepresentativeAction' for RCWA(Z) and two integers
-   and for RCWA(Z) and two tuples of integers have been added.
+ - Some cleanup w.r.t. undocumented global variables has been made.
+   A number of them has been made local.
+
 

@@ -755,4 +755,10 @@ DeclareAttribute( "LaTeXName", IsObject );
 
 #############################################################################
 ##
+#O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
+##
+DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
