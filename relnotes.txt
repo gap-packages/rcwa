@@ -221,3 +221,6 @@ Changes between version 1.6.2 and version ... :
 
  - The function `TransitionMatrix' has been turned into an operation.
 
+ - Methods for `RepresentativeAction' for RCWA(Z) and two integers
+   and for RCWA(Z) and two tuples of integers have been added.
+

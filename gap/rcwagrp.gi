@@ -1564,6 +1564,42 @@ InstallOtherMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
+#M  RepresentativeActionOp( RCWA(Integers), <n1>, <n2>, <act> )
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and two integers (RCWA)", ReturnTrue,
+                    [ IsNaturalRCWA_Z, IsInt, IsInt, IsFunction ], 0,
+
+  function ( RCWA_Z, n1, n2, act )
+    if act <> OnPoints then TryNextMethod(); fi;
+    return ClassShift(0,1)^(n2-n1);
+  end );
+
+#############################################################################
+##
+#M  RepresentativeActionOp( RCWA(Integers), <l1>, <l2>, <act> )
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and two k-tuples of integers (RCWA)",
+                    ReturnTrue,
+                    [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
+
+  function ( RCWA_Z, l1, l2, act )
+
+    local  g, range, perm, exp, points, n;
+
+    points := Union(l1,l2);
+    if not IsSubset(Integers,points) then return fail; fi;
+    range := [1..Maximum(points)-Minimum(points)+1]; n := Length(range);
+    exp := -Minimum(points)+1;
+    perm := RepresentativeAction(SymmetricGroup(n),l1+exp,l2+exp,act);
+    if perm = fail then return fail; fi;
+    g := RcwaMapping(perm,range);
+    return g^(ClassShift(0,1)^-exp);
+  end );
+
+#############################################################################
+##
 #M  RepresentativeActionOp( RCWA( Integers ), <S1>, <S2>, <act> ) 
 ##
 ##  An rcwa mapping <g> which maps <S1> to <S2>.

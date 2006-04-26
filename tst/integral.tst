@@ -1360,6 +1360,13 @@ gap> List(GeneratorsOfGroup(G),Factorization);
   [ ClassTransposition(0,4,6,8), ClassTransposition(1,2,2,8) ] ]
 gap> List([1..3],k->Length(Ball(G,One(G),k)));
 [ 4, 10, 22 ]
+gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
+ClassShift(0,1)^19
+gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
+>                                OnTuples);
+<bijective rcwa mapping of Z with modulus 15, of order 18>
+gap> OnTuples([0,-7,1,2],elm);
+[ 7, 1, 3, 0 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
