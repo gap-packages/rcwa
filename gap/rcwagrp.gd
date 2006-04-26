@@ -333,6 +333,15 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
+#F  ClassPairs( <m> )
+##
+##  This is an auxiliary function for computing pairs of disjoint residue
+##  classes with modulus at most <m>.
+##
+DeclareGlobalFunction( "ClassPairs" );
+ 
+#############################################################################
+##
 #V  CLASS_PAIRS
 #V  CLASS_PAIRS_LARGE
 ##
@@ -350,6 +359,20 @@ DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##
 DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
+
+#############################################################################
+##
+#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
+##
+DeclareGlobalFunction( "GeneratorsAndInverses" );
+
+#############################################################################
+##
+#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
+#F  EpimorphismByGeneratorsNC( <F>, <G> )
+##
+DeclareGlobalFunction( "EpimorphismByGenerators" );
+DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
 
 #############################################################################
 ##

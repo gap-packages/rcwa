@@ -15,21 +15,29 @@ Revision.rcwagrp_gi :=
 
 # A few auxiliary functions.
 
-GeneratorsAndInverses :=
-  G->Concatenation(GeneratorsOfGroup(G),List(GeneratorsOfGroup(G),g->g^-1));
-MakeReadOnlyGlobal( "GeneratorsAndInverses" );
+#############################################################################
+##
+#F  GeneratorsAndInverses( <G> )
+##
+InstallGlobalFunction( GeneratorsAndInverses,
+                       G->Concatenation(GeneratorsOfGroup(G),
+                                        List(GeneratorsOfGroup(G),g->g^-1)));
 
-EpimorphismByGenerators := function ( F, G )
-  return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
-                                       GeneratorsOfGroup(G));
-end;
-MakeReadOnlyGlobal( "EpimorphismByGenerators" );
-
-EpimorphismByGeneratorsNC := function ( F, G )
-  return GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),
+#############################################################################
+##
+#F  EpimorphismByGenerators( <F>, <G> )
+#F  EpimorphismByGeneratorsNC( <F>, <G> )
+##
+InstallGlobalFunction( EpimorphismByGenerators,
+  function ( F, G )
+    return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
                                          GeneratorsOfGroup(G));
-end;
-MakeReadOnlyGlobal( "EpimorphismByGeneratorsNC" );
+  end );
+InstallGlobalFunction( EpimorphismByGeneratorsNC,
+  function ( F, G )
+    return GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),
+                                           GeneratorsOfGroup(G));
+  end );
 
 # Some implications.
 
@@ -362,14 +370,15 @@ InstallMethod( IsSimple,
     else TryNextMethod(); fi;
   end );
 
-# Auxiliary function for computing pairs of disjoint residue classes
-# with modulus at most m.
-
-ClassPairs := m -> Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
-                            t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
-                                 and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
-                                 and (t[2] <> t[4] or t[1] < t[3]));
-MakeReadOnlyGlobal( "ClassPairs" );
+#############################################################################
+##
+#F  ClassPairs( <m> )
+##
+InstallGlobalFunction( ClassPairs,
+  m -> Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
+                t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
+                     and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
+                     and (t[2] <> t[4] or t[1] < t[3])) );
 
 InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
 InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
@@ -732,35 +741,6 @@ InstallOtherMethod( OrbitsModulo,
     return result;
   end );
 
-CheckModulus := function ( G, m )
-
-  local  IsAffine, R, P, gens, errormessage;
-
-  IsAffine := function ( g, cl )
-
-    local  m, c, res, cls;
-
-    m := Modulus(g); c := Coefficients(g); res := AllResidues(R,m);
-    cls := Filtered(List(res,r->ResidueClass(R,m,r)),
-                    clm->Intersection(clm,cl)<>[]);
-    return Length(Set(c{List(cls,clm->Position(res,Residues(clm)[1]))})) = 1;
-  end;
-
-  Info(InfoRCWA,2,"Checking modulus ...");
-  errormessage := Concatenation(
-                  "the modulus computation failed --\n",
-                  "please send the generators of the group you tested ",
-                  "to Stefan Kohl, kohl@mathematik.uni-stuttgart.de.\n");
-  R := Source(One(G)); P := RespectedPartition(G);
-  if   not IsZero(Lcm(List(P,Modulus)) mod m)
-    or not IsGroup(ActionOnRespectedPartition(G))
-  then Error(errormessage); fi;
-  gens := GeneratorsOfGroup(G);
-  if   not ForAll(gens,g->ForAll(P,cl->IsAffine(g,cl)))
-  then Error(errormessage); fi;
-end;
-MakeReadOnlyGlobal( "CheckModulus" );
-
 #############################################################################
 ##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa group
@@ -775,7 +755,37 @@ InstallMethod( Modulus,
 
   function ( G )
 
-    local  R, m, oldmod, maxfinmod, g, gens, els, step, maxstep;
+    local  CheckModulus,
+           R, m, oldmod, maxfinmod, g, gens, els, step, maxstep;
+
+    CheckModulus := function ( G, m )
+
+      local  IsAffine, R, P, gens, errormessage;
+
+      IsAffine := function ( g, cl )
+
+        local  m, c, res, cls;
+
+        m := Modulus(g); c := Coefficients(g); res := AllResidues(R,m);
+        cls := Filtered(List(res,r->ResidueClass(R,m,r)),
+                        clm->Intersection(clm,cl)<>[]);
+        return Length(Set(c{List(cls,clm->Position(res,
+                                                   Residues(clm)[1]))}))=1;
+      end;
+
+      Info(InfoRCWA,2,"Checking modulus ...");
+      errormessage := Concatenation(
+                      "the modulus computation failed --\n",
+                      "please send the generators of the group you tested ",
+                      "to Stefan Kohl, kohl@mathematik.uni-stuttgart.de.\n");
+      R := Source(One(G)); P := RespectedPartition(G);
+      if   not IsZero(Lcm(List(P,Modulus)) mod m)
+        or not IsGroup(ActionOnRespectedPartition(G))
+      then Error(errormessage); fi;
+      gens := GeneratorsOfGroup(G);
+      if   not ForAll(gens,g->ForAll(P,cl->IsAffine(g,cl)))
+      then Error(errormessage); fi;
+    end;
 
     if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
     R := Source(One(G)); gens := GeneratorsOfGroup(G);
