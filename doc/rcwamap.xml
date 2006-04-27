@@ -1377,6 +1377,32 @@ gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
 
 </Section>
 
+<!-- #################################################################### -->
+
+<Section Label="sec:ExtractingRoots">
+<Heading>
+  Extracting roots of rcwa mappings
+</Heading>
+
+<ManSection>
+  <Meth Name="Root" Arg="f, k" Label = "f, k"/>
+  <Returns>
+    An rcwa mapping <C>g</C> such that <C>g&circum;<A>k</A>=<A>f</A></C>,
+    provided that such a mapping exists and that there is a method available
+    which can determine it.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> Root(Comm(a,b),3)^3 = Comm(a,b);
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
