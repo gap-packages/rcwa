@@ -402,53 +402,45 @@ gap> IsomorphismPermGroup(Group(g1,g2));
 <ManSection>
   <Attr Name="IsomorphismMatrixGroup" Arg="G" Label="G"/>
   <Returns>
-    An isomorphism from the rcwa group&nbsp;<A>G</A> to a matrix group.
+    An isomorphism from the rcwa group&nbsp;<A>G</A> to a matrix group,
+    provided that <A>G</A> embeds into a matrix group and that there is
+    a suitable method available. Both conditions are fulfilled if
+    <A>G</A> is tame.
   </Returns>
   <Description>
-    Currently there is only a method available for tame rcwa groups.
 <Example>
 <![CDATA[
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> SetName(g,"g"); SetName(h,"h");
 gap> phi := IsomorphismMatrixGroup(Group(g,h));;
-gap> [ FieldOfMatrixGroup(Image(phi)), DegreeOfMatrixGroup(Image(phi)) ];
-[ Rationals, 28 ]
+gap> FieldOfMatrixGroup(Image(phi));
+Rationals
+gap> DegreeOfMatrixGroup(Image(phi));
+14
 gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
- . . . . . . 1 1 . . . . . . . . . . . . . . . . . . . .
- . . . . . . . 1 . . . . . . . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . . . . . . . 3 . . . . . . .
- . . . . . . . . . . . . . . . . . . . . . 1 . . . . . .
- . . . . . . . . 1 3 . . . . . . . . . . . . . . . . . .
- . . . . . . . . . 1 . . . . . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . . . . . . . . . 3 . . . . .
- . . . . . . . . . . . . . . . . . . . . . . . 1 . . . .
- . . 1 4 . . . . . . . . . . . . . . . . . . . . . . . .
- . . . 1 . . . . . . . . . . . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . . . 1 1 . . . . . . . . . .
- . . . . . . . . . . . . . . . . . 1 . . . . . . . . . .
- . . . . . . . . . . . . . . . . . . . . . . . . 3 . . .
- . . . . . . . . . . . . . . . . . . . . . . . . . 1 . .
- . . . . . . . . . . . . . . . . . . 1 3 . . . . . . . .
- . . . . . . . . . . . . . . . . . . . 1 . . . . . . . .
- . . . . . . . . . . . . . . . . . . . . . . . . . . 3 .
- . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
- . . . . . . . . . . . . 1 4 . . . . . . . . . . . . . .
- . . . . . . . . . . . . . 1 . . . . . . . . . . . . . .
- 2 2 . . . . . . . . . . . . . . . . . . . . . . . . . .
- . 1 . . . . . . . . . . . . . . . . . . . . . . . . . .
- . . . . 2 2 . . . . . . . . . . . . . . . . . . . . . .
- . . . . . 1 . . . . . . . . . . . . . . . . . . . . . .
- . . . . . . . . . . 2 2 . . . . . . . . . . . . . . . .
- . . . . . . . . . . . 1 . . . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . 2 2 . . . . . . . . . . . .
- . . . . . . . . . . . . . . . 1 . . . . . . . . . . . .
+ . . . . . . 1 1 . . . . . .
+ . . . . . . . 1 . . . . . .
+ . . . . . . . . . . 3 . . .
+ . . . . . . . . . . . 1 . .
+ . . . . . . . . 1 3 . . . .
+ . . . . . . . . . 1 . . . .
+ . . . . . . . . . . . . 3 .
+ . . . . . . . . . . . . . 1
+ . . 1 4 . . . . . . . . . .
+ . . . 1 . . . . . . . . . .
+ 2 2 . . . . . . . . . . . .
+ . 1 . . . . . . . . . . . .
+ . . . . 2 2 . . . . . . . .
+ . . . . . 1 . . . . . . . .
 ]]>
 </Example>
   </Description>
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 

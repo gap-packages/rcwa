@@ -846,36 +846,53 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
-#M  RespectedPartition( <G> ) . . . . . . . . . . . . . . for tame rcwa group
+#F  RespectedPartitionOfRcwaGroup  worker function: RespectedPartition[Short]
 ##
-InstallOtherMethod( RespectedPartition,
-                    "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+BindGlobal( "RespectedPartitionOfRcwaGroup",
 
-  function ( G )
+  function ( G, short )
 
-    local  R, m, moved, fixed, pcp, untouched, cls, cl, orb, r, i;
+    local  R, P, m, moved, fixed, remaining, allcls, cls, cl, orb;
 
     if not IsTame(G) then return fail; fi;
-    R := Source(One(G)); m := Modulus(G); moved := MovedPoints(G);
-    if   IsUnionOfResidueClasses(moved) and Modulus(moved) <> One(R)
-    then fixed := Residues(Difference(R,moved));
-    elif moved <> [] then fixed := []; else fixed := [0]; fi;
-    pcp := List(fixed,i->ResidueClass(R,m,i));
-    untouched := Difference(AllResidues(R,m),fixed);
-    while untouched <> [] do
-      i := untouched[1]; RemoveSet(untouched,i);
-      cls := Difference(ResidueClass(R,m,i),Union(pcp));
-      if cls <> [] then
-        for r in Residues(cls) do
-          cl := ResidueClass(R,Modulus(cls),r);
-          orb := Orbit(G,cl); pcp := Union(pcp,orb);
-        od;
-      fi;
+    R         := Source(One(G));
+    m         := Modulus(G);
+    allcls    := AllResidueClassesModulo(R,m);
+    cls       := allcls;
+    moved     := Support(G);
+    fixed     := Difference(R,moved);
+    P         := AsUnionOfFewClasses(fixed);
+    remaining := moved;
+    while not IsEmpty(remaining) do
+      cls := Filtered(cls, cl -> Intersection(cl,remaining) <> []);
+      for cl in cls do
+        orb := Orbit(G,cl);
+        if short and Maximum(List(orb,Modulus)) <= m then break; fi;
+        if not short and Minimum(List(orb,Modulus)) = m then break; fi;
+      od;
+      P         := Union(P,orb);
+      remaining := Difference(remaining,Union(orb));
     od;
-    Assert(1,Union(pcp)=R);
-    Assert(2,Action(G,pcp)<>fail);
-    return pcp;
+    Assert(1,Union(P)=R);
+    Assert(2,Action(G,P)<>fail);
+    return P;
   end );
+
+#############################################################################
+##
+#M  RespectedPartition( <G> ) . . . . . . . . . . . . . . for tame rcwa group
+##
+InstallMethod( RespectedPartition,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               G -> RespectedPartitionOfRcwaGroup( G, false ) );
+
+#############################################################################
+##
+#M  RespectedPartitionShort( <G> ) . . . . . . . . . . .  for tame rcwa group
+##
+InstallMethod( RespectedPartitionShort,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               G -> RespectedPartitionOfRcwaGroup( G, true ) );
 
 #############################################################################
 ##
@@ -1033,7 +1050,7 @@ InstallMethod( IsomorphismMatrixGroup,
       od;
     fi;
     g := GeneratorsOfGroup(G);
-    P := RespectedPartition(G);
+    P := RespectedPartitionShort(G);
     deg := 2 * Length(P);
     H := Action(G,P); h := GeneratorsOfGroup(H);
     m := [];
@@ -1236,9 +1253,9 @@ InstallMethod( Size,
     if not IsTame(G) then return infinity; fi;
 
     # On the one hand, an orbit of a finite tame group <G> can intersect
-    # at most in 1 resp. 2 points with any residue class in a respected
+    # in at most 1 resp. 2 points with any residue class in a respected
     # partition, depending on whether <G> is class-wise order-preserving
-    # or not. On the other, if <G> is infinite, one of its orbits contains
+    # or not. On the other if <G> is infinite, one of its orbits contains
     # an entire residue class from the respected partition.
 
     orbs := List(RespectedPartition(G),cl->[Representative(cl)]);
@@ -1288,43 +1305,6 @@ InstallMethod( Size,
 
 #############################################################################
 ##
-#M  IntegralizingConjugator( <sigma> ) . . .  for tame bij. rcwa mapping of Z
-##
-InstallMethod( IntegralizingConjugator,
-               "for tame bijective rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
-
-  function ( sigma )
-
-    local  result, pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
-
-    if IsIntegral(sigma) then return One(sigma); fi;
-    pcp := RespectedPartition(sigma); 
-    if pcp = fail then return fail; fi;
-    m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
-    c := List([1..m],i->[1,0,1]);
-    for rtilde in [0..mtilde-1] do
-      cl := pcp[rtilde+1];
-      r := Residues(cl)[1]; m_cl := Modulus(cl);
-      for j in [0..m/m_cl-1] do
-        c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
-      od;
-    od;
-    result := RcwaMapping(c);
-    SetIsBijective(result,true);
-    return result;
-  end );
-
-#############################################################################
-##
-#M  IntegralConjugate( <f> ) . . . . . . . . . . . . .  for tame rcwa mapping
-##
-InstallMethod( IntegralConjugate,
-               "for tame rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               f -> f^IntegralizingConjugator( f ) );
-
-#############################################################################
-##
 #M  IntegralizingConjugator( <G> ) . . . . . . . . for tame rcwa group over Z
 ##
 InstallOtherMethod( IntegralizingConjugator,
@@ -1333,21 +1313,12 @@ InstallOtherMethod( IntegralizingConjugator,
 
   function ( G )
 
-    local  pcp, c, m, mtilde, r, rtilde, cl, m_cl, i, j;
+    local  P;
 
     if IsIntegral(G) then return One(G); fi;
-    pcp := RespectedPartition(G); 
-    if pcp = fail then return fail; fi;
-    m := Lcm(List(pcp,Modulus)); mtilde := Length(pcp);
-    c := List([1..m],i->[1,0,1]);
-    for rtilde in [0..mtilde-1] do
-      cl := pcp[rtilde+1];
-      r := Residues(cl)[1]; m_cl := Modulus(cl);
-      for j in [0..m/m_cl-1] do
-        c[j*m_cl+r+1] := [mtilde,m_cl*rtilde-mtilde*r,m_cl];
-      od;
-    od;
-    return RcwaMapping(c);
+    P := RespectedPartition(G); if P = fail then return fail; fi;
+    return RepresentativeAction(RCWA(Integers),P,
+                                AllResidueClassesModulo(Integers,Length(P)));
   end );
 
 #############################################################################
@@ -1356,7 +1327,45 @@ InstallOtherMethod( IntegralizingConjugator,
 ##
 InstallOtherMethod( IntegralConjugate,
                     "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-                    G -> G^IntegralizingConjugator( G ) );
+
+  function ( G )
+
+    local  result, R, m;
+
+    result := G^IntegralizingConjugator(G);
+    R      := Source(One(result));
+    m      := Lcm(List(GeneratorsOfGroup(result),Modulus));
+    SetRespectedPartition(result,AllResidueClassesModulo(R,m));
+    return result;
+  end );
+
+#############################################################################
+##
+#M  IntegralizingConjugator( <sigma> ) . . . . . . for tame bij. rcwa mapping
+##
+InstallMethod( IntegralizingConjugator,
+               "for tame bijective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+               sigma -> IntegralizingConjugator( Group( sigma ) ) );
+
+#############################################################################
+##
+#M  IntegralConjugate( <f> ) . . . . . . . . . . . for tame bij. rcwa mapping
+##
+InstallMethod( IntegralConjugate,
+               "for tame bijective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  result, R, m;
+
+    result := sigma^IntegralizingConjugator(sigma);
+    R      := Source(result);
+    m      := Modulus(result);
+    SetRespectedPartition(result,AllResidueClassesModulo(R,m));
+    return result;
+  end );
 
 #############################################################################
 ##
@@ -1368,34 +1377,39 @@ InstallMethod( StandardizingConjugator,
 
   function ( sigma )
 
-    local  toflat, flat, m, mtilde, mTilde, r, rtilde, c, pcp, cycs, lngs,
+    local  toint, int, m, mtilde, mTilde, P, r, rtilde, c, cycs, lngs,
            cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
 
-    if not (IsBijective(sigma) and IsTame(sigma)) then return fail; fi;
-    if not IsIntegral(sigma) then
-      toflat := IntegralizingConjugator(sigma);
-      flat   := sigma^toflat;
-    else toflat := One(sigma); flat := sigma; fi;
-    m := Modulus(flat); pcp := RespectedPartition(flat);
-    cycs := Cycles(flat,pcp); lngs := Set(List(cycs,Length));
+    if not IsBijective(sigma) or not IsTame(sigma) then TryNextMethod(); fi;
+    toint   := IntegralizingConjugator(sigma);
+    int     := IntegralConjugate(sigma);
+    m       := Modulus(int);
+    P       := AllResidueClassesModulo(Integers,m);
+    cycs    := Cycles(int,P);
+    lngs    := Set(List(cycs,Length));
     cohorts := List(lngs,l->Filtered(cycs,cyc->Length(cyc)=l));
-    mtilde := Sum(lngs); c := List([1..m],i->[1,0,1]); rtilde := 0;
+    mtilde  := Sum(lngs);
+    c       := List([1..m],i->[1,0,1]);
+    rtilde  := 0;
     for cohort in cohorts do
-      nrcycs := Length(cohort); l := Length(cohort[1]);
-      res := List([1..l],i->List([1..nrcycs],j->Residues(cohort[j][i])[1]));
-      cyc := List([1..nrcycs],j->Cycle(flat,res[1][j]));
+      nrcycs := Length(cohort);
+      l      := Length(cohort[1]);
+      res    := List([1..l],i->List([1..nrcycs],
+                                    j->Residues(cohort[j][i])[1]));
+      cyc    := List([1..nrcycs],j->Cycle(int,res[1][j]));
       mTilde := nrcycs * mtilde;
       for i in [1..l] do
         for r in res[i] do
-          j := Position(res[i],r);
-          n := cyc[j][i]; ntilde := (j-1)*mtilde+rtilde;
-          k := (ntilde*m-mTilde*n-m*rtilde+mtilde*r)/(m*mtilde);
+          j      := Position(res[i],r);
+          n      := cyc[j][i];
+          ntilde := (j-1)*mtilde+rtilde;
+          k      := (ntilde*m-mTilde*n-m*rtilde+mtilde*r)/(m*mtilde);
           c[r+1] := [mTilde,k*m*mtilde+m*rtilde-mtilde*r,m];
         od;
         rtilde := rtilde + 1;
       od;
     od; 
-    return toflat * RcwaMapping(c);
+    return toint * RcwaMapping(c);
   end );
 
 #############################################################################
@@ -1495,24 +1509,6 @@ InstallOtherMethod( RepresentativeActionOp,
     return StandardizingConjugator(f) * StandardizingConjugator(g)^-1;
   end );
 
-BindGlobal( "RefinedPartition",
-
-  function ( P, k )
-
-    local  l, mods, min, pos;
-
-    P := ShallowCopy(P); l := Length(P);
-    while l < k do
-      mods   := List(P,Modulus);
-      min    := Minimum(mods);
-      pos    := Position(mods,min);
-      P[pos] := SplittedClass(P[pos],2);
-      P      := Flat(P);
-      l      := l + 1;
-    od;
-    return P;
-  end );
-
 #############################################################################
 ##
 #M  RepresentativeActionOp( RCWA( Integers ), <f>, <g>, <act> ) 
@@ -1530,7 +1526,23 @@ InstallOtherMethod( RepresentativeActionOp,
 
   function ( RCWA_Z, f, g, act )
 
-    local  Sorted, facts_f, facts_g, P1, P2, l, sigma, i;
+    local  RefinedPartition, Sorted, facts_f, facts_g, P1, P2, l, sigma, i;
+
+    RefinedPartition := function ( P, k )
+
+      local  l, mods, min, pos;
+
+      P := ShallowCopy(P); l := Length(P);
+      while l < k do
+        mods   := List(P,Modulus);
+        min    := Minimum(mods);
+        pos    := Position(mods,min);
+        P[pos] := SplittedClass(P[pos],2);
+        P      := Flat(P);
+        l      := l + 1;
+      od;
+      return P;
+    end;
 
     Sorted := l -> [Filtered(l,f->Name(f)[6] = 'S'),
                     Filtered(l,f->Name(f)[6] = 'R'),
@@ -1570,6 +1582,43 @@ InstallOtherMethod( RepresentativeActionOp,
     od;
     if f^sigma <> g then Error("`RepresentativeAction' failed.\n"); fi;
     return sigma;
+  end );
+
+#############################################################################
+##
+#M  RepresentativeActionOp( RCWA( Integers ), <ct1>, <ct2>, <act> ) 
+##
+##  Special method for two class transpositions which are both not equal to
+##  n -> n + (-1)^n. The factorization of the result into 6 class transposi-
+##  tions is stored. The existence of such products is used in the proof that
+##  the group which is generated by all class transpositions is simple.
+##
+InstallOtherMethod( RepresentativeActionOp,
+                    "for RCWA(Z) and two class transpositions (RCWA)",
+                    true,
+                    [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
+                      IsFunction ], 200,
+
+  function ( RCWA_Z, ct1, ct2, act )
+
+    local  result, sixcts, cls, D, supd;
+
+    if act <> OnPoints or not ForAll([ct1,ct2],IsClassTransposition)
+      or ClassTransposition(0,2,1,2) in [ct1,ct2]
+    then TryNextMethod(); fi;
+    cls  := Concatenation(List([ct1,ct2],TransposedClasses));
+    supd := 1 - Sum(List(cls{[3,4]},Density));
+    D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[1,2]})))[1];
+    D := SplittedClass(D,Int(Density(D)/supd)+1)[1];
+    Append(cls,SplittedClass(D,2));
+    D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[3..6]})));
+    if Length(D) = 1 then D := SplittedClass(D[1],2); fi;
+    Append(cls,D{[1,2]});
+    sixcts := List([cls{[1,5]},cls{[2,6]},cls{[5,7]},
+                    cls{[6,8]},cls{[3,7]},cls{[4,8]}],ClassTransposition);
+    result := Product(sixcts);
+    SetFactorizationIntoCSCRCT(result,sixcts);
+    return result;
   end );
 
 #############################################################################
@@ -1665,6 +1714,7 @@ InstallOtherMethod( RepresentativeActionOp,
 ##  - affine on the elements of <P1>, if the option `IsTame' is not set
 ##    and all elements of both partitions <P1> and <P2> are single residue
 ##    classes, and
+##
 ##  - tame, if the option `IsTame' is set.
 ##
 ##  The arguments <P1> and <P2> must be partitions of $\Z$ into equally many

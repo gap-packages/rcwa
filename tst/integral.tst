@@ -755,7 +755,7 @@ gap> Trajectory(a,8,10,"AllCoeffs");
   [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
 gap> G := Group(g,h);;
 gap> P := RespectedPartition(G);
-[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12),
+[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
   2(24), 8(24), 14(24), 20(24) ]
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> phi = NiceMonomorphism(G);
@@ -1367,6 +1367,16 @@ gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
 <bijective rcwa mapping of Z with modulus 15, of order 18>
 gap> OnTuples([0,-7,1,2],elm);
 [ 7, 1, 3, 0 ]
+gap> conj := RepresentativeAction(RCWA(Integers),
+>                                 ClassTransposition(1,4,2,6),
+>                                 ClassTransposition(2,8,3,10));
+<bijective rcwa mapping of Z with modulus 480>
+gap> Factorization(conj);
+[ ClassTransposition(1,4,3,8), ClassTransposition(2,6,7,8),
+  ClassTransposition(0,4,3,8), ClassTransposition(6,8,7,8),
+  ClassTransposition(0,4,2,8), ClassTransposition(6,8,3,10) ]
+gap> conj = Product(last);
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

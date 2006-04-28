@@ -493,6 +493,24 @@ T5p := RcwaMapping([[1,0,2],[5, 1,2]]);; SetName(T5p,"T5+");
 
 #############################################################################
 ##
+##  Section 4.19: Representations of the free group of rank 2
+##
+r1 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4);
+r2 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,3,4);
+SetName(r1,"r1"); SetName(r2,"r2");
+
+F2 := Group(r1^2,r2^2); SetName(F2,"F_2");
+
+#############################################################################
+##
+##  Section 4.20: Representations of the modular group PSL(2,Z)
+##
+PSL2Z := Group(ClassTransposition(0,3,1,3) * ClassTransposition(0,3,2,3),
+               ClassTransposition(1,3,0,6) * ClassTransposition(2,3,3,6));
+SetName(PSL2Z,"PSL(2,Z)");
+
+#############################################################################
+##
 ##  The Venturini examples.
 ##
 V1 := function ( t )
@@ -710,25 +728,10 @@ D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
 
 #############################################################################
 ##
-##  The following groups F2 resp. PSL2Z are isomorphic to the free group of
-##  rank 2, resp. to the modular group PSL(2,Z).
-##
-r1 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4);
-r2 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,3,4);
-SetName(r1,"r1"); SetName(r2,"r2");
-
-F2 := Group(r1^2,r2^2); SetName(F2,"F_2");
-
-PSL2Z := Group(ClassTransposition(0,3,1,3) * ClassTransposition(0,3,2,3),
-               ClassTransposition(1,3,0,6) * ClassTransposition(2,3,3,6));
-SetName(PSL2Z,"PSL(2,Z)");
-
-#############################################################################
-##
 ##  A factorization of `a' into involutions. 
 ##
 ##  The following factorization has been determined interactively, before
-##  the general factorization routine `FactorizationIntoGenerators' has been
+##  the general factorization routine `FactorizationIntoCSCRCT' has been
 ##  implemented. The determination of this factorization gave the necessary
 ##  insights to develop a general method.
 ##
@@ -849,36 +852,6 @@ ClassSwitch := function( r1, m1, r2, m2 )
   rest := RcwaMapping(c);
   return Restriction(tau,rest);
 end;
-
-#############################################################################
-##
-##  Given two class transpositions <ct1> and <ct2> which are both not equal
-##  to n -> n + (-1)^n, the function `ConjugatingCTs' returns a list <cts>
-##  of six class transpositions such that the conjugate of <ct1> under
-##  Product(<cts>) equals <ct2>. No argument checks are performed.
-##
-ConjugatingCTs := function ( ct1, ct2 )
-
-  local  cls, D, supd;
-
-  cls := Concatenation(List([ct1,ct2],ct->
-                            Filtered(LargestSourcesOfAffineMappings(ct),
-                                     cl->IsSubset(Support(ct),cl))));
-  supd := 1 - Sum(List(cls{[3,4]},Density));
-  D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[1,2]})))[1];
-  D := SplittedClass(D,Int(Density(D)/supd)+1)[1];
-  Append(cls,SplittedClass(D,2));
-  D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[3..6]})));
-  if Length(D) = 1 then D := SplittedClass(D[1],2); fi;
-  Append(cls,D{[1,2]});
-  return List([cls{[1,5]},cls{[2,6]},cls{[5,7]},
-               cls{[6,8]},cls{[3,7]},cls{[4,8]}],ClassTransposition);
-end;
-
-# An auxiliary function which returns the list of all products of
-# <k> elements from a list <gens>.
-
-Products := function(gens,k) return List(Tuples(gens,k),Product); end;
 
 #############################################################################
 ##

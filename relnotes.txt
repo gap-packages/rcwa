@@ -210,7 +210,7 @@ Changes between version 1.6.0 and version 1.6.2:
  - Methods for `CyclicGroup', `DihedralGroup' and `AbelianGroup' have been
    added.
 
-Changes between version 1.6.2 and version ... :
+Changes between version 1.6.2 and version 1.7.0:
 
  - A method for `Root' which extracts k-th roots of class-wise
    order-preserving rcwa mappings of finite order has been added.
@@ -227,7 +227,9 @@ Changes between version 1.6.2 and version ... :
 
  - The function `TransitionMatrix' has been turned into an operation.
 
- - Some cleanup w.r.t. undocumented global variables has been made.
-   A number of them has been made local.
+ - Some cleanup `behind the scenes' has been made. In particular some code
+   has been improved or simplified, and a number of undocumented global
+   variables have been made local.
+
 
 
