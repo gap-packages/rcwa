@@ -59,7 +59,6 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
                [ IsListOrCollection ], 0,
 
   function ( l )
-
     if   ForAll(l,IsRcwaMapping)
     then return     Length(Set(List(l,FamilyObj))) = 1
                 and ForAll(l,IsBijective); 
@@ -74,7 +73,6 @@ InstallMethod( IsCyclic, "generic method for groups (RCWA)", true,
                [ IsGroup ], 50,
 
   function ( G )
-
     if   Length(GeneratorsOfGroup(G)) = 1
     then return true;
     else TryNextMethod(); fi;
@@ -107,8 +105,7 @@ InstallMethod( TrivialSubmagmaWithOne,
 ##
 #V  RcwaGroupsOverZFamily . . . . . . . the family of all rcwa groups over Z
 ##
-BindGlobal( "RcwaGroupsOverZFamily",
-            FamilyObj( TrivialRcwaGroupOverZ ) );
+BindGlobal( "RcwaGroupsOverZFamily", FamilyObj( TrivialRcwaGroupOverZ ) );
 
 #############################################################################
 ##
@@ -594,7 +591,6 @@ InstallOtherMethod( MovedPoints,
                     "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
-
     if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GF_q_x(G)
     then return Source(One(G)); fi;
     return Union(List(GeneratorsOfGroup(G),MovedPoints));
@@ -815,7 +811,7 @@ InstallMethod( Modulus,
     Info(InfoRCWA,1,"Trying probabilistic random walk, initial m = ",m);
     maxfinmod := Lcm(R,List(gens,Divisor)) * m;
     step := 1; maxstep := 10 * Length(gens); g := gens[1];
-    repeat # probabilistic.
+    repeat # probabilistic
       g := g * Random(gens); step := step + 1;
       if not IsZero(m mod Modulus(g)) then
         m := Lcm(m,Modulus(g)); step := 1;
@@ -1079,7 +1075,6 @@ InstallMethod( NiceMonomorphism,
                "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
-
     if   IsTame(G)
     then if   IsTrivial(KernelOfActionOnRespectedPartition(G))
          then return IsomorphismPermGroup(G);
@@ -1116,49 +1111,61 @@ InstallMethod( \in,
     then Info(InfoRCWA,4,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);
     if IsOne(g) or g in gens or g^-1 in gens then
-      Info(InfoRCWA,4,"<g> = 1 or one of <g> or <g>^-1 ",
+      Info(InfoRCWA,2,"<g> = 1 or one of <g> or <g>^-1 ",
                       "in generator list of <G>.");
       return true;
     fi;
     if not IsSubset(PrimeSet(G),PrimeSet(g)) then
-      Info(InfoRCWA,4,"<g> and <G> have incompatible prime sets.");
+      Info(InfoRCWA,2,"<g> and <G> have incompatible prime sets.");
       return false;
     fi;
     if        IsClassWiseOrderPreserving(G)
       and not IsClassWiseOrderPreserving(g) then
-      Info(InfoRCWA,4,"<G> is class-wise order-preserving, <g> is not.");
+      Info(InfoRCWA,2,"<G> is class-wise order-preserving, <g> is not.");
       return false;
     fi;
-    if not IsSubset(MovedPoints(G),MovedPoints(g)) then
-      Info(InfoRCWA,4,"supp(<g>) is not a subset of supp(<G>).");
+    if Sign(g) = -1 and Set(gens,Sign) = [1] then
+      Info(InfoRCWA,2,"Sign(<g>) is -1, but the sign of all generators ",
+                      "of <G> is 1.");
+      return false;
+    fi;
+    if Determinant(g) <> 0 and IsClassWiseOrderPreserving(G)
+      and Set(gens,Determinant) = [0]
+    then
+      Info(InfoRCWA,2,"<G> lies in the kernel of the determinant ",
+                      "epimorphism, but <g> does not.");
+      return false;
+    fi;
+    if not IsSubset(Support(G),Support(g)) then
+      Info(InfoRCWA,2,"Support(<g>) is not a subset of Support(<G>).");
       return false;
     fi;
     if not IsTame(G) then
-      Info(InfoRCWA,3,"<G> is wild -- trying to factor <g> into gen's ...");
+      Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
       return PreImagesRepresentative(phi,g) <> fail;
     else
       if Modulus(G) mod Modulus(g) <> 0 then
-        Info(InfoRCWA,4,"Mod(<g>) does not divide Mod(<G>).");
+        Info(InfoRCWA,2,"Mod(<g>) does not divide Mod(<G>).");
         return false;
       fi;
       if IsFinite(G) and Order(g) = infinity then
-        Info(InfoRCWA,3,"<G> is finite, but <g> has infinite order.");
+        Info(InfoRCWA,2,"<G> is finite, but <g> has infinite order.");
         return false;
       fi;
       if not IsTame(g) then
-        Info(InfoRCWA,3,"<G> is tame, but <g> is wild.");
+        Info(InfoRCWA,2,"<G> is tame, but <g> is wild.");
         return false;
       fi;
       P := RespectedPartition(G);
       H := ActionOnRespectedPartition(G);
       h := Permutation(g,P);
       if h = fail then
-        Info(InfoRCWA,3,"<g> does not act on RespectedPartition(<G>).");
+        Info(InfoRCWA,2,"<g> does not act on RespectedPartition(<G>).");
         return false;
       fi;
       if not h in H then
-        Info(InfoRCWA,3,"The action of <g> on RespectedPartition(<G>) ",
+        Info(InfoRCWA,2,"The action of <g> on RespectedPartition(<G>) ",
                         "is not an element of the one of <G>.");
         return false;
       fi;
@@ -1170,20 +1177,20 @@ InstallMethod( \in,
       # positive here.
 
       if IsClassWiseOrderPreserving(G) then
-        Info(InfoRCWA,3,"Compute an element of <G> which acts like <g>");
-        Info(InfoRCWA,3,"on RespectedPartition(<G>).");
+        Info(InfoRCWA,2,"Compute an element of <G> which acts like <g>");
+        Info(InfoRCWA,2,"on RespectedPartition(<G>).");
         phi := EpimorphismFromFreeGroup(H);
         h   := PreImagesRepresentative(phi,h:NoStabChain);
         if h = fail then return false; fi;
         h   := Product(List(LetterRepAssocWord(h),
                             id->gens[AbsInt(id)]^SignInt(id)));
         k   := g/h;
-        Info(InfoRCWA,3,"Check membership of the quotient in the kernel of");
-        Info(InfoRCWA,3,"the action of <g> on RespectedPartition(<G>).");
+        Info(InfoRCWA,2,"Check membership of the quotient in the kernel of");
+        Info(InfoRCWA,2,"the action of <g> on RespectedPartition(<G>).");
         K:=KernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed);
         L:=KernelOfActionOnRespectedPartitionHNFMat(G:ProperSubgroupAllowed);
         if L = [] then return IsOne(k); fi;
-        Info(InfoRCWA,3,"The kernel has rank ",Length(L),".");
+        Info(InfoRCWA,2,"The kernel has rank ",Length(L),".");
         c := Coefficients(k);
         l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
         if SolutionIntMat(L,l) <> fail then return true; fi;
@@ -1191,7 +1198,7 @@ InstallMethod( \in,
 
       # Finally, a brute force factorization attempt:
 
-      Info(InfoRCWA,3,"Trying to factor <g> into gen's ...");
+      Info(InfoRCWA,2,"Trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
       return PreImagesRepresentative(phi,g) <> fail;
     fi;
@@ -1500,7 +1507,6 @@ InstallOtherMethod( RepresentativeActionOp,
                       IsFunction ], 0,
 
   function ( RCWA_Z, f, g, act )
-
     if act <> OnPoints then TryNextMethod(); fi;
     if f = g then return One(f); fi;
     if not ForAll([f,g],IsTame) then TryNextMethod(); fi;
@@ -2297,7 +2303,6 @@ InstallOtherMethod( IsPrimitive,
                                   IsListOrCollection ], 0,
 
   function ( G, S )
-
     if not IsSubset(Source(One(G)),S) then TryNextMethod(); fi;
     if   not ForAll(GeneratorsOfGroup(G),g->S^g=S)
     then Error("IsPrimitive: <G> must act on <S>.\n"); fi;
@@ -2640,7 +2645,6 @@ InstallMethod( IsPerfect,
 InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 
   function ( ord )
-
     if   not IsPosInt(ord) then return 0;
     elif ord = 1 then return 1;
     elif ord mod 2 = 0 then return infinity;
