@@ -19,18 +19,19 @@ Revision.rcwaaux_g :=
 ##  This is done using the GAPDoc package by Frank L\"ubeck and
 ##  Max Neunh\"offer.
 ##
-RCWABuildManual := function ( )
+BindGlobal( "RCWABuildManual", 
 
-  local  Manual, RCWADir;
+  function ( )
 
-  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-  MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
-                 [ "../gap/rcwaaux.g",
-                   "../gap/rcwamap.gd", "../gap/rcwamap.gi",
-                   "../gap/rcwagrp.gd", "../gap/rcwagrp.gi" ],
-                   "RCWA", "../../../" );
-end;
-MakeReadOnlyGlobal( "RCWABuildManual" );
+    local  Manual, RCWADir;
+
+    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
+                   [ "../gap/rcwaaux.g",
+                     "../gap/rcwamap.gd", "../gap/rcwamap.gi",
+                     "../gap/rcwagrp.gd", "../gap/rcwagrp.gi" ],
+                     "RCWA", "../../../" );
+  end );
 
 #############################################################################
 ##
@@ -41,28 +42,30 @@ MakeReadOnlyGlobal( "RCWABuildManual" );
 ##  The function makes use of an adaptation of the test file `tst/testall.g'
 ##  of the {\GAP} Library to this package. 
 ##
-RCWATest := function ( )
+BindGlobal( "RCWATest",
 
-  local  RCWADir, dir;
+  function ( )
 
-  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-  dir := Concatenation( RCWADir, "/tst/" );
-  Read( Concatenation( dir, "testall.g" ) );
-end;
-MakeReadOnlyGlobal( "RCWATest" );
+    local  RCWADir, dir;
+
+    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    dir := Concatenation( RCWADir, "/tst/" );
+    Read( Concatenation( dir, "testall.g" ) );
+  end );
 
 #############################################################################
 ##
 #F  RCWAReadExamples( ) . . . . . . . . . . . . . . . . .  read examples file
 ##
-RCWAReadExamples := function ( )
+BindGlobal( "RCWAReadExamples",
 
-  local  RCWADir;
+  function ( )
 
-  RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-  Read( Concatenation( RCWADir, "/examples/examples.g" ) );
-end;
-MakeReadOnlyGlobal( "RCWAReadExamples" );
+    local  RCWADir;
+
+    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    Read( Concatenation( RCWADir, "/examples/examples.g" ) );
+  end );
 
 ResidueClassUnionViewingFormat( "short" );
 
