@@ -210,7 +210,7 @@ Changes between version 1.6.0 and version 1.6.2:
  - Methods for `CyclicGroup', `DihedralGroup' and `AbelianGroup' have been
    added.
 
-Changes between version 1.6.2 and version 1.7.0:
+Changes between version 1.6.2 and version 1.7.0 (April 28, 2006):
 
  - A method for `Root' which extracts k-th roots of class-wise
    order-preserving rcwa mappings of finite order has been added.
