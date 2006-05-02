@@ -199,6 +199,11 @@ They are listed in alphabetical order.
     Test whether its prime set is a subset of the prime set of&nbsp;<A>G</A>.
     If not, return <C>false</C>. Test if <A>G</A> is class-wise
     order-preserving, and <A>g</A> is not. If so, return <C>false</C>.
+    Test if the sign of <A>g</A> is&nbsp;-1 and all generators
+    of&nbsp;<A>G</A> have sign&nbsp;1. If yes, return <C>false</C>.
+    Test if <A>G</A> is class-wise order-preserving, all generators
+    of&nbsp;<A>G</A> have determinant&nbsp;0 and <A>g</A> has
+    determinant&nbsp;<M>\neq 0</M>. If yes, return <C>false</C>.
     Test whether the support of&nbsp;<A>g</A> is a subset of the support
     of&nbsp;<A>G</A>. If not, return <C>false</C>. <P/>
 
