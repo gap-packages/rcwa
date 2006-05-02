@@ -231,5 +231,12 @@ Changes between version 1.6.2 and version 1.7.0 (April 28, 2006):
    has been improved or simplified, and a number of undocumented global
    variables have been made local.
 
+Changes between version 1.7.0 and version 1.7.1:
+
+ - The method for `Root' has been improved.
+   The modulus of the result is now often significantly smaller.
+
+ - Some minor improvements of code and documentation have been made.
+
 
 
