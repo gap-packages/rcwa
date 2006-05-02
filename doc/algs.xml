@@ -723,7 +723,7 @@ They are listed in alphabetical order.
     of&nbsp;<A>f</A> a respected partition <M>\mathcal{P}</M> into cycles
     <M>\prod_{i=1}^l \prod_{j=0}^{k-1} \tau_{r_1(km_1),r_i+jm_i(km_i)}</M>
     of the <A>k</A>-fold
-    length on the refined partition which one gets from \(\mathcal{P}\)
+    length on the refined partition which one gets from <M>\mathcal{P}</M>
     by decomposing any <M>r_i(m_i) \in \mathcal{P}</M> into residue classes
     (mod&nbsp;<M>km_i</M>). Finally conjugate the resulting permutation
     back. <P/>
