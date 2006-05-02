@@ -2607,7 +2607,9 @@ InstallMethod( \^,
 
     local  f;
 
+    if IsOne(h) then return g; fi;
     f := h^-1 * g * h;
+    if f = g then return g; fi;
     if HasOrder (g) then SetOrder (f,Order (g)); fi;
     if HasIsTame(g) then SetIsTame(f,IsTame(g)); fi;
     if   HasStandardConjugate(g)
@@ -2629,12 +2631,14 @@ InstallMethod( \^,
 
   function ( f, n )
 
-    local  pow;
+    local  pow, e, name;
 
     if ValueOption("UseKernelPOW") = true then TryNextMethod(); fi;
 
     if   n = 0 then return One( f );
     elif n = 1 then return f;
+    elif HasOrder(f) and Order(f) <> infinity and n mod Order(f) = 1
+    then return f;
     elif n > 1 then pow := POW(f,n:UseKernelPOW);
                else pow := POW(Inverse( f ),-n:UseKernelPOW);
     fi;
@@ -2646,15 +2650,18 @@ InstallMethod( \^,
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
       fi;
       if HasName(f) and HasIsTame(f) and IsTame(f) then
+        name := SplitString(Name(f),'^');
+        if   Length(name) = 2 and Int(name[2]) <> fail
+        then e := Int(name[2]) * n; else e := n; fi;
         if   Order(f) = infinity
-        then SetName(pow,Concatenation(Name(f),"^",String(n)));
-        elif not (n mod Order(f) in [0,1])
-        then SetName(pow,Concatenation(Name(f),"^",String(n mod Order(f))));
-        elif n mod Order(f) = 1
-        then SetName(pow,Name(f));
+        then SetName(pow,Concatenation(name[1],"^",String(e)));
+        elif not (e mod Order(f) in [0,1])
+        then SetName(pow,Concatenation(name[1],"^",String(e mod Order(f))));
+        elif e mod Order(f) = 1
+        then SetName(pow,name[1]);
         fi;
       fi;
-      if HasLaTeXName(f) then
+      if HasLaTeXName(f) and Position(LaTeXName(f),'^') = fail then
         if   Order(f) = infinity
         then SetLaTeXName(pow,Concatenation(LaTeXName(f),"^{",
                                             String(n),"}"));
@@ -3979,46 +3986,65 @@ InstallMethod( CompatibleConjugate,
 
 #############################################################################
 ##
+#M  Root( <sigma>, <k> ) . . . . . .  for an element of CT(Z) of finite order
+##
+InstallMethod( Root,
+               "for an element of CT(Z) of finite order (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt ], 10,
+
+  function ( sigma, k )
+
+    local  root, regroot, k_reg, k_sing, order, P, remaining, cycle, l, i, j;
+
+    if k = 1 then return sigma; fi;
+    if not IsClassWiseOrderPreserving(sigma) or not IsTame(sigma)
+      or Order(sigma) = infinity
+      or not ForAll(Factorization(sigma),IsClassTransposition)
+    then TryNextMethod(); fi;
+    order     := Order(sigma);
+    k_sing    := Product(Filtered(Factors(k),p->order mod p = 0));
+    k_reg     := k/k_sing;
+    regroot   := sigma^(1/k_reg mod order); 
+    if k_sing = 1 then return regroot; fi;
+    P         := RespectedPartition(regroot);
+    remaining := ShallowCopy(P);
+    root      := One(sigma);
+    repeat
+      cycle     := Cycle(regroot,remaining[1]);
+      l         := Length(cycle);
+      remaining := Difference(remaining,cycle);
+      cycle     := List(cycle,cl->SplittedClass(cl,k_sing));
+      for i in [1..l] do
+        for j in [1..k_sing] do
+          if [i,j] <> [1,1] then
+            root := root * ClassTransposition(cycle[1][1],cycle[i][j]);
+          fi;
+        od;
+      od;
+    until IsEmpty(remaining);
+    return root;    
+  end );
+
+#############################################################################
+##
 #M  Root( <sigma>, <k> ) . . . .  for cwop. rcwa mapping of Z of finite order
 ##
 InstallMethod( Root,
-               Concatenation("for a class-wise order-preserving rcwa mapp",
-                             "ing of Z of finite order and an integer > 0"),
+               "for a cwop. rcwa mapping of Z of finite order (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt ], 0,
 
   function ( sigma, k )
 
-    local  root, g, x, m, cycs, cyc, rem, val, i, j;
+    local  root, g, x;
 
     if k = 1 then return sigma; fi;
     if not IsClassWiseOrderPreserving(sigma) or not IsTame(sigma)
       or Order(sigma) = infinity
     then TryNextMethod(); fi;
-    g := IntegralConjugate(sigma);
-    x := IntegralizingConjugator(sigma);
-    m := Modulus(g);
-    cycs := [];
-    rem  := AllResidueClassesModulo(Integers,m);
-    repeat
-      cyc := Cycle(g,rem[1]);
-      Add(cycs,List(cyc,Representative));
-      rem := Difference(rem,cyc);
-    until IsEmpty(rem);
-    val := [];
-    for cyc in cycs do
-      for i in [1..Length(cyc)] do
-        for j in [1..k] do
-          if   j < k           then Add(val,[cyc[i]+(j-1)*m,cyc[i]+j*m]);
-          elif i < Length(cyc) then Add(val,[cyc[i]+(j-1)*m,cyc[i+1]]);
-                               else Add(val,[cyc[i]+(j-1)*m,cyc[1]]); fi;
-        od;
-      od;
-    od;
-    val  := Concatenation(val,val+k*m);
-    root := RcwaMapping(k*m,val);
-    if   root^k <> g  # We may need to conj. by some prod. of class shifts
-    then root := root^RepresentativeAction(RCWA(Integers),root^k,g); fi;
-    return root^(x^-1);
+    g    := Product(Filtered(Factorization(sigma),IsClassTransposition));
+    x    := RepresentativeAction(RCWA(Integers),g,sigma);
+    root := Root(g,k)^x;
+    return root;
   end );
 
 #############################################################################

@@ -1377,6 +1377,26 @@ gap> Factorization(conj);
   ClassTransposition(0,4,2,8), ClassTransposition(6,8,3,10) ]
 gap> conj = Product(last);
 true
+gap> [ g^2, g^8 ];
+[ g^2, g ]
+gap> g^2;
+g^2
+gap> last^6;
+g^5
+gap> nu^3;
+ClassShift(0,1)^3
+gap> last^17;
+ClassShift(0,1)^51
+gap> [ Root(g,2), Root(g,8) ];
+[ g^4, g ]
+gap> Root(g,7);
+<bijective rcwa mapping of Z with modulus 168>
+gap> last^7 = g;
+true
+gap> Root(h,10);
+<bijective rcwa mapping of Z with modulus 48>
+gap> last^10 = h;
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
