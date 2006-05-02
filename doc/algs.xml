@@ -18,7 +18,7 @@ This chapter provides references to the corresponding theorems, and lists
 short descriptions of the other algorithms and methods implemented in this
 package. The word <Q>trivial</Q> as a description means that essentially
 nothing is done except of storing or recalling one or several values,
-and <Q>straight forward</Q> means that no sophisticated algorithm is used.
+and <Q>straightforward</Q> means that no sophisticated algorithm is used.
 The descriptions are kept very informal and short.
 They are listed in alphabetical order.
 
@@ -28,7 +28,7 @@ They are listed in alphabetical order.
     <C>ActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q> after having computed a respected partition
+    <Q>Straightforward</Q> after having computed a respected partition
     by <C>RespectedPartition</C>. One only needs to know how to compute
     images of residue classes under affine mappings.
   </Item>
@@ -37,14 +37,14 @@ They are listed in alphabetical order.
     <C>Ball(<A>G</A>,<A>g</A>,<A>d</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
     <C>Ball(<A>G</A>,<A>p</A>,<A>d</A>,<A>act</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -87,7 +87,7 @@ They are listed in alphabetical order.
     <C>CommonRightInverse(<A>l</A>,<A>r</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q> if one knows how to compute images of residue
+    <Q>Straightforward</Q> if one knows how to compute images of residue
     classes under affine mappings, and how to compute inverses of
     affine mappings.
   </Item>
@@ -162,7 +162,7 @@ They are listed in alphabetical order.
     <C>FixedPointsOfAffinePartialMappings(<A>f</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -177,7 +177,7 @@ They are listed in alphabetical order.
     <C>Image(<A>f</A>)</C>, <C>Image(<A>f</A>,<A>S</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q> if one can compute images of residue classes
+    <Q>Straightforward</Q> if one can compute images of residue classes
     under affine mappings and unite and intersect residue classes
     (Chinese Remainder Theorem).
     See Lemma&nbsp;1.2.1 in&nbsp;<Cite Key="Kohl05"/>.
@@ -476,7 +476,7 @@ They are listed in alphabetical order.
     <C>mKnot(<A>m</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>, following the definition given in
+    <Q>Straightforward</Q>, following the definition given in
     <Cite Key="Keller99"/>.
   </Item>
 
@@ -540,7 +540,7 @@ They are listed in alphabetical order.
     <C>OrbitsModulo(<A>G</A>,<A>m</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -577,7 +577,7 @@ They are listed in alphabetical order.
     <C>PrimeSet(<A>G</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -710,10 +710,21 @@ They are listed in alphabetical order.
     <C>Root(<A>f</A>,<A>k</A>)</C>
   </Mark>
   <Item>
-    Merge <A>k</A>-tuples of cycles of the same length.
-    For example, for <A>k</A>=2 this looks as follows:
-    <M>(a_1,a_2,\dots,a_l) (b_1,b_2,\dots,b_l) \leadsto
-    (a_1,b_1,a_2,b_2,a_3,b_3,\dots,a_l,b_l)</M>.
+    If <A>f</A> is bijective, class-wise order-preserving and has
+    finite order: <P/>
+
+    Find a conjugate of <A>f</A> which is a product of class transpositions.
+    Slice cycles <M>\prod_{i=2}^l \tau_{r_1(m_1),r_i(m_i)}</M>
+    of&nbsp;<A>f</A> a respected partition <M>\mathcal{P}</M> into cycles
+    <M>\prod_{i=1}^l \prod_{j=0}^{k-1} \tau_{r_1(km_1),r_i+jm_i(km_i)}</M>
+    of the <A>k</A>-fold
+    length on the refined partition which one gets from \(\mathcal{P}\)
+    by decomposing any <M>r_i(m_i) \in \mathcal{P}</M> into residue classes
+    (mod&nbsp;<M>km_i</M>). Finally conjugate the resulting permutation
+    back. <P/>
+
+    Other cases seem to be more difficult and are currently not
+    covered.
   </Item>
 
   <Mark>
@@ -735,7 +746,7 @@ They are listed in alphabetical order.
     <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q>.
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -790,7 +801,7 @@ They are listed in alphabetical order.
     <C>TransitionGraph(<A>f</A>,<A>m</A>)</C>
   </Mark>
   <Item>
-    <Q>Straight forward</Q> -- just check a sufficiently long interval.
+    <Q>Straightforward</Q> -- just check a sufficiently long interval.
   </Item>
 
   <Mark>
