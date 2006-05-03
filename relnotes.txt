@@ -238,5 +238,9 @@ Changes between version 1.7.0 and version 1.7.1:
 
  - Some minor improvements of code and documentation have been made.
 
+Changes between version 1.7.1 and version 1.7.2:
+
+ - The length of the used respected partitions of tame rcwa mappings
+   and -groups has been reduced.
 
 
