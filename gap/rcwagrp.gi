@@ -905,7 +905,8 @@ InstallMethod( ActionOnRespectedPartition,
 InstallMethod( RankOfKernelOfActionOnRespectedPartition,
                "for tame rcwa groups over Z (RCWA)", true,
                [ IsRcwaGroupOverZ ], 0,
-               G -> Length( KernelOfActionOnRespectedPartitionHNFMat(G) ) );
+  G -> Number(GeneratorsOfGroup(KernelOfActionOnRespectedPartition(G)),
+              g->Order(g)=infinity) );
 
 #############################################################################
 ##
