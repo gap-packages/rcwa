@@ -957,14 +957,14 @@ false
 <Example>
 <![CDATA[
 gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
-<bijective rcwa mapping of Z with modulus 24>
+<bijective rcwa mapping of Z with modulus 12>
 gap> h^elm = h^g; # check ...
 true
 gap> Order(elm);
-10
+infinity
 gap> cent := g*elm^-1;
-<bijective rcwa mapping of Z with modulus 24>
-gap> Comm(cent,h); # cent must lie in the centralizer of h in RCWA(Z)
+<bijective rcwa mapping of Z with modulus 12>
+gap> Comm(cent,h); # cent must lie in the centralizer of h in RCWA(Z).
 IdentityMapping( Integers )
 ]]>
 </Example>
@@ -973,18 +973,19 @@ IdentityMapping( Integers )
 <![CDATA[
 gap> Order(cent);; Display(cent);
 
-Bijective rcwa mapping of Z with modulus 24, of order 12
+Bijective rcwa mapping of Z with modulus 12, of order 12
 
-               n mod 24                |                 n^f
+               n mod 12                |                 n^f
 ---------------------------------------+--------------------------------------
-   0  4 10 12 16 22                    | n - 1
-   1 13                                | 2n
+   0  4  6 10                          | n - 1
+   1  7                                | 2n
    2                                   | (n - 2)/2
-   3  9 15 21                          | 2n + 2
-   5  6  7 14 17 18 19                 | n
-   8 20                                | n/2
-  11 23                                | n + 2
+   3  9                                | 2n + 2
+   5 11                                | n + 2
+   8                                   | n/2
 
+gap> cent in Group(h); # This particular element is even a power of h.
+true
 ]]>
 </Example>
   </Description>
@@ -1246,10 +1247,9 @@ to compute the derived subgroup of a tame rcwa group.
 gap> G := Group(g,h);; Size(G);
 infinity
 gap> P := RespectedPartition(G);
-[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
-  2(24), 8(24), 14(24), 20(24) ]
+[ 0(6), 1(6), 3(6), 4(6), 5(6), 2(12), 8(12) ]
 gap> Permutation(g,P);
-(1,11,2,5,3,12,4)(6,13,7,10,8,14,9)
+(1,6,2,5,3,7,4)
 ]]>
 </Example>
   </Description>
@@ -1265,12 +1265,11 @@ gap> Permutation(g,P);
 <Example>
 <![CDATA[
 gap> H := ActionOnRespectedPartition(G);
-Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
-    14,9) ])
+Group([ (1,6,2,5,3,7,4), (1,6,2,5)(3,7,4) ])
 gap> H = Action(G,P);
 true
-gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
-[ 322560, 161280, true ]
+gap> StructureDescription(H);
+"S7"
 ]]>
 </Example>
   </Description>
@@ -1290,20 +1289,31 @@ gap> [ Size(H), Size(DerivedSubgroup(H)), IsPerfect(DerivedSubgroup(H)) ];
     conjugates, and methods for this operation may choose any of them.
 <Example>
 <![CDATA[
-gap> Order(IntegralConjugate(g));
-7
+gap> Display(IntegralConjugate(g));
+
+Bijective rcwa mapping of Z with modulus 7, of order 7
+
+                n mod 7                |                 n^f
+---------------------------------------+--------------------------------------
+  0                                    | n + 5
+  1                                    | n + 3
+  2                                    | n + 4
+  3 6                                  | n - 3
+  4                                    | n - 2
+  5                                    | n - 4
+
 gap> RespectedPartition(IntegralConjugate(G));
-[ 0(14), 1(14), 2(14), 3(14), 4(14), 5(14), 6(14), 7(14), 8(14), 9(14), 
-  10(14), 11(14), 12(14), 13(14) ]
+[ 0(7), 1(7), 2(7), 3(7), 4(7), 5(7), 6(7) ]
 gap> Action(IntegralConjugate(G),last);
-Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
-    14,9) ])
+Group([ (1,6,2,5,3,7,4), (1,6,2,5)(3,7,4) ])
 gap> last = ActionOnRespectedPartition(G);
 true
 ]]>
 </Example>
   </Description>
 </ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Attr Name ="IntegralizingConjugator" Arg="G" Label="G"/>
@@ -1319,29 +1329,21 @@ true
     IntegralConjugate(<A>G</A>)</C> resp.
     <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
     IntegralConjugate(<A>f</A>)</C>.
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> Display(IntegralizingConjugator(g));
 
-Bijective rcwa mapping of Z with modulus 24
+Bijective rcwa mapping of Z with modulus 12
 
-               n mod 24                |                 n^f
+               n mod 12                |                 n^f
 ---------------------------------------+--------------------------------------
-   0 12                                | 7n/6
-   1 13                                | (7n - 1)/6
-   2                                   | (7n + 106)/12
-   3 15                                | (7n - 9)/6
-   4 16                                | (7n - 10)/6
-   5 17                                | (7n - 11)/6
-   6 18                                | (7n - 12)/6
-   7 19                                | (7n - 13)/6
-   8                                   | (7n + 76)/12
-   9 21                                | (7n - 21)/6
-  10 22                                | (7n - 22)/6
-  11 23                                | (7n - 23)/6
-  14                                   | (7n + 46)/12
-  20                                   | (7n + 16)/12
+   0  6                                | 7n/6
+   1  7                                | (7n - 1)/6
+   2                                   | (7n + 46)/12
+   3  9                                | (7n - 9)/6
+   4 10                                | (7n - 10)/6
+   5 11                                | (7n - 11)/6
+   8                                   | (7n + 16)/12
 
 ]]>
 </Example>
