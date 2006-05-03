@@ -3613,15 +3613,28 @@ InstallMethod( LargestSourcesOfAffineMappings,
 
 #############################################################################
 ##
-#M  RespectedPartition( <sigma> ) . . . . . . for tame bijective rcwa mapping
+#M  RespectedPartitionShort( <sigma> ) . . .  for tame bijective rcwa mapping
 ##
-InstallMethod( RespectedPartition,
+InstallMethod( RespectedPartitionShort,
                "for tame bijective rcwa mappings (RCWA)", true,
                [ IsRcwaMapping ], 0,
 
   function ( sigma )
     if not IsBijective(sigma) then return fail; fi;
-    return RespectedPartition( Group( sigma ) );
+    return RespectedPartitionShort( Group( sigma ) );
+  end );
+
+#############################################################################
+##
+#M  RespectedPartitionLong( <sigma> ) . . . . for tame bijective rcwa mapping
+##
+InstallMethod( RespectedPartitionLong,
+               "for tame bijective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+    if not IsBijective(sigma) then return fail; fi;
+    return RespectedPartitionLong( Group( sigma ) );
   end );
 
 #############################################################################

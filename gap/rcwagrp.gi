@@ -876,19 +876,19 @@ BindGlobal( "RespectedPartitionOfRcwaGroup",
 
 #############################################################################
 ##
-#M  RespectedPartition( <G> ) . . . . . . . . . . . . . . for tame rcwa group
-##
-InstallMethod( RespectedPartition,
-               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> RespectedPartitionOfRcwaGroup( G, false ) );
-
-#############################################################################
-##
 #M  RespectedPartitionShort( <G> ) . . . . . . . . . . .  for tame rcwa group
 ##
 InstallMethod( RespectedPartitionShort,
                "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                G -> RespectedPartitionOfRcwaGroup( G, true ) );
+
+#############################################################################
+##
+#M  RespectedPartitionLong( <G> ) . . . . . . . . . . . . for tame rcwa group
+##
+InstallMethod( RespectedPartitionLong,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               G -> RespectedPartitionOfRcwaGroup( G, false ) );
 
 #############################################################################
 ##
