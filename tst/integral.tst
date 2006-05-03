@@ -383,7 +383,7 @@ true
 gap> std := StandardConjugate(ab);
 <bijective rcwa mapping of Z with modulus 7, of order 6>
 gap> tostd := StandardizingConjugator(ab);
-<bijective rcwa mapping of Z with modulus 36>
+<bijective rcwa mapping of Z with modulus 18>
 gap> ab^tostd = std;
 true
 gap> r := g^ab;
@@ -397,7 +397,7 @@ gap> k := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
 gap> std := StandardConjugate(k);
 <bijective rcwa mapping of Z with modulus 3, of order 3>
 gap> tostd := StandardizingConjugator(k);
-<bijective rcwa mapping of Z with modulus 16>
+<bijective rcwa mapping of Z with modulus 8>
 gap> k^tostd = std;
 true
 gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
@@ -755,8 +755,7 @@ gap> Trajectory(a,8,10,"AllCoeffs");
   [ 6561, -264, 1024 ], [ 19683, -1816, 4096 ] ]
 gap> G := Group(g,h);;
 gap> P := RespectedPartition(G);
-[ 0(12), 1(12), 3(12), 4(12), 5(12), 6(12), 7(12), 9(12), 10(12), 11(12), 
-  2(24), 8(24), 14(24), 20(24) ]
+[ 0(6), 1(6), 3(6), 4(6), 5(6), 2(12), 8(12) ]
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> phi = NiceMonomorphism(G);
 true
@@ -765,13 +764,12 @@ gap> M := Image(phi);
 gap> M = NiceObject(G);
 true
 gap> H := ActionOnRespectedPartition(G);
-Group([ (1,11,2,5,3,12,4)(6,13,7,10,8,14,9), (1,11,2,10)(3,12,4)(5,6,13,7)(8,
-    14,9) ])
+Group([ (1,6,2,5,3,7,4), (1,6,2,5)(3,7,4) ])
 gap> Size(H);
-322560
+5040
 gap> D := DerivedSubgroup(H);;
 gap> Size(D);
-161280
+2520
 gap> IsPerfect(D);
 true
 gap> RankOfKernelOfActionOnRespectedPartition(G);
@@ -1390,11 +1388,11 @@ ClassShift(0,1)^51
 gap> [ Root(g,2), Root(g,8) ];
 [ g^4, g ]
 gap> Root(g,7);
-<bijective rcwa mapping of Z with modulus 168>
+<bijective rcwa mapping of Z with modulus 84>
 gap> last^7 = g;
 true
 gap> Root(h,10);
-<bijective rcwa mapping of Z with modulus 48>
+<bijective rcwa mapping of Z with modulus 24>
 gap> last^10 = h;
 true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
