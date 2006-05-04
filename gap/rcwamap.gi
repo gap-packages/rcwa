@@ -834,6 +834,7 @@ InstallGlobalFunction( ClassTransposition,
     if   m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then
       Error("ClassTransposition: The residue classes must be disjoint.\n");
     fi;
+    r1 := r1 mod m1; r2 := r2 mod m2;
     if   m1 > m2 or (m1 = m2 and r1 > r2)
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
     cl1    := ResidueClass(Integers,m1,r1);
