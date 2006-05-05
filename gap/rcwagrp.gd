@@ -265,10 +265,15 @@ DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 ##
 #A  KernelOfActionOnRespectedPartition( <G> )
 ##
-##  The kernel of the action of <G> on its respected partition.
+##  The kernel <K> of the action of <G> on its respected partition <P>.
 ##  The group <G> has to be tame.
 ##
+##  The attribute `KernelActionIndex' is the order of the permutation group
+##  induced by <K> on the refinement of <P> obtained by splitting any residue
+##  class r(m) into three residue classes with modulus 3m.
+##
 DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
+DeclareAttribute( "KernelActionIndex", IsRcwaGroup );
 
 #############################################################################
 ##
