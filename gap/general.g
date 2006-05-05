@@ -49,4 +49,41 @@ InstallMethod( AllProducts,
 
 #############################################################################
 ##
+#F  GeneratorsAndInverses( <G> )
+##
+InstallGlobalFunction( GeneratorsAndInverses,
+                       G->Concatenation(GeneratorsOfGroup(G),
+                                        List(GeneratorsOfGroup(G),g->g^-1)));
+
+#############################################################################
+##
+#F  EpimorphismByGenerators( <F>, <G> )
+#F  EpimorphismByGeneratorsNC( <F>, <G> )
+##
+InstallGlobalFunction( EpimorphismByGenerators,
+  function ( F, G )
+    return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
+                                         GeneratorsOfGroup(G));
+  end );
+InstallGlobalFunction( EpimorphismByGeneratorsNC,
+  function ( F, G )
+    return GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),
+                                           GeneratorsOfGroup(G));
+  end );
+
+#############################################################################
+## 
+#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups
+## 
+InstallMethod( IsCyclic, "generic method for groups (RCWA)", true,
+               [ IsGroup ], 50,
+
+  function ( G )
+    if   Length(GeneratorsOfGroup(G)) = 1
+    then return true;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
