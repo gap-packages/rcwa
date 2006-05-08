@@ -889,6 +889,25 @@ InstallMethod( TransposedClasses,
 
 #############################################################################
 ##
+#M  SplittedClassTransposition( <ct>, <k>, <cross> ) for a class transp. of Z
+##
+InstallMethod( SplittedClassTransposition,
+               "for a class transposition of Z", ReturnTrue,
+               [ IsRcwaMappingOfZ and IsClassTransposition,
+                 IsPosInt, IsBool ], 0,
+
+  function ( ct, k, cross )
+
+    local  cls, pairs;
+
+    cls := List(TransposedClasses(ct),cl->SplittedClass(cl,k));
+    if cross then pairs := Cartesian(cls);
+             else pairs := TransposedMat(cls); fi;
+    return List(pairs,ClassTransposition);
+  end );
+
+#############################################################################
+##
 #F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 ##

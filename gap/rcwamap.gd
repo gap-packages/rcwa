@@ -274,6 +274,14 @@ DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  SplittedClassTransposition( <ct>, <k>, <cross> )
+##
+DeclareOperation( "SplittedClassTransposition",
+                  [ IsRcwaMapping and IsClassTransposition,
+                    IsPosInt, IsBool ] );
+
+#############################################################################
+##
 #F  PrimeSwitch( <p> ) .  rcwa mapping of Z with multiplier <p> and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 #P  IsPrimeSwitch( <sigma> )
