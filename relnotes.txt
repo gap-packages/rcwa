@@ -243,4 +243,18 @@ Changes between version 1.7.1 and version 1.7.2:
  - The length of the used respected partitions of tame rcwa mappings
    and -groups has been reduced.
 
+Changes between version 1.7.2 and version 1.7.3:
+
+ - An operation `SplittedClassTransposition' has been introduced.
+
+ - The methods for the operations `KernelOfActionOnRespectedPartition'
+   and `RankOfKernelOfActionOnRespectedPartition' have been made
+   deterministic in the sense that their return values can no longer
+   be resp. correspond to proper subgroups of the kernel.
+
+ - An example `embeddings of graphs with 4 vertices in the
+   "class transposition graph"' has been added to examples/examples.g.
+
+ - Various little `internal' improvements have been made.
+
 
