@@ -3188,7 +3188,7 @@ InstallMethod( Loops,
 
 #############################################################################
 ##
-#M  Trajectory( <f>, <n>, <length> )
+#M  Trajectory( <f>, <n>, <length> ) . . . . . . . . .  for rcwa mappings (1)
 ##
 InstallMethod( Trajectory,
                "for an rcwa mapping, given number of iterates (RCWA)",
@@ -3209,7 +3209,7 @@ InstallMethod( Trajectory,
 
 #############################################################################
 ##
-#M  Trajectory( <f>, <n>, <length>, <m> )
+#M  Trajectory( <f>, <n>, <length>, <m> ) . . . . . . . for rcwa mappings (2)
 ##
 InstallMethod( Trajectory,
                Concatenation("for an rcwa mapping, given number of ",
@@ -3232,7 +3232,7 @@ InstallMethod( Trajectory,
 
 #############################################################################
 ##
-#M  Trajectory( <f>, <n>, <terminal> )
+#M  Trajectory( <f>, <n>, <terminal> ) . . . . . . . .  for rcwa mappings (3)
 ##
 InstallMethod( Trajectory,
                "for an rcwa mapping, until a given set is entered (RCWA)",
@@ -3258,7 +3258,7 @@ InstallMethod( Trajectory,
 
 #############################################################################
 ##
-#M  Trajectory( <f>, <n>, <terminal>, <m> )
+#M  Trajectory( <f>, <n>, <terminal>, <m> ) . . . . . . for rcwa mappings (4)
 ##
 InstallMethod( Trajectory,
                Concatenation("for an rcwa mapping, until a given set i",
@@ -3285,8 +3285,8 @@ InstallMethod( Trajectory,
 
 ############################################################################
 ##
-#M  Trajectory( <f>, <n>, <length>, <whichcoeffs> )
-#M  Trajectory( <f>, <n>, <terminal>, <whichcoeffs> )
+#M  Trajectory( <f>, <n>, <length>, <whichcoeffs> ) .  for rcwa mappings (5)
+#M  Trajectory( <f>, <n>, <terminal>, <whichcoeffs> )  for rcwa mappings (6)
 ##
 InstallMethod( Trajectory,
                "for an rcwa mapping, coefficients (RCWA)", ReturnTrue,
