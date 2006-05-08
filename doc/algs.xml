@@ -237,7 +237,8 @@ They are listed in alphabetical order.
     coefficient vector (second entry of each triple) of <C>k</C> in the
     lattice spanned by the rows of the matrix
     <C>KernelOfActionOnRespectedPartitionHNFMat(<A>G</A>)</C>.
-    If it is contained, return <C>true</C>. <P/>
+    If it is contained, return <C>true</C>, otherwise return
+    <C>false</C>. <P/>
 
     If membership still has not been decided yet, try to factor <A>g</A>
     into generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
