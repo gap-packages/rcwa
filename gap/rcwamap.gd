@@ -745,7 +745,7 @@ DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
-#A  LaTeXName( obj ) . . . . . . . . . . . . .  LaTeX string for object <obj>
+#A  LaTeXName( <obj> ) . . . . . . . . . . . .  LaTeX string for object <obj>
 ##
 DeclareAttribute( "LaTeXName", IsObject );
 

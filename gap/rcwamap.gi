@@ -37,7 +37,7 @@ MakeReadOnlyGlobal( "RcwaMappingsOfZFamily" );
 # current GAP session.
 
 BindGlobal( "Z_PI_RCWAMAPPING_FAMILIES", [] );
-BindGlobal( "MODULAR_RCWAMAPPING_FAMILIES", [] );
+BindGlobal( "GFQX_RCWAMAPPING_FAMILIES", [] );
 
 #############################################################################
 ##
@@ -92,7 +92,7 @@ InstallGlobalFunction( RcwaMappingsOfGFqxFamily,
                "univariate polynomial ring <R> over a finite field.\n");
     fi;
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
-    fam := First( MODULAR_RCWAMAPPING_FAMILIES,
+    fam := First( GFQX_RCWAMAPPING_FAMILIES,
                   fam -> IsIdenticalObj( UnderlyingRing( fam ), R ) );
     if fam <> fail then return fam; fi;
     fam := NewFamily( Concatenation( "RcwaMappingsFamily( ",
@@ -103,9 +103,9 @@ InstallGlobalFunction( RcwaMappingsOfGFqxFamily,
     SetUnderlyingRing( fam, R );
     SetFamilySource( fam, FamilyObj( x ) );
     SetFamilyRange ( fam, FamilyObj( x ) );
-    MakeReadWriteGlobal( "MODULAR_RCWAMAPPING_FAMILIES" );
-    Add( MODULAR_RCWAMAPPING_FAMILIES, fam );
-    MakeReadOnlyGlobal( "MODULAR_RCWAMAPPING_FAMILIES" );
+    MakeReadWriteGlobal( "GFQX_RCWAMAPPING_FAMILIES" );
+    Add( GFQX_RCWAMAPPING_FAMILIES, fam );
+    MakeReadOnlyGlobal( "GFQX_RCWAMAPPING_FAMILIES" );
 
     return fam;
   end );
