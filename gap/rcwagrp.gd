@@ -75,8 +75,8 @@ DeclareCategoryCollections( "IsRcwaMappingOfZ" );
 
 #############################################################################
 ##
-#V  TrivialRcwaGroupOverZ( <G> ) . . . . . . . . .  trivial rcwa group over Z
-#V  TrivialRcwaGroup( <G> )
+#V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
+#V  TrivialRcwaGroup
 ##
 DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );
 DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
