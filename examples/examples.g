@@ -10,7 +10,7 @@
 
 #############################################################################
 ##
-##  Some basic `building blocks'.
+##  Some basic ``building blocks''.
 ##
 nu  := ClassShift(Integers);        SetName(nu,"nu");
 t   := ClassReflection(Integers);   SetName(t,"t");
@@ -79,46 +79,6 @@ Diffs        := l -> List([1..Length(l)-1],pos->l[pos+1]-l[pos]);
 
 #############################################################################
 ##
-##  Involutions whose product has coprime multiplier and divisor
-##
-##  This has been removed from the manual, since PrimeSwitch'es can now
-##  be generated easily by just a function call.
-##
-f1 := RcwaMapping([List([[1,6],[0, 8]],ResidueClass),
-                   List([[5,6],[4, 8]],ResidueClass)]); SetName(f1,"f1");
-f2 := RcwaMapping([List([[1,6],[0, 4]],ResidueClass),
-                   List([[2,4],[5, 6]],ResidueClass)]); SetName(f2,"f2");
-f3 := RcwaMapping([List([[2,6],[1,12]],ResidueClass),
-                   List([[4,6],[7,12]],ResidueClass)]); SetName(f3,"f3");
-
-f12 := f1*f2; SetName(f12,"f12");
-f23 := f2*f3; SetName(f23,"f23"); # Only finite cycles (?)
-f13 := f1*f3; SetName(f13,"f13"); #  "     "      "    (?)
-
-f := f1*f2*f3; SetName(f,"f");
-
-# Two tame mappings (of orders 3 and 2, respectively), whose product is not
-# balanced.
-
-g1 := RcwaMapping([[6,2,1],[1,-1,1],[1,4,6],[6,2,1],[1,-1,1],[1,0,1],
-                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1],
-                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1]]);
-
-g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
-                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
-                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
-
-SetName(g1,"g1"); SetName(g2,"g2");
-
-# Two mappings with non-balanced commutator.
-
-c1 := Restriction(RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]),
-                  RcwaMapping([[2,0,1]]));
-c2 := RcwaMapping([[1,0,2],[2,1,1],[1,-1,1],[2,1,1]]);
-SetName(c1,"c1"); SetName(c2,"c2");
-
-#############################################################################
-##
 ##  Section 4.5: Exploring the structure of a wild rcwa group
 ##
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
@@ -177,8 +137,9 @@ kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
 SetName(kappa24_fincyc,"kappa24_fincyc");
 
 # A mapping which has finite cycles of unbounded length and, like the
-# mapping `kappatilde' above, apparently one `chaotically behaving' infinite
-# cycle which has positive density (apparently 11/48) as a subset of Z.
+# mapping `kappatilde' above, apparently one ``chaotically behaving''
+# infinite cycle which has positive density (apparently 11/48) as
+# a subset of Z.
 
 kappa24_densecyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
                                  [3, 4,2],[1,-1,1],[6,4,1],[1, 23,1],
@@ -511,6 +472,67 @@ SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
+##  The ``Class Transposition Graph''
+##
+##  The vertices of the `Class Transposition Graph' are the class transposi-
+##  tions. Two vertices are connected by an edge if their product is tame.
+##
+##  Below, examples of embeddings of all 11 graphs with 4 vertices into this
+##  graph are listed. The function `CheckGraphEmbeddings' can be used to
+##  check this data. If it detects an error, it raises an error message and
+##  enters a break loop.
+##
+Embeddings4 := [
+  [ [  ],
+    [ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4),
+      ClassTransposition(0,2,1,6), ClassTransposition(0,2,1,8) ] ],
+  [ [ [ 1, 2 ] ],
+    [ ClassTransposition(0,4,1,4), ClassTransposition(2,4,3,4),
+      ClassTransposition(0,2,1,6), ClassTransposition(0,2,1,10) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ] ],
+    [ ClassTransposition(1,4,4,6), ClassTransposition(1,2,0,6),
+      ClassTransposition(3,4,0,6), ClassTransposition(0,2,1,2) ] ],
+  [ [ [ 1, 2 ], [ 3, 4 ] ],
+    [ ClassTransposition(1,2,0,6), ClassTransposition(3,4,2,6),
+      ClassTransposition(0,2,3,6), ClassTransposition(2,4,5,6) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ] ],
+    [ ClassTransposition(1,3,0,6), ClassTransposition(1,3,2,3),
+      ClassTransposition(3,4,2,6), ClassTransposition(2,4,1,6) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ],
+    [ ClassTransposition(1,3,2,3), ClassTransposition(1,6,2,6),
+      ClassTransposition(0,4,3,6), ClassTransposition(0,2,3,4) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ] ],
+    [ ClassTransposition(1,6,4,6), ClassTransposition(0,4,3,6),
+      ClassTransposition(1,2,2,6), ClassTransposition(2,4,1,6) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ] ],
+    [ ClassTransposition(3,6,4,6), ClassTransposition(0,3,2,6),
+      ClassTransposition(1,3,2,6), ClassTransposition(1,5,2,5) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ], [ 3, 4 ] ],
+    [ ClassTransposition(2,4,3,4), ClassTransposition(0,4,2,4),
+      ClassTransposition(1,3,0,6), ClassTransposition(1,3,5,6) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ],
+    [ ClassTransposition(3,6,4,6), ClassTransposition(1,5,3,5),
+      ClassTransposition(0,2,1,2), ClassTransposition(1,2,2,6) ] ],
+  [ [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], [ 3, 4 ] ],
+    [ ClassTransposition(0,3,2,3), ClassTransposition(0,4,3,4),
+      ClassTransposition(3,6,4,6), ClassTransposition(2,6,5,6) ] ] ];
+
+CheckGraphEmbeddings := function ( embeddingslist )
+  
+  local  i, pairs, deg;
+
+  deg   := Maximum(Filtered(Flat(embeddingslist),IsInt));
+  pairs := Combinations([1..deg],2);
+  for i in [1..Length(embeddingslist)] do
+    if   Filtered(pairs,pair->IsTame(Product(embeddingslist[i][2]{pair})))
+      <> embeddingslist[i][1]
+    then Error("graph embeddings list is wrong!!!\n"); fi;
+  od;
+  return true;
+end;
+
+#############################################################################
+##
 ##  The Venturini examples.
 ##
 V1 := function ( t )
@@ -578,7 +600,7 @@ SetName(Farkas,"Farkas");
 
 #############################################################################
 ##
-##  The mappings defined in the preprint `Symmetrizing the 3n+1 Tree'.
+##  The mappings defined in the preprint ``Symmetrizing the 3n+1 Tree''.
 ##
 l := RcwaMapping([[1,0,1],[1,0,1],[ 4,0,1],
                   [1,0,1],[1,0,1],[ 1,0,1],
@@ -728,7 +750,49 @@ D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
 
 #############################################################################
 ##
-##  A factorization of `a' into involutions. 
+##  Involutions whose product has coprime multiplier and divisor
+##
+##  This example has been removed from the manual, since involutions having
+##  this property can now easily be obtained as factors of ``PrimeSwitches''.
+##  The construction of the latter has been found by generalizing this
+##  example to primes other than 3.
+##
+f1 := RcwaMapping([List([[1,6],[0, 8]],ResidueClass),
+                   List([[5,6],[4, 8]],ResidueClass)]); SetName(f1,"f1");
+f2 := RcwaMapping([List([[1,6],[0, 4]],ResidueClass),
+                   List([[2,4],[5, 6]],ResidueClass)]); SetName(f2,"f2");
+f3 := RcwaMapping([List([[2,6],[1,12]],ResidueClass),
+                   List([[4,6],[7,12]],ResidueClass)]); SetName(f3,"f3");
+
+f12 := f1*f2; SetName(f12,"f12");
+f23 := f2*f3; SetName(f23,"f23"); # Only finite cycles (?)
+f13 := f1*f3; SetName(f13,"f13"); #  "     "      "    (?)
+
+f := f1*f2*f3; SetName(f,"f");
+
+# Two tame mappings (of orders 3 and 2, respectively), whose product is not
+# balanced.
+
+g1 := RcwaMapping([[6,2,1],[1,-1,1],[1,4,6],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1],
+                   [6,2,1],[1,-1,1],[1,0,1],[6,2,1],[1,-1,1],[1,0,1]]);
+
+g2 := RcwaMapping([[1,0,1],[3,-1,1],[1,1,3],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+                   [1,0,1],[3,-1,1],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);
+
+SetName(g1,"g1"); SetName(g2,"g2");
+
+# Two mappings whose commutator is not balanced.
+
+c1 := Restriction(RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]),
+                  RcwaMapping([[2,0,1]]));
+c2 := RcwaMapping([[1,0,2],[2,1,1],[1,-1,1],[2,1,1]]);
+SetName(c1,"c1"); SetName(c2,"c2");
+
+#############################################################################
+##
+##  A factorization of Collatz' permutation into involutions. 
 ##
 ##  The following factorization has been determined interactively, before
 ##  the general factorization routine `FactorizationIntoCSCRCT' has been
@@ -754,7 +818,7 @@ INTEGRAL_PART_COEFFS :=
 
 rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 
-FactorsOfa := [
+FactorsOfCollatzPermutation := [
   RcwaMapping(List(INTEGRAL_PART_COEFFS,b_rm->[1,b_rm,1])), nu^-4,
   RcwaMapping([[rc(3,144),rc(139,288)],[rc(75,144),rc(235,288)]]),
   RcwaMapping([[rc(101,144),rc(43,288)]]),
@@ -778,12 +842,13 @@ FactorsOfa := [
                [rc(91,288),rc(33,48)],[rc(187,288),rc(20,24)],
                [rc(283,288),rc(7,48)]]), f, nu^4, f^4 ];
 
-FACTORS_OF_A_CYCS := List([1,2,4,12,112,156,256],
-                          n->Cycle(FactorsOfa[1],n) mod 288);
+FACTORS_OF_CP_CYCS := List([1,2,4,12,112,156,256],
+                           n->Cycle(FactorsOfCollatzPermutation[1],n)
+                              mod 288);
 
 nu_rm := ClassShift; t_rm := ClassReflection;
 
-InvolutionFactorsOfa := Concatenation(
+InvolutionFactorsOfCollatzPermutation := Concatenation(
   [ t_rm(  0,288), t_rm(  0,288) * nu_rm(  0,288)^-1,
     t_rm(  1,288), t_rm(  1,288) * nu_rm(  1,288)^-1,
     t_rm(  2,288), t_rm(  2,288) * nu_rm(  2,288)^-1,
@@ -792,19 +857,21 @@ InvolutionFactorsOfa := Concatenation(
     t_rm(252,288), t_rm(252,288) * nu_rm(252,288),
     t_rm(271,288), t_rm(271,288) * nu_rm(271,288),
     t_rm(277,288), t_rm(277,288) * nu_rm(277,288) ],
-  Concatenation(List(FACTORS_OF_A_CYCS,cyc->List([2..Length(cyc)],
+  Concatenation(List(FACTORS_OF_CP_CYCS,cyc->List([2..Length(cyc)],
                      i->RcwaMapping([[rc(cyc[1],288),rc(cyc[i],288)]])))),
   [ RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]), t,
     RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]), t ],
-  FactorsOfa{[3..15]},
+  FactorsOfCollatzPermutation{[3..15]},
   [ f1, f2, f3, t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     t, RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]),
     f1, f2, f3, f1, f2, f3, f1, f2, f3, f1, f2, f3 ] );
 
 #############################################################################
 ##
-##  A class transposition ct(r1,m1,r2,m2) is the commutator of the following
-##  mappings ct1(r1,m1,r2,m2) und ct2(r1,m1,r2,m2):
+##  Class transpositions can be written as commutators:
+##
+##  The class transposition interchanging <r1>(<m1>) and <r2>(<m2>) is the
+##  commutator of `ct1'(<r1>,<m1>,<r2>,<m2>) and `ct2'(<r1>,<m1>,<r2>,<m2>).
 ##
 tau1 := RcwaMapping([[1,1,1],[1,1,1],[1,-2,1],[1,0,1]]);
 tau2 := RcwaMapping([[1,1,1],[1,2,1],[1,0,1],[1,-3,1]]);
@@ -820,9 +887,9 @@ ct2   := function(r1,m1,r2,m2)
 
 #############################################################################
 ##
-##  `Class switches': Involutions which interchange two residue classes which
-##  are not necessarily disjoint (of course there must not be a proper subset
-##  relation between them!):
+##  ``Class switches'': Involutions which interchange two residue classes
+##  which are not necessarily disjoint (of course there must not be a proper
+##  subset relation between them!):
 ##
 ClassSwitch := function( r1, m1, r2, m2 )
 
