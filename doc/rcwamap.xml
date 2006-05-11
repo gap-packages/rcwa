@@ -678,6 +678,11 @@ in Section&nbsp;<Ref Label="sec:FactoringTheCollatzPermutation"/>
 a permutation is factored which has already been mentioned by Lothar Collatz
 in&nbsp;1932, and whose cycle structure is unknown so far. <P/>
 
+Class transpositions can be written as products of any given number <M>k</M>
+of class transpositions, as long as the underlying ring has a residue class
+ring of cardinality&nbsp;<M>k</M>. Such a decomposition can be obtained by
+<C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>. <P/>
+
 Obtaining a factorization of a bijective rcwa mapping into class shifts,
 class reflections and class transpositions is particularly difficult if
 multiplier and divisor are coprime. A prototype of permutations which have
