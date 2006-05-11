@@ -262,7 +262,7 @@ InstallOtherMethod( DihedralGroupCons,
     local  result;
 
     result := Group(ClassShift(0,1),ClassReflection(0,1));
-    SetSize(result,infinity); SetIsAbelian(result,true);
+    SetSize(result,infinity);
     SetIsTame(result,true); SetIsIntegral(result,true);
     return result;
   end );
@@ -281,7 +281,7 @@ InstallOtherMethod( AbelianGroupCons,
 
     if not ForAll(invs,n->IsInt(n) or n=infinity) then TryNextMethod(); fi;
     result := DirectProduct(List(invs,n->CyclicGroup(IsRcwaGroupOverZ,n)));
-    SetSize(result,Product(invs));
+    SetSize(result,Product(invs)); SetIsAbelian(result,true);
     SetIsTame(result,true); SetIsIntegral(result,true);
     return result;
   end );
