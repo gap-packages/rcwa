@@ -72,6 +72,20 @@ InstallGlobalFunction( EpimorphismByGeneratorsNC,
   end );
 
 #############################################################################
+##
+#M  \in( <g>, <G> ) . for groups, checking for <g> being among the generators
+##
+InstallMethod(\in,
+              "default method checking for <g> being among the gen's (RCWA)",
+              ReturnTrue, [ IsMultiplicativeElementWithInverse, IsGroup ], 0,
+
+  function ( g, G )
+    if   g = One(G) or g in GeneratorsOfGroup(G)
+    then return true;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
 ## 
 #M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups
 ## 
