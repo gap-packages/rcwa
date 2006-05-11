@@ -908,6 +908,17 @@ InstallMethod( SplittedClassTransposition,
 
 #############################################################################
 ##
+#M  SplittedClassTransposition( <ct>, <k> ) .  for a class transposition of Z
+##
+InstallOtherMethod( SplittedClassTransposition,
+                    "for a class transposition of Z", ReturnTrue,
+                    [ IsRcwaMappingOfZ and IsClassTransposition, IsPosInt ],
+                    0, function ( ct, k )
+                         return SplittedClassTransposition(ct,k,false);
+                       end );
+
+#############################################################################
+##
 #F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 ##
