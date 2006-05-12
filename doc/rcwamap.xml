@@ -1574,6 +1574,12 @@ gap> List( [ T, a ], GuessedDivergence );
     an rcwa mapping of a polynomial ring in one variable over a finite field,
     and <C>false</C> otherwise.
   </Returns>
+  <Description>
+    Often the same methods can be used for rcwa mappings of the ring of
+    integers and of its semilocalizations. For this reason there is
+    a category <C>IsRcwaMappingOfZOrZ&uscore;pi</C> which is the union of
+    <C>IsRcwaMappingOfZ</C> and <C>IsRcwaMappingOfZ&uscore;pi</C>.
+  </Description>
 </ManSection>
 
 <ManSection>
