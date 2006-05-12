@@ -1395,6 +1395,9 @@ gap> Root(h,10);
 <bijective rcwa mapping of Z with modulus 24>
 gap> last^10 = h;
 true
+gap> SplittedClassTransposition(ClassTransposition(0,2,1,4),3);
+[ ClassTransposition(0,6,1,12), ClassTransposition(2,6,5,12),
+  ClassTransposition(4,6,9,12) ]
 gap> SplittedClassTransposition(ClassTransposition(0,2,1,2),3,false);
 [ ClassTransposition(0,6,1,6), ClassTransposition(2,6,3,6),
   ClassTransposition(4,6,5,6) ]
