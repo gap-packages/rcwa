@@ -1406,6 +1406,10 @@ gap> SplittedClassTransposition(ClassTransposition(0,2,1,2),2,true);
   ClassTransposition(1,4,2,4), ClassTransposition(2,4,3,4) ]
 gap> SplittedClassTransposition(ClassTransposition(1,2,4,6),2,false);
 [ ClassTransposition(1,4,4,12), ClassTransposition(3,4,10,12) ]
+gap> D := DihedralPcpGroup(0);
+Pcp-group with orders [ 2, 0 ]
+gap> DirectProduct(D,D,D);
+Pcp-group with orders [ 2, 0, 2, 0, 2, 0 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
