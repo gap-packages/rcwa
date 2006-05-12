@@ -61,7 +61,8 @@ BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 Autoload         := false,
 TestFile         := "tst/testall.g",
-Keywords         := [ "infinite permutation groups", "permutation groups over rings",
+Keywords         := [ "infinite permutation groups", "geometric group theory",
+                      "combinatorial group theory", "permutation groups over rings",
                       "residue class-wise affine groups", "residue class-wise affine mappings",
                       "Collatz conjecture", "3n+1 conjecture" ]
 
