@@ -67,6 +67,8 @@ forms a subgroup of Sym(<M>R</M>).
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or for short an <E>rcwa</E> group. <P/>
 
+<Index Key="tame">tame rcwa mapping</Index>
+<Index Key="tame">tame rcwa group</Index>
 There are two entirely different classes of rcwa mappings and -groups.
 One of these classes comprises what could be called the <Q>trivial cases</Q>.
 The members of the other have typically a quite complicate structure and are
@@ -510,6 +512,7 @@ memory required for storing an rcwa mapping is proportional to its modulus.
 Whether a given mapping is tame or wild can be determined by the operation
 <C>IsTame</C>. There are methods for <C>Order</C>, which can not only
 compute a finite order, but can also detect infinite order. <P/>
+<Index Key="IsTame" Subkey="f"><C>IsTame</C></Index>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
@@ -613,7 +616,8 @@ There are operations <C>Modulus</C> (abbreviated <C>Mod</C>) and
 <C>Coefficients</C> for extracting the modulus resp. the coefficient list
 of a given rcwa mapping. The meaning of the return values is as described
 in the previous section.
-
+<Index Key="Modulus" Subkey="f"><C>Modulus</C></Index>
+<Index Key="Mod" Subkey="f"><C>Mod</C></Index>
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
 than <M>\mathbb{Z}</M>, not for all operations applicable methods are
@@ -682,6 +686,9 @@ Class transpositions can be written as products of any given number <M>k</M>
 of class transpositions, as long as the underlying ring has a residue class
 ring of cardinality&nbsp;<M>k</M>. Such a decomposition can be obtained by
 <C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>. <P/>
+<Index Key="SplittedClassTransposition" Subkey="G">
+  <C>SplittedClassTransposition</C>
+</Index>
 
 Obtaining a factorization of a bijective rcwa mapping into class shifts,
 class reflections and class transpositions is particularly difficult if
@@ -853,6 +860,7 @@ An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1
 (cp.&nbsp;<Ref Prop="IsIntegral" Label="f"/>). It is called <E>balanced</E>,
 i.e. has the property <C>IsBalanced</C>, if its multiplier and divisor have
 the same prime divisors. 
+<Index Key="IsBalanced" Subkey="f"><C>IsBalanced</C></Index>
 
 <ManSection>
   <Attr Name="PrimeSet" Arg="f" Label="f"/>
@@ -1119,7 +1127,6 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
     modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
-    <Index Key="rcwa mapping" Subkey="transition matrix"></Index>
     Let <M>M</M> be this matrix. Then for any two residue classes <M>r_1(m),
     r_2(m) \in R/mR</M>, the entry <M>M_{r_1(m),r_2(m)}</M> is defined by
     <Alt Only="LaTeX">
@@ -1584,6 +1591,9 @@ gap> List( [ T, a ], GuessedDivergence );
     integers and of its semilocalizations. For this reason there is
     a category <C>IsRcwaMappingOfZOrZ&uscore;pi</C> which is the union of
     <C>IsRcwaMappingOfZ</C> and <C>IsRcwaMappingOfZ&uscore;pi</C>.
+    <Index Key="IsRcwaMappingOfZOrZ_pi" Subkey="f">
+      <C>IsRcwaMappingOfZOrZ&uscore;pi</C>
+    </Index>
   </Description>
 </ManSection>
 
