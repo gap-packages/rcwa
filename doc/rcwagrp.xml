@@ -40,8 +40,7 @@ infinity
 
 There are methods for the operations <C>Display</C> and <C>Print</C>
 which are applicable to rcwa groups. <P/>
-
-
+ 
 All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
 constructed in the way described above. It is handled as a special case:
@@ -53,7 +52,7 @@ constructed in the way described above. It is handled as a special case:
     permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
-    To allow distinguishing the returned group for purposes of
+    To allow distinguishing the returned group from others by means of
     the method selection, it has the characteristic property
     <C>IsNaturalRCWA&uscore;Z</C> resp. one of the properties
     <C>IsNaturalRCWA&uscore;Z&uscore;pi</C> or
@@ -1357,6 +1356,22 @@ Bijective rcwa mapping of Z with modulus 12
 </Example>
   </Description>
 </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:UtilityFunctions">
+<Heading>Some general utility functions</Heading>
+
+&RCWA; introduces a few small utility functions which can be used for groups
+in general: The function <C>GeneratorsAndInverses(<A>G</A>)</C> returns
+a list of generators of <A>G</A> and their inverses,
+<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is a shorthand for
+<C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>, GeneratorsOfGroup(<A>G</A>),
+GeneratorsOfGroup(<A>H</A>))</C> (there is also an <C>NC</C> version of this)
+and the function <C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
+all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
 
 </Section>
 
