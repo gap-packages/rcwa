@@ -849,6 +849,11 @@ gap> List( [ g, u, T, d, r ], Divisor );
   </Description>
 </ManSection>
 
+An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1
+(cp.&nbsp;<Ref Prop="IsIntegral" Label="f"/>). It is called <E>balanced</E>,
+i.e. has the property <C>IsBalanced</C>, if its multiplier and divisor have
+the same prime divisors. 
+
 <ManSection>
   <Attr Name="PrimeSet" Arg="f" Label="f"/>
   <Returns> The prime set of the rcwa mapping&nbsp;<A>f</A>. </Returns>
