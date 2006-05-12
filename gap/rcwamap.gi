@@ -892,7 +892,7 @@ InstallMethod( TransposedClasses,
 #M  SplittedClassTransposition( <ct>, <k>, <cross> ) for a class transp. of Z
 ##
 InstallMethod( SplittedClassTransposition,
-               "for a class transposition of Z", ReturnTrue,
+               "for a class transposition of Z (RCWA)", ReturnTrue,
                [ IsRcwaMappingOfZ and IsClassTransposition,
                  IsPosInt, IsBool ], 0,
 
@@ -908,14 +908,14 @@ InstallMethod( SplittedClassTransposition,
 
 #############################################################################
 ##
-#M  SplittedClassTransposition( <ct>, <k> ) .  for a class transposition of Z
+#M  SplittedClassTransposition( <ct>, <k> ) . . . . . . . . .  default method
 ##
 InstallOtherMethod( SplittedClassTransposition,
-                    "for a class transposition of Z", ReturnTrue,
-                    [ IsRcwaMappingOfZ and IsClassTransposition, IsPosInt ],
-                    0, function ( ct, k )
-                         return SplittedClassTransposition(ct,k,false);
-                       end );
+                    "default method (RCWA)", ReturnTrue,
+                    [ IsRcwaMapping and IsClassTransposition, IsPosInt ], 0,
+                    function ( ct, k )
+                      return SplittedClassTransposition(ct,k,false);
+                    end );
 
 #############################################################################
 ##
