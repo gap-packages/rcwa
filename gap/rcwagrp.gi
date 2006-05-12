@@ -160,7 +160,7 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_GF_q_x( G, true );
+    SetIsNaturalRCWA_GFqx( G, true );
     SetModulusOfRcwaGroup( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -204,11 +204,11 @@ InstallMethod( IsNaturalRCWA_Z_pi,
 
 #############################################################################
 ##
-#M  IsNaturalRCWA_GF_q_x( <G> ) . . . . . . . . . . . . . . .  RCWA(GF(q)[x])
+#M  IsNaturalRCWA_GFqx( <G> ) . . . . . . . . . . . . . . . .  RCWA(GF(q)[x])
 ##
 ##  The groups RCWA(GF(q)[x]) can only be obtained by the above constructor.
 ##
-InstallMethod( IsNaturalRCWA_GF_q_x,
+InstallMethod( IsNaturalRCWA_GFqx,
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                ReturnFalse );
 
@@ -429,7 +429,7 @@ InstallMethod( \in,
 ##
 InstallMethod( \in,
                "for rcwa mapping of GF(q)[x] and RCWA(GF(q)[x]) (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfGFqx, IsNaturalRCWA_GF_q_x ],
+               ReturnTrue, [ IsRcwaMappingOfGFqx, IsNaturalRCWA_GFqx ],
                100,
 
   function ( g, G )
@@ -462,10 +462,10 @@ InstallMethod( IsSubset,
 ##
 InstallMethod( IsSubset,
                "for RCWA(GF(q)[x]) and an rcwa group over GF(q)[x] (RCWA)",
-               ReturnTrue, [ IsNaturalRCWA_GF_q_x, IsRcwaGroupOverGFqx ], 0,
+               ReturnTrue, [ IsNaturalRCWA_GFqx, IsRcwaGroupOverGFqx ], 0,
 
-  function ( RCWA_GF_q_x, G )
-    return FamilyObj(One(RCWA_GF_q_x)) = FamilyObj(One(G));
+  function ( RCWA_GFqx, G )
+    return FamilyObj(One(RCWA_GFqx)) = FamilyObj(One(G));
   end );
 
 #############################################################################
@@ -477,7 +477,7 @@ InstallMethod( Display,
 
   function ( G )
     if   IsNaturalRCWA_Z( G ) or IsNaturalRCWA_Z_pi( G )
-      or IsNaturalRCWA_GF_q_x( G )
+      or IsNaturalRCWA_GFqx( G )
     then Print( Name( G ), "\n" ); else TryNextMethod(); fi;
   end );
 
@@ -553,7 +553,7 @@ InstallOtherMethod( MovedPoints,
                     "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
-    if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GF_q_x(G)
+    if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GFqx(G)
     then return Source(One(G)); fi;
     return Union(List(GeneratorsOfGroup(G),MovedPoints));
   end );

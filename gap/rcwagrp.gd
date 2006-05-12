@@ -107,9 +107,9 @@ DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
 
 #############################################################################
 ##
-#P  IsNaturalRCWA_GF_q_x( <G> ) . . . . . . . . . . . . . .  RCWA( GF(q)[x] )
+#P  IsNaturalRCWA_GFqx( <G> ) . . . . . . . . . . . . . . .  RCWA( GF(q)[x] )
 ##
-DeclareProperty( "IsNaturalRCWA_GF_q_x", IsRcwaGroup );
+DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 
 #############################################################################
 ##
