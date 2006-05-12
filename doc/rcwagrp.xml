@@ -41,6 +41,7 @@ infinity
 There are methods for the operations <C>Display</C> and <C>Print</C>
 which are applicable to rcwa groups. <P/>
 
+
 All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
 constructed in the way described above. It is handled as a special case:
@@ -52,6 +53,13 @@ constructed in the way described above. It is handled as a special case:
     permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
+    To allow distinguishing the returned group for purposes of
+    the method selection, it has the characteristic property
+    <C>IsNaturalRCWA&uscore;Z</C> resp. one of the properties
+    <C>IsNaturalRCWA&uscore;Z&uscore;pi</C> or
+    <C>IsNaturalRCWA&uscore;GFqx</C>, depending on whether <A>R</A>
+    is the ring of integers, one of its semilocalizations or a univariate
+    polynomial ring over a finite field.
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
@@ -1369,6 +1377,12 @@ Bijective rcwa mapping of Z with modulus 12
     an rcwa group over a polynomial ring in one variable over a finite field,
     and <C>false</C> otherwise.
   </Returns>
+  <Description>
+    Often the same methods can be used for rcwa groups over the ring of
+    integers and over its semilocalizations. For this reason there is
+    a category <C>IsRcwaGroupOverZOrZ&uscore;pi</C> which is the union of
+    <C>IsRcwaGroupOverZ</C> and <C>IsRcwaGroupOverZ&uscore;pi</C>.
+  </Description>
 </ManSection>
 
 </Section>
