@@ -57,18 +57,18 @@ InstallGlobalFunction( GeneratorsAndInverses,
 
 #############################################################################
 ##
-#F  EpimorphismByGenerators( <F>, <G> )
-#F  EpimorphismByGeneratorsNC( <F>, <G> )
+#F  EpimorphismByGenerators( <G>, <H> )
+#F  EpimorphismByGeneratorsNC( <G>, <H> )
 ##
 InstallGlobalFunction( EpimorphismByGenerators,
-  function ( F, G )
-    return GroupHomomorphismByImages(F,G,GeneratorsOfGroup(F),
-                                         GeneratorsOfGroup(G));
+  function ( G, H )
+    return GroupHomomorphismByImages(G,H,GeneratorsOfGroup(G),
+                                         GeneratorsOfGroup(H));
   end );
 InstallGlobalFunction( EpimorphismByGeneratorsNC,
-  function ( F, G )
-    return GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),
-                                           GeneratorsOfGroup(G));
+  function ( G, H )
+    return GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
+                                           GeneratorsOfGroup(H));
   end );
 
 #############################################################################
