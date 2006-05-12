@@ -23,18 +23,13 @@ as usual (see the &GAP; reference manual).
 
 <Example>
 <![CDATA[
-gap> g := RcwaMapping([[1,0,1],[1,1,1],[3,6,1],
->                      [1,0,3],[1,1,1],[3,6,1],
->                      [1,0,1],[1,1,1],[3,-21,1]]);;
-gap> h := RcwaMapping([[1,0,1],[1,1,1],[3,6,1],
->                      [1,0,3],[1,1,1],[3,-21,1],
->                      [1,0,1],[1,1,1],[3,6,1]]);;
-gap> List([g,h],Order);
-[ 9, 9 ]
-gap> G := Group(g,h);
+gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));
 <rcwa group over Z with 2 generators>
-gap> Size(G);
+gap> IsTame(G); Size(G); IsSolvable(G); IsPerfect(G);
+true
 infinity
+false
+false
 ]]>
 </Example>
 
@@ -59,25 +54,26 @@ constructed in the way described above. It is handled as a special case:
     <C>IsNaturalRCWA&uscore;GFqx</C>, depending on whether <A>R</A>
     is the ring of integers, one of its semilocalizations or a univariate
     polynomial ring over a finite field.
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> RCWA_Z := RCWA(Integers);
 RCWA(Z)
-gap> Size(RCWA_Z);
-infinity
-gap> IsFinitelyGeneratedGroup(RCWA_Z);
-false
-gap> One(RCWA_Z);
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
+gap> One(RCWA_Z); Size(RCWA_Z); IsFinitelyGeneratedGroup(RCWA_Z);
 IdentityMapping( Integers )
-gap> IsSolvable(RCWA_Z);
+infinity
 false
-gap> IsPerfect(RCWA_Z);
+gap> IsSolvable(RCWA_Z) or IsPerfect(RCWA_Z);
 false
 gap> Centre(RCWA_Z);
 Trivial rcwa group over Z
-gap> IsSubgroup(RCWA_Z, Group(RcwaMapping((1,2,3),[1..4]),
->                             RcwaMapping(2,[[0,1],[1,0],[2,3],[3,2]])));
+gap> IsSubgroup(RCWA_Z,G);
 true
 ]]>
 </Example>
@@ -100,83 +96,38 @@ gap> elm := Random(RCWA_Z);
 <bijective rcwa mapping of Z with modulus 60>
 gap> Display(elm);
 
-Bijective rcwa mapping of Z with modulus 60
+Bijective rcwa mapping of Z with modulus 12
 
-               n mod 60                |                 n^f
+               n mod 12                |                 n^f
 ---------------------------------------+--------------------------------------
-   0  4  6  8 10 14 16 18 20 24 26 28  | 
-  30 34 36 38 40 44 46 48 50 54 56 58  | -3n - 5
-   1                                   | (n - 1)/5
-   2 22 42                             | (3n + 24)/5
-   3  9 15 21 27 33 39 45 51 57        | (-5n + 12)/3
-   5 11 17 29 35 41 47 59              | -n + 2
-   7 13 19 25 37 43 49 55              | -n
-  12 32 52                             | (3n + 4)/5
-  23                                   | (n - 3)/5
-  31                                   | (n + 19)/5
-  53                                   | (n + 17)/5
+   0  2  4  6  8 10                    | 3n + 2
+   1  5  9                             | -n + 2
+   3  7                                | (n - 7)/2
+  11                                   | (-n + 20)/3
 
 ]]>
 </Log>
 
-    The elements returned by this method are obtained by multiplying
-    class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
+    The elements which are returned by this method are obtained by
+    multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
     class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
     class transpositions (see <Ref Func="ClassTransposition"
                               Label="r1, m1, r2, m2"/>).
-    These factors are stored as an attribute value:
-
+    These factors can be retrieved by factoring:
 <Log>
 <![CDATA[
-gap> Perform(FactorizationIntoCSCRCT(elm),Display);
-
-Rcwa mapping of Z with modulus 6
-
-                n mod 6                |    n^ClassTransposition(0,2,5,6)
----------------------------------------+--------------------------------------
-  0 2 4                                | 3n + 5
-  1 3                                  | n
-  5                                    | (n - 5)/3
-
-
-Rcwa mapping of Z with modulus 6
-
-                n mod 6                |    n^ClassTransposition(0,2,3,6)
----------------------------------------+--------------------------------------
-  0 2 4                                | 3n + 3
-  1 5                                  | n
-  3                                    | (n - 3)/3
-
-
-Rcwa mapping of Z with modulus 10
-
-               n mod 10                |    n^ClassTransposition(0,2,1,10)
----------------------------------------+--------------------------------------
-   0  2  4  6  8                       | 5n + 1
-   1                                   | (n - 1)/5
-   3  5  7  9                          | n
-
-
-Rcwa mapping of Z with modulus 4
-
-                n mod 4                |          n^ClassShift(2,4)
----------------------------------------+--------------------------------------
-  0 1 3                                | n
-  2                                    | n + 4
-
-Rcwa mapping of Z: n -> -n
-
-Rcwa mapping of Z with modulus 2
-
-                n mod 2                |        n^ClassReflection(0,2)
----------------------------------------+--------------------------------------
-  0                                    | -n
-  1                                    | n
-
+gap> Factorization(elm);
+[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
+  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
 ]]>
 </Log>
   </Description>
 </ManSection>
+
+An auxiliary function which is used in this context for choosing the
+class transpositions is <C>ClassPairs(<A>m</A>)</C>.
+This function returns a list of all pairs of disjoint residue classes
+<M>r_1(m_1)</M>, <M>r_2(m_2)</M>, where <M>m_1, m_2 \leq m</M>. <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
