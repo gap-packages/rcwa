@@ -1248,7 +1248,13 @@ to compute the derived subgroup of a tame rcwa group.
     a permutation group, and on whose elements all elements
     of&nbsp;<A>G</A> resp. all powers of&nbsp;<A>sigma</A> are affine.
     In the author's thesis it is shown that such a partition exists if and
-    only if <A>G</A> resp. <A>sigma</A> is tame (see Theorem&nbsp;2.5.8).
+    only if <A>G</A> resp. <A>sigma</A> is tame (see Theorem&nbsp;2.5.8).<P/>
+
+    Related attributes are <C>RespectedPartitionShort</C> and
+    <C>RespectedPartitionLong</C>. They are used to denote respected
+    partitions consisting of residue classes <M>r(m)</M> where
+    <M>m</M> divides the modulus of&nbsp;<A>G</A> resp. <A>sigma</A>, resp.
+    where the modulus of <A>G</A> resp. <A>sigma</A> divides&nbsp;<M>m</M>.
 <Example>
 <![CDATA[
 gap> G := Group(g,h);; Size(G);
