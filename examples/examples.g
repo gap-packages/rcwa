@@ -271,18 +271,7 @@ SetName(r_2mod,"r");
 
 #############################################################################
 ##
-##  Section 4.8: An rcwa representation of a small group
-##
-r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
-                  [1,0,3],[1,1,1],[3, -3,1],
-                  [1,0,1],[1,1,1],[3, -3,1]]); SetName(r,"r");
-s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
-                  [1,0,3],[1,1,1],[3,  6,1],
-                  [1,0,1],[1,1,1],[3,-21,1]]); SetName(s,"s");
-
-#############################################################################
-##
-##  Section 4.9: An rcwa representation of the symmetric group on 10 points
+##  Section 4.8: An rcwa representation of the symmetric group on 10 points
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]); SetName(b,"b");
@@ -308,14 +297,14 @@ SetName(a_1,"a_1"); SetName(a_2,"a_2");
 
 #############################################################################
 ##
-##  Section 4.10: Checking for solvability
+##  Section 4.9: Checking for solvability
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]); SetName(b,"b");
 
 #############################################################################
 ##
-##  Section 4.11: Some examples over (semi)localizations of the integers
+##  Section 4.10: Some examples over (semi)localizations of the integers
 ##
 a2  := RcwaMapping(Z_pi(2),    ShallowCopy(Coefficients(a)));
 
@@ -340,7 +329,7 @@ v2w2 := Comm(v2,w2); SetName(v2w2,"[v2,w2]");
 
 #############################################################################
 ##
-##  Section 4.12: Twisting 257-cycles into an rcwa mapping with modulus 32
+##  Section 4.11: Twisting 257-cycles into an rcwa mapping with modulus 32
 ##
 ##  In order to avoid a name clash we call the mapping `x_257' instead
 ##  of `x'.
@@ -365,7 +354,7 @@ SetName(x_257,"x");
 
 #############################################################################
 ##
-##  Section 4.13: The behaviour of the moduli of powers
+##  Section 4.12: The behaviour of the moduli of powers
 ##
 ##  We only list mappings here which are used exclusively in this example.
 ##
@@ -385,7 +374,7 @@ e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
 
 #############################################################################
 ##
-##  Section 4.14: Images and preimages under the Collatz mapping
+##  Section 4.13: Images and preimages under the Collatz mapping
 ##
 T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
 
@@ -402,7 +391,7 @@ a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 
 #############################################################################
 ##
-##  Section 4.15: A group which acts 4-transitive on the positive integers
+##  Section 4.14: A group which acts 4-transitive on the positive integers
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
@@ -410,7 +399,7 @@ SetName(u,"u");
 
 #############################################################################
 ##
-##  Section 4.16: A group which acts 3-transitive, but not 4-transitive on Z
+##  Section 4.15: A group which acts 3-transitive, but not 4-transitive on Z
 ##
 ##  This example does not define rcwa mappings whose inclusion here would
 ##  save any typing.
@@ -418,7 +407,7 @@ SetName(u,"u");
 
 #############################################################################
 ##
-##  Section 4.17: Grigorchuk groups
+##  Section 4.16: Grigorchuk groups
 ##
 ##  The definition of a, b, c and d is omitted in order to avoid overwriting
 ##  the previous values of these variables.
@@ -447,14 +436,14 @@ GrigorchukGroup2 := level -> Group(FourCycle,
 
 #############################################################################
 ##
-##  Section 4.18: Forward orbits of a monoid with 2 generators
+##  Section 4.17: Forward orbits of a monoid with 2 generators
 ##
 T5m := RcwaMapping([[1,0,2],[5,-1,2]]);; SetName(T5m,"T5-");
 T5p := RcwaMapping([[1,0,2],[5, 1,2]]);; SetName(T5p,"T5+");
 
 #############################################################################
 ##
-##  Section 4.19: Representations of the free group of rank 2
+##  Section 4.18: Representations of the free group of rank 2
 ##
 r1 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4);
 r2 := ClassTransposition(0,2,1,2) * ClassTransposition(0,2,3,4);
@@ -464,7 +453,7 @@ F2 := Group(r1^2,r2^2); SetName(F2,"F_2");
 
 #############################################################################
 ##
-##  Section 4.20: Representations of the modular group PSL(2,Z)
+##  Section 4.19: Representations of the modular group PSL(2,Z)
 ##
 PSL2Z := Group(ClassTransposition(0,3,1,3) * ClassTransposition(0,3,2,3),
                ClassTransposition(1,3,0,6) * ClassTransposition(2,3,3,6));
@@ -747,6 +736,20 @@ R4 := RcwaMapping(List([[0,2],[1, 4],[ 3, 8],[7,8]],ResidueClass),
                   List([[1,8],[5,16],[13,16],[3,4]],ResidueClass));
 SetName(R4,"R4");
 D4 := CommonRightInverse(L4,R4); SetName(D4,"D4");
+
+#############################################################################
+##
+##  An rcwa representation of Syl_3(S_9)
+##
+##  This example has been removed from the manual, since it was thought to be
+##  too trivial compared to the others.
+##
+r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
+                  [1,0,3],[1,1,1],[3, -3,1],
+                  [1,0,1],[1,1,1],[3, -3,1]]); SetName(r,"r");
+s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
+                  [1,0,3],[1,1,1],[3,  6,1],
+                  [1,0,1],[1,1,1],[3,-21,1]]); SetName(s,"s");
 
 #############################################################################
 ##
