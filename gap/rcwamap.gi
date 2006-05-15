@@ -1418,7 +1418,7 @@ InstallMethod( LaTeXObj,
     then indent := ""; else indent := String(" ",indent); fi;
     str := indent;
     if ValueOption("Factorization") = true and IsBijective(f) then
-      gens := List(FactorizationIntoGenerators(f),LaTeXName);
+      gens := List(FactorizationIntoCSCRCT(f),LaTeXName);
       append("      &");
       for pos in [1..Length(gens)] do
         append(gens[pos]);
@@ -1494,7 +1494,7 @@ InstallMethod( LaTeXAndXDVI,
     m := Modulus(f);
     if   ValueOption("Factorization") <> true
     then size := LogInt(Int(m/16)+1,2)+1;
-    else size := Int(Length(FactorizationIntoGenerators(f))/50) + 1; fi;
+    else size := Int(Length(FactorizationIntoCSCRCT(f))/50) + 1; fi;
     if size < 5 then AppendTo(stream,"\\begin{",sizes[size],"}\n\n"); fi;
     if   IsBijective(f)  then jectivity := " bijective";
     elif IsInjective(f)  then jectivity := "n injective, but not surjective";
@@ -1926,10 +1926,10 @@ InstallOtherMethod( MovedPoints,
 
 #############################################################################
 ##
-#M  NrMovedPoints( <obj> ) . . . . . . . . . . . . . . . . . . generic method
+#M  NrMovedPoints( <obj> ) . . . . . . . . . . . . . . . . . . default method
 ##
 InstallOtherMethod( NrMovedPoints,
-                    "generic method (RCWA)", true, [ IsObject ], 0,
+                    "default method (RCWA)", true, [ IsObject ], 0,
                     obj -> Size( MovedPoints( obj ) ) );
 
 #############################################################################
@@ -3387,7 +3387,7 @@ InstallGlobalFunction( SearchCycle,
 #M  PermutationOpNC( <sigma>, <P>, <act> ) . .  for rcwa map. and resp. part.
 ##
 InstallMethod( PermutationOpNC,
-               "for rcwa mapping and respected partition (RCWA)", true,
+               "for an rcwa mapping and a respected partition (RCWA)", true,
                [ IsRcwaMapping, IsList, IsFunction ], 0,
 
   function ( sigma, P, act )
@@ -4381,7 +4381,7 @@ InstallMethod( FactorizationIntoCSCRCT,
           else
             Info(InfoRCWA,1,"A loop has been detected. Trying to ",
                             "factor the inverse instead.");
-            facts := FactorizationIntoGenerators(elm^-1:Slave);
+            facts := FactorizationIntoCSCRCT(elm^-1:Slave);
             if facts = fail then
               Info(InfoRCWA,1,"Factorization of the inverse failed also. ",
                               "Giving up.");
@@ -4393,11 +4393,11 @@ InstallMethod( FactorizationIntoCSCRCT,
       until IsIntegral(g);
 
       facts := Concatenation(leftfacts,
-                             FactorizationIntoGenerators(g:Slave),
+                             FactorizationIntoCSCRCT(g:Slave),
                              rightfacts);
 
       if ValueOption("ExpandPrimeSwitches") = true then
-        facts := Flat(List(facts,FactorizationIntoGenerators));
+        facts := Flat(List(facts,FactorizationIntoCSCRCT));
       fi;
 
     fi;
@@ -4411,7 +4411,7 @@ InstallMethod( FactorizationIntoCSCRCT,
     if ValueOption("Slave") <> true and ValueOption("NC") <> true then
       Info(InfoRCWA,1,"Checking the result.");
       if   Product(facts) <> elm
-      then Error("FactorizationIntoGenerators: Internal error!"); fi;
+      then Error("FactorizationIntoCSCRCT: Internal error!"); fi;
     fi;
 
     return facts;
@@ -4423,13 +4423,13 @@ InstallMethod( FactorizationIntoCSCRCT,
 #M  Factorization( <g> ) . . into class shifts / reflections / transpositions
 ##
 if not IsOperation( Factorization ) then
-  GenericFactorization := Factorization;
+  DefaultFactorization := Factorization;
   MakeReadWriteGlobal( "Factorization" ); Unbind( Factorization );
   DeclareOperation( "Factorization",
                   [ IsGroup, IsMultiplicativeElementWithInverse ] );
-  InstallMethod( Factorization,"generic method", true,
+  InstallMethod( Factorization,"default method", true,
                [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
-               GenericFactorization );
+               DefaultFactorization );
 fi;
 
 InstallMethod( Factorization,

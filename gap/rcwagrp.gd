@@ -268,22 +268,16 @@ DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 ##  The kernel <K> of the action of <G> on its respected partition <P>.
 ##  The group <G> has to be tame.
 ##
-##  The attribute `KernelActionIndex' is the order of the permutation group
-##  induced by <K> on the refinement of <P> obtained by splitting any residue
-##  class r(m) into three residue classes with modulus 3m.
+##  The attribute `KernelActionIndices' stores the orders of the permutation
+##  groups induced by <K> on the refinements of <P> obtained by splitting any
+##  residue class r(m) into p residue classes with modulus pm, where p runs
+##  over the first RCWA_NR_KERNEL_TEST_PRIMES primes. The mentioned refine-
+##  ments of <P> are stored as an attribute `RefinedRespectedPartitions'.
 ##
 DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
-DeclareAttribute( "KernelActionIndex", IsRcwaGroup );
-
-#############################################################################
-##
-#A  KernelOfActionOnRespectedPartitionHNFMat( <G> )
-##
-##  A matrix of row vectors spanning the lattice corresponding to
-##  KernelOfActionOnRespectedPartition( <G> ), in Hermite normal form.
-##
-DeclareAttribute( "KernelOfActionOnRespectedPartitionHNFMat",
-                  IsRcwaGroupOverZ );
+DeclareAttribute( "RefinedRespectedPartitions", IsRcwaGroup );
+DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
+BindGlobal( "RCWA_NR_KERNEL_TEST_PRIMES", 4 );
 
 #############################################################################
 ##

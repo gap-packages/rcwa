@@ -288,10 +288,10 @@ InstallOtherMethod( AbelianGroupCons,
 
 #############################################################################
 ##
-#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . generic method for groups
+#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . default method for groups
 ##
 InstallMethod( IsSolvable,
-               "generic method for groups (RCWA)", true, [ IsGroup ],
+               "default method for groups (RCWA)", true, [ IsGroup ],
                SUM_FLAGS,
 
   function ( G )
@@ -302,10 +302,10 @@ InstallMethod( IsSolvable,
 
 #############################################################################
 ##
-#M  IsPerfect( <G> ) . . . . . . . . . . . . . . .  generic method for groups
+#M  IsPerfect( <G> ) . . . . . . . . . . . . . . .  default method for groups
 ##
 InstallMethod( IsPerfect,
-               "generic method for groups (RCWA)", true, [ IsGroup ],
+               "default method for groups (RCWA)", true, [ IsGroup ],
                SUM_FLAGS,
 
   function ( G )
@@ -316,10 +316,10 @@ InstallMethod( IsPerfect,
 
 #############################################################################
 ##
-#M  IsSimple( <G> ) . . . . . . . . . . . . . . . . generic method for groups
+#M  IsSimple( <G> ) . . . . . . . . . . . . . . . . default method for groups
 ##
 InstallMethod( IsSimple,
-               "generic method for groups (RCWA)", true, [ IsGroup ],
+               "default method for groups (RCWA)", true, [ IsGroup ],
                SUM_FLAGS,
 
   function ( G )
@@ -560,21 +560,21 @@ InstallOtherMethod( MovedPoints,
 
 #############################################################################
 ##
-#M  Support( <G> ) . . . . . . . . . . . . . . . .  generic method for groups
+#M  Support( <G> ) . . . . . . . . . . . . . . . .  default method for groups
 ##
 InstallMethod( Support,
-               "generic method for groups (RCWA)", true, [ IsGroup ], 0,
+               "default method for groups (RCWA)", true, [ IsGroup ], 0,
                MovedPoints );
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . . . . .  for finite groups
+#M  IsomorphismRcwaGroupOverZ( <G> ) . . . . default method for finite groups
 #M  IsomorphismRcwaGroup( <G> )
 ##
 ##  This is a simple method which just embeds <G> into Sym($\Z/m\Z$).
 ##
 InstallMethod( IsomorphismRcwaGroupOverZ,
-               "generic method for finite groups (RCWA)", true,
+               "default method for finite groups (RCWA)", true,
                [ IsGroup and IsFinite ], 0,
 
   function ( G )
@@ -870,28 +870,18 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  P, P3, H, H3, index;
+    local  P, H, Pp, Hp, indices;
 
-    P     := RespectedPartition(G);
-    H     := ActionOnRespectedPartition(G);
-    P3    := Flat(List(P,cl->SplittedClass(cl,3)));
-    H3    := Action(G,P3);
-    index := Size(H3)/Size(H);
-    SetKernelActionIndex(G,index);
-    return Number(Factors(index),p->p=3);
-  end );
-
-#############################################################################
-##
-#M  KernelOfActionOnRespectedPartitionHNFMat( <G> )  for tame rcwa gp. over Z
-##
-InstallMethod( KernelOfActionOnRespectedPartitionHNFMat,
-               "for tame rcwa groups over Z (RCWA)", true,
-               [ IsRcwaGroupOverZ ], 0,
-
-  function ( G )
-    KernelOfActionOnRespectedPartition(G);
-    return KernelOfActionOnRespectedPartitionHNFMat(G);
+    P       := RespectedPartition(G);
+    H       := ActionOnRespectedPartition(G);
+    Pp      := List(Primes{[1..4]},p->Flat(List(P,cl->SplittedClass(cl,p))));
+    Hp      := List(Pp,P->Group(List(GeneratorsOfGroup(G),
+                                gen->PermutationOpNC(gen,P,OnPoints))));
+    indices := List(Hp,Size)/Size(H);
+    SetKernelActionIndices(G,indices);
+    SetRefinedRespectedPartitions(G,Pp);
+    return Maximum(List([1..4],
+                        i->Number(Factors(indices[i]),p->p=Primes[i])));
   end );
 
 #############################################################################
@@ -904,55 +894,63 @@ InstallMethod( KernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  KernelComplete, P, K, H, L, g, h, nrgens, l, c,
-           genK, elH, elG, elK, lng, nr, lasthit, i;
+    local  P, P3, KFullPoly, KPoly, genKFP, rank, K, H, g, h, k, kPoly,
+           genG, genH, genK, nrgens, crcs, i;
 
-    KernelComplete := function ( )
-
-      local  P3, HNF, LHNF, T, genKHNF;
-
-      if nr >= Maximum(2*lasthit,Length(P)) then
-        lasthit := nr;
-        HNF     := HermiteNormalFormIntegerMatTransforms(L{[1..lng]});
-        LHNF    := HNF.normal;
-        T       := HNF.rowtrans;
-        genKHNF := List([1..lng],
-                        i->Product(List([1..lng],j->genK[j]^T[i][j])));
-        LHNF    := Filtered(LHNF,l->not IsZero(l));
-        genKHNF := Filtered(genKHNF,k->not IsOne(k));
-        if   Length(genKHNF) < RankOfKernelOfActionOnRespectedPartition(G)
-        then return false; fi;
-        if genKHNF <> [] then K := Group(genKHNF);
-                         else K := TrivialSubgroup(G); fi;
-        P3 := Flat(List(P,cl->SplittedClass(cl,3)));
-        if Size(Action(K,P3)) <> KernelActionIndex(G) then return false; fi;
-        SetRespectedPartition(K,P);
-        SetKernelOfActionOnRespectedPartition(K,K);
-        SetRankOfKernelOfActionOnRespectedPartition(K,Length(genKHNF));
-        SetKernelOfActionOnRespectedPartitionHNFMat(K,LHNF);
-        SetKernelOfActionOnRespectedPartitionHNFMat(G,LHNF);
-        return true;
-      else return false; fi;
-    end;
-
-    P := RespectedPartition(G);
-    H := ActionOnRespectedPartition(G);
-    g := GeneratorsOfGroup(G); h := GeneratorsOfGroup(H);
-    nrgens := Length(g); elH := h[1]; elG := g[1]; L := [];
-    lng := 0; nr := 1; lasthit := 1; genK := [];
-    repeat
-      elK := elG^Order(elH);
-      if not IsOne(elK) then
-        c := Coefficients(elK);
-        l := List([1..Length(P)],
-                  i -> c[Residues(P[i])[1] mod Modulus(elK) + 1][2]);
-        if   SolutionIntMat(L,l) = fail or (L = [] and not ForAll(l,IsZero))
-        then lng := lng + 1; Add(L,l); Add(genK,elK); lasthit := nr; fi;
-      fi;
-      i := Random([1..nrgens]); nr := nr + 1;
-      elH := elH * h[i];
-      elG := elG * g[i];
-    until KernelComplete();
+    P         := RespectedPartition(G);
+    P3        := Flat(List(P,cl->SplittedClass(cl,3)));
+    H         := ActionOnRespectedPartition(G);
+    rank      := RankOfKernelOfActionOnRespectedPartition(G);
+    genG      := GeneratorsOfGroup(G);
+    genH      := GeneratorsOfGroup(H);
+    genK      := [];
+    KFullPoly := DirectProduct(List([1..Length(P)],i->DihedralPcpGroup(0)));
+    genKFP    := GeneratorsOfGroup(KFullPoly);
+    KPoly     := TrivialSubgroup(KFullPoly);
+    K         := TrivialSubgroup(G);
+    g         := genG[1];
+    h         := genH[1];
+    nrgens    := Length(genG);
+    if Set(KernelActionIndices(G)) <> [1] then
+      repeat
+        k := g^Order(h);
+        if not IsOne(k) then
+          kPoly := One(KFullPoly);
+          for i in [1..Length(P)] do
+            for crcs in Factorization(RestrictedPerm(k,P[i])) do
+              if IsClassReflection(crcs) then
+                kPoly := kPoly*genKFP[2*i-1];
+              elif not IsOne(crcs) then
+                kPoly := kPoly*genKFP[2*i]^Determinant(crcs);
+              fi;
+            od;
+          od;
+          if not kPoly in KPoly then
+            if   IsTrivial(K)
+            then K := SubgroupNC(G,[k]);
+            else K := ClosureSubgroupNC(K,k); fi;
+            KPoly := ClosureSubgroup(KPoly,kPoly);
+            if   ForAll([1..RCWA_NR_KERNEL_TEST_PRIMES],
+                        i->Size(Group(List(GeneratorsOfGroup(K),
+                   gen->PermutationOpNC(gen,RefinedRespectedPartitions(G)[i],
+                                            OnPoints))))
+                 = KernelActionIndices(G)[i])
+            then break; fi;
+          fi;
+        fi;
+        i := Random([1..nrgens]);
+        g := g * genG[i];
+        h := h * genH[i];
+      until false;
+    fi;
+    SetIndexInParent(K,Size(H));
+    SetRespectedPartition(K,P);
+    SetRankOfKernelOfActionOnRespectedPartition(K,rank);
+    SetKernelOfActionOnRespectedPartition(K,K);
+    if   not IsTrivial(K)
+    then SetIsomorphismPcpGroup(K,EpimorphismByGeneratorsNC(K,KPoly));
+    else SetIsomorphismPcpGroup(K,GroupHomomorphismByImages(K,KPoly,
+                                  [One(K)],[One(KPoly)])); fi;
     return K;
   end );
 
@@ -987,7 +985,7 @@ InstallMethod( IsomorphismPermGroup,
       if   Length(S) > 10 * Length(RespectedPartition(G))
       then TryNextMethod(); fi;
     until S = S_old;
-    H   := Action(G,S); # Now, <G> must act faithfully on <S>.
+    H   := Action(G,S); # Now the group <G> must act faithfully on <S>.
     orb := First(Orbits(H,MovedPoints(H)),M->Size(Action(H,M))=Size(H));
     if orb <> fail then
       H := GroupWithGenerators(List(GeneratorsOfGroup(H),
@@ -1079,7 +1077,8 @@ InstallMethod( \in,
 
   function ( g, G )
 
-    local  P, H, h, K, k, L, l, F, phi, c, gens, gensinv;
+    local  P, H, h, K, k, KPoly, KFullPoly, genKFP, kPoly, crcs,
+           F, phi, gens, i;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -1146,31 +1145,34 @@ InstallMethod( \in,
         return false;
       fi;
 
-      if IsClassWiseOrderPreserving(G) then
-        Info(InfoRCWA,2,"Compute an element of <G> which acts like <g>");
-        Info(InfoRCWA,2,"on RespectedPartition(<G>).");
-        phi := EpimorphismFromFreeGroup(H);
-        h   := PreImagesRepresentative(phi,h:NoStabChain);
-        if h = fail then return false; fi;
-        h   := Product(List(LetterRepAssocWord(h),
-                            id->gens[AbsInt(id)]^SignInt(id)));
-        k   := g/h;
-        Info(InfoRCWA,2,"Check membership of the quotient in the kernel of");
-        Info(InfoRCWA,2,"the action of <g> on RespectedPartition(<G>).");
-        K:=KernelOfActionOnRespectedPartition(G);
-        L:=KernelOfActionOnRespectedPartitionHNFMat(G);
-        if L = [] then return IsOne(k); fi;
-        Info(InfoRCWA,2,"The kernel has rank ",Length(L),".");
-        c := Coefficients(k);
-        l := List(P,cl->c[Residues(cl)[1] mod Modulus(k) + 1][2]);
-        return SolutionIntMat(L,l) <> fail;
-      fi;
+      Info(InfoRCWA,2,"Computing an element of <G> which acts like <g>");
+      Info(InfoRCWA,2,"on RespectedPartition(<G>).");
 
-      # Finally, a brute force factorization attempt:
+      phi := EpimorphismFromFreeGroup(H);
+      h   := PreImagesRepresentative(phi,h:NoStabChain);
+      if h = fail then return false; fi;
+      h   := Product(List(LetterRepAssocWord(h),
+                          id->gens[AbsInt(id)]^SignInt(id)));
+      k   := g/h;
 
-      Info(InfoRCWA,2,"Trying to factor <g> into gen's ...");
-      phi := EpimorphismFromFreeGroup(G);
-      return PreImagesRepresentative(phi,g) <> fail;
+      Info(InfoRCWA,2,"Checking membership of the quotient in the kernel ");
+      Info(InfoRCWA,2,"of the action of <g> on RespectedPartition(<G>).");
+
+      K         := KernelOfActionOnRespectedPartition(G);
+      KPoly     := Range(IsomorphismPcpGroup(K));
+      KFullPoly := Parent(KPoly);
+      genKFP    := GeneratorsOfGroup(KFullPoly);
+      kPoly     := One(KFullPoly);
+      for i in [1..Length(P)] do
+        for crcs in Factorization(RestrictedPerm(k,P[i])) do
+          if IsClassReflection(crcs) then
+            kPoly := kPoly*genKFP[2*i-1];
+          elif not IsOne(crcs) then
+            kPoly := kPoly*genKFP[2*i]^Determinant(crcs);
+          fi;
+        od;
+      od;
+      return kPoly in KPoly;
     fi;
   end );
 
@@ -1491,8 +1493,8 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 ##  Special method for products of the same numbers of class shifts, inverses
 ##  of class shifts, class reflections and class transpositions, each, whose
-##  supports are pairwisely disjoint and do not entirely cover Z up to a
-##  finite complement.
+##  supports are pairwise disjoint and do not entirely cover Z up to a finite
+##  complement.
 ##
 InstallOtherMethod( RepresentativeActionOp,
                     "for RCWA(Z) and products of disjoint CS/CR/CT (RCWA)",
@@ -1502,7 +1504,7 @@ InstallOtherMethod( RepresentativeActionOp,
 
   function ( RCWA_Z, f, g, act )
 
-    local  RefinedPartition, Sorted, facts_f, facts_g, P1, P2, l, sigma, i;
+    local  RefinedPartition, Sorted, maps, facts, P, l, sigma, i;
 
     RefinedPartition := function ( P, k )
 
@@ -1520,41 +1522,44 @@ InstallOtherMethod( RepresentativeActionOp,
       return P;
     end;
 
-    Sorted := l -> [Filtered(l,f->Name(f)[6] = 'S'),
-                    Filtered(l,f->Name(f)[6] = 'R'),
-                    Filtered(l,f->Name(f)[6] = 'T')];              
+    Sorted := l -> [Filtered(l,fact->IsClassShift(fact)
+                                  or IsClassShift(fact^-1)),
+                    Filtered(l,IsClassReflection),
+                    Filtered(l,IsClassTransposition)];              
 
     if act <> OnPoints then TryNextMethod(); fi;
     if f = g then return One(f); fi;
     if not ForAll([f,g],IsTame) then TryNextMethod(); fi;
     if Order(f) <> Order(g) then return fail; fi;
-    facts_f := FactorizationIntoGenerators(f);
-    facts_g := FactorizationIntoGenerators(g);
-    if    Length(facts_f) <> Length(facts_g)
-       or Density(MovedPoints(f)) = 1 or Density(MovedPoints(g)) = 1
-       or    Density(MovedPoints(f))
-          <> Sum(List(facts_f,fact->Density(MovedPoints(fact))))
-       or    Density(MovedPoints(g))
-          <> Sum(List(facts_g,fact->Density(MovedPoints(fact))))
+    maps  := [f,g];
+    facts := List(maps,FactorizationIntoCSCRCT);
+    if   Length(facts[1]) <> Length(facts[2])
+      or 1 in List(maps,map->Density(Support(map)))
+      or ForAny([1..2],i->Density(Support(maps[i]))
+                       <> Sum(List(facts[i],fact->Density(Support(fact)))))
+      or not ForAll(Union(facts),
+                    fact ->   IsClassShift(fact) or IsClassShift(fact^-1)
+                           or IsClassReflection(fact)
+                           or IsClassTransposition(fact))
     then TryNextMethod(); fi;
-    facts_f := Sorted(facts_f); facts_g := Sorted(facts_g);
-    if List(facts_f,Length) <> List(facts_g,Length) then TryNextMethod(); fi;
-    P1 := AsUnionOfFewClasses(Difference(Integers,MovedPoints(f)));
-    P2 := AsUnionOfFewClasses(Difference(Integers,MovedPoints(g)));
-    l  := Maximum(Length(P1),Length(P2));
-    if l > Length(P1) then P1 := RefinedPartition(P1,l); fi;
-    if l > Length(P2) then P2 := RefinedPartition(P2,l); fi;
-    Append(P1,Flat(List(Flat(facts_f),
-                        fact->Filtered(LargestSourcesOfAffineMappings(fact),
-                                  cl->Intersection(Support(fact),cl)<>[]))));
-    Append(P2,Flat(List(Flat(facts_g),
-                        fact->Filtered(LargestSourcesOfAffineMappings(fact),
-                                  cl->Intersection(Support(fact),cl)<>[]))));
-    sigma := RcwaMapping(P1,P2);
-    for i in [1..Length(facts_f[1])] do
-      if   Number([PositionSublist(Name(facts_f[1][i]),"-1"),
-                   PositionSublist(Name(facts_g[1][i]),"-1")],IsInt) = 1
-      then sigma := ClassReflection(MovedPoints(facts_f[1][i])) * sigma; fi;
+    facts := List(facts,Sorted);
+    if   List(facts[1],Length) <> List(facts[2],Length)
+    then TryNextMethod(); fi;
+    P := List(maps,
+              map->AsUnionOfFewClasses(Difference(Integers,Support(map))));
+    l  := Maximum(List(P,Length));
+    for i in [1..2] do
+      if l > Length(P[i]) then P[i] := RefinedPartition(P[i],l); fi;
+    od;
+    for i in [1..2] do
+      Append(P[i],Flat(List(Flat(facts[i]),
+                  fact->Filtered(LargestSourcesOfAffineMappings(fact),
+                                 cl->Intersection(Support(fact),cl)<>[]))));
+    od;
+    sigma := RcwaMapping(P[1],P[2]);
+    for i in [1..Length(facts[1][1])] do
+      if   Number([facts[1][1][i]^-1,facts[2][1][i]^-1],IsClassShift) = 1
+      then sigma := ClassReflection(Support(facts[1][1][i])) * sigma; fi;
     od;
     if f^sigma <> g then Error("`RepresentativeAction' failed.\n"); fi;
     return sigma;
@@ -2290,23 +2295,28 @@ InstallOtherMethod( OrbitOp,
 
   function ( G, pnt, gens, acts, act )
 
-    local  P, M, where, delta, S, orb;
+    local  P, K, where, gensrests, noncwoppos, m, S, orb, i;
 
     if act <> OnPoints then TryNextMethod(); fi;
     orb := ShortOrbits(G,[pnt],100);
     if orb <> [] then return orb[1]; fi;
     if IsFinite(G) or not IsTame(G) then TryNextMethod(); fi;
-    P := RespectedPartition(G);
-    M := KernelOfActionOnRespectedPartitionHNFMat(G);
-    if M <> [] then
-      where := First([1..Length(P)],pos->pnt in P[pos]);
-      delta := List(TransposedMat(M),Gcd)[where];
-      if delta <> 0 then S := ResidueClass(Integers,delta,pnt);
-                    else TryNextMethod(); fi;
-    else TryNextMethod(); fi;
+    P          := RespectedPartition(G);
+    K          := KernelOfActionOnRespectedPartition(G);
+    where      := First(P,cl->pnt in cl);
+    gensrests  := List(GeneratorsOfGroup(K),g->RestrictedPerm(g,where));
+    noncwoppos := Filtered([1..Length(gensrests)],
+                           i->not IsClassWiseOrderPreserving(gensrests[i]));
+    for i in noncwoppos{[2..Length(noncwoppos)]} do
+      gensrests[i] := gensrests[i] * gensrests[noncwoppos[1]];
+    od;
+    m :=   Gcd(List(Filtered(gensrests,IsClassWiseOrderPreserving),
+                    Determinant))
+         * Modulus(where);
+    S := ResidueClass(Integers,m,pnt);
+    S := Union(S,S^gensrests[noncwoppos[1]]);
     return OrbitUnion(G,S);
   end );
-
 
 #############################################################################
 ##

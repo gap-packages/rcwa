@@ -87,9 +87,9 @@ InstallMethod(\in,
 
 #############################################################################
 ## 
-#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . generic method for groups
+#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . default method for groups
 ## 
-InstallMethod( IsCyclic, "generic method for groups (RCWA)", true,
+InstallMethod( IsCyclic, "default method for groups (RCWA)", true,
                [ IsGroup ], 50,
 
   function ( G )
