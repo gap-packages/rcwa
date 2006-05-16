@@ -561,15 +561,13 @@ gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
 <bijective rcwa mapping of Z with modulus 5, of order 5>
 gap> G := Group(g1,g2);
 <rcwa group over Z with 2 generators>
-gap> H := NiceObject(G);
-Group([ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ])
-gap> phi := NiceMonomorphism(G);;
+gap> phi := IsomorphismPermGroup(G);;
 gap> IsBijective(phi);
 true
 gap> Size(Image(phi));
 24
-gap> phi = IsomorphismPermGroup(G);
-true
+gap> Image(phi);
+Group([ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ])
 gap> IdGroup(G);
 [ 24, 12 ]
 gap> G;
@@ -757,27 +755,15 @@ gap> G := Group(g,h);;
 gap> P := RespectedPartition(G);
 [ 0(6), 1(6), 3(6), 4(6), 5(6), 2(12), 8(12) ]
 gap> phi := IsomorphismMatrixGroup(G);;
-gap> phi = NiceMonomorphism(G);
-true
 gap> M := Image(phi);
 <matrix group with 2 generators>
-gap> M = NiceObject(G);
-true
 gap> H := ActionOnRespectedPartition(G);
 Group([ (1,6,2,5,3,7,4), (1,6,2,5)(3,7,4) ])
-gap> Size(H);
-5040
-gap> D := DerivedSubgroup(H);;
-gap> Size(D);
-2520
-gap> IsPerfect(D);
-true
+gap> StructureDescription(H);
+"S7"
 gap> RankOfKernelOfActionOnRespectedPartition(G);
 6
-gap> K := KernelOfActionOnRespectedPartition(G);
-<rcwa group over Z with 6 generators>
-gap> RankMat(KernelOfActionOnRespectedPartitionHNFMat(G));
-6
+gap> K := KernelOfActionOnRespectedPartition(G);;
 gap> IsAbelian(K);
 true
 gap> g in G;
@@ -1410,6 +1396,16 @@ gap> D := DihedralPcpGroup(0);
 Pcp-group with orders [ 2, 0 ]
 gap> DirectProduct(D,D,D);
 Pcp-group with orders [ 2, 0, 2, 0, 2, 0 ]
+gap> G := Group(ClassTransposition(0,2,1,2),
+>               ClassReflection(0,2),ClassShift(1,2));;
+gap> ActionOnRespectedPartition(G);
+Group([ (1,2), (), () ])
+gap> RankOfKernelOfActionOnRespectedPartition(G);
+2
+gap> K := KernelOfActionOnRespectedPartition(G);;
+gap> List([nu,t,nu*t,nu^7*t,ClassTransposition(0,2,1,4),ClassReflection(1,2)],
+>         elm->elm in G);
+[ true, true, true, true, false, true ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
