@@ -561,13 +561,14 @@ gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
 <bijective rcwa mapping of Z with modulus 5, of order 5>
 gap> G := Group(g1,g2);
 <rcwa group over Z with 2 generators>
-gap> phi := IsomorphismPermGroup(G);;
+gap> phi := IsomorphismPermGroup(G);
+[ <bijective rcwa mapping of Z with modulus 2, of order 2>,
+  <bijective rcwa mapping of Z with modulus 3, of order 3> ] ->
+[ (1,6)(2,3)(4,5), (1,5,6)(2,3,4) ]
 gap> IsBijective(phi);
 true
 gap> Size(Image(phi));
 24
-gap> Image(phi);
-Group([ (1,2)(3,4)(5,6), (1,2,3)(4,5,6) ])
 gap> IdGroup(G);
 [ 24, 12 ]
 gap> G;

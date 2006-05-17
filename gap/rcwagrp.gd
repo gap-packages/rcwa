@@ -268,16 +268,19 @@ DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 ##  The kernel <K> of the action of <G> on its respected partition <P>.
 ##  The group <G> has to be tame.
 ##
-##  The attribute `KernelActionIndices' stores the orders of the permutation
-##  groups induced by <K> on the refinements of <P> obtained by splitting any
-##  residue class r(m) into p residue classes with modulus pm, where p runs
-##  over the first RCWA_NR_KERNEL_TEST_PRIMES primes. The mentioned refine-
-##  ments of <P> are stored as an attribute `RefinedRespectedPartitions'.
-##
 DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
+
+#############################################################################
+##
+#A  RefinedRespectedPartitions( <G> )
+#A  KernelActionIndices( <G> )
+##
+##  Refinements of the stored respected partition <P> of <G>, resp. the
+##  orders of the permutation groups induced by the kernel of the action of
+##  <G> on <P> on these refinements.
+##
 DeclareAttribute( "RefinedRespectedPartitions", IsRcwaGroup );
 DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
-BindGlobal( "RCWA_NR_KERNEL_TEST_PRIMES", 4 );
 
 #############################################################################
 ##
@@ -383,20 +386,6 @@ DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##
 DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
-
-#############################################################################
-##
-#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
-##
-DeclareGlobalFunction( "GeneratorsAndInverses" );
-
-#############################################################################
-##
-#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
-#F  EpimorphismByGeneratorsNC( <F>, <G> )
-##
-DeclareGlobalFunction( "EpimorphismByGenerators" );
-DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
 
 #############################################################################
 ##

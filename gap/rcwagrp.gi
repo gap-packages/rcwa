@@ -862,26 +862,37 @@ InstallMethod( ActionOnRespectedPartition,
 
 #############################################################################
 ##
-#M  RankOfKernelOfActionOnRespectedPartition( <G> )  for tame rcwa gp. over Z
+#M  RankOfKernelOfActionOnRespectedPartition( <G> ) . .  for tame rcwa groups
 ##
 InstallMethod( RankOfKernelOfActionOnRespectedPartition,
-               "for tame rcwa groups over Z (RCWA)", true,
-               [ IsRcwaGroupOverZ ], 0,
+               "for tame rcwa groups (RCWA)", true,
+               [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    local  P, H, Pp, Hp, indices;
+    local  P, H, Pp, Hp, indices, bound, primes, prod, p;
 
-    P       := RespectedPartition(G);
-    H       := ActionOnRespectedPartition(G);
-    Pp      := List(Primes{[1..4]},p->Flat(List(P,cl->SplittedClass(cl,p))));
-    Hp      := List(Pp,P->Group(List(GeneratorsOfGroup(G),
+    if IsTrivial(G) then return 0; fi;
+    P     := RespectedPartition(G);
+    H     := ActionOnRespectedPartition(G);
+    bound :=   Modulus(G) * Size(H)
+             * Maximum(List(GeneratorsOfGroup(G),
+                            g->Maximum(List(Coefficients(g),
+                                            c->AbsInt(c[2])))));
+    if bound < 5 then bound := 5; fi;
+    primes := []; p := 1; prod := 1;
+    while prod <= bound do
+      p    := NextPrimeInt(p); Add(primes,p);
+      prod := prod * p;
+    od;
+    Pp := List(primes,p->Flat(List(P,cl->SplittedClass(cl,p))));
+    Hp := List(Pp,P->Group(List(GeneratorsOfGroup(G),
                                 gen->PermutationOpNC(gen,P,OnPoints))));
     indices := List(Hp,Size)/Size(H);
     SetKernelActionIndices(G,indices);
     SetRefinedRespectedPartitions(G,Pp);
-    return Maximum(List([1..4],
-                        i->Number(Factors(indices[i]),p->p=Primes[i])));
+    return Maximum(List([1..Length(primes)],
+                        i->Number(Factors(indices[i]),p->p=primes[i])));
   end );
 
 #############################################################################
@@ -937,7 +948,7 @@ InstallMethod( KernelOfActionOnRespectedPartition,
             fi;
             KPoly    := Subgroup(KFullPoly,genKPoly);
             K        := SubgroupNC(G,genK);
-            if   ForAll([1..RCWA_NR_KERNEL_TEST_PRIMES],
+            if   ForAll([1..Length(RefinedRespectedPartitions(G))],
                         i->Size(Group(List(GeneratorsOfGroup(K),
                    gen->PermutationOpNC(gen,RefinedRespectedPartitions(G)[i],
                                             OnPoints))))
@@ -975,45 +986,27 @@ InstallMethod( KernelOfActionOnRespectedPartition,
 
 #############################################################################
 ##
-#M  IsomorphismPermGroup( <G> ) . . . . . . . . . . .  for finite rcwa groups
+#M  IsomorphismPermGroup( <G> ) . . . . . . . . for finite rcwa groups over Z
+##
+##  This method uses that the class reflection on a residue class r(m)
+##  interchanges the residue classes r+m(3m) and r+2m(3m).
 ##
 InstallMethod( IsomorphismPermGroup,
-               "for finite rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               "for finite rcwa groups (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
 
   function ( G )
 
-    local  phi, H, orb, S, S_old, g;
+    local  P, P3, H, phi;
 
-    if ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity) or not IsTame(G)
-      or RankOfKernelOfActionOnRespectedPartition(G) > 0
-    then return fail; fi;
-
-    # Note that a class reflection of a residue class r(m) can fix
-    # one element in r(m), but not two. This means that <G> acts
-    # faithfully on the orbit containing the following set <S>:
-
+    if not IsFinite(G) then return fail; fi;
+    P   := RespectedPartition(G);
     if   IsClassWiseOrderPreserving(G)
-    then S := List(RespectedPartition(G),Representative);
-    else S := Flat(List(RespectedPartition(G),
-                        cl->[0,Modulus(cl)]+Representative(cl)));
-    fi;
-
-    repeat
-      S_old := ShallowCopy(S);
-      for g in GeneratorsOfGroup(G) do S := Union(S,S^g); od;
-      if   Length(S) > 10 * Length(RespectedPartition(G))
-      then TryNextMethod(); fi;
-    until S = S_old;
-    H   := Action(G,S); # Now the group <G> must act faithfully on <S>.
-    orb := First(Orbits(H,MovedPoints(H)),M->Size(Action(H,M))=Size(H));
-    if orb <> fail then
-      H := GroupWithGenerators(List(GeneratorsOfGroup(H),
-                                    h->Permutation(h,orb)));
-    fi;
+    then H := ActionOnRespectedPartition(G);
+    else H := Action(G,Flat(List(P,cl->SplittedClass(cl,3)))); fi;
     phi := Immutable(EpimorphismByGeneratorsNC(G,H));
     if   not HasParent(G)
     then SetNiceMonomorphism(G,phi); SetNiceObject(G,H); fi;
-
     return phi;
   end );
 

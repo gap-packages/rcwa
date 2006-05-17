@@ -49,7 +49,13 @@ InstallMethod( AllProducts,
 
 #############################################################################
 ##
-#F  GeneratorsAndInverses( <G> )
+#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
+##
+DeclareGlobalFunction( "GeneratorsAndInverses" );
+
+#############################################################################
+##
+#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
 ##
 InstallGlobalFunction( GeneratorsAndInverses,
                        G->Concatenation(GeneratorsOfGroup(G),
@@ -57,8 +63,16 @@ InstallGlobalFunction( GeneratorsAndInverses,
 
 #############################################################################
 ##
-#F  EpimorphismByGenerators( <G>, <H> )
-#F  EpimorphismByGeneratorsNC( <G>, <H> )
+#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
+#F  EpimorphismByGeneratorsNC( <F>, <G> )
+##
+DeclareGlobalFunction( "EpimorphismByGenerators" );
+DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
+
+#############################################################################
+##
+#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
+#F  EpimorphismByGeneratorsNC( <F>, <G> )
 ##
 InstallGlobalFunction( EpimorphismByGenerators,
   function ( G, H )
