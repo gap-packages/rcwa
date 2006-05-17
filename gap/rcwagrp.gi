@@ -1234,37 +1234,19 @@ InstallMethod( Size,
 
   function ( G )
 
-    local  orbs, orbs_old, gens, g, maxpts;
-
-    # A few `trivial' checks.
+    local  P3;
 
     if IsTrivial(G) then return 1; fi;
     if ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
     then return infinity; fi;
     if not IsTame(G) then return infinity; fi;
-
-    # On the one hand, an orbit of a finite tame group <G> can intersect
-    # in at most 1 resp. 2 points with any residue class in a respected
-    # partition, depending on whether <G> is class-wise order-preserving
-    # or not. On the other if <G> is infinite, one of its orbits contains
-    # an entire residue class from the respected partition.
-
-    orbs := List(RespectedPartition(G),cl->[Representative(cl)]);
-    if IsClassWiseOrderPreserving(G) then maxpts := 1; else
-      orbs   := Concatenation(orbs,orbs+List(RespectedPartition(G),
-                                             cl->[Modulus(cl)]));
-      maxpts := 2;
-    fi;
-    gens := GeneratorsAndInverses(G);
-    repeat
-      orbs_old := List(orbs,ShallowCopy);
-      for g in gens do orbs := List(orbs,orb->Union(orb,orb^g)); od;
-    until orbs = orbs_old
-       or ForAny(orbs,orb->ForAny(RespectedPartition(G),
-                                  cl->Length(Intersection(cl,orb))>maxpts));
-
-    if orbs = orbs_old then return Size(Action(G,Union(orbs)));
-                       else return infinity; fi;
+    if   RankOfKernelOfActionOnRespectedPartition(G) > 0
+    then return infinity; fi;
+    if   IsClassWiseOrderPreserving(G)
+    then return Size(ActionOnRespectedPartition(G)); fi;
+    P3 := Flat(List(RespectedPartition(G),cl->SplittedClass(cl,3)));
+    return Size(Group(List(GeneratorsOfGroup(G),
+                           gen->PermutationOpNC(gen,P3,OnPoints))));
   end );
 
 #############################################################################
