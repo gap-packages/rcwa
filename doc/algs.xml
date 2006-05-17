@@ -234,10 +234,11 @@ They are listed in alphabetical order.
     on&nbsp;<C>P</C> using <C>KernelOfActionOnRespectedPartition</C>. Check
     whether <C>k</C> lies in&nbsp;<C>K</C>. This is done using the package
     <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>, and uses an
-    isomorphism from a supergroup of &nbsp;<C>K</C> which always
-    contains&nbsp;<C>k</C> to a polycyclically presented group.
-    If&nbsp;<C>k</C> is contained, return <C>true</C>, otherwise return
-    <C>false</C>.
+    isomorphism from a supergroup of &nbsp;<C>K</C> which is isomorphic
+    to the <C>|P|</C>-fold direct product of the infinite dihedral group
+    and which always contains&nbsp;<C>k</C> to a polycyclically presented
+    group. If&nbsp;<C>k</C> lies in&nbsp;<C>K</C>, return <C>true</C>,
+    otherwise return <C>false</C>.
   </Item>
 
   <Mark>
@@ -329,7 +330,8 @@ They are listed in alphabetical order.
     <C>IsomorphismPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    If <A>G</A> is infinite, return <C>fail</C>.
+    If the group <A>G</A> is infinite, there is no isomorphism to
+    a finite permutation group, thus return <C>fail</C>.
     Otherwise use <C>ActionOnRespectedPartition</C>.
   </Item>
 
@@ -420,16 +422,16 @@ They are listed in alphabetical order.
   </Mark>
   <Item>
     First determine the abelian invariants of the kernel&nbsp;<C>K</C>.
-    For this, compute quotients of the orders of the permutation groups
-    induced by&nbsp;<A>G</A> on sufficiently many refinements of
+    For this, compute sufficiently many quotients of orders of
+    permutation groups induced by&nbsp;<A>G</A> on refinements of
     the stored respected partition&nbsp;<C>P</C> by the order of the
     permutation group induced by&nbsp;<A>G</A> on&nbsp;<C>P</C> itself.
     Then use a random walk through the group <A>G</A>.
     Compute powers of elements encountered along the way which
     fix&nbsp;<C>P</C>.
-    Translate these kernel elements into elements of the <C>|P|</C>-fold
-    direct product of the infinite dihedral group (this group certainly
-    contains&nbsp;<C>K</C>).
+    Translate these kernel elements into elements of a polycyclically
+    presented group isomorphic to the <C>|P|</C>-fold direct product of
+    the infinite dihedral group (<C>K</C> certainly embeds in this group).
     Use <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>
     to collect independent <Q>nice</Q> generators of&nbsp;<C>K</C>.
     Proceed until the permutation groups induced by&nbsp;<C>K</C> on the
@@ -770,7 +772,7 @@ They are listed in alphabetical order.
   <Item>
     Test whether one of the generators of the group&nbsp;<A>G</A> has
     infinite order. If so, return <C>infinity</C>.
-    Test whether <A>G</A> is tame. If not, return <C>infinity</C>.
+    Test whether the group <A>G</A> is tame. If not, return <C>infinity</C>.
     Test whether <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
     is nonzero. If so, return <C>infinity</C>.
     Otherwise if <A>G</A> is class-wise order-preserving, return the size
