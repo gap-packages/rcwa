@@ -771,9 +771,14 @@ They are listed in alphabetical order.
     Test whether one of the generators of the group&nbsp;<A>G</A> has
     infinite order. If so, return <C>infinity</C>.
     Test whether <A>G</A> is tame. If not, return <C>infinity</C>.
-    Otherwise return the product of the order of the permutation group
-    induced by <C>G</C> on the stored respected partition&nbsp;<C>P</C>
-    and the order of the kernel of the action of <C>G</C> on&nbsp;<C>P</C>.
+    Test whether <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
+    is nonzero. If so, return <C>infinity</C>.
+    Otherwise if <A>G</A> is class-wise order-preserving, return the size
+    of the permutation group induced on the stored respected partition.
+    If <A>G</A> is not class-wise order-preserving, return the size
+    of the permutation group induced on the refinement of the stored
+    respected partition which is obtained by splitting each residue class
+    into three residue classes with equal moduli.
   </Item>
 
   <Mark>
