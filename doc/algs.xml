@@ -432,7 +432,7 @@ They are listed in alphabetical order.
     contains&nbsp;<C>K</C>).
     Use <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>
     to collect independent <Q>nice</Q> generators of&nbsp;<C>K</C>.
-    Proceed until the permutation groups induced by&nbsp;<c>K</C> on the
+    Proceed until the permutation groups induced by&nbsp;<C>K</C> on the
     refined respected partitions all equal the initially stored quotients.
   </Item>
 
