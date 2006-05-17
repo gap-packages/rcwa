@@ -763,7 +763,8 @@ gap> StructureDescription(H);
 "S7"
 gap> RankOfKernelOfActionOnRespectedPartition(G);
 6
-gap> K := KernelOfActionOnRespectedPartition(G);;
+gap> K := KernelOfActionOnRespectedPartition(G);
+<rcwa group over Z with 6 generators>
 gap> IsAbelian(K);
 true
 gap> g in G;
