@@ -12,9 +12,9 @@
 ##
 ##  Some basic ``building blocks''.
 ##
-nu  := ClassShift(Integers);        SetName(nu,"nu");
-t   := ClassReflection(Integers);   SetName(t,"t");
-tau := ClassTransposition(0,2,1,2); SetName(tau,"tau");
+nu  := ClassShift(Integers);
+t   := ClassReflection(Integers);
+tau := ClassTransposition(0,2,1,2);
 
 #############################################################################
 ##
