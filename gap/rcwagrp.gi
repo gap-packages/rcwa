@@ -894,11 +894,10 @@ InstallMethod( KernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  P, P3, KFullPoly, KPoly, genKFP, rank, K, H, g, h, k, kPoly,
-           genG, genH, genK, nrgens, crcs, i;
+    local  P, KFullPoly, KPoly, genKFP, genKPoly, rank, K, H, g, h,
+           k, kPoly, genG, genH, genK, cgspar, nrgens, crcs, i;
 
     P         := RespectedPartition(G);
-    P3        := Flat(List(P,cl->SplittedClass(cl,3)));
     H         := ActionOnRespectedPartition(G);
     rank      := RankOfKernelOfActionOnRespectedPartition(G);
     genG      := GeneratorsOfGroup(G);
@@ -926,10 +925,18 @@ InstallMethod( KernelOfActionOnRespectedPartition,
             od;
           od;
           if not kPoly in KPoly then
-            if   IsTrivial(K)
-            then K := SubgroupNC(G,[k]);
-            else K := ClosureSubgroupNC(K,k); fi;
-            KPoly := ClosureSubgroup(KPoly,kPoly);
+            genKPoly := GeneratorsOfGroup(KPoly);
+            genK     := GeneratorsOfGroup(K);
+            if IsEmpty(genKPoly) then
+              genKPoly := [kPoly];
+              genK     := [k];
+            else
+              cgspar   := CgsParallel(genKPoly,genK);
+              genKPoly := Concatenation(cgspar[1],[kPoly]);
+              genK     := Concatenation(cgspar[2],[k]);
+            fi;
+            KPoly    := Subgroup(KFullPoly,genKPoly);
+            K        := SubgroupNC(G,genK);
             if   ForAll([1..RCWA_NR_KERNEL_TEST_PRIMES],
                         i->Size(Group(List(GeneratorsOfGroup(K),
                    gen->PermutationOpNC(gen,RefinedRespectedPartitions(G)[i],
@@ -943,6 +950,18 @@ InstallMethod( KernelOfActionOnRespectedPartition,
         h := h * genH[i];
       until false;
     fi;
+    if not IsBound(genKPoly) then
+      genKPoly := [One(KFullPoly)];
+      genK     := [One(G)];
+    else
+      genKPoly := GeneratorsOfGroup(KPoly);
+      genK     := GeneratorsOfGroup(K);
+      cgspar   := CgsParallel(genKPoly,genK);
+      genKPoly := cgspar[1];
+      genK     := cgspar[2];
+    fi;
+    KPoly := Subgroup(KFullPoly,genKPoly);
+    K     := SubgroupNC(G,genK);
     SetIndexInParent(K,Size(H));
     SetRespectedPartition(K,P);
     SetRankOfKernelOfActionOnRespectedPartition(K,rank);
