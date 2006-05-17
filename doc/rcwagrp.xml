@@ -1263,6 +1263,38 @@ gap> StructureDescription(H);
 </ManSection>
 
 <ManSection>
+  <Attr Name="KernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
+  <Attr Name="RankOfKernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
+  <Returns>
+    The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
+    <C>RespectedPartition(<A>G</A>)</C>, resp. the rank of the largest
+    free abelian subgroup of this kernel.
+  </Returns>
+  <Description>
+    The method for <C>KernelOfActionOnRespectedPartition</C> uses
+    the package <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>.
+<Example>
+<![CDATA[
+gap> K := KernelOfActionOnRespectedPartition(G);
+<rcwa group over Z with 6 generators>
+gap> RankOfKernelOfActionOnRespectedPartition(G);
+6
+gap> Index(G,K);
+5040
+gap> IsomorphismPcpGroup(K);
+[ <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 12>,
+  <bijective rcwa mapping of Z with modulus 12> ] ->
+[ g2*g14^-1, g4*g14^-1, g6*g14^-1, g8*g14^-1, g10*g14^-1, g12*g14^-1 ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Attr Name ="IntegralConjugate" Arg="G" Label="G"/>
   <Attr Name ="IntegralConjugate" Arg="f" Label="f"/>
   <Returns>
@@ -1274,6 +1306,7 @@ gap> StructureDescription(H);
     In the author's thesis it is shown that such a conjugate exists
     (see Theorem&nbsp;2.5.14). There are usually infinitely many such
     conjugates, and methods for this operation may choose any of them.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> Display(IntegralConjugate(g));
@@ -1299,8 +1332,6 @@ true
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Attr Name ="IntegralizingConjugator" Arg="G" Label="G"/>
