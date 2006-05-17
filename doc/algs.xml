@@ -225,27 +225,19 @@ They are listed in alphabetical order.
     Let <C>h</C> be the permutation induced by <A>g</A> on <C>P</C>.
     Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>. <P/>
 
-    If <A>G</A> is class-wise order-preserving, do the following:
-    Compute an element <C>g1</C> of <A>G</A> which acts on <C>P</C> like
-    <A>g</A>. For this purpose, factor <A>h</A> into generators of <C>H</C>
-    using <C>PreImagesRepresentative</C>. Compute the corresponding product
-    of generators of <A>G</A>. Set <C>k := g/g1</C>. The mapping <C>k</C>
-    is necessarily integral. Compute the kernel <C>K</C> of the action of
-    <A>G</A> on <C>P</C> using <C>KernelOfActionOnRespectedPartition</C>.
-    Check whether <C>k</C> lies in the kernel of the action of <A>G</A> on
-    <C>P</C> by using <C>SolutionIntMat</C> to decide membership of the
-    coefficient vector (second entry of each triple) of <C>k</C> in the
-    lattice spanned by the rows of the matrix
-    <C>KernelOfActionOnRespectedPartitionHNFMat(<A>G</A>)</C>.
-    If it is contained, return <C>true</C>, otherwise return
-    <C>false</C>. <P/>
-
-    If membership still has not been decided yet, try to factor <A>g</A>
-    into generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
-    If successful, return <C>true</C>.  If <A>g</A> is in <A>G</A>, this
-    terminates after a finite number of steps. Both runtime and memory
-    requirements are exponential in the word length. If <A>g</A> is not in
-    <A>G</A>, the method runs into an infinite loop.
+    Compute an element <C>g1</C> of <A>G</A> which acts on&nbsp;<C>P</C>
+    like&nbsp;<A>g</A>. For this purpose, factor <A>h</A> into generators
+    of&nbsp;<C>H</C> using <C>PreImagesRepresentative</C>, and compute the
+    corresponding product of generators of&nbsp;<A>G</A>.
+    Let <C>k := g/g1</C>. The mapping <C>k</C> is always integral.
+    Compute the kernel&nbsp;<C>K</C> of the action of <A>G</A>
+    on&nbsp;<C>P</C> using <C>KernelOfActionOnRespectedPartition</C>. Check
+    whether <C>k</C> lies in&nbsp;<C>K</C>. This is done using the package
+    <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>, and uses an
+    isomorphism from a supergroup of &nbsp;<C>K</C> which always
+    contains&nbsp;<C>k</C> to a polycyclically presented group.
+    If&nbsp;<C>k</C> is contained, return <C>true</C>, otherwise return
+    <C>false</C>.
   </Item>
 
   <Mark>
@@ -337,8 +329,7 @@ They are listed in alphabetical order.
     <C>IsomorphismPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    If <A>G</A> is wild or <C>KernelOfActionOnRespectedPartition</C>
-    is not trivial, return <C>fail</C>.
+    If <A>G</A> is infinite, return <C>fail</C>.
     Otherwise use <C>ActionOnRespectedPartition</C>.
   </Item>
 
@@ -428,22 +419,21 @@ They are listed in alphabetical order.
     <C>KernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    Use a random walk through the group <A>G</A>. Compute powers of elements
-    encountered along the way which fix the respected partition of <A>G</A>
-    which has been computed by <C>RespectedPartition</C>.
-    Get vectors from these powers by taking the second entry of each
-    coefficient triple. Form a lattice out of these vectors.
-    Stop if for a while all found vectors already belong to this lattice
-    (this is probabilistic). Bring the lattice to Hermite Normal Form, and
-    transform the rows of the resulting matrix back to rcwa mappings
-    generating the kernel.
-  </Item>
-
-  <Mark>
-    <C>KernelOfActionOnRespectedPartitionHNFMat(<A>G</A>)</C>
-  </Mark>
-  <Item>
-    This is a <Q>spin-off</Q> of <C>KernelOfActionOnRespectedPartition</C>.
+    First determine the abelian invariants of the kernel&nbsp;<C>K</C>.
+    For this, compute quotients of the orders of the permutation groups
+    induced by&nbsp;<A>G</A> on sufficiently many refinements of
+    the stored respected partition&nbsp;<C>P</C> by the order of the
+    permutation group induced by&nbsp;<A>G</A> on&nbsp;<C>P</C> itself.
+    Then use a random walk through the group <A>G</A>.
+    Compute powers of elements encountered along the way which
+    fix&nbsp;<C>P</C>.
+    Translate these kernel elements into elements of the <C>|P|</C>-fold
+    direct product of the infinite dihedral group (this group certainly
+    contains&nbsp;<C>K</C>).
+    Use <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>
+    to collect independent <Q>nice</Q> generators of&nbsp;<C>K</C>.
+    Proceed until the permutation groups induced by&nbsp;<c>K</C> on the
+    refined respected partitions all equal the initially stored quotients.
   </Item>
 
   <Mark>
@@ -621,7 +611,8 @@ They are listed in alphabetical order.
     <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    This is a <Q>spin-off</Q> of <C>KernelOfActionOnRespectedPartition</C>.
+    This performs basically the first part of the computations done by
+    <C>KernelOfActionOnRespectedPartition</C>.
   </Item>
 
   <Mark>
@@ -777,14 +768,12 @@ They are listed in alphabetical order.
     <C>Size(<A>G</A>)</C>
   </Mark>
   <Item>
-    Test whether the group <A>G</A> is tame. If not, return <C>infinity</C>.
-    Otherwise use <C>ActionOnRespectedPartition</C> to compute the
-    permutation group <C>H</C> induced by <A>G</A> on a respected partition
-    <C>P</C>, and <C>KernelOfActionOnRespectedPartition</C> to compute the
-    kernel <C>K</C> of the action of <A>G</A> on <C>P</C>. The group <C>K</C>
-    is infinite if and only if one of its generators has infinite order.
-    Return the product of the order of <C>H</C> and the order
-    of&nbsp;<C>K</C>.
+    Test whether one of the generators of the group&nbsp;<A>G</A> has
+    infinite order. If so, return <C>infinity</C>.
+    Test whether <A>G</A> is tame. If not, return <C>infinity</C>.
+    Otherwise return the product of the order of the permutation group
+    induced by <C>G</C> on the stored respected partition&nbsp;<C>P</C>
+    and the order of the kernel of the action of <C>G</C> on&nbsp;<C>P</C>.
   </Item>
 
   <Mark>
