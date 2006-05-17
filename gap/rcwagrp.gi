@@ -891,7 +891,7 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
     indices := List(Hp,Size)/Size(H);
     SetKernelActionIndices(G,indices);
     SetRefinedRespectedPartitions(G,Pp);
-    return Maximum(List([1..Length(primes)],
+    return Maximum(List([2..Length(primes)],
                         i->Number(Factors(indices[i]),p->p=primes[i])));
   end );
 
