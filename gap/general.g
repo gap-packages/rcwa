@@ -100,9 +100,9 @@ InstallMethod(\in,
   end );
 
 #############################################################################
-## 
+##
 #M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . default method for groups
-## 
+##
 InstallMethod( IsCyclic, "default method for groups (RCWA)", true,
                [ IsGroup ], 50,
 
@@ -111,6 +111,24 @@ InstallMethod( IsCyclic, "default method for groups (RCWA)", true,
     then return true;
     else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  AbelianInvariants( <G> ) . . .  for groups knowing an iso. to a pcp group
+##
+InstallMethod( AbelianInvariants,
+               "for groups knowing an isomorphism to a pcp group", true,
+               [ IsGroup and HasIsomorphismPcpGroup ], 0,
+               G -> AbelianInvariants(Image(IsomorphismPcpGroup(G))) );
+
+#############################################################################
+##
+#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
+##
+InstallMethod( AbelianInvariants,
+               "for groups knowing an isomorphism to a permutation group",
+               true, [ IsGroup and HasIsomorphismPermGroup ], 0,
+               G -> AbelianInvariants(Image(IsomorphismPermGroup(G))) );
 
 #############################################################################
 ##
