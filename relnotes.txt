@@ -21,13 +21,13 @@ Changes between version 1.0.3 and version 1.1.0 (June 16, 2005):
    rcwa mapping is written to a file, LaTeX'ed and shown with xdvi.
    Try e.g. Display(Random(RCWA(Integers)):xdvi);.
 
- - An example `A group which acts 2-transitively on the positive integers'
+ - An example "A group which acts 2-transitively on the positive integers"
    has been added to the manual. In this example, the 2-transitivity of
    a given wild rcwa group is checked computationally.
 
 Changes between version 1.1.0 and version 1.2.0 (August 8, 2005):
 
- - An example `A group which acts 3-transitively, but not 4-transitively on Z'
+ - An example "A group which acts 3-transitively, but not 4-transitively on Z"
    has been added to the manual. In this example, the 3-transitivity and
    non-4-transitivity of the action of a given wild rcwa group on Z is
    checked computationally.
@@ -68,7 +68,7 @@ Changes between version 1.2.2 and version 1.3.0 (November 22, 2005):
    use of a better bound for the modulus of the product.
 
  - The archive file now includes a copy of the author's thesis
-   `Restklassenweise affine Gruppen' as well as an english translation of it.
+   "Restklassenweise affine Gruppen" as well as an english translation of it.
 
 Changes between version 1.3.0 and version 1.3.1:
 
@@ -176,11 +176,11 @@ Changes between version 1.4.4 and version 1.5.1 (March 29, 2006):
 
 Changes between version 1.5.1 and version 1.5.2:
 
- - An example `Representations of the free group of rank 2' has been added
+ - An example "Representations of the free group of rank 2" has been added
    to the manual. This example shows a transfer of the construction of the
    Schottky groups from PSL(2,C) to RCWA(Z).
 
- - An example `A representation of the modular group PSL(2,Z)' has been
+ - An example "A representation of the modular group PSL(2,Z)" has been
    added to the manual.
 
  - A bug in the `Size' method for tame rcwa groups which are not class-wise
@@ -227,7 +227,7 @@ Changes between version 1.6.2 and version 1.7.0 (April 28, 2006):
 
  - The function `TransitionMatrix' has been turned into an operation.
 
- - Some cleanup `behind the scenes' has been made. In particular some code
+ - Some cleanup "behind the scenes" has been made. In particular some code
    has been improved or simplified, and a number of undocumented global
    variables have been made local.
 
@@ -243,22 +243,23 @@ Changes between version 1.7.1 and version 1.7.2:
  - The length of the used respected partitions of tame rcwa mappings
    and -groups has been reduced.
 
-Changes between version 1.7.2 and version 1.7.3:
+Changes between version 1.7.2 and version 1.8.0 (May 18, 2006):
 
- - The methods for the operations `KernelOfActionOnRespectedPartition'
-   and `RankOfKernelOfActionOnRespectedPartition' have been made
-   deterministic in the sense that their return values can no longer
-   be resp. correspond to proper subgroups of the kernel.
+ - The method for the operation `KernelOfActionOnRespectedPartition' works
+   now also for tame rcwa groups which are not class-wise order-preserving,
+   and has been documented. RCWA needs now the package Polycyclic.
 
- - The documentation has been improved in some places, and
-   a couple of general auxiliary functions have been documented.
+ - An operation `SplittedClassTransposition' has been introduced, and the
+   function `ClassPairs' has been documented.
 
- - An operation `SplittedClassTransposition' has been introduced,
-   and the function `ClassPairs' has been documented.
+ - The documentation has been improved in some places, and a couple of
+   general auxiliary functions have been documented.
 
- - An example `embeddings of graphs with 4 vertices in the
-   "class transposition graph"' has been added to examples/examples.g.
+ - An example "embeddings of graphs with 4 vertices in the class
+   transposition graph" has been added to examples/examples.g.
 
- - Various little `internal' improvements have been made.
+ - Various little "internal" improvements have been made.
+
+
 
 
