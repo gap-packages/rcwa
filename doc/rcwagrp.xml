@@ -316,10 +316,9 @@ and <C>IsClassWiseOrderPreserving</C>.
   <Description>
     This method tries to decide whether <A>g</A> is an element
     of&nbsp;<A>G</A> or not. It can always decide this question if <A>G</A>
-    is tame and class-wise order-preserving. For wild groups only a number
-    of easy cases are covered. On Info level&nbsp;3 of <C>InfoRCWA</C> the
-    method gives information on reasons why <A>g</A> is an element
-    of&nbsp;<A>G</A> or&nbsp;not. <P/>
+    is tame. For wild groups only a number of easy cases are covered.
+    On Info level&nbsp;3 of <C>InfoRCWA</C> the method gives information on
+    reasons why <A>g</A> is an element of&nbsp;<A>G</A> or&nbsp;not. <P/>
 
     The direct product of two free groups of rank&nbsp;2 can faithfully be
     represented as an rcwa group. In&nbsp;<Cite Key="Mihailova58"/>
