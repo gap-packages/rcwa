@@ -260,6 +260,18 @@ Changes between version 1.7.2 and version 1.8.0 (May 18, 2006):
 
  - Various little "internal" improvements have been made.
 
+Changes between version 1.8.0 and version 1.9.0 (May 22. 2006):
 
+ - Parts of the manual have been revised and rewritten in a more
+   compact form.
+
+ - `ClassTransposition', `ClassShift' and `ClassReflection' now work
+   also over rings other than Z.
+
+ - Methods for `Multiplier' and `Divisor' for rcwa groups have been added.
+
+ - The function `InjectiveAsMappingFrom' has been changed and documented.
+
+ - Various little improvements in the code have been made.
 
 
