@@ -45,8 +45,8 @@ false
 There are methods for the operations <C>View</C>, <C>Display</C>,
 <C>Print</C> and <C>String</C> which are applicable to rcwa groups. <P/>
  
-All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
-The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
+All rcwa groups over a ring <M>R</M> are subgroups of RCWA(<M>R</M>).
+The group RCWA(<M>R</M>) itself is not finitely generated, thus cannot be
 constructed in the way described above. It is handled as a special case:
 
 <ManSection>
@@ -56,13 +56,6 @@ constructed in the way described above. It is handled as a special case:
     permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
-    To allow distinguishing the returned group from others by means of
-    the method selection, it has the characteristic property
-    <C>IsNaturalRCWA&uscore;Z</C> resp. one of the properties
-    <C>IsNaturalRCWA&uscore;Z&uscore;pi</C> or
-    <C>IsNaturalRCWA&uscore;GFqx</C>, depending on whether <A>R</A>
-    is the ring of integers, one of its semilocalizations or a univariate
-    polynomial ring over a finite field.
 <Example>
 <![CDATA[
 gap> RCWA_Z := RCWA(Integers);
@@ -89,10 +82,10 @@ true
   </Description>
 </ManSection>
 
+There is a method for the operation <C>Random</C> which
+generates pseudo-random elements of RCWA(<M>\Z</M>) --
+see&nbsp;<Ref Label="sec:Random"/>. <P/>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Alt Only="LaTeX">\noindent</Alt>
 Another way of constructing an rcwa group is taking the image of an
 rcwa representation:
 
@@ -558,11 +551,11 @@ IdentityMapping( Integers )
 <Section Label="sec:ActionOnR">
 <Heading>The action of an rcwa group on the underlying ring R</Heading>
 
-The support (set of moved points) of an rcwa group can be determined by
-<C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 <Index Key="Support" Subkey="G"><C>Support</C></Index>
 <Index Key="MovedPoints" Subkey="G"><C>MovedPoints</C></Index>
 
+The support, i.e. set of moved points, of an rcwa group can be determined
+by <C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 Sometimes testing for transitivity on the underlying ring is feasible.
 This is e.g. the case for tame groups over&nbsp;<M>\Z</M>.
 Further it is often possible to determine group elements which map a
@@ -860,21 +853,20 @@ gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),(),2);
 
 <!-- #################################################################### -->
 
-<Section Label="sec:ConjugacyInRCWA_R">
-<Heading>Conjugacy in RCWA(R)</Heading>
+<Section Label="sec:ConjugacyInRCWA_Z">
+<Heading>Conjugacy in RCWA(Z)</Heading>
 
 <ManSection>
   <Meth Name="IsConjugate" Arg="RCWA_Z, f, g"
                            Label="RCWA( Integers ), f, g"/>
   <Returns>
     <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
-    are conjugate in RCWA(<M>\mathbb{Z}</M>), and <C>false</C> otherwise.
+    are conjugate in RCWA(<M>\Z</M>), and <C>false</C> otherwise.
   </Returns>
   <Description>
-    This may fail or run into an infinite loop.
-    In particular the support for wild rcwa mappings is currently very poor,
-    since the author does not know a way to solve the conjugacy problem for
-    these. Some easy cases are handled anyway.
+    The author does not know a general way to solve the conjugacy problem
+    for elements of RCWA(<M>\Z</M>), thus the method may fail or run into
+    an infinite loop.
 <Example>
 <![CDATA[
 gap> IsConjugate(RCWA(Integers),g,h);
@@ -888,6 +880,23 @@ false
   </Description>
 </ManSection>
 
+<Index Key="ShortCycles" Subkey="f, maxlng"><C>ShortCycles</C></Index>
+There is an operation <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C> which
+returns a list of all cycles of <A>f</A> of length at most <A>maxlng</A>
+which do not correspond to cycles consisting of residue classes. The
+cycles are sorted by increasing length. If for some value of <A>maxlng</A>
+the lists <C>List(ShortCycles(<A>f</A>,<A>maxlng</A>),Length)</C> and
+<C>List(ShortCycles(<A>g</A>,<A>maxlng</A>),Length)</C> differ, then
+<A>f</A> and <A>g</A> are clearly not conjugate.
+
+<Example>
+<![CDATA[
+gap> ShortCycles(a,5);
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], 
+  [ -9, -7, -5, -4, -6 ] ]
+]]>
+</Example>
+
 <ManSection>
   <Meth Name="RepresentativeAction" Arg="RCWA_Z, f, g"
                                     Label="RCWA( Integers ), f, g"/>
@@ -897,9 +906,8 @@ false
     exists and <C>fail</C> otherwise.
   </Returns>
   <Description>
-    This method currently works only for tame rcwa mappings
-    of&nbsp;<M>\Z</M>, since the author does not know a way to solve the
-    conjugacy problem for wild rcwa mappings.
+    This method may fail for the same reasons as
+    <Ref Meth="IsConjugate" Label="RCWA( Integers ), f, g"/>.
 <Example>
 <![CDATA[
 gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
@@ -912,64 +920,10 @@ gap> cent := g*elm^-1;
 <bijective rcwa mapping of Z with modulus 12>
 gap> Comm(cent,h); # cent must lie in the centralizer of h in RCWA(Z).
 IdentityMapping( Integers )
-]]>
-</Example>
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-<Example>
-<![CDATA[
-gap> Order(cent);; Display(cent);
-
-Bijective rcwa mapping of Z with modulus 12, of order 12
-
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  4  6 10                          | n - 1
-   1  7                                | 2n
-   2                                   | (n - 2)/2
-   3  9                                | 2n + 2
-   5 11                                | n + 2
-   8                                   | n/2
-
+gap> Order(cent);
+12
 gap> cent in Group(h); # This particular element is even a power of h.
 true
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Oper Name="ShortCycles" Arg="f, maxlng" Label="f, maxlng"/>
-  <Returns>
-    All <Q>single</Q> finite cycles of the rcwa mapping&nbsp;<A>f</A>
-    of length at most <A>maxlng</A>.
-  </Returns>
-  <Description>
-    In this context, <Q>single</Q> finite cycles are finite cycles which
-    do not belong to an infinite series. This means that there is no
-    constant&nbsp;<M>m</M> such that adding any multiple of&nbsp;<M>m</M>
-    to the elements of the cycle always yields another cycle.
-    Since &GAP;-permutations cannot move negative integers, rationals
-    or polynomials, the cycles are returned as lists. For example,
-    the list <C>[-3,1,2,-2]</C> denotes the cycle <C>(-3,1,2,-2)</C>.
-    Permutations with different sets of finite cycle lengths are
-    obviously not conjugate.
-<Example>
-<![CDATA[
-gap> ShortCycles(a,5);
-[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], 
-  [ -9, -7, -5, -4, -6 ] ]
-gap> ShortCycles(u,2);
-[ [ 0 ], [ -1 ], [ 1, 2 ], [ 3, 5 ], [ -10, -6 ] ]
-gap> ShortCycles(Comm(a,b),10);
-[  ]
-gap> ShortCycles(a*b,2);
-[ [ 0 ], [ 2 ], [ 3 ], [ -26 ], [ 7 ], [ -3 ], [ -1 ] ]
-gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
-gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
-gap> List( [ v, w ], Order );
-[ 6, 8 ]
-gap> [ ShortCycles(v,10), ShortCycles(w,10) ];
-[ [ [ 0, 2, 1 ] ], [ [ 0, 3, 2, 1 ] ] ]
 ]]>
 </Example>
   </Description>
@@ -979,7 +933,8 @@ gap> [ ShortCycles(v,10), ShortCycles(w,10) ];
   <Func Name="NrConjugacyClassesOfRCWAZOfOrder" Arg="ord" Label="ord"/>
   <Returns>
     The number of conjugacy classes of RCWA(<M>\Z</M>) of elements
-    of order&nbsp;<A>ord</A>.
+    of order&nbsp;<A>ord</A>, as given in Corollary&nbsp;2.7.1&nbsp;(b)
+    in&nbsp;<Cite Key="Kohl05"/>.
   </Returns>
   <Description>
 <Example>
@@ -1346,6 +1301,7 @@ This function returns a list of all pairs of disjoint residue classes
 <Index Key="AllProducts" Subkey="l, k">
   <C>AllProducts</C>
 </Index>
+
 &RCWA; introduces a few small utility functions which can be used for groups
 in general: The function <C>GeneratorsAndInverses(<A>G</A>)</C> returns
 a list of generators of <A>G</A> and their inverses,
@@ -1375,13 +1331,34 @@ all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
     and <C>false</C> otherwise.
   </Returns>
   <Description>
+
+    <Index Key="IsRcwaGroupOverZOrZ_pi" Subkey="G">
+      <C>IsRcwaGroupOverZOrZ&uscore;pi</C>
+    </Index>
+
     Often the same methods can be used for rcwa groups over the ring of
     integers and over its semilocalizations. For this reason there is
     a category <C>IsRcwaGroupOverZOrZ&uscore;pi</C> which is the union of
     <C>IsRcwaGroupOverZ</C> and <C>IsRcwaGroupOverZ&uscore;pi</C>.
-    <Index Key="IsRcwaGroupOverZOrZ_pi" Subkey="G">
-      <C>IsRcwaGroupOverZOrZ&uscore;pi</C>
+
+    <Index Key="IsNaturalRCWA&uscore;Z" Subkey="G">
+      <C>IsNaturalRCWA&uscore;Z</C>
     </Index>
+    <Index Key="IsNaturalRCWA&uscore;Z&uscore;pi" Subkey="G">
+      <C>IsNaturalRCWA&uscore;Z&uscore;pi</C>
+    </Index>
+    <Index Key="IsNaturalRCWA&uscore;GFqx" Subkey="G">
+      <C>IsNaturalRCWA&uscore;GFqx</C>
+    </Index>
+
+    To allow distinguishing the entire group RCWA(<M>R</M>) from others
+    by means of the method selection, it has the characteristic property
+    <C>IsNaturalRCWA&uscore;Z</C> resp. one of the properties
+    <C>IsNaturalRCWA&uscore;Z&uscore;pi</C> or
+    <C>IsNaturalRCWA&uscore;GFqx</C>, depending on whether <M>R</M>
+    is the ring of integers, one of its semilocalizations or a univariate
+    polynomial ring over a finite field.
+
   </Description>
 </ManSection>
 
