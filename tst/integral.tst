@@ -40,6 +40,8 @@ gap> IsSurjective(T);
 true
 gap> Coefficients(T);
 [ [ 1, 0, 2 ], [ 3, 1, 2 ] ]
+gap> InjectiveAsMappingFrom(T);
+0(2)
 gap> Display(T^3);
 
 Surjective rcwa mapping of Z with modulus 8
@@ -137,6 +139,19 @@ gap> im := Image(e1,S);
 Z \ [ 1, 2, 6 ]
 gap> pre := PreImage(e1,im);
 Z \ [ 1, 2, 3 ]
+gap> f5 := RcwaMapping([[7,0,5],[7,-2,5],[3,-1,5],[3,1,5],[7,2,5]]);;
+gap> InjectiveAsMappingFrom(f5);
+<union of 79 residue classes (mod 105)>
+gap> last^f5 = Image(f5);
+true
+gap> perm := RcwaMapping([List([[0,4],[1,6],[2,12],[11,12],[3,6]],
+>                              ResidueClass)]);
+<bijective rcwa mapping of Z with modulus 12, of order 5>
+gap> Factorization(perm);
+[ ClassTransposition(1,6,3,6), ClassTransposition(2,12,11,12), 
+  ClassTransposition(3,6,2,12), ClassTransposition(0,4,1,6) ]
+gap> Cycle(perm,ResidueClass(0,4));
+[ 0(4), 1(6), 2(12), 11(12), 3(6) ]
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> IsBijective(u);
 true
@@ -774,6 +789,14 @@ gap> g*h^3*g^-2*h in G;
 true
 gap> a in G;
 false
+gap> Multiplier(G);
+2
+gap> Divisor(G);
+2
+gap> Divisor(Group(ClassTransposition(0,2,1,6)));
+3
+gap> Multiplier(Group(a,b));
+infinity
 gap> G := Group(ab,ac);
 <rcwa group over Z with 2 generators>
 gap> One(G) in G;
@@ -834,7 +857,7 @@ gap> md(Comm(c1,c2));
 gap> Order(RcwaMapping([[rc(1,2),rc(36,72)]]));
 2
 gap> f1 := RcwaMapping([[rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]]);
-<rcwa mapping of Z with modulus 12>
+<bijective rcwa mapping of Z with modulus 12, of order 2>
 gap> Cycle(f1,rc(0,4));
 [ 0(4), 1(6) ]
 gap> Cycle(f1,rc(5,6));
@@ -917,11 +940,11 @@ gap> P1 := [rc(0,2),rc(1,4),rc(3,4)];
 gap> P2 := [rc(0,3),rc(1,3),rc(2,3)];
 [ 0(3), 1(3), 2(3) ]
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<rcwa mapping of Z with modulus 4>
+<bijective rcwa mapping of Z with modulus 4>
 gap> P1^elm = P2;
 true
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame rcwa mapping of Z with modulus 24>
+<tame bijective rcwa mapping of Z with modulus 24>
 gap> P1^elmt = P2;
 true
 gap> RCWAReadExamples();
@@ -1110,11 +1133,11 @@ true
 gap> P1 := [rc(1,3),Union(rc(0,3),rc(2,3))];;
 gap> P2 := [Union(rc(2,5),rc(4,5)),Union(rc(0,5),rc(1,5),rc(3,5))];;
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<rcwa mapping of Z with modulus 6>
+<bijective rcwa mapping of Z with modulus 6>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame rcwa mapping of Z with modulus 120>
+<tame bijective rcwa mapping of Z with modulus 120>
 gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> Modulus(RepresentativeAction(RCWA(Integers),

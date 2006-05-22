@@ -130,7 +130,7 @@ Rcwa mapping of GF(2)[x] with modulus x
  0*Z(2)                   | P
  Z(2)^0                   | x*P
 
-gap> r*(s^r)*r^-1 = s;  # Does not work in 4.2.
+gap> r*(s^r)*r^-1 = s;
 true
 gap> One(r) in Group(r);
 true
@@ -235,13 +235,14 @@ gap> Trajectory(r,x^3+x^2,[(x^3+x^2)^(r^-1)],"AllCoeffs");
   [ x^6+x^5+x^3+x+Z(2)^0, x^6+x^4+x^3+x^2, x^6+x^4+x^2+Z(2)^0 ] ]
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
 gap> f := RcwaMapping([[rc(Zero(R),x^2),rc(One(R),x^3),rc(x,x^2)]]);
-<rcwa mapping of GF(2)[x] with modulus x^3>
-gap> Order(f);
-3
+<bijective rcwa mapping of GF(2)[x] with modulus x^3, of order 3>
 gap> G := Group(r);
 <rcwa group over GF(2)[x] with 1 generator>
 gap> IsTransitive(G,R);
 false
+gap> ct := ClassTransposition(ResidueClass(R,x,Zero(R)),
+>                             ResidueClass(R,x^2,One(R)));
+ClassTransposition(0*Z(2),x,Z(2)^0,x^2)
 gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;
