@@ -549,7 +549,7 @@ IdentityMapping( Integers )
 <!-- #################################################################### -->
 
 <Section Label="sec:ActionOnR">
-<Heading>The action of an rcwa group on the underlying ring R</Heading>
+<Heading>The action of an rcwa group on the underlying ring</Heading>
 
 <Index Key="Support" Subkey="G"><C>Support</C></Index>
 <Index Key="MovedPoints" Subkey="G"><C>MovedPoints</C></Index>
@@ -669,6 +669,7 @@ gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
 <Example>
 <![CDATA[
 gap> F := FreeGroup("a","b");;
+gap> G := Group(a,b);;
 gap> w := RepresentativeActionPreImage(G,[7,4,9],[4,5,13],OnPoints,F);
 b^-1*a*b*a^-1
 gap> w := RepresentativeActionPreImage(G,[5,4,9],[13,5,4],OnTuples,F);
@@ -705,27 +706,26 @@ a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
   </Returns>
   <Description>
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
-    underlying ring <M>R</M> into the same number of disjoint
-    unions of residue classes.
+    underlying ring <M>R</M> into the same number of disjoint unions of
+    residue classes.
     The method recognizes the option <C>IsTame</C>. If this option
     is set, the returned mapping is tame provided that there is a tame
     mapping which satisfies the given condition.
     If the option <C>IsTame</C> is not set and the partitions <A>P1</A>
-    and <A>P2</A> both consist entirely of single residue classes,
-    then the returned mapping is affine on any residue class
-    in&nbsp;<A>P1</A>.
+    and <A>P2</A> both consist entirely of single residue classes, then
+    the returned mapping is affine on any residue class in&nbsp;<A>P1</A>.
 <Example>
 <![CDATA[
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
-gap> P1 := [rc(0,3),rc(1,3),rc(2,9),rc(5,9),rc(8,9)];
+gap> P1 := List([[0,3],[1,3],[2,9],[5,9],[8,9]],ResidueClass);
 [ 0(3), 1(3), 2(9), 5(9), 8(9) ]
-gap> P2 := [rc(0,2),rc(1,8),rc(5,16),rc(3,4),rc(13,16)];
+gap> P2 := List([[0,2],[1,8],[5,16],[3,4],[13,16]],ResidueClass);
 [ 0(2), 1(8), 5(16), 3(4), 13(16) ]
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<rcwa mapping of Z with modulus 9>
+<bijective rcwa mapping of Z with modulus 9>
 gap> Display(elm);
 
-Rcwa mapping of Z with modulus 9
+Bijective rcwa mapping of Z with modulus 9
 
                 n mod 9                |                 n^f
 ---------------------------------------+--------------------------------------
@@ -738,16 +738,16 @@ Rcwa mapping of Z with modulus 9
 gap> P1^elm = P2;
 true
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame rcwa mapping of Z with modulus 1152>
+<tame bijective rcwa mapping of Z with modulus 1152>
 gap> P := RespectedPartition(elm);;
 gap> Length(P);
 313
 gap> elm := RepresentativeAction(RCWA(Integers),
->                                [rc(1,3),Union(rc(0,3),rc(2,3))],
->                                [Union(rc(2,5),rc(4,5)),
->                                 Union(rc(0,5),rc(1,5),rc(3,5))]);
-<rcwa mapping of Z with modulus 6>
-gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
+>             [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))],
+>             [Union(ResidueClass(2,5),ResidueClass(4,5)),
+>              Union(ResidueClass(0,5),ResidueClass(1,5),ResidueClass(3,5))]);
+<bijective rcwa mapping of Z with modulus 6>
+gap> [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))]^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 ]]>
 </Example>
@@ -770,14 +770,6 @@ gap> ShortOrbits(A5,[-10..10],100);
   [ 5, 6, 7, 8, 9 ], [ 10, 11, 12, 13, 14 ] ]
 gap> Action(A5,last[2]);
 Group([ (1,2,3,4,5), (3,4,5) ])
-gap> G := Group(Comm(a,b),Comm(a,c));;
-gap> orb := ShortOrbits(G,[-15..15],100);
-[ [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ], 
-  [ -33, -30, -24, -21, -16, -14, -13, -11, -10, -8 ], [ -9 ], [ 0 ], 
-  [ 2, 3, 4, 5, 6, 7, 8, 10, 12, 15 ], [ 9 ], 
-  [ 11, 13, 14, 16, 17, 19, 21, 24, 30, 33 ] ]
-gap> Action(G,orb[1]);
-Group([ (2,5,8,10,7,6), (1,3,6,9,4,5) ])
 gap> ShortOrbits(Group(u),[-30..30],100);
 [ [ -13, -8, -7, -5, -4, -3, -2 ], [ -10, -6 ], [ -1 ], [ 0 ], [ 1, 2 ], 
   [ 3, 5 ], [ 24, 36, 39, 40, 44, 48, 60, 65, 67, 71, 80, 86, 93, 100, 112, 
@@ -800,6 +792,7 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     See also <Ref Oper ="OrbitsModulo" Label="f, m"/> for rcwa mappings.
 <Example>
 <![CDATA[
+gap> G := Group(Comm(a,b),Comm(a,c));;
 gap> OrbitsModulo(G,36);
 [ [ 0 ], [ 1, 11, 13, 14, 16, 17, 19, 21, 24, 29, 30, 31, 32, 33, 34, 35 ], 
   [ 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 22, 23, 25, 26, 28 ], [ 9 ], [ 18 ], 
@@ -826,6 +819,7 @@ gap> OrbitsModulo(G,36);
     are cheap. They are not only applicable to rcwa groups.
 <Example>
 <![CDATA[
+gap> G := Group(Comm(a,b),Comm(a,c));;
 gap> for d in [1..4] do Print(Ball(G,1,d,OnPoints),"\n"); od;
 [ -3, -2, 1 ]
 [ -5, -4, -3, -2, 1 ]
@@ -833,17 +827,10 @@ gap> for d in [1..4] do Print(Ball(G,1,d,OnPoints),"\n"); od;
 [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
 gap> List([1..11],d->Length(Ball(G,[1,2,3],d,OnSets)));
 [ 5, 17, 51, 127, 245, 324, 343, 357, 360, 360, 360 ]
-]]>
-</Example>
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-<Example>
-<![CDATA[
 gap> List([1..11],d->Length(Ball(G,[1,2,3],d,OnTuples)));
 [ 5, 17, 51, 143, 325, 557, 662, 695, 713, 720, 720 ]
-gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),(),2);
-[ (), (5,6), (4,5), (4,5,6), (4,6,5), (3,4), (3,4)(5,6), (3,4,5), (3,5,4), 
-  (2,3), (2,3)(5,6), (2,3)(4,5), (2,3,4), (2,4,3), (1,2), (1,2)(5,6), 
-  (1,2)(4,5), (1,2)(3,4), (1,2,3), (1,3,2) ]
+gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
+[ (), (3,4), (2,3), (2,3,4), (2,4,3), (1,2), (1,2)(3,4), (1,2,3), (1,3,2) ]
 ]]>
 </Example>
   </Description>
@@ -1041,6 +1028,59 @@ true
 
 <!-- #################################################################### -->
 
+<Section Label="sec:Random">
+<Heading>Getting pseudo-random elements of RCWA(Z)</Heading>
+
+<Index Key="Random" Subkey="RCWA(Z)"><C>Random</C></Index>
+There is a method for the operation <C>Random</C> for RCWA(<M>\Z</M>).
+This method is designed to be suitable for generating interesting
+examples. No particular distribution is guaranteed -- in fact, the
+author has no idea what a <Q>good</Q> random distribution on
+RCWA(<M>\Z</M>) should be.
+
+<Log>
+<![CDATA[
+gap> elm := Random(RCWA(Integers));
+<bijective rcwa mapping of Z with modulus 60>
+gap> Display(elm);
+
+Bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |                 n^f
+---------------------------------------+--------------------------------------
+   0  2  4  6  8 10                    | 3n + 2
+   1  5  9                             | -n + 2
+   3  7                                | (n - 7)/2
+  11                                   | (-n + 20)/3
+
+]]>
+</Log>
+
+The elements which are returned by this method are obtained by
+multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
+class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
+class transpositions (see <Ref Func="ClassTransposition"
+                          Label="r1, m1, r2, m2"/>).
+These factors can be retrieved by factoring:
+
+<Log>
+<![CDATA[
+gap> Factorization(elm);
+[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
+  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
+]]>
+</Log>
+
+An auxiliary function which is used in this context for choosing the
+class transpositions is <C>ClassPairs(<A>m</A>)</C>.
+<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
+This function returns a list of all pairs of disjoint residue classes
+<M>r_1(m_1)</M>, <M>r_2(m_2)</M>, where <M>m_1, m_2 \leq m</M>.
+
+</Section>
+
+<!-- #################################################################### -->
+
 <Section Label="sec:MethodsForTameGroups">
 <Heading>Special attributes for tame rcwa groups</Heading>
 
@@ -1049,9 +1089,10 @@ rcwa groups. In the sequel, these attributes are described in detail. <P/>
 
 With their help, various structural information about a given tame rcwa
 group can be obtained. For example there are methods for <C>IsSolvable</C>
-and <C>IsPerfect</C> available for tame rcwa groups (the latter works in
-some cases by other means also for wild groups). Often it is also feasible
-to compute the derived subgroup of a tame rcwa group. 
+and <C>IsPerfect</C> available for tame rcwa groups, while testing wild
+groups for solvability or perfectness is currently not always feasible.
+It is often also possible to compute the derived subgroup of a tame
+rcwa group. 
 
 <ManSection>
   <Attr Name ="RespectedPartition" Arg="G" Label="G"/>
@@ -1167,9 +1208,8 @@ gap> IsomorphismPcpGroup(K);
     RCWA(<M>\mathbb{Z}</M>).
   </Returns>
   <Description>
-    In the author's thesis it is shown that such a conjugate exists
-    (see Theorem&nbsp;2.5.14). There are usually infinitely many such
-    conjugates, and methods for this operation may choose any of them.
+    Such conjugates exist, see&nbsp;<Cite Key="Kohl05"/>,
+    Theorem&nbsp;2.5.14. In general there are infinitely many of them.
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
@@ -1231,59 +1271,6 @@ Bijective rcwa mapping of Z with modulus 12
 </Example>
   </Description>
 </ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:Random">
-<Heading>Getting pseudo-random elements of RCWA(Z)</Heading>
-
-<Index Key="Random" Subkey="RCWA(Z)"><C>Random</C></Index>
-There is a method for the operation <C>Random</C> for RCWA(<M>\Z</M>).
-This method is designed to be suitable for generating interesting
-examples. No particular distribution is guaranteed -- in fact, the
-author has no idea what a <Q>good</Q> random distribution on
-RCWA(<M>\Z</M>) should be.
-
-<Log>
-<![CDATA[
-gap> elm := Random(RCWA(Integers));
-<bijective rcwa mapping of Z with modulus 60>
-gap> Display(elm);
-
-Bijective rcwa mapping of Z with modulus 12
-
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  2  4  6  8 10                    | 3n + 2
-   1  5  9                             | -n + 2
-   3  7                                | (n - 7)/2
-  11                                   | (-n + 20)/3
-
-]]>
-</Log>
-
-The elements which are returned by this method are obtained by
-multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
-class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
-class transpositions (see <Ref Func="ClassTransposition"
-                          Label="r1, m1, r2, m2"/>).
-These factors can be retrieved by factoring:
-
-<Log>
-<![CDATA[
-gap> Factorization(elm);
-[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
-  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
-]]>
-</Log>
-
-An auxiliary function which is used in this context for choosing the
-class transpositions is <C>ClassPairs(<A>m</A>)</C>.
-<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-This function returns a list of all pairs of disjoint residue classes
-<M>r_1(m_1)</M>, <M>r_2(m_2)</M>, where <M>m_1, m_2 \leq m</M>.
 
 </Section>
 
