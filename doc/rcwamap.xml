@@ -9,8 +9,10 @@
 <Chapter Label="ch:RcwaMappings">
 <Heading>Residue Class-Wise Affine Mappings</Heading>
 
-This chapter describes the functionality provided by this package for
-computing with residue class-wise affine mappings.
+This chapter gives the basic definitions, describes how to enter residue
+class-wise affine mappings and how to compute with them. The functionality
+of this package which is dedicated to residue class-wise affine groups
+is described in detail in the next chapter.
 
 <!-- #################################################################### -->
 
@@ -1362,7 +1364,9 @@ gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
   <Description>
 <Example>
 <![CDATA[
-gap> Root(Comm(a,b),3)^3 = Comm(a,b);
+gap> Root(Comm(a,b),300);
+<bijective rcwa mapping of Z with modulus 216>
+gap> last^300 = Comm(a,b);
 true
 ]]>
 </Example>

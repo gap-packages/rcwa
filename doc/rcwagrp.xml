@@ -22,8 +22,8 @@ computing with residue class-wise affine groups.
 <Index Key="GroupWithGenerators"><C>GroupWithGenerators</C></Index>
 
 Residue class-wise affine groups can be constructed using either
-<C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>,
-as usual (see the &GAP; reference manual).
+<C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>
+as usual, cp. the &GAP; reference manual.
 
 <Example>
 <![CDATA[
