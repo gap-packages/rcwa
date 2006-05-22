@@ -804,6 +804,36 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
+#M  Multiplier( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallOtherMethod( Multiplier,
+                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  R, orbs, thin, thick, quot, int;
+
+    R := Source(One(G));
+    if not IsTame(G) then return infinity; fi;
+    orbs  := Orbits(G,RespectedPartition(G));
+    thin  := List(orbs,o->First(o,cl->Density(cl)=Minimum(List(o,Density))));
+    thick := List(orbs,o->First(o,cl->Density(cl)=Maximum(List(o,Density))));
+    quot  := List([1..Length(orbs)],
+                  i->Modulus(thin[i])/Modulus(thick[i]));
+    int   := List(quot,q->Length(AllResidues(R,q)));
+    return quot[Position(int,Maximum(int))];
+  end );
+
+#############################################################################
+##
+#M  Divisor( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallOtherMethod( Divisor,
+                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+                    Multiplier );
+
+#############################################################################
+##
 #F  RespectedPartitionOfRcwaGroup  worker function: RespectedPartition[Short]
 ##
 BindGlobal( "RespectedPartitionOfRcwaGroup",

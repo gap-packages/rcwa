@@ -335,37 +335,36 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( cycles )
 
-    local  CoeffsOfRcwaMappingByClassCycles, R, coeffs;
-
-    CoeffsOfRcwaMappingByClassCycles := function ( R, cycles )
-
-      local  m, c, res, cyc, pre, im, affectedpos, pos, r1, r2, m1, m2, r, i;
-
-      m   := Lcm(List(Union(cycles),Modulus));
-      res := AllResidues(R,m);
-      c   := List(res,r->[1,0,1]*One(R));
-      for cyc in cycles do
-        if Length(cyc) <= 1 then continue; fi;
-        for pos in [1..Length(cyc)] do
-          pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
-          r1 := Residues(pre)[1]; m1 := Modulus(pre);
-          r2 := Residues(im )[1]; m2 := Modulus(im);
-          affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
-          for i in affectedpos do c[i] := [m2,m1*r2-m2*r1,m1]; od;
-        od;
-      od;
-      return c;
-    end;
+    local  result, R, coeffs, m, res, cyc, pre, im, affectedpos,
+           r1, r2, m1, m2, pos, i;
 
     if not IsUnionOfResidueClasses(cycles[1][1]) then TryNextMethod(); fi;
-    R := UnderlyingRing(FamilyObj(cycles[1][1]));
-    coeffs := CoeffsOfRcwaMappingByClassCycles(R,cycles);
+
+    R      := UnderlyingRing(FamilyObj(cycles[1][1]));
+    m      := Lcm(List(Union(cycles),Modulus));
+    res    := AllResidues(R,m);
+    coeffs := List(res,r->[1,0,1]*One(R));
+    for cyc in cycles do
+      if Length(cyc) <= 1 then continue; fi;
+      for pos in [1..Length(cyc)] do
+        pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
+        r1 := Residues(pre)[1]; m1 := Modulus(pre);
+        r2 := Residues(im )[1]; m2 := Modulus(im);
+        affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
+        for i in affectedpos do coeffs[i] := [m2,m1*r2-m2*r1,m1]; od;
+      od;
+    od;
     if   IsIntegers(R)
-    then return RcwaMappingNC(coeffs);
+    then result := RcwaMappingNC(coeffs);
     elif IsZ_pi(R)
-    then return RcwaMappingNC(R,coeffs);
+    then result := RcwaMappingNC(R,coeffs);
     elif IsPolynomialRing(R)
-    then return RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs); fi;
+    then result := RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs);
+    fi;
+    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    SetIsBijective(result,true); SetIsTame(result,true);
+    SetOrder(result,Lcm(List(cycles,Length)));
+    return result;
   end );
 
 #############################################################################
@@ -410,7 +409,7 @@ InstallOtherMethod( RcwaMappingNC,
 
   function ( P1, P2 )
 
-    local R, coeffs, m, res, r1, m1, r2, m2, i, j;
+    local  R, coeffs, m, res, r1, m1, r2, m2, i, j;
 
     if not IsUnionOfResidueClasses(P1[1]) then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(P1[1]));
@@ -436,15 +435,16 @@ InstallOtherMethod( RcwaMapping,
 
   function ( P1, P2 )
 
-    local R;
+    local  result;
 
     if not (     ForAll(Concatenation(P1,P2),IsResidueClass)
              and Length(P1) = Length(P2)
              and Sum(List(P1,Density)) = 1
              and Union(P1) = UnderlyingRing(FamilyObj(P1[1])))
     then TryNextMethod(); fi;
-    R := UnderlyingRing(FamilyObj(P1[1]));
-    return RcwaMappingNC(P1,P2);
+    result := RcwaMappingNC(P1,P2);
+    IsBijective(result);
+    return result;
   end );
 
 #############################################################################
@@ -738,19 +738,30 @@ InstallGlobalFunction( ClassShift,
 
   function ( arg )
 
-    local  result, coeff, r, m;
+    local  result, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsResidueClass(arg[1])
-    then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
-    if IsIntegers(arg[1]) then arg := [0,1]; fi;
-    if   Length(arg) <> 2 or not IsInt(arg[1]) or not IsPosInt(arg[2])
+    if   IsResidueClass(arg[1]) and not IsRing(arg[1])
+    then R   := UnderlyingRing(FamilyObj(arg[1]));
+         arg := [Residues(arg[1])[1],Modulus(arg[1])];
+    elif IsRing(arg[1])
+    then R := arg[1]; arg := [0,1]*One(R);
+    else R := DefaultRing(arg[2]); fi;
+    if   Length(arg) <> 2 or not IsSubset(R,arg) or IsZero(arg[2])
     then Error("usage: see ?ClassShift( r, m )\n"); fi;
+    if IsInt(arg[2]) then arg[2] := AbsInt(arg[2]); fi;
     r := arg[1]; m := arg[2]; r := r mod m;
-    coeff := List([1..m],r->[1,0,1]); coeff[r+1] := [1,m,1];
-    result := RcwaMapping(coeff);
+    res        := AllResidues(R,m);
+    idcoeff    := [1,0,1]*One(R);
+    coeff      := List(res,r->idcoeff);
+    pos        := PositionSorted(res,r);
+    coeff[pos] := [1,m,1]*One(R);
+    result     := RcwaMapping(R,m,coeff);
     SetIsClassShift(result,true); SetIsBijective(result,true);
-    SetOrder(result,infinity); SetIsTame(result,true);
+    if   Characteristic(R) = 0
+    then SetOrder(result,infinity);
+    else SetOrder(result,Characteristic(R)); fi;
+    SetIsTame(result,true);
     SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
     SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
                                                String(m),")}"));
@@ -760,11 +771,10 @@ InstallGlobalFunction( ClassShift,
 
 #############################################################################
 ##
-#M  IsClassShift( <sigma> ) . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  IsClassShift( <sigma> ) . . . . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( IsClassShift,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                sigma -> IsResidueClass(Support(sigma))
                         and sigma = ClassShift(Support(sigma)) );
 
@@ -778,18 +788,21 @@ InstallGlobalFunction( ClassReflection,
 
   function ( arg )
 
-    local  result, coeff, r, m;
+    local  result, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsResidueClass(arg[1])
-    then arg := [Residues(arg[1])[1],Modulus(arg[1])]; fi;
-    if IsIntegers(arg[1]) then arg := [0,1]; fi;
-    if   Length(arg) <> 2 or not IsInt(arg[1]) or not IsPosInt(arg[2])
+    if   IsResidueClass(arg[1]) and not IsRing(arg[1])
+    then R   := UnderlyingRing(FamilyObj(arg[1]));
+         arg := [Residues(arg[1])[1],Modulus(arg[1])];
+    elif IsRing(arg[1])
+    then R := arg[1]; arg := [0,1];
+    else R := Integers; fi;
+    if   Length(arg) <> 2 or not IsSubset(R,arg) or not IsPosInt(arg[2])
     then Error("usage: see ?ClassReflection( r, m )\n"); fi;
     r := arg[1]; m := arg[2]; r := r mod m;
     coeff := List([1..m],r->[1,0,1]);
     coeff[r+1] := [-1,2*r,1];
-    result := RcwaMapping(coeff);
+    result := RcwaMapping(R,m,coeff);
     SetIsClassReflection(result,true); SetIsBijective(result,true);
     SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassReflection(",
@@ -802,11 +815,11 @@ InstallGlobalFunction( ClassReflection,
 
 #############################################################################
 ##
-#M  IsClassReflection( <sigma> ) . . . . . . . . . . . for rcwa mappings of Z
+#M  IsClassReflection( <sigma> ) . . . . . . . for rcwa mappings of Z or Z_pi
 ##
 InstallMethod( IsClassReflection,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings of Z or Z_pi (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
                sigma -> IsResidueClass(Union(Support(sigma),
                                        Union(ShortCycles(sigma,1)))) and
                sigma = ClassReflection(Union(Support(sigma),
@@ -822,27 +835,28 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, r1, m1, r2, m2, cl1, cl2, h;
+    local  result, R, r1, m1, r2, m2, cl1, cl2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   Length(arg) = 2 and ForAll(arg,IsResidueClass)
-    then arg := [Residues(arg[1])[1],Modulus(arg[1]),
-                 Residues(arg[2])[1],Modulus(arg[2])]; fi;
-    if   Length(arg) <> 4 or not ForAll(arg,IsInt)
+    if Length(arg) = 2 and ForAll(arg,IsResidueClass) then
+      R   := UnderlyingRing(FamilyObj(arg[1]));
+      arg := [Residues(arg[1])[1],Modulus(arg[1]),
+              Residues(arg[2])[1],Modulus(arg[2])];
+    else R := DefaultRing(arg[1]); fi;
+    if   Length(arg) <> 4 or not IsSubset(R,arg)
     then Error("usage: see ?ClassTransposition( r1, m1, r2, m2 )\n"); fi;
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
-    if   m1*m2 = 0 or (r1-r2) mod Gcd(m1,m2) = 0 then
+    if   IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(m1,m2)) then
       Error("ClassTransposition: The residue classes must be disjoint.\n");
     fi;
     r1 := r1 mod m1; r2 := r2 mod m2;
     if   m1 > m2 or (m1 = m2 and r1 > r2)
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
-    cl1    := ResidueClass(Integers,m1,r1);
-    cl2    := ResidueClass(Integers,m2,r2);
+    cl1    := ResidueClass(R,m1,r1);
+    cl2    := ResidueClass(R,m2,r2);
     result := RcwaMapping([[cl1,cl2]]);
     SetIsClassTransposition(result,true);
     SetTransposedClasses(result,[cl1,cl2]);
-    SetIsBijective(result,true); SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassTransposition(",
                                  String(r1),",",String(m1),",",
                                  String(r2),",",String(m2),")"));
@@ -855,11 +869,10 @@ InstallGlobalFunction( ClassTransposition,
 
 #############################################################################
 ##
-#M  IsClassTransposition( <sigma> ) . . . . . . . . .  for rcwa mappings of Z
+#M  IsClassTransposition( <sigma> ) . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( IsClassTransposition,
-               "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( sigma )
 
@@ -878,8 +891,7 @@ InstallMethod( IsClassTransposition,
 #M  TransposedClasses( <sigma> ) . . . . . . . . . . for class transpositions
 ##
 InstallMethod( TransposedClasses,
-               "for class transpositions (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
+               "for class transpositions (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( ct )
     if   IsClassTransposition(ct)
@@ -889,17 +901,18 @@ InstallMethod( TransposedClasses,
 
 #############################################################################
 ##
-#M  SplittedClassTransposition( <ct>, <k>, <cross> ) for a class transp. of Z
+#M  SplittedClassTransposition( <ct>, <k>, <cross> ) . . . . . default method
 ##
 InstallMethod( SplittedClassTransposition,
-               "for a class transposition of Z (RCWA)", ReturnTrue,
-               [ IsRcwaMappingOfZ and IsClassTransposition,
-                 IsPosInt, IsBool ], 0,
+               "for a class transposition (RCWA)", ReturnTrue,
+               [ IsRcwaMapping and IsClassTransposition,
+                 IsRingElement, IsBool ], 0,
 
   function ( ct, k, cross )
 
     local  cls, pairs;
 
+    if IsZero(k) or not k in Source(ct) then TryNextMethod(); fi;
     cls := List(TransposedClasses(ct),cl->SplittedClass(cl,k));
     if cross then pairs := Cartesian(cls);
              else pairs := TransposedMat(cls); fi;
@@ -908,11 +921,12 @@ InstallMethod( SplittedClassTransposition,
 
 #############################################################################
 ##
-#M  SplittedClassTransposition( <ct>, <k> ) . . . . . . . . .  default method
+#M  SplittedClassTransposition( <ct>, <k> ) . . . . . .  two-argument version
 ##
 InstallOtherMethod( SplittedClassTransposition,
                     "default method (RCWA)", ReturnTrue,
-                    [ IsRcwaMapping and IsClassTransposition, IsPosInt ], 0,
+                    [ IsRcwaMapping and IsClassTransposition,
+                      IsRingElement ], 0,
                     function ( ct, k )
                       return SplittedClassTransposition(ct,k,false);
                     end );
@@ -2858,7 +2872,7 @@ InstallMethod( IsSurjective,
     return ForAll([1..Length(resInv)], i -> IsBound(cInv[i]));
   end );
 
-#############################################################################
+############################################################################
 ##
 #F  InjectiveAsMappingFrom( <f> ) . . . .  some set on which <f> is injective
 ##
@@ -2869,7 +2883,7 @@ InstallGlobalFunction( InjectiveAsMappingFrom,
     local  R, m, base, pre, im, cl, imcl, overlap;
 
     R := Source(f); if IsBijective(f) then return R; fi;
-    m := Modulus(f); base := List(AllResidues(R,m),r->ResidueClass(R,m,r));
+    m := Modulus(f); base := AllResidueClassesModulo(R,m);
     pre := R; im := [];
     for cl in base do
       imcl    := cl^f;
@@ -2877,7 +2891,7 @@ InstallGlobalFunction( InjectiveAsMappingFrom,
       im      := Union(im,imcl);
       pre     := Difference(pre,Intersection(PreImagesSet(f,overlap),cl));
     od;
-    return [pre,im];
+    return pre;
   end );
 
 #############################################################################
@@ -3358,28 +3372,6 @@ InstallGlobalFunction( TraceTrajectoriesOfClasses,
       Print("k = ",k,": "); View(l[k]); Print("\n");
     until Runtime() - starttime >= timeout or l[k] in l{[1..k-1]};
     return l;
-  end );
-
-#############################################################################
-##
-#F  SearchCycle( <l> ) . . . . . . . . . . . . a simple-minded cycle detector
-##
-InstallGlobalFunction( SearchCycle,
-
-  function ( l )
-
-    local  pos, incr, refine;
-
-    if Length(l) < 2 then return fail; fi;
-    pos := 1; incr := 1;
-    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
-                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
-      pos := pos + 1; incr := incr + 1;
-      if pos + 2*incr-1 > Length(l) then return fail; fi;
-    od;
-    refine := SearchCycle(l{[pos..pos+incr-1]});
-    if refine <> fail then return refine;
-                      else return l{[pos..pos+incr-1]}; fi;
   end );
 
 #############################################################################

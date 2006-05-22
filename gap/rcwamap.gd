@@ -278,7 +278,7 @@ DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 ##
 DeclareOperation( "SplittedClassTransposition",
                   [ IsRcwaMapping and IsClassTransposition,
-                    IsPosInt, IsBool ] );
+                    IsRingElement, IsBool ] );
 
 #############################################################################
 ##
@@ -583,12 +583,6 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 
 #############################################################################
 ##
-#F  SearchCycle( <l> ) . . . . . . . . . . . . a simple-minded cycle detector
-##
-DeclareGlobalFunction( "SearchCycle" );
-
-#############################################################################
-##
 #O  ShortCycles( <f>, <maxlng> ) . . . . short cycles of the rcwa mapping <f>
 ##
 ##  Computes all ``single'' finite cycles of the rcwa mapping <f>
@@ -650,36 +644,6 @@ DeclareAttribute( "IncreasingOn", IsRcwaMapping );
 ##  and $m$ denotes the modulus of <f>.
 ##
 DeclareAttribute( "DecreasingOn", IsRcwaMapping );
-
-#############################################################################
-##
-#O  LikelyContractionCentre( <f>, <maxn>, <bound> ) likely contraction centre
-##
-##  Tries to compute the *contraction centre* of the rcwa mapping <f> --
-##  assuming its existence this is the uniquely-defined finite subset $S_0$
-##  of the base ring <R> which is mapped bijectively onto itself under <f>
-##  and where for any $x \in R$ there is an integer $k$ such that
-##  $x^{f^k} \in S_0$. The mapping <f> is assumed to be contracting.
-##  As this problem seems to be computationally undecidable methods will be
-##  probabilistic. The argument <maxn> is a bound on the starting value
-##  and <bound> is a bound on the elements of the sequence to be searched.
-##  If the limit <bound> is exceeded, an Info message on some Info level
-##  of InfoRCWA is given.
-##
-DeclareOperation( "LikelyContractionCentre",
-                  [ IsRcwaMapping, IsRingElement, IsPosInt ] );
-DeclareSynonym( "LikelyContractionCenter", LikelyContractionCentre );
-
-#############################################################################
-##
-#O  GuessedDivergence( <f> ) . . . . . . . . . . .  guessed divergence of <f>
-##
-##  Guesses the "divergence" of the rcwa mapping <f>.
-##  This is conjectured to be a measure for how fast an rcwa mapping
-##  contracts (if its divergence is smaller than 1) or how fast its
-##  trajectories diverge (if its divergence is larger than 1).
-##
-DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
 
 #############################################################################
 ##
@@ -754,6 +718,38 @@ DeclareAttribute( "LaTeXName", IsObject );
 #O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
 ##
 DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
+
+#############################################################################
+##
+#O  LikelyContractionCentre( <f>, <maxn>, <bound> ) likely contraction centre
+##
+##  Tries to compute the *contraction centre* of the rcwa mapping <f>.
+##  Assuming its existence, this is the unique finite subset $S_0$ of the
+##  base ring <R> which <f> maps bijectively onto itself and which intersects
+##  nontrivially with any trajectory of <f>. The mapping <f> is assumed to be
+##  contracting.
+##  As in general contraction centres are likely not computable, methods will
+##  be probabilistic. The argument <maxn> is a bound on the starting value
+##  and <bound> is a bound on the elements of the sequence to be searched.
+##  If the limit <bound> is exceeded, an Info message on Info level 3 of
+##  InfoRCWA is given.
+##
+DeclareOperation( "LikelyContractionCentre",
+                  [ IsRcwaMapping, IsRingElement, IsPosInt ] );
+DeclareSynonym( "LikelyContractionCenter", LikelyContractionCentre );
+
+#############################################################################
+##
+#O  GuessedDivergence( <f> ) . . . . . . . . . . .  guessed divergence of <f>
+##
+##  Guesses the ``divergence'' of the rcwa mapping <f>.
+##  This should give a rough hint on how fast an rcwa mapping contracts
+##  (if its divergence is smaller than 1) or how fast its trajectories
+##  diverge (if its divergence is larger than 1). Nothing particular is
+##  guaranteed, and no mathematical conclusions can be made from the return
+##  values. 
+##
+DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
 
 #############################################################################
 ##

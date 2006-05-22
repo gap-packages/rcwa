@@ -6,7 +6,7 @@
 ##
 ##  This file contains some more general pieces of code which are not direct-
 ##  ly related to RCWA. Some of them might perhaps later be moved into the
-##  GAP Library.
+##  GAP Library or elsewhere.
 ##
 Revision.general_g :=
   "@(#)$Id$";
@@ -32,6 +32,34 @@ InstallMethod( \*, "for infinity and positive integer (RCWA)",
 InstallMethod( \*, "for infinity and infinity (RCWA)",
                ReturnTrue, [ IsInfinity, IsInfinity ], 0,
                function ( infty1, infty2 ) return infinity; end );
+
+#############################################################################
+##
+#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
+##
+DeclareGlobalFunction( "SearchCycle" );
+
+#############################################################################
+##
+#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
+##
+InstallGlobalFunction( SearchCycle,
+
+  function ( l )
+
+    local  pos, incr, refine;
+
+    if Length(l) < 2 then return fail; fi;
+    pos := 1; incr := 1;
+    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
+                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
+      pos := pos + 1; incr := incr + 1;
+      if pos + 2*incr-1 > Length(l) then return fail; fi;
+    od;
+    refine := SearchCycle(l{[pos..pos+incr-1]});
+    if refine <> fail then return refine;
+                      else return l{[pos..pos+incr-1]}; fi;
+  end );
 
 #############################################################################
 ##
