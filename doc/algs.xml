@@ -250,6 +250,20 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
+    <C>InjectiveAsMappingFrom(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    The function starts with the entire source of <A>f</A> as <Q>preimage</Q>
+    <C>pre</C> and the empty set as <Q>image</Q>&nbsp;<C>im</C>.
+    It loops over the residue classes (mod&nbsp;<C>Mod(<A>f</A>)</C>).
+    For any such residue class <C>cl</C> the following is done: Firstly,
+    the image of <C>cl</C> under&nbsp;<A>f</A> is added to&nbsp;<C>im</C>.
+    Secondly, the intersection of the preimage of the intersection of the
+    image of <C>cl</C> under <A>f</A> and <C>im</C> under <A>f</A> and
+    <C>cl</C> is subtracted from&nbsp;<C>pre</C>. 
+  </Item>
+
+  <Mark>
     <C>IntegralConjugate(<A>f</A>)</C>, 
     <C>IntegralConjugate(<A>G</A>)</C>
   </Mark>

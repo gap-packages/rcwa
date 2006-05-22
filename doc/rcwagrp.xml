@@ -17,6 +17,10 @@ computing with residue class-wise affine groups.
 <Section Label="sec:ContructingRcwaGroups">
 <Heading>Constructing residue class-wise affine groups</Heading>
 
+<Index Key="Group"><C>Group</C></Index>
+<Index Key="GroupByGenerators"><C>GroupByGenerators</C></Index>
+<Index Key="GroupWithGenerators"><C>GroupWithGenerators</C></Index>
+
 Residue class-wise affine groups can be constructed using either
 <C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>,
 as usual (see the &GAP; reference manual).
@@ -33,8 +37,13 @@ false
 ]]>
 </Example>
 
-There are methods for the operations <C>Display</C> and <C>Print</C>
-which are applicable to rcwa groups. <P/>
+<Index Key="View" Subkey="G"><C>View</C></Index>
+<Index Key="Display" Subkey="G"><C>Display</C></Index>
+<Index Key="Print" Subkey="G"><C>Print</C></Index>
+<Index Key="String" Subkey="G"><C>String</C></Index>
+
+There are methods for the operations <C>View</C>, <C>Display</C>,
+<C>Print</C> and <C>String</C> which are applicable to rcwa groups. <P/>
  
 All rcwa groups over the ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) is not finitely generated, thus cannot be
@@ -80,55 +89,6 @@ true
   </Description>
 </ManSection>
 
-<ManSection>
-  <Meth Name="Random" Arg="RCWA_Z" Label="RCWA( Integers )"/>
-  <Returns>
-    A pseudo-random element of the group RCWA(<M>\mathbb{Z}</M>).
-  </Returns>
-  <Description>
-    This method is designed to be suitable for generating interesting
-    examples. No particular distribution is guaranteed -- in fact, the
-    author has no idea what a <Q>reasonable</Q> random distribution
-    on RCWA(<M>\mathbb{Z}</M>) should be.
-<Log>
-<![CDATA[
-gap> elm := Random(RCWA_Z);
-<bijective rcwa mapping of Z with modulus 60>
-gap> Display(elm);
-
-Bijective rcwa mapping of Z with modulus 12
-
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  2  4  6  8 10                    | 3n + 2
-   1  5  9                             | -n + 2
-   3  7                                | (n - 7)/2
-  11                                   | (-n + 20)/3
-
-]]>
-</Log>
-
-    The elements which are returned by this method are obtained by
-    multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
-    class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
-    class transpositions (see <Ref Func="ClassTransposition"
-                              Label="r1, m1, r2, m2"/>).
-    These factors can be retrieved by factoring:
-<Log>
-<![CDATA[
-gap> Factorization(elm);
-[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
-  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
-]]>
-</Log>
-  </Description>
-</ManSection>
-
-An auxiliary function which is used in this context for choosing the
-class transpositions is <C>ClassPairs(<A>m</A>)</C>.
-<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-This function returns a list of all pairs of disjoint residue classes
-<M>r_1(m_1)</M>, <M>r_2(m_2)</M>, where <M>m_1, m_2 \leq m</M>. <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
@@ -217,18 +177,177 @@ gap> Difference(Integers,ResidueClass(2,4))^F2.2;
 
 <!-- #################################################################### -->
 
-<Section Label="sec:AttributesAndProperties">
-<Heading>Attributes and properties of rcwa groups</Heading>
+<Section Label="sec:DirectProductsAndWreathProducts">
+<Heading>Direct products and wreath products</Heading>
+
+The class of groups which can faithfully be represented as rcwa groups
+is closed under forming direct products, wreath products with finite
+groups and wreath products with the infinite cyclic group <M>(\Z,+)</M>.
+For information on how direct products and wreath products of subgroups
+of RCWA(<M>\Z</M>) are embedded in RCWA(<M>\Z</M>) see
+Section&nbsp;<Ref Label="sec:RestrictionAndInduction"/> below.
 
 <ManSection>
-  <Meth Name="Modulus" Arg="G" Label="G"/>
-  <Meth Name="Mod"     Arg="G" Label="G"/>
-  <Returns> The modulus of the rcwa group&nbsp;<A>G</A>. </Returns>
+  <Meth Name="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
+  <Returns>
+    An rcwa group isomorphic to the direct product of the rcwa groups
+    over&nbsp;<M>\mathbb{Z}</M> given as arguments.
+  </Returns>
   <Description>
-    The <E>Modulus</E> of an rcwa group is the lcm of the moduli of its
-    elements in case such an lcm exists and 0 otherwise. <P/>
+    There is certainly no unique or canonical way to embed a direct
+    product of rcwa groups into RCWA(<M>\mathbb{Z}</M>). 
+    This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
+    <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
+    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;..., where
+    <M>m</M> denotes the number of groups given as arguments.
+<Example>
+<![CDATA[
+gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));;
+gap> Embedding(G,1);
+[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
+  <bijective rcwa mapping of Z with modulus 18, of order 12> ]
+gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
+[ 0(3), 1(3) \ [ -2, 1 ], 2(3) \ [ -1, 2 ] ]
+gap> Image(Projection(G,2)) = Group(a,b);
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
 
-    See also <Ref Prop="IsTame" Label="G"/>.
+<ManSection>
+  <Meth Name="WreathProduct" Arg="G, P" Label="G, P"/>
+  <Meth Name="WreathProduct" Arg="G, Z" Label="G, Z"/>
+  <Returns>
+    An rcwa group isomorphic to the wreath product of the rcwa
+    group&nbsp;<A>G</A> over&nbsp;<M>\mathbb{Z}</M> with the finite
+    permutation group&nbsp;<A>P</A>, resp. with the infinite cyclic
+    group&nbsp;<A>Z</A>.
+  </Returns>
+  <Description>
+    There is certainly no unique or canonical way to embed a wreath product
+    of rcwa groups into RCWA(<M>\mathbb{Z}</M>). The first-mentioned method
+    embeds the <C>DegreeAction(<A>P</A>)</C>th direct power of&nbsp;<A>G</A>
+    using the method for <C>DirectProduct</C>, and lets the permutation
+    group&nbsp;<A>P</A> act naturally on the set of residue classes modulo
+    <C>DegreeAction(<A>P</A>)</C>. The second-mentioned method restricts
+    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
+    generator of the infinite cyclic group <A>Z</A> to
+    <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
+<Example>
+<![CDATA[
+gap> G := Group(g,h);;
+gap> IsTame(G); Size(G);    
+true
+infinity
+gap> H := WreathProduct(G,AlternatingGroup(5));
+<tame rcwa group over Z with 12 generators, of size infinity>
+gap> Embedding(H,1);
+[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
+  <bijective rcwa mapping of Z with modulus 30, of order 12> ]
+gap> Embedding(H,2);
+[ (1,2,3,4,5), (3,4,5) ] -> 
+[ <bijective rcwa mapping of Z with modulus 5, of order 5>, 
+  <bijective rcwa mapping of Z with modulus 5, of order 3> ]
+gap> H := WreathProduct(G,Group(ClassShift(0,1)));
+<wild rcwa group over Z with 3 generators>
+gap> Support(Image(Embedding(H,1)));
+3(4)
+gap> Embedding(H,2);
+[ ClassShift(0,1) ] -> [ <wild bijective rcwa mapping of Z with modulus 4> ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:MembershipTest">
+<Heading>
+  The membership test
+</Heading>
+
+<Index Key="rcwa group" Subkey="membership test">rcwa group</Index>
+
+There is a method for the operation <C>\in</C>.
+Given an rcwa group&nbsp;<C>G</C> and an rcwa mapping&nbsp;<C>g</C>, this
+method tries to decide whether <C>g</C> is an element of&nbsp;<C>G</C> or
+not. It can always decide this question if <C>G</C> is tame.
+For wild groups this is often not the case. On Info level&nbsp;3 of
+<C>InfoRCWA</C> the method gives information on reasons why <C>g</C> is
+an element of&nbsp;<C>G</C> or&nbsp;not. <P/>
+
+The direct product of two free groups of rank&nbsp;2 can faithfully be
+represented as an rcwa group. According to&nbsp;<Cite Key="Mihailova58"/>
+this implies that in general the membership problem for rcwa groups is
+algorithmically undecidable.
+
+<Example>
+<![CDATA[
+gap> a in G;
+false
+gap> a*b in H;
+true
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
+gap> u in G or u in H;
+false
+]]>
+</Example>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:AttributesAndProperties">
+<Heading>Basic attributes and properties of rcwa groups</Heading>
+
+<Index Key="Size" Subkey="G"><C>Size</C></Index>
+There is a method available for the operation <C>Size</C>. An rcwa group
+is finite if and only if it is tame and its action on a suitably chosen
+respected partition (see&nbsp;<Ref Attr="RespectedPartition"/>) is faithful.
+Hence the problem of computing the order of an rcwa group reduces to
+the problem of deciding whether it is tame, the problem of deciding whether
+it acts faithfully on a respected partition and the problem of computing the
+order of the finite permutation group induced on the respected partition.
+
+<Index Key="Modulus" Subkey="G"><C>Modulus</C></Index>
+<Index Key="Mod" Subkey="G"><C>Mod</C></Index>
+<Index Key="ModulusOfRcwaGroup" Subkey="G"><C>ModulusOfRcwaGroup</C></Index>
+<Index Key="Multiplier" Subkey="G"><C>Multiplier</C></Index>
+<Index Key="Mult" Subkey="G"><C>Mult</C></Index>
+<Index Key="Divisor" Subkey="G"><C>Divisor</C></Index>
+<Index Key="Div" Subkey="G"><C>Div</C></Index>
+<Index Key="PrimeSet" Subkey="G"><C>PrimeSet</C></Index>
+
+Basic attributes derived from the affine partial mappings of the elements of
+an rcwa group and their coefficients are <C>Modulus</C>, <C>Multiplier</C>,
+<C>Divisor</C> and <C>PrimeSet</C>.
+The <E>Modulus</E> of an rcwa group is the lcm of the moduli of its
+elements in case such an lcm exists and 0 otherwise.
+The <E>multiplier</E> resp. <E>divisor</E> of an rcwa group is the lcm
+of the multipliers resp. divisors of its elements in case such an lcm exists
+and <M>\infty</M> otherwise.
+The <E>prime set</E> of an rcwa group is the union of the prime sets of
+its elements.
+There are shorthands <C>Mod</C>, <C>Mult</C> and <C>Div</C> defined for
+<C>Modulus</C>, <C>Multiplier</C> resp. <C>Divisor</C>. 
+Technically, the modulus of an rcwa group is stored as an attribute
+<C>ModulusOfRcwaGroup</C>. <P/>
+
+<Index Key="IsTame" Subkey="G"><C>IsTame</C></Index>
+<Index Key="IsIntegral" Subkey="G"><C>IsIntegral</C></Index>
+<Index Key="IsClassWiseOrderPreserving" Subkey="G">
+  <C>IsClassWiseOrderPreserving</C>
+</Index>
+
+A tame rcwa group, i.e. one with modulus&nbsp;0, has the property
+<C>IsTame</C>. An rcwa group is called <E>integral</E> resp.
+<E>class-wise order-preserving</E> if all of its elements are so.
+There are corresponding methods available for <C>IsIntegral</C>
+and <C>IsClassWiseOrderPreserving</C>.
+
 <Example>
 <![CDATA[
 gap> g1 := RcwaMapping((1,2),[1..2]);
@@ -241,111 +360,37 @@ gap> G := Group(g1,g2,g3);
 <rcwa group over Z with 3 generators>
 gap> Modulus(G);
 30
+gap> [ Mult(G), Div(G) ];
+[ 1, 1 ]
+gap> PrimeSet(G);
+[ 2, 3, 5 ]
+gap> IsIntegral(G) and IsClassWiseOrderPreserving(G);
+true
+gap> Size(G);
+265252859812191058636308480000000
 gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);; SetName(a,"a");
-gap> Modulus(Group(a));
-0
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Prop Name="IsTame" Arg="G" Label="G"/>
-  <Returns>
-    <C>true</C> if the rcwa group&nbsp;<A>G</A> is tame and <C>false</C>
-    otherwise.
-  </Returns>
-  <Description>
-    An rcwa group is called <E>tame</E> if its modulus is not equal
-    to&nbsp;0.
-<Example>
-<![CDATA[
 gap> b := ClassShift(1,4) * a;; SetName(b,"b");
 gap> c := ClassShift(3,4) * a;; SetName(c,"c");
-gap> List( [ G, Group(a,b), Group(Comm(a,b),Comm(a,c)) ], IsTame );
+gap> H := Group(a,b,c);;
+gap> Modulus(H);
+0
+gap> [ Mult(H), Div(H) ];
+[ infinity, infinity ]
+gap> Size(H);
+infinity
+gap> List( [ G, H, Group(Comm(a,b),Comm(a,c)) ], IsTame );
 [ true, false, true ]
 ]]>
 </Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Attr Name="PrimeSet" Arg="G" Label="G"/>
-  <Returns> The prime set of the rcwa group&nbsp;<A>G</A>. </Returns>
-  <Description>
-    The <E>prime set</E> of an rcwa group is the union of the prime
-    sets of its elements. <P/>
-
-    See also&nbsp;<Ref Attr="PrimeSet" Label="f"/> for rcwa mappings.
-<Example>
-<![CDATA[
-gap> PrimeSet(G);
-[ 2, 3, 5 ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<Index Key="IsIntegral" Subkey="G"><C>IsIntegral</C></Index>
-<Index Key="IsClassWiseOrderPreserving" Subkey="G">
-  <C>IsClassWiseOrderPreserving</C>
-</Index>
-An rcwa group is called <E>integral</E> resp. <E>class-wise
-order-preserving</E> if all of its elements are so.
-There are corresponding methods available for <C>IsIntegral</C>
-and <C>IsClassWiseOrderPreserving</C>.
-
 
 </Section>
 
 <!-- #################################################################### -->
 
-<Section Label="sec:MembershipOrderMatPerm">
+<Section Label="sec:PermutationAndMatrixReps">
 <Heading>
-  Membership testing, order computation,
-  permutation- / matrix representations
+  Permutation- and matrix representations
 </Heading>
-
-<Index Key="rcwa group" Subkey="element testing"></Index>
-<ManSection>
-  <Meth Name="\in" Arg="g, G" Label="g, G"/>
-  <Returns>
-    <C>true</C> if the rcwa mapping&nbsp;<A>g</A> is an element of the
-    rcwa group&nbsp;<A>G</A> and <C>false</C> if not.
-  </Returns>
-  <Description>
-    This method tries to decide whether <A>g</A> is an element
-    of&nbsp;<A>G</A> or not. It can always decide this question if <A>G</A>
-    is tame. For wild groups only a number of easy cases are covered.
-    On Info level&nbsp;3 of <C>InfoRCWA</C> the method gives information on
-    reasons why <A>g</A> is an element of&nbsp;<A>G</A> or&nbsp;not. <P/>
-
-    The direct product of two free groups of rank&nbsp;2 can faithfully be
-    represented as an rcwa group. In&nbsp;<Cite Key="Mihailova58"/>
-    it is shown that this implies that in general the membership problem
-    for rcwa groups is algorithmically undecidable.
-<Example>
-<![CDATA[
-gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
-gap> u in G;
-false
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="Size" Arg="G" Label="G"/>
-  <Returns> The order of the rcwa group&nbsp;<A>G</A>. </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> Size(G);
-265252859812191058636308480000000
-]]>
-</Example>
-  </Description>
-</ManSection>
 
 <ManSection>
   <Meth Name="IsomorphismPermGroup" Arg="G" Label="G"/>
@@ -405,8 +450,6 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
 </ManSection>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -468,8 +511,6 @@ IdentityMapping( Integers )
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Oper Name ="PreImagesRepresentatives" Arg="phi, g" Label="phi, g"/>
@@ -545,8 +586,6 @@ true
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Meth Name="RepresentativeAction"
@@ -682,9 +721,6 @@ a^-1*b^-1*a^3*b^2*a*b*a*b^-1*a^2
     and <A>P2</A> both consist entirely of single residue classes,
     then the returned mapping is affine on any residue class
     in&nbsp;<A>P1</A>.
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <Example>
 <![CDATA[
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
@@ -741,13 +777,6 @@ gap> ShortOrbits(A5,[-10..10],100);
   [ 5, 6, 7, 8, 9 ], [ 10, 11, 12, 13, 14 ] ]
 gap> Action(A5,last[2]);
 Group([ (1,2,3,4,5), (3,4,5) ])
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> G := Group(Comm(a,b),Comm(a,c));;
 gap> orb := ShortOrbits(G,[-15..15],100);
 [ [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ], 
@@ -915,8 +944,8 @@ true
     of length at most <A>maxlng</A>.
   </Returns>
   <Description>
-    In this context, <Q>single</Q> finite cycles are finite cycles which do
-    not belong to an infinite series. This means that there is no
+    In this context, <Q>single</Q> finite cycles are finite cycles which
+    do not belong to an infinite series. This means that there is no
     constant&nbsp;<M>m</M> such that adding any multiple of&nbsp;<M>m</M>
     to the elements of the cycle always yields another cycle.
     Since &GAP;-permutations cannot move negative integers, rationals
@@ -970,6 +999,15 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 
 <Section Label="sec:RestrictionAndInduction">
 <Heading>Restriction and induction</Heading>
+
+There are monomorphisms from the group RCWA(<M>\Z</M>) into itself.
+The support of the image of such a monomorphism is the image of a given
+injective rcwa mapping. Therefore these monomorphisms are called
+<E>restriction monomorphisms</E>. Taking images of rcwa groups under
+restrictions by rcwa mappings with pairwise distinct images permits
+forming their direct product and their wreath product with some finite
+permutation group, regardless of whether they are tame or not
+(cp. Section&nbsp;<Ref Label="sec:DirectProductsAndWreathProducts"/>).
 
 <ManSection>
   <Oper Name ="Restriction" Arg="g, f" Label = "g, f"/>
@@ -1044,90 +1082,6 @@ true
   </Description>
 </ManSection>
 
-Restriction monomorphisms permit forming direct products and
-wreath products of rcwa groups, regardless of whether they are
-tame or not:
-
-<ManSection>
-  <Meth Name="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
-  <Returns>
-    An rcwa group isomorphic to the direct product of the rcwa groups
-    over&nbsp;<M>\mathbb{Z}</M> given as arguments.
-  </Returns>
-  <Description>
-    There is certainly no unique or canonical way to embed a direct
-    product of rcwa groups into RCWA(<M>\mathbb{Z}</M>). 
-    This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
-    <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
-    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;..., where
-    <M>m</M> denotes the number of groups given as arguments.
-<Example>
-<![CDATA[
-gap> G := DirectProduct(Group(g,h),Group(a,b),Group(u));;
-gap> Embedding(G,1);
-[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
-  <bijective rcwa mapping of Z with modulus 18, of order 12> ]
-gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
-[ 0(3), 1(3) \ [ -2, 1 ], 2(3) \ [ -1, 2 ] ]
-gap> Image(Projection(G,2)) = Group(a,b);
-true
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="WreathProduct" Arg="G, P" Label="G, P"/>
-  <Meth Name="WreathProduct" Arg="G, Z" Label="G, Z"/>
-  <Returns>
-    An rcwa group isomorphic to the wreath product of the rcwa
-    group&nbsp;<A>G</A> over&nbsp;<M>\mathbb{Z}</M> with the finite
-    permutation group&nbsp;<A>P</A>, resp. with the infinite cyclic
-    group&nbsp;<A>Z</A>.
-  </Returns>
-  <Description>
-    There is certainly no unique or canonical way to embed a wreath product
-    of rcwa groups into RCWA(<M>\mathbb{Z}</M>). The first-mentioned method
-    embeds the <C>DegreeAction(<A>P</A>)</C>th direct power of&nbsp;<A>G</A>
-    using the method for <C>DirectProduct</C>, and lets the permutation
-    group&nbsp;<A>P</A> act naturally on the set of residue classes modulo
-    <C>DegreeAction(<A>P</A>)</C>. The second-mentioned method restricts
-    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
-    generator of the infinite cyclic group <A>Z</A> to
-    <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
-<Example>
-<![CDATA[
-gap> G := Group(g,h);;
-gap> IsTame(G); Size(G);    
-true
-infinity
-gap> H := WreathProduct(G,AlternatingGroup(5));
-<tame rcwa group over Z with 12 generators, of size infinity>
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
-gap> Embedding(H,1);
-[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
-  <bijective rcwa mapping of Z with modulus 30, of order 12> ]
-gap> Embedding(H,2);
-[ (1,2,3,4,5), (3,4,5) ] -> 
-[ <bijective rcwa mapping of Z with modulus 5, of order 5>, 
-  <bijective rcwa mapping of Z with modulus 5, of order 3> ]
-gap> H := WreathProduct(G,Group(ClassShift(0,1)));
-<wild rcwa group over Z with 3 generators>
-gap> Support(Image(Embedding(H,1)));
-3(4)
-gap> Embedding(H,2);
-[ ClassShift(0,1) ] -> [ <wild bijective rcwa mapping of Z with modulus 4> ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
 </Section>
 
 <!-- #################################################################### -->
@@ -1155,10 +1109,10 @@ to compute the derived subgroup of a tame rcwa group.
     is a partition of the underlying ring&nbsp;<M>R</M> into a finite
     number of residue classes on which&nbsp;<A>G</A> resp. the cyclic
     group generated by&nbsp;<A>sigma</A> acts in a natural way as
-    a permutation group, and on whose elements all elements
-    of&nbsp;<A>G</A> resp. all powers of&nbsp;<A>sigma</A> are affine.
-    In the author's thesis it is shown that such a partition exists if and
-    only if <A>G</A> resp. <A>sigma</A> is tame (see Theorem&nbsp;2.5.8).<P/>
+    a permutation group, and on whose elements all elements of&nbsp;<A>G</A>
+    resp. all powers of&nbsp;<A>sigma</A> are affine. In the author's thesis
+    it is shown that such a partition exists if and only if <A>G</A> resp.
+    <A>sigma</A> is tame (see Theorem&nbsp;2.5.8). <P/>
 
     <Index Key="RespectedPartitionShort" Subkey="G">
       <C>RespectedPartitionShort</C>
@@ -1174,9 +1128,16 @@ to compute the derived subgroup of a tame rcwa group.
     </Index>
     Related attributes are <C>RespectedPartitionShort</C> and
     <C>RespectedPartitionLong</C>. They are used to denote respected
-    partitions consisting of residue classes <M>r(m)</M> where
-    <M>m</M> divides the modulus of&nbsp;<A>G</A> resp. <A>sigma</A>, resp.
-    where the modulus of <A>G</A> resp. <A>sigma</A> divides&nbsp;<M>m</M>.
+    partitions consisting of residue classes <M>r(m)</M> where <M>m</M>
+    divides the modulus of&nbsp;<A>G</A> resp. <A>sigma</A>, resp. where
+    the modulus of <A>G</A> resp. <A>sigma</A> divides&nbsp;<M>m</M>. <P/>
+
+    The permutation induced by <A>sigma</A> on a respected
+    partition&nbsp;<C>P</C> can be computed efficiently using
+    <C>PermutationOpNC(<A>sigma</A>,P,OnPoints)</C>.
+    <Index Key="PermutationOpNC" Subkey="sigma, P, OnPoints">
+      <C>PermutationOpNC</C>
+    </Index>
 <Example>
 <![CDATA[
 gap> G := Group(g,h);; Size(G);
@@ -1315,6 +1276,59 @@ Bijective rcwa mapping of Z with modulus 12
 </Example>
   </Description>
 </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:Random">
+<Heading>Getting pseudo-random elements of RCWA(Z)</Heading>
+
+<Index Key="Random" Subkey="RCWA(Z)"><C>Random</C></Index>
+There is a method for the operation <C>Random</C> for RCWA(<M>\Z</M>).
+This method is designed to be suitable for generating interesting
+examples. No particular distribution is guaranteed -- in fact, the
+author has no idea what a <Q>good</Q> random distribution on
+RCWA(<M>\Z</M>) should be.
+
+<Log>
+<![CDATA[
+gap> elm := Random(RCWA(Integers));
+<bijective rcwa mapping of Z with modulus 60>
+gap> Display(elm);
+
+Bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |                 n^f
+---------------------------------------+--------------------------------------
+   0  2  4  6  8 10                    | 3n + 2
+   1  5  9                             | -n + 2
+   3  7                                | (n - 7)/2
+  11                                   | (-n + 20)/3
+
+]]>
+</Log>
+
+The elements which are returned by this method are obtained by
+multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
+class reflections (see <Ref Func="ClassReflection" Label="r, m"/>) and
+class transpositions (see <Ref Func="ClassTransposition"
+                          Label="r1, m1, r2, m2"/>).
+These factors can be retrieved by factoring:
+
+<Log>
+<![CDATA[
+gap> Factorization(elm);
+[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
+  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
+]]>
+</Log>
+
+An auxiliary function which is used in this context for choosing the
+class transpositions is <C>ClassPairs(<A>m</A>)</C>.
+<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
+This function returns a list of all pairs of disjoint residue classes
+<M>r_1(m_1)</M>, <M>r_2(m_2)</M>, where <M>m_1, m_2 \leq m</M>.
 
 </Section>
 

@@ -52,6 +52,7 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
     Reference Manual for a description of the Info mechanism.
     For convenience: <C>RCWAInfo(</C><A>n</A><C>)</C> is a shorthand for
     <C>SetInfoLevel(InfoRCWA</C>,<A>n</A><C>)</C>.
+    <Index Key="RCWAInfo"><C>RCWAInfo</C></Index>
   </Description>
 </ManSection>
 
