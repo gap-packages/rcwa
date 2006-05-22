@@ -35,6 +35,20 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
+#M  IsSubset( Integers, Rationals ) . . . . . . . . . . . . . . . for Z and Q
+##
+InstallMethod( IsSubset, "for Integers and Rationals (RCWA)", ReturnTrue,
+               [ IsIntegers, IsRationals ], 0, ReturnFalse );
+
+#############################################################################
+##
+#M  IsSubset( Z_pi( <pi> ), Rationals ) . . . . . . . . . . .  for Z_pi and Q
+##
+InstallMethod( IsSubset, "for Z_pi and Rationals (RCWA)", ReturnTrue,
+               [ IsZ_pi, IsRationals ], 0, ReturnFalse );
+
+#############################################################################
+##
 #F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
 DeclareGlobalFunction( "SearchCycle" );
