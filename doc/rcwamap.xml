@@ -24,7 +24,8 @@ groups over the ring of integers has been given. In this section it follows
 a slightly generalized and more formal version of this definition. In the
 same time some useful notation is introduced. <P/>
 
-<Index Key="rcwa mapping" Subkey="definition"></Index> 
+<Index Key="rcwa mapping" Subkey="definition"></Index>
+
 Let <M>R</M> be an infinite euclidean domain which is not a field and all
 of whose proper residue class rings are finite. A mapping
 <M>f: R \rightarrow R</M> is called <E>residue class-wise affine</E>, or for
@@ -45,12 +46,14 @@ the restriction of the mapping <M>f</M> to the set
            f|_r(m):  r(m) -> R,  n |->  -------------------.
                                               c_r(m)
 </Verb></Alt>
-<Index Key="modulus" Subkey="definition"></Index> 
-<Index Key="rcwa mapping" Subkey="modulus"></Index>
-<Index Key="multiplier" Subkey="definition"></Index> 
-<Index Key="rcwa mapping" Subkey="multiplier"></Index>
-<Index Key="divisor" Subkey="definition"></Index> 
-<Index Key="rcwa mapping" Subkey="divisor"></Index>
+
+<Index Key="modulus" Subkey="definition">modulus</Index>
+<Index Key="rcwa mapping" Subkey="modulus">rcwa mapping</Index>
+<Index Key="multiplier" Subkey="definition">multiplier</Index>
+<Index Key="rcwa mapping" Subkey="multiplier">rcwa mapping</Index>
+<Index Key="divisor" Subkey="definition">divisor</Index>
+<Index Key="rcwa mapping" Subkey="divisor">rcwa mapping</Index>
+
 The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
 It is understood that all fractions are reduced, i.e. that
 <M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that <M>m</M> is
@@ -72,7 +75,9 @@ The set RCWA(<M>R</M>) <M>:=</M>{<M>\{ \ \sigma \in</M> Sym(<M>R</M>)
 <M>\ | \ \sigma</M> is residue class-wise affine <M>\}</M>} is closed under
 multiplication and taking inverses (this can be verified easily), hence
 forms a subgroup of Sym(<M>R</M>).
+
 <Index Key="rcwa group" Subkey="definition"></Index>
+
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or for short an <E>rcwa</E> group. <P/>
 
@@ -80,10 +85,11 @@ group, or for short an <E>rcwa</E> group. <P/>
 <Index Key="tame" Subkey="rcwa group">tame</Index>
 <Index Key="wild" Subkey="rcwa mapping">wild</Index>
 <Index Key="wild" Subkey="rcwa group">wild</Index>
-<Index Key="rcwa mapping" Subkey="tame"></Index>
-<Index Key="rcwa group" Subkey="tame"></Index>
-<Index Key="rcwa mapping" Subkey="wild"></Index>
-<Index Key="rcwa group" Subkey="wild"></Index>
+<Index Key="rcwa mapping" Subkey="tame">rcwa mapping</Index>
+<Index Key="rcwa group" Subkey="tame">rcwa group</Index>
+<Index Key="rcwa mapping" Subkey="wild">rcwa mapping</Index>
+<Index Key="rcwa group" Subkey="wild">rcwa group</Index>
+
 There are two entirely different classes of rcwa mappings and -groups.
 One of these classes comprises what could be called the <Q>trivial cases</Q>.
 The members of the other have typically a quite complicate structure and are
