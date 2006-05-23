@@ -4,7 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains tests of RCWA's functionality for rcwa mappings of
+##  and rcwa groups over the ring of integers.
+##
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> oldwarninglevel := InfoLevel(InfoWarning);;

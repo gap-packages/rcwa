@@ -4,7 +4,10 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains checks of the computations done in a preprint
+##  `On Normal Subgroups of the Group of Residue Class-Wise Affine Permuta-
+##  tions of the Integers'.
+##
 gap> START_TEST("$Id$");
 gap> nu  := ClassShift(0,1);;
 gap> t   := ClassReflection(0,1);;

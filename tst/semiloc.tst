@@ -4,7 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains tests of RCWA's functionality for rcwa mappings of
+##  and rcwa groups over semilocalizations Z_pi of the ring of integers.
+##
 gap> START_TEST("$Id$");
 gap> RcwaMapping(Z_pi(2),[[2,0,1]]);
 Rcwa mapping of Z_( 2 ): n -> 2 n
@@ -196,6 +198,49 @@ gap> LargestSourcesOfAffineMappings(a);
 [ 0(2), 1(4), 3(4) ]
 gap> LargestSourcesOfAffineMappings(One(a));
 [ Z_( 2, 3 ) ]
+gap> Display(ClassShift(Z_pi(2)));
+Tame bijective rcwa mapping of Z_( 2 ): n -> n + 1
+gap> cs := ClassShift(ResidueClass(Z_pi(2),2,0));
+ClassShift(0,2)
+gap> Display(cs);
+
+Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
+
+                n mod 2                |          n^ClassShift(0,2)
+---------------------------------------+--------------------------------------
+  0                                    | n + 2
+  1                                    | n
+
+gap> cr := ClassReflection(Z_pi(2));
+ClassReflection(0,1)
+gap> Display(cr);
+Bijective rcwa mapping of Z_( 2 ): n -> -n
+gap> Order(cr);
+2
+gap> Display(ClassReflection(ResidueClass(Z_pi(2),2,1)));
+
+Bijective rcwa mapping of Z_( 2 ) with modulus 2, of order 2
+
+                n mod 2                |        n^ClassReflection(1,2)
+---------------------------------------+--------------------------------------
+  0                                    | n
+  1                                    | -n + 2
+
+gap> ct := ClassTransposition(ResidueClass(Z_pi([2,3]),2,1),
+>                             ResidueClass(Z_pi([2,3]),6,4));
+ClassTransposition(1,2,4,6)
+gap> Display(ct);
+
+Bijective rcwa mapping of Z_( 2, 3 ) with modulus 6, of order 2
+
+                n mod 6                |    n^ClassTransposition(1,2,4,6)
+---------------------------------------+--------------------------------------
+  0 2                                  | n
+  1 3 5                                | 3 n + 1
+  4                                    | (n - 1) / 3
+
+gap> ct^2;
+IdentityMapping( Z_( 2, 3 ) )
 gap> STOP_TEST( "semiloc.tst", 100000000 );
 
 #############################################################################

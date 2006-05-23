@@ -4,7 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains tests of RCWA's functionality for rcwa mappings of
+##  and rcwa groups over polynomial rings GF(q)[x].
+##
 gap> START_TEST("$Id$");
 gap> oldwarninglevel := InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning,0);
@@ -259,6 +261,85 @@ gap> LargestSourcesOfAffineMappings(r);
   x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
 gap> LargestSourcesOfAffineMappings(One(r));
 [ GF(2)[x] ]
+gap> R := PolynomialRing(GF(2),1);;
+gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
+gap> cs1 := ClassShift(R);
+ClassShift(0*Z(2),Z(2)^0)
+gap> Display(cs1);
+Bijective rcwa mapping of GF(2)[x]: P -> P + Z(2)^0
+gap> Order(cs1);
+2
+gap> cs1^2;
+IdentityMapping( GF(2)[x] )
+gap> cs2 := ClassShift(ResidueClass(R,x,Zero(R)));
+ClassShift(0*Z(2),x)
+gap> Display(cs2);
+
+Bijective rcwa mapping of GF(2)[x] with modulus x, of order 2
+
+         P mod x          |              P^ClassShift(0*Z(2),x)
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | P + x
+ Z(2)^0                   | P
+
+gap> cs2^2;
+IdentityMapping( GF(2)[x] )
+gap> Display(cs1*cs2);
+
+Bijective rcwa mapping of GF(2)[x] with modulus x
+
+         P mod x          |                        P^f
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | P + Z(2)^0
+ Z(2)^0                   | P + x+Z(2)^0
+
+gap> (cs1*cs2)^2;
+Bijective rcwa mapping of GF(2)[x]: P -> P + x
+gap> (cs1*cs2)^4;
+IdentityMapping( GF(2)[x] )
+gap> Order(cs1*cs2);
+4
+gap> ct := ClassTransposition(ResidueClass(R,x,One(x)),
+>                             ResidueClass(R,x^2+x,x));
+ClassTransposition(Z(2)^0,x,x,x^2+x)
+gap> Order(ct);
+2
+gap> ct^2;
+IdentityMapping( GF(2)[x] )
+gap> Display(ct);
+
+Bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 2
+
+       P mod x^2+x        |     P^(ClassTransposition(Z(2)^0,x,x,x^2+x))
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | P
+ Z(2)^0   x+Z(2)^0        | (x+Z(2)^0)*P + Z(2)^0
+ x                        | (P + Z(2)^0)/(x+Z(2)^0)
+
+gap> prod1 := ct*cs1;
+<bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
+gap> RCWAInfo(3);
+gap> IsTame(prod1);
+#I  IsTame: balancedness criterion.
+#I  IsTame: loop criterion.
+false
+gap> RCWAInfo(0);
+gap> prod1^2;
+<wild bijective rcwa mapping of GF(2)[x] with modulus x^3+x>
+gap> prod1^3;
+<wild bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2+x>
+gap> prod1^4;
+<wild bijective rcwa mapping of GF(2)[x] with modulus x^5+x>
+gap> prod2 := ct*cs2;
+<bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
+gap> IsTame(prod2);
+true
+gap> Order(prod2);
+3
+gap> prod2^2;
+<bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 3>
+gap> prod2^3;
+IdentityMapping( GF(2)[x] )
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 250000000 );
 
