@@ -30,9 +30,9 @@ ming wreath products with  finite groups and with  the infinite  cyclic group
 groups and certain divisible torsion groups.  It also contains finitely gene-
 rated groups with unsolvable membership problem. The group which is generated
 by all  class transpositions  -  these are involutions  which interchange two
-disjoint  residue classes  -  is a simple group which contains  groups of all
-mentioned types  and whose class of isomorphism types of  subgroups is closed
-under the above operations.
+disjoint residue classes -  is a simple group which has subgroups of all men-
+tioned types and whose class of isomorphism types of  subgroups is closed un-
+der the above operations.
 
 Despite of the contents of the preceding paragraph,  only comparatively basic
 facts  about the structure of  residue class-wise affine groups  are known so
