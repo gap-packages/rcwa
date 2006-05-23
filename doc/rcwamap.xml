@@ -58,10 +58,10 @@ chosen multiplicatively minimal. Apart from the restrictions imposed
 by the condition that the image of any residue class <M>r(m)</M>
 under&nbsp;<M>f</M> must be a subset of <M>R</M> and that one cannot
 divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>, <M>b_{r(m)}</M> and
-<M>c_{r(m)}</M> can be any ring elements. The <E>multiplier</E>
-of&nbsp;<M>f</M> is the lcm of the coefficients <M>a_{r(m)}</M> in the
-numerators and the <E>divisor</E> of&nbsp;<M>f</M> is the lcm of the
-coefficients <M>c_{r(m)}</M> in the denominators. <P/>
+<M>c_{r(m)}</M> can be any ring elements. The lcm of the coefficients
+<M>a_{r(m)}</M> in the numerators is called the <E>multiplier</E>
+of&nbsp;<M>f</M>, and the lcm of the coefficients <M>c_{r(m)}</M>
+in the denominators is called the <E>divisor</E> of&nbsp;<M>f</M>. <P/>
 
 The <E>product</E> <M>f \cdot g</M> of some rcwa mappings <M>f</M>
 and&nbsp;<M>g</M> is their composition as mappings, where <M>f</M>
@@ -137,9 +137,9 @@ Surjective rcwa mapping of Z with modulus 2
 
 gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 <rcwa mapping of Z with modulus 4>
-gap> IsBijective(a); # Check whether this is a permutation.
+gap> IsBijective(a);
 true
-gap> Display(a);
+gap> Display(a); # This is Collatz' permutation:
 
 Bijective rcwa mapping of Z with modulus 4
 
@@ -273,8 +273,7 @@ transpositions (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
   <Description>
     For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
     is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
-    multiplier&nbsp;<M>p</M> (see <Ref Attr="Multiplier" Label="f"/>) and
-    divisor&nbsp;2 (see <Ref Attr="Divisor" Label="f"/>).
+    multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
 <Example>
 <![CDATA[
 gap> Display(PrimeSwitch(3));
@@ -405,8 +404,9 @@ necessary for understanding this manual or for using this package.
 
 <Example>
 <![CDATA[
-gap> R := PolynomialRing(GF(2),1); x := Indeterminate(GF(2),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> RcwaMapping(R,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));      # (a)
 <rcwa mapping of GF(2)[x] with modulus x+Z(2)^0>
 gap> RcwaMapping(Z_pi(2),[[1/3,0,1]]);                               # (b)
@@ -432,8 +432,6 @@ gap> Cycle(last,ResidueClass(0,2));
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Index Key="View" Subkey="f"><C>View</C></Index>
 <Index Key="Display" Subkey="f"><C>Display</C></Index>
@@ -462,18 +460,21 @@ the elements of the underlying ring is so. There is also a method for
     into class shifts, class reflections, class transpositions and prime
     switches is printed (cp. <Ref Attr="FactorizationIntoCSCRCT"
     Label="g"/>).
-    For rcwa mappings with modulus larger than&nbsp;1, an indentation by
+    For rcwa mappings with modulus greater than&nbsp;1, an indentation by
     <A>Indentation</A> characters can be specified by setting this option
     value accordingly.
 <Example>
 <![CDATA[
-gap> Print(LaTeXObj(a));
+gap> Print(LaTeXObj(T));
 n \ \longmapsto \
 \begin{cases}
-  \frac{3n}{2}     & \text{if} \ n \in 0(2), \\
-  \frac{3n + 1}{4} & \text{if} \ n \in 1(4), \\
-  \frac{3n - 1}{4} & \text{if} \ n \in 3(4).
+  \frac{n}{2}      & \text{if} \ n \in 0(2), \\
+  \frac{3n + 1}{2} & \text{if} \ n \in 1(2).
 \end{cases}
+]]>
+</Example>
+<Example>
+<![CDATA[
 gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
       &\nu_{8(12)} \cdot \nu_{0(12)}^{-1}
  \cdot \tau_{0(12),6(12)} \cdot \tau_{0(12),4(12)}
@@ -502,6 +503,7 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 
 <Index Key="rcwa mapping" Subkey="arithmetic operations">rcwa mapping</Index>
 <Index Key="Order" Subkey="sigma"><C>Order</C></Index>
+<Index Key="IsTame" Subkey="f"><C>IsTame</C></Index> <P/>
 
 Checking whether two rcwa mappings are equal is cheap.
 Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
@@ -516,10 +518,6 @@ memory required for storing an rcwa mapping is proportional to its modulus.
 Whether a given mapping is tame or wild can be determined by the operation
 <C>IsTame</C>. There are methods for <C>Order</C>, which can not only
 compute a finite order, but can also detect infinite order.
-
-<Index Key="IsTame" Subkey="f"><C>IsTame</C></Index> <P/>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
