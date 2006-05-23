@@ -1363,8 +1363,6 @@ true
 
 </Section>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <!-- #################################################################### -->
 
 <Section Label="sec:NonBijectiveMappings">
@@ -1381,16 +1379,10 @@ true
   <Description>
 <Example>
 <![CDATA[
-gap> RcwaMapping([[2,0,1]]); Display(RightInverse(last));
+gap> twice := RcwaMapping([[2,0,1]]);
 Rcwa mapping of Z: n -> 2n
-
-Rcwa mapping of Z with modulus 2
-
-                n mod 2                |                 n^f
----------------------------------------+--------------------------------------
-  0                                    | n/2
-  1                                    | n
-
+gap> twice * RightInverse(twice);
+IdentityMapping( Integers )
 ]]>
 </Example>
   </Description>
@@ -1406,7 +1398,10 @@ Rcwa mapping of Z with modulus 2
     must form a partition of their source.
 <Example>
 <![CDATA[
-gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),RcwaMapping([[2,1,1]])));
+gap> twice := RcwaMapping([[2,0,1]]); twiceplus1 := RcwaMapping([[2,1,1]]);
+Rcwa mapping of Z: n -> 2n
+Rcwa mapping of Z: n -> 2n + 1
+gap> Display(CommonRightInverse(twice,twiceplus1));
 
 Rcwa mapping of Z with modulus 2
 
@@ -1525,8 +1520,6 @@ gap> List( [ T, a ], GuessedDivergence );
 </ManSection>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
