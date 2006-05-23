@@ -80,6 +80,10 @@ group, or for short an <E>rcwa</E> group. <P/>
 <Index Key="tame" Subkey="rcwa group">tame</Index>
 <Index Key="wild" Subkey="rcwa mapping">wild</Index>
 <Index Key="wild" Subkey="rcwa group">wild</Index>
+<Index Key="rcwa mapping" Subkey="tame"></Index>
+<Index Key="rcwa group" Subkey="tame"></Index>
+<Index Key="rcwa mapping" Subkey="wild"></Index>
+<Index Key="rcwa group" Subkey="wild"></Index>
 There are two entirely different classes of rcwa mappings and -groups.
 One of these classes comprises what could be called the <Q>trivial cases</Q>.
 The members of the other have typically a quite complicate structure and are
@@ -840,25 +844,28 @@ gap> List( [ a, a*b, (a*b)^2, Comm(a,b) ], Sign );
 <Section Label="sec:PropertiesDerivedFromCoefficients">
 <Heading>Attributes and properties derived from the coefficients</Heading>
 
-A number of basic attributes and properties of an rcwa mapping are derived
-immediately from the coefficients of its affine partial mappings. <P/>
-
 <Index Key="Multiplier" Subkey="f"><C>Multiplier</C></Index>
 <Index Key="Mult" Subkey="f"><C>Mult</C></Index>
 <Index Key="Divisor" Subkey="f"><C>Divisor</C></Index>
 <Index Key="Div" Subkey="f"><C>Div</C></Index>
 <Index Key="PrimeSet" Subkey="f"><C>PrimeSet</C></Index>
+<Index Key="integral" Subkey="definition"><C>integral</C></Index>
+<Index Key="rcwa mapping" Subkey="integral"><C>integral</C></Index>
 <Index Key="IsIntegral" Subkey="f"><C>IsIntegral</C></Index>
+<Index Key="balanced" Subkey="definition"><C>balanced</C></Index>
+<Index Key="rcwa mapping" Subkey="balanced"><C>balanced</C></Index>
 <Index Key="IsBalanced" Subkey="f"><C>IsBalanced</C></Index>
+<Index Key="rcwa mapping" Subkey="class-wise order-preserving">
+  <C>class-wise order-preserving</C>
+</Index>
 <Index Key="IsClassWiseOrderPreserving" Subkey="f">
   <C>IsClassWiseOrderPreserving</C>
 </Index>
 
-In the notation used in the definition of an rcwa mapping, the
-<E>multiplier</E> is the lcm of the coefficients <M>a_{r(m)}</M> in the
-numerators. Similarly, the <E>divisor</E> is the lcm of the coefficients
-<M>c_{r(m)}</M> in the denominators. These two values are stored as
-attributes <C>Multiplier</C> and <C>Divisor</C>, or in short <C>Mult</C>
+A number of basic attributes and properties of an rcwa mapping are derived
+immediately from the coefficients of its affine partial mappings. This holds
+for example for the multiplier and the divisor. These two values are stored
+as attributes <C>Multiplier</C> and <C>Divisor</C>, or in short <C>Mult</C>
 resp. <C>Div</C>. The <E>prime set</E> of an rcwa mapping is the set of
 prime divisors of the product of its modulus and its multiplier.
 It is stored as an attribute <C>PrimeSet</C>.
@@ -866,10 +873,12 @@ An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1.
 An rcwa mapping is called <E>balanced</E> if its multiplier and divisor
 have the same prime divisors. An integral mapping has the property
 <C>IsIntegral</C> and a balanced mapping has the property <C>IsBalanced</C>.
-An rcwa mapping of the ring of integers or one of its semilocalizations is
-called <E>class-wise order-preserving</E> if and only if all coefficients
+An rcwa mapping of the ring of integers or of one of its semilocalizations
+is called <E>class-wise order-preserving</E> if and only if all coefficients
 <M>a_{r(m)}</M> in the numerators of the affine partial mappings are
 positive. The corresponding property is <C>IsClassWiseOrderPreserving</C>.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -990,12 +999,12 @@ gap> List([1..3],k->FixedPointsOfAffinePartialMappings(T^k));
   <C>SetOnWhichMappingIsClassWise</C>
 </Index>
 
-There are attributes <C>SetOnWhichMappingIsClassWise
-&obrace;OrderPreserving|Constant|OrderReversing&cbrace;</C> which store the
-union of the residue classes (mod&nbsp;<C>Mod(<A>f</A>)</C>) on which an
-rcwa mapping&nbsp;<A>f</A> of&nbsp;<M>\Z</M> or a semilocalization
-thereof is class-wise order-preserving, class-wise constant resp.
-class-wise order-reversing.
+There are attributes <C>SetOnWhichMappingIsClassWise</C>
+(<C>-OrderPreserving</C>, <C>-Constant</C>, <C>-OrderReversing</C>) which
+store the union of the residue classes (mod&nbsp;<C>Mod(<A>f</A>)</C>) on
+which an rcwa mapping&nbsp;<A>f</A> of&nbsp;<M>\Z</M> or of
+a semilocalization thereof is class-wise order-preserving, class-wise
+constant resp. class-wise order-reversing.
 
 <Example>
 <![CDATA[
@@ -1037,7 +1046,7 @@ gap> SetOnWhichMappingIsClassWiseOrderReversing(ClassReflection(13,17));
       </Item>
     </Enum>
     The assignment of the residue classes (mod&nbsp;<M>m</M>) to the
-    vertices of the graph is given by the ordering of the residues in
+    vertices of the graph corresponds to the ordering of the residues in
     <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>.
     The result is returned in the format used by the package
     <Package>GRAPE</Package>.
@@ -1117,7 +1126,7 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
       (See LaTeX version of the manual.)
     </Alt>
     The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
-    columns of the matrix is given by the ordering of the residues in
+    columns of the matrix corresponds to the ordering of the residues in
     <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>. <P/>
 
     The transition matrix is a weighted adjacency matrix of the corresponding
@@ -1125,32 +1134,10 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
     The sums of the rows of a transition matrix are always equal to&nbsp;1.
 <Example>
 <![CDATA[
-gap> Display(TransitionMatrix(a,5));
-[ [  1/2,  1/4,    0,    0,  1/4 ],
-  [    0,  1/4,    0,  1/4,  1/2 ],
-  [  1/4,    0,    0,  3/4,    0 ],
-  [  1/4,    0,  3/4,    0,    0 ],
-  [    0,  1/2,  1/4,    0,  1/4 ] ]
-gap> Display(TransitionMatrix(T,19)*One(GF(7)));
- 4 . . . . . . . . . 4 . . . . . . . .
- . . 4 . . . . . . . 4 . . . . . . . .
- . 4 . . . . . . . . . . . 4 . . . . .
- . . . . . 4 . . . . . 4 . . . . . . .
- . . 4 . . . . . . . . . . . . . 4 . .
- . . . . . . . . 4 . . . 4 . . . . . .
- 4 . . 4 . . . . . . . . . . . . . . .
- . . . . . . . . . . . 4 . 4 . . . . .
- . . . 4 4 . . . . . . . . . . . . . .
- . . . . . . . . . . . . . . 1 . . . .
- . . . . . 4 4 . . . . . . . . . . . .
- . . . . . . . . . . . . . . . 4 . 4 .
- . . . . . . 4 . . 4 . . . . . . . . .
- . 4 . . . . . . . . . . . . . . 4 . .
- . . . . . . . 4 . . . . 4 . . . . . .
- . . . . 4 . . . . . . . . . . . . 4 .
- . . . . . . . . 4 . . . . . . 4 . . .
- . . . . . . . 4 . . . . . . . . . . 4
- . . . . . . . . . 4 . . . . . . . . 4
+gap> Display(TransitionMatrix(T^3,3));
+[ [  1/8,  1/4,  5/8 ],
+  [    0,  1/4,  3/4 ],
+  [    0,  3/8,  5/8 ] ]
 ]]>
 </Example>
   </Description>
@@ -1181,18 +1168,17 @@ gap> Sources(nu*nu^a);
 
 <ManSection>
   <Attr Name="Sinks" Arg="f"  Label = "f"/>
+  <Returns>
+    (See <Ref Attr="Sources" Label="f"/>, with <Q>outgoing</Q> replaced
+    by <Q>ingoing</Q>.)
+  </Returns>
   <Description>
-    See <Ref Attr="Sources" Label="f"/>, with <Q>outgoing</Q> replaced
-    by <Q>ingoing</Q>.
 <Example>
 <![CDATA[
 gap> [ Sinks(kappa), Sinks(a) ];
 [ [  ], [  ] ]
 gap> Sinks(nu*nu^a);
 [ 3(6) ]
-gap> Sinks(Product(List([[1,4,2,4],[1,4,3,4],[3,6,7,12],[2,4,3,6]],
->                       ClassTransposition)));
-[ 3(6) U 1(12) ]
 ]]>
 </Example>
   </Description>
@@ -1208,8 +1194,6 @@ gap> Sinks(Product(List([[1,4,2,4],[1,4,3,4],[3,6,7,12],[2,4,3,6]],
   <Description>
 <Example>
 <![CDATA[
-gap> Loops(kappa);
-[ 10(12) ]
 gap> Loops(a);
 [ 0(4), 1(4), 3(4) ]
 gap> Loops(nu*nu^a);
@@ -1220,8 +1204,6 @@ gap> Loops(nu*nu^a);
 </ManSection>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -1243,9 +1225,8 @@ gap> Loops(nu*nu^a);
   </Returns>
   <Description>
     To save memory when computing long trajectories containing huge
-    iterates, the reduction (mod&nbsp;<A>m</A>) is done immediately after
-    any iteration.
-
+    iterates, the reduction (mod&nbsp;<A>m</A>) is done each time before
+    storing an iterate.
     In place of the ring element&nbsp;<A>n</A>, the methods also accept
     a finite set of ring elements or a union of residue classes.
 <Example>
