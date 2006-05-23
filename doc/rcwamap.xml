@@ -45,32 +45,41 @@ the restriction of the mapping <M>f</M> to the set
            f|_r(m):  r(m) -> R,  n |->  -------------------.
                                               c_r(m)
 </Verb></Alt>
-The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
+<Index Key="modulus" Subkey="definition"></Index> 
 <Index Key="rcwa mapping" Subkey="modulus"></Index>
+<Index Key="multiplier" Subkey="definition"></Index> 
+<Index Key="rcwa mapping" Subkey="multiplier"></Index>
+<Index Key="divisor" Subkey="definition"></Index> 
+<Index Key="rcwa mapping" Subkey="divisor"></Index>
+The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
 It is understood that all fractions are reduced, i.e. that
-<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that
-<M>m</M> is chosen multiplicatively minimal. <P/>
+<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that <M>m</M> is
+chosen multiplicatively minimal. Apart from the restrictions imposed
+by the condition that the image of any residue class <M>r(m)</M>
+under&nbsp;<M>f</M> must be a subset of <M>R</M> and that one cannot
+divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>, <M>b_{r(m)}</M> and
+<M>c_{r(m)}</M> can be any ring elements. The <E>multiplier</E>
+of&nbsp;<M>f</M> is the lcm of the coefficients <M>a_{r(m)}</M> in the
+numerators and the <E>divisor</E> of&nbsp;<M>f</M> is the lcm of the
+coefficients <M>c_{r(m)}</M> in the denominators. <P/>
 
-Apart from the restrictions imposed by the condition that the image of any
-residue class <M>r(m)</M> under <M>f</M> must be a subset of <M>R</M> and
-that one cannot divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>,
-<M>b_{r(m)}</M> and <M>c_{r(m)}</M> can be any ring elements. <P/>
+The <E>product</E> <M>f \cdot g</M> of some rcwa mappings <M>f</M>
+and&nbsp;<M>g</M> is their composition as mappings, where <M>f</M>
+is applied first. The <E>inverse</E> of a bijective rcwa mapping is
+its inverse mapping. <P/>
 
-When talking about the <E>product</E> <M>f \cdot g</M> of some rcwa mappings
-<M>f</M> and&nbsp;<M>g</M> it is always meant their composition as mappings,
-where <M>f</M> is applied first. By the inverse of a bijective rcwa mapping
-it is meant its inverse mapping. <P/>
-
-The set RCWA(<M>R</M>) <M>\ := \ </M> { <M>\{ \ \sigma \in</M> Sym(<M>R</M>)
-<M>\ | \ \sigma</M> is residue class-wise affine <M>\}</M> } is closed under
+The set RCWA(<M>R</M>) <M>:=</M>{<M>\{ \ \sigma \in</M> Sym(<M>R</M>)
+<M>\ | \ \sigma</M> is residue class-wise affine <M>\}</M>} is closed under
 multiplication and taking inverses (this can be verified easily), hence
 forms a subgroup of Sym(<M>R</M>).
 <Index Key="rcwa group" Subkey="definition"></Index>
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or for short an <E>rcwa</E> group. <P/>
 
-<Index Key="tame">tame rcwa mapping</Index>
-<Index Key="tame">tame rcwa group</Index>
+<Index Key="tame" Subkey="rcwa mapping">tame</Index>
+<Index Key="tame" Subkey="rcwa group">tame</Index>
+<Index Key="wild" Subkey="rcwa mapping">wild</Index>
+<Index Key="wild" Subkey="rcwa group">wild</Index>
 There are two entirely different classes of rcwa mappings and -groups.
 One of these classes comprises what could be called the <Q>trivial cases</Q>.
 The members of the other have typically a quite complicate structure and are
