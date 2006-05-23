@@ -22,11 +22,22 @@ mapping f to the set r(m) = {r + km | k in Z} is given by
            f|_r(m):  r(m) -> Z,  n |->  -------------------.
                                               c_r(m)
 
-Residue class-wise affine groups are countable.   "Many" of them act multiply
-transitively on  Z  or on subsets thereof.  Only relatively basic facts about
-their structure are known so far. This package is intended to serve as a tool
-for obtaining a better understanding of their rich and interesting group
-theoretical and combinatorial structure.
+Residue class-wise affine groups are countable. The class of groups which can
+faithfully be represented as residue class-wise affine groups is closed under
+forming wreath products with finite groups and with the infinite cyclic group
+(Z,+).  It includes  free groups  of any rank,  all  free products  of finite
+groups and certain divisible torsion groups.  It also contains finitely gene-
+rated groups with unsolvable membership problem. The group which is generated
+by all  class transpositions  -  these are involutions  which interchange two
+disjoint  residue classes  -  is a simple group which contains  groups of all
+mentioned types  and whose class of isomorphism types of  subgroups is closed
+under the above operations.
+
+Residue class-wise affine groups  often act multiply transitively  on Z or on
+subsets thereof.  Only relatively basic facts about their structure are known
+so far.  This package  is intended to serve as  a tool for obtaining a better
+understanding of their rich and interesting  group theoretical and combinato-
+rial structure.
 
 Residue class-wise affine groups can be generalized in a natural way to  euc-
 lidean rings other than the integers. While this package undoubtedly provides
