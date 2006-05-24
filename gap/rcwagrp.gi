@@ -819,7 +819,8 @@ InstallOtherMethod( Multiplier,
     thin  := List(orbs,o->First(o,cl->Density(cl)=Minimum(List(o,Density))));
     thick := List(orbs,o->First(o,cl->Density(cl)=Maximum(List(o,Density))));
     quot  := List([1..Length(orbs)],
-                  i->Modulus(thin[i])/Modulus(thick[i]));
+                  i->Lcm(Mod(thin[i]),Mod(thick[i]))/Mod(thin[i])
+                    *Lcm(Mod(thin[i]),Mod(thick[i]))/Mod(thick[i]));
     int   := List(quot,q->Length(AllResidues(R,q)));
     return quot[Position(int,Maximum(int))];
   end );
