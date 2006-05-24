@@ -477,15 +477,17 @@ gap> phi := EpimorphismFromFreeGroup(G);
 [ a, nu ] -> [ a, nu ]
 gap> F := Source(phi);
 <free group on the generators [ a, nu ]>
-gap> w := Comm(F.1,Comm(F.1,F.2^2));
-a^-1*nu^-2*a^-1*nu^2*a*nu^-2*a*nu^2
-gap> f := w^phi;
-<bijective rcwa mapping of Z with modulus 16>
-gap> pre := PreImagesRepresentative(phi,f);
-a^-2*nu^-2*a^2*nu^2
-gap> one := w*pre^-1; # pre <> w --> We have a nontrivial relation!
-a^-1*nu^-2*a^-1*nu^2*a*nu^-2*a^-1*nu^2*a^2
-gap> one^phi;
+gap> w := Comm(F.1^2*F.2^4,F.1*F.2^3);
+nu^-4*a^-2*nu^-3*a*nu^4*a*nu^3
+gap> g := w^phi;
+<bijective rcwa mapping of Z with modulus 8>
+gap> pre := PreImagesRepresentative(phi,g);
+nu^-4*a^-1*nu^-1*a^-1*nu^3*a*nu^-1*a*nu^3
+gap> rel := w/pre; # pre <> w --> We have a nontrivial relation!
+nu^-4*a^-2*nu^-3*a*nu^5*a^-1*nu^-3*a*nu*a*nu^4
+gap> rel := rel^(F.2^-4*F.1^-1); # Cyclically reduced form.
+a^-1*nu^-3*a*nu^5*a^-1*nu^-3*a*nu
+gap> rel^phi;
 IdentityMapping( Integers )
 ]]>
 </Example>
@@ -510,26 +512,18 @@ IdentityMapping( Integers )
     For a slightly more concise description see there.
 <Example>
 <![CDATA[
-gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
-gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
-gap> SetName(g,"g"); SetName(h,"h");
-gap> G := Group(g,h);
-<rcwa group over Z with 2 generators>
-gap> phi := EpimorphismFromFreeGroup(G);
-[ g, h ] -> [ g, h ]
-gap> f := g^3*h*g^-4*h^5*g;
-<bijective rcwa mapping of Z with modulus 12>
-gap> pre := PreImagesRepresentatives(phi,f);
-[ g^3*h*g^3*h^5*g, g^-3*h^-4*g^-3*h^-1*g*h*g, g^3*h*g^-4*h^5*g ]
-gap> List(pre,Length);
-[ 13, 14, 14 ]
-gap> Set(List(pre,w->w^phi)) = [f];
-true
-gap> rel := pre[1]*pre[2]^-1;
-g^3*h*g^3*h^4*g^-1*h*g^3*h^4*g^3
-gap> Length(rel);
-23
-gap> rel^phi; # A relation of length 23.
+gap> w := Comm(F.1*F.2,Comm(F.1,F.2^2)); # We continue the example above.
+nu^-1*a^-1*nu^-2*a^-1*nu^2*a^2*nu*a^-1*nu^-2*a*nu^2
+gap> g := w^phi;
+<bijective rcwa mapping of Z with modulus 16>
+gap> pre := PreImagesRepresentatives(phi,g);
+[ nu^-1*a^-2*nu^-2*a*nu^2*a*nu^-1*a^-1*nu^2*a,
+  nu^-1*a^-1*nu^-2*a^-1*nu^2*a^2*nu^-1*a^-1*nu^2*a ]
+gap> rel := pre[1]/pre[2];
+nu^-1*a^-2*nu^-2*a*nu^2*a^-1*nu^-2*a*nu^2*a*nu
+gap> rel := (rel^(F.2^-1*F.1^-1))^-1; # Cyclically reduced form.
+nu^-2*a^-1*nu^2*a*nu^-2*a^-1*nu^2*a
+gap> rel^phi;
 IdentityMapping( Integers )
 ]]>
 </Example>
@@ -651,32 +645,32 @@ gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
     of the word sometimes takes much more time than its determination.
     For this reason, <C>RepresentativeActionPreImage</C> is sometimes
     much faster than <C>RepresentativeAction</C>.
-    The used algorithm is not inefficient, as the last two of the
-    examples below suggest. It is based on computing balls of
-    increasing radius around <A>src</A> and <A>dest</A> until they
-    intersect nontrivially. It avoids multiplying rcwa mappings.
+    The used algorithm is based on computing balls of increasing radius
+    around <A>src</A> and <A>dest</A> until they intersect nontrivially.
+    It avoids multiplying rcwa mappings.
     Of course the other warnings given in the description of
     <Ref Meth="RepresentativeAction" Label="G, src, dest, act"/>
     apply to this operation as well.
 <Example>
 <![CDATA[
-gap> F := FreeGroup("a","b");;
-gap> G := Group(a,b);; phi := EpimorphismByGenerators(F,G);;
-gap> RepresentativeActionPreImage(G,[5,4,9],[13,5,4],OnTuples,F);
-a^2*b*a*b*a^2
-gap> w := RepresentativeActionPreImage(G,[4,7,9],[4,5,8],OnPoints,F);
-a^-2*b^-1*a^-2*b
-gap> w^phi;
-<bijective rcwa mapping of Z with modulus 512>
-gap> last = RepresentativeAction(G,[4,7,9],[4,5,8],OnPoints);
-true
-gap> [4,7,9]^(w^phi);
-[ 4, 5, 8 ]
-gap> RepresentativeActionPreImage(G,[37,4,9],[4,51,8],OnPoints,F); last^phi;
-b^-1*a^-1*b*a^-4*b
-<bijective rcwa mapping of Z with modulus 512>
-gap> RepresentativeActionPreImage(G,[37,4,9],[4,51,8],OnTuples,F);
-a^-2*b*a*b^-1*a^2*b*a^-1*b*a*b^-1*a^-1*b*a^-2*b^-1
+gap> g := ClassTransposition(0,2,1,2)*ClassShift(0,3);;      SetName(g,"g");
+gap> h := ClassTransposition(3,4,4,6)*ClassReflection(0,4);; SetName(h,"h");
+gap> G := Group(g,h);;
+gap> F := FreeGroup("g","h");; phi := EpimorphismByGenerators(F,G);;
+gap> w1 := RepresentativeActionPreImage(G,[1,2,3,4],[2,3,5,7],OnPoints,F);
+h^-1*g^3*h^-1*g^-1*h^-2
+gap> elm1 := w1^phi;
+<bijective rcwa mapping of Z with modulus 864>
+gap> [1,2,3,4]^elm1; # check
+[ 2, 3, 5, 7 ]
+gap> List([1,2,3,4],n->n^elm1); # `OnPoints' permits reordering
+[ 2, 7, 3, 5 ]
+gap> w2 := RepresentativeActionPreImage(G,[1,2,3,4],[2,3,5,7],OnTuples,F);
+g*h^-1*g^-1*h^-1*g^-2*h*g^-2*h^2*g^-1*h*g
+gap> elm2 := w2^phi;
+<bijective rcwa mapping of Z with modulus 432>
+gap> List([1,2,3,4],n->n^elm2); # `OnTuples' does not permit reordering
+[ 2, 3, 5, 7 ]
 ]]>
 </Example>
   </Description>
@@ -867,8 +861,8 @@ the lists <C>List(ShortCycles(<A>f</A>,<A>maxlng</A>),Length)</C> and
 <Example>
 <![CDATA[
 gap> ShortCycles(a,5);
-[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 6, 9, 7, 5 ], 
-  [ -9, -7, -5, -4, -6 ] ]
+[ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 5, 7, 9, 6 ],
+  [ -9, -6, -4, -5, -7 ] ]
 ]]>
 </Example>
 
@@ -889,7 +883,7 @@ gap> rep := RepresentativeAction(RCWA(Integers),
 >                                ClassTransposition(0,2,1,4),
 >                                ClassTransposition(1,2,0,4));
 <bijective rcwa mapping of Z with modulus 32>
-gap> ClassTransposition(0,2,1,4)^rep = ClassTransposition(1,2,0,4); # check.
+gap> ClassTransposition(0,2,1,4)^rep = ClassTransposition(1,2,0,4); # check
 true
 gap> Factorization(rep);
 [ ClassTransposition(0,2,3,16), ClassTransposition(1,4,11,16),
@@ -955,9 +949,6 @@ permutation group, regardless of whether they are tame or not
     image of&nbsp;<A>f</A> and fixes its complement pointwisely.
 <Example>
 <![CDATA[
-gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
->         Restriction(u,RcwaMapping([[2,1,1]])));
-IdentityMapping( Integers )
 gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));
 <wild rcwa group over Z with 2 generators>
 gap> Support(F2tilde);
