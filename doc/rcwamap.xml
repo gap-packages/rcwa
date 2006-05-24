@@ -414,9 +414,9 @@ necessary for understanding this manual or for using this package.
 
 <Example>
 <![CDATA[
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
-gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> RcwaMapping(R,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));      # (a)
 <rcwa mapping of GF(2)[x] with modulus x+Z(2)^0>
 gap> RcwaMapping(Z_pi(2),[[1/3,0,1]]);                               # (b)
@@ -539,7 +539,7 @@ gap> ForAll([ClassShift(0,1),ClassReflection(0,1),
 >            ClassTransposition(0,2,1,2)],IsTame);
 true
 gap> T^2*a*T*a^-3;
-<rcwa mapping of Z with modulus 288>
+<surjective rcwa mapping of Z with modulus 288>
 gap> (ClassShift(1,3)*ClassReflection(2,7))^1000;
 <bijective rcwa mapping of Z with modulus 21>
 ]]>
