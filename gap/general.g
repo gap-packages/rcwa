@@ -35,28 +35,9 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
-#M  IsSubset( Integers, Rationals ) . . . . . . . . . . . . . . . for Z and Q
-##
-InstallMethod( IsSubset, "for Integers and Rationals (RCWA)", ReturnTrue,
-               [ IsIntegers, IsRationals ], 0, ReturnFalse );
-
-#############################################################################
-##
-#M  IsSubset( Z_pi( <pi> ), Rationals ) . . . . . . . . . . .  for Z_pi and Q
-##
-InstallMethod( IsSubset, "for Z_pi and Rationals (RCWA)", ReturnTrue,
-               [ IsZ_pi, IsRationals ], 0, ReturnFalse );
-
-#############################################################################
-##
 #F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
 DeclareGlobalFunction( "SearchCycle" );
-
-#############################################################################
-##
-#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
-##
 InstallGlobalFunction( SearchCycle,
 
   function ( l )
@@ -78,13 +59,9 @@ InstallGlobalFunction( SearchCycle,
 #############################################################################
 ##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
-##
-DeclareOperation( "AllProducts", [ IsListOrCollection, IsPosInt ] );
-
-#############################################################################
-##
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
+DeclareOperation( "AllProducts", [ IsListOrCollection, IsPosInt ] );
 InstallMethod( AllProducts,
                "for lists (RCWA)", ReturnTrue, [ IsList, IsPosInt ], 0,
                function ( l, k ) return List(Tuples(l,k),Product); end );
@@ -94,11 +71,6 @@ InstallMethod( AllProducts,
 #F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
 ##
 DeclareGlobalFunction( "GeneratorsAndInverses" );
-
-#############################################################################
-##
-#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
-##
 InstallGlobalFunction( GeneratorsAndInverses,
                        G->Concatenation(GeneratorsOfGroup(G),
                                         List(GeneratorsOfGroup(G),g->g^-1)));
@@ -109,18 +81,12 @@ InstallGlobalFunction( GeneratorsAndInverses,
 #F  EpimorphismByGeneratorsNC( <F>, <G> )
 ##
 DeclareGlobalFunction( "EpimorphismByGenerators" );
-DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
-
-#############################################################################
-##
-#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
-#F  EpimorphismByGeneratorsNC( <F>, <G> )
-##
 InstallGlobalFunction( EpimorphismByGenerators,
   function ( G, H )
     return GroupHomomorphismByImages(G,H,GeneratorsOfGroup(G),
                                          GeneratorsOfGroup(H));
   end );
+DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
 InstallGlobalFunction( EpimorphismByGeneratorsNC,
   function ( G, H )
     return GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
@@ -156,17 +122,13 @@ InstallMethod( IsCyclic, "default method for groups (RCWA)", true,
 
 #############################################################################
 ##
-#M  AbelianInvariants( <G> ) . . .  for groups knowing an iso. to a pcp group
+#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a pcp group
+#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
 ##
 InstallMethod( AbelianInvariants,
                "for groups knowing an isomorphism to a pcp group", true,
                [ IsGroup and HasIsomorphismPcpGroup ], 0,
                G -> AbelianInvariants(Image(IsomorphismPcpGroup(G))) );
-
-#############################################################################
-##
-#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
-##
 InstallMethod( AbelianInvariants,
                "for groups knowing an isomorphism to a permutation group",
                true, [ IsGroup and HasIsomorphismPermGroup ], 0,
