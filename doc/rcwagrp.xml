@@ -386,10 +386,10 @@ gap> Size(G);
   <Description>
 <Example>
 <![CDATA[
-gap> IsomorphismPermGroup(Group(g1,g2));
-[ <bijective rcwa mapping of Z with modulus 2, of order 2>, 
-  <bijective rcwa mapping of Z with modulus 3, of order 3> ] -> 
-[ (1,6)(2,3)(4,5), (1,5,6)(2,3,4) ]
+gap> IsomorphismPermGroup(Group(ClassTransposition(0,2,1,2),
+>                               ClassTransposition(0,3,1,3)));
+[ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ] -> 
+[ (1,2)(3,4)(5,6), (1,2)(4,5) ]
 ]]>
 </Example>
   </Description>
@@ -406,29 +406,35 @@ gap> IsomorphismPermGroup(Group(g1,g2));
   <Description>
 <Example>
 <![CDATA[
-gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
-gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
-gap> SetName(g,"g"); SetName(h,"h");
-gap> phi := IsomorphismMatrixGroup(Group(g,h));;
+gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(2,4));
+<rcwa group over Z with 2 generators>
+gap> phi := IsomorphismMatrixGroup(G);;
 gap> FieldOfMatrixGroup(Image(phi));
 Rationals
 gap> DegreeOfMatrixGroup(Image(phi));
-14
+10
 gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
- . . . . . . 1 1 . . . . . .
- . . . . . . . 1 . . . . . .
- . . . . . . . . . . 3 . . .
- . . . . . . . . . . . 1 . .
- . . . . . . . . 1 3 . . . .
- . . . . . . . . . 1 . . . .
- . . . . . . . . . . . . 3 .
- . . . . . . . . . . . . . 1
- . . 1 4 . . . . . . . . . .
- . . . 1 . . . . . . . . . .
- 2 2 . . . . . . . . . . . .
- . 1 . . . . . . . . . . . .
- . . . . 2 2 . . . . . . . .
- . . . . . 1 . . . . . . . .
+ . . . . . . 3 2 . .
+ . . . . . . . 1 . .
+ . . . . . . . . 3 2
+ . . . . . . . . . 1
+ . . . . 1 . . . . .
+ . . . . . 1 . . . .
+ 2 1 . . . . . . . .
+ . 1 . . . . . . . .
+ . . 2 1 . . . . . .
+ . . . 1 . . . . . .
+gap> Display(GeneratorsOfGroup(Image(phi))[2]*One(GF(5)));
+ 1 . . . . . . . . .
+ . 1 . . . . . . . .
+ . . 1 4 . . . . . .
+ . . . 1 . . . . . .
+ . . . . 1 . . . . .
+ . . . . . 1 . . . .
+ . . . . . . 1 . . .
+ . . . . . . . 1 . .
+ . . . . . . . . 1 .
+ . . . . . . . . . 1
 ]]>
 </Example>
   </Description>
@@ -504,6 +510,9 @@ IdentityMapping( Integers )
     For a slightly more concise description see there.
 <Example>
 <![CDATA[
+gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
+gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
+gap> SetName(g,"g"); SetName(h,"h");
 gap> G := Group(g,h);
 <rcwa group over Z with 2 generators>
 gap> phi := EpimorphismFromFreeGroup(G);
@@ -516,11 +525,11 @@ gap> List(pre,Length);
 [ 13, 14, 14 ]
 gap> Set(List(pre,w->w^phi)) = [f];
 true
-gap> w := pre[1]*pre[2]^-1;
+gap> rel := pre[1]*pre[2]^-1;
 g^3*h*g^3*h^4*g^-1*h*g^3*h^4*g^3
-gap> Length(w);
+gap> Length(rel);
 23
-gap> w^phi; # A relation of length 23.
+gap> rel^phi; # A relation of length 23.
 IdentityMapping( Integers )
 ]]>
 </Example>
@@ -800,14 +809,15 @@ gap> OrbitsModulo(G,12);
     are cheap. They are not only applicable to rcwa groups.
 <Example>
 <![CDATA[
-gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
-gap> List([1..8],k->Length(Ball(F2,0,k,OnPoints)));
-[ 3, 9, 27, 81, 243, 729, 2187, 6561 ]
-gap> A8 := Image(IsomorphismRcwaGroup(AlternatingGroup(8)));;
-gap> List([1..15],d->Length(Ball(A8,[1,2,3],d,OnSets)));
-[ 3, 5, 11, 21, 31, 41, 48, 55, 56, 56, 56, 56, 56, 56, 56 ]
-gap> List([1..15],d->Length(Ball(A8,[1,2,3],d,OnTuples)));
-[ 3, 5, 11, 23, 45, 86, 138, 209, 281, 323, 333, 336, 336, 336, 336 ]
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
+>                                                    CyclicGroup(2))));
+<wild rcwa group over Z with 2 generators>
+gap> List([1..10],k->Length(Ball(PSL2Z,0,k,OnPoints)));
+[ 3, 4, 6, 8, 12, 16, 24, 32, 48, 64 ]
+gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnPoints)));
+[ 3, 5, 9, 13, 21, 29, 45, 61, 93, 125 ]
+gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnTuples)));
+[ 4, 8, 14, 22, 34, 50, 74, 106, 154, 218 ]
 gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
 [ (), (3,4), (2,3), (2,3,4), (2,4,3), (1,2), (1,2)(3,4), (1,2,3), (1,3,2) ]
 ]]>
@@ -974,7 +984,7 @@ gap> Support(F2tilde);
     points outside the image of&nbsp;<A>f</A>.
 <Example>
 <![CDATA[
-gap> Induction(G,RcwaMapping([[5,3,1]])) = Group(a,b);
+gap> Induction(F2tilde,RcwaMapping([[5,3,1]])) = F2;
 true
 ]]>
 </Example>
