@@ -670,8 +670,10 @@ a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
     that such a factorization exists and the method finds it.
   </Returns>
   <Description>
-    The method may return <C>fail</C>, stop with an error message or run into
-    an infinite loop. If it returns a result, this result is always correct.
+    The method may return <C>fail</C>, stop with an error message or run
+    into an infinite loop. If it returns a result, this result is always
+    correct. <P/>
+
     By default, prime switches are taken as one factor. 
     If the option <A>ExpandPrimeSwitches</A> is set, they are each
     decomposed into the 6 class transpositions given in
@@ -1356,9 +1358,9 @@ gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
   <Description>
 <Example>
 <![CDATA[
-gap> Root(Comm(a,b),100);
-<bijective rcwa mapping of Z with modulus 32>
-gap> last^100 = Comm(a,b);
+gap> Root(ClassTransposition(0,2,1,2),100);
+<bijective rcwa mapping of Z with modulus 8>
+gap> last^100 = ClassTransposition(0,2,1,2);
 true
 ]]>
 </Example>
