@@ -2,7 +2,7 @@
 <!-- ##                                                                ## -->
 <!-- ##  rcwagrp.xml         RCWA documentation           Stefan Kohl  ## -->
 <!-- ##                                                                ## -->
-<!-- ##  $Id$      ## -->
+<!-- ##  $Id$     ## -->
 <!-- ##                                                                ## -->
 <!-- #################################################################### -->
 
@@ -196,7 +196,7 @@ gap> F2xF2 := DirectProduct(F2,F2);
 <wild rcwa group over Z with 4 generators>
 gap> List([1..2],i->Support(Image(Embedding(F2xF2,i))));
 [ 0(2), 1(2) ]
-gap> Image(Projection(F2xF2,1)) = Image(IsomorphismRcwaGroup(FreeGroup(2)));
+gap> Image(Projection(F2xF2,1)) = F2;
 true
 ]]>
 </Example>
@@ -213,20 +213,18 @@ true
     group&nbsp;<A>Z</A>.
   </Returns>
   <Description>
-    There is certainly no unique or canonical way to embed a wreath product
-    of rcwa groups into RCWA(<M>\mathbb{Z}</M>). The first-mentioned method
-    embeds the <C>DegreeAction(<A>P</A>)</C>th direct power of&nbsp;<A>G</A>
-    using the method for <C>DirectProduct</C>, and lets the permutation
-    group&nbsp;<A>P</A> act naturally on the set of residue classes modulo
-    <C>DegreeAction(<A>P</A>)</C>. The second-mentioned method restricts
-    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
-    generator of the infinite cyclic group <A>Z</A> to
-    <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
+    The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
+    direct power of&nbsp;<A>G</A> using the method for <C>DirectProduct</C>,
+    and lets the permutation group&nbsp;<A>P</A> act naturally on the set of
+    residue classes modulo <C>DegreeAction(<A>P</A>)</C>.
+    The second-mentioned method restricts the group&nbsp;<A>G</A> to the
+    residue class&nbsp;3(4), and maps the generator of the infinite cyclic
+    group <A>Z</A> to <C>ClassTransposition(0,2,1,2) *
+    ClassTransposition(0,2,1,4)</C>.
 <Example>
 <![CDATA[
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
-gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));
-<wild rcwa group over Z with 12 generators>
+gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));;
 gap> Embedding(F2wrA5,1);
 [ <wild bijective rcwa mapping of Z with modulus 8>,
   <wild bijective rcwa mapping of Z with modulus 8> ] ->
@@ -369,6 +367,8 @@ gap> Size(G);
 </Example>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -566,6 +566,8 @@ true
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Meth Name="RepresentativeAction"
         Arg="G, src, dest, act" Label="G, src, dest, act"/>
@@ -661,8 +663,6 @@ gap> w1 := RepresentativeActionPreImage(G,[1,2,3,4],[2,3,5,7],OnPoints,F);
 h^-1*g^3*h^-1*g^-1*h^-2
 gap> elm1 := w1^phi;
 <bijective rcwa mapping of Z with modulus 864>
-gap> [1,2,3,4]^elm1; # check
-[ 2, 3, 5, 7 ]
 gap> List([1,2,3,4],n->n^elm1); # `OnPoints' permits reordering
 [ 2, 7, 3, 5 ]
 gap> w2 := RepresentativeActionPreImage(G,[1,2,3,4],[2,3,5,7],OnTuples,F);
@@ -837,6 +837,7 @@ gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
     The author does not know a general way to solve the conjugacy problem
     for elements of RCWA(<M>\Z</M>), thus the method may fail or run into
     an infinite loop.
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),
@@ -876,7 +877,7 @@ gap> ShortCycles(a,5);
   </Returns>
   <Description>
     This method may fail for the same reasons as
-    <Ref Meth="IsConjugate" Label="RCWA( Integers ), f, g"/>.
+    <Ref Meth="IsConjugate" Label="RCWA(Integers), f, g"/>.
 <Example>
 <![CDATA[
 gap> rep := RepresentativeAction(RCWA(Integers),
@@ -983,6 +984,8 @@ true
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -1209,8 +1212,7 @@ gap> List(GeneratorsOfGroup(IntegralConjugate(G)),Factorization);
     <A>G</A>&circum;<A>x</A> resp. <A>f</A>&circum;<A>x</A> is integral. 
   </Returns>
   <Description>
-    While there are usually infinitely many such rcwa mappings,
-    it is taken care that the returned ones always satisfy the relations
+    For consistency, it holds always
     <C><A>G</A>&circum;IntegralizingConjugator(<A>G</A>) =
     IntegralConjugate(<A>G</A>)</C> resp.
     <C><A>f</A>&circum;IntegralizingConjugator(<A>f</A>) =
@@ -1258,13 +1260,14 @@ gap> RespectedPartition(G)^IntegralizingConjugator(G);
   <C>AllProducts</C>
 </Index>
 
-&RCWA; introduces a few small utility functions which can be used for groups
-in general: The function <C>GeneratorsAndInverses(<A>G</A>)</C> returns
-a list of generators of <A>G</A> and their inverses,
-<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is a shorthand for
-<C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>, GeneratorsOfGroup(<A>G</A>),
-GeneratorsOfGroup(<A>H</A>))</C> (there is also an <C>NC</C> version of this)
-and the function <C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
+&RCWA; introduces a few small utility functions which can be used for
+groups in general: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
+returns a list of generators of <A>G</A> and their inverses,
+<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is
+a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
+GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
+(there is also an <C>NC</C> version of this) and the function
+<C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
 all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
 
 </Section>
