@@ -24,7 +24,7 @@ groups over the ring of integers has been given. In this section it follows
 a slightly generalized and more formal version of this definition. In the
 same time some useful notation is introduced. <P/>
 
-<Index Key="rcwa mapping" Subkey="definition"></Index>
+<Index Key="rcwa mapping" Subkey="definition">rcwa mapping</Index>
 
 Let <M>R</M> be an infinite euclidean domain which is not a field and all
 of whose proper residue class rings are finite. A mapping
@@ -76,7 +76,7 @@ The set RCWA(<M>R</M>) <M>:=</M>{<M>\{ \ \sigma \in</M> Sym(<M>R</M>)
 multiplication and taking inverses (this can be verified easily), hence
 forms a subgroup of Sym(<M>R</M>).
 
-<Index Key="rcwa group" Subkey="definition"></Index>
+<Index Key="rcwa group" Subkey="definition">rcwa group</Index>
 
 A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
 group, or for short an <E>rcwa</E> group. <P/>
@@ -855,15 +855,14 @@ gap> List( [ a, a*b, (a*b)^2, Comm(a,b) ], Sign );
 <Index Key="Divisor" Subkey="f"><C>Divisor</C></Index>
 <Index Key="Div" Subkey="f"><C>Div</C></Index>
 <Index Key="PrimeSet" Subkey="f"><C>PrimeSet</C></Index>
-<Index Key="integral" Subkey="definition"><C>integral</C></Index>
-<Index Key="rcwa mapping" Subkey="integral"><C>integral</C></Index>
+<Index Key="integral" Subkey="definition">integral</Index>
+<Index Key="rcwa mapping" Subkey="integral">rcwa mapping</Index>
 <Index Key="IsIntegral" Subkey="f"><C>IsIntegral</C></Index>
 <Index Key="balanced" Subkey="definition"><C>balanced</C></Index>
-<Index Key="rcwa mapping" Subkey="balanced"><C>balanced</C></Index>
+<Index Key="rcwa mapping" Subkey="balanced">rcwa mapping</Index>
 <Index Key="IsBalanced" Subkey="f"><C>IsBalanced</C></Index>
-<Index Key="rcwa mapping" Subkey="class-wise order-preserving">
-  <C>class-wise order-preserving</C>
-</Index>
+<Index Key="rcwa mapping"
+       Subkey="class-wise order-preserving">rcwa mapping</Index>
 <Index Key="IsClassWiseOrderPreserving" Subkey="f">
   <C>IsClassWiseOrderPreserving</C>
 </Index>
@@ -1037,7 +1036,7 @@ gap> SetOnWhichMappingIsClassWiseOrderReversing(ClassReflection(13,17));
     for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
-    <Index Key="rcwa mapping" Subkey="transition graph"></Index>
+    <Index Key="rcwa mapping" Subkey="transition graph">rcwa mapping</Index>
     <Alt Only="LaTeX">\noindent</Alt>
     The <E>transition graph</E> <M>\Gamma_{f,m}</M> of&nbsp;<M>f</M> for
     modulus&nbsp;<M>m</M> is defined as follows:
