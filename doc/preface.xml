@@ -62,9 +62,9 @@ the author feels that this is a gap which is worth to be filled.
 <Heading>Groups which can be represented</Heading>
 
 This section lists some types of groups which are known to be representable
-as residue class-wise affine groups. Proofs of most of the results are not
-yet published respectively can only be found in preprints on the author's
-homepage. They are only listed here for the information of the user. <P/>
+as residue class-wise affine groups. Proofs of most of the results have not
+yet appeared in print, but can be found in preprints on the author's
+homepage. <P/>
 
 Obviously, the infinite dihedral group <M>\langle n \mapsto -n,
 n \mapsto n+1 \rangle</M> can be represented. Further the class of

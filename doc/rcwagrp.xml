@@ -849,8 +849,8 @@ gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
 <Heading>Conjugacy in RCWA(Z)</Heading>
 
 <ManSection>
-  <Meth Name="IsConjugate" Arg="RCWA_Z, f, g"
-                           Label="RCWA( Integers ), f, g"/>
+  <Meth Name="IsConjugate" Arg="RCWA(Integers), f, g"
+                           Label="RCWA(Integers), f, g"/>
   <Returns>
     <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
     are conjugate in RCWA(<M>\Z</M>), and <C>false</C> otherwise.
@@ -865,8 +865,6 @@ gap> IsConjugate(RCWA(Integers),g,h);
 false
 gap> IsConjugate(RCWA(Integers),g,g^a);
 true
-gap> IsConjugate(RCWA(Integers),a,b);
-false
 ]]>
 </Example>
   </Description>
@@ -890,8 +888,8 @@ gap> ShortCycles(a,5);
 </Example>
 
 <ManSection>
-  <Meth Name="RepresentativeAction" Arg="RCWA_Z, f, g"
-                                    Label="RCWA( Integers ), f, g"/>
+  <Meth Name="RepresentativeAction" Arg="RCWA(Integers), f, g"
+                                    Label="RCWA(Integers), f, g"/>
   <Returns>
     An rcwa mapping&nbsp;<C>x</C> such that
     <C><A>f</A>&circum;x = <A>g</A></C>, if such an <C>x</C>
@@ -906,8 +904,6 @@ gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
 <bijective rcwa mapping of Z with modulus 12>
 gap> h^elm = h^g; # check ...
 true
-gap> Order(elm);
-infinity
 gap> cent := g*elm^-1;
 <bijective rcwa mapping of Z with modulus 12>
 gap> Comm(cent,h); # cent must lie in the centralizer of h in RCWA(Z).
@@ -931,10 +927,8 @@ true
   <Description>
 <Example>
 <![CDATA[
-gap> NrConjugacyClassesOfRCWAZOfOrder(2);
-infinity
-gap> NrConjugacyClassesOfRCWAZOfOrder(105);
-218
+gap> List([2,105],NrConjugacyClassesOfRCWAZOfOrder);
+[ infinity, 218 ]
 ]]>
 </Example>
   </Description>
@@ -957,50 +951,34 @@ permutation group, regardless of whether they are tame or not
 (cp. Section&nbsp;<Ref Label="sec:DirectProductsAndWreathProducts"/>).
 
 <ManSection>
-  <Oper Name ="Restriction" Arg="g, f" Label = "g, f"/>
+  <Oper Name="Restriction" Arg="g, f" Label="g, f"/>
+  <Oper Name="Restriction" Arg="G, f" Label="G, f"/>
   <Returns>
-    The <E>restriction</E> of the rcwa mapping <A>g</A> by
-    the injective rcwa mapping&nbsp;<A>f</A>.
+    The <E>restriction</E> of the rcwa mapping <A>g</A> resp. the
+    rcwa group <A>G</A> by the injective rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    By definition, the restriction <M>g_f</M> of the rcwa mapping
-    <A>g</A> by the injective rcwa mapping&nbsp;<A>f</A> is the
-    uniquely determined rcwa mapping which satisfies
-    <M>f \cdot g_f = g \cdot f</M> and fixes the complement of
-    the image of <A>f</A> pointwisely.
+    By definition, the restriction <M>g_f</M> of an rcwa mapping <A>g</A>
+    by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa mapping
+    which satisfies the equation <M>f \cdot g_f = g \cdot f</M> and which
+    fixes the complement of the image of <A>f</A> pointwisely.
     If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
-    is just the conjugate of <A>g</A> under&nbsp;<A>f</A>.
-    See also <Ref Oper="Restriction" Label="G, f"/> for rcwa groups.
+    is just the conjugate of <A>g</A> under&nbsp;<A>f</A>. <P/>
+
+    The restriction of an rcwa group&nbsp;<A>G</A> by an injective
+    rcwa mapping&nbsp;<A>f</A> is defined as the group whose elements are
+    the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
+    The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
+    image of&nbsp;<A>f</A> and fixes its complement pointwisely.
 <Example>
 <![CDATA[
 gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
 >         Restriction(u,RcwaMapping([[2,1,1]])));
 IdentityMapping( Integers )
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Oper Name ="Restriction" Arg="G, f" Label="G, f"/>
-  <Returns>
-    The <E>restriction</E> of the rcwa group <A>G</A> by
-    the injective rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    By definition, the restriction of the rcwa group&nbsp;<A>G</A>
-    by the injective rcwa mapping&nbsp;<A>f</A> consists of the
-    restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
-    The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
-    image of&nbsp;<A>f</A> and fixes its complement pointwisely.
-    See also <Ref Oper="Restriction" Label="g, f"/> for rcwa mappings.
-<Example>
-<![CDATA[
 gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 <rcwa group over Z with 2 generators>
 gap> MovedPoints(G);
-3(5) \ [ -2, 3 ]
-]]>
+3(5) \ [ -2, 3 ]]]>
 </Example>
   </Description>
 </ManSection>
