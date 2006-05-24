@@ -1213,12 +1213,14 @@ gap> IsomorphismPcpGroup(K);
     Theorem&nbsp;2.5.14. In general there are infinitely many of them.
 <Example>
 <![CDATA[
-gap> Mult(IntegralConjugate(G));
-1
-gap> Div(IntegralConjugate(G));
-1
+gap> IsIntegral(IntegralConjugate(G));
+true
 gap> RespectedPartition(IntegralConjugate(G));
 [ 0(8), 1(8), 2(8), 3(8), 4(8), 5(8), 6(8), 7(8) ]
+gap> List(GeneratorsOfGroup(IntegralConjugate(G)),Factorization);
+[ [ ClassShift(5,8), ClassTransposition(2,8,3,8), ClassTransposition(2,8,4,8),
+      ClassTransposition(2,8,5,8) ],
+  [ ClassTransposition(2,8,6,8), ClassTransposition(4,8,7,8) ] ]
 ]]>
 </Example>
   </Description>
@@ -1257,12 +1259,8 @@ Bijective rcwa mapping of Z with modulus 24
    6 14 22                             | n - 1
    7 19                                | (2n + 7)/3
 
-gap> RespectedPartition(G);
-[ 3(6), 5(6), 0(8), 2(8), 4(8), 6(8), 1(12), 7(12) ]
 gap> RespectedPartition(G)^IntegralizingConjugator(G);
 [ 0(8), 1(8), 2(8), 3(8), 4(8), 5(8), 6(8), 7(8) ]
-gap> last = RespectedPartition(IntegralConjugate(G));
-true
 ]]>
 </Example>
   </Description>
