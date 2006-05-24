@@ -191,13 +191,12 @@ Section&nbsp;<Ref Label="sec:RestrictionAndInduction"/> below.
     <M>m</M> denotes the number of groups given as arguments.
 <Example>
 <![CDATA[
-gap> G := DirectProduct(Group(g,h),Group(a,b),Group(ClassReflection(0,1)));;
-gap> Embedding(G,1);
-[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 18, of order 7>, 
-  <bijective rcwa mapping of Z with modulus 18, of order 12> ]
-gap> List([1..3],i->MovedPoints(Image(Embedding(G,i))));
-[ 0(3), 1(3) \ [ -2, 1 ], 2(3) \ [ 2 ] ]
-gap> Image(Projection(G,2)) = Group(a,b);
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> F2xF2 := DirectProduct(F2,F2);
+<wild rcwa group over Z with 4 generators>
+gap> List([1..2],i->Support(Image(Embedding(F2xF2,i))));
+[ 0(2), 1(2) ]
+gap> Image(Projection(F2xF2,1)) = Image(IsomorphismRcwaGroup(FreeGroup(2)));
 true
 ]]>
 </Example>
@@ -225,15 +224,17 @@ true
     <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
 <Example>
 <![CDATA[
-gap> G := Group(g,h);; IsTame(G);; Size(G);;
-gap> H := WreathProduct(G,AlternatingGroup(5));
-<tame rcwa group over Z with 12 generators, of size infinity>
-gap> Embedding(H,1);
-[ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
-  <bijective rcwa mapping of Z with modulus 30, of order 12> ]
-gap> Embedding(H,2);
-[ (1,2,3,4,5), (3,4,5) ] -> 
-[ <bijective rcwa mapping of Z with modulus 5, of order 5>, 
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));
+<wild rcwa group over Z with 12 generators>
+gap> Embedding(F2wrA5,1);
+[ <wild bijective rcwa mapping of Z with modulus 8>,
+  <wild bijective rcwa mapping of Z with modulus 8> ] ->
+[ <wild bijective rcwa mapping of Z with modulus 40>,
+  <wild bijective rcwa mapping of Z with modulus 40> ]
+gap> Embedding(F2wrA5,2);
+[ (1,2,3,4,5), (3,4,5) ] ->
+[ <bijective rcwa mapping of Z with modulus 5, of order 5>,
   <bijective rcwa mapping of Z with modulus 5, of order 3> ]
 gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
 <wild rcwa group over Z with 2 generators>
@@ -273,11 +274,11 @@ algorithmically undecidable.
 
 <Example>
 <![CDATA[
-gap> G := Group(g,h);;
-gap> a in G;
-false
-gap> g*h^2*g*h^-3*g^-1*h^7*g*h in G;
+gap> G := Group(ClassShift(0,3),ClassTransposition(0,3,2,6));;
+gap> ClassShift(2,6)^7*ClassTransposition(0,3,2,6)*ClassShift(0,3)^-3 in G;
 true
+gap> ClassShift(0,1) in G;
+false
 ]]>
 </Example>
 
@@ -364,18 +365,6 @@ gap> IsIntegral(G) and IsClassWiseOrderPreserving(G);
 true
 gap> Size(G);
 265252859812191058636308480000000
-gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);; SetName(a,"a");
-gap> b := ClassShift(1,4) * a;; SetName(b,"b");
-gap> c := ClassShift(3,4) * a;; SetName(c,"c");
-gap> H := Group(a,b,c);;
-gap> Modulus(H);
-0
-gap> [ Mult(H), Div(H) ];
-[ infinity, infinity ]
-gap> Size(H);
-infinity
-gap> List( [ G, H, Group(Comm(a,b),Comm(a,c)) ], IsTame );
-[ true, false, true ]
 ]]>
 </Example>
 
@@ -474,19 +463,10 @@ gap> Display(GeneratorsOfGroup(Image(phi))[1]*One(GF(5)));
                      Label="G, src, dest, act, F"/>.
 <Example>
 <![CDATA[
-gap> G := Group(g,h);
+gap> a  := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
+gap> nu := RcwaMapping([[1,1,1]]);; SetName(nu,"nu");
+gap> G  := Group(a,nu);
 <rcwa group over Z with 2 generators>
-gap> phi := EpimorphismFromFreeGroup(G);
-[ g, h ] -> [ g, h ]
-gap> PreImagesRepresentative(phi,h*g^3*h^2*g^-1*h*g*h^-3);
-h*g^3*h^2*g^-1*h*g*h^-3
-gap> nu := RcwaMapping([[1,1,1]]);
-Rcwa mapping of Z: n -> n + 1
-gap> SetName(nu,"nu");
-gap> G := Group(a,nu);
-<rcwa group over Z with 2 generators>
-gap> IsTame(G);
-false
 gap> phi := EpimorphismFromFreeGroup(G);
 [ a, nu ] -> [ a, nu ]
 gap> F := Source(phi);
@@ -494,9 +474,7 @@ gap> F := Source(phi);
 gap> w := Comm(F.1,Comm(F.1,F.2^2));
 a^-1*nu^-2*a^-1*nu^2*a*nu^-2*a*nu^2
 gap> f := w^phi;
-<bijective rcwa mapping of Z with modulus 18>
-gap> IsTame(f);
-false
+<bijective rcwa mapping of Z with modulus 16>
 gap> pre := PreImagesRepresentative(phi,f);
 a^-2*nu^-2*a^2*nu^2
 gap> one := w*pre^-1; # pre <> w --> We have a nontrivial relation!
@@ -577,7 +555,7 @@ if such elements exist.
     If <A>G</A> is wild, this may fail or run into an infinite loop.
 <Example>
 <![CDATA[
-gap> G := Group(g,h);;
+gap> G := Group(ClassTransposition(1,2,0,4),ClassShift(0,2));;
 gap> IsTransitive(G,Integers);
 true
 ]]>
@@ -604,7 +582,7 @@ true
     is a rather long word and coefficient explosion happens to occur.
 <Example>
 <![CDATA[
-gap> G := Group(a,b);
+gap> G := Group(a,a/ClassShift(1,4));
 <rcwa group over Z with 2 generators>
 gap> elm := RepresentativeAction(G,[7,4,9],[4,5,13],OnTuples);
 <bijective rcwa mapping of Z with modulus 12>
@@ -676,20 +654,20 @@ gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
 gap> F := FreeGroup("a","b");;
 gap> G := Group(a,b);; phi := EpimorphismByGenerators(F,G);;
 gap> RepresentativeActionPreImage(G,[5,4,9],[13,5,4],OnTuples,F);
-b^-1*a^-1*b*a^-1
+a^2*b*a*b*a^2
 gap> w := RepresentativeActionPreImage(G,[4,7,9],[4,5,8],OnPoints,F);
-b^2*a^2
+a^-2*b^-1*a^-2*b
 gap> w^phi;
-<bijective rcwa mapping of Z with modulus 256>
+<bijective rcwa mapping of Z with modulus 512>
 gap> last = RepresentativeAction(G,[4,7,9],[4,5,8],OnPoints);
 true
 gap> [4,7,9]^(w^phi);
 [ 4, 5, 8 ]
 gap> RepresentativeActionPreImage(G,[37,4,9],[4,51,8],OnPoints,F); last^phi;
-a^-1*b^-1*a*b^4*a
-<bijective rcwa mapping of Z with modulus 4608>
+b^-1*a^-1*b*a^-4*b
+<bijective rcwa mapping of Z with modulus 512>
 gap> RepresentativeActionPreImage(G,[37,4,9],[4,51,8],OnTuples,F);
-b*a^6*b*a^-3*b^-3*a^-1*b*a^2
+a^-2*b*a*b^-1*a^2*b*a^-1*b*a*b^-1*a^-1*b*a^-2*b^-1
 ]]>
 </Example>
   </Description>
@@ -797,11 +775,9 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     See also <Ref Oper ="OrbitsModulo" Label="f, m"/> for rcwa mappings.
 <Example>
 <![CDATA[
-gap> G := Group(Comm(a,b),Comm(a,c));;
-gap> OrbitsModulo(G,36);
-[ [ 0 ], [ 1, 11, 13, 14, 16, 17, 19, 21, 24, 29, 30, 31, 32, 33, 34, 35 ], 
-  [ 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 22, 23, 25, 26, 28 ], [ 9 ], [ 18 ], 
-  [ 27 ] ]
+gap> G := Group(ClassTransposition(1,4,0,6),ClassShift(0,2));;
+gap> OrbitsModulo(G,12);
+[ [ 0, 1, 2, 4, 5, 6, 8, 9, 10 ], [ 3 ], [ 7 ], [ 11 ] ]
 ]]>
 </Example>
   </Description>
@@ -824,16 +800,14 @@ gap> OrbitsModulo(G,36);
     are cheap. They are not only applicable to rcwa groups.
 <Example>
 <![CDATA[
-gap> G := Group(Comm(a,b),Comm(a,c));;
-gap> for d in [1..4] do Print(Ball(G,1,d,OnPoints),"\n"); od;
-[ -3, -2, 1 ]
-[ -5, -4, -3, -2, 1 ]
-[ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
-[ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
-gap> List([1..11],d->Length(Ball(G,[1,2,3],d,OnSets)));
-[ 5, 17, 51, 127, 245, 324, 343, 357, 360, 360, 360 ]
-gap> List([1..11],d->Length(Ball(G,[1,2,3],d,OnTuples)));
-[ 5, 17, 51, 143, 325, 557, 662, 695, 713, 720, 720 ]
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> List([1..8],k->Length(Ball(F2,0,k,OnPoints)));
+[ 3, 9, 27, 81, 243, 729, 2187, 6561 ]
+gap> A8 := Image(IsomorphismRcwaGroup(AlternatingGroup(8)));;
+gap> List([1..15],d->Length(Ball(A8,[1,2,3],d,OnSets)));
+[ 3, 5, 11, 21, 31, 41, 48, 55, 56, 56, 56, 56, 56, 56, 56 ]
+gap> List([1..15],d->Length(Ball(A8,[1,2,3],d,OnTuples)));
+[ 3, 5, 11, 23, 45, 86, 138, 209, 281, 323, 333, 336, 336, 336, 336 ]
 gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
 [ (), (3,4), (2,3), (2,3,4), (2,4,3), (1,2), (1,2)(3,4), (1,2,3), (1,3,2) ]
 ]]>
@@ -861,10 +835,11 @@ gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
     an infinite loop.
 <Example>
 <![CDATA[
-gap> IsConjugate(RCWA(Integers),g,h);
-false
-gap> IsConjugate(RCWA(Integers),g,g^a);
+gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),
+>                               ClassTransposition(1,2,0,4));
 true
+gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),ClassShift(0,1));
+false
 ]]>
 </Example>
   </Description>
@@ -900,18 +875,16 @@ gap> ShortCycles(a,5);
     <Ref Meth="IsConjugate" Label="RCWA( Integers ), f, g"/>.
 <Example>
 <![CDATA[
-gap> elm := RepresentativeAction(RCWA(Integers),h,h^g);
-<bijective rcwa mapping of Z with modulus 12>
-gap> h^elm = h^g; # check ...
+gap> rep := RepresentativeAction(RCWA(Integers),
+>                                ClassTransposition(0,2,1,4),
+>                                ClassTransposition(1,2,0,4));
+<bijective rcwa mapping of Z with modulus 32>
+gap> ClassTransposition(0,2,1,4)^rep = ClassTransposition(1,2,0,4); # check.
 true
-gap> cent := g*elm^-1;
-<bijective rcwa mapping of Z with modulus 12>
-gap> Comm(cent,h); # cent must lie in the centralizer of h in RCWA(Z).
-IdentityMapping( Integers )
-gap> Order(cent);
-12
-gap> cent in Group(h); # This particular element is even a power of h.
-true
+gap> Factorization(rep);
+[ ClassTransposition(0,2,3,16), ClassTransposition(1,4,11,16),
+  ClassTransposition(2,8,3,16), ClassTransposition(6,8,11,16),
+  ClassTransposition(1,2,2,8), ClassTransposition(0,4,6,8) ]
 ]]>
 </Example>
   </Description>
@@ -975,10 +948,11 @@ permutation group, regardless of whether they are tame or not
 gap> Comm(Restriction(a,RcwaMapping([[2,0,1]])),
 >         Restriction(u,RcwaMapping([[2,1,1]])));
 IdentityMapping( Integers )
-gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
-<rcwa group over Z with 2 generators>
-gap> MovedPoints(G);
-3(5) \ [ -2, 3 ]]]>
+gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));
+<wild rcwa group over Z with 2 generators>
+gap> Support(F2tilde);
+3(5)
+]]>
 </Example>
   </Description>
 </ManSection>
