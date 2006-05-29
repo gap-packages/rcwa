@@ -736,8 +736,8 @@ gap> fact3 := ClassTransposition(2,4,3,4);;
 gap> elm4 := elm3/fact3;
 IdentityMapping( Integers )
 gap> kappafacts := [ fact3, fact2, fact1 ];
-[ ClassTransposition(2,4,3,4), ClassTransposition(4,6,8,12), 
-  ClassTransposition(3,4,4,6) ]
+[ ClassTransposition(2,4,3,4), ClassTransposition(3,4,8,12),
+  ClassTransposition(4,6,8,12) ]
 gap> kappa = Product(kappafacts);
 true
 ]]>
