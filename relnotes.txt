@@ -260,7 +260,7 @@ Changes between version 1.7.2 and version 1.8.0 (May 18, 2006):
 
  - Various little "internal" improvements have been made.
 
-Changes between version 1.8.0 and version 2.0.0 (May 24, 2006):
+Changes between version 1.8.0 and version 2.0.0 (May 29, 2006):
 
 The main change is that the manual has been revised.
 
@@ -271,7 +271,9 @@ Further changes:
 
  - Methods for `Multiplier' and `Divisor' for rcwa groups have been added.
 
- - The function `InjectiveAsMappingFrom' has been changed and documented.
+ - Some further minor extentions of the functionality have been made,
+   e.g. there is now a method for `ShortCycles' analogous to `ShortOrbits',
+   and a function `InjectiveAsMappingFrom' has been added.
 
  - The code has been improved in various places.
 
