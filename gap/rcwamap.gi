@@ -3519,11 +3519,29 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
-#M  ShortCycles( <f>, <maxlng> ) .  for rcwa mapping of Z or Z_pi and integer
+#M  ShortCycles( <sigma>, <S>, <maxlng> ) for bij. rcwa map., set & pos. int.
 ##
 InstallMethod( ShortCycles,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_pi, IsPosInt ], 0,
+               Concatenation("for a bijective rcwa mapping, a set and ",
+                             "a positive integer (RCWA)"),
+               ReturnTrue,
+               [ IsRcwaMapping, IsListOrCollection, IsPosInt ], 0,
+
+  function ( sigma, S, maxlng )
+    if   not IsBijective(sigma) or not IsSubset(Source(sigma),S)
+    then TryNextMethod(); fi;
+    return List(ShortOrbits(Group(sigma),S,maxlng),
+                orb->Cycle(sigma,Minimum(orb)));
+  end );
+
+#############################################################################
+##
+#M  ShortCycles( <f>, <maxlng> )  for rcwa mapping of Z or Z_pi and pos. int.
+##
+InstallOtherMethod( ShortCycles,
+                    Concatenation("for an rcwa mapping of Z or Z_pi and ",
+                                  "a positive integer (RCWA)"),
+                    ReturnTrue, [ IsRcwaMappingOfZOrZ_pi, IsPosInt ], 0,
 
   function ( f, maxlng )
 

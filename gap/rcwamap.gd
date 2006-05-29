@@ -583,12 +583,16 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 
 #############################################################################
 ##
-#O  ShortCycles( <f>, <maxlng> ) . . . . short cycles of the rcwa mapping <f>
+#O  ShortCycles( <f>, <S>, <maxlng> ) .  short cycles of the rcwa mapping <f>
+#O  ShortCycles( <f>, <maxlng> )
 ##
-##  Computes all ``single'' finite cycles of the rcwa mapping <f>
-##  of length <= <maxlng>.
+##  In the 3-argument case, `ShortCycles' computes all finite cycles of the
+##  rcwa mapping <f> of length <= <maxlng> which intersect nontrivially with
+##  the set <S>. In the 2-argument case, it computes all ``single'' finite
+##  cycles of the rcwa mapping <f> of length <= <maxlng>.
 ##
-DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
+DeclareOperation( "ShortCycles",
+                  [ IsRcwaMapping, IsListOrCollection, IsPosInt ] );
 
 #############################################################################
 ##

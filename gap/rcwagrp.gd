@@ -170,8 +170,8 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaGroupOverZ );
 ##
 #O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
 ##
-##  Computes all finite orbits of the rcwa group <G> of maximal length
-##  <maxlng>, which intersect non-trivially with the set <S>.
+##  Computes all finite orbits of the rcwa group <G> of length <= <maxlng>,
+##  which intersect nontrivially with the set <S>.
 ##
 DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
 
