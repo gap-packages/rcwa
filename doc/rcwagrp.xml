@@ -469,8 +469,9 @@ gap> Display(GeneratorsOfGroup(Image(phi))[2]*One(GF(5)));
                      Label="G, src, dest, act, F"/>.
 <Example>
 <![CDATA[
-gap> a  := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
-gap> nu := RcwaMapping([[1,1,1]]);; SetName(nu,"nu");
+gap> a  := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.
+gap> nu := RcwaMapping([[1,1,1]]);;                  # n -> n + 1.
+gap> SetName(nu,"nu"); SetName(a,"a"); # For displaying purposes.
 gap> G  := Group(a,nu);
 <rcwa group over Z with 2 generators>
 gap> phi := EpimorphismFromFreeGroup(G);
@@ -578,8 +579,8 @@ true
   <Description>
     If an element satisfying this condition does not exist, this method
     either returns <C>fail</C> or runs into an infinite loop.
-    The problem of whether <A>src</A> and <A>dest</A> lie in the same
-    orbit under the action of <A>G</A> in general seems to be hard.
+    The problem to decide whether <A>src</A> and <A>dest</A> lie in the
+    same orbit under the action of <A>G</A> in general seems to be hard.
     The method is based on <Ref Oper="RepresentativeActionPreImage"
     Label="G, src, dest, act, F"/>, and it basically just computes an image
     under an epimorphism. As this involves multiplications of rcwa mappings,
@@ -587,7 +588,8 @@ true
     is a rather long word and coefficient explosion happens to occur.
 <Example>
 <![CDATA[
-gap> G := Group(a,a/ClassShift(1,4));
+gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.
+gap> G := Group(a,ClassShift(1,4));
 <rcwa group over Z with 2 generators>
 gap> elm := RepresentativeAction(G,[7,4,9],[4,5,13],OnTuples);
 <bijective rcwa mapping of Z with modulus 12>
@@ -622,8 +624,6 @@ Bijective rcwa mapping of Z with modulus 9
   7                                    | (16n - 49)/9
   8                                    | (16n + 7)/9
 
-gap> List([5,4,9],n->n^elm);
-[ 13, 5, 4 ]
 gap> RepresentativeAction(G,[7,4,9],[4,5,8],OnTuples);
 <bijective rcwa mapping of Z with modulus 256>
 ]]>
@@ -741,25 +741,28 @@ gap> [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))]^elm;
 
 <ManSection>
   <Oper Name="ShortOrbits" Arg="G, S, maxlng" Label="G, S, maxlng"/>
+  <Oper Name="ShortCycles" Arg="sigma, S, maxlng" Label="G, S, maxlng"/>
   <Returns>
-    A list of all finite orbits of the rcwa group&nbsp;<A>G</A> of length
-    at most&nbsp;<A>maxlng</A> which intersect nontrivially with the
-    set&nbsp;<A>S</A>.
+    A list of all finite orbits of the rcwa group&nbsp;<A>G</A> resp.
+    of all finite cycles of the bijective rcwa mapping <A>sigma</A> of
+    length at most&nbsp;<A>maxlng</A> which intersect nontrivially with
+    the set&nbsp;<A>S</A>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> A5 := RcwaGroupByPermGroup(AlternatingGroup(5));;
-gap> ShortOrbits(A5,[-10..10],100);
-[ [ -10, -9, -8, -7, -6 ], [ -5, -4, -3, -2, -1 ], [ 0, 1, 2, 3, 4 ], 
-  [ 5, 6, 7, 8, 9 ], [ 10, 11, 12, 13, 14 ] ]
-gap> Action(A5,last[2]);
-Group([ (1,2,3,4,5), (3,4,5) ])
-gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
-gap> ShortOrbits(Group(u),[-30..30],100);
-[ [ -13, -8, -7, -5, -4, -3, -2 ], [ -10, -6 ], [ -1 ], [ 0 ], [ 1, 2 ], 
-  [ 3, 5 ], [ 24, 36, 39, 40, 44, 48, 60, 65, 67, 71, 80, 86, 93, 100, 112, 
-      128, 138, 155, 167, 187, 230, 248, 312, 446, 520, 803, 867, 1445 ] ]
+gap> G := Group(ClassTransposition(1,4,2,4)  * ClassTransposition(1,4,3,4),
+>               ClassTransposition(3,9,6,18) * ClassTransposition(1,6,3,9));;
+gap> List(ShortOrbits(G,[-15..15],100),orb->StructureDescription(Action(G,orb)));
+[ "A15", "A4", "1", "1", "C3", "1", "((C2 x C2 x C2) : C7) : C3", "1", "1", 
+  "C3", "A19" ]
+gap> ShortCycles(mKnot(5),[1..100],20);
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5, 6 ], [ 7, 8 ], 
+  [ 9, 10, 12, 14, 16, 13, 11 ], [ 15, 18 ], 
+  [ 17, 20, 24, 28, 23, 19, 22, 26, 21 ], 
+  [ 45, 54, 64, 76, 61, 49, 58, 47, 56 ], 
+  [ 59, 70, 84, 100, 120, 144, 172, 206, 165, 198, 159, 190, 228, 183, 147, 
+      176, 141, 113, 91, 73 ] ]
 ]]>
 </Example>
   </Description>
@@ -778,9 +781,9 @@ gap> ShortOrbits(Group(u),[-30..30],100);
     See also <Ref Oper ="OrbitsModulo" Label="f, m"/> for rcwa mappings.
 <Example>
 <![CDATA[
-gap> G := Group(ClassTransposition(1,4,0,6),ClassShift(0,2));;
-gap> OrbitsModulo(G,12);
-[ [ 0, 1, 2, 4, 5, 6, 8, 9, 10 ], [ 3 ], [ 7 ], [ 11 ] ]
+gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(3,4));;
+gap> OrbitsModulo(G,8);
+[ [ 0, 1, 4 ], [ 2, 5, 6 ], [ 3, 7 ] ]
 ]]>
 </Example>
   </Description>
@@ -851,7 +854,7 @@ false
 </ManSection>
 
 <Index Key="ShortCycles" Subkey="f, maxlng"><C>ShortCycles</C></Index>
-There is an operation <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C> which
+In its 2-argument form, <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C>
 returns a list of all cycles of <A>f</A> of length at most <A>maxlng</A>
 which do not correspond to cycles consisting of residue classes. The
 cycles are sorted by increasing length. If for some value of <A>maxlng</A>
@@ -861,6 +864,7 @@ the lists <C>List(ShortCycles(<A>f</A>,<A>maxlng</A>),Length)</C> and
 
 <Example>
 <![CDATA[
+gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.
 gap> ShortCycles(a,5);
 [ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ], [ 4, 5, 7, 9, 6 ],
   [ -9, -6, -4, -5, -7 ] ]
@@ -1114,7 +1118,7 @@ rcwa group.
     </Index>
 <Example>
 <![CDATA[
-gap> G := Group(ClassShift(0,2),ClassTransposition(0,4,1,6));
+gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
 true
@@ -1137,7 +1141,7 @@ gap> P := RespectedPartition(G);
 <Example>
 <![CDATA[
 gap> H := ActionOnRespectedPartition(G);
-Group([ (3,4,5,6), (3,7)(5,8) ])
+Group([ (3,7)(5,8), (3,4,5,6) ])
 gap> H = Action(G,P);
 true
 gap> StructureDescription(H);
@@ -1196,9 +1200,9 @@ true
 gap> RespectedPartition(IntegralConjugate(G));
 [ 0(8), 1(8), 2(8), 3(8), 4(8), 5(8), 6(8), 7(8) ]
 gap> List(GeneratorsOfGroup(IntegralConjugate(G)),Factorization);
-[ [ ClassShift(5,8), ClassTransposition(2,8,3,8), ClassTransposition(2,8,4,8),
-      ClassTransposition(2,8,5,8) ],
-  [ ClassTransposition(2,8,6,8), ClassTransposition(4,8,7,8) ] ]
+[ [ ClassTransposition(2,8,6,8), ClassTransposition(4,8,7,8) ], 
+  [ ClassShift(5,8), ClassTransposition(2,8,3,8), ClassTransposition(2,8,4,8),
+      ClassTransposition(2,8,5,8) ] ]
 ]]>
 </Example>
   </Description>

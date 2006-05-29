@@ -531,16 +531,17 @@ compute a finite order, but can also detect infinite order.
 
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;          # The Collatz mapping.
+gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.
 gap> List([-4..4],k->Modulus(a^k));
 [ 256, 64, 16, 4, 1, 3, 9, 27, 81 ]
 gap> IsTame(T) or IsTame(a);
 false
-gap> ForAll([ClassShift(0,1),ClassReflection(0,1),
->            ClassTransposition(0,2,1,2)],IsTame);
+gap> IsTame(ClassShift(0,1)) and IsTame(ClassTransposition(0,2,1,2));
 true
 gap> T^2*a*T*a^-3;
-<surjective rcwa mapping of Z with modulus 768>
-gap> (ClassShift(1,3)*ClassReflection(2,7))^1000;
+<rcwa mapping of Z with modulus 768>
+gap> (ClassShift(1,3)*ClassReflection(2,7))^1000000;
 <bijective rcwa mapping of Z with modulus 21>
 ]]>
 </Example>
@@ -696,9 +697,9 @@ a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
     the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
 <Example>
 <![CDATA[
-gap> Factorization(Comm(a,b));
-[ ClassShift(2,4), ClassShift(0,4)^-1, ClassTransposition(0,4,2,4),
-  ClassTransposition(3,8,5,8), ClassTransposition(2,4,5,8) ]
+gap> Factorization(Comm(ClassShift(0,3)*ClassReflection(1,2),ClassShift(0,2)));
+[ ClassReflection(2,3), ClassShift(2,6)^-1, ClassTransposition(0,6,2,6), 
+  ClassTransposition(0,6,5,6) ]
 ]]>
 </Example>
   </Description>
@@ -706,8 +707,8 @@ gap> Factorization(Comm(a,b));
 
 For purposes of demonstrating the capabilities of the factorization routine,
 in Section&nbsp;<Ref Label="sec:FactoringTheCollatzPermutation"/>
-a permutation is factored which has already been investigated by Lothar
-Collatz in&nbsp;1932, and whose cycle structure is unknown so far. <P/>
+Collatz' permutation is factored. Lothar Collatz has investigated this
+permutation in&nbsp;1932. Its cycle structure is unknown so far. <P/>
 
 Class transpositions can be written as products of any given number <M>k</M>
 of class transpositions, as long as the underlying ring has a residue class
@@ -784,9 +785,9 @@ cannot have infinitely many cycles of any given finite length.
         \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
       </Display>
     </Alt>
-    In the author's thesis it is shown that the determinant mapping is an
-    epimorphism from the group of all class-wise order-preserving bijective
-    rcwa mappings of <M>\Z</M> onto <M>(\Z,+)</M> (see Theorem&nbsp;2.11.9).
+    The determinant mapping is an epimorphism from the group of all
+    class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
+    to <M>(\Z,+)</M>, see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.11.9.
     <P/>
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
@@ -794,11 +795,10 @@ cannot have infinitely many cycles of any given finite length.
     of <A>sigma</A> to&nbsp;<A>S</A>.
 <Example>
 <![CDATA[
-gap> nu := ClassShift(0,1);;
-gap> List( [ nu, a, b ], Determinant );
-[ 1, 0, 1 ]
-gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
-5
+gap> List([ClassTransposition(0,4,5,12),ClassShift(3,7)],Determinant);
+[ 0, 1 ]
+gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);   
+100
 ]]>
 </Example>
   </Description>
@@ -824,20 +824,17 @@ gap> Determinant(nu^7*a^2*nu^-1*b^-1*a^-3);
         \right)}}.
       </Display>
     </Alt>
-    In the author's thesis it is shown that the sign mapping is an
-    epimorphism from RCWA(<M>\Z</M>) to the group <M>\Z^\times</M> of
-    units of&nbsp;<M>\Z</M> (see Theorem&nbsp;2.12.8).
-    This means that the kernel of the sign mapping is a normal subgroup
+    The sign mapping is an epimorphism from RCWA(<M>\Z</M>) to the group
+    <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>,
+    see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.12.8.
+    Therefore the kernel of the sign mapping is a normal subgroup
     of RCWA(<M>\Z</M>) of index&nbsp;2.
 <Example>
 <![CDATA[
-gap> t := ClassReflection(0,1);;
-gap> List( [ nu, nu^2, nu^3 ], Sign );
-[ -1, 1, -1 ]
-gap> List( [ t, nu^3*t ], Sign );
-[ -1, 1 ]
-gap> List( [ a, a*b, (a*b)^2, Comm(a,b) ], Sign );
-[ 1, -1, 1, 1 ]
+gap> List([ClassTransposition(3,4,2,6),ClassShift(0,3),ClassReflection(2,5)],Sign);
+[ 1, -1, -1 ]
+gap> Sign (ClassTransposition(3,4,2,6)*ClassShift(0,3)*ClassReflection(2,5));
+1
 ]]>
 </Example>
   </Description>
@@ -929,15 +926,15 @@ true
   <Description>
 <Example>
 <![CDATA[
-gap> LargestSourcesOfAffineMappings(T);
-[ 0(2), 1(2) ]
+gap> LargestSourcesOfAffineMappings(ClassShift(3,7));
+[ Z \ 3(7), 3(7) ]
+gap> LargestSourcesOfAffineMappings(ClassReflection(0,1));
+[ Integers ]
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> List( [ u, u^-1 ], LargestSourcesOfAffineMappings );
 [ [ 0(5), 1(5), 2(5), 3(5), 4(5) ], [ 0(3), 1(3), 2(9), 5(9), 8(9) ] ]
-gap> LargestSourcesOfAffineMappings(t);
-[ Integers ]
 gap> kappa := ClassTransposition(2,4,3,4) * ClassTransposition(4,6,8,12)
->           * ClassTransposition(3,4,4,6);;
-gap> SetName(kappa,"kappa");
+>           * ClassTransposition(3,4,4,6);; SetName(kappa,"kappa");
 gap> LargestSourcesOfAffineMappings(kappa);
 [ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ]
 ]]>
@@ -958,13 +955,12 @@ gap> LargestSourcesOfAffineMappings(kappa);
   <Description>
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
 gap> [ Multpk(T,2,-1), Multpk(T,3,1) ];
 [ Integers, 1(2) ]
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> [ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];
 [ [  ], 0(5) U 2(5), Z \ 0(5) U 2(5), Integers ]
-gap> [ Multpk(kappa,2,1), Multpk(kappa,2,-1), Multpk(kappa,3,1),
->      Multpk(kappa,3,-1) ];
-[ 4(12) U 11(12), 2(4), 2(4), 8(12) ]
 ]]>
 </Example>
   </Description>
@@ -980,8 +976,9 @@ gap> [ Multpk(kappa,2,1), Multpk(kappa,2,-1), Multpk(kappa,3,1),
     The returned list contains entries for the restrictions
     of&nbsp;<A>f</A> to all residue classes modulo <C>Mod(<A>f</A>)</C>.
     A list entry can either be an empty set, the source of&nbsp;<A>f</A>
-    or a set of cardinality&nbsp;1. The ordering of the entries is the
-    same as the one which is used in coefficient lists.
+    or a set of cardinality&nbsp;1. The ordering of the entries corresponds
+    to the ordering of the residues in
+    <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>.
 <Example>
 <![CDATA[
 gap> FixedPointsOfAffinePartialMappings(ClassShift(0,2));
@@ -1013,8 +1010,9 @@ constant resp. class-wise order-reversing.
 
 <Example>
 <![CDATA[
-gap> List( [ T, u, t ], SetOnWhichMappingIsClassWiseOrderPreserving );
-[ Integers, Integers, [  ] ]
+gap> List([ClassTransposition(1,2,0,4),ClassShift(2,3),ClassReflection(2,5)],
+>          SetOnWhichMappingIsClassWiseOrderPreserving );
+[ Integers, Integers, Z \ 2(5) ]
 gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
 gap> SetOnWhichMappingIsClassWiseOrderReversing(ClassReflection(13,17));
@@ -1057,11 +1055,11 @@ gap> SetOnWhichMappingIsClassWiseOrderReversing(ClassReflection(13,17));
     <Package>GRAPE</Package>.
 <Example>
 <![CDATA[
-gap> TransitionGraph(T,4);
-rec( isGraph := true, order := 4, group := Group(()),
-  schreierVector := [ -1, -2, -3, -4 ],
-  adjacencies := [ [ 1, 3 ], [ 1, 3 ], [ 2, 4 ], [ 2, 4 ] ],
-  representatives := [ 1, 2, 3, 4 ], names := [ 1, 2, 3, 4 ] )
+gap> TransitionGraph(ClassShift(0,1),6);
+rec( isGraph := true, order := 6, group := Group(()), 
+  schreierVector := [ -1, -2, -3, -4, -5, -6 ], 
+  adjacencies := [ [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 1 ] ], 
+  representatives := [ 1, 2, 3, 4, 5, 6 ], names := [ 1, 2, 3, 4, 5, 6 ] )
 ]]>
 </Example>
   </Description>
@@ -1071,7 +1069,7 @@ rec( isGraph := true, order := 4, group := Group(()),
   <Oper Name="OrbitsModulo" Arg="f, m" Label="f, m"/>
   <Returns>
     The partition of <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>
-    corresponding to the weakly-connected components of the transition
+    corresponding to the weakly connected components of the transition
     graph of the rcwa mapping&nbsp;<A>f</A> for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
@@ -1090,7 +1088,7 @@ gap> OrbitsModulo(ClassTransposition(0,2,1,4),8);
         Arg = "f, m" Label="f, m"/>
   <Returns>
     The set of restrictions of the rcwa mapping&nbsp;<A>f</A> to the
-    weakly-connected components of its transition graph <M>\Gamma_{f,m}</M>.
+    weakly connected components of its transition graph <M>\Gamma_{f,m}</M>.
   </Returns>
   <Description>
     The product of the returned mappings is&nbsp;<A>f</A>.
@@ -1139,6 +1137,7 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
     The sums of the rows of a transition matrix are always equal to&nbsp;1.
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
 gap> Display(TransitionMatrix(T^3,3));
 [ [  1/8,  1/4,  5/8 ],
   [    0,  1/4,  3/4 ],
@@ -1155,17 +1154,15 @@ gap> Display(TransitionMatrix(T^3,3));
     of the rcwa mapping&nbsp;<A>f</A>, as described below.
   </Returns>
   <Description>
-    The returned list contains an entry for any strongly connected component
-    of the transition graph of&nbsp;<A>f</A> for modulus&nbsp;<M>m</M> which
-    has only outgoing edges. The list entry corresponding to a given such
-    strongly connected component is the union of the vertices which belong
-    to the respective component.
+    The returned list contains an entry for any strongly
+    connected component of the transition graph of&nbsp;<A>f</A> for
+    modulus&nbsp;<C>Mod(<A>f</A>)</C> which has only outgoing edges.
+    The list entry corresponding to such a component
+    is the union of the vertices belonging to it.
 <Example>
 <![CDATA[
-gap> [ Sources(kappa), Sources(a) ];
-[ [  ], [  ] ]
-gap> Sources(nu*nu^a);
-[ 2(4) ]
+gap> Sources(ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4));
+[ 0(4) ]
 ]]>
 </Example>
   </Description>
@@ -1180,9 +1177,7 @@ gap> Sources(nu*nu^a);
   <Description>
 <Example>
 <![CDATA[
-gap> [ Sinks(kappa), Sinks(a) ];
-[ [  ], [  ] ]
-gap> Sinks(nu*nu^a);
+gap> Sinks(ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4));  
 [ 1(4) ]
 ]]>
 </Example>
@@ -1193,16 +1188,14 @@ gap> Sinks(nu*nu^a);
   <Attr Name="Loops" Arg="f"  Label = "f"/>
   <Returns>
     The list of non-isolated vertices of the transition graph of the
-    rcwa mapping&nbsp;<A>f</A> for modulus <C>Modulus(<A>f</A>)</C>
+    rcwa mapping&nbsp;<A>f</A> for modulus <C>Mod(<A>f</A>)</C>
     which carry a loop.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-gap> Loops(a);
-[ 0(3), 1(3), 2(3) ]
-gap> Loops(nu*nu^a);
-[ 1(4), 2(4) ]
+gap> Loops(ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4));
+[ 0(4), 1(4) ]
 ]]>
 </Example>
   </Description>
@@ -1236,6 +1229,7 @@ gap> Loops(nu*nu^a);
     a finite set of ring elements or a union of residue classes.
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
 gap> Trajectory(T,27,16); Trajectory(T,27,25,5);
 [ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155 ]
 [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3, 0, 3, 0, 0, 3, 0, 3, 0, 0, 3 ]
@@ -1299,6 +1293,7 @@ gap> List([1..3],k->IncreasingOn(T^k));
 [ 1(2), 3(4), 3(4) U 1(8) U 6(8) ]
 gap> List([1..3],k->DecreasingOn(T^k));
 [ 0(2), Z \ 3(4), 0(4) U 2(8) U 5(8) ]
+gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.
 gap> List([-2..2],k->IncreasingOn(a^k));
 [ Z \ 1(8) U 7(8), 0(2), [  ], Z \ 0(3), 1(9) U 4(9) U 5(9) U 8(9) ]
 ]]>
@@ -1329,6 +1324,7 @@ gap> List([-2..2],k->IncreasingOn(a^k));
     whose modulus has only prime divisors which lie in&nbsp;<A>pi</A>.
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
 gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
 [ 131/13, 203/13, 311/13, 473/13, 716/13, 358/13, 179/13, 275/13, 419/13, 
   635/13, 959/13, 1445/13, 2174/13, 1087/13, 1637/13, 2462/13, 1231/13, 
@@ -1436,7 +1432,8 @@ Rcwa mapping of Z with modulus 2
     a bijective rcwa mapping is&nbsp;1.
 <Example>
 <![CDATA[
-gap> List( [ T, a, RcwaMapping([[2,0,1]]) ], ImageDensity );
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
+gap> List( [ T, ClassShift(0,1), RcwaMapping([[2,0,1]]) ], ImageDensity );
 [ 4/3, 1, 1/2 ]
 ]]>
 </Example>
@@ -1493,6 +1490,7 @@ non-probabilistic functionality related to trajectories of rcwa mappings.
     level&nbsp;3 of <C>InfoRCWA</C> is given.
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
 gap> S0 := LikelyContractionCentre(T,100,1000);
 #I  Warning: `LikelyContractionCentre' is highly probabilistic.
 The returned result can only be regarded as a rough guess.
@@ -1515,10 +1513,9 @@ See ?LikelyContractionCentre for information on how to improve this guess.
     Nothing particular is guaranteed.
 <Example>
 <![CDATA[
-gap> List( [ T, a ], GuessedDivergence );
+gap> GuessedDivergence(T);                                       
 #I  Warning: GuessedDivergence: no particular return value is guaranteed.
-#I  Warning: GuessedDivergence: no particular return value is guaranteed.
-[ 0.866025, 1.05827 ]
+0.866025
 ]]>
 </Example>
   </Description>

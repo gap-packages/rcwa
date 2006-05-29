@@ -11,11 +11,17 @@
 This chapter discusses a number of <Q>nice</Q> examples of rcwa mappings
 and -groups in detail. All of them show different aspects of the package,
 and the order in which they appear is entirely arbitrary. In particular
-they are not ordered by degree of interestingness or difficulty.
-The rcwa mappings defined in this chapter can be found in the file
-<F>pkg/rcwa/examples/examples.g</F>, so there is no need to extract them
-from the manual files. This file can be read into the current &GAP; session
-by issueing <C>RCWAReadExamples( );</C>.
+they are not ordered by degree of interestingness or difficulty. <P/>
+
+The rcwa mappings defined in this chapter (and in fact many more) can be
+found in the file <F>pkg/rcwa/examples/examples.g</F>, so there is no need
+to extract them from the manual files. This file can be read into the current
+&GAP; session by issueing <C>RCWAReadExamples( );</C>. <P/>
+
+The examples are typically far from discussing the respective aspects
+exhaustively. It is quite likely that in many instances by just a few
+little modifications or additional easy commands you can find out
+interesting things yourself -- have fun!
 
 <!-- #################################################################### -->
 
@@ -43,359 +49,106 @@ Rcwa mapping of Z with modulus 3
 ]]>
 </Example>
 
-The cycle structure of this permutation has not been completely determined
-yet. In particular it is not known whether the cycle containing&nbsp;8 is
-finite or infinite. There are a few finite cycles:
+This permutation has a few finite cycles:
 
 <Example>
 <![CDATA[
-gap> List(ShortOrbits(Group(Collatz),[-100..100],100),
->         orb->Cycle(Collatz,Minimum(orb)));
-[ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ], 
-  [ -9, -6, -4, -5, -7 ], [ -3, -2 ], [ -1 ], [ 0 ], [ 1 ], [ 2, 3 ], 
+gap> ShortCycles(Collatz,[-50..50],50);
+[ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ],
+  [ -9, -6, -4, -5, -7 ], [ -3, -2 ], [ -1 ], [ 0 ], [ 1 ], [ 2, 3 ],
   [ 4, 5, 7, 9, 6 ], [ 44, 59, 79, 105, 70, 93, 62, 83, 111, 74, 99, 66 ] ]
 ]]>
 </Example>
 
+The cycle structure of Collatz' permutation has not been completely
+determined yet. In particular it is not known whether the cycle
+containing&nbsp;8 is finite or infinite. 
 Nevertheless, the factorization routine included in this package can
-determine a factorization of this permutation into involutions interchanging
-two disjoint residue classes, each (for reasons of saving a bit space in
-this manual, we factor the inverse mapping instead and revert the list
-afterwards):
+determine a factorization of this permutation into class transpositions,
+i.e. involutions interchanging two disjoint residue classes:
 
 <Example>
 <![CDATA[
-gap> RCWAInfo(2); # Switch Info output on.
-gap> Reversed(Factorization(Collatz^-1:ExpandPrimeSwitches));
-#I  Modulus(<g>) = 4, Multiplier(<g>) = 3, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 16, Multiplier(<g>) = 3, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 6, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
-#I  p = 3, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 3(6), 5(12), 7(12), 8(12), 0(48) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 6(8) ]
-#I  Found 5 pairs.
-#I  After filtering and splitting: 5 pairs.
-#I  Dividing by ClassTransposition(3,6,6,8) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,5,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,7,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,8,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,0,48) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 6, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 12
-#I  p = 3, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 7(12), 8(12), 0(96) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 6(8) ]
-#I  Found 3 pairs.
-#I  After filtering and splitting: 3 pairs.
-#I  Dividing by ClassTransposition(6,8,7,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,8,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,8,0,96) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 12, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 12
-#I  p = 3, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 7(12), 0(192) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 2(4) ]
-#I  Found 2 pairs.
-#I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(2,4,7,12) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(2,4,0,192) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 24, Divisor(<g>) = 4
-#I  Dividing by PrimeSwitch(3) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 48, Divisor(<g>) = 12
-#I  p = 3, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 0(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 2(4) ]
-#I  Found 1 pairs.
-#I  After filtering and splitting: 1 pairs.
-#I  Dividing by ClassTransposition(2,4,0,384) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 128, Divisor(<g>) = 4
-#I  p = 2, kmult = 7, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 384(1536) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 2(4), 3(6), 1(12), 11(12) ]
-#I  Found 3 pairs.
-#I  After filtering and splitting: 5 pairs.
-#I  Dividing by ClassTransposition(2,12,384,1536) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(1,12,384,1536) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,12,384,1536) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,384,1536) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,384,1536) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 32, Divisor(<g>) = 4
-#I  p = 2, kmult = 5, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 0(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 3(6), 1(12), 6(12), 10(12), 11(12) ]
-#I  Found 4 pairs.
-#I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(1,12,0,384) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(6,12,0,384) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,0,384) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,0,384) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  p = 2, kmult = 4, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 48(192), 192(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 3(6), 6(12), 10(12), 11(12) ]
-#I  Found 3 pairs.
-#I  After filtering and splitting: 3 pairs.
-#I  Dividing by ClassTransposition(6,12,48,192) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(10,12,48,192) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,12,48,192) from the right.
-#I  Modulus(<g>) = 48, Multiplier(<g>) = 16, Divisor(<g>) = 4
-#I  p = 2, kmult = 4, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 192(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 3(6), 10(12), 11(12) ]
-#I  Splitting classes being divided by q*p^kdiv.
-#I  Found 4 pairs.
-#I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(10,24,192,384) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(11,24,192,384) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(22,24,192,384) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(23,24,192,384) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  p = 2, kmult = 3, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 72(96), 96(192), 0(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 3(6), 11(12), 22(24) ]
-#I  Found 2 pairs.
-#I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(11,12,72,96) from the right.
-#I  Dividing by ClassTransposition(22,24,96,192) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 8, Divisor(<g>) = 4
-#I  p = 2, kmult = 3, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 0(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 3(6) ]
-#I  Splitting classes being divided by q*p^kdiv.
-#I  Splitting classes being divided by q*p^kdiv.
-#I  Splitting classes being divided by q*p^kdiv.
-#I  Found 8 pairs.
-#I  After filtering and splitting: 8 pairs.
-#I  Dividing by ClassTransposition(3,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(9,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(15,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(21,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(27,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(33,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(39,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(45,48,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  p = 2, kmult = 2, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 44(48), 48(96), 192(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 9(12), 15(24), 27(48) ]
-#I  Found 2 pairs.
-#I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(9,12,44,48) from the right.
-#I  Dividing by ClassTransposition(15,24,48,96) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 4, Divisor(<g>) = 4
-#I  p = 2, kmult = 2, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 192(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 27(48) ]
-#I  Splitting classes being divided by q*p^kdiv.
-#I  Found 2 pairs.
-#I  After filtering and splitting: 2 pairs.
-#I  Dividing by ClassTransposition(27,96,192,384) from the right.
-#I  Modulus(<g>) = 384, Multiplier(<g>) = 2, Divisor(<g>) = 4
-#I  Dividing by ClassTransposition(75,96,192,384) from the right.
-#I  Modulus(<g>) = 384, Multiplier(<g>) = 2, Divisor(<g>) = 4
-#I  p = 2, kmult = 1, kdiv = 2
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 4(24), 17(24), 24(48), 96(192), 0(384) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 75(96) ]
-#I  Found 1 pairs.
-#I  After filtering and splitting: 1 pairs.
-#I  Dividing by ClassTransposition(75,96,0,384) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  p = 2, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 4(24), 17(24), 24(48), 96(192) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 7(12), 5(24), 12(24), 16(24), 75(96) ]
-#I  Found 6 pairs.
-#I  After filtering and splitting: 6 pairs.
-#I  Dividing by ClassTransposition(7,12,4,24) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(7,12,17,24) from the right.
-#I  Dividing by ClassTransposition(5,24,24,48) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(12,24,24,48) from the right.
-#I  Modulus(<g>) = 192, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,24,48) from the right.
-#I  Dividing by ClassTransposition(75,96,96,192) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  p = 2, kmult = 1, kdiv = 1
-#I  Images of classes being multiplied by q*p^kmult:
-#I  [ 17(24) ]
-#I  Images of classes being divided by q*p^kdiv:
-#I  [ 12(24), 16(24) ]
-#I  Splitting classes being multiplied by q*p^kmult.
-#I  Found 4 pairs.
-#I  After filtering and splitting: 4 pairs.
-#I  Dividing by ClassTransposition(12,24,17,48) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,17,48) from the right.
-#I  Dividing by ClassTransposition(12,24,41,48) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 2, Divisor(<g>) = 2
-#I  Dividing by ClassTransposition(16,24,41,48) from the right.
-#I  Modulus(<g>) = 96, Multiplier(<g>) = 1, Divisor(<g>) = 1
-#I  Determining largest sources of affine mappings.
-#I  Computing respected partition.
-#I  Computing induced permutation on respected partition 
-[ 12(24), 14(24), 18(24), 13(48), 22(48), 23(48), 28(48), 31(48), 32(48), 
-  33(48), 34(48), 35(48), 39(48), 44(48), 45(48), 0(96), 1(96), 2(96), 3(96), 
-  4(96), 5(96), 6(96), 7(96), 8(96), 9(96), 10(96), 11(96), 15(96), 16(96), 
-  17(96), 19(96), 20(96), 21(96), 24(96), 25(96), 26(96), 27(96), 29(96), 
-  30(96), 37(96), 40(96), 41(96), 43(96), 46(96), 47(96), 48(96), 49(96), 
-  50(96), 51(96), 52(96), 53(96), 54(96), 55(96), 56(96), 57(96), 58(96), 
-  59(96), 63(96), 64(96), 65(96), 67(96), 68(96), 69(96), 72(96), 73(96), 
-  74(96), 75(96), 77(96), 78(96), 85(96), 88(96), 89(96), 91(96), 94(96), 
-  95(96) ].
-#I  Factoring the rest into class shifts.
-#I  Checking the result.
-[ ClassTransposition(4,6,7,12), ClassTransposition(2,6,1,12), 
-  ClassTransposition(2,4,5,6), ClassTransposition(0,4,1,6), 
-  ClassTransposition(5,6,4,8), ClassTransposition(1,6,0,8), 
-  ClassTransposition(4,6,7,12), ClassTransposition(2,6,1,12), 
-  ClassTransposition(2,4,5,6), ClassTransposition(0,4,1,6), 
-  ClassTransposition(5,6,4,8), ClassTransposition(1,6,0,8), 
-  ClassTransposition(4,6,7,12), ClassTransposition(2,6,1,12), 
-  ClassTransposition(2,4,5,6), ClassTransposition(0,4,1,6), 
-  ClassTransposition(5,6,4,8), ClassTransposition(1,6,0,8), 
-  ClassTransposition(3,6,6,8), ClassTransposition(6,8,5,12), 
-  ClassTransposition(6,8,7,12), ClassTransposition(6,8,8,12), 
-  ClassTransposition(6,8,0,48), ClassTransposition(4,6,7,12), 
-  ClassTransposition(2,6,1,12), ClassTransposition(2,4,5,6), 
-  ClassTransposition(0,4,1,6), ClassTransposition(5,6,4,8), 
-  ClassTransposition(1,6,0,8), ClassTransposition(6,8,7,12), 
-  ClassTransposition(6,8,8,12), ClassTransposition(6,8,0,96), 
-  ClassTransposition(4,6,7,12), ClassTransposition(2,6,1,12), 
-  ClassTransposition(2,4,5,6), ClassTransposition(0,4,1,6), 
-  ClassTransposition(5,6,4,8), ClassTransposition(1,6,0,8), 
-  ClassTransposition(2,4,7,12), ClassTransposition(2,4,0,192), 
-  ClassTransposition(4,6,7,12), ClassTransposition(2,6,1,12), 
-  ClassTransposition(2,4,5,6), ClassTransposition(0,4,1,6), 
-  ClassTransposition(5,6,4,8), ClassTransposition(1,6,0,8), 
-  ClassTransposition(2,4,0,384), ClassTransposition(2,12,384,1536), 
-  ClassTransposition(1,12,384,1536), ClassTransposition(6,12,384,1536), 
-  ClassTransposition(10,12,384,1536), ClassTransposition(11,12,384,1536), 
-  ClassTransposition(1,12,0,384), ClassTransposition(6,12,0,384), 
-  ClassTransposition(10,12,0,384), ClassTransposition(11,12,0,384), 
-  ClassTransposition(6,12,48,192), ClassTransposition(10,12,48,192), 
-  ClassTransposition(11,12,48,192), ClassTransposition(10,24,192,384), 
-  ClassTransposition(11,24,192,384), ClassTransposition(22,24,192,384), 
-  ClassTransposition(23,24,192,384), ClassTransposition(11,12,72,96), 
-  ClassTransposition(22,24,96,192), ClassTransposition(3,48,0,384), 
-  ClassTransposition(9,48,0,384), ClassTransposition(15,48,0,384), 
-  ClassTransposition(21,48,0,384), ClassTransposition(27,48,0,384), 
-  ClassTransposition(33,48,0,384), ClassTransposition(39,48,0,384), 
-  ClassTransposition(45,48,0,384), ClassTransposition(9,12,44,48), 
-  ClassTransposition(15,24,48,96), ClassTransposition(27,96,192,384), 
-  ClassTransposition(75,96,192,384), ClassTransposition(75,96,0,384), 
-  ClassTransposition(7,12,4,24), ClassTransposition(7,12,17,24), 
-  ClassTransposition(5,24,24,48), ClassTransposition(12,24,24,48), 
-  ClassTransposition(16,24,24,48), ClassTransposition(75,96,96,192), 
-  ClassTransposition(12,24,17,48), ClassTransposition(16,24,17,48), 
-  ClassTransposition(12,24,41,48), ClassTransposition(16,24,41,48), 
-  ClassTransposition(3,96,43,96), ClassTransposition(3,96,40,96), 
-  ClassTransposition(3,96,26,96), ClassTransposition(3,96,30,96), 
-  ClassTransposition(3,96,24,96), ClassTransposition(3,96,25,96), 
-  ClassTransposition(3,96,29,96), ClassTransposition(3,96,11,96), 
-  ClassTransposition(3,96,10,96), ClassTransposition(3,96,15,96), 
-  ClassTransposition(3,96,27,96), ClassTransposition(3,96,51,96), 
-  ClassTransposition(3,96,91,96), ClassTransposition(3,96,88,96), 
-  ClassTransposition(3,96,74,96), ClassTransposition(3,96,78,96), 
-  ClassTransposition(3,96,72,96), ClassTransposition(3,96,73,96), 
-  ClassTransposition(3,96,77,96), ClassTransposition(3,96,59,96), 
-  ClassTransposition(3,96,58,96), ClassTransposition(3,96,63,96), 
-  ClassTransposition(3,96,75,96), ClassTransposition(0,96,95,96), 
-  ClassTransposition(0,96,94,96), ClassTransposition(0,96,85,96), 
-  ClassTransposition(0,96,89,96), ClassTransposition(0,96,49,96), 
-  ClassTransposition(0,96,53,96), ClassTransposition(0,96,57,96), 
-  ClassTransposition(0,96,56,96), ClassTransposition(0,96,55,96), 
-  ClassTransposition(0,96,52,96), ClassTransposition(0,96,69,96), 
-  ClassTransposition(0,96,68,96), ClassTransposition(0,96,65,96), 
-  ClassTransposition(0,96,67,96), ClassTransposition(0,96,64,96), 
-  ClassTransposition(0,96,50,96), ClassTransposition(0,96,54,96), 
-  ClassTransposition(0,96,48,96), ClassTransposition(0,96,47,96), 
-  ClassTransposition(0,96,46,96), ClassTransposition(0,96,37,96), 
-  ClassTransposition(0,96,41,96), ClassTransposition(0,96,1,96), 
-  ClassTransposition(0,96,5,96), ClassTransposition(0,96,9,96), 
-  ClassTransposition(0,96,8,96), ClassTransposition(0,96,7,96), 
-  ClassTransposition(0,96,4,96), ClassTransposition(0,96,21,96), 
-  ClassTransposition(0,96,20,96), ClassTransposition(0,96,17,96), 
-  ClassTransposition(0,96,19,96), ClassTransposition(0,96,16,96), 
-  ClassTransposition(0,96,2,96), ClassTransposition(0,96,6,96), 
-  ClassTransposition(13,48,35,48), ClassTransposition(13,48,34,48), 
-  ClassTransposition(13,48,39,48), ClassTransposition(13,48,33,48), 
-  ClassTransposition(13,48,32,48), ClassTransposition(13,48,31,48), 
-  ClassTransposition(13,48,28,48), ClassTransposition(13,48,45,48), 
-  ClassTransposition(13,48,44,48), ClassTransposition(13,48,23,48), 
-  ClassTransposition(13,48,22,48), ClassTransposition(12,24,14,24), 
-  ClassTransposition(12,24,18,24) ]
-gap> Product(last) = Collatz; # Check the result.
-true
-gap> Length(last2);
-159
-gap> RCWAInfo(0); # Switch Info output off again.
+gap> Length(Factorization(Collatz));
+212
 ]]>
 </Example>
 
-See the end of Section <Ref Label="sec:WildButFiniteCycles"/> for a much
-smaller factorization task which is performed <Q>manually</Q> for purposes
+Setting the Info level of <C>InfoRCWA</C> equal to&nbsp;2 (simply issue
+<C>RCWAInfo(2);</C>) causes the factorization routine to display detailed
+information on the progress of the factoring process. For reasons of saving
+space, this is not done in this manual. <P/>
+
+We would like to get a factorization into fewer factors. Firstly, we try
+to factor the inverse -- just like the various options interpreted by the
+factorization routine, this has influence on decisions taken during the
+factoring process:
+
+<Example>
+<![CDATA[
+gap> Length(Factorization(Collatz^1));
+129
+]]>
+</Example>
+
+This is already a shorter product, but can still be improved.
+We remember the <C>mKnot</C>'s, of which the permutation <C>mKnot(3)</C>
+looks very similar to Collatz' permutation. Therefore it is straightforward
+to try to factor both <C>mKnot(3)</C> and <C>Collatz/mKnot(3)</C>, and to
+look whether the sum of the numbers of factors is less than&nbsp;129:
+
+<Example>
+<![CDATA[
+gap> KnotFacts := Factorization(mKnot(3));;
+gap> QuotFacts := Factorization(Collatz/mKnot(3));;
+gap> List([KnotFacts,QuotFacts],Length);
+[ 59, 9 ]
+gap> CollatzFacts := Concatenation(QuotFacts,KnotFacts);
+[ ClassTransposition(0,6,4,6), ClassTransposition(0,6,5,6), 
+  ClassTransposition(0,6,3,6), ClassTransposition(0,6,1,6), 
+  ClassTransposition(0,6,2,6), ClassTransposition(2,3,4,6), 
+  ClassTransposition(0,3,4,6), ClassTransposition(2,3,1,6), 
+  ClassTransposition(0,3,1,6), ClassTransposition(0,36,35,36), 
+  ClassTransposition(0,36,22,36), ClassTransposition(0,36,18,36), 
+  ClassTransposition(0,36,17,36), ClassTransposition(0,36,14,36), 
+  ClassTransposition(0,36,20,36), ClassTransposition(0,36,4,36), 
+  ClassTransposition(2,36,8,36), ClassTransposition(2,36,16,36), 
+  ClassTransposition(2,36,13,36), ClassTransposition(2,36,9,36), 
+  ClassTransposition(2,36,7,36), ClassTransposition(2,36,6,36), 
+  ClassTransposition(2,36,3,36), ClassTransposition(2,36,10,36), 
+  ClassTransposition(2,36,15,36), ClassTransposition(2,36,12,36), 
+  ClassTransposition(2,36,5,36), ClassTransposition(21,36,28,36), 
+  ClassTransposition(21,36,33,36), ClassTransposition(21,36,30,36), 
+  ClassTransposition(21,36,23,36), ClassTransposition(21,36,34,36), 
+  ClassTransposition(21,36,31,36), ClassTransposition(21,36,27,36), 
+  ClassTransposition(21,36,25,36), ClassTransposition(21,36,24,36), 
+  ClassTransposition(26,36,32,36), ClassTransposition(26,36,29,36), 
+  ClassTransposition(10,18,35,36), ClassTransposition(5,18,35,36), 
+  ClassTransposition(10,18,17,36), ClassTransposition(5,18,17,36), 
+  ClassTransposition(8,12,14,24), ClassTransposition(6,9,17,18), 
+  ClassTransposition(3,9,17,18), ClassTransposition(0,9,17,18), 
+  ClassTransposition(6,9,16,18), ClassTransposition(3,9,16,18), 
+  ClassTransposition(0,9,16,18), ClassTransposition(6,9,11,18), 
+  ClassTransposition(3,9,11,18), ClassTransposition(0,9,11,18), 
+  ClassTransposition(6,9,4,18), ClassTransposition(3,9,4,18), 
+  ClassTransposition(0,9,4,18), ClassTransposition(0,6,14,24), 
+  ClassTransposition(0,6,2,24), ClassTransposition(8,12,17,18), 
+  ClassTransposition(7,12,17,18), ClassTransposition(8,12,11,18), 
+  ClassTransposition(7,12,11,18), PrimeSwitch(3)^-1, 
+  ClassTransposition(7,12,17,18), ClassTransposition(2,6,17,18), 
+  ClassTransposition(0,3,17,18), PrimeSwitch(3)^-1, PrimeSwitch(3)^-1, 
+  PrimeSwitch(3)^-1 ]
+gap> Product(CollatzFacts) = Collatz; # Check.
+true
+]]>
+</Example>
+
+The factors <C>PrimeSwitch(3)</C> are products of 6 class transpositions
+(cp.&nbsp;<Ref Func="PrimeSwitch" Label="p"/>).
+At the end of Section <Ref Label="sec:WildButFiniteCycles"/>, a much
+smaller factorization task is performed <Q>manually</Q> for purposes
 of illustration.
- 
+
 </Section>
 
 <!-- #################################################################### -->
@@ -422,12 +175,6 @@ See ?LikelyContractionCentre for information on how to improve this guess.
   1, 2 ]
 gap> S0^T = S0; # This holds by definition of the contraction centre.
 true
-gap> Trajectory(T,27,S0);
-[ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103, 155, 
-  233, 350, 175, 263, 395, 593, 890, 445, 668, 334, 167, 251, 377, 566, 283, 
-  425, 638, 319, 479, 719, 1079, 1619, 2429, 3644, 1822, 911, 1367, 2051, 
-  3077, 4616, 2308, 1154, 577, 866, 433, 650, 325, 488, 244, 122, 61, 92, 46, 
-  23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2 ]
 gap> List([1..40],n->Length(Trajectory(T,n,S0)));
 [ 1, 1, 5, 2, 4, 6, 11, 3, 13, 5, 10, 7, 7, 12, 12, 4, 9, 14, 14, 6, 6, 11, 
   11, 8, 16, 8, 70, 13, 13, 13, 67, 5, 18, 10, 10, 15, 15, 15, 23, 7 ]
@@ -440,7 +187,7 @@ gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0))));
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
-The following mapping also seems to be contracting, but its trajectories
+The following mapping seems to be contracting as well, but its trajectories
 are much longer:
 
 <Log>
@@ -512,9 +259,9 @@ trajectories of integers <M>n \in 1(16)</M> under the Collatz mapping always
 contain&nbsp;1 would be sufficient to prove the <M>3n+1</M> Conjecture.
 In the sequel, this result is verified by &RCWA;. Checking that the
 union of the images of the residue class 1(16) under powers of the Collatz
-mapping&nbsp;<M>T</M> contains <M>\mathbb{Z} \setminus 0(3)</M> is obviously
-enough. Thus we proceed by setting <M>S := 1(16)</M> and successively
-uniting the set <M>S</M> with its image under&nbsp;<M>T</M>:
+mapping&nbsp;<M>T</M> contains <M>\Z \setminus 0(3)</M> is obviously
+enough. Thus we put <M>S := 1(16)</M>, and successively unite the
+set&nbsp;<M>S</M> with its image under&nbsp;<M>T</M>:
 
 <Example>
 <![CDATA[
@@ -681,9 +428,8 @@ sheds a light on the idea behind it.
 
 In this example, a simple attempt to should be made to investigate the
 structure of a given wild group by finding orders of torsion elements.
-In general, determining the structure of a given wild group computationally
-seems to be a very hard task. First of all, the group in question
-has to be defined:
+In general, determining the structure of a given wild group seems to be
+a very hard task. First of all, the group in question has to be defined:
 
 <Example>
 <![CDATA[
@@ -701,9 +447,7 @@ Rcwa mapping of Z with modulus 5
   3                                    | (9n - 2)/5
   4                                    | (9n + 4)/5
 
-gap> nu := RcwaMapping([[1,1,1]]);
-Rcwa mapping of Z: n -> n + 1
-gap> SetName(nu,"nu");
+gap> nu := ClassShift(0,1);;
 gap> G := Group(u,nu);
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
@@ -785,7 +529,7 @@ gap> Order(Comm(u2,nu^30));
 
 Thus even this rather simple-minded approach reveals various different
 orders of torsion elements, and the involved primes are also not all
-quite <Q>small</Q>.
+very <Q>small</Q>.
 
 </Section>
 
@@ -794,16 +538,14 @@ quite <Q>small</Q>.
 <Section Label="sec:WildButFiniteCycles">
 <Heading>A wild rcwa mapping which has only finite cycles</Heading>
 
-Some wild rcwa mappings of <M>\mathbb{Z}</M> have only finite cycles.
-In this section, a permutation is examined which can be shown to be such
-a mapping and which is likely to be something like a <Q>minimal</Q> example.
-<P/>
+Some wild rcwa mappings of <M>\Z</M> have only finite cycles. In this
+section, a permutation is examined which can be shown to be such a mapping
+and which is likely to be something like a <Q>minimal</Q> example. <P/>
 
-Over <M>R</M> = GF(<M>q</M>)[<M>x</M>], constructing such mappings is easy
-since the degree function gives rise to a partition of <M>R</M> into
-finite sets which is left invariant by suitable wild rcwa mappings.
-Over <M>R = \mathbb{Z}</M> however the situation looks different --
-there is no such <Q>natural</Q> partition into finite sets which can be
+Over <M>R</M> = GF(<M>q</M>)[<M>x</M>], the degree function gives rise
+to a partition of <M>R</M> into finite sets which is left invariant by
+suitable wild rcwa mappings. Over <M>R = \Z</M> the situation looks different
+-- there is no such <Q>natural</Q> partition into finite sets which can be
 fixed by a wild rcwa mapping.
 
 <Example>
@@ -952,12 +694,7 @@ gap> Multpk(elm1,2,1)^elm1;
 8(12)
 gap> Multpk(elm1,2,-1)^elm1;
 4(6)
-gap> Multpk(elm1,3,1)^elm1;
-4(6)
-gap> Multpk(elm1,3,-1)^elm1;
-3(4)
-gap> fact1 := RcwaMapping([[rc(4,6),rc(8,12)]]);
-<rcwa mapping of Z with modulus 12>
+gap> fact1 := ClassTransposition(4,6,8,12);;
 ]]>
 </Example>
 
@@ -982,8 +719,7 @@ gap> Multpk(elm2,3,1)^elm2;
 8(12)
 gap> Multpk(elm2,3,-1)^elm2;
 3(4)
-gap> fact2 := RcwaMapping([[rc(3,4),rc(8,12)]]);
-<rcwa mapping of Z with modulus 12>
+gap> fact2 := ClassTransposition(3,4,8,12);;
 gap> elm3 := elm2/fact2;
 <bijective rcwa mapping of Z with modulus 4>
 gap> Display(elm3);
@@ -996,16 +732,12 @@ Bijective rcwa mapping of Z with modulus 4
   2                                    | n + 1
   3                                    | n - 1
 
-gap> fact3 := RcwaMapping([[rc(2,4),rc(3,4)]]);
-<rcwa mapping of Z with modulus 4>
+gap> fact3 := ClassTransposition(2,4,3,4);;
 gap> elm4 := elm3/fact3;
 IdentityMapping( Integers )
 gap> kappafacts := [ fact3, fact2, fact1 ];
-[ <bijective rcwa mapping of Z with modulus 4>, 
-  <bijective rcwa mapping of Z with modulus 12>, 
-  <bijective rcwa mapping of Z with modulus 12> ]
-gap> List(kappafacts,Order);
-[ 2, 2, 2 ]
+[ ClassTransposition(2,4,3,4), ClassTransposition(4,6,8,12), 
+  ClassTransposition(3,4,4,6) ]
 gap> kappa = Product(kappafacts);
 true
 ]]>
@@ -1117,14 +849,13 @@ subgroup thereof acting transitively, but not primitively on 512 points.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:RcwaRepresentationOfS10">
+<Section Label="sec:TameByCommsOfWildPerms">
 <Heading>
-  An rcwa representation of the symmetric group on 10 points
+  A tame group generated by commutators of wild permutations
 </Heading>
 
-In this section, an rcwa representation of the symmetric group on
-10&nbsp;points should be investigated. We start by defining some
-bijections of infinite order and computing commutators:
+In this section, we have a look at 3 wild rcwa mappings whose commutators
+generate tame groups:
 
 <Example>
 <![CDATA[
@@ -1132,8 +863,8 @@ gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
 gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
 gap> SetName(a,"a"); SetName(b,"b"); SetName(c,"c");
-gap> List([a,b,c],Order);
-[ infinity, infinity, infinity ]
+gap> List([a,b,c],IsTame);
+[ false, false, false ]
 gap> ab := Comm(a,b);; ac := Comm(a,c);; bc := Comm(b,c);;
 gap> SetName(ab,"[a,b]"); SetName(ac,"[a,c]"); SetName(bc,"[b,c]");
 gap> List([ab,ac,bc],Order);
@@ -1183,8 +914,8 @@ Hence the group <A>G</A> is isomorphic to the symmetric group on
 10&nbsp;points and acts faithfully on the orbit containing&nbsp;1.
 
 Another question is which groups arise if we take as generators
-either <A>ab</A>, <A>ac</A> or <A>bc</A> and the mapping&nbsp;<A>t</A>,
-which maps each integer to its additive inverse:
+either <A>ab</A>, <A>ac</A> or <A>bc</A> and the involution
+which maps any integer to its additive inverse:
 
 <Example>
 <![CDATA[
@@ -1207,7 +938,7 @@ gap> StructureDescription(Image(phi));
 
 Thus the group generated by <A>ab</A> and <A>t</A> is isomorphic to 
 <Alt Only="LaTeX"><M>{\rm C}_2 \times {\rm S}_{10}</M></Alt>
-<Alt Not="LaTeX"><M>C_2 x S_{10}</M></Alt>.
+<Alt Not="LaTeX"><M>C_2 x S_10</M></Alt>.
 The next group is an extension of a perfect group of order&nbsp;960:
 
 <Example>
@@ -1242,9 +973,9 @@ gap> RespectedPartition(G);
   15(18) ]
 gap> ActionOnRespectedPartition(G);
 Group([ (1,5,8,2,4,12)(3,9,6,11), (1,6)(2,5)(3,4)(8,12)(9,11) ])
-gap> IsNaturalSymmetricGroup(last);
-true
-gap> RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed);
+gap> StructureDescription(last);
+"S10"
+gap> RankOfKernelOfActionOnRespectedPartition(G);
 9
 ]]>
 </Example>
@@ -1258,17 +989,20 @@ gap> RankOfKernelOfActionOnRespectedPartition(G:ProperSubgroupAllowed);
 <Section Label="sec:CheckingForSolvability">
 <Heading>Checking for solvability</Heading>
 
-Is the group generated by the mappings <A>a</A> and <A>b</A> from the last
-paragraph solvable? <P/>
+Is the group generated by the permutations <A>a</A> and <A>b</A> from the
+last paragraph solvable? <P/>
 
 This group is wild. Presently there is no general method available for
 testing wild rcwa groups for solvability. But nevertheless, for the given
-group this question can be decided to the negative. The idea is to find a
-subgroup <A>U</A> which acts on a finite set <A>S</A> of integers,
-and induces on <A>S</A> a non-solvable finite permutation group:
+group we can obtain a negative answer to this question. The idea is to
+find a subgroup&nbsp;<A>U</A> which acts on a finite set&nbsp;<A>S</A> of
+integers, and which induces on&nbsp;<A>S</A> a non-solvable finite
+permutation group:
 
 <Example>
 <![CDATA[
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);; SetName(a,"a");
+gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);; SetName(b,"b");
 gap> G := Group(a,b);;
 gap> ShortOrbits(Group(Comm(a,b)),[-10..10],100);
 [ [ -10 ], [ -9 ], [ -30, -21, -14, -13, -11, -8 ], [ -7 ], [ -6 ], 
@@ -1290,9 +1024,9 @@ true
 ]]>
 </Example>
 
-Thus, the subgroup <A>U</A> induces on <A>S</A> a natural symmetric group
-of degree&nbsp;6. Hence the group&nbsp;<A>G</A> is not solvable, as claimed.
-We finish this example by factoring the group element <A>elm</A> into
+Thus the subgroup <A>U</A> induces on <A>S</A> a natural symmetric group of
+degree&nbsp;6. Therefore the group&nbsp;<A>G</A> is not solvable, as claimed.
+We conclude this example by factoring the group element <A>elm</A> into
 generators:
 
 <Example>
@@ -1316,8 +1050,7 @@ true
 <Heading>Some examples over (semi)localizations of the integers</Heading>
 
 We start with something one can observe when trying to <Q>transfer</Q> an
-rcwa mapping from the ring of integers to one of its localizations (we take
-the mapping <C>a</C> from the previous examples):
+rcwa mapping from the ring of integers to one of its localizations:
 
 <Example>
 <![CDATA[
@@ -1335,9 +1068,8 @@ gap> (1/3)^a2; # That's the reason!
 </Example>
 
 The above can also be explained easily by pointing out that the modulus
-of the inverse of <C>a</C> is 3, and that 3 is a unit of
-<M>\mathbb{Z}_{(2)}</M>.
-Moving to <M>\mathbb{Z}_{(2,3)}</M> solves this problem:
+of the inverse of <C>a</C> is 3, and that 3 is a unit of <M>\Z_{(2)}</M>.
+Moving to <M>\Z_{(2,3)}</M> solves this problem:
 
 <Example>
 <![CDATA[
@@ -2286,11 +2018,11 @@ Bijective rcwa mapping of Z with modulus 4, of order 2
 ]]>
 </Example>
 
-This group acts transitively on <M>\mathbb{Z}</M>, since already the cyclic
-group generated by the first of the two generators does so. Next we have
-to show that it acts 2-transitively. We essentially proceed as in the example
+This group acts transitively on <M>\Z</M>, since already the cyclic group
+generated by the first of the two generators does so. Next we have to show
+that it acts 2-transitively. We essentially proceed as in the example
 in the previous section, by checking that the stabilizer of&nbsp;0
-acts transitively on <M>\mathbb{Z} \setminus \{0\}</M>.
+acts transitively on <M>\Z \setminus \{0\}</M>.
 
 <Example>
 <![CDATA[
@@ -2432,7 +2164,7 @@ true
 ]]>
 </Example>
 
-This shows that <M>G</M> is not 4-transitive on <M>\mathbb{Z}</M>.
+This shows that <M>G</M> is not 4-transitive on <M>\Z</M>.
 The corresponding calculation for 3-tuples looks as follows:
 
 <Example>
@@ -2470,8 +2202,8 @@ for proving, but only for disproving <M>k</M>-transitivity.
   Grigorchuk groups
 </Heading>
 
-In this section, we show how construct finite quotients of the two infinite
-periodic groups introduced by Rostislav Grigorchuk
+In this section, we show how to construct finite quotients of the two
+infinite periodic groups introduced by Rostislav Grigorchuk
 in&nbsp;<Cite Key="Grigorchuk80"/> with the help of &RCWA;.
 
 The first of these, nowadays known as <Q>Grigorchuk group</Q>, is
@@ -2510,8 +2242,8 @@ d := level -> SequenceElement(1,level);
 
 All computations given on the webpage can now be done just as with the
 <Q>original</Q> construction of the quotients of the Grigorchuk group.
-In the sequel, finite quotients of the second group introduced
-in&nbsp;<Cite Key="Grigorchuk80"/> are constructed:
+In the sequel, we construct finite quotients of the second group introduced
+in&nbsp;<Cite Key="Grigorchuk80"/>:
 
 <Example>
 <![CDATA[
@@ -2670,7 +2402,7 @@ The free group of rank&nbsp;2 embeds in RCWA(<M>\Z</M>) -- in fact it embeds
 even in the subgroup which is generated by all class transpositions.
 An explicit embedding can be constructed by transferring the construction
 of the so-called <Q>Schottky groups</Q> (cp.&nbsp;<Cite Key="LaHarpe00"/>,
-page&nbsp;27) from PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>)
+page&nbsp;27) from PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\Z</M>)
 (we use the notation from the cited book):
 
 <Example>
@@ -2764,10 +2496,9 @@ gap> Order(r1/r2);
   Representations of the modular group PSL(2,Z)
 </Heading>
 
-The modular group PSL(2,<M>\mathbb{Z}</M>) embeds in the group generated by
-all class transpositions as well. We give an explicit embedding, and check
-that it really is one by applying the Table Tennis Lemma as in the previous
-section:
+The modular group PSL(2,<M>\Z</M>) embeds in the group generated by all class
+transpositions as well. We give an embedding, and check that it really is one
+by applying the Table Tennis Lemma as in the previous section:
 
 <Example>
 <![CDATA[
@@ -2791,7 +2522,7 @@ true
 ]]>
 </Example>
 
-A slightly different representation of PSL(2,<M>\mathbb{Z}</M>) can be
+A slightly different representation of PSL(2,<M>\Z</M>) can be
 obtained by using &RCWA;'s general method for <C>IsomorphismRcwaGroup</C>
 for free products of finite groups:
 
