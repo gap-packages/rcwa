@@ -151,10 +151,9 @@ InstallMethod( DirectProductOp,
 
     D := groups[1]; first := [1,Length(GeneratorsOfGroup(D))+1];
     for i in [2..Length(groups)] do
-      auts := List([1..Length(GeneratorsOfGroup(groups[i]))],
-                   j->IdentityMapping(D));
+      auts := List(Igs(groups[i]),x->IdentityMapping(D));
       D    := SplitExtensionByAutomorphisms(D,groups[i],auts);
-      Add(first,Length(GeneratorsOfGroup(D))+1);
+      Add(first,Length(Igs(D))+1);
     od;
 
     info := rec(groups := groups, first := first,
