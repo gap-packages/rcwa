@@ -46,9 +46,9 @@ involutions which interchange two disjoint residue classes -- is a simple
 group which has subgroups of all mentioned types and whose class of
 isomorphism types of subgroups is closed under the above operations. <P/>
 
-Despite of the contents of the preceding paragraph, only comparatively basic
-facts about the structure of residue class-wise affine groups are known so
-far. This package is intended to serve as a tool for obtaining a better
+Despite of what has been said in the preceding paragraph, only comparatively
+basic facts about the structure of residue class-wise affine groups are known
+so far. This package is intended to serve as a tool for obtaining a better
 understanding of their rich and interesting group theoretical and
 combinatorial structure. <P/>
 
