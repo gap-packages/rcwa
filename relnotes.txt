@@ -277,4 +277,8 @@ Further changes:
 
  - The code has been improved in various places.
 
+Changes between version 2.0.0 and version 2.0.1:
+
+ - An operation `RespectsPartition' has been introduced.
+
 

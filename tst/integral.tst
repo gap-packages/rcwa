@@ -1433,6 +1433,16 @@ gap> K := KernelOfActionOnRespectedPartition(G);;
 gap> List([nu,t,nu*t,nu^7*t,ClassTransposition(0,2,1,4),ClassReflection(1,2)],
 >         elm->elm in G);
 [ true, true, true, true, false, true ]
+gap> G := Group(g,h);;
+gap> P := RespectedPartition(G);;
+gap> RespectsPartition(G,P);
+true
+gap> List([1,4,6,12],m->RespectsPartition(ClassShift(0,m),P));
+[ false, false, true, false ]
+gap> List([1,2,6,12],m->RespectsPartition(ClassReflection(0,m),P));
+[ false, false, true, false ]
+gap> List([g,h,g*h,a,ab],elm->RespectsPartition(elm,P));
+[ true, true, true, false, false ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

@@ -1080,7 +1080,8 @@ rcwa group.
   <Attr Name ="RespectedPartition" Arg="G" Label="G"/>
   <Attr Name ="RespectedPartition" Arg="sigma" Label="sigma"/>
   <Returns>
-    A <E>respected partition</E> of <A>G</A> resp. <A>sigma</A>.
+    A respected partition of the rcwa group <A>G</A> resp.
+    of the rcwa mapping&nbsp;<A>sigma</A>.
   </Returns>
   <Description>
     A <E>respected partition</E> of&nbsp;<A>G</A> resp.&nbsp;<A>sigma</A>
@@ -1110,8 +1111,17 @@ rcwa group.
     divides the modulus of&nbsp;<A>G</A> resp. <A>sigma</A>, resp. where
     the modulus of <A>G</A> resp. <A>sigma</A> divides&nbsp;<M>m</M>. <P/>
 
-    The permutation induced by <A>sigma</A> on a respected
-    partition&nbsp;<C>P</C> can be computed efficiently using
+    <Index Key="RespectsPartition" Subkey="G">
+      <C>RespectsPartition</C>
+    </Index>
+    <Index Key="RespectsPartition" Subkey="sigma">
+      <C>RespectsPartition</C>
+    </Index>
+    There is an operation <C>RespectsPartition(<A>G</A>,<A>P</A>)</C>
+    resp. <C>RespectsPartition(<A>sigma</A>,<A>P</A>)</C>, which tests
+    whether <A>G</A> resp.&nbsp;<A>sigma</A> respects a given
+    partition&nbsp;<A>P</A>. The permutation induced by <A>sigma</A>
+    on&nbsp;<C>P</C> can be computed efficiently using
     <C>PermutationOpNC(<A>sigma</A>,P,OnPoints)</C>.
     <Index Key="PermutationOpNC" Subkey="sigma, P, OnPoints">
       <C>PermutationOpNC</C>

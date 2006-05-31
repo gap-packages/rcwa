@@ -284,6 +284,13 @@ DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
 
 #############################################################################
 ##
+#O  RespectsPartition( <G>, <P> )
+#O  RespectsPartition( <sigma>, <P> )
+##
+DeclareOperation( "RespectsPartition", [ IsObject, IsList ] );
+
+#############################################################################
+##
 #A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
 ##
 DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
