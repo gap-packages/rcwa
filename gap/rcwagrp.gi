@@ -1207,12 +1207,12 @@ InstallMethod( \in,
         Info(InfoRCWA,2,"Mod(<g>) does not divide Mod(<G>).");
         return false;
       fi;
-      if IsFinite(G) and Order(g) = infinity then
-        Info(InfoRCWA,2,"<G> is finite, but <g> has infinite order.");
-        return false;
-      fi;
       if not IsTame(g) then
         Info(InfoRCWA,2,"<G> is tame, but <g> is wild.");
+        return false;
+      fi;
+      if IsFinite(G) and Order(g) = infinity then
+        Info(InfoRCWA,2,"<G> is finite, but <g> has infinite order.");
         return false;
       fi;
       P := RespectedPartition(G);
@@ -1227,8 +1227,10 @@ InstallMethod( \in,
         return false;
       fi;
       if not h in H then
-        Info(InfoRCWA,2,"The action of <g> on RespectedPartition(<G>) ",
-                        "is not an element of the one of <G>.");
+        Info(InfoRCWA,2,"The permutation induced by <g> on ",
+                        "P := RespectedPartition(<G>)");
+        Info(InfoRCWA,2,"is not an element of the permutation group ",
+                        "which is induced by <G> on P.");
         return false;
       fi;
 
