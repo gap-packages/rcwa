@@ -101,7 +101,7 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>Determinant(<A>sigma</A>)</C>
+    <C>Determinant(<A>g</A>)</C>
   </Mark>
   <Item>
     Evaluation of the given expression.
@@ -772,7 +772,7 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>Sign(<A>sigma</A>)</C>
+    <C>Sign(<A>g</A>)</C>
   </Mark>
   <Item>
     Evaluation of the given expression.
