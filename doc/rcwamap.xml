@@ -512,7 +512,7 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 <Heading>Basic functionality for rcwa mappings</Heading>
 
 <Index Key="rcwa mapping" Subkey="arithmetic operations">rcwa mapping</Index>
-<Index Key="Order" Subkey="sigma"><C>Order</C></Index>
+<Index Key="Order" Subkey="g"><C>Order</C></Index>
 <Index Key="IsTame" Subkey="f"><C>IsTame</C></Index> <P/>
 
 Checking whether two rcwa mappings are equal is cheap.
@@ -605,9 +605,9 @@ gap> while Length(M) < 10000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
 ]]>
 </Example>
 
-<Index Key="Support" Subkey="sigma"><C>Support</C></Index>
-<Index Key="MovedPoints" Subkey="sigma"><C>MovedPoints</C></Index>
-<Index Key="RestrictedPerm" Subkey="sigma"><C>RestrictedPerm</C></Index>
+<Index Key="Support" Subkey="g"><C>Support</C></Index>
+<Index Key="MovedPoints" Subkey="g"><C>MovedPoints</C></Index>
+<Index Key="RestrictedPerm" Subkey="g"><C>RestrictedPerm</C></Index>
 
 There is a method for the operation <C>Support</C> for computing the
 support of a bijective rcwa mapping. A synonym for <C>Support</C> is
@@ -762,10 +762,10 @@ cannot have infinitely many cycles of any given finite length.
 <Heading>Determinant and sign</Heading>
 
 <ManSection>
-  <Meth Name="Determinant" Arg="sigma" Label="sigma"/>
-  <Meth Name="Determinant" Arg="sigma, S" Label="sigma, S"/>
+  <Meth Name="Determinant" Arg="g" Label="g"/>
+  <Meth Name="Determinant" Arg="g, S" Label="g, S"/>
   <Returns>
-    The determinant of the bijective rcwa mapping&nbsp;<A>sigma</A>.
+    The determinant of the bijective rcwa mapping&nbsp;<A>g</A>.
   </Returns>
   <Description>
     The <E>determinant</E> of an affine mapping <M>n \mapsto (an+b)/c</M>
@@ -792,7 +792,7 @@ cannot have infinitely many cycles of any given finite length.
 
     If a residue class union&nbsp;<A>S</A> is given as an additional
     argument, the method returns the determinant of the restriction
-    of <A>sigma</A> to&nbsp;<A>S</A>.
+    of <A>g</A> to&nbsp;<A>S</A>.
 <Example>
 <![CDATA[
 gap> List([ClassTransposition(0,4,5,12),ClassShift(3,7)],Determinant);
@@ -805,9 +805,9 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
 </ManSection>
 
 <ManSection>
-  <Attr Name="Sign" Arg="sigma" Label="sigma"/>
+  <Attr Name="Sign" Arg="g" Label="g"/>
   <Returns>
-    The sign of the bijective rcwa mapping&nbsp;<A>sigma</A>.
+    The sign of the bijective rcwa mapping&nbsp;<A>g</A>.
   </Returns>
   <Description>
     Using the notation from the definition of an rcwa mapping,
