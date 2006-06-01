@@ -277,7 +277,7 @@ Further changes:
 
  - The code has been improved in various places.
 
-Changes between version 2.0.0 and version 2.0.1:
+Changes between version 2.0.0 and version 2.0.2:
 
  - Operations `Projections' and `RespectsPartition' have been introduced.
 
