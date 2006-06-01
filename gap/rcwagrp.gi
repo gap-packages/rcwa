@@ -701,6 +701,24 @@ InstallOtherMethod( OrbitsModulo,
 
 #############################################################################
 ##
+#M  Projections( <G>, <m> ) . . . . . . . . . . . . .  for rcwa groups over Z
+##
+InstallMethod( Projections,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ, IsPosInt ], 0,
+
+  function ( G, m )
+
+    local  orbs, gens, groups;
+
+    gens   := GeneratorsOfGroup(G);
+    orbs   := List(OrbitsModulo(G,m),orb->ResidueClassUnion(Integers,m,orb));
+    groups := List(orbs,orb->Group(List(gens,gen->RestrictedPerm(gen,orb))));
+    return List(groups,grp->EpimorphismByGeneratorsNC(G,grp));
+  end );
+
+#############################################################################
+##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
 ##  Modulus of the rcwa group <G>.

@@ -1443,6 +1443,21 @@ gap> List([1,2,6,12],m->RespectsPartition(ClassReflection(0,m),P));
 [ false, false, true, false ]
 gap> List([g,h,g*h,a,ab],elm->RespectsPartition(elm,P));
 [ true, true, true, false, false ]
+gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
+gap> Projections(G,8);
+[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
+    [ <bijective rcwa mapping of Z with modulus 8>,
+      IdentityMapping( Integers ) ],
+  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
+    [ <bijective rcwa mapping of Z with modulus 4>,
+      <bijective rcwa mapping of Z with modulus 4> ],
+  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
+    [ <bijective rcwa mapping of Z with modulus 8>,
+      IdentityMapping( Integers ) ] ]
+gap> List(last,phi->Support(Image(phi)));
+[ 0(8) U 1(8), 2(4) U 3(4), 4(8) U 5(8) ]
+gap> List(last2,phi->Size(Image(phi)));
+[ 2, infinity, 2 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

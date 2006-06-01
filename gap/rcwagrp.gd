@@ -186,6 +186,12 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
+##
+DeclareOperation( "Projections", [ IsRcwaGroup, IsPosInt ] );
+
+#############################################################################
+##
 #O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
 ##
 ##  An analogon to `PreImagesRepresentative' which returns a list of possibly

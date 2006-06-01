@@ -279,6 +279,6 @@ Further changes:
 
 Changes between version 2.0.0 and version 2.0.1:
 
- - An operation `RespectsPartition' has been introduced.
+ - Operations `Projections' and `RespectsPartition' have been introduced.
 
 

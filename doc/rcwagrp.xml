@@ -769,21 +769,28 @@ gap> ShortCycles(mKnot(5),[1..100],20);
 </ManSection>
 
 <ManSection>
-  <Meth Name ="OrbitsModulo" Arg="G, m" Label="G, m"/>
+  <Oper Name ="Projections" Arg="G, m" Label="G, m"/>
   <Returns>
-    A partition of <C>[0..<A>m</A>-1]</C> such that <M>i</M> and
-    <M>j</M> lie in the same subset if and only if there is an element
-    <M>g</M> of <A>G</A> which moves an element from the residue class
-    <M>i(m)</M> to the residue class <M>j(m)</M>.
+    The projections of the rcwa group&nbsp;<A>G</A> to the unions of
+    residue classes (mod&nbsp;<A>m</A>) which it fixes setwisely.
   </Returns>
   <Description>
-    The argument <A>G</A> must be an rcwa group over <M>\Z</M>.
-    See also <Ref Oper ="OrbitsModulo" Label="f, m"/> for rcwa mappings.
+    The corresponding partition of a set of representatives for
+    the residue classes (mod&nbsp;<A>m</A>) can be obtained by the
+    operation <C>OrbitsModulo(<A>G</A>,<A>m</A>)</C>.
+    <Index Key="OrbitsModulo" Subkey="G, m"><C>OrbitsModulo</C></Index>
 <Example>
 <![CDATA[
-gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(3,4));;
-gap> OrbitsModulo(G,8);
-[ [ 0, 1, 4 ], [ 2, 5, 6 ], [ 3, 7 ] ]
+gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
+gap> Projections(G,4);
+[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
+    [ <bijective rcwa mapping of Z with modulus 4>,
+      IdentityMapping( Integers ) ],
+  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
+    [ <bijective rcwa mapping of Z with modulus 4>,
+      <bijective rcwa mapping of Z with modulus 4> ] ]
+gap> List(last,phi->Support(Image(phi)));
+[ 0(4) U 1(4), 2(4) U 3(4) ]
 ]]>
 </Example>
   </Description>
@@ -811,8 +818,6 @@ gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
 <wild rcwa group over Z with 2 generators>
 gap> List([1..10],k->Length(Ball(PSL2Z,0,k,OnPoints)));
 [ 3, 4, 6, 8, 12, 16, 24, 32, 48, 64 ]
-gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnPoints)));
-[ 3, 5, 9, 13, 21, 29, 45, 61, 93, 125 ]
 gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnTuples)));
 [ 4, 8, 14, 22, 34, 50, 74, 106, 154, 218 ]
 gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
@@ -840,7 +845,6 @@ gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
     The author does not know a general way to solve the conjugacy problem
     for elements of RCWA(<M>\Z</M>), thus the method may fail or run into
     an infinite loop.
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
 gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),
@@ -884,9 +888,8 @@ gap> ShortCycles(a,5);
     <Ref Meth="IsConjugate" Label="RCWA(Integers), f, g"/>.
 <Example>
 <![CDATA[
-gap> rep := RepresentativeAction(RCWA(Integers),
->                                ClassTransposition(0,2,1,4),
->                                ClassTransposition(1,2,0,4));
+gap> rep := RepresentativeAction(RCWA(Integers),ClassTransposition(0,2,1,4),
+>                                               ClassTransposition(1,2,0,4));
 <bijective rcwa mapping of Z with modulus 32>
 gap> ClassTransposition(0,2,1,4)^rep = ClassTransposition(1,2,0,4); # check
 true
