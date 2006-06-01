@@ -86,7 +86,7 @@ factoring process:
 
 <Example>
 <![CDATA[
-gap> Length(Factorization(Collatz^1));
+gap> Length(Factorization(Collatz^-1));
 129
 ]]>
 </Example>
