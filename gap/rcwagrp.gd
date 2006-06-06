@@ -373,6 +373,12 @@ DeclareAttribute( "StandardConjugate", IsRcwaMapping );
 
 #############################################################################
 ##
+#A  RankOfFreeGroup( <Fn> )
+##
+DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
+
+#############################################################################
+##
 #F  ClassPairs( <m> )
 ##
 ##  This is an auxiliary function for computing pairs of disjoint residue

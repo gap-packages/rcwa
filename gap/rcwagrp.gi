@@ -2931,7 +2931,7 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
     local  rank, m, D, gamma, RCWA_Z, phi, image, i;
 
-    rank := RankOfFreeGroup(F);
+    rank := Length(GeneratorsOfGroup(F));
     if rank = 1 then
       phi := GroupHomomorphismByImagesNC(F,Group(ClassShift(0,1)),
                                          [F.1],[ClassShift(0,1)]);
