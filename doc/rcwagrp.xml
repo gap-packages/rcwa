@@ -117,46 +117,74 @@ rcwa representation:
 gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
 >                     SymmetricGroup(3));
 <fp group on the generators [ f1, f2, f3, f4, f5 ]>
-gap> phi := IsomorphismRcwaGroup(F);
+gap> IsomorphismRcwaGroup(F);
 [ f1, f2, f3, f4, f5 ] -> [ <bijective rcwa mapping of Z with modulus 12>,
   <bijective rcwa mapping of Z with modulus 24>,
   <bijective rcwa mapping of Z with modulus 12>,
   <bijective rcwa mapping of Z with modulus 72>,
   <bijective rcwa mapping of Z with modulus 36> ]
-gap> G := Image(phi);
-<wild rcwa group over Z with 5 generators>
-gap> RelatorsOfFpGroup(F); # For illustrational purposes, do some checks:
-[ f1^2, f1^-1*f2*f1*f2^-1, f2^2, f3^3, f4^2, f5^2, f4*f5*f4*f5*f4*f5 ]
-gap> ForAll([ G.1^2, G.1^-1*G.2*G.1*G.2^-1, G.2^2, G.3^3,
->             G.4^2, G.5^2, (G.4*G.5)^3 ], IsOne);
-true
+gap> IsomorphismRcwaGroup(FreeGroup(2));
+[ f1, f2 ] -> [ <wild bijective rcwa mapping of Z with modulus 8>,
+  <wild bijective rcwa mapping of Z with modulus 8> ]
+gap> F2 := Image(last);
+<wild rcwa group over Z with 2 generators>
 ]]>
 </Example>
+  </Description>
+</ManSection>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
+<ManSection>
+  <Meth Name="StructureDescription" Arg="G" Label="G"/>
+  <Returns>
+    A string which describes the structure of the rcwa group&nbsp;<A>G</A>
+    to some extent.
+  </Returns>
+  <Description>
+    The attribute <C>StructureDescription</C> for finite groups is
+    documented in the &GAP; Reference Manual. Therefore we describe here
+    only issues which are specific to infinite groups, and in particular
+    to rcwa groups. <P/>
+
+    Wreath products are denoted by&nbsp;<C>wr</C>, and free products are
+    denoted by&nbsp;<C>*</C>. The infinite cyclic group <M>(\Z,+)</M> is
+    denoted by&nbsp;<C>Z</C>, and free groups of rank <M>2,3,4,\dots</M>
+    are denoted by&nbsp;<C>F2</C>, <C>F3</C>, <C>F4</C>,&nbsp;<M>\dots</M>.
+    While for finite groups the symbol&nbsp;<C>.</C> is used to denote a
+    non-split extension, for rcwa groups in general it stands for an
+    extension which may be split or not.
+    For wild groups in most cases it happens that the structure of the
+    <Q>main</Q> part cannot be exhibited. Such parts of the group with
+    unknown structure are denoted by <C>&lt;unknown&gt;</C>.
+    In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
+    can be very complicate and very difficult to exhibit.
+    While for isomorphic finite groups always the same structure
+    description is computed, this cannot be guaranteed for rcwa groups.
 <Example>
 <![CDATA[
-gap> S := AllResidueClassesModulo(3);
-[ 0(3), 1(3), 2(3) ]
-gap> nonids := grp->Difference(AsList(grp),[One(grp)]);;
-gap> List(S{[2,3]},Si->List(nonids(Group(G.1,G.2)),g->Si^g));
-[ [ 3(12), 6(24), 0(24) ], [ 9(12), 18(24), 12(24) ] ]
-gap> Union(Flat(last));
-0(3)
-gap> List(S{[1,3]},Si->List(nonids(Group(G.3)),g->Si^g));
-[ [ 1(12), 4(12) ], [ 7(12), 10(12) ] ]
-gap> Union(Flat(last));
-1(3)
-gap> List(S{[1,2]},Si->List(nonids(Group(G.4,G.5)),g->Si^g));
-[ [ 8(24), 5(36), 17(36), 2(24), 11(36) ],
-  [ 20(24), 23(36), 35(36), 14(24), 29(36) ] ]
-gap> Union(Flat(last));
-2(3)
-gap> phi := IsomorphismRcwaGroup(FreeGroup(2)); F2 := Image(phi);
-[ f1, f2 ] -> [ <wild bijective rcwa mapping of Z with modulus 8>,
-  <wild bijective rcwa mapping of Z with modulus 8> ]
-<wild rcwa group over Z with 2 generators>
+gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
+gap> StructureDescription(G);
+"(Z x Z x Z x Z x Z x Z x Z) . (C2 x S7)"
+gap> G := Group(ClassTransposition(0,2,1,4),
+>               ClassShift(2,4),ClassReflection(1,2));;
+gap> StructureDescription(G:short);
+"Z^2.((S3xS3):2)"
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
+>                                                    CyclicGroup(2))));;
+gap> G := DirectProduct(PSL2Z,F2);
+<wild rcwa group over Z with 4 generators>
+gap> StructureDescription(G);
+"(C3 * C2) x F2"
+gap> G := WreathProduct(G,CyclicGroup(IsRcwaGroupOverZ,infinity));
+<wild rcwa group over Z with 5 generators>
+gap> StructureDescription(G);
+"((C3 * C2) x F2) wr Z"
+gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
+gap> G := Group(Collatz,ClassShift(0,1));;
+gap> StructureDescription(G:short);
+"<unknown>.Z"
 ]]>
 </Example>
   </Description>
@@ -176,6 +204,8 @@ For information on how direct products and wreath products of subgroups
 of RCWA(<M>\Z</M>) are embedded in RCWA(<M>\Z</M>), see
 Section&nbsp;<Ref Label="sec:RestrictionAndInduction"/> below.
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Meth Name="DirectProduct" Arg="G1, G2, ..." Label="G1, G2, ..."/>
   <Returns>
@@ -187,15 +217,14 @@ Section&nbsp;<Ref Label="sec:RestrictionAndInduction"/> below.
     product of rcwa groups into RCWA(<M>\Z</M>). 
     This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
     <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
-    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;..., where
-    <M>m</M> denotes the number of groups given as arguments.
+    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;...
+    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction" Label="G, f"/>),
+    where <M>m</M> denotes the number of groups given as arguments.
 <Example>
 <![CDATA[
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
 gap> F2xF2 := DirectProduct(F2,F2);
 <wild rcwa group over Z with 4 generators>
-gap> List([1..2],i->Support(Image(Embedding(F2xF2,i))));
-[ 0(2), 1(2) ]
 gap> Image(Projection(F2xF2,1)) = F2;
 true
 ]]>
@@ -217,10 +246,11 @@ true
     direct power of&nbsp;<A>G</A> using the method for <C>DirectProduct</C>,
     and lets the permutation group&nbsp;<A>P</A> act naturally on the set of
     residue classes modulo <C>DegreeAction(<A>P</A>)</C>.
-    The second-mentioned method restricts the group&nbsp;<A>G</A> to the
-    residue class&nbsp;3(4), and maps the generator of the infinite cyclic
-    group <A>Z</A> to <C>ClassTransposition(0,2,1,2) *
-    ClassTransposition(0,2,1,4)</C>.
+    The second-mentioned method restricts
+    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction" Label="G, f"/>)
+    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
+    generator of the infinite cyclic group&nbsp;<A>Z</A>
+    to <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
 <Example>
 <![CDATA[
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
@@ -345,24 +375,17 @@ and <C>IsClassWiseOrderPreserving</C>.
 
 <Example>
 <![CDATA[
-gap> g1 := RcwaMapping((1,2),[1..2]);
-<bijective rcwa mapping of Z with modulus 2, of order 2>
-gap> g2 := RcwaMapping((1,2,3),[1..3]);
-<bijective rcwa mapping of Z with modulus 3, of order 3>
-gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);
-<bijective rcwa mapping of Z with modulus 5, of order 5>
-gap> G := Group(g1,g2,g3);
-<rcwa group over Z with 3 generators>
-gap> Modulus(G);
-30
-gap> [ Mult(G), Div(G) ];
-[ 1, 1 ]
-gap> PrimeSet(G);
+gap> g1 := RcwaMapping((1,2),[1..2]);;
+gap> g2 := RcwaMapping((1,2,3),[1..3]);;
+gap> g3 := RcwaMapping((1,2,3,4,5),[1..5]);;
+gap> List([g1,g2,g3],Modulus);
 [ 2, 3, 5 ]
-gap> IsIntegral(G) and IsClassWiseOrderPreserving(G);
-true
+gap> G := Group(g1,g2,g3);;
 gap> Size(G);
 265252859812191058636308480000000
+gap> List([Modulus,Multiplier,Divisor,PrimeSet,
+>          IsIntegral,IsClassWiseOrderPreserving],f->f(G));
+[ 30, 1, 1, [ 2, 3, 5 ], true, true ]
 ]]>
 </Example>
 

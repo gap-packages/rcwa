@@ -281,4 +281,9 @@ Changes between version 2.0.0 and version 2.0.2:
 
  - Operations `Projections' and `RespectsPartition' have been introduced.
 
+Changes between version 2.0.2 and version 2.1.0:
+
+ - A method for `StructureDescription' with basic functionality has been
+   added.
+
 

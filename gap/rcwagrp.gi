@@ -2929,9 +2929,9 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
   function ( F )
 
-    local  rank, m, D, gamma, RCWA_Z, phi, i;
+    local  rank, m, D, gamma, RCWA_Z, phi, image, i;
 
-    rank := Length(GeneratorsOfGroup(F));
+    rank := RankOfFreeGroup(F);
     if rank = 1 then
       phi := GroupHomomorphismByImagesNC(F,Group(ClassShift(0,1)),
                                          [F.1],[ClassShift(0,1)]);
@@ -2949,9 +2949,10 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
     for i in [1..rank] do
       SetIsTame(gamma[i],false); SetOrder(gamma[i],infinity);
     od;
-    phi := GroupHomomorphismByImagesNC(F,Group(gamma),
-                                       GeneratorsOfGroup(F),gamma);
-    SetSize(Image(phi),infinity); SetIsTame(Image(phi),false);
+    image := Group(gamma);
+    SetSize(image,infinity); SetIsTame(image,false);
+    SetRankOfFreeGroup(image,rank);
+    phi := EpimorphismByGeneratorsNC(F,image);
     SetIsBijective(phi,true);
     return phi;
   end );
@@ -3008,8 +3009,10 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
                      i->Image(embs[embnrs[i]],
                               PreImagesRepresentative(embsF[embnrs[i]],
                                                       gensF[i])));
-    img      := Group(gens); SetSize(img,infinity); SetIsTame(img,false);
-    phi      := GroupHomomorphismByImagesNC(F,img,GeneratorsOfGroup(F),gens);
+    img := Group(gens);
+    SetSize(img,infinity); SetIsTame(img,false);
+    SetFreeProductInfo(img,info);
+    phi := EpimorphismByGeneratorsNC(F,img);
     SetIsBijective(phi,true);
     return phi;
   end );
@@ -3028,10 +3031,9 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
   function ( F )
 
-    local  phi, phitilde, img, gens, genstilde, gensF, info,
+    local  phi, phitilde, img, gens, genstilde, info,
            groups, groupstilde, m, degs;
 
-    gensF  := GeneratorsOfGroup(F);
     info   := FreeProductInfo(F);
     groups := Filtered(info.groups,IsNonTrivial);
     m      := Length(groups);
@@ -3048,9 +3050,116 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
       img         := Group(gens);
       SetIsTame(img,false); SetSize(img,infinity);
     fi;
-    phi := GroupHomomorphismByImagesNC(F,img,gensF,gens);
+    phi := EpimorphismByGeneratorsNC(F,img);
     SetIsBijective(phi,true);
     return phi;
+  end );
+
+#############################################################################
+##
+#M  StructureDescription( <G> ). . . . . . . . . . . . for rcwa groups over Z
+##
+InstallMethod( StructureDescription,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  desc, short, P, H, rank, top, bottom, pcp, ords, pcpgens, pcpords,
+           D0s, Zs, C2s, factors, descs, gens, bound, domain, induced, i;
+
+    short := ValueOption("short") <> fail;
+    if HasDirectProductInfo(G) then
+      factors := DirectProductInfo(G)!.groups;
+      descs   := List(factors,StructureDescription);
+      for i in [1..Length(descs)] do
+        if   Intersection(descs[i],"x:.*") <> ""
+        then descs[i] := Concatenation("(",descs[i],")"); fi; 
+      od;
+      desc := descs[1];
+      for i in [2..Length(descs)] do
+        desc := Concatenation(desc," x ",descs[i]);
+      od;
+      if short then RemoveCharacters(desc," "); fi;
+      return desc;
+    fi;
+    if HasWreathProductInfo(G) then
+      factors := WreathProductInfo(G)!.groups;
+      descs   := List(factors,StructureDescription);
+      for i in [1..2] do
+        if   Intersection(descs[i],"x:.*") <> ""
+        then descs[i] := Concatenation("(",descs[i],")"); fi; 
+      od;
+      desc := Concatenation(descs[1]," wr ",descs[2]);
+      if short then RemoveCharacters(desc," "); fi;
+      return desc;
+    fi;
+    if HasFreeProductInfo(G) then
+      factors := FreeProductInfo(G)!.groups;
+      descs   := List(factors,StructureDescription);
+      for i in [1..Length(descs)] do
+        if   Intersection(descs[i],"x:.*") <> ""
+        then descs[i] := Concatenation("(",descs[i],")"); fi; 
+      od;
+      desc := descs[1];
+      for i in [2..Length(descs)] do
+        desc := Concatenation(desc," * ",descs[i]);
+      od;
+      if short then RemoveCharacters(desc," "); fi;
+      return desc;
+    fi;
+    gens := GeneratorsOfGroup(G);
+    if IsTame(G) then
+      if IsFinite(G) then
+        return StructureDescription(Image(IsomorphismPermGroup(G)));
+      else
+        if Length(gens) = 1 then return "Z"; fi;
+        rank := RankOfKernelOfActionOnRespectedPartition(G);
+        if   IsClassWiseOrderPreserving(G)
+        then H := ActionOnRespectedPartition(G);
+        else H := Action(G,RefinedRespectedPartitions(G)[2]); fi;
+        top := StructureDescription(H);
+        if short then bottom := Concatenation("Z^",String(rank)); else
+          bottom := "Z";
+          for i in [2..rank] do bottom := Concatenation(bottom," x Z"); od;
+        fi;
+        if not IsTrivial(H) then
+          if   Intersection(top,"x:.") <> ""
+          then top := Concatenation("(",top,")"); fi;
+          if   Position(bottom,'x') <> fail
+          then bottom := Concatenation("(",bottom,")"); fi;
+          if short then
+            desc := Concatenation(bottom,".",top);
+          else
+            desc := Concatenation(bottom," . ",top);
+          fi;
+        else desc := bottom; fi;
+        return desc;
+      fi;
+    else
+      if Length(gens) = 1 then return "Z"; fi;
+      if   HasRankOfFreeGroup(G)
+      then return Concatenation("F",String(RankOfFreeGroup(G))); fi;
+      bound  := Lcm(List(gens,Modulus)); # some `reasonable' value
+      domain := Intersection(Support(G),[-bound..bound]);
+      domain := Concatenation(ShortOrbits(G,domain,100));
+      if not IsEmpty(domain) then
+        induced := Action(G,domain);
+        top     := StructureDescription(induced);
+        if   Intersection(top,"x:.") <> ""
+        then top := Concatenation("(",top,")"); fi;
+        desc := Concatenation("<unknown> . ",top);
+      else
+        if IsClassWiseOrderPreserving(G)
+          and not ForAll(gens,gen->Determinant(gen)=0)
+        then desc := "<unknown> . Z";
+        elif not ForAll(gens,gen->Sign(gen)=1)
+        then desc := "<unknown> . 2";
+        else desc := "<unknown>"; fi;
+      fi;
+      if short then RemoveCharacters(desc," "); fi;
+      return desc;
+    fi;
   end );
 
 #############################################################################
