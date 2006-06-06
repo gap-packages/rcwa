@@ -1458,6 +1458,25 @@ gap> List(last,phi->Support(Image(phi)));
 [ 0(8) U 1(8), 2(4) U 3(4), 4(8) U 5(8) ]
 gap> List(last2,phi->Size(Image(phi)));
 [ 2, infinity, 2 ]
+gap> G := Group(ClassTransposition(0,2,1,4),
+>               ClassShift(2,4),ClassReflection(1,2));;
+gap> StructureDescription(G:short);
+"Z^2.((S3xS3):2)"
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
+>                                                    CyclicGroup(2))));;
+gap> G := DirectProduct(PSL2Z,F2);
+<wild rcwa group over Z with 4 generators>
+gap> StructureDescription(G);
+"(C3 * C2) x F2"
+gap> G := WreathProduct(G,CyclicGroup(IsRcwaGroupOverZ,infinity));
+<wild rcwa group over Z with 5 generators>
+gap> StructureDescription(G);
+"((C3 * C2) x F2) wr Z"
+gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
+gap> G := Group(Collatz,ClassShift(0,1));;
+gap> StructureDescription(G:short);
+"<unknown>.Z"
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
