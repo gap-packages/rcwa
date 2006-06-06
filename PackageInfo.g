@@ -36,8 +36,8 @@ PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.htm
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
 PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PackageInfo.g",
 AbstractHTML     := Concatenation("This package provides methods for investigating ",
-                                  "a certain kind of infinite permutation groups ",
-                                  "over the integers. For an abstract, see ",
+                                  "infinite permutation groups of a certain kind. ",
+                                  "For an abstract, see ",
                                   "<a href = \"",~.PackageWWWHome,"\">here</a>."),
 PackageDoc       := rec(
                          BookName         := "RCWA",
