@@ -160,7 +160,8 @@ gap> F2 := Image(last);
     In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
     can be very complicate and very difficult to exhibit.
     While for isomorphic finite groups always the same structure
-    description is computed, this cannot be guaranteed for rcwa groups.
+    description is computed, this cannot be guaranteed for isomorphic
+    rcwa groups.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
