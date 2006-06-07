@@ -3152,7 +3152,7 @@ InstallMethod( StructureDescription,
     until rem = [];
     if Length(comps) > 1 then
       descs := List(comps,comp->StructureDescription(Group(gens{comp})));
-      desc  := descs[1];
+      desc  := ShallowCopy(descs[1]);
       for i in [2..Length(comps)] do
         Append(desc," x ");
         if Intersection(descs[i],"x:.*wr") <> ""
