@@ -1458,6 +1458,20 @@ gap> List(last,phi->Support(Image(phi)));
 [ 0(8) U 1(8), 2(4) U 3(4), 4(8) U 5(8) ]
 gap> List(last2,phi->Size(Image(phi)));
 [ 2, infinity, 2 ]
+gap> G := Group(ClassShift(0,1),ClassReflection(0,1));;
+gap> StructureDescription(G);
+"D0"
+gap> G := Group(ClassShift(0,2),ClassReflection(1,2));;
+gap> StructureDescription(G);
+"Z x C2"
+gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
+>               ClassReflection(2,4),ClassShift(3,4));;
+gap> StructureDescription(G);
+"D0 x C2 x Z"
+gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
+>               ClassReflection(1,4),ClassReflection(2,4),ClassShift(3,4));;
+gap> StructureDescription(G:short);
+"Z^2.((S3xS3):2)x2xZ"
 gap> G := Group(ClassTransposition(0,2,1,4),
 >               ClassShift(2,4),ClassReflection(1,2));;
 gap> StructureDescription(G:short);
