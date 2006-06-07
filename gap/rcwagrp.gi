@@ -3137,7 +3137,8 @@ InstallMethod( StructureDescription,
       then return "D0"; fi;
     fi;
     commgraph := Filtered(Combinations([1..Length(gens)],2),
-                          e->gens[e[1]]*gens[e[2]] <> gens[e[2]]*gens[e[1]]);
+                          e->not IsEmpty(Intersection(Support(gens[e[1]]),
+                                                      Support(gens[e[2]]))));
     comps := []; rem := [1..Length(gens)];
     repeat
       comp := [rem[1]];

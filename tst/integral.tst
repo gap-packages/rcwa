@@ -1472,6 +1472,10 @@ gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
 >               ClassReflection(2,4),ClassShift(3,4));;
 gap> StructureDescription(G);
 "D0 x C2 x Z"
+gap> G := Group(ClassTransposition(0,4,1,4),ClassTransposition(2,4,3,4),
+>               ClassTransposition(0,2,1,2));;
+gap> StructureDescription(G);
+"C2 x C2"
 gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
 >               ClassReflection(1,4),ClassReflection(2,4),ClassShift(3,4));;
 gap> StructureDescription(G:short);
