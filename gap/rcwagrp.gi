@@ -3125,15 +3125,13 @@ InstallMethod( StructureDescription,
       return desc;
     fi;
     if IsTrivial(G) then return "1"; fi;
-    gens := GeneratorsOfGroup(G);
-    if    Length(gens) = 2 and not IsAbelian(G)
-      and Number(gens,IsTame) >= 0
-      and Set(List(gens,Order)) in [[2,2],[2,infinity]]
-    then
-      ords := Set(List(gens,Order));
-      if  (ords = [2,2] and (not IsTame(Product(gens))
-           or Order(Product(gens)) = infinity))
-        or ords = [2,infinity]
+    gens := GeneratorsOfGroup(G); List(gens,IsTame);
+    if   Length(gens) = 2 and not IsAbelian(G) and List(gens,Order) = [2,2]
+    then if not IsTame(Product(gens)) or Order(Product(gens)) = infinity
+         then return "D0"; fi; fi;
+    if Set(List(gens,Order)) = [2,infinity] then
+      if   Order(gens[1]) = infinity and gens[1]^gens[2] = gens[1]^-1
+        or Order(gens[2]) = infinity and gens[2]^gens[1] = gens[2]^-1
       then return "D0"; fi;
     fi;
     commgraph := Filtered(Combinations([1..Length(gens)],2),

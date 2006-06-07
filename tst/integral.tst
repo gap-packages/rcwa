@@ -1471,7 +1471,7 @@ gap> StructureDescription(G);
 gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
 >               ClassReflection(2,4),ClassShift(3,4));;
 gap> StructureDescription(G);
-"D0 x C2 x Z"
+"(Z x Z) . C2 x C2 x Z"
 gap> G := Group(ClassTransposition(0,4,1,4),ClassTransposition(2,4,3,4),
 >               ClassTransposition(0,2,1,2));;
 gap> StructureDescription(G);
@@ -1484,6 +1484,9 @@ gap> G := Group(ClassTransposition(0,2,1,4),
 >               ClassShift(2,4),ClassReflection(1,2));;
 gap> StructureDescription(G:short);
 "Z^2.((S3xS3):2)"
+gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
+gap> StructureDescription(G);
+"(Z x Z x Z x Z x Z x Z x Z) . (C2 x S7)"
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
 >                                                    CyclicGroup(2))));;
