@@ -149,14 +149,15 @@ gap> F2 := Image(last);
 
     Wreath products are denoted by&nbsp;<C>wr</C>, and free products are
     denoted by&nbsp;<C>*</C>. The infinite cyclic group <M>(\Z,+)</M> is
-    denoted by&nbsp;<C>Z</C>, and free groups of rank <M>2,3,4,\dots</M>
+    denoted by&nbsp;<C>Z</C>, the infinite dihedral group is denoted
+    by&nbsp;<C>D0</C> and free groups of rank <M>2,3,4,\dots</M>
     are denoted by&nbsp;<C>F2</C>, <C>F3</C>, <C>F4</C>,&nbsp;<M>\dots</M>.
     While for finite groups the symbol&nbsp;<C>.</C> is used to denote a
     non-split extension, for rcwa groups in general it stands for an
     extension which may be split or not.
-    For wild groups in most cases it happens that the structure of the
-    <Q>main</Q> part cannot be exhibited. Such parts of the group with
-    unknown structure are denoted by <C>&lt;unknown&gt;</C>.
+    For wild groups in most cases it happens that there is a large section
+    on which no structural information can be obtained. Such sections of the
+    group with unknown structure are denoted by <C>&lt;unknown&gt;</C>.
     In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
     can be very complicate and very difficult to exhibit.
     While for isomorphic finite groups always the same structure
