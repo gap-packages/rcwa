@@ -1179,7 +1179,7 @@ InstallMethod( \in,
   function ( g, G )
 
     local  P, H, h, K, k, KPoly, KFullPoly, genKFP, kPoly, crcs,
-           F, phi, gens, i;
+           F, phi, gens, orbs, i;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -1217,6 +1217,19 @@ InstallMethod( \in,
       return false;
     fi;
     if not IsTame(G) then
+      orbs := ShortOrbits(G,Intersection(Support(G),[-100..100]),50);
+      if orbs <> [] then
+        if ForAny(orbs,orb->Permutation(g,orb)=fail) then
+          Info(InfoRCWA,2,"<g> does not act on some finite orbit of <G>.");
+          return false;
+        fi;
+        if ForAny(orbs,orb->not Permutation(g,orb) in Action(G,orb)) then
+          Info(InfoRCWA,2,"<g> induces a permutation on some finite orbit");
+          Info(InfoRCWA,2,"of <G> which does not lie in the group induced");
+          Info(InfoRCWA,2,"by <G> on this orbit.");
+          return false;
+        fi;
+      fi;
       Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
       return PreImagesRepresentative(phi,g) <> fail;
@@ -3065,15 +3078,18 @@ InstallMethod( StructureDescription,
 
   function ( G )
 
-    local  desc, short, P, H, rank, top, bottom, pcp, ords, pcpgens, pcpords,
-           D0s, Zs, C2s, factors, descs, gens, bound, domain, induced, i;
+    local  desc, short, P, H, rank, top, bottom, ords, factors, descs, gens,
+           bound, domain, induced, commgraph, e, comps, comp, comp_old, rem,
+           i;
 
+    if not IsFinitelyGeneratedGroup(G) then TryNextMethod(); fi;
     short := ValueOption("short") <> fail;
+
     if HasDirectProductInfo(G) then
       factors := DirectProductInfo(G)!.groups;
       descs   := List(factors,StructureDescription);
       for i in [1..Length(descs)] do
-        if   Intersection(descs[i],"x:.*") <> ""
+        if   Intersection(descs[i],"x:.*wr") <> ""
         then descs[i] := Concatenation("(",descs[i],")"); fi; 
       od;
       desc := descs[1];
@@ -3087,7 +3103,7 @@ InstallMethod( StructureDescription,
       factors := WreathProductInfo(G)!.groups;
       descs   := List(factors,StructureDescription);
       for i in [1..2] do
-        if   Intersection(descs[i],"x:.*") <> ""
+        if   Intersection(descs[i],"x:.*wr") <> ""
         then descs[i] := Concatenation("(",descs[i],")"); fi; 
       od;
       desc := Concatenation(descs[1]," wr ",descs[2]);
@@ -3098,7 +3114,7 @@ InstallMethod( StructureDescription,
       factors := FreeProductInfo(G)!.groups;
       descs   := List(factors,StructureDescription);
       for i in [1..Length(descs)] do
-        if   Intersection(descs[i],"x:.*") <> ""
+        if   Intersection(descs[i],"x:.*wr") <> ""
         then descs[i] := Concatenation("(",descs[i],")"); fi; 
       od;
       desc := descs[1];
@@ -3108,7 +3124,44 @@ InstallMethod( StructureDescription,
       if short then RemoveCharacters(desc," "); fi;
       return desc;
     fi;
+    if IsTrivial(G) then return "1"; fi;
     gens := GeneratorsOfGroup(G);
+    if    Length(gens) = 2 and not IsAbelian(G)
+      and Number(gens,IsTame) >= 0
+      and Set(List(gens,Order)) in [[2,2],[2,infinity]]
+    then
+      ords := Set(List(gens,Order));
+      if  (ords = [2,2] and (not IsTame(Product(gens))
+           or Order(Product(gens)) = infinity))
+        or ords = [2,infinity]
+      then return "D0"; fi;
+    fi;
+    commgraph := Filtered(Combinations([1..Length(gens)],2),
+                          e->gens[e[1]]*gens[e[2]] <> gens[e[2]]*gens[e[1]]);
+    comps := []; rem := [1..Length(gens)];
+    repeat
+      comp := [rem[1]];
+      repeat
+        comp_old := ShallowCopy(comp);
+        for e in commgraph do
+          if Intersection(comp,e) <> [] then comp := Union(comp,e); fi;
+        od;
+      until comp = comp_old;
+      Add(comps,comp);
+      rem := Difference(rem,comp);
+    until rem = [];
+    if Length(comps) > 1 then
+      descs := List(comps,comp->StructureDescription(Group(gens{comp})));
+      desc  := descs[1];
+      for i in [2..Length(comps)] do
+        Append(desc," x ");
+        if Intersection(descs[i],"x:.*wr") <> ""
+        then descs[i] := Concatenation("(",descs[i],")"); fi;
+        Append(desc,descs[i]);
+      od;
+      if short then RemoveCharacters(desc," "); fi;
+      return desc;
+    fi;
     if IsTame(G) then
       if IsFinite(G) then
         return StructureDescription(Image(IsomorphismPermGroup(G)));
@@ -3160,6 +3213,21 @@ InstallMethod( StructureDescription,
       if short then RemoveCharacters(desc," "); fi;
       return desc;
     fi;
+  end );
+
+#############################################################################
+##
+#M  StructureDescription( <G> ). . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( StructureDescription,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+    if   IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GFqx(G)
+    then return Name(G); fi;
+    if   IsFinite(G)
+    then return StructureDescription(Image(IsomorphismPermGroup(G))); fi;
+    return "<unknown>";
   end );
 
 #############################################################################
