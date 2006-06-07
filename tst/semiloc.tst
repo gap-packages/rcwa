@@ -241,6 +241,8 @@ Bijective rcwa mapping of Z_( 2, 3 ) with modulus 6, of order 2
 
 gap> ct^2;
 IdentityMapping( Z_( 2, 3 ) )
+gap> StructureDescription(RCWA(Z_pi(2)));
+"RCWA(Z_( 2 ))"
 gap> STOP_TEST( "semiloc.tst", 100000000 );
 
 #############################################################################

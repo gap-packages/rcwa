@@ -214,6 +214,8 @@ gap> IsPerfect(G);
 false
 gap> Centre(G);
 Trivial rcwa group over Z
+gap> ClassShift(0,1)^17 in Group(ClassShift(0,1));
+true
 gap> u in G;
 true
 gap> t in G;
@@ -950,6 +952,8 @@ gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 gap> P1^elmt = P2;
 true
 gap> RCWAReadExamples();
+gap> kappa^2 in Group(a,b);
+false
 gap> List([-2..2],k->Determinant(a^k));
 [ 0, 0, 0, 0, 0 ]
 gap> List([-2..2],k->Determinant(b^k));
@@ -1491,6 +1495,8 @@ gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
 gap> G := Group(Collatz,ClassShift(0,1));;
 gap> StructureDescription(G:short);
 "<unknown>.Z"
+gap> StructureDescription(RCWA(Integers));
+"RCWA(Z)"
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

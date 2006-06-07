@@ -340,6 +340,10 @@ gap> prod2^2;
 <bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 3>
 gap> prod2^3;
 IdentityMapping( GF(2)[x] )
+gap> StructureDescription(RCWA(R));
+"RCWA(GF(2)[x])"
+gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
+"C2"
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 250000000 );
 
