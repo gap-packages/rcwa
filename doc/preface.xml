@@ -21,7 +21,7 @@ of the Collatz mapping
 <Alt Only="LaTeX">
   <Display>
   <![CDATA[
-    T: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
+    T: \ \Z \longrightarrow \Z, \ \ \ \
     n \ \longmapsto \
     \begin{cases}
       \frac{n}{2}    & \text{if} \ n \ \text{even}, \\
@@ -162,7 +162,7 @@ found with the help of this package.
 <Alt Only="Text"> </Alt>
 <Alt Only="HTML">
 <![CDATA[
-  <P align = right> Stefan Kohl </P>
+  <p align = "right"> Stefan Kohl </p>
 ]]>
 </Alt>
 <Alt Only="LaTeX">
