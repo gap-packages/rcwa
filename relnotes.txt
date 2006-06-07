@@ -286,4 +286,8 @@ Changes between version 2.0.2 and version 2.1.0 (June 6, 2006):
  - A method for `StructureDescription' with basic functionality has been
    added.
 
+Changes between version 2.1.0 and version 2.1.1:
+
+ - Some improvements to `StructureDescription' and to the membership test
+   have been made.
 
