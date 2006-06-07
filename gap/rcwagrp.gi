@@ -1045,7 +1045,7 @@ InstallMethod( RespectsPartition,
 
     local  cl, c, c_rest, r, m, l;
 
-    if   not ForAll(P,IsUnionOfResidueClassesOfZ)
+    if   not ForAll(P,cl->IsUnionOfResidueClassesOfZ(cl) or IsIntegers(cl))
       or not ForAll(P,IsResidueClass)
       or not IsIntegers(Union(P)) or Sum(List(P,Density)) <> 1
     then TryNextMethod(); fi;
