@@ -176,13 +176,12 @@ structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
+  <Func Name="ClassShift" Arg="ResidueClass(r,m)" Label="r(m)"/>
   <Returns> The class shift <M>\nu_{r(m)}</M>. </Returns>
   <Description>
-    The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping of
-    <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and fixes <M>\mathbb{Z} \setminus r(m)</M> pointwisely.
-    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
-    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
+    of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
+    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwisely.
     Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
@@ -202,13 +201,12 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 
 <ManSection>
   <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
+  <Func Name="ClassReflection" Arg="ResidueClass(r,m)" Label="r(m)"/>
   <Returns> The class reflection <M>\varsigma_{r(m)}</M>. </Returns>
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
-    of <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and fixes <M>\mathbb{Z}&nbsp;\setminus&nbsp;r(m)</M> pointwisely.
-    The residue class <C>ResidueClass(<A>r</A>,<A>m</A>)</C> itself
-    can be given in place of the arguments <A>r</A> and&nbsp;<A>m</A>.
+    of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
+    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwisely.
     Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
