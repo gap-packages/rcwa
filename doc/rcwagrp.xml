@@ -293,7 +293,7 @@ There is a method for the operation <C>in</C>.
 Given an rcwa group&nbsp;<C>G</C> and an rcwa mapping&nbsp;<C>g</C>, this
 method tries to decide whether <C>g</C> is an element of&nbsp;<C>G</C> or
 not. It can always decide this question if <C>G</C> is tame.
-For wild groups this is often not the case. On Info level&nbsp;3 of
+For wild groups this is sometimes not the case. On Info level&nbsp;2 of
 <C>InfoRCWA</C> the method gives information on reasons why <C>g</C> is
 an element of&nbsp;<C>G</C> or&nbsp;not. <P/>
 

@@ -176,7 +176,7 @@ structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
-  <Returns> The <E>class shift</E> <M>\nu_{r(m)}</M>. </Returns>
+  <Returns> The class shift <M>\nu_{r(m)}</M>. </Returns>
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping of
     <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
@@ -202,7 +202,7 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 
 <ManSection>
   <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
-  <Returns> The <E>class reflection</E> <M>\varsigma_{r(m)}</M>. </Returns>
+  <Returns> The class reflection <M>\varsigma_{r(m)}</M>. </Returns>
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of <M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
@@ -229,21 +229,22 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
-                                  Label="r1, m1, r2, m2"/>
+  <Func Name="ClassTransposition"
+        Arg="r1, m1, r2, m2"
+        Label="r1, m1, r2, m2"/>
+  <Func Name="ClassTransposition"
+        Arg="ResidueClass(r1,m1),ResidueClass(r2,m2)"
+        Label="r1(m1), r2(m2)"/>
   <Returns>
-    The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
+    The class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
   </Returns>
   <Description>
     The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an
-    rcwa mapping of <M>\mathbb{Z}</M> of order&nbsp;2 which interchanges
-    the disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of
-    <M>\mathbb{\Z}</M> and fixes the complement of their union pointwisely.
-    The residue classes <C>ResidueClass(<A>r1</A>,<A>m1</A>)</C>
-    and <C>ResidueClass(<A>r2</A>,<A>m2</A>)</C> themselves
-    can be given in place of the arguments <A>r1</A>, <A>m1</A>,
-    <A>r2</A> and <A>m2</A>. Enclosing the argument list in list brackets
-    is permitted. The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
+    involution which interchanges the disjoint residue classes
+    <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of&nbsp;<M>\Z</M> and which fixes
+    the complement of their union pointwisely.
+    Enclosing the argument list in list brackets is permitted.
+    The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
     are stored as an attribute <C>TransposedClasses</C>.
 <Example>
 <![CDATA[
