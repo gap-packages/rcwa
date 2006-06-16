@@ -68,29 +68,32 @@ InstallMethod( AllProducts,
 
 #############################################################################
 ##
-#F  GeneratorsAndInverses( <G> ) list of generators of <G> and their inverses
+#O  GeneratorsAndInverses( <D> ) list of generators of <D> and their inverses
+#M  GeneratorsAndInverses( <G> ) . . . . . . . . . . . . . . . . . for groups
 ##
-DeclareGlobalFunction( "GeneratorsAndInverses" );
-InstallGlobalFunction( GeneratorsAndInverses,
-                       G->Concatenation(GeneratorsOfGroup(G),
-                                        List(GeneratorsOfGroup(G),g->g^-1)));
+DeclareOperation( "GeneratorsAndInverses", [ IsMagmaWithInverses ] );
+InstallMethod( GeneratorsAndInverses,
+               "for groups (RCWA)", true, [ IsGroup ], 0,
+               G -> Concatenation(GeneratorsOfGroup(G),
+                                  List(GeneratorsOfGroup(G),g->g^-1)) );
 
 #############################################################################
 ##
-#F  EpimorphismByGenerators( <F>, <G> ) .  epi.: gen's of <F> -> gen's of <G>
-#F  EpimorphismByGeneratorsNC( <F>, <G> )
+#F  EpimorphismByGenerators( <D1>, <D2> ) .  epi.: gen's of <F>->gen's of <G>
+#O  EpimorphismByGeneratorsNC( <D1>, <D2> ) .  NC version as underlying oper.
+#M  EpimorphismByGeneratorsNC( <G>, <H> ) . . . . . . . . . . . .  for groups
 ##
-DeclareGlobalFunction( "EpimorphismByGenerators" );
-InstallGlobalFunction( EpimorphismByGenerators,
-  function ( G, H )
-    return GroupHomomorphismByImages(G,H,GeneratorsOfGroup(G),
-                                         GeneratorsOfGroup(H));
-  end );
-DeclareGlobalFunction( "EpimorphismByGeneratorsNC" );
-InstallGlobalFunction( EpimorphismByGeneratorsNC,
+DeclareOperation( "EpimorphismByGeneratorsNC", [ IsDomain, IsDomain ] );
+InstallMethod( EpimorphismByGeneratorsNC,
+               "for groups (RCWA)", ReturnTrue, [ IsGroup, IsGroup ], 0,
   function ( G, H )
     return GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
                                            GeneratorsOfGroup(H));
+  end );
+DeclareGlobalFunction( "EpimorphismByGenerators" );
+InstallGlobalFunction( EpimorphismByGenerators,
+  function ( D1, D2 )
+    return EpimorphismByGeneratorsNC(D1,D2);
   end );
 
 #############################################################################
