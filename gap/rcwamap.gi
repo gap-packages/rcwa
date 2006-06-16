@@ -2913,8 +2913,9 @@ InstallMethod( Order,
                true, [ IsRcwaMapping ], 0,
 
   function ( f )
-    if   HasIsTame(f) and not IsTame(f)
-    then return infinity; else TryNextMethod(); fi;
+    if HasIsTame(f) and not IsTame(f) then return infinity; fi;
+    if IsRcwaMappingOfZ(f) and not IsTame(f) then return infinity; fi;
+    TryNextMethod();
   end );
 
 #############################################################################
