@@ -291,3 +291,15 @@ Changes between version 2.1.0 and version 2.1.1:
  - Some improvements to `StructureDescription' and to the membership test
    have been made.
 
+Changes between version 2.1.1 and version 2.1.2:
+
+ - A method for the operation `Index' for rcwa groups has been added.
+
+ - A method for computing factor groups G/N of rcwa groups has been
+   added. This method covers the case that the normal subgroup N has
+   finite index in G.
+
+ - A few internal code improvements have been made.
+
+
+
