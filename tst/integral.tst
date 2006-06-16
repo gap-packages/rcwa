@@ -1468,6 +1468,10 @@ gap> StructureDescription(G);
 gap> G := Group(ClassShift(0,2),ClassReflection(1,2));;
 gap> StructureDescription(G);
 "Z x C2"
+gap> G := Group(ClassShift(0,2),ClassReflection(0,2),
+>               ClassShift(1,2),ClassReflection(1,2));;
+gap> StructureDescription(G);
+"D0 x D0"
 gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
 >               ClassReflection(2,4),ClassShift(3,4));;
 gap> StructureDescription(G);
@@ -1504,6 +1508,17 @@ gap> StructureDescription(G:short);
 "<unknown>.Z"
 gap> StructureDescription(RCWA(Integers));
 "RCWA(Z)"
+gap> G := Group(ClassShift(0,2),ClassReflection(0,2),
+>               ClassTransposition(0,2,1,2));;
+gap> N := Subgroup(G,[ClassShift(0,2),ClassShift(1,2)]);;
+gap> IsNormal(G,N);
+true
+gap> Index(G,N);
+8
+gap> G/N;
+Group([ (), (1,2)(3,5)(4,6)(7,8), (1,3)(2,4)(5,7)(6,8) ])
+gap> StructureDescription(last);
+"D8"
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );
