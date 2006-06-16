@@ -2739,6 +2739,45 @@ InstallMethod( IsPerfect,
 
 #############################################################################
 ##
+#M  NaturalHomomorphismByNormalSubgroupNCOrig( <G>, <N> ) . . for rcwa groups
+##
+InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
+               "for rcwa groups, requiring finite index (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRcwaGroup ], 0,
+
+  function ( G, N )
+
+    local  cosets, img;
+
+    if not IsNormal(G,N) then return fail; fi;
+    if IndexNC(G,N) = infinity then TryNextMethod(); fi;
+    cosets := RightCosets(G,N);
+    img    := Action(G,cosets,OnRight);
+    return EpimorphismByGeneratorsNC(G,img);
+  end );
+
+#############################################################################
+##
+#M  IndexNC( <G>, <H> ) . . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallMethod( IndexNC,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRcwaGroup ], 0,
+
+  function ( G, H )
+    if IsClassWiseOrderPreserving(G)
+      and Set(List(GeneratorsOfGroup(G),Determinant)) <> [0]
+      and Set(List(GeneratorsOfGroup(H),Determinant)) =  [0]
+    then return infinity; fi;
+    if IsTame(H) and not IsTame(G) then return infinity; fi;
+    if IsTame(G) and RankOfKernelOfActionOnRespectedPartition(G)
+                   > RankOfKernelOfActionOnRespectedPartition(H)
+    then return infinity; fi;
+    return Length(RightCosets(G,H));
+  end );
+
+#############################################################################
+##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
 ##
 InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
@@ -3129,7 +3168,7 @@ InstallMethod( StructureDescription,
     if   Length(gens) = 2 and not IsAbelian(G) and List(gens,Order) = [2,2]
     then if not IsTame(Product(gens)) or Order(Product(gens)) = infinity
          then return "D0"; fi; fi;
-    if Set(List(gens,Order)) = [2,infinity] then
+    if Length(gens) = 2 and Set(List(gens,Order)) = [2,infinity] then
       if   Order(gens[1]) = infinity and gens[1]^gens[2] = gens[1]^-1
         or Order(gens[2]) = infinity and gens[2]^gens[1] = gens[2]^-1
       then return "D0"; fi;
