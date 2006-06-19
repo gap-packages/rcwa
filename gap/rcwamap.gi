@@ -878,6 +878,7 @@ InstallMethod( IsClassTransposition,
 
     local  cls;
 
+    if IsOne(sigma) then return false; fi;
     cls := AsUnionOfFewClasses(Support(sigma));
     if Length(cls) = 1 then cls := SplittedClass(cls[1],2); fi;
     if Length(cls) > 2 then return false; fi;
@@ -4057,6 +4058,10 @@ InstallMethod( Root,
     local  root, g, x;
 
     if k = 1 then return sigma; fi;
+    if IsOne(sigma) then
+      root := Product([1..k-1],r->ClassTransposition(0,k,r,k));
+      SetOrder(root,k); return root;
+    fi;
     if not IsClassWiseOrderPreserving(sigma) or not IsTame(sigma)
       or Order(sigma) = infinity
     then TryNextMethod(); fi;
