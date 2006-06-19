@@ -3164,7 +3164,9 @@ InstallMethod( StructureDescription,
       return desc;
     fi;
     if IsTrivial(G) then return "1"; fi;
-    gens := GeneratorsOfGroup(G); List(gens,IsTame);
+    gens := DuplicateFreeList(Filtered(GeneratorsOfGroup(G),
+                                       gen->not IsOne(gen)));
+    List(gens,IsTame);
     if   Length(gens) = 2 and not IsAbelian(G) and List(gens,Order) = [2,2]
     then if not IsTame(Product(gens)) or Order(Product(gens)) = infinity
          then return "D0"; fi; fi;
