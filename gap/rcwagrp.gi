@@ -2694,15 +2694,13 @@ InstallMethod( PreImagesRepresentative,
 ##
 #M  Factorization( <G>, <g> ) . . . . . . .  for rcwa mappings in rcwa groups
 ##
-if IsOperation( Factorization ) then  # In GAP 4.5 or higher.
-  InstallMethod( Factorization,
-                 "for rcwa mappings in rcwa groups (RCWA)", true,
-                 [ IsRcwaGroup, IsRcwaMapping ], 0,
+InstallMethod( Factorization,
+               "for rcwa mappings in rcwa groups (RCWA)", true,
+               [ IsRcwaGroup, IsRcwaMapping ], 0,
 
-    function ( G, g )
-      return PreImagesRepresentative(EpimorphismFromFreeGroup(G),g);
-    end );
-fi;
+  function ( G, g )
+    return PreImagesRepresentative(EpimorphismFromFreeGroup(G),g);
+  end );
 
 #############################################################################
 ##
@@ -2719,12 +2717,16 @@ InstallMethod( IsSolvable,
 
 #############################################################################
 ##
-#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa groups
+#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . for rcwa groups over Z
 ##
 InstallMethod( IsPerfect,
-               "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ ], 0,
 
   function ( G )
+
+    local  H;
+
     if IsTrivial(G) then return true; fi;
     if IsAbelian(G) then return false; fi;
     if IsRcwaGroupOverZ(G) then
@@ -2734,7 +2736,25 @@ InstallMethod( IsPerfect,
       then return false; fi;
     fi;
     if not IsTame(G) then TryNextMethod(); fi;
-    return IsPerfect(ActionOnRespectedPartition(G));
+    H := ActionOnRespectedPartition(G);
+    if   IsTransitive(H,[1..LargestMovedPoint(H)])
+    then return IsPerfect(H); else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsSimpleGroup( <G> ) . . . . . . . . . . . . . . . for rcwa groups over Z
+##
+InstallMethod( IsSimpleGroup,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+    if not IsTame(G) and not IsPerfect(G) then return false; fi;
+    if IsTame(G) and not IsFinite(G) then return false; fi;
+    if   IsFinite(G)
+    then return IsSimpleGroup(Image(IsomorphismPermGroup(G))); fi;
+    TryNextMethod();
   end );
 
 #############################################################################
