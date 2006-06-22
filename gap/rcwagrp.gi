@@ -244,6 +244,10 @@ InstallMethod( IsSubset,
       if not IsSubgroup(ActionOnRespectedPartition(G),
                         Action(H,RespectedPartition(G)))
       then return false; fi;
+      if   Size(H) > Size(G)
+        or RankOfKernelOfActionOnRespectedPartition(H)
+         > RankOfKernelOfActionOnRespectedPartition(G)
+      then return false; fi;
     fi;
     return ForAll(gensH,h->h in G);
   end );
