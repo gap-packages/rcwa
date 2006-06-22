@@ -214,6 +214,42 @@ InstallMethod( IsNaturalRCWA_GFqx,
 
 #############################################################################
 ##
+#M  IsSubset( <G>, <H> ) . . . . . . . . . . . . . for two rcwa groups over Z
+##
+InstallMethod( IsSubset,
+               "for two rcwa groups over Z (RCWA)", true,
+               [ IsRcwaGroupOverZ, IsRcwaGroupOverZ ], 0,
+
+  function ( G, H )
+
+    local  gensG, gensH, dG, dH;
+
+    gensG := GeneratorsOfGroup(G); gensH := GeneratorsOfGroup(H);
+    if IsSubset(gensG,gensH) then return true; fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(H)) then return false; fi;
+    if   ForAll(gensG,g->Sign(g) = 1) and ForAny(gensH,h->Sign(h)=-1)
+    then return false; fi;
+    if IsClassWiseOrderPreserving(G) then
+      if not IsClassWiseOrderPreserving(H) then return false; fi;
+      dG := Gcd(List(gensG,Determinant));
+      dH := Gcd(List(gensH,Determinant));
+      if   dG = 0 and dH <> 0 or dG <> 0 and dH mod dG <> 0
+      then return false; fi;
+    fi;
+    if IsTame(G) and not IsTame(H) then return false; fi;
+    if IsTame(G) and IsTame(H) then
+      if Multiplier(G) mod Multiplier(H) <> 0 then return false; fi;
+      if   not RespectsPartition(H,RespectedPartition(G))
+      then return false; fi;
+      if not IsSubgroup(ActionOnRespectedPartition(G),
+                        Action(H,RespectedPartition(G)))
+      then return false; fi;
+    fi;
+    return ForAll(gensH,h->h in G);
+  end );
+
+#############################################################################
+##
 #M  CyclicGroupCons( IsRcwaGroupOverZ, <n> )
 ##
 InstallOtherMethod( CyclicGroupCons,
