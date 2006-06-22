@@ -1219,7 +1219,7 @@ InstallMethod( \in,
   function ( g, G )
 
     local  P, H, h, K, k, KPoly, KFullPoly, genKFP, kPoly, crcs,
-           F, phi, gens, orbs, orbsmod, m, i;
+           F, phi, gens, orbs, orbsmod, m, max, i;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -1263,6 +1263,18 @@ InstallMethod( \in,
     if not IsSubset(Support(G),Support(g)) then
       Info(InfoRCWA,2,"Support(<g>) is not a subset of Support(<G>).");
       return false;
+    fi;
+    max := Maximum(List(Concatenation(gens,[g]),
+                        gen->Maximum(List(Coefficients(gen),
+                                          c->AbsInt(c[2])))));
+    if Minimum([0..max]^g) < 0 or Maximum([-max..-1]^g) >= 0 then
+      if    ForAll(gens,gen->Minimum([0..max]^gen)>=0)
+        and ForAll(gens,gen->Maximum([-max..-1]^gen)<0)
+      then
+        Info(InfoRCWA,2,"<G> fixes the nonnegative integers setwisely,");
+        Info(InfoRCWA,2,"but <g> does not.");
+        return false;
+      fi;
     fi;
     if not IsTame(G) then
       orbs := ShortOrbits(G,Intersection(Support(G),[-100..100]),50);
