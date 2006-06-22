@@ -1219,7 +1219,7 @@ InstallMethod( \in,
   function ( g, G )
 
     local  P, H, h, K, k, KPoly, KFullPoly, genKFP, kPoly, crcs,
-           F, phi, gens, orbs, i;
+           F, phi, gens, orbs, orbsmod, m, i;
 
     Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
                     "and an rcwa group over Z");
@@ -1233,6 +1233,14 @@ InstallMethod( \in,
     fi;
     if not IsSubset(PrimeSet(G),PrimeSet(g)) then
       Info(InfoRCWA,2,"<g> and <G> have incompatible prime sets.");
+      return false;
+    fi;
+    if not IsSubset(Factors(   Product(List(gens,Multiplier))
+                             * Product(List(gens,Divisor))),
+                    Filtered(Factors(Multiplier(g)*Divisor(g)),p->p<>1))
+    then
+      Info(InfoRCWA,2,"The multiplier or divisor of <g> has factors which");
+      Info(InfoRCWA,2,"no multiplier or divisor of a generator of <G> has.");
       return false;
     fi;
     if        IsClassWiseOrderPreserving(G)
@@ -1269,6 +1277,14 @@ InstallMethod( \in,
           Info(InfoRCWA,2,"by <G> on this orbit.");
           return false;
         fi;
+      fi;
+      m       := Lcm(List(Concatenation(gens,[g]),Modulus));
+      orbsmod := List(Projections(G,m),proj->Support(Image(proj)));
+      if ForAny(orbsmod,orb->orb^g<>orb) then
+        Info(InfoRCWA,2,"<g> does not leave the partition of Z into unions");
+        Info(InfoRCWA,2,"of residue classes (mod ",m,") invariant which is");
+        Info(InfoRCWA,2,"fixed by <G>.");
+        return false;
       fi;
       Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
