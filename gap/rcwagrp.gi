@@ -3184,9 +3184,12 @@ InstallMethod( StructureDescription,
     if not IsFinitelyGeneratedGroup(G) then TryNextMethod(); fi;
     short := ValueOption("short") <> fail;
 
+    if IsTrivial(G) then return "1"; fi;
+    if   IsFinite(G)
+    then return StructureDescription(Image(IsomorphismPermGroup(G))); fi;
     if HasDirectProductInfo(G) then
       factors := DirectProductInfo(G)!.groups;
-      descs   := List(factors,StructureDescription);
+      descs   := Filtered(List(factors,StructureDescription),str->str<>"1");
       for i in [1..Length(descs)] do
         if   Intersection(descs[i],"x:.*wr") <> ""
         then descs[i] := Concatenation("(",descs[i],")"); fi; 
@@ -3211,7 +3214,7 @@ InstallMethod( StructureDescription,
     fi;
     if HasFreeProductInfo(G) then
       factors := FreeProductInfo(G)!.groups;
-      descs   := List(factors,StructureDescription);
+      descs   := Filtered(List(factors,StructureDescription),str->str<>"1");
       for i in [1..Length(descs)] do
         if   Intersection(descs[i],"x:.*wr") <> ""
         then descs[i] := Concatenation("(",descs[i],")"); fi; 
@@ -3223,7 +3226,6 @@ InstallMethod( StructureDescription,
       if short then RemoveCharacters(desc," "); fi;
       return desc;
     fi;
-    if IsTrivial(G) then return "1"; fi;
     gens := DuplicateFreeList(Filtered(GeneratorsOfGroup(G),
                                        gen->not IsOne(gen)));
     List(gens,IsTame);
