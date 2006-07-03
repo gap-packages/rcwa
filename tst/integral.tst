@@ -1519,6 +1519,8 @@ gap> G/N;
 Group([ (), (1,2)(3,5)(4,6)(7,8), (1,3)(2,4)(5,7)(6,8) ])
 gap> StructureDescription(last);
 "D8"
+gap> (1,2,3,4,5,6,7,8,9,10,11,12)^Collatz;
+(1,3,2,5,7,4,9,11,6,13,15,8)
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

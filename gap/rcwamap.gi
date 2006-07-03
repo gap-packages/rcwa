@@ -2667,6 +2667,35 @@ InstallMethod( \^,
 
 #############################################################################
 ##
+#M  \^( <perm>, <g> ) . . . . . .  for a permutation and an rcwa mapping of Z
+##
+InstallMethod( \^,
+               "for a permutation and an rcwa mapping of Z (RCWA)",
+               ReturnTrue, [ IsPerm, IsRcwaMappingOfZ ], 0,
+
+  function ( perm, g )
+
+    local  cycs, cyc, h, i;
+
+    if not IsBijective(g) then
+      Error("<g> must be bijective.\n");
+      return fail;
+    fi;
+    if not ForAll(MovedPoints(perm)^g,IsPosInt) then
+      Info(InfoWarning,1,
+           "Warning: GAP permutations can only move positive integers!");
+      TryNextMethod();
+    fi;
+    cycs := List(Cycles(perm,MovedPoints(perm)),cyc->OnTuples(cyc,g));
+    h := ();
+    for cyc in cycs do
+      for i in [2..Length(cyc)] do h := h * (cyc[1],cyc[i]); od;
+    od;
+    return h;
+  end );
+
+#############################################################################
+##
 #M  \^( <f>, <n> ) . . . . . . . . . . . . for an rcwa mapping and an integer
 ##
 ##  <n>-th power of the rcwa mapping <f>. 

@@ -309,5 +309,10 @@ Changes between version 2.1.2 and version 2.1.3:
  - The output string of `StructureDescription' is now a bit nicer
    in certain cases.
 
+Changes between version 2.1.3 and version 2.1.4:
+
+ - A method for computing conjugates of GAP permutations under bijective
+   rcwa mappings has been added.
+
 
 
