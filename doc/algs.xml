@@ -196,6 +196,32 @@ is used.
     Test whether <A>G</A> fixes the nonnegative integers setwisely,
     but&nbsp;<A>g</A> does not. If yes, return <C>false</C>. <P/>
 
+    If <A>G</A> is tame, proceed as follows:
+    Test whether the modulus of <A>g</A> divides the modulus of <A>G</A>.
+    If not, return <C>false</C>. Test whether <A>G</A> is finite and <A>g</A>
+    has infinite order. If so, return <C>false</C>. Test whether <A>g</A>
+    is tame. If not, return <C>false</C>.
+    Compute a respected partition <C>P</C> of <A>G</A> and the
+    finite permutation group <C>H</C> induced by <A>G</A> on it
+    (see <C>RespectedPartition</C>).
+    Check whether <A>g</A> permutes <C>P</C>. If not, return <C>false</C>.
+    Let <C>h</C> be the permutation induced by <A>g</A> on <C>P</C>.
+    Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>.
+    Compute an element <C>g1</C> of <A>G</A> which acts on&nbsp;<C>P</C>
+    like&nbsp;<A>g</A>. For this purpose, factor <A>h</A> into generators
+    of&nbsp;<C>H</C> using <C>PreImagesRepresentative</C>, and compute the
+    corresponding product of generators of&nbsp;<A>G</A>.
+    Let <C>k := g/g1</C>. The mapping <C>k</C> is always integral.
+    Compute the kernel&nbsp;<C>K</C> of the action of <A>G</A>
+    on&nbsp;<C>P</C> using <C>KernelOfActionOnRespectedPartition</C>. Check
+    whether <C>k</C> lies in&nbsp;<C>K</C>. This is done using the package
+    <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>, and uses an
+    isomorphism from a supergroup of &nbsp;<C>K</C> which is isomorphic
+    to the <C>|P|</C>-fold direct product of the infinite dihedral group
+    and which always contains&nbsp;<C>k</C> to a polycyclically presented
+    group. If&nbsp;<C>k</C> lies in&nbsp;<C>K</C>, return <C>true</C>,
+    otherwise return <C>false</C>. <P/>
+
     If <A>G</A> is not tame, proceed as follows:
     Look for finite orbits of&nbsp;<A>G</A>. If some are found, test whether
     <A>g</A> acts on them, and whether the induced permutations lie in
@@ -210,34 +236,7 @@ is used.
     If successful, return <C>true</C>. If <A>g</A> is in <A>G</A>, this
     terminates after a finite number of steps. Both runtime and memory
     requirements are exponential in the word length. If <A>g</A> is not
-    in <A>G</A>, the method runs into an infinite loop. <P/>
-
-    If <A>G</A> is tame, proceed as follows:
-    Test whether the modulus of <A>g</A> divides the modulus of <A>G</A>.
-    If not, return <C>false</C>. Test whether <A>G</A> is finite and <A>g</A>
-    has infinite order. If so, return <C>false</C>. Test whether <A>g</A>
-    is tame. If not, return <C>false</C>.
-    Compute a respected partition <C>P</C> of <A>G</A> and the
-    finite permutation group <C>H</C> induced by <A>G</A> on it
-    (see <C>RespectedPartition</C>).
-    Check whether <A>g</A> permutes <C>P</C>. If not, return <C>false</C>.
-    Let <C>h</C> be the permutation induced by <A>g</A> on <C>P</C>.
-    Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>. <P/>
-
-    Compute an element <C>g1</C> of <A>G</A> which acts on&nbsp;<C>P</C>
-    like&nbsp;<A>g</A>. For this purpose, factor <A>h</A> into generators
-    of&nbsp;<C>H</C> using <C>PreImagesRepresentative</C>, and compute the
-    corresponding product of generators of&nbsp;<A>G</A>.
-    Let <C>k := g/g1</C>. The mapping <C>k</C> is always integral.
-    Compute the kernel&nbsp;<C>K</C> of the action of <A>G</A>
-    on&nbsp;<C>P</C> using <C>KernelOfActionOnRespectedPartition</C>. Check
-    whether <C>k</C> lies in&nbsp;<C>K</C>. This is done using the package
-    <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>, and uses an
-    isomorphism from a supergroup of &nbsp;<C>K</C> which is isomorphic
-    to the <C>|P|</C>-fold direct product of the infinite dihedral group
-    and which always contains&nbsp;<C>k</C> to a polycyclically presented
-    group. If&nbsp;<C>k</C> lies in&nbsp;<C>K</C>, return <C>true</C>,
-    otherwise return <C>false</C>.
+    in <A>G</A>, the method runs into an infinite loop.
   </Item>
 
   <Mark>
