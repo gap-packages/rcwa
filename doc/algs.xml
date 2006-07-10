@@ -16,8 +16,8 @@ very brief descriptions of most other algorithms and methods implemented in
 this package. The word <Q>trivial</Q> as a description means that essentially
 nothing is done except of storing or recalling one or several values,
 and <Q>straightforward</Q> means that no sophisticated algorithm is used.
-The descriptions are kept very informal and short.
-They are listed in alphabetical order.
+The descriptions are kept very informal and short, and some of them provide
+only rudimentary information. They are listed in alphabetical order.
 
 <List>
 
@@ -73,20 +73,10 @@ They are listed in alphabetical order.
   </Item>
 
   <Mark>
-    <C>CoefficientsOnTrajectory(<A>f</A>,<A>n</A>,<A>val</A>,<A>cond</A>,<A>all</A>)</C>
-  </Mark>
-  <Item>
-    Iterated application of an rcwa mapping, and composition
-    of affine mappings.
-  </Item>
-
-  <Mark>
     <C>CommonRightInverse(<A>l</A>,<A>r</A>)</C>
   </Mark>
   <Item>
-    <Q>Straightforward</Q> if one knows how to compute images of residue
-    classes under affine mappings, and how to compute inverses of
-    affine mappings.
+    (See <C>RightInverse</C>.)
   </Item>
 
   <Mark>
@@ -194,23 +184,37 @@ They are listed in alphabetical order.
     Test whether the mapping <A>g</A> or its inverse is in the list of
     generators of&nbsp;<A>G</A>. If it is, return <C>true</C>.
     Test whether its prime set is a subset of the prime set of&nbsp;<A>G</A>.
-    If not, return <C>false</C>. Test if <A>G</A> is class-wise
-    order-preserving, and <A>g</A> is not. If so, return <C>false</C>.
-    Test if the sign of <A>g</A> is&nbsp;-1 and all generators
+    If not, return <C>false</C>. Test whether the multiplier or the divisor
+    of&nbsp;<A>g</A> has a prime factor which does not divide the multiplier
+    of&nbsp;<A>G</A>. If yes, return <C>false</C>. Test if <A>G</A> is
+    class-wise order-preserving, and <A>g</A> is not. If so, return
+    <C>false</C>. Test if the sign of <A>g</A> is&nbsp;-1 and all generators
     of&nbsp;<A>G</A> have sign&nbsp;1. If yes, return <C>false</C>.
     Test if <A>G</A> is class-wise order-preserving, all generators
     of&nbsp;<A>G</A> have determinant&nbsp;0 and <A>g</A> has
     determinant&nbsp;<M>\neq 0</M>. If yes, return <C>false</C>.
     Test whether the support of&nbsp;<A>g</A> is a subset of the support
-    of&nbsp;<A>G</A>. If not, return <C>false</C>. <P/>
+    of&nbsp;<A>G</A>. If not, return <C>false</C>.
+    Test whether <A>G</A> fixes the nonnegative integers setwisely,
+    but&nbsp;<A>g</A> does not. If yes, return <C>false</C>. <P/>
 
-    If <A>G</A> is not tame, try to factor <A>g</A> into generators
-    of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>. If successful,
-    return <C>true</C>. If <A>g</A> is in <A>G</A>, this terminates after
-    a finite number of steps. Both runtime and memory requirements are
-    exponential in the word length. If <A>g</A> is not in <A>G</A>, it runs 
-    into an infinite loop. If <A>G</A> is tame, proceed as follows: <P/>
+    If <A>G</A> is not tame, proceed as follows:
+    Look for finite orbits of&nbsp;<A>G</A>. If some are found, test whether
+    <A>g</A> acts on them, and whether the induced permutations lie in
+    the permutation groups induced by&nbsp;<A>G</A>. If for one of the
+    examined orbits one of the latter two questions has a negative answer,
+    then return <C>false</C>.
+    Look for a positive integer&nbsp;<M>m</M> such that <A>g</A> does
+    not leave a partition of&nbsp;<M>\Z</M> into unions of residue
+    classes (mod&nbsp;<M>m</M>) invariant which is fixed by&nbsp;<A>G</A>.
+    If successful, return <C>false</C>. If not, try to factor <A>g</A> into
+    generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
+    If successful, return <C>true</C>. If <A>g</A> is in <A>G</A>, this
+    terminates after a finite number of steps. Both runtime and memory
+    requirements are exponential in the word length. If <A>g</A> is not
+    in <A>G</A>, the method runs into an infinite loop. <P/>
 
+    If <A>G</A> is tame, proceed as follows:
     Test whether the modulus of <A>g</A> divides the modulus of <A>G</A>.
     If not, return <C>false</C>. Test whether <A>G</A> is finite and <A>g</A>
     has infinite order. If so, return <C>false</C>. Test whether <A>g</A>
@@ -244,6 +248,21 @@ They are listed in alphabetical order.
   <Item>
     Form the union of the residue classes which are determined by the
     coefficients as indicated.
+  </Item>
+
+  <Mark>
+    <C>Induction(<A>g</A>,<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Compute <C>f * g * RightInverse(<A>f</A>)</C>.
+  </Item>
+
+  <Mark>
+    <C>Induction(<A>G</A>,<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Get a set of generators by applying <C>Induction(<A>g</A>,<A>f</A>)</C>
+    to the generators <A>g</A> of&nbsp;<A>G</A>.
   </Item>
 
   <Mark>
@@ -699,13 +718,8 @@ They are listed in alphabetical order.
     <C>Restriction(<A>g</A>,<A>f</A>)</C>
   </Mark>
   <Item>
-    Computes images <C>(n&circum;<A>g</A>)&circum;<A>f</A></C> and preimages
-    <C>n&circum;<A>f</A></C> for sufficiently many integers <C>n</C> under
-    the image of <A>g</A> under the restriction monomorphism associated
-    to&nbsp;<A>f</A>. Then it constructs the desired mapping by
-    <C>RcwaMapping(<A>m</A>,<A>values</A>)</C>. Finally, the result is
-    checked by a direct verification that the diagram in
-    Definition&nbsp;2.3.1 in&nbsp;<Cite Key="Kohl05"/> commutes.
+    Compute the action of <C>RightInverse(<A>f</A>) * g * f</C> on the
+    image of&nbsp;<A>f</A>.
   </Item>
 
   <Mark>
@@ -714,6 +728,15 @@ They are listed in alphabetical order.
   <Item>
     Get a set of generators by applying <C>Restriction(<A>g</A>,<A>f</A>)</C>
     to the generators <A>g</A> of&nbsp;<A>G</A>.
+  </Item>
+
+  <Mark>
+    <C>RightInverse(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q> if one knows how to compute images of residue
+    classes under affine mappings, and how to compute inverses of
+    affine mappings.
   </Item>
 
   <Mark>
@@ -792,6 +815,13 @@ They are listed in alphabetical order.
     of the permutation group induced on the refinement of the stored
     respected partition which is obtained by splitting each residue class
     into three residue classes with equal moduli.
+  </Item>
+
+  <Mark>
+    <C>StructureDescription(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    (Not described here.)
   </Item>
 
   <Mark>
