@@ -9,15 +9,13 @@
 <Chapter Label="ch:algorithms">
 <Heading>The Algorithms Implemented in RCWA</Heading>
 
-A couple of algorithms implemented in this package are described in the
-author's thesis&nbsp;<Cite Key="Kohl05"/> in the form of constructive proofs.
-This chapter provides references to the corresponding theorems, and gives
-very brief descriptions of most other algorithms and methods implemented in
-this package. The word <Q>trivial</Q> as a description means that essentially
-nothing is done except of storing or recalling one or several values,
-and <Q>straightforward</Q> means that no sophisticated algorithm is used.
-The descriptions are kept very informal and short, and some of them provide
-only rudimentary information. They are listed in alphabetical order.
+This chapter lists brief descriptions of most algorithms and methods
+implemented in this package. These descriptions are kept very informal and
+short, and some of them provide only rudimentary information. They are listed
+in alphabetical order. The word <Q>trivial</Q> as a description means that
+essentially nothing is done except of storing or recalling one or several
+values, and <Q>straightforward</Q> means that no sophisticated algorithm
+is used.
 
 <List>
 
