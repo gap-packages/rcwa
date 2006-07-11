@@ -19,10 +19,10 @@
 <!-- #################################################################### -->
 
 <TitlePage>
-  <Title>RCWA</Title>
+  <Title>&RCWA;</Title>
   <Subtitle>Residue Class-Wise Affine Groups</Subtitle>
   <Version>
-    ( Version <#Include SYSTEM "../version"> )
+    Version <#Include SYSTEM "../version">
   </Version>
   <Author>
     Stefan Kohl
