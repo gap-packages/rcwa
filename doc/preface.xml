@@ -69,9 +69,9 @@ on the author's homepage. <P/>
 
 Obviously, the infinite dihedral group <M>\langle n \mapsto -n,
 n \mapsto n+1 \rangle</M> can be represented. Further the class of
-representable groups is closed under forming wreath products with finite
-groups (cp.&nbsp;<Cite Key="Kohl05"/>, Corollary&nbsp;2.3.3 and
-Theorem&nbsp;2.6.1) and with the infinite cyclic group <M>(\Z,+)</M>.
+representable groups is closed under forming direct products and under
+forming wreath products with finite groups and with the infinite cyclic
+group <M>(\Z,+)</M>.
 Free groups and free products of finite groups can be represented as well.
 Further there are divisible torsion groups and finitely generated groups
 with unsolvable membership problem which have faithful residue class-wise
