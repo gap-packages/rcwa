@@ -317,5 +317,8 @@ Changes between version 2.1.3 and version 2.1.4:
  - A method for computing conjugates of GAP permutations under bijective
    rcwa mappings has been added.
 
+Changes between version 2.1.4 and version 2.1.5:
+
+ - The abstract and the preface of the manual have been revised.
 
 
