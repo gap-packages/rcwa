@@ -37,10 +37,20 @@
   </Author>
   <Date>July 10, 2006</Date>
   <Copyright>
-    &copyright; 2003 - 2006 by Stefan Kohl <P/>
+    &copyright; 2003 - 2006 by Stefan Kohl.
     This package is distributed under the GNU General Public License.
   </Copyright>
   <#Include SYSTEM "abstract.xml">
+  <Acknowledgements>
+    I am very grateful to Bettina&nbsp;Eick for communicating this package
+    and for her kind help in improving its documentation.
+    Further I would like to thank the two anonymous referees for their
+    constructive criticism and their helpful suggestions. 
+    I am also very grateful to Laurent Bartholdi for inviting me to give
+    a talk in Lausanne in April 2006, and for his hint on how
+    to construct wreath products of residue class-wise affine groups
+    with&nbsp;<M>(\Z,+)</M>.
+  </Acknowledgements>
 </TitlePage>
 
 <!-- #################################################################### -->

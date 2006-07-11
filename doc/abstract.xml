@@ -57,10 +57,7 @@ euclidean rings other than the ring of integers. While this package
 undoubtedly provides most functionality for residue class-wise affine groups
 over the integers, at least rudimentarily it also covers the cases that the
 underlying ring is a semilocalization of&nbsp;<M>\Z</M> or a polynomial ring
-in one variable over a finite field. The reason for choosing these rings was
-that they differ from&nbsp;<M>\Z</M> by having only finitely many prime
-ideals respectively by having nonzero characteristic, and that performing
-arithmetic operations in them is comparatively cheap. <P/>
+in one variable over a finite field. <P/>
 
 The original motivation for investigating residue class-wise affine groups
 comes from the famous <M>3n+1</M> Conjecture, which is an assertion about
@@ -69,9 +66,7 @@ a surjective, but not injective residue class-wise affine mapping. <P/>
 Residue class-wise affine groups are introduced in the author's thesis
 <E>Restklassenweise affine Gruppen</E>. This thesis is published at
 <URL>http://deposit.ddb.de/cgi-bin/dokserv?idn=977164071</URL>
-(Archivserver Deutsche Bibliothek) and at
-<URL>http://elib.uni-stuttgart.de/opus/volltexte/2005/2448/</URL>
-(OPUS-Datenbank Universität Stuttgart).
+(Archivserver Deutsche Bibliothek).
 A copy of this thesis and an english translation thereof are distributed
 with this package (see <F>thesis/thesis.pdf</F> resp.
 <F>thesis/thesis&uscore;e.pdf</F>).
