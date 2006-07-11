@@ -35,7 +35,7 @@
        Germany
     </Address>
   </Author>
-  <Date>July 10, 2006</Date>
+  <Date>July 11, 2006</Date>
   <Copyright>
     &copyright; 2003 - 2006 by Stefan Kohl.
     This package is distributed under the GNU General Public License.
@@ -47,9 +47,11 @@
     Further I would like to thank the two anonymous referees for their
     constructive criticism and their helpful suggestions. 
     I am also very grateful to Laurent Bartholdi for inviting me to give
-    a talk in Lausanne in April 2006, and for his hint on how
+    a talk on the subject in Lausanne in April 2006, and for his hint on how
     to construct wreath products of residue class-wise affine groups
-    with&nbsp;<M>(\Z,+)</M>.
+    with&nbsp;<M>(\Z,+)</M>. I would like to thank Otto H. Kegel, Katrin Tent
+    and Oliver Röndigs for their related invitations to Freiburg resp.
+    Bielefeld in February and March 2006.
   </Acknowledgements>
 </TitlePage>
 
