@@ -524,6 +524,9 @@ end;
 ##
 ##  The Venturini examples.
 ##
+V0 := RcwaMapping([[2,0,3],[4,5,3],[4,-5,3]]); # The residue class 0(5)
+                                               # is an ergodic set of V0.
+
 V1 := function ( t )
 
         local map;
@@ -572,8 +575,8 @@ V7 := RcwaMapping([[1,0,3],[2,-2,3],[5,-4,3],[4,0,3],[5,-8,3],[4,-2,3]]);
 
 V8 := RcwaMapping([[1,0,3],[1,-1,3],[5,5,3],[3,5,2],[3,2,2],[3,-1,2]]);
 
-SetName(V4,"V4"); SetName(V5,"V5"); SetName(V6,"V6");
-SetName(V7,"V7"); SetName(V8,"V8");
+SetName(V0,"V0"); SetName(V4,"V4"); SetName(V5,"V5");
+SetName(V6,"V6"); SetName(V7,"V7"); SetName(V8,"V8");
 
 #############################################################################
 ##
