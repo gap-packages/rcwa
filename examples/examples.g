@@ -524,6 +524,12 @@ end;
 ##
 ##  The Venturini examples.
 ##
+##  The examples V0 - V8 below are taken from
+##
+##  G. Venturini. Iterates of number-theoretic functions with periodic
+##  rational coefficients (generalization of the 3x+1 problem).
+##  Stud. Appl. Math., 86(3):185--218, 1992.
+##
 V0 := RcwaMapping([[2,0,3],[4,5,3],[4,-5,3]]); # The residue class 0(5)
                                                # is an ergodic set of V0.
 
