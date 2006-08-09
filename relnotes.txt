@@ -321,4 +321,9 @@ Changes between version 2.1.4 and version 2.1.5:
 
  - The abstract and the preface of the manual have been revised.
 
+Changes between version 2.1.5 and version 2.1.6:
+
+ - A bug in the application of a non-membership criterion for rcwa groups
+   has been fixed (the error has been identified in the code, no example
+   has been constructed).
 
