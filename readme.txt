@@ -58,7 +58,7 @@ thesis/thesis_e.pdf).   It is officially published  at  the following  sites:
 
                                 Requirements
 
-The RCWA package needs at least GAP 4.4.7, ResClasses 2.3.1, GRAPE 4.0, Poly-
+The RCWA package needs at least GAP 4.4.7, ResClasses 2.3.3, GRAPE 4.0, Poly-
 cyclic 1.1  and GAPDoc 0.999.  All required packages are already present in a
 standard GAP installation.  RCWA can be used under UNIX, under Windows and on
 the MacIntosh.  It is completely written in the GAP language and does neither

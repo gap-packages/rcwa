@@ -327,3 +327,7 @@ Changes between version 2.1.5 and version 2.1.6:
    has been fixed (the error has been identified in the code, no example
    has been constructed).
 
+ - Some cleanup of comments and declarations in the source code
+   has been made.
+
+
