@@ -7,30 +7,19 @@
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa groups.
 ##
-##  See the definitions given in the file `rcwamap.gd'.
+##  See the definitions given in the file rcwamap.gd.
 ##
-##  We call a subgroup of RCWA($R$) a *residue class-wise affine* group, or
-##  in short an *rcwa* group. We define the *modulus* of an rcwa group by
-##  the lcm of the moduli of its elements in case such an lcm exists,
-##  and by 0 otherwise. 
+##  We call a subgroup of RCWA(R) a *residue class-wise affine* group, or
+##  in short an *rcwa* group.
 ##
 Revision.rcwagrp_gd :=
   "@(#)$Id$";
 
 #############################################################################
 ##
-#C  IsRcwaGroup . . . . . . . . . . . . . . . . . . . . . . . all rcwa groups
-##
-##  The category of all rcwa groups.
-##
-DeclareSynonym( "IsRcwaGroup",
-                 CategoryCollections(IsRcwaMapping) and IsGroup );
-
-#############################################################################
-##
 #C  IsRcwaGroupOverZ . . . . . . . . . . . . . . . . . . . rcwa groups over Z
 ##
-##  The category of all rcwa groups over $\Z$.
+##  The category of all rcwa groups over Z.
 ##
 DeclareSynonym( "IsRcwaGroupOverZ",
                  CategoryCollections(IsRcwaMappingOfZ) and IsGroup );
@@ -39,7 +28,7 @@ DeclareSynonym( "IsRcwaGroupOverZ",
 ##
 #C  IsRcwaGroupOverZ_pi . . . . . . . . . . . . . . . rcwa groups over Z_(pi)
 ##
-##  The category of all rcwa groups over semilocalizations of $\Z$.
+##  The category of all rcwa groups over semilocalizations of Z.
 ##
 DeclareSynonym( "IsRcwaGroupOverZ_pi",
                  CategoryCollections(IsRcwaMappingOfZ_pi) and IsGroup );
@@ -48,7 +37,7 @@ DeclareSynonym( "IsRcwaGroupOverZ_pi",
 ##
 #C  IsRcwaGroupOverZOrZ_pi . . . . . . . . . . . rcwa groups over Z or Z_(pi)
 ##
-##  The category of all rcwa groups over the ring $\Z$ or semilocalizations
+##  The category of all rcwa groups over the ring Z or semilocalizations
 ##  thereof. This is the union of the categories `IsRcwaGroupOverZ' and
 ##  `IsRcwaGroupOverZ_pi'.
 ##
@@ -101,7 +90,7 @@ DeclareProperty( "IsNaturalRCWA_Z", IsRcwaGroup );
 
 #############################################################################
 ##
-#P  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . .  RCWA( Z_pi )
+#P  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . .  RCWA( Z_(pi) )
 ##
 DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
 
@@ -124,47 +113,53 @@ DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 ##
 #A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
 ##
+##  We define the *modulus* of an rcwa group by the lcm of the moduli of its
+##  elements in case such an lcm exists, and by 0 otherwise. 
+##
 DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
 
 #############################################################################
 ##
-#P  IsTame( <G> ) . . . . . indicates whether or not <G> is a tame rcwa group
+#A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . rcwa representation of <G>
+#A  IsomorphismRcwaGroup( <G> )
 ##
-##  We say that an $R$-rcwa group is *tame* if and only if its modulus is
-##  strictly positive, and *wild* otherwise.
+##  A faithful rcwa representation of the group <G> over Z.
 ##
-DeclareProperty( "IsTame", IsRcwaGroup );
+DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
+DeclareSynonym( "IsomorphismRcwaGroup", IsomorphismRcwaGroupOverZ );
+DeclareSynonym( "IsomorphismIntegralRcwaGroup", IsomorphismRcwaGroupOverZ );
 
 #############################################################################
 ##
-#A  PrimeSet( <G> ) . . . . . . . . . . . . . prime set of the rcwa group <G>
+#F  RcwaGroupOverZByPermGroup( <G> ) . . . . . . rcwa group isomorphic to <G>
+#F  RcwaGroupByPermGroup( <G> )
 ##
-##  Prime set of rcwa group <G>.
+##  Constructs an rcwa group over Z isomorphic to the permutation group <G>,
+##  which acts on [ 1 .. LargestMovedPoint( <G> ) ] as <G> does.
 ##
-##  We define the prime set of an rcwa group <G> by the union of the prime
-##  sets of its elements.
-##
-DeclareAttribute( "PrimeSet", IsRcwaGroup );
+DeclareGlobalFunction( "RcwaGroupOverZByPermGroup" );
+DeclareSynonym( "RcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
+DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
 
 #############################################################################
 ##
-#P  IsIntegral( <G> ) . . . . . . .  indicates whether or not <G> is integral
+#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
+#O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
 ##
-##  We say that an $R$-rcwa group is *integral* if and only if all of its
-##  elements are integral.
+##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##
-DeclareProperty( "IsIntegral", IsRcwaGroup ); 
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt, IsFunction ] );
 
 #############################################################################
 ##
-#P  IsClassWiseOrderPreserving( <G> ) .  is <G> class-wise order-preserving ?
+#O  IsTransitive( <G>, <S> )
+#O  Transitivity( <G>, <S> )
+#O  IsPrimitive( <G>, <S> )
 ##
-##  Indicates whether <G> is class-wise order-preserving or not.
-##
-##  We say that an rcwa group <G> over $\Z$ is *class-wise order-preserving*
-##  if all of its elements are.
-##
-DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaGroupOverZ ); 
+DeclareOperation( "IsTransitive", [ IsRcwaGroup, IsListOrCollection ] );
+DeclareOperation( "Transitivity", [ IsRcwaGroup, IsListOrCollection ] );
+DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
@@ -186,9 +181,57 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
+#O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
+##
+##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa group <G>
+##  by (i.e. to the image of) the rcwa mapping <f>. The mapping <f> must be
+##  injective.
+##
+DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Restriction", [ IsRcwaGroup, IsRcwaMapping ] );
+
+#############################################################################
+##
+#O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
+#O  Induction( <G>, <f> ) . . . . . . . . . . . . . . induction of <G> by <f>
+##
+##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa group <G>
+##  by the rcwa mapping <f>.
+##
+##  The mapping <f> must be injective, and both the support of <g> and its
+##  image under <g>, resp. the support of <G>, must lie in the image of <f>.
+##  It holds `Induction( Restriction( <g>, <f> ), <f> ) = <g>' and the
+##  corresponding equality for rcwa groups, thus induction is the one-sided
+##  inverse operation of restriction.
+##
+DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Induction", [ IsRcwaGroup, IsRcwaMapping ] );
+
+#############################################################################
+##
 #O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
 ##
 DeclareOperation( "Projections", [ IsRcwaGroup, IsPosInt ] );
+
+#############################################################################
+##
+#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
+##
+DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
+
+#############################################################################
+##
+#A  RankOfFreeGroup( <Fn> )
+##
+DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
+
+#############################################################################
+##
+#O  RepresentativeActionOp( <G>, <g>, <h>, <act> )
+##
+DeclareOperation( "RepresentativeActionOp",
+                  [ IsGroup, IsObject, IsObject, IsFunction ] );
 
 #############################################################################
 ##
@@ -234,9 +277,9 @@ DeclareOperation( "RepresentativesActionPreImage",
 #A  RespectedPartitionLong( <G> )
 #A  RespectedPartitionLong( <sigma> )
 ##
-##  A partition of the base ring <R> into a finite number of residue classes
+##  A partition of the base ring R into a finite number of residue classes
 ##  on which the rcwa group <G> acts as a permutation group, and on whose
-##  elements all elements of <G> are affine. Provided that <R> has a residue
+##  elements all elements of <G> are affine. Provided that R has a residue
 ##  class ring of cardinality 2, such a partition exists if and only if <G>
 ##  is tame. The respected partition of a bijective rcwa mapping <sigma> is
 ##  defined as the respected partition of the cyclic group generated by
@@ -271,7 +314,7 @@ DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 ##
 #A  KernelOfActionOnRespectedPartition( <G> )
 ##
-##  The kernel <K> of the action of <G> on its respected partition <P>.
+##  The kernel of the action of <G> on its stored respected partition.
 ##  The group <G> has to be tame.
 ##
 DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
@@ -281,9 +324,9 @@ DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
 #A  RefinedRespectedPartitions( <G> )
 #A  KernelActionIndices( <G> )
 ##
-##  Refinements of the stored respected partition <P> of <G>, resp. the
-##  orders of the permutation groups induced by the kernel of the action of
-##  <G> on <P> on these refinements.
+##  Refinements of the stored respected partition P of <G>, resp. the orders
+##  of the permutation groups induced by the kernel of the action of <G> on P
+##  on these refinements.
 ##
 DeclareAttribute( "RefinedRespectedPartitions", IsRcwaGroup );
 DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
@@ -297,114 +340,61 @@ DeclareOperation( "RespectsPartition", [ IsObject, IsList ] );
 
 #############################################################################
 ##
-#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
+#A  IntegralizingConjugator( <f> ) . . . . . . . mapping x: <f>^x is integral
+#A  IntegralizingConjugator( <G> ) . . . . . . . mapping x: <G>^x is integral
 ##
-DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
-
-#############################################################################
-##
-#A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . rcwa representation of <G>
-#A  IsomorphismRcwaGroup( <G> )
-##
-##  A faithful rcwa representation of the group <G> over $\Z$.
-##
-DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
-DeclareSynonym( "IsomorphismRcwaGroup", IsomorphismRcwaGroupOverZ );
-DeclareSynonym( "IsomorphismIntegralRcwaGroup", IsomorphismRcwaGroupOverZ );
-
-#############################################################################
-##
-#F  RcwaGroupOverZByPermGroup( <G> ) . . . . . . rcwa group isomorphic to <G>
-#F  RcwaGroupByPermGroup( <G> )
-##
-##  Constructs an integral rcwa group isomorphic to the permutation
-##  group <G>, which acts on [ 1 .. LargestMovedPoint( <G> ) ] as <G> does.
-##
-DeclareGlobalFunction( "RcwaGroupOverZByPermGroup" );
-DeclareSynonym( "RcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
-DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
-
-#############################################################################
-##
-#A  IntegralizingConjugator( <f> ) . . . . . mapping <x>: <f>^<x> is integral
-#A  IntegralizingConjugator( <G> ) . . . . . mapping <x>: <G>^<x> is integral
-##
-##  A mapping <x> such that <f>^<x> resp. <G>^<x> is integral. Exists always
-##  if <f> is a tame bijective rcwa mapping resp. if <G> is a tame rcwa
-##  group, and the underlying ring <R> has residue class rings of any finite
-##  cardinality.
+##  A mapping x such that <f>^x resp. <G>^x is integral. Exists always if <f>
+##  is a tame bijective rcwa mapping resp. if <G> is a tame rcwa group, and
+##  the underlying ring R has residue class rings of any finite cardinality.
 ##
 DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
+DeclareAttribute( "IntegralizingConjugator", IsRcwaGroup );
 
 #############################################################################
 ##
 #A  IntegralConjugate( <f> ) . . . . . . . . . . .  integral conjugate of <f>
 #A  IntegralConjugate( <G> ) . . . . . . . . . . .  integral conjugate of <G>
 ##
-##  Some integral conjugate of the rcwa mapping <f> resp. rcwa group <G>
-##  in RCWA(<R>). This is certainly not defined uniquely, and exists only
-##  if <f> is tame.
+##  Some integral conjugate of the rcwa mapping <f> resp. rcwa group <G> in
+##  RCWA(R). This is of course not unique, and exists only if <f> is tame.
 ##  
 DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
+DeclareAttribute( "IntegralConjugate", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  StandardizingConjugator( <f> ) . . . . . mapping <x>: <f>^<x> is standard
-#A  StandardizingConjugator( <G> ) . . . . . mapping <x>: <G>^<x> is standard
+#A  StandardizingConjugator( <f> ) . . . . . . . mapping x: <f>^x is standard
+#A  StandardizingConjugator( <G> ) . . . . . . . mapping x: <G>^x is standard
 ##
-##  A mapping <x> such that <f>^<x> resp. <G>^<x> is the ``standard''
-##  representative of the conjugacy class resp. conjugacy class of subgroups
-##  of RCWA(<R>) the bijective rcwa mapping <f> resp. the rcwa group <G>
-##  belongs to.
+##  A mapping x such that <f>^x resp. <G>^x is the "standard" representative
+##  of the conjugacy class resp. conjugacy class of subgroups of RCWA(R) the
+##  bijective rcwa mapping <f> resp. the rcwa group <G> belongs to.
 ##
 DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
+DeclareAttribute( "StandardizingConjugator", IsRcwaGroup );
 
 #############################################################################
 ##
 #A  StandardConjugate( <f> ) . .  standard rep. of the conjugacy class of <f>
 #A  StandardConjugate( <G> ) . .  standard rep. of the conjugacy class of <G>
 ##
-##  Some ``nice'' canonical representative of the conjugacy class of the
-##  bijective rcwa mapping <f> / rcwa group <G> in the whole group RCWA(<R>).
-##  Two rcwa mappings / rcwa groups are conjugate in RCWA(<R>) if and only if
-##  their ``standard conjugates'' are equal.
+##  Some "nice" canonical representative of the conjugacy class of the
+##  bijective rcwa mapping <f> / rcwa group <G> in the whole group RCWA(R).
+##  Two rcwa mappings / rcwa groups are conjugate in RCWA(R) if and only if
+##  their "standard conjugates" are the same.
 ##
 DeclareAttribute( "StandardConjugate", IsRcwaMapping );
+DeclareAttribute( "StandardConjugate", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  RankOfFreeGroup( <Fn> )
+#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
 ##
-DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
-
-#############################################################################
+##  Computes some mapping <h>^r such that there is a partition which is
+##  respected by both <g> and <h>^r, hence such that the group generated
+##  by <g> and <h>^r is tame. Methods may return any such mapping.
 ##
-#F  ClassPairs( <m> )
-##
-##  This is an auxiliary function for computing pairs of disjoint residue
-##  classes with modulus at most <m>.
-##
-DeclareGlobalFunction( "ClassPairs" );
- 
-#############################################################################
-##
-#V  CLASS_PAIRS
-#V  CLASS_PAIRS_LARGE
-##
-##  Residues and moduli of pairs of disjoint residue classes.
-##  Mainly used to generate random class transpositions.
-##
-DeclareGlobalVariable( "CLASS_PAIRS" );
-DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
-
-#############################################################################
-##
-#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
-#O  Ball( <G>, <p>, <d> )        "      the point <p> under the action of <G>
-##
-##  All balls are understood w.r.t. the stored generators of the group <G>.
-##
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
+DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##

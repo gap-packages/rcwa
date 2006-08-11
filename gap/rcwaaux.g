@@ -14,10 +14,9 @@ Revision.rcwaaux_g :=
 #F  RCWABuildManual( ) . . . . . . . . . . . . . . . . . . . build the manual
 ##
 ##  This function builds the manual of the RCWA package in the file formats
-##  &LaTeX;, DVI, Postscript, PDF and HTML.
+##  LaTeX, DVI, Postscript, PDF and HTML.
 ##
-##  This is done using the GAPDoc package by Frank L\"ubeck and
-##  Max Neunh\"offer.
+##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
 ##
 BindGlobal( "RCWABuildManual", 
 
@@ -39,8 +38,8 @@ BindGlobal( "RCWABuildManual",
 ##
 ##  Performs tests of the RCWA package.
 ##
-##  The function makes use of an adaptation of the test file `tst/testall.g'
-##  of the {\GAP} Library to this package. 
+##  The function makes use of an adaptation of the test file tst/testall.g
+##  of the GAP Library to this package. 
 ##
 BindGlobal( "RCWATest",
 

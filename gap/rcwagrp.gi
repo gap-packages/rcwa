@@ -8,7 +8,7 @@
 ##  with rcwa groups over the ring of integers, its semilocalizations and
 ##  over polynomial rings in one variable over a finite field.
 ##
-##  See the definitions given in the files `rcwamap.gd' and `rcwagrp.gd'.
+##  See the definitions given in the files rcwamap.gd and rcwagrp.gd.
 ##
 Revision.rcwagrp_gi :=
   "@(#)$Id$";
@@ -72,7 +72,7 @@ BindGlobal( "RcwaGroupsOverZFamily", FamilyObj( TrivialRcwaGroupOverZ ) );
 ##
 #M  RCWACons( IsRcwaGroup, Integers ) . . . . . . . . . . . . . . . RCWA( Z )
 ##
-##  Group formed by all bijective rcwa mappings of $\Z$.
+##  Group formed by all bijective rcwa mappings of Z.
 ##
 InstallMethod( RCWACons,
                "natural RCWA(Z) (RCWA)", true,
@@ -105,12 +105,13 @@ InstallMethod( RCWACons,
 
 #############################################################################
 ##
-#M  RCWACons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . . .  RCWA( Z_pi )
+#M  RCWACons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . .  RCWA( Z_(pi) )
 ##
-##  Group formed by all bijective rcwa mappings over $\Z_{(\pi)}$.
+##  Group formed by all bijective rcwa mappings of Z_(pi).
 ##
 InstallMethod( RCWACons,
-               "natural RCWA(Z_pi) (RCWA)", true, [ IsRcwaGroup, IsZ_pi ], 0,
+               "natural RCWA(Z_(pi)) (RCWA)", true,
+               [ IsRcwaGroup, IsZ_pi ], 0,
 
   function ( filter, R )
 
@@ -142,10 +143,10 @@ InstallMethod( RCWACons,
 ##
 #M  RCWACons( IsRcwaGroup, PolynomialRing( GF( <q> ), 1 ) )  RCWA( GF(q)[x] )
 ##
-##  Group formed by all bijective rcwa mappings over GF(q)[x].
+##  Group formed by all bijective rcwa mappings of GF(q)[x].
 ##
 InstallMethod( RCWACons,
-               "natural RCWA(Z_pi) (RCWA)", true, 
+               "natural RCWA(GF(q)[x]) (RCWA)", true, 
                [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
 
   function ( filter, R )
@@ -193,10 +194,9 @@ InstallMethod( IsNaturalRCWA_Z,
 
 #############################################################################
 ##
-#M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . . .  RCWA(Z_pi)
+#M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . .  RCWA(Z_(pi))
 ##
-##  The groups RCWA($\Z_{(\pi)}$) can only be obtained by the above
-##  constructor.
+##  The groups RCWA(Z_(pi)) can only be obtained by the above constructor.
 ##
 InstallMethod( IsNaturalRCWA_Z_pi,
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
@@ -256,9 +256,9 @@ InstallMethod( IsSubset,
 ##
 #M  CyclicGroupCons( IsRcwaGroupOverZ, <n> )
 ##
-InstallOtherMethod( CyclicGroupCons,
-                    "rcwa group over Z, for a positive integer (RCWA)",
-                    ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
+InstallMethod( CyclicGroupCons,
+               "rcwa group over Z, for a positive integer (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
 
   function( filt, n )
 
@@ -311,9 +311,9 @@ InstallOtherMethod( DihedralGroupCons,
 ##
 #M  AbelianGroupCons( IsRcwaGroupOverZ, <invs> )
 ##
-InstallOtherMethod( AbelianGroupCons,
-                    "rcwa group over Z, for list of abelian inv's (RCWA)",
-                    ReturnTrue, [ IsRcwaGroupOverZ, IsList ], 0,
+InstallMethod( AbelianGroupCons,
+               "rcwa group over Z, for list of abelian inv's (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsList ], 0,
 
   function( filt, invs )
 
@@ -486,7 +486,7 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  IsSubset( RCWA( Z_pi( <pi> ) ), G ) . .  for RCWA(Z_pi) and an rcwa group
+#M  IsSubset( RCWA( Z_pi( <pi> ) ), G ) .  for RCWA(Z_(pi)) and an rcwa group
 ##
 InstallMethod( IsSubset,
                "for RCWA(Z_(pi)) and an rcwa group over Z_(pi) (RCWA)",
@@ -589,8 +589,8 @@ InstallMethod( Display,
 ##
 ##  The set of moved points (support) of the rcwa group <G>.
 ##
-InstallOtherMethod( MovedPoints,
-                    "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
+InstallMethod( MovedPoints,
+               "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
     if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GFqx(G)
@@ -603,7 +603,7 @@ InstallOtherMethod( MovedPoints,
 #M  Support( <G> ) . . . . . . . . . . . . . . . .  default method for groups
 ##
 InstallMethod( Support,
-               "default method for groups (RCWA)", true, [ IsGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                MovedPoints );
 
 #############################################################################
@@ -611,7 +611,7 @@ InstallMethod( Support,
 #M  IsomorphismRcwaGroupOverZ( <G> ) . . . . default method for finite groups
 #M  IsomorphismRcwaGroup( <G> )
 ##
-##  This is a simple method which just embeds <G> into Sym($\Z/m\Z$).
+##  This is a simple method which just embeds <G> into Sym(Z/mZ).
 ##
 InstallMethod( IsomorphismRcwaGroupOverZ,
                "default method for finite groups (RCWA)", true,
@@ -667,22 +667,22 @@ InstallMethod( PrimeSet,
 ##
 #M  IsIntegral( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-InstallOtherMethod( IsIntegral,
-                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0, 
-                    G -> ForAll( GeneratorsOfGroup( G ), IsIntegral ) );
+InstallMethod( IsIntegral,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0, 
+               G -> ForAll( GeneratorsOfGroup( G ), IsIntegral ) );
 
 #############################################################################
 ##
 #M  IsClassWiseOrderPreserving( <G> ) . . .  for rcwa groups over Z or Z_(pi)
 ##
-##  We say that an rcwa group over $\Z$ or $\Z_{\pi}$ is *class-wise
+##  We say that an rcwa group over Z or Z_(pi) is *class-wise
 ##  order-preserving* if all of its elements are.
 ##
-InstallOtherMethod( IsClassWiseOrderPreserving,
-                    "for rcwa groups over Z or Z_(pi) (RCWA)",
-                    true, [ IsRcwaGroupOverZOrZ_pi ], 0,
-                    G -> ForAll( GeneratorsOfGroup( G ),
-                                 IsClassWiseOrderPreserving ) );
+InstallMethod( IsClassWiseOrderPreserving,
+               "for rcwa groups over Z or Z_(pi) (RCWA)",
+               true, [ IsRcwaGroupOverZOrZ_pi ], 0,
+               G -> ForAll( GeneratorsOfGroup( G ),
+                            IsClassWiseOrderPreserving ) );
 
 #############################################################################
 ## 
@@ -714,9 +714,9 @@ InstallMethod( ShortOrbits,
 ##
 #M  OrbitsModulo( <G>, <m> ) . . . . . . . . for rcwa groups over Z or Z_(pi)
 ##
-InstallOtherMethod( OrbitsModulo,
-                    "for rcwa groups over Z or Z_(pi) (RCWA)", true,
-                    [ IsRcwaGroupOverZOrZ_pi, IsPosInt ], 0,
+InstallMethod( OrbitsModulo,
+               "for rcwa groups over Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaGroupOverZOrZ_pi, IsPosInt ], 0,
 
   function ( G, m )
 
@@ -864,8 +864,8 @@ InstallMethod( IsTame,
 ##
 #M  Multiplier( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-InstallOtherMethod( Multiplier,
-                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+InstallMethod( Multiplier,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -887,9 +887,9 @@ InstallOtherMethod( Multiplier,
 ##
 #M  Divisor( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
-InstallOtherMethod( Divisor,
-                    "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-                    Multiplier );
+InstallMethod( Divisor,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               Multiplier );
 
 #############################################################################
 ##
@@ -1475,9 +1475,9 @@ InstallMethod( Size,
 ##
 #M  IntegralizingConjugator( <G> ) . . . . . . .  for tame rcwa groups over Z
 ##
-InstallOtherMethod( IntegralizingConjugator,
-                    "for tame rcwa groups over Z (RCWA)", true,
-                    [ IsRcwaGroupOverZ ], 0,
+InstallMethod( IntegralizingConjugator,
+               "for tame rcwa groups over Z (RCWA)", true,
+               [ IsRcwaGroupOverZ ], 0,
 
   function ( G )
 
@@ -1493,8 +1493,8 @@ InstallOtherMethod( IntegralizingConjugator,
 ##
 #M  IntegralConjugate( <G> ) . . . . . . . . . . . . . . for tame rcwa groups
 ##
-InstallOtherMethod( IntegralConjugate,
-                    "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+InstallMethod( IntegralConjugate,
+               "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
@@ -1592,15 +1592,15 @@ InstallMethod( StandardConjugate,
 ##
 #M  IsConjugate( RCWA( Integers ), <f>, <g> ) 
 ##
-##  For rcwa mappings of $\Z$, in the full group `RCWA( Integers )'.
+##  For rcwa mappings of Z, in the full group `RCWA( Integers )'.
 ##  Checks whether the standard conjugates of <f> and <g> are equal, if the
 ##  mappings are tame, and looks for different lengths of short cycles
 ##  otherwise (the latter will not terminate if <f> and <g> are conjugate).
 ##
-InstallOtherMethod( IsConjugate,
-                    "for two rcwa mappings of Z, in RCWA(Z) (RCWA)",
-                    true, [ IsNaturalRCWA_Z, IsRcwaMappingOfZ,
-                            IsRcwaMappingOfZ ], 0,
+InstallMethod( IsConjugate,
+               "for two rcwa mappings of Z, in RCWA(Z) (RCWA)",
+               true, [ IsNaturalRCWA_Z, IsRcwaMappingOfZ,
+                       IsRcwaMappingOfZ ], 0,
 
   function ( RCWA_Z, f, g )
 
@@ -1625,16 +1625,14 @@ InstallOtherMethod( IsConjugate,
 ##
 #M  IsConjugate( RCWA( Z_pi( <pi> ) ), <f>, <g> ) 
 ##
-##  For rcwa mappings of $\Z_{\pi}$, in `RCWA( Z_pi( <pi> ) )'.
+##  For rcwa mappings of Z_(pi), in RCWA( Z_pi( <pi> ) ).
 ##  Only trivial checks are done. The method cannot find a positive result
 ##  unless <f> and <g> are equal.
 ##
-InstallOtherMethod( IsConjugate,
-                    Concatenation("for two rcwa mappings of Z_(pi) ",
-                                  "in RCWA(Z_(pi)) (RCWA)"),
-                    ReturnTrue, 
-                    [ IsNaturalRCWA_Z_pi,
-                      IsRcwaMappingOfZ_pi, IsRcwaMappingOfZ_pi ], 0,
+InstallMethod( IsConjugate,
+               "for two rcwa mappings of Z_(pi) in RCWA(Z_(pi)) (RCWA)",
+               ReturnTrue, [ IsNaturalRCWA_Z_pi,
+                             IsRcwaMappingOfZ_pi, IsRcwaMappingOfZ_pi ], 0,
 
   function ( RCWA_Z_pi, f, g )
 
@@ -1656,16 +1654,15 @@ InstallOtherMethod( IsConjugate,
 ##
 #M  RepresentativeActionOp( RCWA( Integers ), <f>, <g>, <act> ) 
 ##
-##  For tame rcwa mappings of $\Z$ under the conjugation action in the full
-##  group `RCWA( Integers )'. The method returns an rcwa mapping <h> such
+##  For tame rcwa mappings of Z under the conjugation action in the full
+##  group RCWA( Integers ). The method returns an rcwa mapping <h> such
 ##  that <f>^<h> = <g>, in case such a mapping exists and fail otherwise.
 ##  The action <act> must be `OnPoints'.
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two tame rcwa mappings of Z (RCWA)",
-                    true,
-                    [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
-                      IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two tame rcwa mappings of Z (RCWA)", true,
+               [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
+                 IsFunction ], 0,
 
   function ( RCWA_Z, f, g, act )
     if act <> OnPoints then TryNextMethod(); fi;
@@ -1685,11 +1682,10 @@ InstallOtherMethod( RepresentativeActionOp,
 ##  supports are pairwise disjoint and do not entirely cover Z up to a finite
 ##  complement.
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and products of disjoint CS/CR/CT (RCWA)",
-                    true,
-                    [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
-                      IsFunction ], 100,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and products of disjoint CS/CR/CT (RCWA)", true,
+               [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
+                 IsFunction ], 100,
 
   function ( RCWA_Z, f, g, act )
 
@@ -1763,11 +1759,10 @@ InstallOtherMethod( RepresentativeActionOp,
 ##  tions is stored. The existence of such products is used in the proof that
 ##  the group which is generated by all class transpositions is simple.
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two class transpositions (RCWA)",
-                    true,
-                    [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
-                      IsFunction ], 200,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two class transpositions (RCWA)", true,
+               [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
+                 IsFunction ], 200,
 
   function ( RCWA_Z, ct1, ct2, act )
 
@@ -1795,9 +1790,9 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 #M  RepresentativeActionOp( RCWA(Integers), <n1>, <n2>, <act> )
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two integers (RCWA)", ReturnTrue,
-                    [ IsNaturalRCWA_Z, IsInt, IsInt, IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two integers (RCWA)", ReturnTrue,
+               [ IsNaturalRCWA_Z, IsInt, IsInt, IsFunction ], 0,
 
   function ( RCWA_Z, n1, n2, act )
     if act <> OnPoints then TryNextMethod(); fi;
@@ -1808,10 +1803,9 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 #M  RepresentativeActionOp( RCWA(Integers), <l1>, <l2>, <act> )
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two k-tuples of integers (RCWA)",
-                    ReturnTrue,
-                    [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two k-tuples of integers (RCWA)", ReturnTrue,
+               [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
 
   function ( RCWA_Z, l1, l2, act )
 
@@ -1832,13 +1826,13 @@ InstallOtherMethod( RepresentativeActionOp,
 #M  RepresentativeActionOp( RCWA( Integers ), <S1>, <S2>, <act> ) 
 ##
 ##  An rcwa mapping <g> which maps <S1> to <S2>.
-##  The sets <S1> and <S2> have to be unions of residue classes of $\Z$.
+##  The sets <S1> and <S2> have to be unions of residue classes of Z.
 ##  The argument <act> is ignored.
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two residue class unions (RCWA)", true,
-                    [ IsNaturalRCWA_Z, IsUnionOfResidueClassesOfZ,
-                      IsUnionOfResidueClassesOfZ, IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two residue class unions (RCWA)", true,
+               [ IsNaturalRCWA_Z, IsUnionOfResidueClassesOfZ,
+                 IsUnionOfResidueClassesOfZ, IsFunction ], 0,
 
   function ( RCWA_Z, S1, S2, act )
 
@@ -1887,12 +1881,12 @@ InstallOtherMethod( RepresentativeActionOp,
 ##
 ##  - tame, if the option `IsTame' is set.
 ##
-##  The arguments <P1> and <P2> must be partitions of $\Z$ into equally many
+##  The arguments <P1> and <P2> must be partitions of Z into equally many
 ##  disjoint residue class unions, and the argument <act> is ignored.
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for RCWA(Z) and two class partitions (RCWA)", true,
-                    [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two class partitions (RCWA)", true,
+               [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
 
   function ( RCWA_Z, P1, P2, act )
 
@@ -2005,11 +1999,11 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
-#M  Ball( <G>, <g>, <d> ) . . . . . . . . for a permutation group and a point
+#M  Ball( <G>, <p>, <d>, <act> ) . . . .  for a permutation group and a point
 ##
-InstallOtherMethod( Ball,
-                    "for a permutation group and a point (RCWA)", ReturnTrue,
-                    [ IsGroup, IsObject, IsPosInt, IsFunction ], 0,
+InstallMethod( Ball,
+               "for a permutation group and a point (RCWA)", ReturnTrue,
+               [ IsGroup, IsObject, IsPosInt, IsFunction ], 0,
 
   function ( G, p, d, act )
 
@@ -2055,9 +2049,9 @@ InstallMethod( OrbitUnion,
 ##
 ##  This method might fail or run into an infinite loop.
 ##
-InstallOtherMethod( IsTransitive,
-                    "for an rcwa group and a residue class union (RCWA)",
-                    ReturnTrue, [ IsRcwaGroup, IsListOrCollection ], 0,
+InstallMethod( IsTransitive,
+               "for an rcwa group and a residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsListOrCollection ], 0,
 
   function ( G, S )
 
@@ -2179,9 +2173,9 @@ InstallOtherMethod( IsTransitive,
 ##
 ##  This method might fail or run into an infinite loop.
 ##
-InstallOtherMethod( Transitivity,
-                    "for an rcwa group over Z and one of Z, N_0 or N (RCWA)",
-                    ReturnTrue, [ IsRcwaGroupOverZ, IsCollection ], 0,
+InstallMethod( Transitivity,
+               "for an rcwa group over Z and one of Z, N_0 or N (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsCollection ], 0,
 
   function ( G, D )
 
@@ -2460,10 +2454,9 @@ InstallOtherMethod( Transitivity,
 ##
 ##  This method might fail or run into an infinite loop.
 ##
-InstallOtherMethod( IsPrimitive,
-                    "for an rcwa group and a residue class union (RCWA)",
-                    ReturnTrue, [ IsRcwaGroupOverZ,
-                                  IsListOrCollection ], 0,
+InstallMethod( IsPrimitive,
+               "for an rcwa group and a residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsListOrCollection ], 0,
 
   function ( G, S )
     if not IsSubset(Source(One(G)),S) then TryNextMethod(); fi;
@@ -2677,9 +2670,9 @@ InstallMethod( RepresentativeActionPreImage,
 ##
 #M  RepresentativeActionOp( <G>, <src>, <dest>, <act> )
 ##
-InstallOtherMethod( RepresentativeActionOp,
-                    "for rcwa groups (RCWA)", ReturnTrue,
-                    [ IsRcwaGroup, IsObject, IsObject, IsFunction ], 0,
+InstallMethod( RepresentativeActionOp,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsObject, IsObject, IsFunction ], 0,
 
   function ( G, src, dest, act )
 
@@ -2884,9 +2877,9 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 ##
 #M  Restriction( <G>, <f> ) . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-InstallOtherMethod( Restriction,
-                    "for rcwa groups (RCWA)", ReturnTrue,
-                    [ IsRcwaGroup, IsRcwaMapping ], 0,
+InstallMethod( Restriction,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRcwaMapping ], 0,
 
   function ( G, f )
 
@@ -2907,9 +2900,9 @@ InstallOtherMethod( Restriction,
 ##
 #M  Induction( <G>, <f> ) . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-InstallOtherMethod( Induction,
-                    "for rcwa groups (RCWA)", ReturnTrue,
-                    [ IsRcwaGroup, IsRcwaMapping ], 0,
+InstallMethod( Induction,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRcwaMapping ], 0,
 
   function ( G, f )
 

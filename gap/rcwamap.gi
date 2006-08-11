@@ -8,7 +8,7 @@
 ##  with rcwa mappings of the ring of integers, its semilocalizations and of
 ##  polynomial rings in one variable over a finite field.
 ##
-##  See the definitions given in the file `rcwamap.gd'.
+##  See the definitions given in the file rcwamap.gd.
 ##
 Revision.rcwamap_gi :=
   "@(#)$Id$";
@@ -151,9 +151,9 @@ BindGlobal( "IsRcwaMappingOfGFqxInStandardRep",
 ##
 #F  RcwaMappingNC( <coeffs> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping of Z by coefficients (RCWA)",
-                    true, [ IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z by coefficients (RCWA)",
+               true, [ IsList ], 0,
 
   function ( coeffs )
 
@@ -197,9 +197,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <coeffs> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping of Z by coefficients (RCWA)",
-                    true, [ IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z by coefficients (RCWA)",
+               true, [ IsList ], 0,
 
   function ( coeffs )
 
@@ -229,9 +229,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <perm>, <range> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping of Z by permutation and range (RCWA)",
-                    true, [ IsPerm, IsRange ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z by permutation and range (RCWA)",
+               true, [ IsPerm, IsRange ], 0,
 
   function ( perm, range )
 
@@ -254,9 +254,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <perm>, <range> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping of Z by permutation and range (RCWA)",
-                    true, [ IsPerm, IsRange ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z by permutation and range (RCWA)",
+               true, [ IsPerm, IsRange ], 0,
 
   function ( perm, range )
 
@@ -275,9 +275,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <modulus>, <values> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping of Z by modulus and values (RCWA)",
-                    true, [ IsInt, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z by modulus and values (RCWA)",
+               true, [ IsInt, IsList ], 0,
 
   function ( modulus, values )
 
@@ -298,9 +298,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <modulus>, <values> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping of Z by modulus and values (RCWA)",
-                    true, [ IsInt, IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z by modulus and values (RCWA)",
+               true, [ IsInt, IsList ], 0,
 
   function ( modulus, values )
 
@@ -329,9 +329,8 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <cycles> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping by class cycles (RCWA)",
-                    true, [ IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by class cycles (RCWA)", true, [ IsList ], 0,
 
   function ( cycles )
 
@@ -371,9 +370,8 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <cycles> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping by class cycles (RCWA)",
-                    true, [ IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping by class cycles (RCWA)", true, [ IsList ], 0,
 
   function ( cycles )
 
@@ -403,9 +401,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <P1>, <P2> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping by two class partitions (RCWA)",
-                    true, [ IsList, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by two class partitions (RCWA)",
+               true, [ IsList, IsList ], 0,
 
   function ( P1, P2 )
 
@@ -429,9 +427,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <P1>, <P2> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping by two class partitions (RCWA)",
-                    true, [ IsList, IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping by two class partitions (RCWA)",
+               true, [ IsList, IsList ], 0,
 
   function ( P1, P2 )
 
@@ -451,10 +449,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <pi>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    Concatenation("rcwa mapping by noninvertible primes ",
-                                  "and coefficients (RCWA)"),
-                    true, [ IsObject, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by noninvertible primes and coeff's (RCWA)",
+               true, [ IsObject, IsList ], 0,
 
   function ( pi, coeffs )
 
@@ -501,10 +498,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <pi>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    Concatenation("rcwa mapping by noninvertible primes ",
-                                  "and coefficients (RCWA)"),
-                    true, [ IsObject, IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping by noninvertible primes and coeff's (RCWA)",
+               true, [ IsObject, IsList ], 0,
 
   function ( pi, coeffs )
 
@@ -538,10 +534,10 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <q>, <modulus>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    Concatenation("rcwa mapping by finite field size, ",
-                                  "modulus and coefficients (RCWA)"),
-                    true, [ IsInt, IsPolynomial, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               Concatenation("rcwa mapping by finite field size, ",
+                             "modulus and coefficients (RCWA)"),
+               true, [ IsInt, IsPolynomial, IsList ], 0,
 
   function ( q, modulus, coeffs )
 
@@ -601,10 +597,10 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <q>, <modulus>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    Concatenation("rcwa mapping by finite field size, ",
-                                  "modulus and coefficients (RCWA)"),
-                    true, [ IsInt, IsPolynomial, IsList ], 0,
+InstallMethod( RcwaMapping,
+               Concatenation("rcwa mapping by finite field size, ",
+                             "modulus and coefficients (RCWA)"),
+               true, [ IsInt, IsPolynomial, IsList ], 0,
 
   function ( q, modulus, coeffs )
 
@@ -637,9 +633,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <R>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping by ring and coefficients (RCWA)",
-                    ReturnTrue, [ IsRing, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by ring and coefficients (RCWA)",
+               ReturnTrue, [ IsRing, IsList ], 0,
 
   function ( R, coeffs )
 
@@ -654,9 +650,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <R>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping by ring and coefficients (RCWA)",
-                    ReturnTrue, [ IsRing, IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping by ring and coefficients (RCWA)",
+               ReturnTrue, [ IsRing, IsList ], 0,
 
   function ( R, coeffs )
 
@@ -671,9 +667,9 @@ InstallOtherMethod( RcwaMapping,
 ##
 #F  RcwaMappingNC( <R>, <modulus>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMappingNC,
-                    "rcwa mapping by ring, modulus and coefficients (RCWA)",
-                    ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by ring, modulus and coefficients (RCWA)",
+               ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
 
   function ( R, modulus, coeffs )
 
@@ -689,9 +685,9 @@ InstallOtherMethod( RcwaMappingNC,
 ##
 #F  RcwaMapping( <R>, <modulus>, <coeffs> )
 ##
-InstallOtherMethod( RcwaMapping,
-                    "rcwa mapping by ring, modulus and coefficients (RCWA)",
-                    ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
+InstallMethod( RcwaMapping,
+               "rcwa mapping by ring, modulus and coefficients (RCWA)",
+               ReturnTrue, [ IsRing, IsRingElement, IsList ], 0,
 
   function ( R, modulus, coeffs )
 
@@ -815,10 +811,10 @@ InstallGlobalFunction( ClassReflection,
 
 #############################################################################
 ##
-#M  IsClassReflection( <sigma> ) . . . . . . . for rcwa mappings of Z or Z_pi
+#M  IsClassReflection( <sigma> ) . . . . . . for rcwa mappings of Z or Z_(pi)
 ##
 InstallMethod( IsClassReflection,
-               "for rcwa mappings of Z or Z_pi (RCWA)",
+               "for rcwa mappings of Z or Z_(pi) (RCWA)",
                true, [ IsRcwaMappingOfZOrZ_pi ], 0,
                sigma -> IsResidueClass(Union(Support(sigma),
                                        Union(ShortCycles(sigma,1)))) and
@@ -902,7 +898,19 @@ InstallMethod( TransposedClasses,
 
 #############################################################################
 ##
-#M  SplittedClassTransposition( <ct>, <k>, <cross> ) . . . . . default method
+#M  SplittedClassTransposition( <ct>, <k> ) . . . . . . .  2-argument version
+##
+InstallMethod( SplittedClassTransposition,
+               "default method (RCWA)", ReturnTrue,
+               [ IsRcwaMapping and IsClassTransposition,
+                 IsRingElement ], 0,
+               function ( ct, k )
+                 return SplittedClassTransposition(ct,k,false);
+               end );
+
+#############################################################################
+##
+#M  SplittedClassTransposition( <ct>, <k>, <cross> ) . . . 3-argument version
 ##
 InstallMethod( SplittedClassTransposition,
                "for a class transposition (RCWA)", ReturnTrue,
@@ -919,18 +927,6 @@ InstallMethod( SplittedClassTransposition,
              else pairs := TransposedMat(cls); fi;
     return List(pairs,ClassTransposition);
   end );
-
-#############################################################################
-##
-#M  SplittedClassTransposition( <ct>, <k> ) . . . . . .  two-argument version
-##
-InstallOtherMethod( SplittedClassTransposition,
-                    "default method (RCWA)", ReturnTrue,
-                    [ IsRcwaMapping and IsClassTransposition,
-                      IsRingElement ], 0,
-                    function ( ct, k )
-                      return SplittedClassTransposition(ct,k,false);
-                    end );
 
 #############################################################################
 ##
@@ -1623,7 +1619,7 @@ SetIsOne( IdentityRcwaMappingOfZ, true );
 ##
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
-##  Zero rcwa mapping of $\Z$.
+##  Zero rcwa mapping of Z.
 ##
 InstallMethod( Zero,
                "for rcwa mappings of Z (RCWA)", true,
@@ -1634,7 +1630,7 @@ InstallMethod( Zero,
 ##
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . . for rcwa mappings of Z_(pi)
 ##
-##  Zero rcwa mapping of $\Z_{(\pi)}$.
+##  Zero rcwa mapping of Z_(pi).
 ##
 InstallMethod( Zero,
                "for rcwa mappings of Z_(pi) (RCWA)",
@@ -1652,7 +1648,7 @@ InstallMethod( Zero,
 ##
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of GF(q)[x]
 ##
-##  Zero rcwa mapping of GF($q$)[$x$]$.
+##  Zero rcwa mapping of GF(q)[x].
 ##
 InstallMethod( Zero,
                "for rcwa mappings of GF(q)[x] (RCWA)",
@@ -1693,7 +1689,7 @@ InstallMethod( One,
 ##
 #M  One( <f> ) . . . . . . . . . . . . . . . . .  for rcwa mappings of Z_(pi)
 ##
-##  Identity rcwa mapping of $\Z_{(\pi)}$.
+##  Identity rcwa mapping of Z_(pi).
 ##
 InstallMethod( One,
                "for rcwa mappings of Z_(pi) (RCWA)",
@@ -1712,7 +1708,7 @@ InstallMethod( One,
 ##
 #M  One( <f> ) . . . . . . . . . . . . . . . .  for rcwa mappings of GF(q)[x]
 ##
-##  Identity rcwa mapping of GF($q$)[$x$]$.
+##  Identity rcwa mapping of GF(q)[x].
 ##
 InstallMethod( One,
                "for rcwa mappings of GF(q)[x] (RCWA)",
@@ -1742,9 +1738,9 @@ InstallMethod( IsOne,
 ##
 #M  Coefficients( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallOtherMethod( Coefficients,
-                    "for rcwa mappings (RCWA)", true,
-                    [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
+InstallMethod( Coefficients,
+               "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
 
 #############################################################################
 ##
@@ -1802,9 +1798,9 @@ InstallMethod( Multpk,
 
 #############################################################################
 ##
-#M  SetOnWhichMappingIsClassWiseOrderPreserving for rcwa mappings of Z / Z_pi
-#M  SetOnWhichMappingIsClassWiseOrderReversing  for rcwa mappings of Z / Z_pi
-#M  SetOnWhichMappingIsClassWiseConstant . . .  for rcwa mappings of Z / Z_pi
+#M  SetOnWhichMappingIsClassWiseOrderPreserving for rcwa map's of Z or Z_(pi)
+#M  SetOnWhichMappingIsClassWiseOrderReversing  for rcwa map's of Z or Z_(pi)
+#M  SetOnWhichMappingIsClassWiseConstant . . .  for rcwa map's of Z or Z_(pi)
 ##
 InstallMethod( SetOnWhichMappingIsClassWiseOrderPreserving,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",
@@ -1855,9 +1851,9 @@ InstallMethod( IsClassWiseOrderPreserving,
 ##
 #M  Sign( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
-InstallOtherMethod( Sign,
-                    "for rcwa mappings of Z (RCWA)",
-                    true, [ IsRcwaMappingOfZ ], 0,
+InstallMethod( Sign,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
 
   function ( f )
 
@@ -1878,12 +1874,12 @@ InstallOtherMethod( Sign,
 ##
 #M  Determinant( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallOtherMethod( Determinant,
-                    "for rcwa mappings of Z (RCWA)",
-                    true, [ IsRcwaMappingOfZ ], 0,
-                    f -> Sum( List( Coefficients( f ),
-                                    c -> c[2] / AbsInt( c[1] ) ) ) / 
-                         Modulus( f ) );
+InstallMethod( Determinant,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+               f -> Sum( List( Coefficients( f ),
+                               c -> c[2] / AbsInt( c[1] ) ) ) /
+                    Modulus( f ) );
 
 #############################################################################
 ##
@@ -1910,8 +1906,8 @@ InstallOtherMethod( Determinant,
 ##
 ##  The set of moved points (support) of the rcwa mapping <f>.
 ##
-InstallOtherMethod( MovedPoints,
-                    "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( MovedPoints,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -1951,9 +1947,9 @@ InstallOtherMethod( NrMovedPoints,
 ##
 #M  Support( <g> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallOtherMethod( Support,
-                    "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-                    MovedPoints );
+InstallMethod( Support,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               MovedPoints );
 
 #############################################################################
 ##
@@ -1977,13 +1973,13 @@ InstallMethod( ImageElm,
 ##
 #M  ImageElm( <f>, <n> ) . for an rcwa mapping of Z_(pi) and an el. of Z_(pi)
 ##
-##  Image of the element <n> of the ring $\Z_{(\pi)}$ for suitable <pi> under
+##  Image of the element <n> of the ring Z_(pi) for suitable <pi> under
 ##  the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               "for an rcwa mapping of Z_(pi) and an element of Z_pi (RCWA)",
-               true, [ IsRcwaMappingOfZ_piInStandardRep, IsRat ],
-               0,
+               Concatenation("for an rcwa mapping of Z_(pi) ",
+                             "and an element of Z_(pi) (RCWA)"),
+               true, [ IsRcwaMappingOfZ_piInStandardRep, IsRat ], 0,
 
   function ( f, n )
 
@@ -2049,9 +2045,9 @@ InstallMethod( ImagesElm,
 ##
 ##  Image of the set <S> under the rcwa mapping <f>.
 ##
-InstallOtherMethod( ImagesSet,
-                    "for an rcwa mapping and a residue class union (RCWA)",
-                    true, [ IsRcwaMapping, IsListOrCollection ], 0,
+InstallMethod( ImagesSet,
+               "for an rcwa mapping and a residue class union (RCWA)",
+               true, [ IsRcwaMapping, IsListOrCollection ], 0,
 
   function ( f, S )
 
@@ -2079,9 +2075,9 @@ InstallOtherMethod( ImagesSet,
 ##  - A partition of the source of <f> into (unions of) residue classes (in
 ##    this case the <i>th element of the result is the image of <S>[<i>]).
 ##
-InstallOtherMethod( \^,
-                    "for a set / class partition and an rcwa mapping (RCWA)",
-                    ReturnTrue, [ IsListOrCollection, IsRcwaMapping ], 0,
+InstallMethod( \^,
+               "for a set / class partition and an rcwa mapping (RCWA)",
+               ReturnTrue, [ IsListOrCollection, IsRcwaMapping ], 0,
 
   function ( S, f )
     if   IsSubset(Source(f),S)
@@ -2095,14 +2091,14 @@ InstallOtherMethod( \^,
 ##
 #M  \^( <U>, <f> ) . for residue class union with fixed reps and rcwa mapping
 ##
-##  Image of the residue class union <U> of $\Z$ with fixed representatives
+##  Image of the residue class union <U> of Z with fixed representatives
 ##  under the rcwa mapping <f>.
 ##
-InstallOtherMethod( \^,
-                    Concatenation("for residue class union with fixed reps ",
-                                  "and rcwa mapping (RCWA)"), ReturnTrue,
-                    [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
-                      IsRcwaMappingOfZ ], 0,
+InstallMethod( \^,
+               Concatenation("for residue class union with fixed reps ",
+                             "and rcwa mapping (RCWA)"), ReturnTrue,
+               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
+                 IsRcwaMappingOfZ ], 0,
 
   function ( U, f )
 
@@ -2209,9 +2205,9 @@ InstallMethod( PreImagesSet,
 ##
 #M  PreImagesSet( <f>, <l> ) . for rcwa mapping and list of el's of its range
 ##
-InstallOtherMethod( PreImagesSet,
-                    "for rcwa map. and list of elements of its range (RCWA)",
-                    true, [ IsRcwaMapping, IsList ], 0,
+InstallMethod( PreImagesSet,
+               "for rcwa map. and list of elements of its range (RCWA)",
+               true, [ IsRcwaMapping, IsList ], 0,
 
   function ( f, l )
     return Union( List( Set( l ), n -> PreImagesElm( f, n ) ) );
@@ -2225,8 +2221,7 @@ InstallOtherMethod( PreImagesSet,
 ##
 InstallMethod( PreImagesSet,
                "for an rcwa mapping of Z and a residue class union (RCWA)",
-               true, [ IsRcwaMappingOfZ, IsUnionOfResidueClassesOfZ ],
-               0,
+               true, [ IsRcwaMappingOfZ, IsUnionOfResidueClassesOfZ ], 0,
 
   function ( f, S )
 
@@ -2255,15 +2250,14 @@ InstallMethod( PreImagesSet,
 ##
 #M  PreImagesSet( <f>, <U> ) . . . . as above, but with fixed representatives
 ##
-##  Preimage of the residue class union <U> of $\Z$ with fixed
-##  representatives under the rcwa mapping <f>.
+##  Preimage of the residue class union <U> of Z with fixed representatives
+##  under the rcwa mapping <f>.
 ##
-InstallOtherMethod( PreImagesSet,
-                    Concatenation("for rcwa mapping and residue class union",
-                                  " with fixed reps (RCWA)"), ReturnTrue,
-                    [ IsRcwaMappingOfZ,
-                      IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
-                    0,
+InstallMethod( PreImagesSet,
+               Concatenation("for rcwa mapping and residue class union",
+                             " with fixed reps (RCWA)"), ReturnTrue,
+               [ IsRcwaMappingOfZ,
+                 IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
 
   function ( f, U )
 
@@ -3567,12 +3561,12 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
-#M  ShortCycles( <f>, <maxlng> )  for rcwa mapping of Z or Z_pi and pos. int.
+#M  ShortCycles( <f>, <maxlng> )  for rcwa mapping of Z or Z_(pi) & pos. int.
 ##
-InstallOtherMethod( ShortCycles,
-                    Concatenation("for an rcwa mapping of Z or Z_pi and ",
-                                  "a positive integer (RCWA)"),
-                    ReturnTrue, [ IsRcwaMappingOfZOrZ_pi, IsPosInt ], 0,
+InstallMethod( ShortCycles,
+               Concatenation("for an rcwa mapping of Z or Z_(pi) and ",
+                             "a positive integer (RCWA)"),
+               ReturnTrue, [ IsRcwaMappingOfZOrZ_pi, IsPosInt ], 0,
 
   function ( f, maxlng )
 
@@ -3715,9 +3709,9 @@ InstallMethod( DecreasingOn,
 ##
 #M  RestrictedPerm( <g>, <S> )  for an rcwa mapping and a residue class union
 ##
-InstallOtherMethod( RestrictedPerm,
-                    "for an rcwa mapping and a residue class union (RCWA)",
-                    true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
+InstallMethod( RestrictedPerm,
+               "for an rcwa mapping and a residue class union (RCWA)",
+               true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
 
   function ( g, S )
 
@@ -3746,9 +3740,9 @@ InstallOtherMethod( RestrictedPerm,
 ##
 #M  RestrictedPerm( <g>, <R> ) . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallOtherMethod( RestrictedPerm,
-                    "for an rcwa mapping and its full source (RCWA)", true,
-                    [ IsRcwaMapping, IsRing ], 0,
+InstallMethod( RestrictedPerm,
+               "for an rcwa mapping and its full source (RCWA)", true,
+               [ IsRcwaMapping, IsRing ], 0,
 
   function ( g, R )
     if R = Source(g) then return g; else TryNextMethod(); fi;
