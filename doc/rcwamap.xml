@@ -1072,7 +1072,6 @@ rec( isGraph := true, order := 6, group := Group(()),
     graph of the rcwa mapping&nbsp;<A>f</A> for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
-    See also <Ref Meth="OrbitsModulo" Label="G, m"/> for rcwa groups.
 <Example>
 <![CDATA[
 gap> OrbitsModulo(ClassTransposition(0,2,1,4),8);
