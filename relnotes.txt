@@ -330,4 +330,7 @@ Changes between version 2.1.5 and version 2.1.6:
  - Some cleanup of comments and declarations in the source code
    has been made.
 
+Changes between version 2.1.6 and version 2.1.7:
+
+ - A function `GluckTaylorInvariant' has been added (not yet documented).
 
