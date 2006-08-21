@@ -3380,6 +3380,17 @@ InstallMethod( Trajectory,
 
 #############################################################################
 ##
+#F  GluckTaylorInvariant( <l> ) . .  Gluck-Taylor invariant of trajectory <l>
+##
+InstallGlobalFunction( GluckTaylorInvariant,
+
+  function ( l )
+    if not IsList(l) or not ForAll(l,IsInt) then return fail; fi;
+    return Sum([1..Length(l)],i->l[i]*l[i mod Length(l) + 1])/(l*l);
+  end );
+
+#############################################################################
+##
 #F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
 ##
 InstallGlobalFunction( TraceTrajectoriesOfClasses,

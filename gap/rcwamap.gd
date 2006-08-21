@@ -774,6 +774,18 @@ DeclareOperation( "Trajectory", [ IsRcwaMapping, IsObject, IsObject,
 
 #############################################################################
 ##
+#F  GluckTaylorInvariant( <l> ) . .  Gluck-Taylor invariant of trajectory <l>
+##
+##  The Gluck-Taylor invariant of the list <l> of integers, interpreted as
+##  the trajectory of an rcwa mapping. See
+##
+##  David Gluck and Brian D. Taylor: A New Statistic for the 3x+1 Problem,
+##  Proc. Amer. Math. Soc. 130 (2002), 1293-1301.
+##
+DeclareGlobalFunction( "GluckTaylorInvariant" );
+
+#############################################################################
+##
 #F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
 ##
 ##  Traces the trajectories of the residue classes in the residue class union
