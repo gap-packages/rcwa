@@ -3038,6 +3038,41 @@ InstallMethod( WreathProduct,
 
 #############################################################################
 ##
+#M  WreathProduct( <G>, <F2> ) . . . . . . .  for an rcwa group over Z and F2
+##
+InstallMethod( WreathProduct,
+               "for an rcwa group over Z and a free group of rank 2 (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsGroup ], 0,
+
+  function ( G, F2 )
+
+    local  prod, info, Gpi, f1, f2;
+
+    if not IsFreeGroup(F2) and not HasRankOfFreeGroup(F2)
+      or RankOfFreeGroup(F2) <> 2 or Length(GeneratorsOfGroup(F2)) <> 2
+    then TryNextMethod(); fi;
+
+    Gpi := Restriction(G,RcwaMapping([[24,2,1]]));
+    f1  := ClassTransposition(2,4,3,4) * ClassTransposition(4,6,8,12)
+         * ClassTransposition(3,4,4,6);
+    f2  := ClassTransposition(0,2,1,2) * ClassTransposition(1,2,2,4);
+    SetIsTame(f1,false); SetIsTame(f2,false);
+    prod := Group(Concatenation(GeneratorsOfGroup(Gpi),[f1,f2]));
+    info := rec( groups := [ G, F2 ], alpha := IdentityMapping(F2),
+                 I := F2, degI := infinity, hgens := [ f1, f2 ],
+                 embeddings := [ GroupHomomorphismByImagesNC( G, prod,
+                                   GeneratorsOfGroup(G),
+                                   GeneratorsOfGroup(Gpi)),
+                                 GroupHomomorphismByImagesNC( F2, prod,
+                                   GeneratorsOfGroup(F2), [ f1, f2 ] ) ] );
+    SetWreathProductInfo(prod,info);
+    SetIsTame(prod,false); SetSize(prod,infinity);
+
+    return prod;
+  end );
+
+#############################################################################
+##
 #M  Embedding( <W>, <i> ) . . . . . . . . . . for a wreath product and 1 or 2
 ##
 InstallMethod( Embedding,
