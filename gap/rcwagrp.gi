@@ -3040,6 +3040,9 @@ InstallMethod( WreathProduct,
 ##
 #M  WreathProduct( <G>, <F2> ) . . . . . . .  for an rcwa group over Z and F2
 ##
+##  The generators need to be adjusted!!! --
+##  Now only a wreath product with a proper quotient of F2 is formed.
+##
 InstallMethod( WreathProduct,
                "for an rcwa group over Z and a free group of rank 2 (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsGroup ], 0,
