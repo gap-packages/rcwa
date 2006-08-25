@@ -2932,8 +2932,22 @@ InstallOtherMethod( IsUnit,
 ##
 ##  The `wild --> infinite order' criterion.
 ##
+InstallMethod( Order, 
+               "for rcwa mappings, wild->infinite order. (RCWA)",
+               true, [ IsRcwaMapping and HasIsTame ], SUM_FLAGS,
+
+  function ( f )
+    if not IsTame(f) then return infinity; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+##
+##  The `wild --> infinite order' criterion, force wildness test.
+##
 InstallMethod( Order,
-               "for rcwa mappings, wild --> infinite order. (RCWA)",
+               "for rcwa mappings, wild->infinite order, force test. (RCWA)",
                true, [ IsRcwaMapping ], 0,
 
   function ( f )
