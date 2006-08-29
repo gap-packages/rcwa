@@ -1299,6 +1299,33 @@ gap> List([-2..2],k->IncreasingOn(a^k));
   </Description>
 </ManSection>
 
+<ManSection>
+  <Func Name="GluckTaylorInvariant" Arg="a" Label="a"/>
+  <Returns>
+    The invariant introduced in&nbsp;<Cite Key="GluckTaylor02"/>. This is
+    <M>(\sum_{i=1}^l a_i \cdot a_{i \mod l + 1})/(\sum_{i=1}^l a_i^2)</M>,
+    where <M>l</M> denotes the length of&nbsp;<A>a</A>.
+  </Returns>
+  <Description>
+    The argument <A>a</A> must be a list of integers.
+    In&nbsp;<Cite Key="GluckTaylor02"/> it is shown that if <A>a</A>
+    is a trajectory of the `original' Collatz mapping <M>n</M>
+    <M>\mapsto</M> (<M>n/2</M> if <M>n</M> even, <M>3n+1</M> if
+    <M>n</M> odd) starting at an odd integer <M>\geq 3</M> and ending
+    at&nbsp;1, then the invariant lies in the interval <M>]9/13,5/7[</M>.
+<Example>
+<![CDATA[
+gap> C := RcwaMapping([[1,0,2],[3,1,1]]);;
+gap> List([3,5..49],n->Float(GluckTaylorInvariant(Trajectory(C,n,[1]))));
+[ 0.701053, 0.696721, 0.708528, 0.707684, 0.706635, 0.695636, 0.711769,
+  0.699714, 0.707409, 0.693833, 0.710432, 0.706294, 0.714242, 0.699935,
+  0.714242, 0.705383, 0.706591, 0.698198, 0.712222, 0.714242, 0.709048,
+  0.69612, 0.714241, 0.701076 ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
@@ -1456,9 +1483,11 @@ gap> InjectiveAsMappingFrom(T);
 
 </Section>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <!-- #################################################################### -->
 
-<Section Label="sec:BehaviourOfTrajectories">
+<Section Label="sec:ProbabilisticGuesses">
 <Heading>
   Probabilistic guesses on the behaviour of trajectories
 </Heading>
@@ -1520,6 +1549,8 @@ gap> GuessedDivergence(T);
 </ManSection>
 
 </Section>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
