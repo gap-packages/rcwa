@@ -1521,6 +1521,7 @@ gap> StructureDescription(last);
 "D8"
 gap> (1,2,3,4,5,6,7,8,9,10,11,12)^Collatz;
 (1,3,2,5,7,4,9,11,6,13,15,8)
+gap> C := RcwaMapping([[1,0,2],[3,1,1]]);;
 gap> gt := List([3,5..99],n->GluckTaylorInvariant(Trajectory(C,n,[1])));;
 gap> Minimum(gt) > 9/13 and Maximum(gt) < 5/7;
 true
