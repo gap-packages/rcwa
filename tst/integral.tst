@@ -1434,7 +1434,10 @@ Group([ (1,2), (), () ])
 gap> RankOfKernelOfActionOnRespectedPartition(G);
 2
 gap> K := KernelOfActionOnRespectedPartition(G);;
-gap> List([nu,t,nu*t,nu^7*t,ClassTransposition(0,2,1,4),ClassReflection(1,2)],
+gap> List([ClassShift(0,1),ClassReflection(0,1),
+>          ClassShift(0,1)*ClassReflection(0,1),
+>          ClassShift(0,1)^7*ClassReflection(0,1),
+>          ClassTransposition(0,2,1,4),ClassReflection(1,2)],
 >         elm->elm in G);
 [ true, true, true, true, false, true ]
 gap> G := Group(g,h);;
