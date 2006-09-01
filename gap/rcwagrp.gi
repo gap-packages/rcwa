@@ -959,7 +959,7 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  P, H, Pp, Hp, indices, bound, primes, prod, p;
+    local  P, H, Pq, Hq, indices, bound, primepowers, prod, p, q;
 
     if IsTrivial(G) then return 0; fi;
     P     := RespectedPartition(G);
@@ -969,19 +969,21 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
                             g->Maximum(List(Coefficients(g),
                                             c->AbsInt(c[2])))));
     if bound < 5 then bound := 5; fi;
-    primes := []; p := 1; prod := 1;
+    primepowers := []; q := 1; prod := 1;
     while prod <= bound do
-      p    := NextPrimeInt(p); Add(primes,p);
-      prod := prod * p;
+      repeat q := q + 1; until IsPrimePowerInt(q);
+      Add(primepowers,q);
+      prod := prod * q;
     od;
-    Pp := List(primes,p->Flat(List(P,cl->SplittedClass(cl,p))));
-    Hp := List(Pp,P->Group(List(GeneratorsOfGroup(G),
+    Pq := List(primepowers,q->Flat(List(P,cl->SplittedClass(cl,q))));
+    Hq := List(Pq,P->Group(List(GeneratorsOfGroup(G),
                                 gen->PermutationOpNC(gen,P,OnPoints))));
-    indices := List(Hp,Size)/Size(H);
+    indices := List(Hq,Size)/Size(H);
     SetKernelActionIndices(G,indices);
-    SetRefinedRespectedPartitions(G,Pp);
-    return Maximum(List([2..Length(primes)],
-                        i->Number(Factors(indices[i]),p->p=primes[i])));
+    SetRefinedRespectedPartitions(G,Pq);
+    return Maximum(List(Filtered([2..Length(primepowers)],
+                                 i->IsPrime(primepowers[i])),
+                        j->Number(Factors(indices[j]),p->p=primepowers[j])));
   end );
 
 #############################################################################
