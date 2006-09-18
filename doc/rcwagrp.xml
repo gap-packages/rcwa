@@ -971,7 +971,7 @@ permutation group, regardless of whether they are tame or not
     By definition, the restriction <M>g_f</M> of an rcwa mapping <A>g</A>
     by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa mapping
     which satisfies the equation <M>f \cdot g_f = g \cdot f</M> and which
-    fixes the complement of the image of <A>f</A> pointwisely.
+    fixes the complement of the image of <A>f</A> pointwise.
     If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
     is just the conjugate of <A>g</A> under&nbsp;<A>f</A>. <P/>
 
@@ -979,7 +979,7 @@ permutation group, regardless of whether they are tame or not
     rcwa mapping&nbsp;<A>f</A> is defined as the group whose elements are
     the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
     The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
-    image of&nbsp;<A>f</A> and fixes its complement pointwisely.
+    image of&nbsp;<A>f</A> and fixes its complement pointwise.
 <Example>
 <![CDATA[
 gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));

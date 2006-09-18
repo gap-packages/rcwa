@@ -181,7 +181,7 @@ structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwisely.
+    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwise.
     Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
@@ -206,7 +206,7 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwisely.
+    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise.
     Enclosing the argument list in list brackets is permitted.
 <Example>
 <![CDATA[
@@ -240,7 +240,7 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     The <E>class transposition</E> <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an
     involution which interchanges the disjoint residue classes
     <M>r_1(m_1)</M> and <M>r_2(m_2)</M> of&nbsp;<M>\Z</M> and which fixes
-    the complement of their union pointwisely.
+    the complement of their union pointwise.
     Enclosing the argument list in list brackets is permitted.
     The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
     are stored as an attribute <C>TransposedClasses</C>.
@@ -625,7 +625,7 @@ true
 ]]>
 </Example>
 
-Rcwa mappings can be added and subtracted pointwisely. However, please note
+Rcwa mappings can be added and subtracted pointwise. However, please note
 that the set of rcwa mappings of a ring does not form a ring under
 <C>+</C> and <C>*</C>. <P/>
 
