@@ -9,9 +9,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue Class-Wise Affine Groups",
-Version          := "2.1.8",
-Date             := "19/09/2006",
-ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-2.1.8",
+Version          := "2.2.0",
+Date             := "20/09/2006",
+ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-2.2.0",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -36,7 +36,7 @@ PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.htm
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
 PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PackageInfo.g",
 AbstractHTML     := Concatenation("This package provides methods for investigating ",
-                                  "a certain kind of infinite permutation groups. ",
+                                  "a certain kind of infinite groups. ",
                                   "For an abstract, see ",
                                   "<a href = \"",~.PackageWWWHome,"\">here</a>."),
 PackageDoc       := rec(
