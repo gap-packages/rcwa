@@ -336,3 +336,7 @@ Changes between version 2.1.6 and version 2.1.7:
 
  - A bug in `KernelOfActionOnRespectedPartition' has been fixed.
 
+Changes between version 2.1.7 and version 2.1.8:
+
+ - Some improvements of the documentation have been made.
+
