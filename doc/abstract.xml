@@ -37,7 +37,7 @@ the restriction of the mapping&nbsp;<M>f</M> to the set
 <Q>Many</Q> residue class-wise affine groups act multiply transitively
 on&nbsp;<M>\Z</M> or on subsets thereof. The class of groups which can
 faithfully be represented as residue class-wise affine groups is closed
-under forming wreath products with finite groups and with the infinite
+under taking wreath products with finite groups and with the infinite
 cyclic group <M>(\Z,+)</M>. It includes free groups of any rank, all free
 products of finite groups and certain divisible torsion groups. It also
 contains finitely generated groups with unsolvable membership problem. The
@@ -50,27 +50,7 @@ Despite of what has been said in the preceding paragraph, still not very
 much is known about the structure of residue class-wise affine groups.
 This package is intended to serve as a tool for obtaining a better
 understanding of their rich and interesting group theoretical and
-combinatorial structure. <P/>
-
-Residue class-wise affine groups can be generalized in a natural way to
-euclidean rings other than the ring of integers. While this package
-undoubtedly provides most functionality for residue class-wise affine groups
-over the integers, at least rudimentarily it also covers the cases that the
-underlying ring is a semilocalization of&nbsp;<M>\Z</M> or a polynomial ring
-in one variable over a finite field. <P/>
-
-The original motivation for investigating residue class-wise affine groups
-comes from the famous <M>3n+1</M> Conjecture, which is an assertion about
-a surjective, but not injective residue class-wise affine mapping. <P/>
-
-Residue class-wise affine groups are introduced in the author's thesis
-<E>Restklassenweise affine Gruppen</E>. This thesis is published at
-<URL>http://deposit.ddb.de/cgi-bin/dokserv?idn=977164071</URL>
-(Archivserver Deutsche Bibliothek).
-A copy of this thesis and an english translation thereof are distributed
-with this package.
-
-<Alt Only="LaTeX">\vspace{-1cm}</Alt>
+combinatorial structure.
 
 </Abstract>
 
