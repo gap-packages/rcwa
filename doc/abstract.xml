@@ -10,12 +10,14 @@
 
 &RCWA; is a package for &GAP; 4 which provides methods for computing with
 <E>R</E>esidue <E>C</E>lass-<E>W</E>ise <E>A</E>ffine groups. In principle,
-this package can deal at least with the following types of groups:
+this package can deal at least with the following types of groups and their
+subgroups:
 
 <List>
 
   <Item>
-    Finite groups.
+    Finite groups, and certain divisible torsion groups which they
+    embed into.
   </Item>
 
   <Item>
@@ -28,12 +30,12 @@ this package can deal at least with the following types of groups:
   </Item>
 
   <Item>
-    Direct products of residue class-wise affine groups.
+    Direct products of the above groups.
   </Item>
 
   <Item>
-    Wreath products of residue class-wise affine groups with finite groups
-    and with&nbsp;<M>(\Z,+)</M>.
+    Wreath products of the above groups with finite groups and
+    with&nbsp;<M>(\Z,+)</M>.
   </Item>
 
 </List>
