@@ -60,7 +60,7 @@ is used.
     <C>ClassTransposition(<A>r1</A>,<A>m1</A>,<A>r2</A>,<A>m2</A>)</C>
   </Mark>
   <Item>
-    See Remark&nbsp;2.9.2 in&nbsp;<Cite Key="Kohl05"/>.
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -81,7 +81,7 @@ is used.
     <C>DecreasingOn(<A>f</A>)</C>
   </Mark>
   <Item>
-    Form the union of the residue classes which are determined by the
+    Forms the union of the residue classes which are determined by the
     coefficients as indicated.
   </Item>
 
@@ -98,7 +98,7 @@ is used.
     <C>DirectProduct(<A>G1</A>,<A>G2</A>, ... )</C>
   </Mark>
   <Item>
-    Restrict the groups <A>G1</A>, <A>G2</A>, ...
+    Restricts the groups <A>G1</A>, <A>G2</A>, ...
     to disjoint residue classes. See <C>Restriction</C>
     and Corollary&nbsp;2.3.3 in&nbsp;<Cite Key="Kohl05"/>.
   </Item>
@@ -137,8 +137,8 @@ is used.
     <C>FactorizationOnConnectedComponents(<A>f</A>,<A>m</A>)</C>
   </Mark>
   <Item>
-    Call <Package>GRAPE</Package> to get the connected components of the
-    transition graph, and then compute a partition of the suitably
+    Calls <Package>GRAPE</Package> to get the connected components of the
+    transition graph, and then computes a partition of the suitably
     <Q>blown up</Q> coefficient list corresponding to the connected
     components.
   </Item>
@@ -243,7 +243,7 @@ is used.
     <C>IncreasingOn(<A>f</A>)</C>
   </Mark>
   <Item>
-    Form the union of the residue classes which are determined by the
+    Forms the union of the residue classes which are determined by the
     coefficients as indicated.
   </Item>
 
@@ -251,14 +251,14 @@ is used.
     <C>Induction(<A>g</A>,<A>f</A>)</C>
   </Mark>
   <Item>
-    Compute <C>f * g * RightInverse(<A>f</A>)</C>.
+    Computes <C>f * g * RightInverse(<A>f</A>)</C>.
   </Item>
 
   <Mark>
     <C>Induction(<A>G</A>,<A>f</A>)</C>
   </Mark>
   <Item>
-    Get a set of generators by applying <C>Induction(<A>g</A>,<A>f</A>)</C>
+    Gets a set of generators by applying <C>Induction(<A>g</A>,<A>f</A>)</C>
     to the generators <A>g</A> of&nbsp;<A>G</A>.
   </Item>
 
@@ -306,7 +306,7 @@ is used.
     <C>IsClassWiseOrderPreserving(<A>f</A>)</C>
   </Mark>
   <Item>
-    Test whether the first entry of all coefficient triples is positive.
+    Tests whether the first entry of all coefficient triples is positive.
   </Item>
 
   <Mark>
@@ -349,7 +349,7 @@ is used.
     <C>IsomorphismMatrixGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    Use the algorithm described in the proof of Theorem&nbsp;2.6.3
+    Uses the algorithm described in the proof of Theorem&nbsp;2.6.3
     in&nbsp;<Cite Key="Kohl05"/>.
   </Item>
 
@@ -476,7 +476,7 @@ is used.
     <C>LargestSourcesOfAffineMappings(<A>f</A>)</C>
   </Mark>
   <Item>
-    Form unions of residue classes modulo the modulus of the mapping,
+    Forms unions of residue classes modulo the modulus of the mapping,
     whose corresponding coefficient triples are equal.
   </Item>
 
@@ -484,7 +484,7 @@ is used.
     <C>LaTeXObj(<A>f</A>)</C>
   </Mark>
   <Item>
-    Collect residue classes those corresponding coefficient triples
+    Collects residue classes those corresponding coefficient triples
     are equal.
   </Item>
 
@@ -492,9 +492,9 @@ is used.
     <C>LikelyContractionCentre(<A>f</A>,<A>maxn</A>,<A>bound</A>)</C>
   </Mark>
   <Item>
-    Compute trajectories with starting values from a given interval, until
-    a cycle is reached. Abort if the trajectory exceeds the prescribed bound.
-    Form the union of the detected cycles.
+    Computes trajectories with starting values from a given interval, until
+    a cycle is reached. Aborts if the trajectory exceeds the prescribed
+    bound. Form the union of the detected cycles.
   </Item>
 
   <Mark>
@@ -547,7 +547,7 @@ is used.
     <C>Multpk(<A>f</A>,<A>p</A>,<A>k</A>)</C>
   </Mark>
   <Item>
-    Form the union of the residue classes modulo the modulus of the mapping,
+    Forms the union of the residue classes modulo the modulus of the mapping,
     which are determined by the given divisibility criteria for the
     coefficients of the corresponding affine mapping.
   </Item>
@@ -564,7 +564,7 @@ is used.
     <C>OrbitsModulo(<A>f</A>,<A>m</A>)</C>
   </Mark>
   <Item>
-    Use <Package>GRAPE</Package> to compute the connected
+    Uses <Package>GRAPE</Package> to compute the connected
     components of the transition graph.
   </Item>
 
@@ -722,7 +722,7 @@ is used.
     <C>Restriction(<A>g</A>,<A>f</A>)</C>
   </Mark>
   <Item>
-    Compute the action of <C>RightInverse(<A>f</A>) * g * f</C> on the
+    Computes the action of <C>RightInverse(<A>f</A>) * g * f</C> on the
     image of&nbsp;<A>f</A>.
   </Item>
 
@@ -730,7 +730,8 @@ is used.
     <C>Restriction(<A>G</A>,<A>f</A>)</C>
   </Mark>
   <Item>
-    Get a set of generators by applying <C>Restriction(<A>g</A>,<A>f</A>)</C>
+    Gets a set of generators by applying
+    <C>Restriction(<A>g</A>,<A>f</A>)</C>
     to the generators <A>g</A> of&nbsp;<A>G</A>.
   </Item>
 
@@ -775,7 +776,7 @@ is used.
     <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C>
   </Mark>
   <Item>
-    Look for fixed points of affine partial mappings of powers
+    Looks for fixed points of affine partial mappings of powers
     of&nbsp;<A>f</A>.
   </Item>
 
@@ -790,7 +791,7 @@ is used.
     <C>SetOnWhichMappingIsClassWiseOrderPreserving(<A>f</A>)</C>, etc.
   </Mark>
   <Item>
-    Form the union of the residue classes modulo the modulus of the mapping,
+    Forms the union of the residue classes modulo the modulus of the mapping,
     in whose corresponding coefficient triple the first entry is positive,
     zero resp. negative.
   </Item>
