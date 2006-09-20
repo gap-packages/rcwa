@@ -342,7 +342,7 @@ Changes between version 2.1.7 and version 2.2.0 (September 20, 2006):
    In particular the abstract, the preface and the readme file have been
    updated, improved and shortened.
 
- - The author's thesis is no longer distributed with the package, since
-   better results on residue class-wise affine groups have been found in the
-   meantime.
+ - The author's thesis is no longer distributed with the package, since more
+   and better results on residue class-wise affine groups have been found in
+   the meantime.
 
