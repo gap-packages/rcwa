@@ -234,7 +234,7 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     <Alt Only="LaTeX">
     <Display>
       <![CDATA[
-      \tau_{r_1(m_1),r_2(m_2)}: \ \ n \ \longmapsto \
+      \tau_{r_1(m_1),r_2(m_2)}: \ \ \ n \ \longmapsto \
       \begin{cases}
         (m_2 n + m_1 r_2 - m_2 r_1)/m_1 & \text{if} \ n \in r_1(m_1), \\
         (m_1 n + m_2 r_1 - m_1 r_2)/m_2 & \text{if} \ n \in r_2(m_2), \\
