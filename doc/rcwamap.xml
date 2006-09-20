@@ -12,40 +12,38 @@
 This chapter gives the basic definitions, describes how to enter residue
 class-wise affine mappings and how to compute with them. The functionality
 of this package which is dedicated to residue class-wise affine groups
-is described in detail in the next chapter.
+is described in detail in the next chapter. The reader is encouraged to
+look there already now or after having read the first few pages of this
+chapter, and to look up definitions as he needs to.
 
 <!-- #################################################################### -->
 
 <Section Label="sec:basicdefinitions">
 <Heading>Basic definitions</Heading>
 
-In the abstract, already a brief definition of residue class-wise affine
-groups over the ring of integers has been given. In this section it follows
-a slightly generalized and more formal version of this definition. In the
-same time some useful notation is introduced. <P/>
-
 <Index Key="rcwa mapping" Subkey="definition">rcwa mapping</Index>
+<Index Key="rcwa group" Subkey="definition">rcwa group</Index>
 
-Let <M>R</M> be an infinite euclidean domain which is not a field and all
-of whose proper residue class rings are finite. A mapping
-<M>f: R \rightarrow R</M> is called <E>residue class-wise affine</E>, or for
-short an <E>rcwa</E> mapping, if there is an <M>m \in R \setminus \{0\}</M>
-such that the restrictions of <M>f</M> to the residue classes <M>r(m) \in
-R/mR</M> are all affine. This means that for any residue class <M>r(m)</M>
-there are coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in R</M> such that
-the restriction of the mapping <M>f</M> to the set
-<M>r(m) = \{{ r+km | k \in R\}}</M> is given by
+Residue class-wise affine groups, or for short <E>rcwa</E> groups, are
+permutation groups whose elements are bijective residue class-wise affine
+mappings. <P/>
+
+A mapping <M>f: \Z \rightarrow \Z</M> is called <E>residue class-wise
+affine</E>, or for short an <E>rcwa</E> mapping, if there is a positive
+integer&nbsp;<M>m</M> such that the restrictions of&nbsp;<M>f</M> to the
+residue classes <M>r(m) \in \Z/m\Z</M> are all affine, i.e. given&nbsp;by
 <Alt Only="LaTeX">
   <Display>
-    f|_{r(m)}: \ r(m) \rightarrow R, \ \ \
-    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}.
+    f|_{r(m)}: \ r(m) \rightarrow \Z, \ \ \
+    n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}
   </Display>
 </Alt>
 <Alt Only="Text,HTML"><Verb>
                                         a_r(m) * n + b_r(m)
-           f|_r(m):  r(m) -> R,  n |->  -------------------.
+           f|_r(m):  r(m) -> Z,  n |->  -------------------
                                               c_r(m)
 </Verb></Alt>
+for certain coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \Z</M>.
 
 <Index Key="modulus" Subkey="definition">modulus</Index>
 <Index Key="rcwa mapping" Subkey="modulus">rcwa mapping</Index>
@@ -54,32 +52,18 @@ the restriction of the mapping <M>f</M> to the set
 <Index Key="divisor" Subkey="definition">divisor</Index>
 <Index Key="rcwa mapping" Subkey="divisor">rcwa mapping</Index>
 
-The value <M>m</M> is called the <E>modulus</E> of&nbsp;<M>f</M>.
-It is understood that all fractions are reduced, i.e. that
-<M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that <M>m</M> is
-chosen multiplicatively minimal. Apart from the restrictions imposed
-by the condition that the image of any residue class <M>r(m)</M>
-under&nbsp;<M>f</M> must be a subset of <M>R</M> and that one cannot
-divide by&nbsp;0, the coefficients <M>a_{r(m)}</M>, <M>b_{r(m)}</M> and
-<M>c_{r(m)}</M> can be any ring elements. The lcm of the coefficients
-<M>a_{r(m)}</M> in the numerators is called the <E>multiplier</E>
-of&nbsp;<M>f</M>, and the lcm of the coefficients <M>c_{r(m)}</M>
-in the denominators is called the <E>divisor</E> of&nbsp;<M>f</M>. <P/>
+The smallest possible <M>m</M> is called the <E>modulus</E>
+of&nbsp;<M>f</M>. It is understood that all fractions are reduced,
+i.e. that <M>\gcd( a_{r(m)}, b_{r(m)}, c_{r(m)} ) = 1</M>, and that
+<M>c_{r(m)} &gt; 0</M>. The lcm of the coefficients <M>a_{r(m)}</M>
+is called the <E>multiplier</E> of&nbsp;<M>f</M>, and the lcm of the
+coefficients <M>c_{r(m)}</M> is called the <E>divisor</E>
+of&nbsp;<M>f</M>. <P/>
 
-The <E>product</E> <M>f \cdot g</M> of some rcwa mappings <M>f</M>
-and&nbsp;<M>g</M> is their composition as mappings, where <M>f</M>
-is applied first. The <E>inverse</E> of a bijective rcwa mapping is
-its inverse mapping. <P/>
-
-The set RCWA(<M>R</M>) <M>:=</M>{<M>\{ \ \sigma \in</M> Sym(<M>R</M>)
-<M>\ | \ \sigma</M> is residue class-wise affine <M>\}</M>} is closed under
-multiplication and taking inverses (this can be verified easily), hence
-forms a subgroup of Sym(<M>R</M>).
-
-<Index Key="rcwa group" Subkey="definition">rcwa group</Index>
-
-A subgroup of RCWA(<M>R</M>) is called a <E>residue class-wise affine</E>
-group, or for short an <E>rcwa</E> group. <P/>
+It is easy to see that the residue class-wise affine mappings form
+a monoid under composition, and that the residue class-wise affine
+permutations form a countable subgroup of Sym(<M>\Z</M>).
+We denote the latter group by RCWA(<M>\Z</M>). <P/>
 
 <Index Key="tame" Subkey="rcwa mapping">tame</Index>
 <Index Key="tame" Subkey="rcwa group">tame</Index>
@@ -90,14 +74,21 @@ group, or for short an <E>rcwa</E> group. <P/>
 <Index Key="rcwa mapping" Subkey="wild">rcwa mapping</Index>
 <Index Key="rcwa group" Subkey="wild">rcwa group</Index>
 
-There are two entirely different classes of rcwa mappings and -groups.
-One of these classes comprises what could be called the <Q>trivial cases</Q>.
-The members of the other have typically a quite complicate structure and are
-in often very difficult to investigate. Accordingly, the former are
-called <E>tame</E> and the latter are called <E>wild</E>.
-By definition, an rcwa mapping is <E>tame</E> if the set of moduli of its
-powers is bounded, and an rcwa group is <E>tame</E> if the set of moduli
-of its elements is bounded.
+An rcwa mapping is called <E>tame</E> if the set of moduli of its powers
+is bounded, or equivalently if it permutes a partition of&nbsp;<M>\Z</M>
+into finitely many residue classes on all of which it is affine.
+An rcwa group is called <E>tame</E> if there is a common such partition
+for all of its elements, or equivalently if the set of moduli of its
+elements is bounded. Rcwa mappings and -groups which are not tame
+are called <E>wild</E>. Tame rcwa mappings and -groups are something which
+one could call the <Q>trivial cases</Q> or <Q>basic building blocks</Q>,
+while wild rcwa groups are the objects of primary interest. <P/>
+
+The definitions of residue class-wise affine mappings and -groups can be
+generalized in an obvious way to suitable rings other than&nbsp;<M>\Z</M>.
+In fact, this package provides at least rudimentary support for residue
+class-wise affine groups over semilocalizations of&nbsp;<M>\Z</M> and over
+univariate polynomial rings over finite fields.
 
 </Section>
 
