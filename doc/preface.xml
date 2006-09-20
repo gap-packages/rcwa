@@ -52,7 +52,7 @@ the author feels that this is a gap which is worth to be filled.
 <!-- #################################################################### -->
 
 <Section Label="sec:GroupsWhichEmbed">
-<Heading>Groups which can be represented</Heading>
+<Heading>Groups which can be dealt with</Heading>
 
 The following groups are known to be faithfully representable as
 residue class-wise affine groups:
@@ -119,26 +119,22 @@ interesting group theoretical and combinatorial structure.
 <Heading>Scope of this package</Heading>
 
 This package can be applied in various ways to various different problems,
-and it is simply not possible to say what can be found out with its help
+and it is just impossible to say what can be found out with its help
 about which groups. The best way to get an idea about this is likely to
 experiment with the examples discussed in this manual and included in the
 file <File>pkg/rcwa/examples/examples.g</File>. <P/>
 
-Of course this package often does not provide an out-of-the-box solution for
-a given problem. At the beginning, the user may perhaps notice long
-runtimes for seemingly easy things. But with some experience he will learn
-to estimate how long something will take and to see why raising some
-harmlessly-looking mapping to the 20th power would take terabytes of
-memory, while one can easily find out nontrivial things about groups which
-look much more complicate. Quite often it is possible to find an answer for
+Of course this package often does not provide an out-of-the-box solution
+for a given problem. Quite often it is possible to find an answer for
 a given question by using an interactive trial-and-error approach. <P/>
 
 With substancial help of this package, the author has found the results
 mentioned in Section&nbsp;<Ref Label="sec:GroupsWhichEmbed"/>.
 Interactive sessions with this package have also lead to the development
-of various algorithms. An example is the method for factoring residue
-class-wise affine permutations into involutions which have a particularly
-simple structure (see&nbsp;<Ref Attr="FactorizationIntoCSCRCT" Label="g"/>).
+of most of the algorithms which are now implemented in it. Just to mention
+one example, developing the factorization method for residue class-wise
+affine permutations (see&nbsp;<Ref Attr="FactorizationIntoCSCRCT"
+Label="g"/>) solely by means of theory would likely have been very hard.
 
 </Section>
 
