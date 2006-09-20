@@ -301,8 +301,8 @@ transpositions (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 <Example>
 <![CDATA[
 gap> Factorization(PrimeSwitch(3));
-[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8),
-  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6),
+[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
+  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
   ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ]
 ]]>
 </Example>
