@@ -1337,13 +1337,13 @@ all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
     a category <C>IsRcwaGroupOverZOrZ&uscore;pi</C> which is the union of
     <C>IsRcwaGroupOverZ</C> and <C>IsRcwaGroupOverZ&uscore;pi</C>.
 
-    <Index Key="IsNaturalRCWA&uscore;Z" Subkey="G">
+    <Index Key="IsNaturalRCWA_Z" Subkey="G">
       <C>IsNaturalRCWA&uscore;Z</C>
     </Index>
-    <Index Key="IsNaturalRCWA&uscore;Z&uscore;pi" Subkey="G">
+    <Index Key="IsNaturalRCWA_Z_pi" Subkey="G">
       <C>IsNaturalRCWA&uscore;Z&uscore;pi</C>
     </Index>
-    <Index Key="IsNaturalRCWA&uscore;GFqx" Subkey="G">
+    <Index Key="IsNaturalRCWA_GFqx" Subkey="G">
       <C>IsNaturalRCWA&uscore;GFqx</C>
     </Index>
 
