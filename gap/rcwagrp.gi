@@ -1454,24 +1454,27 @@ InstallMethod( Size,
 ##
 #M  Size( <G> ) . . . . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-##  This method looks for elements of infinite order.
-##  In case this search is not successful, it gives up.
+##  This method tests for tameness and looks for elements of infinite order.
 ##
 InstallMethod( Size,
-               "for rcwa groups, look for elements of infinite order (RCWA)",
+               "for rcwa groups, test for tameness (RCWA)",
                true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
     local  gen, k;
 
-    Info(InfoRCWA,1,"Size: look for elements of infinite order.");
+    Info(InfoRCWA,1,
+         "Size: Test for tameness and look for elements of infinite order.");
+    if not IsTame(G) then return infinity; fi;
+    if   IsTame(G) and Characteristic(Source(One(G))) <> 0
+    then TryNextMethod(); fi; # In this case, <G> is finite.
     gen := GeneratorsOfGroup(G);
-    if ForAny(gen, g -> Order(g) = infinity) then return infinity; fi;
-    if   ForAny(Combinations(gen,2), t -> Order(Comm(t[1],t[2])) = infinity)
+    if ForAny(gen,g->Order(g)=infinity) then return infinity; fi;
+    if   ForAny(Combinations(gen,2),t->Order(Comm(t[1],t[2]))=infinity)
     then return infinity; fi;
     for k in [2..3] do
-      if   ForAny(Tuples(gen,k), t -> Order(Product(t)) = infinity)
+      if   ForAny(Tuples(gen,k),t->Order(Product(t))=infinity)
       then return infinity; fi;
     od;
     TryNextMethod();
@@ -2851,6 +2854,20 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 InstallMethod( IndexNC,
                "for rcwa groups (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsRcwaGroup ], 0,
+
+  function ( G, H )
+    if ForAll([G,H],IsFinite) then return Size(G)/Size(H); fi;
+    if IsFinite(H) and not IsFinite(G) then return infinity; fi;
+    return Length(RightCosets(G,H));
+  end );
+
+#############################################################################
+##
+#M  IndexNC( <G>, <H> ) . . . . . . . . . . . . . . . . for rcwa groups over Z
+##
+InstallMethod( IndexNC,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ, IsRcwaGroupOverZ ], 0,
 
   function ( G, H )
     if IsClassWiseOrderPreserving(G)
