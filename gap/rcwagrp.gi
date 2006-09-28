@@ -858,7 +858,11 @@ InstallMethod( ModulusOfRcwaGroup,
 ##
 InstallMethod( IsTame,
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Modulus( G ) <> Zero( Source( One( G ) ) ) );
+
+  function ( G )
+    if   Modulus( G ) <> Zero( Source( One( G ) ) ) then return true;
+    else SetSize(G,infinity); return false; fi;
+  end );
 
 #############################################################################
 ##
