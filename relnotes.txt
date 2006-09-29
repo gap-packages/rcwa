@@ -346,3 +346,8 @@ Changes between version 2.1.7 and version 2.2.0 (September 20, 2006):
    and better results on residue class-wise affine groups have been found in
    the meantime.
 
+Changes between version 2.2.0 and version 2.2.1:
+
+ - Some minor code and documentation improvements have been made.
+   Now RCWA needs ResClasses 2.3.5.
+
