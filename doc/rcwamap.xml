@@ -13,7 +13,7 @@ This chapter gives the basic definitions, describes how to enter residue
 class-wise affine mappings and how to compute with them. The functionality
 of this package which is dedicated to residue class-wise affine groups
 is described in detail in the next chapter. The reader is encouraged to
-look there already now or after having read the first few pages of this
+look there already after having read the first few pages of this
 chapter, and to look up definitions as he needs to.
 
 <!-- #################################################################### -->

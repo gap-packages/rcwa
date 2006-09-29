@@ -65,7 +65,7 @@
 
 <Body>
 
-<#Include SYSTEM "preface.xml">
+<#Include SYSTEM "about.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
 <#Include SYSTEM "examples.xml">
