@@ -461,6 +461,14 @@ SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
+##  A group which has any symmetric group of odd degree as a quotient
+##
+SmOdd := Group( ClassTransposition(0,4,3,4),
+                ClassTransposition(0,6,3,6),
+                ClassTransposition(1,4,0,6) );
+
+#############################################################################
+##
 ##  The ``Class Transposition Graph''
 ##
 ##  The vertices of the `Class Transposition Graph' are the class transposi-
