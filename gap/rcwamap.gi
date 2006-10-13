@@ -3466,24 +3466,30 @@ InstallMethod( PrimeSet,
 
 #############################################################################
 ##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . for bijective rcwa mappings
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-##  The balancedness criterion.
-##  This is only applicable for bijective mappings, e.g. n -> 2n
-##  of course isn't wild.
+##  The balancedness criterion and the
+##  `surjective and not injective' criterion.
 ##
 InstallMethod( IsTame,
-               "for bijective rcwa mappings, balancedness criterion (RCWA)",
+               "for rcwa mappings, balancedness criterion (RCWA)",
                true, [ IsRcwaMapping ], 100,
 
   function ( f )
     if   IsIntegral(f)
     then Info(InfoRCWA,4,"IsTame: mapping is integral, hence tame.");
          return true; fi;
-    if not IsBijective(f) then TryNextMethod(); fi;
     Info(InfoRCWA,1,"IsTame: balancedness criterion.");
-    if   not IsBalanced(f)
-    then SetOrder(f,infinity); return false; else TryNextMethod(); fi;
+    if   not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f)))
+    then if IsBijective(f) then SetOrder(f,infinity); fi; return false; fi;
+    if   IsBijective(f)
+     and Set(Factors(Multiplier(f))) <> Set(Factors(Divisor(f)))
+    then SetOrder(f,infinity); return false; fi;
+    if IsIntegers(Source(f)) then
+      Info(InfoRCWA,1,"IsTame: `surjective and not injective' criterion.");
+      if IsSurjective(f) and not IsInjective(f) then return false; fi;
+    fi;
+    TryNextMethod();
   end );
 
 #############################################################################
@@ -3491,7 +3497,7 @@ InstallMethod( IsTame,
 #M  IsTame( <f> ) . . . . . . . . . . . . . . . . for bijective rcwa mappings
 ##
 ##  The `dead end' criterion.
-##  This is only applicable for bijective mappings.
+##  This is only applicable to bijective mappings.
 ##
 InstallMethod( IsTame,
                "for bijective rcwa mappings, `dead end' criterion (RCWA)",
@@ -3517,7 +3523,7 @@ InstallMethod( IsTame,
 #M  IsTame( <f> ) . . . . . . . . . . . . . . . . for bijective rcwa mappings
 ##
 ##  The loop criterion.
-##  This is only applicable for bijective mappings.
+##  This is only applicable to bijective mappings.
 ##
 InstallMethod( IsTame,
                "for bijective rcwa mappings, loop criterion (RCWA)", true,
@@ -3525,16 +3531,28 @@ InstallMethod( IsTame,
 
   function ( f )
 
-    local  R, m, RmodmR, cl, img;
+    local  R, m, coeffs, cl, img, r, c, d;
 
+    if not IsBijective(f) then TryNextMethod(); fi;
     Info(InfoRCWA,2,"IsTame: loop criterion.");
     R := Source(f); m := Modulus(f);
-    RmodmR := List(AllResidues(R,m),r->ResidueClass(R,m,r));
-    for cl in RmodmR do
-      img := cl^f;
-      if   img <> cl and Intersection(cl,img) <> []
-      then SetOrder(f,infinity); return false; fi;
-    od;
+    if IsIntegers(R) then
+      coeffs := Coefficients(f);
+      for r in [0..m-1] do
+        c := coeffs[r+1];
+        if AbsInt(c[1]) <> 1 or c[3] <> 1 then
+          d := Gcd(m,c[1]*m/c[3]);
+          if   (r - (c[1]*r+c[2])/c[3]) mod d = 0
+          then SetOrder(f,infinity); return false; fi;
+        fi;
+      od;
+    else
+      for cl in AllResidueClassesModulo(R,m) do
+        img := cl^f;
+        if   img <> cl and Intersection(cl,img) <> []
+        then SetOrder(f,infinity); return false; fi;
+      od;
+    fi;
     TryNextMethod();
   end );
 
