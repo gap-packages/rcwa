@@ -797,7 +797,7 @@ gap> ShortCycles(mKnot(5),[1..100],20);
   <Oper Name ="Projections" Arg="G, m" Label="G, m"/>
   <Returns>
     The projections of the rcwa group&nbsp;<A>G</A> to the unions of
-    residue classes (mod&nbsp;<A>m</A>) which it fixes setwisely.
+    residue classes (mod&nbsp;<A>m</A>) which it fixes setwise.
   </Returns>
   <Description>
     The corresponding partition of a set of representatives for

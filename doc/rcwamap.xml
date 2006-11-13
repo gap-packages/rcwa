@@ -618,7 +618,7 @@ There is a method for the operation <C>Support</C> for computing the
 support of a bijective rcwa mapping. A synonym for <C>Support</C> is
 <C>MovedPoints</C>. There is also a method for <C>RestrictedPerm</C>
 for computing the restriction of a bijective rcwa mapping to a union
-of residue classes which it fixes setwisely.
+of residue classes which it fixes setwise.
 
 <Example>
 <![CDATA[

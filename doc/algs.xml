@@ -193,7 +193,7 @@ is used.
     determinant&nbsp;<M>\neq 0</M>. If yes, return <C>false</C>.
     Test whether the support of&nbsp;<A>g</A> is a subset of the support
     of&nbsp;<A>G</A>. If not, return <C>false</C>.
-    Test whether <A>G</A> fixes the nonnegative integers setwisely,
+    Test whether <A>G</A> fixes the nonnegative integers setwise,
     but&nbsp;<A>g</A> does not. If yes, return <C>false</C>. <P/>
 
     If <A>G</A> is tame, proceed as follows:
