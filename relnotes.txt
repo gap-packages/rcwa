@@ -356,3 +356,5 @@ Changes between version 2.2.1 and version 2.2.2:
  - The implementation of the methods for checking some wildness criteria
    has been improved.
 
+ - The documentation has been improved in some places.
+
