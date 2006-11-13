@@ -669,7 +669,7 @@ DeclareOperation( "FactorizationOnConnectedComponents",
 ##  the list `Sinks(<f>)' is obtained by replacing "outgoing" by "ingoing".
 ##
 ##  The entries of the list `Loops(<f>)' are the residue classes (mod m)
-##  which are not setwisely fixed by <f>, but which intersect nontrivially
+##  which <f> does not fix setwise, but which intersect nontrivially
 ##  with their images under <f>.
 ##
 DeclareAttribute( "Sources", IsRcwaMapping );

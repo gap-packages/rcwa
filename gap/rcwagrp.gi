@@ -1278,7 +1278,7 @@ InstallMethod( \in,
       if    ForAll(gens,gen->Minimum([0..max]^gen)>=0)
         and ForAll(gens,gen->Maximum([-max..-1]^gen)<0)
       then
-        Info(InfoRCWA,2,"<G> fixes the nonnegative integers setwisely,");
+        Info(InfoRCWA,2,"<G> fixes the nonnegative integers setwise,");
         Info(InfoRCWA,2,"but <g> does not.");
         return false;
       fi;
