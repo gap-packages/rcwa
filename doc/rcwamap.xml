@@ -43,7 +43,8 @@ residue classes <M>r(m) \in \Z/m\Z</M> are all affine, i.e. given&nbsp;by
            f|_r(m):  r(m) -> Z,  n |->  -------------------
                                               c_r(m)
 </Verb></Alt>
-for certain coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \Z</M>.
+for certain coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \Z</M>
+depending on&nbsp;<M>r(m)</M>.
 
 <Index Key="modulus" Subkey="definition">modulus</Index>
 <Index Key="rcwa mapping" Subkey="modulus">rcwa mapping</Index>
@@ -162,7 +163,7 @@ gap> Cycle(a,44);
 <Alt Only="LaTeX">\noindent</Alt>
 There is computational evidence for the conjecture that any
 residue-class-wise affine permutation of&nbsp;<M>\Z</M> can be factored
-into members of the following three series of rcwa mappings of particularly
+into members of the following three series of permutations of particularly
 simple structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
@@ -514,7 +515,7 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 <!-- #################################################################### -->
 
 <Section Label="sec:BasicFunctionalityForRcwaMappings">
-<Heading>Basic functionality for rcwa mappings</Heading>
+<Heading>Basic functionality for residue-class-wise affine mappings</Heading>
 
 <Index Key="rcwa mapping" Subkey="arithmetic operations">rcwa mapping</Index>
 <Index Key="Order" Subkey="g"><C>Order</C></Index>
@@ -661,7 +662,7 @@ available. <P/>
 <!-- #################################################################### -->
 
 <Section Label="sec:FactoringRcwaMappings">
-<Heading>Factoring rcwa mappings</Heading>
+<Heading>Factoring residue-class-wise affine permutations</Heading>
 
 Factoring group elements into elements of some <Q>nice</Q> set of generators
 is often helpful. The following can be seen as an attempt towards getting
