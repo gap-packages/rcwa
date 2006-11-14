@@ -7,14 +7,14 @@
 <!-- #################################################################### -->
 
 <Chapter Label="ch:RcwaMappings">
-<Heading>Residue Class-Wise Affine Mappings</Heading>
+<Heading>Residue-Class-Wise Affine Mappings</Heading>
 
-This chapter gives the basic definitions, describes how to enter residue
-class-wise affine mappings and how to compute with them. The functionality
-of this package which is dedicated to residue class-wise affine groups
-is described in detail in the next chapter. The reader is encouraged to
-look there already after having read the first few pages of this
-chapter, and to look up definitions as he needs to.
+This chapter gives the basic definitions, describes how to enter
+residue-class-wise affine mappings and how to compute with them.
+The functionality of this package which is dedicated to residue-class-wise
+affine groups is described in detail in the next chapter. The reader is
+encouraged to look there already after having read the first few pages of
+this chapter, and to look up definitions as he needs to.
 
 <!-- #################################################################### -->
 
@@ -24,11 +24,11 @@ chapter, and to look up definitions as he needs to.
 <Index Key="rcwa mapping" Subkey="definition">rcwa mapping</Index>
 <Index Key="rcwa group" Subkey="definition">rcwa group</Index>
 
-Residue class-wise affine groups, or for short <E>rcwa</E> groups, are
-permutation groups whose elements are bijective residue class-wise affine
+Residue-class-wise affine groups, or for short <E>rcwa</E> groups, are
+permutation groups whose elements are bijective residue-class-wise affine
 mappings. <P/>
 
-A mapping <M>f: \Z \rightarrow \Z</M> is called <E>residue class-wise
+A mapping <M>f: \Z \rightarrow \Z</M> is called <E>residue-class-wise
 affine</E>, or for short an <E>rcwa</E> mapping, if there is a positive
 integer&nbsp;<M>m</M> such that the restrictions of&nbsp;<M>f</M> to the
 residue classes <M>r(m) \in \Z/m\Z</M> are all affine, i.e. given&nbsp;by
@@ -60,8 +60,8 @@ is called the <E>multiplier</E> of&nbsp;<M>f</M>, and the lcm of the
 coefficients <M>c_{r(m)}</M> is called the <E>divisor</E>
 of&nbsp;<M>f</M>. <P/>
 
-It is easy to see that the residue class-wise affine mappings form
-a monoid under composition, and that the residue class-wise affine
+It is easy to see that the residue-class-wise affine mappings form
+a monoid under composition, and that the residue-class-wise affine
 permutations form a countable subgroup of Sym(<M>\Z</M>).
 We denote the latter group by RCWA(<M>\Z</M>). <P/>
 
@@ -84,11 +84,11 @@ are called <E>wild</E>. Tame rcwa mappings and -groups are something which
 one could call the <Q>trivial cases</Q> or <Q>basic building blocks</Q>,
 while wild rcwa groups are the objects of primary interest. <P/>
 
-The definitions of residue class-wise affine mappings and -groups can be
+The definitions of residue-class-wise affine mappings and -groups can be
 generalized in an obvious way to suitable rings other than&nbsp;<M>\Z</M>.
-In fact, this package provides at least rudimentary support for residue
-class-wise affine groups over semilocalizations of&nbsp;<M>\Z</M> and over
-univariate polynomial rings over finite fields.
+In fact, this package provides at least rudimentary support for
+residue-class-wise affine groups over semilocalizations of&nbsp;<M>\Z</M>
+and over univariate polynomial rings over finite fields.
 
 </Section>
 
@@ -97,7 +97,7 @@ univariate polynomial rings over finite fields.
 <!-- #################################################################### -->
 
 <Section Label="sec:EnteringRcwaMappings">
-<Heading>Entering residue class-wise affine mappings</Heading>
+<Heading>Entering residue-class-wise affine mappings</Heading>
 
 Entering an rcwa mapping of&nbsp;<M>\Z</M> into &RCWA; requires specifying
 the modulus&nbsp;<M>m</M> and the coefficients <M>a_{r(m)}</M>,
@@ -160,10 +160,10 @@ gap> Cycle(a,44);
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Alt Only="LaTeX">\noindent</Alt>
-There is computational evidence for the conjecture that any residue
-class-wise affine permutation of&nbsp;<M>\Z</M> can be factored into members
-of the following three series of rcwa mappings of particularly simple
-structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
+There is computational evidence for the conjecture that any
+residue-class-wise affine permutation of&nbsp;<M>\Z</M> can be factored
+into members of the following three series of rcwa mappings of particularly
+simple structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>

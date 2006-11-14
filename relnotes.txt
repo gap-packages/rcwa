@@ -343,7 +343,7 @@ Changes between version 2.1.7 and version 2.2.0 (September 20, 2006):
    updated, improved and shortened.
 
  - The author's thesis is no longer distributed with the package, since more
-   and better results on residue class-wise affine groups have been found in
+   and better results on residue-class-wise affine groups have been found in
    the meantime.
 
 Changes between version 2.2.0 and version 2.2.1:
@@ -357,4 +357,8 @@ Changes between version 2.2.1 and version 2.2.2:
    has been improved.
 
  - The documentation has been improved in some places.
+
+ - A little "spelling reform" has taken place -- the longer the author looks
+   at it, the more he is convinced that "residue-class-wise affine" looks
+   better than "residue class-wise affine".
 

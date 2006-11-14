@@ -42,7 +42,7 @@ to any given positive integer eventually yields&nbsp;1
 
 So far, no attempts have been made to investigate the structure of groups
 whose elements are permutations which are <Q>similar to the Collatz
-mapping</Q>, i.e. <E>residue class-wise affine</E>. <P/>
+mapping</Q>, i.e. <E>residue-class-wise affine</E>. <P/>
 
 After having investigated these groups for a couple of years,
 the author feels that this is a gap which is worth to be filled.
@@ -55,10 +55,10 @@ the author feels that this is a gap which is worth to be filled.
 <Heading>Groups which can be dealt with</Heading>
 
 In principle this package permits to construct and investigate all groups
-which have faithful representations as residue class-wise affine groups.
+which have faithful representations as residue-class-wise affine groups.
 A couple of types of such groups are listed in the abstract.
 From the list given there, one can already conclude that there are
-finitely generated residue class-wise affine groups which are not finitely
+finitely generated residue-class-wise affine groups which are not finitely
 presented, and such with unsolvable membership problem.
 However the list is by far not exhaustive. <P/>
 
@@ -85,7 +85,7 @@ is available on the author's homepage.
 
 So far, compared to classes of groups like for example finite groups,
 matrix groups, finitely presented groups or polycyclic groups, not very much
-is known about residue class-wise affine groups. This package is intended
+is known about residue-class-wise affine groups. This package is intended
 to serve as a tool for obtaining a better understanding of their rich and
 interesting group theoretical and combinatorial structure.
 
@@ -110,7 +110,7 @@ With substancial help of this package, the author has found the results
 mentioned in Section&nbsp;<Ref Label="sec:GroupsWhichEmbed"/>.
 Interactive sessions with this package have also lead to the development
 of most of the algorithms which are now implemented in it. Just to mention
-one example, developing the factorization method for residue class-wise
+one example, developing the factorization method for residue-class-wise
 affine permutations (see&nbsp;<Ref Attr="FactorizationIntoCSCRCT"
 Label="g"/>) solely by means of theory would likely have been very hard.
 

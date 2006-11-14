@@ -9,7 +9,7 @@
 ##
 ##  Let R be an infinite euclidean domain which is not a field and all of
 ##  whose proper residue class rings are finite. We call a mapping f: R -> R
-##  *residue class-wise affine*, or in short an *rcwa* mapping, if there is
+##  *residue-class-wise affine*, or in short an *rcwa* mapping, if there is
 ##  a nonzero m in R such that f is affine on residue classes (mod m).
 ##      This means that for any residue class r(m) in R/mR there are
 ##  coefficients a_r(m), b_r(m), c_r(m) in R such that the restriction of f
@@ -27,7 +27,7 @@
 ##      We call m the *modulus* of f. By *products* of rcwa mappings we
 ##  always mean their compositions as mappings, and by the *inverse* of
 ##  a bijective rcwa mapping we mean its inverse mapping. 
-##      The set RCWA(R) := { g in Sym(R) | g is residue class-wise affine }
+##      The set RCWA(R) := { g in Sym(R) | g is residue-class-wise affine }
 ##  is closed under multiplication and taking inverses (this can be verified
 ##  easily), hence forms a subgroup of Sym(R).
 ##      While computing with permutations of infinite sets in general is

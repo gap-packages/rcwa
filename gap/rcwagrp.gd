@@ -9,7 +9,7 @@
 ##
 ##  See the definitions given in the file rcwamap.gd.
 ##
-##  We call a subgroup of RCWA(R) a *residue class-wise affine* group, or
+##  We call a subgroup of RCWA(R) a *residue-class-wise affine* group, or
 ##  in short an *rcwa* group.
 ##
 Revision.rcwagrp_gd :=

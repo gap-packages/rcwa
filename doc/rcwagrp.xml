@@ -7,21 +7,21 @@
 <!-- #################################################################### -->
 
 <Chapter Label="ch:RcwaGroups">
-<Heading>Residue Class-Wise Affine Groups</Heading>
+<Heading>Residue-Class-Wise Affine Groups</Heading>
 
 This chapter describes the functionality provided by this package for
-computing with residue class-wise affine groups.
+computing with residue-class-wise affine groups.
 
 <!-- #################################################################### -->
 
 <Section Label="sec:ContructingRcwaGroups">
-<Heading>Constructing residue class-wise affine groups</Heading>
+<Heading>Constructing residue-class-wise affine groups</Heading>
 
 <Index Key="Group"><C>Group</C></Index>
 <Index Key="GroupByGenerators"><C>GroupByGenerators</C></Index>
 <Index Key="GroupWithGenerators"><C>GroupWithGenerators</C></Index>
 
-Residue class-wise affine groups can be constructed using either
+Residue-class-wise affine groups can be constructed using either
 <C>Group</C>, <C>GroupByGenerators</C> or <C>GroupWithGenerators</C>
 as usual, cp. the &GAP; reference manual.
 
@@ -51,7 +51,7 @@ constructed in the way described above. It is handled as a special case:
 <ManSection>
   <Func Name="RCWA" Arg="R" Label="R"/>
   <Returns>
-    The group RCWA(<A>R</A>) of all residue class-wise affine
+    The group RCWA(<A>R</A>) of all residue-class-wise affine
     permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>

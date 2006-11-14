@@ -8,10 +8,10 @@
 SetPackageInfo( rec(
 
 PackageName      := "RCWA",
-Subtitle         := "Residue Class-Wise Affine Groups",
-Version          := "2.2.1",
-Date             := "29/09/2006",
-ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-2.2.1",
+Subtitle         := "Residue-Class-Wise Affine Groups",
+Version          := "2.2.2",
+Date             := "14/11/2006",
+ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/rcwa-2.2.2",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -35,8 +35,8 @@ AcceptDate       := "04/2005",
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa.html",
 README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/README.rcwa",
 PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/rcwa/PackageInfo.g",
-AbstractHTML     := Concatenation("This package provides methods for investigating ",
-                                  "a certain type of infinite groups. ",
+AbstractHTML     := Concatenation("This package introduces a new class of groups which are ",
+                                  "accessible to computational methods. ",
                                   "For an abstract, see ",
                                   "<a href = \"",~.PackageWWWHome,"\">here</a>."),
 PackageDoc       := rec(
@@ -45,7 +45,7 @@ PackageDoc       := rec(
                          HTMLStart        := "doc/chap0.html",
                          PDFFile          := "doc/manual.pdf",
                          SixFile          := "doc/manual.six",
-                         LongTitle        := "[R]esidue [C]lass-[W]ise [A]ffine groups",
+                         LongTitle        := "[R]esidue-[C]lass-[W]ise [A]ffine groups",
                          Autoload         := true
                        ),
 Dependencies     := rec(
@@ -57,13 +57,13 @@ Dependencies     := rec(
                        ),
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
-                                   " ([R]esidue [C]lass-[W]ise [A]ffine groups)",
+                                   " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
 Autoload         := false,
 TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "geometric group theory",
                       "combinatorial group theory", "permutation groups over rings",
-                      "residue class-wise affine groups", "residue class-wise affine mappings",
+                      "residue-class-wise affine groups", "residue-class-wise affine mappings",
                       "Collatz conjecture", "3n+1 conjecture" ]
 
 ) );
