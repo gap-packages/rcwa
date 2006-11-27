@@ -1984,7 +1984,7 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  Ball( <G>, <g>, <d> ) . . . . . . . .  for a group and an element thereof
+#M  Ball( <G>, <g>, <r> ) . . . . . . . .  for a group and an element thereof
 ##
 ##  As element tests can be expensive, this method does not check whether
 ##  <g> is indeed an element of <G>.
@@ -1993,15 +1993,15 @@ InstallMethod( Ball,
                "for a group and an element thereof (RCWA)", ReturnTrue,
                [ IsGroup, IsMultiplicativeElement, IsInt ], 0,
 
-  function ( G, g, d )
+  function ( G, g, r )
 
     local  ball, gens, k;
 
-    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or d < 0
+    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or r < 0
     then TryNextMethod(); fi;
     ball := [g];
     gens := Set(GeneratorsAndInverses(G));
-    for k in [1..d] do
+    for k in [1..r] do
       ball := Union(ball,Union(List(gens,gen->ball*gen)));
     od;
     return ball;
@@ -2009,20 +2009,20 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
-#M  Ball( <G>, <p>, <d>, <act> ) . . . .  for a permutation group and a point
+#M  Ball( <G>, <p>, <r>, <act> ) . . . .  for a permutation group and a point
 ##
 InstallMethod( Ball,
                "for a permutation group and a point (RCWA)", ReturnTrue,
                [ IsGroup, IsObject, IsInt, IsFunction ], 0,
 
-  function ( G, p, d, act )
+  function ( G, p, r, act )
 
     local  ball, gens, k;
 
-    if d < 0 then TryNextMethod(); fi;
+    if r < 0 then TryNextMethod(); fi;
     ball := [p];
     gens := Set(GeneratorsAndInverses(G));
-    for k in [1..d] do
+    for k in [1..r] do
       ball := Union(ball,Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
     od;
     return ball;

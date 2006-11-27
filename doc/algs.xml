@@ -29,14 +29,14 @@ is used.
   </Item>
 
   <Mark>
-    <C>Ball(<A>G</A>,<A>g</A>,<A>d</A>)</C>
+    <C>Ball(<A>G</A>,<A>g</A>,<A>r</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
-    <C>Ball(<A>G</A>,<A>p</A>,<A>d</A>,<A>act</A>)</C>
+    <C>Ball(<A>G</A>,<A>p</A>,<A>r</A>,<A>act</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.

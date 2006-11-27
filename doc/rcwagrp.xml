@@ -822,20 +822,20 @@ gap> List(last,phi->Support(Image(phi)));
 </ManSection>
 
 <ManSection>
-  <Meth Name ="Ball" Arg="G, p, d, act" Label="G, p, d, act"/>
-  <Meth Name ="Ball" Arg="G, g, d" Label="G, g, d"/>
+  <Meth Name ="Ball" Arg="G, p, r, act" Label="G, p, r, act"/>
+  <Meth Name ="Ball" Arg="G, g, r" Label="G, g, r"/>
   <Returns>
-    The ball of radius&nbsp;<A>d</A> around the point&nbsp;<A>p</A> under
-    the action&nbsp;<A>act</A> of the group&nbsp;<A>G</A>, resp. the ball
-    of radius&nbsp;<A>d</A> around the element&nbsp;<A>g</A> in the
-    group&nbsp;<A>G</A>.
+    The ball of radius&nbsp;<A>r</A> around the point&nbsp;<A>p</A> under
+    the action&nbsp;<A>act</A> of the group&nbsp;<A>G</A>, respectively
+    the ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>g</A> in
+    the group&nbsp;<A>G</A>.
   </Returns>
   <Description>
     All balls are understood w.r.t. <C>GeneratorsOfGroup(<A>G</A>)</C>.
-    As element tests can be expensive, the latter method does not check
+    As membership tests can be expensive, the latter method does not check
     whether <A>g</A> is indeed an element of&nbsp;<A>G</A>.
-    The methods require that point comparisons resp. element comparisons
-    are cheap. They are not only applicable to rcwa groups.
+    The methods require that point comparisons resp. element
+    comparisons are cheap. They are not only applicable to rcwa groups.
 <Example>
 <![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(3),
