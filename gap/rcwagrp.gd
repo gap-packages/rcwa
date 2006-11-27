@@ -148,8 +148,8 @@ DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
 ##
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt ] );
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsPosInt, IsFunction ] );
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt ] );
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt, IsFunction ] );
 
 #############################################################################
 ##

@@ -1991,13 +1991,14 @@ InstallMethod( RepresentativeActionOp,
 ##
 InstallMethod( Ball,
                "for a group and an element thereof (RCWA)", ReturnTrue,
-               [ IsGroup, IsMultiplicativeElement, IsPosInt ], 0,
+               [ IsGroup, IsMultiplicativeElement, IsInt ], 0,
 
   function ( G, g, d )
 
     local  ball, gens, k;
 
-    if not IsCollsElms(FamilyObj(G),FamilyObj(g)) then TryNextMethod(); fi;
+    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or d < 0
+    then TryNextMethod(); fi;
     ball := [g];
     gens := Set(GeneratorsAndInverses(G));
     for k in [1..d] do
@@ -2012,12 +2013,13 @@ InstallMethod( Ball,
 ##
 InstallMethod( Ball,
                "for a permutation group and a point (RCWA)", ReturnTrue,
-               [ IsGroup, IsObject, IsPosInt, IsFunction ], 0,
+               [ IsGroup, IsObject, IsInt, IsFunction ], 0,
 
   function ( G, p, d, act )
 
     local  ball, gens, k;
 
+    if d < 0 then TryNextMethod(); fi;
     ball := [p];
     gens := Set(GeneratorsAndInverses(G));
     for k in [1..d] do
