@@ -127,38 +127,4 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#M  DirectProductOp( <groups>, <onegroup> ) . . . . . . . . .  for pcp groups
-##
-InstallMethod( DirectProductOp,
-               "for pcp groups (RCWA)", ReturnTrue,
-               [ IsList, IsPcpGroup ], 0,
-
-  function ( groups, onegroup )
-
-    local  D, info, first, auts, i;
-
-    if   IsEmpty(groups) or not ForAll(groups,IsPcpGroup)
-    then TryNextMethod(); fi;
-
-    D := groups[1]; first := [1,Length(GeneratorsOfGroup(D))+1];
-    for i in [2..Length(groups)] do
-      auts := List(Igs(groups[i]),x->IdentityMapping(D));
-      D    := SplitExtensionByAutomorphisms(D,groups[i],auts);
-      Add(first,Length(Igs(D))+1);
-    od;
-
-    info := rec(groups := groups, first := first,
-                embeddings := [ ], projections := [ ]);
-    SetDirectProductInfo(D,info);
-
-    if   ForAny(groups,grp->HasSize(grp) and not IsFinite(grp))
-    then SetSize(D,infinity); fi;
-    if   ForAll(groups,grp->HasSize(grp) and IsInt(Size(grp)))
-    then SetSize(D,Product(List(groups,Size))); fi;
-
-    return D;
-  end );
-
-#############################################################################
-##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

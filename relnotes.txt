@@ -362,3 +362,11 @@ Changes between version 2.2.1 and version 2.2.2:
    at it, the more he is convinced that "residue-class-wise affine" looks
    better than "residue class-wise affine".
 
+Changes between version 2.2.2 and version 2.3.0:
+
+ - A `DirectProductOp' method has been moved to Polycyclic.
+   Therefore RCWA now requires Polycyclic 2.1.
+
+ - A couple of minor improvements in the code and in the documentation
+   have been made.
+
