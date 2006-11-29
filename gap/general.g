@@ -127,4 +127,74 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
+#F  SaveAsBitmapPicture( <picture>, <filename>, <colored> )
+##
+##  Writes the pixel matrix <picture> to a bitmap- (bmp-) picture file
+##  named <filename>. The argument <colored> is a boolean which specifies
+##  whether a 24-bit True-Color picture file or a monochrome picture file
+##  should be created. In the former case, <picture> must be an integer
+##  matrix, with entries n = 65536*red+256*green+blue in the range 0..2^24-1
+##  giving the RGB values of the colors of the pixels. In the latter case,
+##  <picture> is a GF(2) matrix, where zeros stand for black pixels and
+##  ones stand for white pixels.
+##
+DeclareGlobalFunction( "SaveAsBitmapPicture" );
+InstallGlobalFunction( SaveAsBitmapPicture,
+
+  function ( picture, filename, colored )
+
+    local  AppendHex, AppendWidthHeight, str,
+           height, width, vec8, pix, x, y, i;
+
+    AppendHex := function ( hexstr )
+      Append(str,List([1..Length(hexstr)/2],
+                      i->CHAR_INT(IntHexString(hexstr{[2*i-1,2*i]}))));
+    end;
+
+    AppendWidthHeight := function ()
+      Add(str,CHAR_INT(width mod 256));  Add(str,CHAR_INT(Int(width/256)));
+      Add(str,CHAR_INT(0));              Add(str,CHAR_INT(0));
+      Add(str,CHAR_INT(height mod 256)); Add(str,CHAR_INT(Int(height/256)));
+    end;
+
+    if not IsMatrix(picture) or not IsString(filename)
+      or not colored in [ true, false ]
+    then
+      Error("usage: SavePicture( <picture>, <filename>, <colored> )\n");
+    fi;
+
+    width := Length(picture[1]);   height := Length(picture);
+    width := width - width mod 32; height := height - height mod 32;
+    str := "";
+    if colored then
+      AppendHex("424D36EE0200000000003600000028000000"); AppendWidthHeight();
+      AppendHex("0000010018000000000000EE020013");
+      AppendHex("0B0000130B00000000000000000000");
+      for y in [1..height] do
+        for x in [1..width] do
+          pix := picture[y][x];
+          Add(str,CHAR_INT(pix mod 256)); pix := Int(pix/256);
+          Add(str,CHAR_INT(pix mod 256)); pix := Int(pix/256);
+          Add(str,CHAR_INT(pix));
+        od;
+      od;
+    else # b/w picture
+      AppendHex("424D3E7D0000000000003E00000028000000"); AppendWidthHeight();
+      AppendHex("00000100010000000000007D0000CE0E0000C4");
+      AppendHex("0E0000000000000000000000000000FFFFFF00");
+      vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
+      for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
+      for y in [1..height] do
+        for x in [1,9..width-7] do
+          Add(str,CHAR_INT(Position(vec8,picture[y]{[x..x+7]})-1));
+        od;
+      od;
+    fi;
+    if   filename[Length(filename) - 3] <> '.'
+    then filename := Concatenation(filename,".BMP"); fi;
+    FileString(filename,str);
+  end );
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

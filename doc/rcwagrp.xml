@@ -1284,6 +1284,87 @@ Bijective rcwa mapping of Z with modulus 24
 
 <!-- #################################################################### -->
 
+<Section Label="sec:DrawingPictures">
+<Heading>Drawing pictures of orbits on <M>\Z^2</M> </Heading>
+
+&RCWA; provides functionality for drawing pictures of orbits on <M>\Z^2</M>
+under the action of rcwa groups. The pictures are written to files in
+bitmap- (bmp-) format. The author has successfully tested this picture
+drawing feature both under Linux and under Windows, and the produced
+pictures can be processed further with many common graphics programs.
+
+<ManSection>
+  <Func Name="DrawOrbitPicture"
+        Arg="G, p0, r, height, width, colored, pallet, filename"
+        Label="G, p0, r, height, width, colored, pallet, filename"/>
+  <Returns> Nothing. </Returns>
+  <Description>
+    Draws a picture of the orbit(s) of the point(s) <A>p0</A> under the
+    action of the group <A>G</A> on&nbsp;<M>\Z^2</M>.
+    The argument <A>p0</A> is either one point or a list of points.
+    The argument <A>r</A> denotes the radius of the ball around <A>p0</A>
+    to be computed. The size of the created picture is <A>height</A> x
+    <A>width</A> pixels, where both dimensions must be multiples of&nbsp;32.
+    The argument <A>colored</A> is a boolean which indicates whether a 24-bit
+    True-Color picture or a monochrome picture should be created.
+    In the former case, <A>pallet</A> must be a list of triples of integers
+    in the range <M>0, \dots, 255</M>, denoting the RGB values of colors to
+    be used. In the latter case, the argument <A>pallet</A> is not used, and
+    any value can be passed.
+    The resulting picture is written in bitmap- (bmp-) format to a file named
+    <A>filename</A>.
+<Log>
+<![CDATA[
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(Group((1,2)),Group((1,2,3)))));;
+gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"~/images/example1.bmp");
+gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
+>                     [[255,0,0],[0,255,0],[0,0,255]],"~/images/example2.bmp");
+gap> G := Group(ClassShift(0,1),ClassTransposition(1,2,0,4));;
+gap> DrawOrbitPicture(G,[0,1],20,512,512,true,
+>                     List([1..20],i->[255-12*i,255-12*i,255]),
+>                     "~/images/example3.bmp");
+]]>
+</Log>
+  </Description>
+</ManSection>
+
+<Ref Func="DrawOrbitPicture"
+     Label="G, p0, r, height, width, colored, pallet, filename"/>
+makes use of the following utility function:
+
+<ManSection>
+  <Func Name="SaveAsBitmapPicture"
+        Arg="picture, filename, colored" Label="picture, filename, colored"/>
+  <Returns> Nothing. </Returns>
+  <Description>
+    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-) picture file
+    named <A>filename</A>. The filename should include the entire pathname.
+    The argument <A>colored</A> is a boolean which specifies whether a 24-bit
+    True-Color picture file or a monochrome picture file should be created.
+    In the former case, <A>picture</A> must be an integer matrix, with
+    entries <M>n = 65536 \cdot red + 256 \cdot green + blue</M> in the range
+    <M>0, \dots, 2^{24}-1</M> specifying the RGB values of the colors of the
+    pixels. In the latter case, <A>picture</A> is a GF(2) matrix, where
+    zeros stand for black pixels and ones stand for white pixels.
+    The numbers of rows and colums of the matrix must both be multiples
+    of&nbsp;32.
+<Log>
+<![CDATA[
+gap> pic := List([0..255],
+>                i->List([0..255],
+>                        j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
+gap> SaveAsBitmapPicture(pic,"~/images/example4.bmp",true);
+]]>
+</Log>
+  </Description>
+</ManSection>
+
+The pictures created in the examples can also be found on &RCWA;'s webpage.
+
+</Section>
+
+<!-- #################################################################### -->
+
 <Section Label="sec:UtilityFunctions">
 <Heading>Some general utility functions</Heading>
 

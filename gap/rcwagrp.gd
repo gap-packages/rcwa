@@ -181,6 +181,29 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>, <pallet>,
+#F                    <filename> )
+##
+##  Draws a picture of the orbit(s) of the point(s) <p0> under the action of
+##  the group <G> on Z^2.
+##
+##  The argument <p0> is either one point or a list of points. The argument
+##  <r> denotes the radius of the ball around <p0> to be computed. The size
+##  of the created picture is <height>x<width> pixels, where both dimensions
+##  must be multiples of 32. The argument <colored> is a boolean which indi-
+##  cates whether a 24-bit True-Color picture or a monochrome picture should
+##  be created. In the former case, <pallet> should be a list of triples of
+##  integers in the range 0..255, denoting the RGB values of colors to be
+##  used. In the latter case, the argument <pallet> is not used, and any
+##  value can be passed.
+##
+##  The resulting picture is written in bitmap- (bmp-) format to a file named
+##  <filename>. The filename should include the entire pathname.
+##
+DeclareGlobalFunction( "DrawOrbitPicture" );
+
+#############################################################################
+##
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 #O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
 ##
