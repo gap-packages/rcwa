@@ -2230,12 +2230,12 @@ InstallOtherMethod( OrbitOp,
 
 #############################################################################
 ##
-#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>, <pallet>,
-#F                    <filename> )
+#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
+#F                    <palette>, <filename> )
 ##
 InstallGlobalFunction( DrawOrbitPicture,
 
-  function ( G, p0, r, height, width, colored, pallet, filename )
+  function ( G, p0, r, height, width, colored, palette, filename )
 
     local  grid, orbits, orbit, balls, sphere, ps, p, k, color,
            white, z, e, offset, i, j;
@@ -2243,9 +2243,9 @@ InstallGlobalFunction( DrawOrbitPicture,
     if   not IsRcwaGroupOverZ(G) or not IsList(p0)
       or not ForAll(Flat(p0),IsInt) or not ForAll([r,height,width],IsPosInt)
       or height < 32 or width < 32
-      or not IsBool(colored) or (colored = true and (not IsList(pallet)
-      or not ForAll(pallet,IsList) or not Set(List(pallet,Length)) = [3]
-      or not IsSubset([0..255],Flat(pallet)))) or not IsString(filename)
+      or not IsBool(colored) or (colored = true and (not IsList(palette)
+      or not ForAll(palette,IsList) or not Set(List(palette,Length)) = [3]
+      or not IsSubset([0..255],Flat(palette)))) or not IsString(filename)
     then Error("DrawOrbitPicture: For usage, see manual.\n"); fi;
 
     offset := [1,1];
@@ -2258,7 +2258,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
         for k in [2..r+1] do
           sphere := Difference(balls[k],balls[k-1]);
-          color  := pallet[(k-2) mod Length(pallet) + 1];
+          color  := palette[(k-2) mod Length(palette) + 1];
           for p in sphere do
             i := p[1]+offset[1]; j := p[2]+offset[2];
             if   i in [1..height] and j in [1..width]
@@ -2277,7 +2277,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
         for i in [1..Length(orbits)] do
           orbit := orbits[i];
-          color := pallet[(i-1) mod Length(pallet) + 1];
+          color := palette[(i-1) mod Length(palette) + 1];
           for p in orbit do
             i := p[1]+offset[1]; j := p[2]+offset[2];
             if   i in [1..height] and j in [1..width]

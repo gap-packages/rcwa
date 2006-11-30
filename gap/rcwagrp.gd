@@ -181,8 +181,8 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
-#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>, <pallet>,
-#F                    <filename> )
+#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
+#F                    <palette>, <filename> )
 ##
 ##  Draws a picture of the orbit(s) of the point(s) <p0> under the action of
 ##  the group <G> on Z^2.
@@ -192,9 +192,9 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 ##  of the created picture is <height>x<width> pixels, where both dimensions
 ##  must be multiples of 32. The argument <colored> is a boolean which indi-
 ##  cates whether a 24-bit True-Color picture or a monochrome picture should
-##  be created. In the former case, <pallet> should be a list of triples of
+##  be created. In the former case, <palette> must be a list of triples of
 ##  integers in the range 0..255, denoting the RGB values of colors to be
-##  used. In the latter case, the argument <pallet> is not used, and any
+##  used. In the latter case, the argument <palette> is not used, and any
 ##  value can be passed.
 ##
 ##  The resulting picture is written in bitmap- (bmp-) format to a file named
