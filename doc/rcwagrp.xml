@@ -1331,7 +1331,7 @@ gap> DrawOrbitPicture(G,[0,1],20,512,512,true,
 </ManSection>
 
 <Ref Func="DrawOrbitPicture"
-     Label="G, p0, r, height, width, colored, palette, filename"/>
+     Label="G, p0, r, h, w, colored, palette, filename"/>
 makes use of the following utility function:
 
 <ManSection>
