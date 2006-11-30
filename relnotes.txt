@@ -362,7 +362,7 @@ Changes between version 2.2.1 and version 2.2.2:
    at it, the more he is convinced that "residue-class-wise affine" looks
    better than "residue class-wise affine".
 
-Changes between version 2.2.2 and version 2.3.0:
+Changes between version 2.2.2 and version 2.3.0 (November 30, 2006):
 
  - Graphics functions `SaveAsBitmapPicture' and `DrawOrbitPicture'
    have been added.
