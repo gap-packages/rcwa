@@ -1295,16 +1295,17 @@ graphics programs.
 
 <ManSection>
   <Func Name="DrawOrbitPicture"
-        Arg="G, p0, r, height, width, colored, palette, filename"
-        Label="G, p0, r, height, width, colored, palette, filename"/>
+        Arg="G, p0, r, h, w, colored, palette, filename"
+        Label="G, p0, r, h, w, colored, palette, filename"/>
   <Returns> Nothing. </Returns>
   <Description>
     Draws a picture of the orbit(s) of the point(s) <A>p0</A> under the
     action of the group <A>G</A> on&nbsp;<M>\Z^2</M>.
     The argument <A>p0</A> is either one point or a list of points.
     The argument <A>r</A> denotes the radius of the ball around <A>p0</A>
-    to be computed. The size of the created picture is <A>height</A> x
-    <A>width</A> pixels, where both dimensions must be multiples of&nbsp;32.
+    to be computed. The size of the created picture is
+    <A>h</A>&nbsp;x&nbsp;<A>w</A> pixels, where both dimensions must be
+    multiples of&nbsp;32.
     The argument <A>colored</A> is a boolean which indicates whether a 24-bit
     True-Color picture or a monochrome picture should be created.
     In the former case, <A>palette</A> must be a list of triples of integers
@@ -1315,7 +1316,8 @@ graphics programs.
     <A>filename</A>.
 <Log>
 <![CDATA[
-gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(Group((1,2)),Group((1,2,3)))));;
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
+                                                     CyclicGroup(3))));;
 gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"~/images/example1.bmp");
 gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
 >                     [[255,0,0],[0,255,0],[0,0,255]],"~/images/example2.bmp");
