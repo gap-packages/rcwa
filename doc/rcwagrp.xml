@@ -1346,7 +1346,7 @@ makes use of the following utility function:
     In the former case, <A>picture</A> must be an integer matrix, with
     entries <M>n = 65536 \cdot red + 256 \cdot green + blue</M> in the range
     <M>0, \dots, 2^{24}-1</M> specifying the RGB values of the colors of the
-    pixels. In the latter case, <A>picture</A> is a GF(2) matrix, where
+    pixels. In the latter case, <A>picture</A> must be a GF(2) matrix, where
     zeros stand for black pixels and ones stand for white pixels.
     The numbers of rows and colums of the matrix must both be multiples
     of&nbsp;32.
