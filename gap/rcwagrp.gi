@@ -2303,6 +2303,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       od;
       SaveAsBitmapPicture(grid,filename,false);
     fi;
+    if ValueOption("ReturnPicture") = true then return grid; fi;
   end );
 
 #############################################################################
