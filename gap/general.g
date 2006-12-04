@@ -194,8 +194,6 @@ InstallGlobalFunction( SaveAsBitmapPicture,
         od;
       od;
     fi;
-    if   filename[Length(filename) - 3] <> '.'
-    then filename := Concatenation(filename,".BMP"); fi;
     FileString(filename,str);
   end );
 fi;
