@@ -134,42 +134,46 @@ InstallMethod( AbelianInvariants,
 ##  whether a 24-bit True-Color picture file or a monochrome picture file
 ##  should be created. In the former case, <picture> must be an integer
 ##  matrix, with entries n = 65536*red+256*green+blue in the range 0..2^24-1
-##  giving the RGB values of the colors of the pixels. In the latter case,
-##  <picture> is a GF(2) matrix, where zeros stand for black pixels and
-##  ones stand for white pixels.
+##  specifying the RGB values of the colors of the pixels. In the latter
+##  case, <picture> must be a GF(2) matrix, where zeros stand for black
+##  pixels and ones stand for white pixels.
 ##
+if not IsBound( SaveAsBitmapPicture ) then
 DeclareGlobalFunction( "SaveAsBitmapPicture" );
 InstallGlobalFunction( SaveAsBitmapPicture,
 
   function ( picture, filename, colored )
 
-    local  AppendHex, AppendWidthHeight, str,
-           height, width, vec8, pix, x, y, i;
+    local  AppendHex, Append16Bit, Append32Bit, str,
+           height, width, length, offset, vec8, pix, x, y, n, i;
 
-    AppendHex := function ( hexstr )
-      Append(str,List([1..Length(hexstr)/2],
-                      i->CHAR_INT(IntHexString(hexstr{[2*i-1,2*i]}))));
+    Append16Bit := function ( n )
+      Add(str,CHAR_INT(n mod 256)); Add(str,CHAR_INT(Int(n/256)));
     end;
 
-    AppendWidthHeight := function ()
-      Add(str,CHAR_INT(width mod 256));  Add(str,CHAR_INT(Int(width/256)));
-      Add(str,CHAR_INT(0));              Add(str,CHAR_INT(0));
-      Add(str,CHAR_INT(height mod 256)); Add(str,CHAR_INT(Int(height/256)));
+    Append32Bit := function ( n )
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n));
     end;
 
     if not IsMatrix(picture) or not IsString(filename)
       or not colored in [ true, false ]
-    then
-      Error("usage: SavePicture( <picture>, <filename>, <colored> )\n");
+    then Error("usage: SaveAsBitmapPicture( ",
+               "<picture>, <filename>, <colored> )\n");
     fi;
 
-    width := Length(picture[1]);   height := Length(picture);
-    width := width - width mod 32; height := height - height mod 32;
-    str := "";
+    width  := Length(picture[1]); width := width - width mod 32;
+    height := Length(picture);
+    str := "BM";
+    if colored then offset := 54; length := 3 * width * height + offset;
+               else offset := 62; length := (width * height)/8 + offset; fi;
+    for n in [length,0,offset,40,width,height] do Append32Bit(n); od;
+    Append16Bit(1);
     if colored then
-      AppendHex("424D36EE0200000000003600000028000000"); AppendWidthHeight();
-      AppendHex("0000010018000000000000EE020013");
-      AppendHex("0B0000130B00000000000000000000");
+      Append16Bit(24);
+      for i in [1..6] do Append32Bit(0); od;
       for y in [1..height] do
         for x in [1..width] do
           pix := picture[y][x];
@@ -178,15 +182,15 @@ InstallGlobalFunction( SaveAsBitmapPicture,
           Add(str,CHAR_INT(pix));
         od;
       od;
-    else # b/w picture
-      AppendHex("424D3E7D0000000000003E00000028000000"); AppendWidthHeight();
-      AppendHex("00000100010000000000007D0000CE0E0000C4");
-      AppendHex("0E0000000000000000000000000000FFFFFF00");
+    else # monochrome picture
+      Append16Bit(1);
+      for i in [1..6] do Append32Bit(0); od;
+      Append32Bit(0); Append32Bit(2^24-1);
       vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
       for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
       for y in [1..height] do
         for x in [1,9..width-7] do
-          Add(str,CHAR_INT(Position(vec8,picture[y]{[x..x+7]})-1));
+          Add(str,CHAR_INT(PositionSorted(vec8,picture[y]{[x..x+7]})-1));
         od;
       od;
     fi;
@@ -194,6 +198,49 @@ InstallGlobalFunction( SaveAsBitmapPicture,
     then filename := Concatenation(filename,".BMP"); fi;
     FileString(filename,str);
   end );
+fi;
+
+#############################################################################
+##
+#F  ReadFromBitmapPicture( <filename> )
+##
+##  Reads the bitmap picture file <filename> created by `SaveAsBitmapPicture'
+##  back into GAP. The function returns the pixel matrix <picture>, as it has
+##  been passed as an argument to `SaveAsBitmapPicture'. In general, files
+##  which have not been created by the function `SaveAsBitmapPicture' cannot
+##  be interpreted properly. Anything may happen if such a file is passed to
+##  `ReadFromBitmapPicture'.
+##
+if not IsBound( ReadFromBitmapPicture ) then
+DeclareGlobalFunction( "ReadFromBitmapPicture" );
+InstallGlobalFunction( ReadFromBitmapPicture,
+
+  function ( filename )
+
+    local  str, picture, width, height, x, y, vec8, i;
+
+    if   not IsString(filename)
+    then Error("usage: ReadFromBitmapPicture( <filename> )\n"); fi;
+
+    str    := StringFile(filename);
+    width  := List(str{[19..22]},INT_CHAR) * List([0..3],i->256^i);
+    height := List(str{[23..26]},INT_CHAR) * List([0..3],i->256^i);
+    if INT_CHAR(str[29]) = 24 then # 24-bit RGB picture
+      picture := List([1..height],
+                      y->List([1..width],
+                              x->List(str{[55+3*(width*(y-1)+x-1)..
+                                           55+3*(width*(y-1)+x-1)+2]},
+                                      INT_CHAR)
+                                *[1,256,65536]));
+    else # monochrome picture
+      vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
+      for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
+      picture := List([1..height],y->Concatenation(List([1,9..width-7],
+                      x->vec8[INT_CHAR(str[63+(width*(y-1)+x-1)/8])+1])));
+    fi;
+    return picture;
+  end );
+fi;
 
 #############################################################################
 ##

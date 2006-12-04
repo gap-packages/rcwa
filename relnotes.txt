@@ -373,3 +373,9 @@ Changes between version 2.2.2 and version 2.3.0 (November 30, 2006):
  - A couple of minor improvements in the code and in the documentation
    have been made.
 
+Changes between version 2.3.0 and version 2.3.1:
+
+ - A graphics function `ReadFromBitmapPicture' has been added.
+
+
+
