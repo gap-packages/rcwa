@@ -1348,7 +1348,7 @@ makes use of the following utility function:
     <M>0, \dots, 2^{24}-1</M> specifying the RGB values of the colors of the
     pixels. In the latter case, <A>picture</A> must be a GF(2) matrix, where
     zeros stand for black pixels and ones stand for white pixels.
-    The numbers of rows and colums of the matrix must both be multiples
+    The numbers of rows and columns of the matrix must both be multiples
     of&nbsp;32.
 <Log>
 <![CDATA[
