@@ -27,7 +27,9 @@
   <Author>
     Stefan Kohl
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
-    <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/</Homepage>
+    <Homepage>
+      http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/
+    </Homepage>
     <Address>
        Institut für Geometrie und Topologie <Br/>
        Pfaffenwaldring 57 <Br/>
@@ -36,7 +38,7 @@
        Germany
     </Address>
   </Author>
-  <Date>November 30, 2006</Date>
+  <Date>December 5, 2006</Date>
   <Copyright>
     &copyright; 2003 - 2006 by Stefan Kohl.
     This package is distributed under the GNU General Public License.

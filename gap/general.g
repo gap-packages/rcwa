@@ -131,7 +131,7 @@ InstallMethod( AbelianInvariants,
 ##
 ##  Writes the pixel matrix <picture> to a bitmap- (bmp-) picture file
 ##  named <filename>. The argument <colored> is a boolean which specifies
-##  whether a 24-bit True-Color picture file or a monochrome picture file
+##  whether a 24-bit True Color picture file or a monochrome picture file
 ##  should be created. In the former case, <picture> must be an integer
 ##  matrix, with entries n = 65536*red+256*green+blue in the range 0..2^24-1
 ##  specifying the RGB values of the colors of the pixels. In the latter
@@ -142,10 +142,11 @@ if not IsBound( SaveAsBitmapPicture ) then
 DeclareGlobalFunction( "SaveAsBitmapPicture" );
 InstallGlobalFunction( SaveAsBitmapPicture,
 
-  function ( picture, filename, colored )
+  function ( picture, filename )
 
-    local  AppendHex, Append16Bit, Append32Bit, str,
-           height, width, length, offset, vec8, pix, x, y, n, i;
+    local  AppendHex, Append16Bit, Append32Bit, str, colored,
+           height, width, fullwidth, length, offset, vec8, pix,
+           chunk, fill, x, y, n, i;
 
     Append16Bit := function ( n )
       Add(str,CHAR_INT(n mod 256)); Add(str,CHAR_INT(Int(n/256)));
@@ -159,16 +160,23 @@ InstallGlobalFunction( SaveAsBitmapPicture,
     end;
 
     if not IsMatrix(picture) or not IsString(filename)
-      or not colored in [ true, false ]
-    then Error("usage: SaveAsBitmapPicture( ",
-               "<picture>, <filename>, <colored> )\n");
-    fi;
+      or (not IsInt(picture[1][1]) and not picture[1][1] in GF(2))
+    then Error("usage: SaveAsBitmapPicture( <picture>, <filename> )\n"); fi;
 
-    width  := Length(picture[1]); width := width - width mod 32;
-    height := Length(picture);
+    colored := IsInt(picture[1][1]);
+    height  := Length(picture);
+    width   := Length(picture[1]);
+    if colored then fullwidth := width + (width mod 4)/3;
+    elif width mod 32 <> 0 then
+      fullwidth := width + 32 - width mod 32;
+      fill := List([1..fullwidth-width],i->Zero(GF(2)));
+      ConvertToGF2VectorRep(fill);
+      picture := List(picture,line->Concatenation(line,fill));
+    else fullwidth := width; fi;
     str := "BM";
-    if colored then offset := 54; length := 3 * width * height + offset;
-               else offset := 62; length := (width * height)/8 + offset; fi;
+    if colored then offset := 54; length := 3 * fullwidth * height + offset;
+               else offset := 62; length := (fullwidth * height)/8 + offset;
+    fi;
     for n in [length,0,offset,40,width,height] do Append32Bit(n); od;
     Append16Bit(1);
     if colored then
@@ -181,6 +189,7 @@ InstallGlobalFunction( SaveAsBitmapPicture,
           Add(str,CHAR_INT(pix mod 256)); pix := Int(pix/256);
           Add(str,CHAR_INT(pix));
         od;
+        for i in [1..width mod 4] do Add(str,CHAR_INT(0)); od;
       od;
     else # monochrome picture
       Append16Bit(1);
@@ -189,7 +198,7 @@ InstallGlobalFunction( SaveAsBitmapPicture,
       vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
       for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
       for y in [1..height] do
-        for x in [1,9..width-7] do
+        for x in [1,9..fullwidth-7] do
           Add(str,CHAR_INT(PositionSorted(vec8,picture[y]{[x..x+7]})-1));
         od;
       od;
@@ -204,10 +213,9 @@ fi;
 ##
 ##  Reads the bitmap picture file <filename> created by `SaveAsBitmapPicture'
 ##  back into GAP. The function returns the pixel matrix <picture>, as it has
-##  been passed as an argument to `SaveAsBitmapPicture'. In general, files
-##  which have not been created by the function `SaveAsBitmapPicture' cannot
-##  be interpreted properly. Anything may happen if such a file is passed to
-##  `ReadFromBitmapPicture'.
+##  been passed as an argument to `SaveAsBitmapPicture'. The file passed to
+##  this function must be an uncompressed monochrome or 24-bit True Color
+##  bitmap file.
 ##
 if not IsBound( ReadFromBitmapPicture ) then
 DeclareGlobalFunction( "ReadFromBitmapPicture" );
@@ -215,7 +223,7 @@ InstallGlobalFunction( ReadFromBitmapPicture,
 
   function ( filename )
 
-    local  str, picture, width, height, x, y, vec8, i;
+    local  str, picture, height, width, fullwidth, vec8, chunk, x, y, i;
 
     if   not IsString(filename)
     then Error("usage: ReadFromBitmapPicture( <filename> )\n"); fi;
@@ -224,19 +232,23 @@ InstallGlobalFunction( ReadFromBitmapPicture,
     width  := List(str{[19..22]},INT_CHAR) * List([0..3],i->256^i);
     height := List(str{[23..26]},INT_CHAR) * List([0..3],i->256^i);
     if INT_CHAR(str[29]) = 24 then # 24-bit RGB picture
+      fullwidth := width + (width mod 4)/3;
       picture := List([1..height],
-                      y->List([1..width],
-                              x->List(str{[55+3*(width*(y-1)+x-1)..
-                                           55+3*(width*(y-1)+x-1)+2]},
+                      y->List([1..Int(fullwidth)],
+                              x->List(str{[55+3*(fullwidth*(y-1)+x-1)..
+                                           55+3*(fullwidth*(y-1)+x-1)+2]},
                                       INT_CHAR)
                                 *[1,256,65536]));
     else # monochrome picture
+      if width mod 32 = 0 then fullwidth := width;
+                          else fullwidth := width + 32 - width mod 32; fi;
       vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
       for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
-      picture := List([1..height],y->Concatenation(List([1,9..width-7],
-                      x->vec8[INT_CHAR(str[63+(width*(y-1)+x-1)/8])+1])));
+      picture := List([1..height],y->Concatenation(List([1,9..fullwidth-7],
+                     x->vec8[INT_CHAR(str[63+(fullwidth*(y-1)+x-1)/8])+1])));
     fi;
-    return picture;
+    if width = fullwidth then return picture;
+                         else return picture{[1..height]}{[1..width]}; fi;
   end );
 fi;
 

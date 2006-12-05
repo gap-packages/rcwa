@@ -2242,7 +2242,6 @@ InstallGlobalFunction( DrawOrbitPicture,
 
     if   not IsRcwaGroupOverZ(G) or not IsList(p0)
       or not ForAll(Flat(p0),IsInt) or not ForAll([r,height,width],IsPosInt)
-      or height < 32 or width < 32
       or not IsBool(colored) or (colored = true and (not IsList(palette)
       or not ForAll(palette,IsList) or not Set(List(palette,Length)) = [3]
       or not IsSubset([0..255],Flat(palette)))) or not IsString(filename)
@@ -2285,7 +2284,7 @@ InstallGlobalFunction( DrawOrbitPicture,
           od;
         od;
       fi;
-      SaveAsBitmapPicture(grid,filename,true);
+      SaveAsBitmapPicture(grid,filename);
     else
       z := Zero(GF(2)); e := One(GF(2));
       grid := List([1..height],i->List([1..width],j->e));
@@ -2301,7 +2300,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         i := p[1]+offset[1]; j := p[2]+offset[2];
         if i in [1..height] and j in [1..width] then grid[i][j] := z; fi;
       od;
-      SaveAsBitmapPicture(grid,filename,false);
+      SaveAsBitmapPicture(grid,filename);
     fi;
     if ValueOption("ReturnPicture") = true then return grid; fi;
   end );

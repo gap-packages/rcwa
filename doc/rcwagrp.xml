@@ -1336,20 +1336,22 @@ makes use of the following utility function:
 
 <ManSection>
   <Func Name="SaveAsBitmapPicture"
-        Arg="picture, filename, colored" Label="picture, filename, colored"/>
+        Arg="picture, filename" Label="picture, filename"/>
   <Returns> Nothing. </Returns>
   <Description>
-    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-) picture file
-    named <A>filename</A>. The filename should include the entire pathname.
-    The argument <A>colored</A> is a boolean which specifies whether a 24-bit
-    True-Color picture file or a monochrome picture file should be created.
-    In the former case, <A>picture</A> must be an integer matrix, with
-    entries <M>n = 65536 \cdot red + 256 \cdot green + blue</M> in the range
-    <M>0, \dots, 2^{24}-1</M> specifying the RGB values of the colors of the
-    pixels. In the latter case, <A>picture</A> must be a GF(2) matrix, where
-    zeros stand for black pixels and ones stand for white pixels.
-    The numbers of rows and columns of the matrix must both be multiples
-    of&nbsp;32. <P/>
+    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-)
+    picture file named <A>filename</A>. The filename should include
+    the entire pathname.
+
+    The argument <A>picture</A> can be a GF(2) matrix, in which case a
+    monochrome picture file is generated. In this case, zeros stand for
+    black pixels and ones stand for white pixels.
+
+    The argument <A>picture</A> can also be an integer matrix, in which case
+    a 24-bit True Color picture file is generated. In this case, the entries
+    of the matrix are supposed to be integers <M>n = 65536 \cdot red + 256
+    \cdot green + blue</M> in the range <M>0, \dots, 2^{24}-1</M> specifying
+    the RGB values of the colors of the pixels. <P/>
 <Index Key="ReadFromBitmapPicture" Subkey="filename">
   <C>ReadFromBitmapPicture</C>
 </Index>
@@ -1357,8 +1359,8 @@ makes use of the following utility function:
     <C>ReadFromBitmapPicture(<A>filename</A>)</C>.
 <Log>
 <![CDATA[
-gap> pic := List([0..255],i->List([0..255],
->                                 j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
+gap> pic := List([0..255],
+>                i->List([0..255],j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
 gap> SaveAsBitmapPicture(pic,"~/images/example4.bmp",true);
 ]]>
 </Log>

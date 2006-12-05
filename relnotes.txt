@@ -377,5 +377,5 @@ Changes between version 2.3.0 and version 2.3.1:
 
  - A graphics function `ReadFromBitmapPicture' has been added.
 
-
+ - The code of the function `SaveAsBitmapPicture' has been improved.
 
