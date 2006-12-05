@@ -1349,12 +1349,16 @@ makes use of the following utility function:
     pixels. In the latter case, <A>picture</A> must be a GF(2) matrix, where
     zeros stand for black pixels and ones stand for white pixels.
     The numbers of rows and columns of the matrix must both be multiples
-    of&nbsp;32.
+    of&nbsp;32. <P/>
+<Index Key="ReadFromBitmapPicture" Subkey="filename">
+  <C>ReadFromBitmapPicture</C>
+</Index>
+    The picture can be read back into &GAP; by the function
+    <C>ReadFromBitmapPicture(<A>filename</A>)</C>.
 <Log>
 <![CDATA[
-gap> pic := List([0..255],
->                i->List([0..255],
->                        j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
+gap> pic := List([0..255],i->List([0..255],
+>                                 j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
 gap> SaveAsBitmapPicture(pic,"~/images/example4.bmp",true);
 ]]>
 </Log>
