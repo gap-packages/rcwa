@@ -377,5 +377,14 @@ Changes between version 2.3.0 and version 2.3.1:
 
  - A graphics function `ReadFromBitmapPicture' has been added.
 
- - The code of the function `SaveAsBitmapPicture' has been improved.
+ - The code of the function `SaveAsBitmapPicture' has been improved,
+   and the requirement that the width of a bitmap picture must be a multiple
+   of 32 has been removed.
+
+ - A test file tst/bmptest.g for RCWA's graphics functionality has been
+   added.
+
+
+
+ 
 
