@@ -1361,7 +1361,7 @@ makes use of the following utility function:
 <![CDATA[
 gap> pic := List([0..255],
 >                i->List([0..255],j->[i,Int((i+j)/2),255-i]*[65536,256,1]));;
-gap> SaveAsBitmapPicture(pic,"~/images/example4.bmp",true);
+gap> SaveAsBitmapPicture(pic,"~/images/example4.bmp");
 ]]>
 </Log>
   </Description>
