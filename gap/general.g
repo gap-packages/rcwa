@@ -127,16 +127,20 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#F  SaveAsBitmapPicture( <picture>, <filename>, <colored> )
+#F  SaveAsBitmapPicture( <picture>, <filename> )
 ##
 ##  Writes the pixel matrix <picture> to a bitmap- (bmp-) picture file
-##  named <filename>. The argument <colored> is a boolean which specifies
-##  whether a 24-bit True Color picture file or a monochrome picture file
-##  should be created. In the former case, <picture> must be an integer
-##  matrix, with entries n = 65536*red+256*green+blue in the range 0..2^24-1
-##  specifying the RGB values of the colors of the pixels. In the latter
-##  case, <picture> must be a GF(2) matrix, where zeros stand for black
-##  pixels and ones stand for white pixels.
+##  named <filename>. The filename should include the entire pathname.
+##
+##  The argument <picture> can be a GF(2) matrix, in which case a monochrome
+##  picture file is generated. In this case, zeros stand for black pixels and
+##  ones stand for white pixels.
+##
+##  The argument <picture> can also be an integer matrix, in which case
+##  a 24-bit True Color picture file is generated. In this case, the entries
+##  of the matrix are supposed to be integers n = 65536*red+256*green+blue in
+##  the range 0,...,2^24-1 specifying the RGB values of the colors of the
+##  pixels.
 ##
 if not IsBound( SaveAsBitmapPicture ) then
 DeclareGlobalFunction( "SaveAsBitmapPicture" );
