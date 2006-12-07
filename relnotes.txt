@@ -384,7 +384,9 @@ Changes between version 2.3.0 and version 2.3.1:
  - A test file tst/bmptest.g for RCWA's graphics functionality has been
    added.
 
+Changes between version 2.3.1 and version 2.3.2:
 
+ - A copy of my thesis is distributed with the package again
+   (somebody had asked for it).
 
- 
 
