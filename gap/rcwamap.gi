@@ -2526,7 +2526,7 @@ InstallMethod( InverseOp,
     mInv := Multiplier( f ) * m / Gcd( List( c, t -> t[3] ) );
     for n in [ 1 .. m ] do
       t := [c[n][3], -c[n][2], c[n][1]]; if t[3] = 0 then return fail; fi;
-      tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
+      tm := StandardAssociate(Source(f),c[n][1]) * m / c[n][3];
       tn := ((n - 1) * c[n][1] + c[n][2]) / c[n][3] mod tm;
       Classes := List([1 .. mInv/tm], i -> (i - 1) * tm + tn);
       for cl in Classes do
@@ -2593,7 +2593,7 @@ InstallMethod( InverseOp,
       r := res[n];
       t := [c[n][3], -c[n][2], c[n][1]];
       if IsZero(t[3]) then return fail; fi;
-      tm := StandardAssociate(Source(f),c[n][1]) * m / Gcd(m,c[n][3]);
+      tm := StandardAssociate(Source(f),c[n][1]) * m / c[n][3];
       tr := (r * c[n][1] + c[n][2]) / c[n][3] mod tm;
       Classes := List(respols[DegreeOfLaurentPolynomial(mInv/tm) + 1],
                       p -> p * tm + tr);
