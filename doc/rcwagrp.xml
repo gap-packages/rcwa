@@ -1317,7 +1317,7 @@ graphics programs.
 <Log>
 <![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
-                                                     CyclicGroup(3))));;
+>                                                    CyclicGroup(3))));;
 gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"~/images/example1.bmp");
 gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
 >                     [[255,0,0],[0,255,0],[0,0,255]],"~/images/example2.bmp");
