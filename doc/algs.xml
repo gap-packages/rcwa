@@ -236,7 +236,7 @@ is used.
     If successful, return <C>true</C>. If <A>g</A> is in <A>G</A>, this
     terminates after a finite number of steps. Both runtime and memory
     requirements are exponential in the word length. If <A>g</A> is not
-    in <A>G</A>, the method runs into an infinite loop.
+    in <A>G</A> at this stage, the method runs into an infinite loop.
   </Item>
 
   <Mark>
@@ -415,10 +415,10 @@ is used.
     (Theorem&nbsp;A.8 in&nbsp;<Cite Key="Kohl05"/>) is the subject
     of&nbsp;<Cite Key="Kohl06a"/>.
 
-    For applying the criterion of the existence of weakly-connected
-    components of the transition graph which are not strongly-connected
-    (Theorem&nbsp;A.11 in&nbsp;<Cite Key="Kohl05"/>),
-    the package <Package>GRAPE</Package> is needed.
+    The package <Package>GRAPE</Package> is needed for the application
+    of the criterion which says that an rcwa permutation is wild if
+    a transition graph has a weakly-connected component which is not
+    strongly-connected (cp. Theorem&nbsp;A.11 in&nbsp;<Cite Key="Kohl05"/>).
   </Item>
 
   <Mark>
@@ -440,7 +440,7 @@ is used.
 
     If suitable <C>g</C> and <M>r(m)</M> are found, proceed as follows: <P/>
 
-    Set <M>S := r(m)</M>. Set <M>S := S \cup S^g</M> for all generators
+    Put <M>S := r(m)</M>. Put <M>S := S \cup S^g</M> for all generators
     <M>g</M> of <A>G</A>, and repeat this until <M>S</M> remains constant.
     This may run into an infinite loop. <P/>
 
@@ -462,7 +462,7 @@ is used.
     fix&nbsp;<C>P</C>.
     Translate these kernel elements into elements of a polycyclically
     presented group isomorphic to the <C>|P|</C>-fold direct product of
-    the infinite dihedral group (<C>K</C> certainly embeds in this group).
+    the infinite dihedral group (<C>K</C> certainly embeds into this group).
     Use <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>
     to collect independent <Q>nice</Q> generators of&nbsp;<C>K</C>.
     Proceed until the permutation groups induced by&nbsp;<C>K</C> on the
@@ -544,9 +544,9 @@ is used.
     <C>Multpk(<A>f</A>,<A>p</A>,<A>k</A>)</C>
   </Mark>
   <Item>
-    Forms the union of the residue classes modulo the modulus of the mapping,
-    which are determined by the given divisibility criteria for the
-    coefficients of the corresponding affine mapping.
+    Forms the union of the residue classes modulo the modulus of the
+    mapping, which are determined by the given divisibility criteria
+    for the coefficients of the corresponding affine mapping.
   </Item>
 
   <Mark>
@@ -758,8 +758,7 @@ is used.
     (mod&nbsp;<M>km_i</M>). Finally conjugate the resulting permutation
     back. <P/>
 
-    Other cases seem to be more difficult and are currently not
-    covered.
+    Other cases seem to be more difficult and are currently not covered.
   </Item>
 
   <Mark>
@@ -838,7 +837,7 @@ is used.
   </Mark>
   <Item>
     Iterated application of an rcwa mapping.
-    In the methods computing <Q>accumulated coefficients</Q>
+    In the methods computing <Q>accumulated coefficients</Q>,
     additionally composition of affine mappings.
   </Item>
 
