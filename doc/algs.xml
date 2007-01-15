@@ -418,10 +418,7 @@ is used.
     For applying the criterion of the existence of weakly-connected
     components of the transition graph which are not strongly-connected
     (Theorem&nbsp;A.11 in&nbsp;<Cite Key="Kohl05"/>),
-    the package <Package>GRAPE</Package> is needed. <P/>
-
-    In addition, some probabilistic methods are used.
-    If the result depends on one of these, a warning is displayed.
+    the package <Package>GRAPE</Package> is needed.
   </Item>
 
   <Mark>
@@ -692,7 +689,7 @@ is used.
   </Item>
 
   <Mark>
-    <C>RepresentativeAction(<A>G</A>,<A>P1</A>,<A>P2</A>)</C>
+    <C>RepresentativeAction(RCWA(Integers),<A>P1</A>,<A>P2</A>)</C>
   </Mark>
   <Item>
     Arbitrary mapping: see Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>.
