@@ -3020,12 +3020,7 @@ InstallMethod( Order,
       if m2 > 6 * m1 or IsOne(g) then TryNextMethod(); fi;
       r := First([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
                                and c[n][2] mod m2 = 0);
-      if   r <> fail
-      then Info(InfoRCWA,1,"Order: the ",Ordinal(e)," power of the argument",
-                           " is ",g,";\nThere is a `class shift' on the ",
-                           "residue class ",r-1,"(",m2,").");
-           return infinity;
-      fi;
+      if r <> fail then return infinity; fi;
       g := g^n; e := e * n; if g = one then break; fi;
     od;
     TryNextMethod();
