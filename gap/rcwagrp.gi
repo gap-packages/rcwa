@@ -1557,8 +1557,8 @@ InstallMethod( StandardizingConjugator,
     local  toint, int, m, mtilde, mTilde, P, r, rtilde, c, cycs, lngs,
            cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
 
-    if   not IsBijective(sigma) or not IsTame(sigma)
-      or Order(sigma) = infinity
+    if   not IsBijective(sigma) or not IsClassWiseOrderPreserving(sigma)
+      or not IsTame(sigma) or Order(sigma) = infinity
     then TryNextMethod(); fi;
     toint   := IntegralizingConjugator(sigma);
     int     := IntegralConjugate(sigma);

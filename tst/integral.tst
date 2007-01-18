@@ -422,14 +422,6 @@ true
 gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
 gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> k := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1],[1,1,1],[1,-1,1]]);;
-gap> std := StandardConjugate(k);
-<bijective rcwa mapping of Z with modulus 5, of order 6>
-gap> tostd := StandardizingConjugator(k);
-<bijective rcwa mapping of Z with modulus 5>
-gap> k^tostd = std;
-true
-gap> Order(tostd);
-6
 gap> Image(k,ResidueClass(Integers,3,2));
 1(15) U 9(15) U 10(15) U 12(15) U 13(15)
 gap> PreImage(k,last);
