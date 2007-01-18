@@ -423,7 +423,7 @@ gap> v := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);;
 gap> w := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> k := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1],[1,1,1],[1,-1,1]]);;
 gap> std := StandardConjugate(k);
-<tame bijective rcwa mapping of Z with modulus 5>
+<bijective rcwa mapping of Z with modulus 5, of order 6>
 gap> tostd := StandardizingConjugator(k);
 <bijective rcwa mapping of Z with modulus 5>
 gap> k^tostd = std;

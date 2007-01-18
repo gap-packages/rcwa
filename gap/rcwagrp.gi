@@ -1557,7 +1557,9 @@ InstallMethod( StandardizingConjugator,
     local  toint, int, m, mtilde, mTilde, P, r, rtilde, c, cycs, lngs,
            cohorts, cohort, l, nrcycs, res, cyc, n, ntilde, i, j, k;
 
-    if not IsBijective(sigma) or not IsTame(sigma) then TryNextMethod(); fi;
+    if   not IsBijective(sigma) or not IsTame(sigma)
+      or Order(sigma) = infinity
+    then TryNextMethod(); fi;
     toint   := IntegralizingConjugator(sigma);
     int     := IntegralConjugate(sigma);
     m       := Modulus(int);
