@@ -1227,8 +1227,8 @@ InstallMethod( \in,
     local  P, H, h, K, k, KPoly, KFullPoly, genKFP, kPoly, crcs,
            F, phi, gens, orbs, orbsmod, m, max, i;
 
-    Info(InfoRCWA,2,"\\in for an rcwa mapping of Z ",
-                    "and an rcwa group over Z");
+    Info(InfoRCWA,2,"\\in for an rcwa permutation <g> of Z ",
+                    "and an rcwa group <G> over Z");
     if not IsBijective(g)
     then Info(InfoRCWA,4,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);

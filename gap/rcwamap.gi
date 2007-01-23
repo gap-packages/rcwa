@@ -2928,142 +2928,238 @@ InstallOtherMethod( IsUnit,
 
 #############################################################################
 ##
-#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-##  The `wild --> infinite order' criterion.
-##
-InstallMethod( Order, 
-               "for rcwa mappings, wild->infinite order. (RCWA)",
-               true, [ IsRcwaMapping and HasIsTame ], SUM_FLAGS,
+InstallMethod( IsTame,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
-    if not IsTame(f) then return infinity; else TryNextMethod(); fi;
+
+    local  gamma, delta, C, r,
+           m, coeffs, cl, img, c, d,
+           pow, exp, e;
+
+    Info(InfoRCWA,3,"`IsTame' for an rcwa mapping <f> of ",
+                    RingToString(Source(f)),".");
+
+    if IsBijective(f) and HasOrder(f) and Order(f) <> infinity then
+      Info(InfoRCWA,3,"IsTame: <f> has finite order, hence is tame.");
+      return true;
+    fi;
+
+    if IsIntegral(f) then
+      Info(InfoRCWA,3,"IsTame: <f> is integral, hence tame.");
+      return true;
+    fi;
+
+    if not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f))) then
+      Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
+      if IsBijective(f) then SetOrder(f,infinity); fi;
+      return false;
+    fi;
+
+    if    IsBijective(f)
+      and Set(Factors(Multiplier(f))) <> Set(Factors(Divisor(f)))
+    then
+      Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
+      SetOrder(f,infinity); return false;
+    fi;
+
+    if IsSurjective(f) and not IsInjective(f) then
+      Info(InfoRCWA,3,"IsTame: <f> is surjective and not ",
+                      "injective, hence wild.");
+      return false;
+    fi;
+
+    if IsRcwaMappingOfZOrZ_pi(f) and IsBijective(f) then
+      Info(InfoRCWA,3,"IsTame: Sources-and-Sinks Criterion.");
+      gamma := TransitionGraph(f,Modulus(f));
+      for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
+      delta := UnderlyingGraph(gamma);
+      C := ConnectedComponents(delta);
+      if Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
+      then
+        Info(InfoRCWA,3,"IsTame: <f> is wild, ",
+                        "by Sources-and-Sinks Criterion.");
+        SetOrder(f,infinity); return false;
+      fi;
+    fi;
+
+    if IsBijective(f) then
+      Info(InfoRCWA,3,"IsTame: Loop Criterion.");
+      m := Modulus(f);
+      if IsRcwaMappingOfZ(f) then
+        coeffs := Coefficients(f);
+        for r in [0..m-1] do
+          c := coeffs[r+1];
+          if AbsInt(c[1]) <> 1 or c[3] <> 1 then
+            d := Gcd(m,c[1]*m/c[3]);
+            if (r - (c[1]*r+c[2])/c[3]) mod d = 0 then
+              Info(InfoRCWA,3,"IsTame: <f> is wild, by Loop Criterion.");
+              SetOrder(f,infinity); return false;
+            fi;
+          fi;
+        od;
+      else
+        for cl in AllResidueClassesModulo(Source(f),m) do
+          img := cl^f;
+          if img <> cl and Intersection(cl,img) <> [] then
+            Info(InfoRCWA,3,"IsTame: <f> is wild, by loop criterion.");
+            SetOrder(f,infinity); return false;
+          fi;
+        od;
+      fi;
+    fi;
+
+    Info(InfoRCWA,3,"IsTame: `finite order or integral power' criterion.");
+    pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
+    for e in exp do
+      pow := pow^e;
+      if IsIntegral(pow) then
+        Info(InfoRCWA,3,"IsTame: <f> has a power which is integral, ",
+                        "hence is tame.");
+        return true;
+      fi;
+      if   IsRcwaMappingOfZOrZ_pi(f) and Modulus(pow) > 6 * Modulus(f)
+        or IsRcwaMappingOfGFqx(f)
+           and   DegreeOfLaurentPolynomial(Modulus(pow))
+               > DegreeOfLaurentPolynomial(Modulus(f)) + 2
+      then break; fi;
+    od;
+
+    if IsBijective(f) and Order(f) <> infinity then
+      Info(InfoRCWA,3,"IsTame: <f> has finite order, hence is tame.");
+      return true;
+    fi;
+
+    if HasIsTame(f) then return IsTame(f); fi;
+
+    Info(InfoRCWA,3,"IsTame: Giving up.");
+    TryNextMethod();
+
   end );
 
 #############################################################################
 ##
-#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
-##
-##  The `wild --> infinite order' criterion, force wildness test.
+#M  Order( <g> ) . . . . . . . . . . . . . . . .  for bijective rcwa mappings
 ##
 InstallMethod( Order,
-               "for rcwa mappings, wild->infinite order, force test. (RCWA)",
+               "for bijective rcwa mappings (RCWA)",
                true, [ IsRcwaMapping ], 0,
 
-  function ( f )
-    if HasIsTame(f) and not IsTame(f) then return infinity; fi;
-    if IsRcwaMappingOfZ(f) and not IsTame(f) then return infinity; fi;
-    TryNextMethod();
-  end );
+  function ( g )
 
-#############################################################################
-##
-#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
-##
-##  The determinant criterion.
-##
-InstallMethod( Order,
-               "for rcwa mappings of Z, determinant criterion. (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 100,
+    local  P, k, p, gtilde, e, e_old, e_max, l, l_max, stabiter,
+           n0, n, b1, b2, m1, m2, r, pow, exp, c, i;
 
-  function ( f )
-    if   not IsBijective(f) or not IsClassWiseOrderPreserving(f)
-      or Determinant(f) = 0
-    then TryNextMethod(); else return infinity; fi;
-  end );
-
-#############################################################################
-##
-#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
-##
-##  The `factors of multiplier and divisor' criterion.
-##
-InstallMethod( Order,
-               "for rcwa mappings, factors of mult. and div. - crit. (RCWA)",
-               true, [ IsRcwaMapping ], 50,
-
-  function ( f )
-
-    local  R, mult, div;
-
-    if not IsBijective(f) then TryNextMethod(); fi;
-    R := Source(f); mult := Multiplier(f); div := Divisor(f);
-    if Set(Factors(R,mult)) <> Set(Factors(R,div))
-    then return infinity; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  Order( <f> ) . . . . . . . . . . . . . . for rcwa mappings of Z or Z_(pi)
-##
-##  This method tests whether <f> satisfies one sufficient criterium for
-##  having infinite order: it checks whether there is a small, smooth
-##  exponent <e> such that the mapping <f>^<e> has a cycle which is a whole
-##  residue class. In case <f> does not have such a cycle it gives up.
-##
-InstallMethod( Order,
-               "for rcwa map's of Z or Z_(pi), arith. prog. method (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 20,
-
-  function ( f )
-
-    local  g, c, m1, m2, exp, e, n, r, one;
-
-    one := One(f);
-    if f = one then return 1; fi;
-    if not IsBijective(f) 
+    if   not IsBijective(g) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
-    m1 := f!.modulus; g := f;
-    exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
-    for n in exp do
-      c := g!.coeffs; m2 := g!.modulus;
-      if m2 > 6 * m1 or IsOne(g) then TryNextMethod(); fi;
-      r := First([1..m2], n ->     c[n] <> [1,0,1] and c[n]{[1,3]} = [1,1]
-                               and c[n][2] mod m2 = 0);
-      if r <> fail then return infinity; fi;
-      g := g^n; e := e * n; if g = one then break; fi;
-    od;
-    TryNextMethod();
-  end );
+    
+    Info(InfoRCWA,3,"`Order' for an rcwa permutation <g> of ",
+                    RingToString(Source(g)),".");
 
-#############################################################################
-##
-#M  Order( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
-##
-##  This method tries to enumerate cycles of the rcwa mapping <f>.
-##  In case <f> has finite order, the method may determine it or give up.
-##  In case <f> has infinite order, the method gives up.
-##
-InstallMethod( Order,
-               "for rcwa mappings of Z, cycle method (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+    if IsOne(g) then return 1; fi;
 
-  function ( f )
+    if HasIsTame(g) and not IsTame(g) then
+      Info(InfoRCWA,3,"Order: <g> is wild, hence has infinite order.");
+      return infinity;
+    fi;
 
-    local  CycLng, CycLngs, LengthLimit, SizeLimit,
-           support, n, m, i, warning;
+    if IsRcwaMappingOfZ(g) then
+      if IsClassWiseOrderPreserving(g) and Determinant(g) <> 0 then
+        Info(InfoRCWA,3,"Order: <g> is class-wise order-preserving, ",
+                        "but not in ker det.");
+        Info(InfoRCWA,3,"       Hence <g> has infinite order.");
+        return infinity;
+      fi;
+    fi;
 
-    if IsOne(f) then return 1; fi;
-    if not IsBijective(f) 
-    then Error("Order: <rcwa mapping> must be bijective\n"); fi;
-    LengthLimit := 2 * Modulus(f)^2;
-    SizeLimit   := Maximum(10^40,Maximum(Flat(Coefficients(f)))^3,
-                           Modulus(f)^10);
-    CycLngs     := [];
-    for i in [1..25] do  # 25 trials ...
-      repeat n := Random([1..2^27]); until n^f <> n;
-      m := n; CycLng := 0;
+    if Set(Factors(Multiplier(g))) <> Set(Factors(Divisor(g))) then
+      Info(InfoRCWA,3,"Order: <g> has infinite order ",
+                      "by the balancedness criterion.");
+      SetIsTame(g,false); return infinity;
+    fi;
+
+    if IsRcwaMappingOfZOrZ_piInStandardRep(g) then
+
+      m1 := Mod(g); pow := g;
+      exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2];
+      for e in exp do
+        c := Coefficients(pow); m2 := Modulus(pow);
+        if m2 > 6 * m1 then break; fi;
+        r := First([1..m2],i -> c[i] <> [1,0,1] and c[i]{[1,3]} = [1,1]
+                            and c[i][2] mod m2 = 0);
+        if r <> fail then
+          Info(InfoRCWA,3,"Order: <g> has infinite order ",
+                          "by the arithmetic progression criterion.");
+          return infinity;
+        fi;
+        pow := pow^e; if IsOne(pow) then break; fi;
+      od;
+
+      Info(InfoRCWA,3,"Order: Looking for finite cycles ... ");
+
+      e := 1; l_max := 2 * Mod(g)^2; e_max := 2^Mod(g); stabiter := 0;
+      b1 := 2^64-1; b2 := b1^2;
       repeat
-        m := m^f; CycLng := CycLng + 1;
-      until m = n or CycLng > LengthLimit or m > SizeLimit;
-      if   CycLng > LengthLimit or m > SizeLimit
-      then TryNextMethod(); fi; # Conjecture: <f> has infinite order then.
-      Add(CycLngs,CycLng);
-    od;
-    if   IsOne(f^Lcm(CycLngs)) 
-    then SetIsTame(f,true);
-         return Lcm(CycLngs);
-    else TryNextMethod(); fi;
+        n0 := Random(-b1,b1); n := n0; l := 0;
+        repeat
+          n := n^g;
+          l := l + 1;
+        until n = n0 or AbsInt(n) > b2 or l > l_max;
+        if n = n0 then
+          e_old := e; e := Lcm(e,l);
+          if e > e_old then stabiter := 0; else stabiter := stabiter + 1; fi;
+        else break; fi;
+      until stabiter = 64 or e > e_max;
+    
+      if e <= e_max and stabiter = 64 then
+        c := Reversed(CoefficientsQadic(e,2)); pow := g;
+        for i in [2..Length(c)] do
+          pow := pow^2;
+          if Mod(pow) > Mod(g)^2 then break; fi;
+          if c[i] = 1 then pow := pow * g; fi;
+          if Mod(pow) > Mod(g)^2 then break; fi;
+        od;
+        if IsOne(pow) then return e; fi;
+      fi;
+
+    fi;
+
+    if not IsTame(g) then
+      Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
+      return infinity;
+    fi;
+
+    Info(InfoRCWA,3,"Order: Attempt to determine a respected partition <P>");
+    Info(InfoRCWA,3,"       of <g>, and compute the order <k> of the per-");
+    Info(InfoRCWA,3,"       mutation induced by <g> on <P> as well as the");
+    Info(InfoRCWA,3,"       order of <g>^<k>.");
+
+    P := RespectedPartition(g);
+
+    k      := Order(Permutation(g,P));
+    gtilde := g^k;
+
+    if IsOne(gtilde) then return k; fi;
+
+    if IsRcwaMappingOfZOrZ_pi(g) then
+      if   not IsClassWiseOrderPreserving(g) and IsOne(gtilde^2)
+      then return 2*k; else return infinity; fi;
+    fi;
+
+    if IsRcwaMappingOfGFqx(g) then
+      e := Lcm(List(Coefficients(g),c->Order(c[1])));
+      gtilde := gtilde^e;
+      if IsOne(gtilde) then return k * e; fi;
+      p := Characteristic(Source(g));
+      gtilde := gtilde^p;
+      if IsOne(gtilde) then return k * e * p; fi;
+    fi;
+
+    Info(InfoRCWA,3,"Order: Giving up.");
+    TryNextMethod();
+
   end );
 
 #############################################################################
@@ -3457,127 +3553,6 @@ InstallMethod( PrimeSet,
                            Set(Factors(Source(f),Multiplier(f))),
                            Set(Factors(Source(f),Divisor(f)))),
                      x -> IsIrreducibleRingElement( Source( f ), x ) );
-  end );
-
-#############################################################################
-##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mappings
-##
-##  The balancedness criterion and the
-##  `surjective and not injective' criterion.
-##
-InstallMethod( IsTame,
-               "for rcwa mappings, balancedness criterion (RCWA)",
-               true, [ IsRcwaMapping ], 100,
-
-  function ( f )
-    if   IsIntegral(f)
-    then Info(InfoRCWA,4,"IsTame: mapping is integral, hence tame.");
-         return true; fi;
-    Info(InfoRCWA,1,"IsTame: balancedness criterion.");
-    if   not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f)))
-    then if IsBijective(f) then SetOrder(f,infinity); fi; return false; fi;
-    if   IsBijective(f)
-     and Set(Factors(Multiplier(f))) <> Set(Factors(Divisor(f)))
-    then SetOrder(f,infinity); return false; fi;
-    if IsIntegers(Source(f)) then
-      Info(InfoRCWA,1,"IsTame: `surjective and not injective' criterion.");
-      if IsSurjective(f) and not IsInjective(f) then return false; fi;
-    fi;
-    TryNextMethod();
-  end );
-
-#############################################################################
-##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . for bijective rcwa mappings
-##
-##  The `dead end' criterion.
-##  This is only applicable to bijective mappings.
-##
-InstallMethod( IsTame,
-               "for bijective rcwa mappings, `dead end' criterion (RCWA)",
-               true, [ IsRcwaMapping ], 50,
-
-  function ( f )
-
-    local  gamma, delta, C, r;
-
-    if   not IsRcwaMappingOfZOrZ_pi(f) or not IsBijective(f)
-    then TryNextMethod(); fi; # TransitionGraph f. mod. map's curr. not impl.
-    Info(InfoRCWA,2,"IsTame:`dead end' criterion.");
-    gamma := TransitionGraph(f,Modulus(f));
-    for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
-    delta := UnderlyingGraph(gamma);
-    C := ConnectedComponents(delta);
-    if   Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
-    then SetOrder(f,infinity); return false; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . for bijective rcwa mappings
-##
-##  The loop criterion.
-##  This is only applicable to bijective mappings.
-##
-InstallMethod( IsTame,
-               "for bijective rcwa mappings, loop criterion (RCWA)", true,
-               [ IsRcwaMapping ], 40,
-
-  function ( f )
-
-    local  R, m, coeffs, cl, img, r, c, d;
-
-    if not IsBijective(f) then TryNextMethod(); fi;
-    Info(InfoRCWA,2,"IsTame: loop criterion.");
-    R := Source(f); m := Modulus(f);
-    if IsIntegers(R) then
-      coeffs := Coefficients(f);
-      for r in [0..m-1] do
-        c := coeffs[r+1];
-        if AbsInt(c[1]) <> 1 or c[3] <> 1 then
-          d := Gcd(m,c[1]*m/c[3]);
-          if   (r - (c[1]*r+c[2])/c[3]) mod d = 0
-          then SetOrder(f,infinity); return false; fi;
-        fi;
-      od;
-    else
-      for cl in AllResidueClassesModulo(R,m) do
-        img := cl^f;
-        if   img <> cl and Intersection(cl,img) <> []
-        then SetOrder(f,infinity); return false; fi;
-      od;
-    fi;
-    TryNextMethod();
-  end );
-
-#############################################################################
-##
-#M  IsTame( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mappings
-##
-##  The `finite order or flat power' criterion.
-##
-InstallMethod( IsTame,
-               "for rcwa mappings, `flat power' criterion (RCWA)",
-               true, [ IsRcwaMapping ], 30,
-
-  function ( f )
-
-    local  pow, exp, e;
-
-    Info(InfoRCWA,2,"IsTame:`finite order or integral power' criterion.");
-    if IsBijective(f) and Order(f) <> infinity then return true; fi;
-    pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
-    for e in exp do
-      pow := pow^e;
-      if IsIntegral(pow) then return true; fi;
-      if   IsRcwaMappingOfZOrZ_pi(f) and Modulus(pow) > 6 * Modulus(f)
-        or IsRcwaMappingOfGFqx(f)
-           and   DegreeOfLaurentPolynomial(Modulus(pow))
-               > DegreeOfLaurentPolynomial(Modulus(f)) + 2
-      then TryNextMethod(); fi;
-    od;
-    TryNextMethod();
   end );
 
 #############################################################################
