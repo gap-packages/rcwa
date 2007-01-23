@@ -69,10 +69,11 @@ group which has subgroups of all types listed in the abstract.
 It is countable, but it has an uncountable series of simple subgroups
 which is parametrized by the sets of odd primes. <P/>
 
-Proofs of most of the results mentioned here and in the abstract have not
-yet appeared in print.
-However they can be found in the preprint&nbsp;<Cite Key="Kohl06b"/>, which
-is available on the author's homepage.
+Proofs of most of the results mentioned here and in the abstract have
+not yet appeared in print. However they can be found in the
+preprint&nbsp;<Cite Key="Kohl06b"/>, which is available on the author's
+homepage. Descriptions of many of the algorithms and methods which are
+implemented in this package can be found in&nbsp;<Cite Key="Kohl07a"/>.
 
 </Section>
 
