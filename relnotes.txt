@@ -389,4 +389,13 @@ Changes between version 2.3.1 and version 2.3.2:
  - A copy of my thesis is distributed with the package again
    (somebody had asked for it).
 
+Changes between version 2.3.2 and version 2.3.3:
+
+ - Now there is a new preprint on algorithms and methods for rcwa groups,
+   in which many of the algorithms and methods implemented in this package
+   are described in detail. A reference to this preprint has been added
+   to the manual.
+
+ - A couple of minor improvements of the code and the documentation have
+   been made.
 
