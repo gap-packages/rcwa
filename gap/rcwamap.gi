@@ -3144,12 +3144,12 @@ InstallMethod( Order,
     if IsOne(gtilde) then return k; fi;
 
     if IsRcwaMappingOfZOrZ_pi(g) then
-      if   not IsClassWiseOrderPreserving(g) and IsOne(gtilde^2)
+      if   not IsClassWiseOrderPreserving(gtilde) and IsOne(gtilde^2)
       then return 2*k; else return infinity; fi;
     fi;
 
     if IsRcwaMappingOfGFqx(g) then
-      e := Lcm(List(Coefficients(g),c->Order(c[1])));
+      e := Lcm(List(Coefficients(gtilde),c->Order(c[1])));
       gtilde := gtilde^e;
       if IsOne(gtilde) then return k * e; fi;
       p := Characteristic(Source(g));
