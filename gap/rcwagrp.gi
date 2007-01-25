@@ -370,15 +370,62 @@ InstallMethod( IsSimple,
 
 #############################################################################
 ##
-#F  ClassPairs( <m> )
+#F  ClassPairs( [ <R> ], <m> )
 ##
-##  All pairs of disjoint residue classes with modulus < m.
+##  In the one-argument version, this function returns a list of all
+##  unordered pairs of disjoint residue classes of Z with modulus <= <m>.
+##
+##  In the two-argument version, it does the following:
+##
+##    - If <R> is either the ring of integers or a semilocalization thereof,
+##      it returns a list of all unordered pairs of disjoint residue classes
+##      of <R> with modulus <= <m>.
+##
+##    - If <R> is a univariate polynomial ring over a finite field, it
+##      returns a list of all unordered pairs of disjoint residue classes
+##      of <R> whose moduli have at most the same degree as <m>.
 ##
 InstallGlobalFunction( ClassPairs,
-  m -> Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
-                t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
-                     and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
-                     and (t[2] <> t[4] or t[1] < t[3])) );
+
+  function ( arg )
+
+    local  R, m, tuples, moduli, Degree, m1, r1, m2, r2;
+
+    if   Length(arg) = 1 then R := Integers; m := arg[1];
+    elif Length(arg) = 2 then R := arg[1];   m := arg[2];
+    else Error("usage: ClassPairs( [ <R> ], <m> )\n"); fi;
+    if IsIntegers(R) or IsZ_pi(R) then
+      tuples := Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
+                         t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
+                              and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
+                              and (t[2] <> t[4] or t[1] < t[3]));
+      if IsZ_pi(R) then
+        tuples := Filtered(tuples,t->IsSubset(NoninvertiblePrimes(R),
+                                              Factors(t[2]*t[4])));
+      fi;
+    elif     IsUnivariatePolynomialRing(R) and IsField(LeftActingDomain(R))
+         and IsFinite(LeftActingDomain(R))
+    then
+      Degree := DegreeOfUnivariateLaurentPolynomial;
+      tuples := [];
+      moduli := Filtered(AllResidues(R,m),r->IsPosInt(Degree(r)));
+      for m1 in moduli do
+        for m2 in moduli do
+          if Degree(m1) > Degree(m2) then continue; fi;
+          for r1 in AllResidues(R,m1) do
+            for r2 in AllResidues(R,m2) do
+              if (m1 <> m2 or r1 < r2) and not IsZero((r1-r2) mod Gcd(m1,m2))
+              then Add(tuples,[r1,m1,r2,m2]); fi;
+            od;
+          od;
+        od;
+      od;
+    else
+      Error("ClassPairs: Sorry, the ring ",R,"\n",String(" ",19),
+            "is currently not supported by this function.\n");
+    fi;
+    return tuples;
+  end );
 
 InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
 InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );

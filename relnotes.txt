@@ -397,5 +397,13 @@ Changes between version 2.3.2 and version 2.3.3:
    to the manual.
 
  - A couple of minor improvements of the code and the documentation have
-   been made.
+   been made. For example, the method for computing the order of a bijective
+   rcwa mapping has been improved, and the number of stored generators of
+   wreath products of rcwa groups with finite permutation groups has been
+   reduced.
+
+ - There is now a two-argument version of the function `ClassPairs', which
+   supports the rings Z_pi and GF(q)[x] as well. The ring has to be given as
+   the first argument.
+
 
