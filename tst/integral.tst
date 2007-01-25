@@ -1218,7 +1218,7 @@ gap> IsTame(G); Size(G);
 true
 infinity
 gap> H := WreathProduct(G,AlternatingGroup(5));
-<tame rcwa group over Z with 12 generators, of size infinity>
+<tame rcwa group over Z with 4 generators, of size infinity>
 gap> Embedding(H,1);
 [ g, h ] -> [ <bijective rcwa mapping of Z with modulus 30, of order 7>, 
   <bijective rcwa mapping of Z with modulus 30, of order 12> ]

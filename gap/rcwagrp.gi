@@ -2797,25 +2797,26 @@ InstallMethod( WreathProduct,
 
   function ( G, P )
 
-    local  prod, info, m, orbreps, blocks, base, h, nrgensG;
+    local  prod, info, m, orbreps, gensonreps, blocks, base, h, nrgensG;
 
-    nrgensG := Length(GeneratorsOfGroup(G));
-    m       := DegreeAction(P);
-    orbreps := List(Orbits(P,MovedPoints(P)),Representative);
-    blocks  := AllResidueClassesModulo(m);
-    base    := DirectProduct(List([0..m-1],r->G));
-    h       := RcwaGroupByPermGroup(P);
-    prod    := Group(Concatenation(GeneratorsOfGroup(base),
-                                   GeneratorsOfGroup(h)));
-    info    := rec( groups := [ G, P ], alpha := IdentityMapping(P),
-                    base := base, basegens := GeneratorsOfGroup(base),
-                    I := P, degI := m, hgens := GeneratorsOfGroup(h),
-                    components := blocks,
-                    embeddings := [ GroupHomomorphismByImagesNC( G, prod,
-                                      GeneratorsOfGroup(G),
-                                      ~.basegens{[1..nrgensG]} ),
-                                    GroupHomomorphismByImagesNC( P, prod,
-                                      GeneratorsOfGroup(P), ~.hgens ) ] );
+    nrgensG    := Length(GeneratorsOfGroup(G));
+    m          := DegreeAction(P);
+    orbreps    := List(Orbits(P,MovedPoints(P)),Representative);
+    gensonreps := Concatenation(List(orbreps,r->GeneratorsOfGroup(
+                                Restriction(G,RcwaMapping([[m,r-1,1]])))));
+    blocks     := AllResidueClassesModulo(m);
+    base       := DirectProduct(List([0..m-1],r->G));
+    h          := RcwaGroupByPermGroup(P);
+    prod       := Group(Concatenation(gensonreps,GeneratorsOfGroup(h)));
+    info       := rec( groups := [ G, P ], alpha := IdentityMapping(P),
+                       base := base, basegens := GeneratorsOfGroup(base),
+                       I := P, degI := m, hgens := GeneratorsOfGroup(h),
+                       components := blocks,
+                       embeddings := [ GroupHomomorphismByImagesNC( G, prod,
+                                         GeneratorsOfGroup(G),
+                                         gensonreps{[1..nrgensG]} ),
+                                       GroupHomomorphismByImagesNC( P, prod,
+                                         GeneratorsOfGroup(P), ~.hgens ) ] );
     SetWreathProductInfo(prod,info);
     if HasIsTame(G) then
       if IsTame(G) then
