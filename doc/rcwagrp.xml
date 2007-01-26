@@ -1062,12 +1062,15 @@ gap> Factorization(elm);
 ]]>
 </Log>
 
-An auxiliary function which is used in this context for choosing the
-class transpositions is <C>ClassPairs(<A>m</A>)</C>.
+There is an auxiliary function <C>ClassPairs([<A>R</A>,] <A>m</A>)</C>,
+which is used in this context.
 <Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-This function returns a list of 4-tuples <M>(r_1,m_1,r_2,m_2)</M>
-of integers corresponding to the pairs of disjoint residue classes
-<M>r_1(m_1)</M> and <M>r_2(m_2)</M> with <M>m_1, m_2 \leq m</M>.
+<Index Key="ClassPairs" Subkey="R, m"><C>ClassPairs</C></Index>
+In its one-argument form, this function returns a list of 4-tuples
+<M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
+pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
+with <M>m_1, m_2 \leq m</M>. In its two-argument form, it does
+<Q>the same</Q> for the ring&nbsp;<A>R</A>.
 
 <Example>
 <![CDATA[
