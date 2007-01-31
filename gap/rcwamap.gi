@@ -3541,6 +3541,21 @@ InstallMethod( PermutationOpNC,
 
 #############################################################################
 ##
+#M  Permuted( <l>, <perm> ) . . . . . . . . . . . . . . . . . fallback method
+##
+##  This method is used in particular in the case that <perm> is an rcwa
+##  permutation and <l> is a respected partition of <perm>.
+##
+InstallOtherMethod( Permuted,
+                    "fallback method (RCWA)", ReturnTrue,
+                    [ IsList, IsMapping ], 0,
+
+  function ( l, perm )
+    return Permuted( l, Permutation( perm, l ) );
+  end );
+
+#############################################################################
+##
 #M  PrimeSet( <f> ) . . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( PrimeSet,
