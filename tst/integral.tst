@@ -1520,6 +1520,9 @@ gap> C := RcwaMapping([[1,0,2],[3,1,1]]);;
 gap> gt := List([3,5..99],n->GluckTaylorInvariant(Trajectory(C,n,[1])));;
 gap> Minimum(gt) > 9/13 and Maximum(gt) < 5/7;
 true
+gap> P := RandomPartitionIntoResidueClasses(Integers,5,[2,3]);;
+gap> Permuted(P,RcwaMapping([P])) = Permuted(P,(1,2,3,4,5));
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 4000000000 );

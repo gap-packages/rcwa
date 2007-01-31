@@ -345,6 +345,14 @@ gap> StructureDescription(RCWA(R));
 "RCWA(GF(2)[x])"
 gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
+gap> P1 := RespectedPartition(ct);
+[ Z(2)^0 ( mod x ), 0*Z(2) ( mod x^2+x ), x ( mod x^2+x ) ]
+gap> P2 := Permuted(P1,ct);
+[ x ( mod x^2+x ), 0*Z(2) ( mod x^2+x ), Z(2)^0 ( mod x ) ]
+gap> g := RepresentativeAction(RCWA(R),P1,P2);
+<bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
+gap> P1^g = P2;
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 250000000 );
 
