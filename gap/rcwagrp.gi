@@ -2033,6 +2033,37 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
+#M  RepresentativeActionOp( RCWA( PolynomialRing( GF( <q> ), 1 ) ),
+#M                          <P1>, <P2>, <act> ) 
+##
+##  Returns an rcwa mapping <g> which maps the partition <P1> to the
+##  partition <P2> and which is affine on the elements of <P1>.
+##
+##  The arguments <P1> and <P2> must be partitions of GF(q)[x] into equally
+##  many residue classes, and the argument <act> is ignored.
+##
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(GF(q)[x]) and two class partitions (RCWA)", true,
+               [ IsNaturalRCWA_GFqx, IsList, IsList, IsFunction ], 0,
+
+  function ( RCWA_GFqx, P1, P2, act )
+
+    local  R, g;
+
+    R := Support(RCWA_GFqx);
+
+    if   Length(P1) <> Length(P2)
+      or not ForAll(Union(P1,P2),IsResidueClass)
+      or not ForAll(Union(P1,P2),cl->IsSubset(R,cl))
+      or not ForAll([P1,P2],P->Sum(List(P,Density))=1)
+      or not ForAll([P1,P2],P->Union(P) = R)
+    then TryNextMethod(); fi;
+
+    return RcwaMapping(P1,P2);
+  end );
+
+#############################################################################
+##
 #M  Ball( <G>, <g>, <r> ) . . . . . . . .  for a group and an element thereof
 ##
 ##  As element tests can be expensive, this method does not check whether
