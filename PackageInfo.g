@@ -50,7 +50,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4.7",
-                         NeededOtherPackages    := [ ["ResClasses", ">=2.3.6"], ["GRAPE",">=4.0"],
+                         NeededOtherPackages    := [ ["ResClasses", ">=2.3.8"], ["GRAPE",">=4.0"],
                                                      ["Polycyclic",">=2.1"], ["GAPDoc",">=0.999"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]

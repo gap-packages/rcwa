@@ -406,4 +406,13 @@ Changes between version 2.3.2 and version 2.3.3:
    supports the rings Z_pi and GF(q)[x] as well. The ring has to be given as
    the first argument.
 
+Changes between version 2.3.3 and version 2.3.4:
+
+ - A method for `Permuted' for a list of residue classes and an
+   rcwa permutation has been added.
+
+ - A method for `RepresentativeAction' for RCWA(GF(q)[x]) and two partitions
+   of GF(q)[x] into residue classes has been added.
+
+ - Now, RCWA needs ResClasses 2.3.8.
 
