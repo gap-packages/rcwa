@@ -18,41 +18,23 @@ Revision.rcwagrp_gd :=
 #############################################################################
 ##
 #C  IsRcwaGroupOverZ . . . . . . . . . . . . . . . . . . . rcwa groups over Z
+#C  IsRcwaGroupOverZ_pi . . . . . . . . . . . . . . . rcwa groups over Z_(pi)
+#C  IsRcwaGroupOverGFqx . . . . . . . . . . . . . . rcwa groups over GF(q)[x]
+#C  IsRcwaGroupOverZOrZ_pi . . . . . . . . . . . rcwa groups over Z or Z_(pi)
 ##
-##  The category of all rcwa groups over Z.
+##  The category of all rcwa groups over Z, over semilocalizations of Z, or
+##  over polynomial rings in one variable over a finite field, respectively.
+##  The category `IsRcwaGroupOverZOrZ_pi' is the union of `IsRcwaGroupOverZ'
+##  and `IsRcwaGroupOverZ_pi'.
 ##
 DeclareSynonym( "IsRcwaGroupOverZ",
                  CategoryCollections(IsRcwaMappingOfZ) and IsGroup );
-
-#############################################################################
-##
-#C  IsRcwaGroupOverZ_pi . . . . . . . . . . . . . . . rcwa groups over Z_(pi)
-##
-##  The category of all rcwa groups over semilocalizations of Z.
-##
 DeclareSynonym( "IsRcwaGroupOverZ_pi",
                  CategoryCollections(IsRcwaMappingOfZ_pi) and IsGroup );
-
-#############################################################################
-##
-#C  IsRcwaGroupOverZOrZ_pi . . . . . . . . . . . rcwa groups over Z or Z_(pi)
-##
-##  The category of all rcwa groups over the ring Z or semilocalizations
-##  thereof. This is the union of the categories `IsRcwaGroupOverZ' and
-##  `IsRcwaGroupOverZ_pi'.
-##
-DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
-                 CategoryCollections(IsRcwaMappingOfZOrZ_pi) and IsGroup );
-
-#############################################################################
-##
-#C  IsRcwaGroupOverGFqx . . . . . . . . . . . . . . rcwa groups over GF(q)[x]
-##
-##  The category of all rcwa groups over polynomial rings in one variable
-##  over finite fields.
-##
 DeclareSynonym( "IsRcwaGroupOverGFqx",
                  CategoryCollections(IsRcwaMappingOfGFqx) and IsGroup );
+DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
+                 CategoryCollections(IsRcwaMappingOfZOrZ_pi) and IsGroup );
 
 #############################################################################
 ##
@@ -72,33 +54,49 @@ DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
 
 #############################################################################
 ##
-#O  RCWACons( <R> ) . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
+#O  RCWACons( <R> ) . . . . . . . . . . . . . . . . . .  RCWA( R ) for ring R
+#F  RCWA( <R> )
 ##
 DeclareConstructor( "RCWACons", [ IsRcwaGroup, IsRing ] );
-
-#############################################################################
-##
-#F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
-##
 DeclareGlobalFunction( "RCWA" );
 
 #############################################################################
 ##
+#P  IsNaturalRCWA( <G> ) . . . . . . . . . . . . . . . . . . . . .  RCWA( R )
 #P  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . .  RCWA( Z )
+#P  IsNaturalRCWA_Z_pi( <G> )  . . . . . . . . . . . . . . . . RCWA( Z_(pi) )
+#P  IsNaturalRCWA_GFqx( <G> )  . . . . . . . . . . . . . . . RCWA( GF(q)[x] )
 ##
+DeclareProperty( "IsNaturalRCWA", IsRcwaGroup );
 DeclareProperty( "IsNaturalRCWA_Z", IsRcwaGroup );
-
-#############################################################################
-##
-#P  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . .  RCWA( Z_(pi) )
-##
 DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
+DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 
 #############################################################################
 ##
-#P  IsNaturalRCWA_GFqx( <G> ) . . . . . . . . . . . . . . .  RCWA( GF(q)[x] )
+#O  CTCons( <R> ) . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
+#F  CT( <R> ) . . . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
 ##
-DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
+DeclareConstructor( "CTCons", [ IsRcwaGroup, IsRing ] );
+DeclareGlobalFunction( "CT" );
+
+#############################################################################
+##
+#P  IsNaturalCT( <G> ) . . . . . . . . . . . . . . . . . . . . . . .  CT( R )
+#P  IsNaturalCT_Z( <G> ) . . . . . . . . . . . . . . . . . . . . . .  CT( Z )
+#P  IsNaturalCT_Z_pi( <G> )  . . . . . . . . . . . . . . . . . . CT( Z_(pi) )
+#P  IsNaturalCT_GFqx( <G> )  . . . . . . . . . . . . . . . . . CT( GF(q)[x] )
+##
+DeclareProperty( "IsNaturalCT", IsRcwaGroup );
+DeclareProperty( "IsNaturalCT_Z", IsRcwaGroup );
+DeclareProperty( "IsNaturalCT_Z_pi", IsRcwaGroup );
+DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );
+
+#############################################################################
+##
+#P  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . RCWA( R ) or CT( R )
+##
+DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 
 #############################################################################
 ##

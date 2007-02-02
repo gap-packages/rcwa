@@ -55,11 +55,11 @@ InstallMethod( TrivialSubmagmaWithOne,
 
   function ( G )
 
-    local  Triv;
+    local  triv;
 
-    Triv := Group(One(G));
-    SetParentAttr(Triv,G);
-    return Triv;
+    triv := Group(One(G));
+    SetParentAttr(triv,G);
+    return triv;
   end );
 
 #############################################################################
@@ -72,10 +72,10 @@ BindGlobal( "RcwaGroupsOverZFamily", FamilyObj( TrivialRcwaGroupOverZ ) );
 ##
 #M  RCWACons( IsRcwaGroup, Integers ) . . . . . . . . . . . . . . . RCWA( Z )
 ##
-##  Group formed by all bijective rcwa mappings of Z.
+##  The group which is formed by all bijective rcwa mappings of Z.
 ##
 InstallMethod( RCWACons,
-               "natural RCWA(Z) (RCWA)", true,
+               "natural RCWA(Z) (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsIntegers ], 0,
 
   function ( filter, R )
@@ -87,11 +87,14 @@ InstallMethod( RCWACons,
                     rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, IdentityRcwaMappingOfZ );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_Z( G, true );
     SetModulusOfRcwaGroup( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
-    SetIsFinite( G, false ); SetSize( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
     SetCentre( G, TrivialRcwaGroupOverZ );
     SetIsAbelian( G, false );
@@ -107,10 +110,10 @@ InstallMethod( RCWACons,
 ##
 #M  RCWACons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . .  RCWA( Z_(pi) )
 ##
-##  Group formed by all bijective rcwa mappings of Z_(pi).
+##  The group which is formed by all bijective rcwa mappings of Z_(pi).
 ##
 InstallMethod( RCWACons,
-               "natural RCWA(Z_(pi)) (RCWA)", true,
+               "natural RCWA(Z_(pi)) (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsZ_pi ], 0,
 
   function ( filter, R )
@@ -125,12 +128,14 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_Z_pi( G, true );
     SetModulusOfRcwaGroup( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
-    SetIsFinite( G, false ); SetSize( G, infinity );
-  # SetIsFinitelyGeneratedGroup( G, false ); ???
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
     SetCentre( G, Group( id ) );
     SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
@@ -143,10 +148,10 @@ InstallMethod( RCWACons,
 ##
 #M  RCWACons( IsRcwaGroup, PolynomialRing( GF( <q> ), 1 ) )  RCWA( GF(q)[x] )
 ##
-##  Group formed by all bijective rcwa mappings of GF(q)[x].
+##  The group which is formed by all bijective rcwa mappings of GF(q)[x].
 ##
 InstallMethod( RCWACons,
-               "natural RCWA(GF(q)[x]) (RCWA)", true, 
+               "natural RCWA(GF(q)[x]) (RCWA)", ReturnTrue, 
                [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
 
   function ( filter, R )
@@ -161,11 +166,14 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_GFqx( G, true );
     SetModulusOfRcwaGroup( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
-    SetIsFinite( G, false ); SetSize( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
     SetCentre( G, Group( id ) );
     SetIsAbelian( G, false );
@@ -178,39 +186,351 @@ InstallMethod( RCWACons,
 
 #############################################################################
 ##
-#F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . RCWA( <R> ) for PID <R>
+#F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . RCWA( R )
 ##
 InstallGlobalFunction( RCWA, R -> RCWACons( IsRcwaGroup, R ) );
 
 #############################################################################
 ##
+#M  IsNaturalRCWA( <G> ) . . . . . . . . . . . . . . . . . . . . . .  RCWA(R)
 #M  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . . .  RCWA(Z)
-##
-##  The group RCWA(Z) can only be obtained by the above constructor.
-##
-InstallMethod( IsNaturalRCWA_Z,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               ReturnFalse );
-
-#############################################################################
-##
 #M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . .  RCWA(Z_(pi))
-##
-##  The groups RCWA(Z_(pi)) can only be obtained by the above constructor.
-##
-InstallMethod( IsNaturalRCWA_Z_pi,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               ReturnFalse );
-
-#############################################################################
-##
 #M  IsNaturalRCWA_GFqx( <G> ) . . . . . . . . . . . . . . . .  RCWA(GF(q)[x])
 ##
-##  The groups RCWA(GF(q)[x]) can only be obtained by the above constructor.
+##  The groups RCWA( <R> ) can only be obtained by the above constructors.
 ##
-InstallMethod( IsNaturalRCWA_GFqx,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               ReturnFalse );
+for property in [ IsNaturalRCWA,
+                  IsNaturalRCWA_Z, IsNaturalRCWA_Z_pi, IsNaturalRCWA_GFqx ]
+do
+  InstallMethod( property,
+                 "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+                 ReturnFalse );
+od;
+
+#############################################################################
+##
+#M  \in( <g>, RCWA( <R> ) ) . . . . . . . . . for an rcwa mapping and RCWA(R)
+##
+InstallMethod( \in,
+               "for an rcwa mapping and RCWA(R) (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsNaturalRCWA ], 100,
+
+  function ( g, RCWA_R )
+    return FamilyObj(g) = FamilyObj(One(RCWA_R)) and IsBijective(g);
+  end );
+
+#############################################################################
+## 
+#M  IsSubset( RCWA( <R> ), G ) . . . . . for RCWA(R) and an rcwa group over R
+## 
+InstallMethod( IsSubset,
+               "for RCWA(R) and an rcwa group over R (RCWA)", ReturnTrue,
+               [ IsNaturalRCWA, IsRcwaGroup ], SUM_FLAGS,
+
+  function ( RCWA_R, G )
+    return FamilyObj(One(RCWA_R)) = FamilyObj(One(G));
+  end );
+
+#############################################################################
+##
+#M  CTCons( IsRcwaGroup, Integers ) . . . . . . . . . . . . . . . . . CT( Z )
+##
+##  The simple group which is generated by
+##  the set of all class transpositions of Z.
+##
+InstallMethod( CTCons,
+               "natural CT(Z) (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsIntegers ], 0,
+
+  function ( filter, R )
+
+    local  G;
+
+    G := Objectify( NewType( RcwaGroupsOverZFamily,
+                             IsRcwaGroupOverZ and IsAttributeStoringRep ),
+                    rec( ) );
+    SetIsTrivial( G, false );
+    SetOne( G, IdentityRcwaMappingOfZ );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalCT( G, true );
+    SetIsNaturalCT_Z( G, true );
+    SetModulusOfRcwaGroup( G, 0 );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
+    SetIsFinitelyGeneratedGroup( G, false );
+    SetCentre( G, TrivialRcwaGroupOverZ );
+    SetIsAbelian( G, false );
+    SetIsSolvableGroup( G, false );
+    SetIsPerfectGroup( G, true );
+    SetIsSimpleGroup( G, true );
+    SetRepresentative( G, ClassTransposition(0,2,1,2) );
+    SetSupport( G, Integers );
+    SetName( G, "CT(Z)" );
+    return G;
+  end );
+
+#############################################################################
+##
+#M  CTCons( IsRcwaGroup, Z_pi( <pi> ) ) . . . . . . . . . . . .  CT( Z_(pi) )
+##
+##  The group which is generated by the set of
+##  all class transpositions of Z_(pi).
+##
+InstallMethod( CTCons,
+               "natural CT(Z_(pi)) (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsZ_pi ], 0,
+
+  function ( filter, R )
+
+    local  G, pi, id, rep;
+
+    pi := NoninvertiblePrimes( R );
+    id := RcwaMapping( pi, [ [1,0,1] ] );
+    G  := Objectify( NewType( FamilyObj( Group( id ) ),
+                                  IsRcwaGroupOverZ_pi
+                              and IsAttributeStoringRep ),
+                     rec( ) );
+    SetIsTrivial( G, false );
+    SetOne( G, id );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalCT( G, true );
+    SetIsNaturalCT_Z_pi( G, true );
+    SetModulusOfRcwaGroup( G, 0 );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
+    SetCentre( G, Group( id ) );
+    SetIsAbelian( G, false );
+    SetIsSolvableGroup( G, false );
+    rep := ClassTransposition(AllResidueClassesModulo(R,pi[1]){[1..2]});
+    SetRepresentative( G, rep );
+    SetSupport( G, R );
+    SetName( G, Concatenation( "CT(", Name(R), ")" ) );
+    return G;
+  end );
+
+#############################################################################
+##
+#M  CTCons( IsRcwaGroup, PolynomialRing( GF( <q> ), 1 ) ) . .  CT( GF(q)[x] )
+##
+##  The group which is generated by the set of
+##  all class transpositions of GF(q)[x].
+##
+InstallMethod( CTCons,
+               "natural CT(GF(q)[x]) (RCWA)", true, 
+               [ IsRcwaGroup, IsUnivariatePolynomialRing ], 0,
+
+  function ( filter, R )
+
+    local  G, q, id, rep;
+
+    q  := Size( CoefficientsRing( R ) );
+    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
+    G  := Objectify( NewType( FamilyObj( Group( id ) ),
+                                  IsRcwaGroupOverGFqx
+                              and IsAttributeStoringRep ),
+                     rec( ) );
+    SetIsTrivial( G, false );
+    SetOne( G, id );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalCT( G, true );
+    SetIsNaturalCT_GFqx( G, true );
+    SetModulusOfRcwaGroup( G, Zero( R ) );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
+    SetIsFinitelyGeneratedGroup( G, false );
+    SetCentre( G, Group( id ) );
+    SetIsAbelian( G, false );
+    SetIsSolvableGroup( G, false );
+    rep := ClassTransposition(SplittedClass(R,q){[1..2]});
+    SetRepresentative( G, rep );
+    SetSupport( G, R );
+    SetName( G, Concatenation( "CT(GF(", String(q), ")[",
+                String(IndeterminatesOfPolynomialRing(R)[1]),"])" ) );
+    return G;
+  end );
+
+#############################################################################
+##
+#F  CT( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . CT(R)
+##
+InstallGlobalFunction( CT, R -> CTCons( IsRcwaGroup, R ) );
+
+#############################################################################
+##
+#M  IsNaturalCT( <G> )  . . . . . . . . . . . . . . . . . . . . . . . . CT(R)
+#M  IsNaturalCT_Z( <G> )  . . . . . . . . . . . . . . . . . . . . . . . CT(Z)
+#M  IsNaturalCT_Z_pi( <G> ) . . . . . . . . . . . . . . . . . . .  CT(Z_(pi))
+#M  IsNaturalCT_GFqx( <G> ) . . . . . . . . . . . . . . . . . .  CT(GF(q)[x])
+##
+##  The groups CT( <R> ) can only be obtained by the above constructors.
+##
+for property in [ IsNaturalCT,
+                  IsNaturalCT_Z, IsNaturalCT_Z_pi, IsNaturalCT_GFqx ]
+do
+  InstallMethod( property,
+                 "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+                 ReturnFalse );
+od;
+
+#############################################################################
+##
+#M  \in( <g>, CT( <R> ) ) . . . . . . . . . . . for an rcwa mapping and CT(R)
+##
+InstallMethod( \in,
+               "for an rcwa mapping and CT(R) (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsNaturalCT ], 100,
+
+  function ( g, CT_R )
+
+    local  R;
+
+    if   FamilyObj(g) <> FamilyObj(One(CT_R)) or not IsBijective(g)
+    then return false; fi;
+    R := Support(CT_R);
+    if IsIntegers(R) or IsZ_pi(R) then 
+      if not IsClassWiseOrderPreserving(g) then return false; fi;
+      if IsIntegers(R) and Determinant(g) <> 0 then return false; fi;
+      if   Minimum([0..Mod(g)-1]^g) < 0
+        or Maximum([-Mod(g)..-1]^g) >= 0
+      then return false; fi;
+    fi;
+    if   ForAll(FactorizationIntoCSCRCT(g),IsClassTransposition)
+    then return true; fi;
+    TryNextMethod();
+  end );
+
+#############################################################################
+##
+#M  Display( <G> ) . . . . . . . . . . . . . . . . . .  for RCWA(R) and CT(R)
+##
+InstallMethod( Display,
+               "for RCWA(R) and CT(R) (RCWA)", true,
+               [ IsNaturalRCWA_OR_CT ], 0,
+               function ( G ) Print( Name( G ), "\n" ); end );
+
+#############################################################################
+##
+#F  ClassPairs( [ <R> ], <m> )
+##
+##  In the one-argument version, this function returns a list of all
+##  unordered pairs of disjoint residue classes of Z with modulus <= <m>.
+##
+##  In the two-argument version, it does the following:
+##
+##    - If <R> is either the ring of integers or a semilocalization thereof,
+##      it returns a list of all unordered pairs of disjoint residue classes
+##      of <R> with modulus <= <m>.
+##
+##    - If <R> is a univariate polynomial ring over a finite field, it
+##      returns a list of all unordered pairs of disjoint residue classes
+##      of <R> whose moduli have at most the same degree as <m>.
+##
+InstallGlobalFunction( ClassPairs,
+
+  function ( arg )
+
+    local  R, m, tuples, moduli, Degree, m1, r1, m2, r2;
+
+    if   Length(arg) = 1 then R := Integers; m := arg[1];
+    elif Length(arg) = 2 then R := arg[1];   m := arg[2];
+    else Error("usage: ClassPairs( [ <R> ], <m> )\n"); fi;
+    if IsIntegers(R) or IsZ_pi(R) then
+      tuples := Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
+                         t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
+                              and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
+                              and (t[2] <> t[4] or t[1] < t[3]));
+      if IsZ_pi(R) then
+        tuples := Filtered(tuples,t->IsSubset(NoninvertiblePrimes(R),
+                                              Factors(t[2]*t[4])));
+      fi;
+    elif     IsUnivariatePolynomialRing(R) and IsField(LeftActingDomain(R))
+         and IsFinite(LeftActingDomain(R))
+    then
+      Degree := DegreeOfUnivariateLaurentPolynomial;
+      tuples := [];
+      moduli := Filtered(AllResidues(R,m),r->IsPosInt(Degree(r)));
+      for m1 in moduli do
+        for m2 in moduli do
+          if Degree(m1) > Degree(m2) then continue; fi;
+          for r1 in AllResidues(R,m1) do
+            for r2 in AllResidues(R,m2) do
+              if (m1 <> m2 or r1 < r2) and not IsZero((r1-r2) mod Gcd(m1,m2))
+              then Add(tuples,[r1,m1,r2,m2]); fi;
+            od;
+          od;
+        od;
+      od;
+    else
+      Error("ClassPairs: Sorry, the ring ",R,"\n",String(" ",19),
+            "is currently not supported by this function.\n");
+    fi;
+    return tuples;
+  end );
+
+InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
+InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
+
+#############################################################################
+##
+#M  Random( RCWA( Integers ) ) . . . . . . . .  a `random' element of RCWA(Z)
+##
+InstallMethod( Random,
+               "for RCWA(Z) (RCWA)", true, [ IsNaturalRCWA_Z ], 0,
+
+  function ( RCWA_Z )
+
+    local  Result, ClassTranspositions, ClassShifts, ClassReflections,
+           GenFactors, Classes, tame, maxmodcscr, maxmodct, noct, nocs, nocr,
+           deg, g, m, r, i;
+
+    tame       := ValueOption("IsTame") = true;
+    noct       := ValueOption("ClassTranspositions");
+    nocs       := ValueOption("ClassShifts");
+    nocr       := ValueOption("ClassReflections");
+    maxmodcscr := ValueOption("ModulusBoundCSCR");
+    maxmodct   := ValueOption("ModulusBoundCT");
+    if noct   = fail then noct := Random([0..2]); fi;
+    if nocs   = fail then nocs := Random([0..3]); fi;
+    if nocr   = fail then nocr := Random([0..3]); fi;
+    if maxmodcscr = fail then maxmodcscr :=  6; fi;
+    if maxmodct   = fail then maxmodct   := 14; fi;
+    if maxmodct <> CLASS_PAIRS_LARGE[1] then
+      MakeReadWriteGlobal("CLASS_PAIRS_LARGE");
+      CLASS_PAIRS_LARGE := [maxmodct,ClassPairs(maxmodct)];
+      MakeReadOnlyGlobal("CLASS_PAIRS_LARGE");
+    fi;
+    Classes             := Combinations([1..maxmodcscr],2)-1;
+    ClassTranspositions := List([1..noct],i->Random(CLASS_PAIRS[2]));
+    if   Random([1..4]) = 1 
+    then Add(ClassTranspositions,Random(CLASS_PAIRS_LARGE[2])); fi;
+    ClassShifts         := List([1..nocs],i->Random(Classes));
+    ClassReflections    := List([1..nocr],i->Random(Classes));
+    ClassTranspositions := List(ClassTranspositions,ClassTransposition);
+    ClassShifts         := List(ClassShifts,t->ClassShift(t)^Random([-1,1]));
+    ClassReflections    := List(ClassReflections,ClassReflection);
+    Result              :=   Product(ClassTranspositions)
+                           * Product(ClassShifts)
+                           * Product(ClassReflections);
+    if Result = 1 then Result := One(RCWA_Z); fi;
+    GenFactors := Concatenation(ClassTranspositions,ClassShifts,
+                                ClassReflections);
+    if not tame then SetFactorizationIntoCSCRCT(Result,GenFactors); fi;
+    if tame then
+      deg := Random([6,6,6,6,6,6,6,6,12,12,12,18]);
+      g := Random(SymmetricGroup(deg));
+      Result := RcwaMapping(g,[1..deg])^Result;
+      SetIsTame(Result,true);
+      SetOrder(Result,Order(g));
+    fi;
+    IsBijective(Result);
+    return Result;
+  end );
 
 #############################################################################
 ##
@@ -366,206 +686,6 @@ InstallMethod( IsSimple,
     if   HasIsSimpleGroup(G)
     then return IsSimpleGroup(G);
     else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#F  ClassPairs( [ <R> ], <m> )
-##
-##  In the one-argument version, this function returns a list of all
-##  unordered pairs of disjoint residue classes of Z with modulus <= <m>.
-##
-##  In the two-argument version, it does the following:
-##
-##    - If <R> is either the ring of integers or a semilocalization thereof,
-##      it returns a list of all unordered pairs of disjoint residue classes
-##      of <R> with modulus <= <m>.
-##
-##    - If <R> is a univariate polynomial ring over a finite field, it
-##      returns a list of all unordered pairs of disjoint residue classes
-##      of <R> whose moduli have at most the same degree as <m>.
-##
-InstallGlobalFunction( ClassPairs,
-
-  function ( arg )
-
-    local  R, m, tuples, moduli, Degree, m1, r1, m2, r2;
-
-    if   Length(arg) = 1 then R := Integers; m := arg[1];
-    elif Length(arg) = 2 then R := arg[1];   m := arg[2];
-    else Error("usage: ClassPairs( [ <R> ], <m> )\n"); fi;
-    if IsIntegers(R) or IsZ_pi(R) then
-      tuples := Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
-                         t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
-                              and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
-                              and (t[2] <> t[4] or t[1] < t[3]));
-      if IsZ_pi(R) then
-        tuples := Filtered(tuples,t->IsSubset(NoninvertiblePrimes(R),
-                                              Factors(t[2]*t[4])));
-      fi;
-    elif     IsUnivariatePolynomialRing(R) and IsField(LeftActingDomain(R))
-         and IsFinite(LeftActingDomain(R))
-    then
-      Degree := DegreeOfUnivariateLaurentPolynomial;
-      tuples := [];
-      moduli := Filtered(AllResidues(R,m),r->IsPosInt(Degree(r)));
-      for m1 in moduli do
-        for m2 in moduli do
-          if Degree(m1) > Degree(m2) then continue; fi;
-          for r1 in AllResidues(R,m1) do
-            for r2 in AllResidues(R,m2) do
-              if (m1 <> m2 or r1 < r2) and not IsZero((r1-r2) mod Gcd(m1,m2))
-              then Add(tuples,[r1,m1,r2,m2]); fi;
-            od;
-          od;
-        od;
-      od;
-    else
-      Error("ClassPairs: Sorry, the ring ",R,"\n",String(" ",19),
-            "is currently not supported by this function.\n");
-    fi;
-    return tuples;
-  end );
-
-InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
-InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
-
-#############################################################################
-##
-#M  Random( RCWA( Integers ) ) . . . . . . . .  a `random' element of RCWA(Z)
-##
-InstallMethod( Random,
-               "for RCWA(Z) (RCWA)", true, [ IsNaturalRCWA_Z ], 0,
-
-  function ( RCWA_Z )
-
-    local  Result, ClassTranspositions, ClassShifts, ClassReflections,
-           GenFactors, Classes, tame, maxmodcscr, maxmodct, noct, nocs, nocr,
-           deg, g, m, r, i;
-
-    tame       := ValueOption("IsTame") = true;
-    noct       := ValueOption("ClassTranspositions");
-    nocs       := ValueOption("ClassShifts");
-    nocr       := ValueOption("ClassReflections");
-    maxmodcscr := ValueOption("ModulusBoundCSCR");
-    maxmodct   := ValueOption("ModulusBoundCT");
-    if noct   = fail then noct := Random([0..2]); fi;
-    if nocs   = fail then nocs := Random([0..3]); fi;
-    if nocr   = fail then nocr := Random([0..3]); fi;
-    if maxmodcscr = fail then maxmodcscr :=  6; fi;
-    if maxmodct   = fail then maxmodct   := 14; fi;
-    if maxmodct <> CLASS_PAIRS_LARGE[1] then
-      MakeReadWriteGlobal("CLASS_PAIRS_LARGE");
-      CLASS_PAIRS_LARGE := [maxmodct,ClassPairs(maxmodct)];
-      MakeReadOnlyGlobal("CLASS_PAIRS_LARGE");
-    fi;
-    Classes             := Combinations([1..maxmodcscr],2)-1;
-    ClassTranspositions := List([1..noct],i->Random(CLASS_PAIRS[2]));
-    if   Random([1..4]) = 1 
-    then Add(ClassTranspositions,Random(CLASS_PAIRS_LARGE[2])); fi;
-    ClassShifts         := List([1..nocs],i->Random(Classes));
-    ClassReflections    := List([1..nocr],i->Random(Classes));
-    ClassTranspositions := List(ClassTranspositions,ClassTransposition);
-    ClassShifts         := List(ClassShifts,t->ClassShift(t)^Random([-1,1]));
-    ClassReflections    := List(ClassReflections,ClassReflection);
-    Result              :=   Product(ClassTranspositions)
-                           * Product(ClassShifts)
-                           * Product(ClassReflections);
-    if Result = 1 then Result := One(RCWA_Z); fi;
-    GenFactors := Concatenation(ClassTranspositions,ClassShifts,
-                                ClassReflections);
-    if not tame then SetFactorizationIntoCSCRCT(Result,GenFactors); fi;
-    if tame then
-      deg := Random([6,6,6,6,6,6,6,6,12,12,12,18]);
-      g := Random(SymmetricGroup(deg));
-      Result := RcwaMapping(g,[1..deg])^Result;
-      SetIsTame(Result,true);
-      SetOrder(Result,Order(g));
-    fi;
-    IsBijective(Result);
-    return Result;
-  end );
-
-#############################################################################
-##
-#M  \in( <g>, RCWA( Integers ) ) . . . . for an rcwa mapping of Z and RCWA(Z)
-##
-InstallMethod( \in,
-               "for an rcwa mapping of Z and RCWA(Z) (RCWA)", ReturnTrue,
-               [ IsRcwaMappingOfZ, IsNaturalRCWA_Z ], 100,
-
-  function ( g, G )
-    return IsBijective(g);
-  end );
-
-#############################################################################
-##
-#M  \in( <g>, RCWA( Z_pi( <pi> ) ) ) . . for an rcwa mapping and RCWA(Z_(pi))
-##
-InstallMethod( \in,
-               "for rcwa mapping of Z or Z_(pi) and RCWA(Z_(pi)) (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfZ_pi, IsNaturalRCWA_Z_pi ], 100,
-
-  function ( g, G )
-    return FamilyObj(g) = FamilyObj(One(G)) and IsBijective(g);
-  end );
-
-#############################################################################
-##
-#M  \in( <g>, RCWA( GF(q)[x] ) ) . . . for an rcwa mapping and RCWA(GF(q)[x])
-##
-InstallMethod( \in,
-               "for rcwa mapping of GF(q)[x] and RCWA(GF(q)[x]) (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfGFqx, IsNaturalRCWA_GFqx ],
-               100,
-
-  function ( g, G )
-    return FamilyObj(g) = FamilyObj(One(G)) and IsBijective(g);
-  end );
-
-#############################################################################
-## 
-#M  IsSubset( RCWA( Integers ), G ) . .  for RCWA(Z) and an rcwa group over Z
-## 
-InstallMethod( IsSubset,
-               "for RCWA(Z) and an rcwa group over Z (RCWA)", ReturnTrue,
-               [ IsNaturalRCWA_Z, IsRcwaGroupOverZ ], 0, ReturnTrue );
-
-#############################################################################
-##
-#M  IsSubset( RCWA( Z_pi( <pi> ) ), G ) .  for RCWA(Z_(pi)) and an rcwa group
-##
-InstallMethod( IsSubset,
-               "for RCWA(Z_(pi)) and an rcwa group over Z_(pi) (RCWA)",
-               ReturnTrue, [ IsNaturalRCWA_Z_pi, IsRcwaGroupOverZ_pi ], 0,
-
-  function ( RCWA_Z_pi, G )
-    return FamilyObj(One(RCWA_Z_pi)) = FamilyObj(One(G));
-  end );
-
-#############################################################################
-##
-#M  IsSubset( RCWA( GF(q)[x] ), G ) . .  for RCWA(GF(q)[x]) and an rcwa group
-##
-InstallMethod( IsSubset,
-               "for RCWA(GF(q)[x]) and an rcwa group over GF(q)[x] (RCWA)",
-               ReturnTrue, [ IsNaturalRCWA_GFqx, IsRcwaGroupOverGFqx ], 0,
-
-  function ( RCWA_GFqx, G )
-    return FamilyObj(One(RCWA_GFqx)) = FamilyObj(One(G));
-  end );
-
-#############################################################################
-##
-#M  Display( RCWA( <R> ) ) . . . . . . . . . . . . . . . . . . .  for RCWA(R)
-##
-InstallMethod( Display,
-               "for RCWA(R) (RCWA)", true, [ IsRcwaGroup and HasName ], 0,
-
-  function ( G )
-    if   IsNaturalRCWA_Z( G ) or IsNaturalRCWA_Z_pi( G )
-      or IsNaturalRCWA_GFqx( G )
-    then Print( Name( G ), "\n" ); else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -1810,31 +1930,45 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  RepresentativeActionOp( RCWA( Integers ), <ct1>, <ct2>, <act> ) 
+#M  RepresentativeActionOp( RCWA( <R> ), <ct1>, <ct2>, <act> ) 
+#M  RepresentativeActionOp( CT( <R> ),   <ct1>, <ct2>, <act> ) 
 ##
 ##  Special method for two class transpositions which are both not equal to
 ##  n -> n + (-1)^n. The factorization of the result into 6 class transposi-
 ##  tions is stored. The existence of such products is used in the proof that
-##  the group which is generated by all class transpositions is simple.
+##  the group which is generated by all class transpositions of Z is simple.
 ##
 InstallMethod( RepresentativeActionOp,
-               "for RCWA(Z) and two class transpositions (RCWA)", true,
-               [ IsNaturalRCWA_Z, IsRcwaMappingOfZ, IsRcwaMappingOfZ,
+               "for RCWA(R) or CT(R) and two class transpositions (RCWA)",
+               ReturnTrue,
+               [ IsNaturalRCWA_OR_CT, IsRcwaMapping, IsRcwaMapping,
                  IsFunction ], 200,
 
-  function ( RCWA_Z, ct1, ct2, act )
+  function ( G, ct1, ct2, act )
 
-    local  result, sixcts, cls, D, supd;
+    local  R, result, sixcts, cls, D, supd, pieces;
 
-    if act <> OnPoints or not ForAll([ct1,ct2],IsClassTransposition)
-      or ClassTransposition(0,2,1,2) in [ct1,ct2]
+    R := Support(G);
+    if act <> OnPoints or not IsSubset(G,[ct1,ct2])
+      or not ForAll([ct1,ct2],IsClassTransposition)
+      or R in List([ct1,ct2],Support)
     then TryNextMethod(); fi;
     cls  := Concatenation(List([ct1,ct2],TransposedClasses));
     supd := 1 - Sum(List(cls{[3,4]},Density));
-    D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[1,2]})))[1];
-    D := SplittedClass(D,Int(Density(D)/supd)+1)[1];
+    D := AsUnionOfFewClasses(Difference(R,Union(cls{[1,2]})))[1];
+    pieces := Int(Density(D)/supd)+1;
+    if   IsZ_pi(R) then
+      while not IsSubset(NoninvertiblePrimes(R),Factors(pieces)) do
+        pieces := pieces + 1;
+      od;
+    elif IsFiniteFieldPolynomialRing(R) then
+      while SmallestRootInt(pieces) <> Characteristic(R) do
+        pieces := pieces + 1;
+      od;
+    fi;
+    D := SplittedClass(D,pieces)[1];
     Append(cls,SplittedClass(D,2));
-    D := AsUnionOfFewClasses(Difference(Integers,Union(cls{[3..6]})));
+    D := AsUnionOfFewClasses(Difference(R,Union(cls{[3..6]})));
     if Length(D) = 1 then D := SplittedClass(D[1],2); fi;
     Append(cls,D{[1,2]});
     sixcts := List([cls{[1,5]},cls{[2,6]},cls{[5,7]},
@@ -1846,15 +1980,21 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  RepresentativeActionOp( RCWA(Integers), <n1>, <n2>, <act> )
+#M  RepresentativeActionOp( RCWA( <R> ), <n1>, <n2>, <act> )
 ##
 InstallMethod( RepresentativeActionOp,
                "for RCWA(Z) and two integers (RCWA)", ReturnTrue,
-               [ IsNaturalRCWA_Z, IsInt, IsInt, IsFunction ], 0,
+               [ IsNaturalRCWA, IsInt, IsInt, IsFunction ], 0,
 
-  function ( RCWA_Z, n1, n2, act )
+  function ( RCWA_R, n1, n2, act )
+
+    local  R;
+
     if act <> OnPoints then TryNextMethod(); fi;
-    return ClassShift(0,1)^(n2-n1);
+    R := Support(RCWA_R);
+    if   Characteristic(R) = 0
+    then return ClassShift(R)^(n2-n1);
+    else return RcwaMapping(R,One(R),[[One(R),n2-n1,One(R)]]); fi;
   end );
 
 #############################################################################
@@ -1881,20 +2021,21 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  RepresentativeActionOp( RCWA( Integers ), <S1>, <S2>, <act> ) 
+#M  RepresentativeActionOp( RCWA( <R> ), <S1>, <S2>, <act> ) 
 ##
 ##  An rcwa mapping <g> which maps <S1> to <S2>.
-##  The sets <S1> and <S2> have to be unions of residue classes of Z.
+##  The sets <S1> and <S2> must be unions of residue classes of <R>.
 ##  The argument <act> is ignored.
 ##
 InstallMethod( RepresentativeActionOp,
-               "for RCWA(Z) and two residue class unions (RCWA)", true,
-               [ IsNaturalRCWA_Z, IsUnionOfResidueClassesOfZ,
-                 IsUnionOfResidueClassesOfZ, IsFunction ], 0,
+               "for RCWA(R) and two residue class unions (RCWA)",
+               ReturnTrue,
+               [ IsNaturalRCWA, IsUnionOfResidueClasses,
+                 IsUnionOfResidueClasses, IsFunction ], 0,
 
-  function ( RCWA_Z, S1, S2, act )
+  function ( RCWA_R, S1, S2, act )
 
-    local  Refine, Refinement, S, C, g;
+        local  Refine, Refinement, R, S, C, g;
 
     Refinement := function ( cls, lng )
 
@@ -1902,12 +2043,15 @@ InstallMethod( RepresentativeActionOp,
 
       while Length(cls) <> lng do
         m       := Minimum(List(cls,Modulus));
-        M       := Lcm(List(cls,Modulus));
+        M       := Lcm(R,List(cls,Modulus));
         splitcl := First(cls,cl->Modulus(cl)=m); RemoveSet(cls,splitcl);
-        k       := Maximum(Filtered(DivisorsInt(M/m),d->d<=lng-Length(cls)));
-        if k = 1 then k := 2; fi;
-        parts   := SplittedClass(splitcl,k);
-        cls     := Union(cls,parts);
+        k := 1;
+        repeat
+          k := k + 1;
+          parts := SplittedClass(splitcl,k);
+        until parts <> fail or k > lng-Length(cls)+1;
+        if k > lng-Length(cls)+1 then return fail; fi;
+        cls := Union(cls,parts);
       od;
       return cls;
     end;
@@ -1919,9 +2063,12 @@ InstallMethod( RepresentativeActionOp,
       then S[1] := Refinement(S[1],Length(S[2])); fi;
     end;
 
+    R := Support(RCWA_R);
+    if not IsSubset(R,S1) or not IsSubset(R,S2) then return fail; fi;
     S := List([S1,S2],AsUnionOfFewClasses);
-    C := List([S1,S2],Si->AsUnionOfFewClasses(Difference(Integers,Si)));
+    C := List([S1,S2],Si->AsUnionOfFewClasses(Difference(R,Si)));
     Refine(S); Refine(C);
+    if fail in S or fail in C then return fail; fi;
     g := RcwaMapping(Concatenation(S[1],C[1]),Concatenation(S[2],C[2]));
     return g;
   end );
@@ -1944,7 +2091,7 @@ InstallMethod( RepresentativeActionOp,
 ##
 InstallMethod( RepresentativeActionOp,
                "for RCWA(Z) and two class partitions (RCWA)", true,
-               [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 0,
+               [ IsNaturalRCWA_Z, IsList, IsList, IsFunction ], 100,
 
   function ( RCWA_Z, P1, P2, act )
 
@@ -2033,24 +2180,23 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  RepresentativeActionOp( RCWA( PolynomialRing( GF( <q> ), 1 ) ),
-#M                          <P1>, <P2>, <act> ) 
+#M  RepresentativeActionOp( RCWA( <R> ), <P1>, <P2>, <act> ) 
 ##
 ##  Returns an rcwa mapping <g> which maps the partition <P1> to the
 ##  partition <P2> and which is affine on the elements of <P1>.
 ##
-##  The arguments <P1> and <P2> must be partitions of GF(q)[x] into equally
+##  The arguments <P1> and <P2> must be partitions of <R> into equally
 ##  many residue classes, and the argument <act> is ignored.
 ##
 InstallMethod( RepresentativeActionOp,
-               "for RCWA(GF(q)[x]) and two class partitions (RCWA)", true,
-               [ IsNaturalRCWA_GFqx, IsList, IsList, IsFunction ], 0,
+               "for RCWA(<R>) and two class partitions (RCWA)", true,
+               [ IsNaturalRCWA, IsList, IsList, IsFunction ], 0,
 
-  function ( RCWA_GFqx, P1, P2, act )
+  function ( RCWA_R, P1, P2, act )
 
     local  R, g;
 
-    R := Support(RCWA_GFqx);
+    R := Support(RCWA_R);
 
     if   Length(P1) <> Length(P2)
       or not ForAll(Union(P1,P2),IsResidueClass)
