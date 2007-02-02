@@ -408,11 +408,19 @@ Changes between version 2.3.2 and version 2.3.3:
 
 Changes between version 2.3.3 and version 2.3.4:
 
+ - The groups CT(R) are now available as GAP objects.
+
+ - More methods for `RepresentativeAction' have been added:
+
+     - For RCWA(GF(q)[x]) resp. RCWA(Z_(pi)) and two partitions
+       of GF(q)[x] resp. Z_(pi) into residue classes.
+
+     - For RCWA(GF(q)[x]) resp. RCWA(Z_(pi)) and two unions of
+       residue classes of GF(q)[x] resp. Z_(pi).
+
  - A method for `Permuted' for a list of residue classes and an
    rcwa permutation has been added.
 
- - A method for `RepresentativeAction' for RCWA(GF(q)[x]) and two partitions
-   of GF(q)[x] into residue classes has been added.
-
- - Now, RCWA needs ResClasses 2.3.8.
+ - Now RCWA needs ResClasses 2.3.8, which provides improved support for
+   unions of residue classes of rings Z_(pi) and GF(q)[x].
 
