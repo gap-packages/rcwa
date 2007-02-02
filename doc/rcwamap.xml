@@ -376,22 +376,21 @@ necessary for understanding this manual or for using this package.
       </Item>
       <Mark>(d)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M>, acting on any set
-        <C><A>range</A>+k*Length(<A>range</A>)</C> like the
-        permutation <A>perm</A> on <A>range</A>, resp.
+        of <A>R</A> = <M>\mathbb{Z}</M>, permuting any set
+        <C><A>range</A>+k*Length(<A>range</A>)</C> like <A>perm</A>
+        permutes <A>range</A>, resp.
       </Item>
       <Mark>(e)</Mark>
       <Item>
         of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>modulus</A> and
-        values prescribed by the list <A>val</A>, which consists of
-        2<M>\cdot</M><A>modulus</A> pairs giving preimage and image for
-        2 points per residue class (mod <A>modulus</A>), resp.
+        values given by a list <A>val</A> of 2 pairs <C>[</C>preimage<C>,
+        </C>image<C>]</C> per residue class (mod <A>modulus</A>), resp.
       </Item>
       <Mark>(f)</Mark>
       <Item>
         of <A>R</A> = <M>\Z_{(\pi)}</M> with modulus
         <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>
-        (the set of primes <M>\pi</M> denoting the underlying ring is
+        (the set of primes <M>\pi</M> which denotes the underlying ring is
         passed as argument <A>pi</A>), resp.
       </Item>
       <Mark>(g)</Mark>
