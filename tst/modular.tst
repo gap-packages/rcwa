@@ -257,8 +257,8 @@ gap> String(f);
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(3^2)[x]: P -> Z(3^2)*P
 gap> LargestSourcesOfAffineMappings(r);
-[ 0*Z(2) ( mod x^2+Z(2)^0 ), Z(2)^0 ( mod x^2+Z(2)^0 ), x ( mod x^2+Z(2)^0 ), 
-  x+Z(2)^0 ( mod x^2+Z(2)^0 ) ]
+[ 0*Z(2)(mod x^2+Z(2)^0), Z(2)^0(mod x^2+Z(2)^0), x(mod x^2+Z(2)^0), 
+  x+Z(2)^0(mod x^2+Z(2)^0) ]
 gap> LargestSourcesOfAffineMappings(One(r));
 [ GF(2)[x] ]
 gap> R := PolynomialRing(GF(2),1);;
@@ -346,9 +346,9 @@ gap> StructureDescription(RCWA(R));
 gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
 gap> P1 := RespectedPartition(ct);
-[ Z(2)^0 ( mod x ), 0*Z(2) ( mod x^2+x ), x ( mod x^2+x ) ]
+[ Z(2)^0(mod x), 0*Z(2)(mod x^2+x), x(mod x^2+x) ]
 gap> P2 := Permuted(P1,ct);
-[ x ( mod x^2+x ), 0*Z(2) ( mod x^2+x ), Z(2)^0 ( mod x ) ]
+[ x(mod x^2+x), 0*Z(2)(mod x^2+x), Z(2)^0(mod x) ]
 gap> g := RepresentativeAction(RCWA(R),P1,P2);
 <bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
 gap> P1^g = P2;
