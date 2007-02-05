@@ -354,13 +354,13 @@ necessary for understanding this manual or for using this package.
     <A>m</A> and <A>coeffs</A> are omitted or replaced by other arguments,
     the former are either derived from the latter or default values are
     taken. The meaning of the other arguments is defined in the detailed
-    description of the particular methods given in the sequel.
+    description of the particular methods given in the sequel:
 
     The above methods return the rcwa mapping
     <List>
       <Mark>(a)</Mark>
       <Item>
-        of <A>R</A> with modulus <A>modulus</A> and coefficients
+        of <A>R</A> with modulus <A>m</A> and coefficients
         <A>coeffs</A>, resp.
       </Item>
       <Mark>(b)</Mark>
@@ -382,9 +382,9 @@ necessary for understanding this manual or for using this package.
       </Item>
       <Mark>(e)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>modulus</A> and
+        of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>m</A> and
         values given by a list <A>val</A> of 2 pairs <C>[</C>preimage<C>,
-        </C>image<C>]</C> per residue class (mod <A>modulus</A>), resp.
+        </C>image<C>]</C> per residue class (mod <A>m</A>), resp.
       </Item>
       <Mark>(f)</Mark>
       <Item>
@@ -396,7 +396,7 @@ necessary for understanding this manual or for using this package.
       <Mark>(g)</Mark>
       <Item>
         of <A>R</A> = GF(<A>q</A>)[<A>x</A>] with modulus
-        <A>modulus</A> and coefficients <A>coeffs</A>, resp.
+        <A>m</A> and coefficients <A>coeffs</A>, resp.
       </Item>
       <Mark>(h)</Mark>
       <Item>
