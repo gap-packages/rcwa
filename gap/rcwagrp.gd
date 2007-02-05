@@ -7,13 +7,27 @@
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa groups.
 ##
-##  See the definitions given in the file rcwamap.gd.
-##
 ##  We call a subgroup of RCWA(R) a *residue-class-wise affine* group, or
 ##  in short an *rcwa* group.
 ##
+##  See also the definitions given in the file rcwamap.gd.
+##
 Revision.rcwagrp_gd :=
   "@(#)$Id$";
+
+#############################################################################
+##
+#S  Basic definitions. //////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#C  CategoryCollections( IsRcwaMappingOfZ ) . . . . . . . rcwa domains over Z
+##
+##  The category of all domains formed out of rcwa mappings of Z.
+##
+DeclareCategoryCollections( "IsRcwaMappingOfZ" );
 
 #############################################################################
 ##
@@ -38,19 +52,17 @@ DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
 
 #############################################################################
 ##
-#C  CategoryCollections( IsRcwaMappingOfZ ) . . . . . . . rcwa domains over Z
-##
-##  The category of all domains formed out of rcwa mappings of Z.
-##
-DeclareCategoryCollections( "IsRcwaMappingOfZ" );
-
-#############################################################################
-##
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
 #V  TrivialRcwaGroup
 ##
 DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );
 DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
+
+#############################################################################
+##
+#S  RCWA(R) and CT(R). //////////////////////////////////////////////////////
+##
+#############################################################################
 
 #############################################################################
 ##
@@ -71,6 +83,15 @@ DeclareProperty( "IsNaturalRCWA", IsRcwaGroup );
 DeclareProperty( "IsNaturalRCWA_Z", IsRcwaGroup );
 DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
 DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
+
+#############################################################################
+##
+#F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
+##
+##  Computes the number of conjugacy classes of the whole group RCWA(Z) of
+##  elements of order <ord>.
+##
+DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 
 #############################################################################
 ##
@@ -100,21 +121,9 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 
 #############################################################################
 ##
-#F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
+#S  Constructing rcwa groups. ///////////////////////////////////////////////
 ##
-##  Computes the number of conjugacy classes of the whole group RCWA(Z) of
-##  elements of order <ord>.
-##
-DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
-
 #############################################################################
-##
-#A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
-##
-##  We define the *modulus* of an rcwa group by the lcm of the moduli of its
-##  elements in case such an lcm exists, and by 0 otherwise. 
-##
-DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -141,17 +150,42 @@ DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
 
 #############################################################################
 ##
-#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
-#O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
+#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
+#O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
 ##
-##  All balls are understood w.r.t. the stored generators of the group <G>.
+##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa group <G>
+##  by (i.e. to the image of) the rcwa mapping <f>. The mapping <f> must be
+##  injective.
 ##
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt ] );
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt, IsFunction ] );
+DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Restriction", [ IsRcwaGroup, IsRcwaMapping ] );
 
 #############################################################################
 ##
-#O  IsTransitive( <G>, <S> )
+#O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
+#O  Induction( <G>, <f> ) . . . . . . . . . . . . . . induction of <G> by <f>
+##
+##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa group <G>
+##  by the rcwa mapping <f>.
+##
+##  The mapping <f> must be injective, and both the support of <g> and its
+##  image under <g>, resp. the support of <G>, must lie in the image of <f>.
+##  We have Induction( Restriction( <g>, <f> ), <f> ) = <g> as well as
+##  Induction( Restriction( <G>, <f> ), <f> ) = <G>. Therefore induction is
+##  the right inverse of restriction.
+##
+DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
+DeclareOperation( "Induction", [ IsRcwaGroup, IsRcwaMapping ] );
+
+#############################################################################
+##
+#S  The action of an rcwa group on the underlying ring. /////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#O  IsTransitive( <G>, <S> ) . . . . . . . . . . . . . . . .  for rcwa groups
 #O  Transitivity( <G>, <S> )
 #O  IsPrimitive( <G>, <S> )
 ##
@@ -167,6 +201,32 @@ DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 ##  which intersect nontrivially with the set <S>.
 ##
 DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
+
+#############################################################################
+##
+#O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+#O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
+##
+##  Computes a preimage resp. possibly multiple preimages of an element of
+##  <G> which maps <src> to <dest> under the natural projection from the
+##  free group <F> onto <G>. The rank of <F> must be equal to the number of
+##  generators of <G>. Often, finding several representatives of the preimage
+##  is not harder than computing just one.
+##
+DeclareOperation( "RepresentativeActionPreImage",
+                  [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ] );
+DeclareOperation( "RepresentativesActionPreImage",
+                  [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ] );
+
+#############################################################################
+##
+#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
+#O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
+##
+##  All balls are understood w.r.t. the stored generators of the group <G>.
+##
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt ] );
+DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt, IsFunction ] );
 
 #############################################################################
 ##
@@ -201,92 +261,18 @@ DeclareGlobalFunction( "DrawOrbitPicture" );
 
 #############################################################################
 ##
-#O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
-#O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
+#S  Tame rcwa groups and respected partitions. //////////////////////////////
 ##
-##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa group <G>
-##  by (i.e. to the image of) the rcwa mapping <f>. The mapping <f> must be
-##  injective.
-##
-DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
-DeclareOperation( "Restriction", [ IsRcwaGroup, IsRcwaMapping ] );
+#############################################################################
 
 #############################################################################
 ##
-#O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
-#O  Induction( <G>, <f> ) . . . . . . . . . . . . . . induction of <G> by <f>
+#A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
 ##
-##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa group <G>
-##  by the rcwa mapping <f>.
+##  We define the *modulus* of an rcwa group by the lcm of the moduli of its
+##  elements in case such an lcm exists, and by 0 otherwise. 
 ##
-##  The mapping <f> must be injective, and both the support of <g> and its
-##  image under <g>, resp. the support of <G>, must lie in the image of <f>.
-##  It holds `Induction( Restriction( <g>, <f> ), <f> ) = <g>' and the
-##  corresponding equality for rcwa groups, thus induction is the one-sided
-##  inverse operation of restriction.
-##
-DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
-DeclareOperation( "Induction", [ IsRcwaGroup, IsRcwaMapping ] );
-
-#############################################################################
-##
-#O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
-##
-DeclareOperation( "Projections", [ IsRcwaGroup, IsPosInt ] );
-
-#############################################################################
-##
-#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
-##
-DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
-
-#############################################################################
-##
-#A  RankOfFreeGroup( <Fn> )
-##
-DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
-
-#############################################################################
-##
-#O  RepresentativeActionOp( <G>, <g>, <h>, <act> )
-##
-DeclareOperation( "RepresentativeActionOp",
-                  [ IsGroup, IsObject, IsObject, IsFunction ] );
-
-#############################################################################
-##
-#O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
-##
-##  An analogon to `PreImagesRepresentative' which returns a list of possibly
-##  several representatives if computing these is not harder than computing
-##  just one representative.
-##
-DeclareOperation( "PreImagesRepresentatives",
-                  [ IsGeneralMapping, IsObject ] );
-
-#############################################################################
-##
-#O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
-##
-##  Computes the preimage of an element of <G> which maps <src> to <dest>
-##  under the natural projection from the free group <F> onto <G>.
-##  The rank of <F> must be equal to the number of generators of <G>.
-##
-DeclareOperation( "RepresentativeActionPreImage",
-                  [ IsGroup, IsObject, IsObject,
-                    IsFunction, IsFreeGroup ] );
-
-#############################################################################
-##
-#O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
-##
-##  An analogon to `RepresentativeActionPreImage' which returns a list of
-##  possibly several representatives if computing these is not harder than
-##  computing just one representative.
-##
-DeclareOperation( "RepresentativesActionPreImage",
-                  [ IsGroup, IsObject, IsObject,
-                    IsFunction, IsFreeGroup ] );
+DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -315,6 +301,16 @@ DeclareSynonym( "HasRespectedPartition", HasRespectedPartitionShort );
 
 #############################################################################
 ##
+#O  RespectsPartition( <G>, <P> )
+#O  RespectsPartition( <sigma>, <P> )
+##
+##  Checks whether the rcwa group <G> resp. the rcwa permutation <sigma>
+##  respects the partition <P>.
+##
+DeclareOperation( "RespectsPartition", [ IsObject, IsList ] );
+
+#############################################################################
+##
 #A  ActionOnRespectedPartition( <G> ) .  action of <G> on respected partition
 ##
 ##  The action of the tame group <G> on its stored respected partition.
@@ -323,21 +319,15 @@ DeclareAttribute( "ActionOnRespectedPartition", IsRcwaGroup );
 
 #############################################################################
 ##
+#A  KernelOfActionOnRespectedPartition( <G> )
 #A  RankOfKernelOfActionOnRespectedPartition( <G> )
 ##
-##  The rank of the largest free abelian group fitting into the kernel of the
-##  action of <G> on its respected partition. The group <G> has to be tame.
-##
-DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
-
-#############################################################################
-##
-#A  KernelOfActionOnRespectedPartition( <G> )
-##
-##  The kernel of the action of <G> on its stored respected partition.
-##  The group <G> has to be tame.
+##  The kernel of the action of <G> on the stored respected partition,
+##  resp. the rank of the largest free abelian group fitting into it. 
+##  The group <G> must be tame.
 ##
 DeclareAttribute( "KernelOfActionOnRespectedPartition", IsRcwaGroup );
+DeclareAttribute( "RankOfKernelOfActionOnRespectedPartition", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -353,68 +343,95 @@ DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
 
 #############################################################################
 ##
-#O  RespectsPartition( <G>, <P> )
-#O  RespectsPartition( <sigma>, <P> )
+#A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
 ##
-DeclareOperation( "RespectsPartition", [ IsObject, IsList ] );
+##  Tame rcwa groups have linear representations over the quotient field of
+##  their underlying ring. There is such a representation whose degree is
+##  twice the length of a respected partition.
+##
+DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
 
 #############################################################################
 ##
-#A  IntegralizingConjugator( <f> ) . . . . . . . mapping x: <f>^x is integral
+#A  IntegralConjugate( <g> ) . . . . . . . . . . .  integral conjugate of <g>
+#A  IntegralConjugate( <G> ) . . . . . . . . . . .  integral conjugate of <G>
+#A  IntegralizingConjugator( <g> ) . . . . . . . mapping x: <g>^x is integral
 #A  IntegralizingConjugator( <G> ) . . . . . . . mapping x: <G>^x is integral
 ##
-##  A mapping x such that <f>^x resp. <G>^x is integral. Exists always if <f>
-##  is a tame bijective rcwa mapping resp. if <G> is a tame rcwa group, and
-##  the underlying ring R has residue class rings of any finite cardinality.
+##  Some integral conjugate of the rcwa mapping <g> resp. rcwa group <G> in
+##  RCWA(R). Such a conjugate exists always if <g> is a tame bijective rcwa
+##  mapping resp. if <G> is a tame rcwa group, and the underlying ring R has
+##  residue class rings of any finite cardinality. Integral conjugates are
+##  of course not unique.
 ##
+DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
+DeclareAttribute( "IntegralConjugate", IsRcwaGroup );
 DeclareAttribute( "IntegralizingConjugator", IsRcwaMapping );
 DeclareAttribute( "IntegralizingConjugator", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  IntegralConjugate( <f> ) . . . . . . . . . . .  integral conjugate of <f>
-#A  IntegralConjugate( <G> ) . . . . . . . . . . .  integral conjugate of <G>
-##
-##  Some integral conjugate of the rcwa mapping <f> resp. rcwa group <G> in
-##  RCWA(R). This is of course not unique, and exists only if <f> is tame.
-##  
-DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
-DeclareAttribute( "IntegralConjugate", IsRcwaGroup );
-
-#############################################################################
-##
-#A  StandardizingConjugator( <f> ) . . . . . . . mapping x: <f>^x is standard
+#A  StandardConjugate( <g> ) . .  standard rep. of the conjugacy class of <g>
+#A  StandardConjugate( <G> ) . .  standard rep. of the conjugacy class of <G>
+#A  StandardizingConjugator( <g> ) . . . . . . . mapping x: <g>^x is standard
 #A  StandardizingConjugator( <G> ) . . . . . . . mapping x: <G>^x is standard
 ##
-##  A mapping x such that <f>^x resp. <G>^x is the "standard" representative
-##  of the conjugacy class resp. conjugacy class of subgroups of RCWA(R) the
-##  bijective rcwa mapping <f> resp. the rcwa group <G> belongs to.
+##  The "standard conjugate" is some "nice" canonical representative of the
+##  conjugacy class of RCWA(R) which the bijective rcwa mapping <g> resp. the
+##  rcwa group <G> belongs to. Two rcwa mappings / rcwa groups are conjugate
+##  in RCWA(R) if and only if their "standard conjugates" are the same. Such
+##  standard class representatives are currently only defined in rare cases.
 ##
+DeclareAttribute( "StandardConjugate", IsRcwaMapping );
+DeclareAttribute( "StandardConjugate", IsRcwaGroup );
 DeclareAttribute( "StandardizingConjugator", IsRcwaMapping );
 DeclareAttribute( "StandardizingConjugator", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  StandardConjugate( <f> ) . .  standard rep. of the conjugacy class of <f>
-#A  StandardConjugate( <G> ) . .  standard rep. of the conjugacy class of <G>
+#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
 ##
-##  Some "nice" canonical representative of the conjugacy class of the
-##  bijective rcwa mapping <f> / rcwa group <G> in the whole group RCWA(R).
-##  Two rcwa mappings / rcwa groups are conjugate in RCWA(R) if and only if
-##  their "standard conjugates" are the same.
+##  Returns an rcwa permutation <h>^r such that there is a partition which is
+##  respected by both <g> and <h>^r, hence such that the group generated by
+##  <g> and <h>^r is tame. Methods may choose any such mapping.
 ##
-DeclareAttribute( "StandardConjugate", IsRcwaMapping );
-DeclareAttribute( "StandardConjugate", IsRcwaGroup );
+DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
-#O  CompatibleConjugate( <g>, <h> ) . . . . . . . . . .  compatible conjugate
+#S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
-##  Computes some mapping <h>^r such that there is a partition which is
-##  respected by both <g> and <h>^r, hence such that the group generated
-##  by <g> and <h>^r is tame. Methods may return any such mapping.
+#############################################################################
+
+#############################################################################
 ##
-DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
+#A  RankOfFreeGroup( <Fn> )
+##
+DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
+
+#############################################################################
+##
+#O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
+##
+DeclareOperation( "Projections", [ IsRcwaGroup, IsPosInt ] );
+
+#############################################################################
+##
+#O  RepresentativeActionOp( <G>, <g>, <h>, <act> )
+##
+DeclareOperation( "RepresentativeActionOp",
+                  [ IsGroup, IsObject, IsObject, IsFunction ] );
+
+#############################################################################
+##
+#O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
+##
+##  An analogon to `PreImagesRepresentative' which returns a list of possibly
+##  several representatives if computing these is not harder than computing
+##  just one representative.
+##
+DeclareOperation( "PreImagesRepresentatives",
+                  [ IsGeneralMapping, IsObject ] );
 
 #############################################################################
 ##
