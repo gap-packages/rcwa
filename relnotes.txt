@@ -406,7 +406,7 @@ Changes between version 2.3.2 and version 2.3.3:
    supports the rings Z_pi and GF(q)[x] as well. The ring has to be given as
    the first argument.
 
-Changes between version 2.3.3 and version 2.3.4:
+Changes between version 2.3.3 and version 2.4.0:
 
  - The groups CT(R) are now available as GAP objects.
 
@@ -421,6 +421,11 @@ Changes between version 2.3.3 and version 2.3.4:
  - A method for `Permuted' for a list of residue classes and an
    rcwa permutation has been added.
 
- - Now RCWA needs ResClasses 2.3.8, which provides improved support for
+ - A "cleanup" of the source files has taken place: Many comments have been
+   improved, and the declarations / implementations have been rearranged and
+   grouped together by "topic".
+
+ - Now RCWA needs ResClasses 2.4.0, which provides improved support for
    unions of residue classes of rings Z_(pi) and GF(q)[x].
+
 
