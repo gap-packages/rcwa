@@ -1258,7 +1258,7 @@ InstallMethod( RespectsPartition,
 
     local  cl, c, c_rest, r, m, l;
 
-    if   not ForAll(P,cl->IsUnionOfResidueClassesOfZ(cl) or IsIntegers(cl))
+    if   not ForAll(P,cl->IsResidueClassUnionOfZ(cl) or IsIntegers(cl))
       or not ForAll(P,IsResidueClass)
       or not IsIntegers(Union(P)) or Sum(List(P,Density)) <> 1
     then TryNextMethod(); fi;
@@ -2030,8 +2030,8 @@ InstallMethod( RepresentativeActionOp,
 InstallMethod( RepresentativeActionOp,
                "for RCWA(R) and two residue class unions (RCWA)",
                ReturnTrue,
-               [ IsNaturalRCWA, IsUnionOfResidueClasses,
-                 IsUnionOfResidueClasses, IsFunction ], 0,
+               [ IsNaturalRCWA, IsResidueClassUnion,
+                 IsResidueClassUnion, IsFunction ], 0,
 
   function ( RCWA_R, S1, S2, act )
 
@@ -2039,18 +2039,13 @@ InstallMethod( RepresentativeActionOp,
 
     Refinement := function ( cls, lng )
 
-      local  m, M, k, splitcl, parts;
+      local  m, splitcl, parts;
 
       while Length(cls) <> lng do
         m       := Minimum(List(cls,Modulus));
-        M       := Lcm(R,List(cls,Modulus));
         splitcl := First(cls,cl->Modulus(cl)=m); RemoveSet(cls,splitcl);
-        k := 1;
-        repeat
-          k := k + 1;
-          parts := SplittedClass(splitcl,k);
-        until parts <> fail or k > lng-Length(cls)+1;
-        if k > lng-Length(cls)+1 then return fail; fi;
+        parts := SplittedClass(splitcl,SizeOfSmallestResidueClassRing(R));
+        if Length(parts) > lng - Length(cls) + 1 then return fail; fi;
         cls := Union(cls,parts);
       od;
       return cls;
@@ -2121,8 +2116,8 @@ InstallMethod( RepresentativeActionOp,
     end;
 
     if   Length(P1) <> Length(P2)
-      or not ForAll(P1,IsUnionOfResidueClassesOfZ)
-      or not ForAll(P2,IsUnionOfResidueClassesOfZ)
+      or not ForAll(P1,IsResidueClassUnionOfZ)
+      or not ForAll(P2,IsResidueClassUnionOfZ)
       or [Union(List(P1,IncludedElements)),Union(List(P1,ExcludedElements)),
           Union(List(P2,IncludedElements)),Union(List(P2,ExcludedElements))]
          <> [[],[],[],[]]

@@ -337,7 +337,7 @@ InstallMethod( RcwaMappingNC,
     local  result, R, coeffs, m, res, cyc, pre, im, affectedpos,
            r1, r2, m1, m2, pos, i;
 
-    if not IsUnionOfResidueClasses(cycles[1][1]) then TryNextMethod(); fi;
+    if not IsResidueClassUnion(cycles[1][1]) then TryNextMethod(); fi;
 
     R      := UnderlyingRing(FamilyObj(cycles[1][1]));
     m      := Lcm(List(Union(cycles),Modulus));
@@ -389,8 +389,7 @@ InstallMethod( RcwaMapping,
       fi;
     end;
 
-    if not IsList(cycles[1]) or
-       not IsUnionOfResidueClasses(cycles[1][1])
+    if   not IsList(cycles[1]) or not IsResidueClassUnion(cycles[1][1])
     then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(cycles[1][1]));
     CheckClassCycles(R,cycles);
@@ -409,7 +408,7 @@ InstallMethod( RcwaMappingNC,
 
     local  R, coeffs, m, res, r1, m1, r2, m2, i, j;
 
-    if not IsUnionOfResidueClasses(P1[1]) then TryNextMethod(); fi;
+    if not IsResidueClassUnion(P1[1]) then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(P1[1]));
     m := Lcm(R,List(P1,Modulus)); res := AllResidues(R,m);
     coeffs := List(res,r->[1,0,1]*One(R));
@@ -1888,7 +1887,7 @@ InstallMethod( Determinant,
 InstallOtherMethod( Determinant,
                     "for rcwa mappings on unions of residue classes (RCWA)",
                     true, [ IsRcwaMappingOfZ,
-                            IsUnionOfResidueClassesOfZ ], 0,
+                            IsResidueClassUnionOfZ ], 0,
 
   function ( f, S )
 
@@ -2221,7 +2220,7 @@ InstallMethod( PreImagesSet,
 ##
 InstallMethod( PreImagesSet,
                "for an rcwa mapping of Z and a residue class union (RCWA)",
-               true, [ IsRcwaMappingOfZ, IsUnionOfResidueClassesOfZ ], 0,
+               true, [ IsRcwaMappingOfZ, IsResidueClassUnionOfZ ], 0,
 
   function ( f, S )
 
@@ -2277,7 +2276,7 @@ InstallMethod( PreImagesSet,
                 i->List(cls[i],cl->[Modulus(cl),
                                     Intersection(rep[i],cl)[1]]));
     cls := Concatenation(cls);
-    preimage := ResidueClassUnionWithFixedRepresentatives(Integers,cls);
+    preimage := UnionOfResidueClassesWithFixedRepresentatives(Integers,cls);
     return RepresentativeStabilizingRefinement(preimage,0);
   end );
 
@@ -3527,7 +3526,7 @@ InstallMethod( PermutationOpNC,
 
     local  rep, img, i, j;
 
-    if   act <> OnPoints or not ForAll(P,IsUnionOfResidueClasses)
+    if   act <> OnPoints or not ForAll(P,IsResidueClassUnion)
     then return PermutationOp(sigma,P,act); fi;
     rep := List(P,cl->Representative(cl)^sigma);
     img := [];
@@ -3739,7 +3738,7 @@ InstallMethod( DecreasingOn,
 ##
 InstallMethod( RestrictedPerm,
                "for an rcwa mapping and a residue class union (RCWA)",
-               true, [ IsRcwaMapping, IsUnionOfResidueClasses ], 0,
+               true, [ IsRcwaMapping, IsResidueClassUnion ], 0,
 
   function ( g, S )
 
