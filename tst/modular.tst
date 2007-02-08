@@ -4,8 +4,8 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains tests of RCWA's functionality for rcwa mappings of
-##  and rcwa groups over polynomial rings GF(q)[x].
+##  This file contains automated tests of RCWA's functionality for
+##  rcwa mappings of and rcwa groups over polynomial rings GF(q)[x].
 ##
 gap> START_TEST("$Id$");
 gap> oldwarninglevel := InfoLevel(InfoWarning);;
@@ -236,15 +236,14 @@ gap> Trajectory(r,x^3+x^2,[(x^3+x^2)^(r^-1)],"AllCoeffs");
   [ x^4+x^2+Z(2)^0, x^4+x, x^4+Z(2)^0 ],
   [ x^6+x^5+x^3+x+Z(2)^0, x^6+x^4+x^3+x^2, x^6+x^4+x^2+Z(2)^0 ] ]
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
-gap> f := RcwaMapping([[rc(Zero(R),x^2),rc(One(R),x^3),rc(x,x^2)]]);
+gap> f := RcwaMapping([[ResidueClass(R,x^2,Zero(R)),
+>                       ResidueClass(R,x^3,One(R)),
+>                       ResidueClass(R,x^2,x)]]);
 <bijective rcwa mapping of GF(2)[x] with modulus x^3, of order 3>
 gap> G := Group(r);
 <rcwa group over GF(2)[x] with 1 generator>
 gap> IsTransitive(G,R);
 false
-gap> ct := ClassTransposition(ResidueClass(R,x,Zero(R)),
->                             ResidueClass(R,x^2,One(R)));
-ClassTransposition(0*Z(2),x,Z(2)^0,x^2)
 gap> R := PolynomialRing(GF(9),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(9));; z := Zero(R);; z9 := Z(9);;
@@ -341,18 +340,8 @@ gap> prod2^2;
 <bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 3>
 gap> prod2^3;
 IdentityMapping( GF(2)[x] )
-gap> StructureDescription(RCWA(R));
-"RCWA(GF(2)[x])"
 gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
-gap> P1 := RespectedPartition(ct);
-[ Z(2)^0(mod x), 0*Z(2)(mod x^2+x), x(mod x^2+x) ]
-gap> P2 := Permuted(P1,ct);
-[ x(mod x^2+x), 0*Z(2)(mod x^2+x), Z(2)^0(mod x) ]
-gap> g := RepresentativeAction(RCWA(R),P1,P2);
-<bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
-gap> P1^g = P2;
-true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 250000000 );
 

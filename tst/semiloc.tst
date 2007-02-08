@@ -4,8 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains tests of RCWA's functionality for rcwa mappings of
-##  and rcwa groups over semilocalizations Z_pi of the ring of integers.
+##  This file contains automated tests of RCWA's functionality for
+##  rcwa mappings of and rcwa groups over semilocalizations Z_pi of
+##  the ring of integers.
 ##
 gap> START_TEST("$Id$");
 gap> RcwaMapping(Z_pi(2),[[2,0,1]]);
@@ -241,8 +242,6 @@ Bijective rcwa mapping of Z_( 2, 3 ) with modulus 6, of order 2
 
 gap> ct^2;
 IdentityMapping( Z_( 2, 3 ) )
-gap> StructureDescription(RCWA(Z_pi(2)));
-"RCWA(Z_( 2 ))"
 gap> STOP_TEST( "semiloc.tst", 100000000 );
 
 #############################################################################

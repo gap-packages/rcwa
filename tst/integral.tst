@@ -4,14 +4,15 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains tests of RCWA's functionality for rcwa mappings of
-##  and rcwa groups over the ring of integers.
+##  This file contains automated tests of RCWA's functionality for
+##  rcwa mappings of and rcwa groups over the ring of integers.
 ##
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> oldwarninglevel := InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning,0);
 gap> ResidueClassUnionViewingFormat("short");
+gap> RCWAReadExamples();
 gap> IdentityRcwaMappingOfZ;
 IdentityMapping( Integers )
 gap> ZeroRcwaMappingOfZ;
@@ -61,14 +62,14 @@ Surjective rcwa mapping of Z with modulus 8
 
 gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1]));
 307
-gap> A := ResidueClass(Integers,3,2);
+gap> cl1 := ResidueClass(Integers,3,2);
 2(3)
-gap> Image(T,A);
+gap> Image(T,cl1);
 1(3) U 8(9)
-gap> PreImage(T,A);
+gap> PreImage(T,cl1);
 Z \ 0(6) U 2(6)
-gap> B := ResidueClass(Integers,3,1);;
-gap> M := Union(Difference(B,[1,4,10]),[2,5,14]);
+gap> cl2 := ResidueClass(Integers,3,1);;
+gap> M := Union(Difference(cl2,[1,4,10]),[2,5,14]);
 1(3) U [ 2, 5, 14 ] \ [ 1, 4, 10 ]
 gap> Display(Image(T,M));
 2(3) U [ 1, 7 ] \ [ 2, 5 ]
@@ -89,8 +90,8 @@ gap> IsBijective(k);
 false
 gap> Image(k);
 0(4)
-gap> C := Difference(Integers,Union(A,B));;
-gap> Image(k,C);
+gap> cl3 := Difference(Integers,Union(cl1,cl2));;
+gap> Image(k,cl3);
 4(12)
 gap> k := RcwaMapping([[-2,0,1]]);
 Rcwa mapping of Z: n -> -2n
@@ -188,46 +189,17 @@ Integers
 gap> d := RcwaMapping([[0,0,1],[0,1,1]]);;
 gap> PreImagesRepresentative(d,1);
 1
-gap> G := RCWA(Integers);
-RCWA(Z)
-gap> Size(G);
-infinity
-gap> IsFinite(G);
-false
-gap> IsFinitelyGeneratedGroup(G);
-false
-gap> IsGroup(G);
-true
-gap> IsNaturalRCWA_Z(G);
-true
-gap> One(G);
-IdentityMapping( Integers )
-gap> Representative(G);
-Rcwa mapping of Z: n -> -n
-gap> IsSubgroup(RCWA(Integers),TrivialRcwaGroupOverZ);
-true
-gap> IsSimple(G);
-false
-gap> IsSolvable(G);
-false
-gap> IsPerfect(G);
-false
-gap> Centre(G);
-Trivial rcwa group over Z
 gap> ClassShift(0,1)^17 in Group(ClassShift(0,1));
 true
-gap> u in G;
+gap> u in RCWA(Integers);
 true
-gap> t in G;
+gap> t in RCWA(Integers);
 true
-gap> T in G;
+gap> T in RCWA(Integers);
 false
 gap> if not IsBound(rc) then
 >      rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 >    fi;
-gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
-gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
-gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
 gap> a = RcwaMapping([rc(0,2),rc(1,4),rc(3,4)],[rc(0,3),rc(1,3),rc(2,3)]);
 true
 gap> MovedPoints(a);
@@ -601,10 +573,6 @@ gap> List(DerivedSeries(H),Size);
 [ 384, 96, 32, 2, 1 ]
 gap> Modulus(H);
 8
-gap> NrConjugacyClassesOfRCWAZOfOrder(2);
-infinity
-gap> NrConjugacyClassesOfRCWAZOfOrder(105);
-218
 gap> IsTame(T);
 false
 gap> IsTame(ab);
@@ -737,15 +705,9 @@ gap> Display(TransitionMatrix(ab,20)*One(GF(7)));
  1 . . . . . 2 . . 4 4 . . . . . 2 2 . .
  2 1 . . . . . . . . 2 4 4 . . . . . 2 .
  . . 1 . . . . 2 . . . . . 4 4 . . 2 . 2
-gap> sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],
->                           [2, 0,1],[1,0,1],[1,0,1],
->                           [1,-3,3],[3,3,2],[1,0,1],
->                           [1, 0,1],[1,0,1],[1,0,1],
->                           [2, 0,1],[3,3,2],[1,0,1],
->                           [1, 0,1],[1,0,1],[1,0,1]]);;
-gap> sigma1 := StandardConjugate(sigma2);;
-gap> sigma := sigma1*sigma2;
-<bijective rcwa mapping of Z with modulus 36>
+gap> sigma1 = StandardConjugate(sigma2);
+true
+gap> sigma := sigma1*sigma2;;
 gap> fact := FactorizationOnConnectedComponents(sigma,36);;
 gap> List(fact,MovedPoints);
 [ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36),
@@ -931,19 +893,6 @@ gap> RestrictedPerm(f,ResidueClass(Integers,2,1));
 <rcwa mapping of Z with modulus 12>
 gap> Order(last);
 12
-gap> P1 := [rc(0,2),rc(1,4),rc(3,4)];
-[ 0(2), 1(4), 3(4) ]
-gap> P2 := [rc(0,3),rc(1,3),rc(2,3)];
-[ 0(3), 1(3), 2(3) ]
-gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<bijective rcwa mapping of Z with modulus 4>
-gap> P1^elm = P2;
-true
-gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame bijective rcwa mapping of Z with modulus 24>
-gap> P1^elmt = P2;
-true
-gap> RCWAReadExamples();
 gap> kappa^2 in Group(a,b);
 false
 gap> List([-2..2],k->Determinant(a^k));
@@ -1106,10 +1055,6 @@ gap> FactorizationIntoCSCRCT((ClassShift(1,3)*ClassReflection(0,2))^a);
   ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18),
   ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18),
   ClassReflection(0,3) ]
-gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
->                                ResidueClassUnion(Integers,5,[2,3]));;
-gap> ResidueClass(1,2)^elm;
-2(5) U 3(5)
 gap> 2*a*RightInverse(2*a);
 IdentityMapping( Integers )
 gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),
@@ -1128,22 +1073,6 @@ true
 gap> Induction(Restriction(Group(a,b),RcwaMapping([[5,3,1]])),
 >              RcwaMapping([[5,3,1]])) = Group(a,b);
 true
-gap> P1 := [rc(1,3),Union(rc(0,3),rc(2,3))];;
-gap> P2 := [Union(rc(2,5),rc(4,5)),Union(rc(0,5),rc(1,5),rc(3,5))];;
-gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<bijective rcwa mapping of Z with modulus 6>
-gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elm;
-[ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
-gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame bijective rcwa mapping of Z with modulus 120>
-gap> [rc(1,3),Union(rc(0,3),rc(2,3))]^elmt;
-[ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
-gap> Modulus(RepresentativeAction(RCWA(Integers),
->            ClassShift(0,2) * ClassTransposition(1,6,3,18)
->          * ClassShift(5,12)^-1 * ClassReflection(11,12),
->            ClassShift(3,5) * ClassTransposition(2,5,1,10)
->          * ClassShift(4,10) * ClassReflection(9,10)));
-36
 gap> Ball(Group((1,2),(2,3),(3,4),(4,5),(5,6)),(),2);
 [ (), (5,6), (4,5), (4,5,6), (4,6,5), (3,4), (3,4)(5,6), (3,4,5), (3,5,4),
   (2,3), (2,3)(5,6), (2,3)(4,5), (2,3,4), (2,4,3), (1,2), (1,2)(5,6),
@@ -1354,45 +1283,38 @@ gap> phi := IsomorphismRcwaGroup(F);
 gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2),CyclicGroup(2));
 <fp group on the generators [ f1, f2, f3 ]>
 gap> phi := IsomorphismRcwaGroup(F);
-[ f1, f2, f3 ] -> [ <bijective rcwa mapping of Z with modulus 8>,
-  <bijective rcwa mapping of Z with modulus 8>,
-  <bijective rcwa mapping of Z with modulus 8> ]
+[ f1, f2, f3 ] -> [ <bijective rcwa mapping of Z with modulus 6>, 
+  <bijective rcwa mapping of Z with modulus 6>, 
+  <bijective rcwa mapping of Z with modulus 6> ]
 gap> G := Image(phi);
 <wild rcwa group over Z with 3 generators>
 gap> List(GeneratorsOfGroup(G),Order);
 [ 2, 2, 2 ]
+gap> gens := GeneratorsOfGroup(G);;
+gap> List([1..3],
+>         i->Permutation(gens[i],
+>                        [ResidueClass(i-1,3),
+>                         Difference(Integers,ResidueClass(i-1,3))]));
+[ (1,2), (1,2), (1,2) ]
 gap> List(GeneratorsOfGroup(G),Factorization);
-[ [ ClassTransposition(2,4,4,8), ClassTransposition(1,2,0,8) ],
-  [ ClassTransposition(3,4,5,8), ClassTransposition(0,2,1,8) ],
-  [ ClassTransposition(0,4,6,8), ClassTransposition(1,2,2,8) ] ]
+[ [ ClassTransposition(1,3,2,3), ClassTransposition(0,6,3,6), 
+      ClassTransposition(2,3,3,6), ClassTransposition(1,3,3,6), 
+      ClassTransposition(2,3,0,6), ClassTransposition(1,3,0,6) ], 
+  [ ClassTransposition(0,3,2,3), ClassTransposition(1,6,4,6), 
+      ClassTransposition(2,3,4,6), ClassTransposition(0,3,4,6), 
+      ClassTransposition(2,3,1,6), ClassTransposition(0,3,1,6) ], 
+  [ ClassTransposition(0,3,1,3), ClassTransposition(2,6,5,6), 
+      ClassTransposition(1,3,5,6), ClassTransposition(0,3,5,6), 
+      ClassTransposition(1,3,2,6), ClassTransposition(0,3,2,6) ] ]
 gap> List([1..3],k->Length(Ball(G,One(G),k)));
 [ 4, 10, 22 ]
-gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
-ClassShift(0,1)^19
-gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
->                                OnTuples);
-<bijective rcwa mapping of Z with modulus 15, of order 18>
-gap> OnTuples([0,-7,1,2],elm);
-[ 7, 1, 3, 0 ]
-gap> conj := RepresentativeAction(RCWA(Integers),
->                                 ClassTransposition(1,4,2,6),
->                                 ClassTransposition(2,8,3,10));
-<bijective rcwa mapping of Z with modulus 480>
-gap> ClassTransposition(1,4,2,6)^conj = ClassTransposition(2,8,3,10);
-true
-gap> Factorization(conj);
-[ ClassTransposition(1,4,3,8), ClassTransposition(2,6,7,8),
-  ClassTransposition(0,4,3,8), ClassTransposition(6,8,7,8),
-  ClassTransposition(0,4,2,8), ClassTransposition(6,8,3,10) ]
-gap> conj = Product(last);
-true
 gap> [ g^2, g^8 ];
 [ g^2, g ]
 gap> g^2;
 g^2
 gap> last^6;
 g^5
-gap> nu^3;
+gap> ClassShift(0,1)^3;
 ClassShift(0,1)^3
 gap> last^17;
 ClassShift(0,1)^51
@@ -1503,8 +1425,6 @@ gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
 gap> G := Group(Collatz,ClassShift(0,1));;
 gap> StructureDescription(G:short);
 "<unknown>.Z"
-gap> StructureDescription(RCWA(Integers));
-"RCWA(Z)"
 gap> G := Group(ClassShift(0,2),ClassReflection(0,2),
 >               ClassTransposition(0,2,1,2));;
 gap> N := Subgroup(G,[ClassShift(0,2),ClassShift(1,2)]);;
