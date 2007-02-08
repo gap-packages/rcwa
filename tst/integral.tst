@@ -1378,6 +1378,8 @@ gap> conj := RepresentativeAction(RCWA(Integers),
 >                                 ClassTransposition(1,4,2,6),
 >                                 ClassTransposition(2,8,3,10));
 <bijective rcwa mapping of Z with modulus 480>
+gap> ClassTransposition(1,4,2,6)^conj = ClassTransposition(2,8,3,10);
+true
 gap> Factorization(conj);
 [ ClassTransposition(1,4,3,8), ClassTransposition(2,6,7,8),
   ClassTransposition(0,4,3,8), ClassTransposition(6,8,7,8),

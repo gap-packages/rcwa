@@ -124,7 +124,7 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   Trivial rcwa group over GF(2)[x], GF(2)[x], infinity, infinity, 0*Z(2) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "RCWA_CT.tst", 100000000 );
+gap> STOP_TEST( "rcwa_ct.tst", 100000000 );
 
 #############################################################################
 ##
