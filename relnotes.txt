@@ -421,9 +421,9 @@ Changes between version 2.3.3 and version 2.4.0:
  - A method for `Permuted' for a list of residue classes and an
    rcwa permutation has been added.
 
- - A "cleanup" of the source files has taken place: Many comments have been
-   improved, and the declarations / implementations have been rearranged and
-   grouped together by "topic".
+ - A major "cleanup" of the source files has taken place: Many comments have
+   been improved, and the declarations / implementations have been rearranged
+   and grouped together by "topic".
 
  - Now RCWA needs ResClasses 2.4.0, which provides improved support for
    unions of residue classes of rings Z_(pi) and GF(q)[x].
