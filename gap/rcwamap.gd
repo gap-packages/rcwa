@@ -7,7 +7,7 @@
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa mappings.
 ##
-##  Let R be an infinite euclidean domain which is not a field and all of
+##  Let R be an infinite euclidean ring which is not a field and all of
 ##  whose proper residue class rings are finite. We call a mapping f: R -> R
 ##  *residue-class-wise affine*, or in short an *rcwa* mapping, if there is
 ##  a nonzero m in R such that f is affine on residue classes (mod m).
@@ -391,7 +391,7 @@ DeclareGlobalFunction( "ClassUnionShift" );
 ##
 #A  FactorizationIntoCSCRCT( <g> )
 ##
-##  A factorization of an element of RCWA(Z) into class shifts,
+##  A factorization of an rcwa permutation into class shifts,
 ##  class reflections and class transpositions.
 ##
 DeclareAttribute( "FactorizationIntoCSCRCT", IsMultiplicativeElement );
@@ -530,18 +530,9 @@ DeclareAttribute( "ImageDensity", IsRcwaMapping );
 
 #############################################################################
 ##
-#S  The sign epimorphism and the notion of tameness. ////////////////////////
+#S  The notion of tameness. /////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#A  Sign( <g> ) . . . . . . . . . . . . the sign of the rcwa mapping <g> of Z
-##
-##  The *sign* of the rcwa mapping <f>. The sign mapping is an epimorphism
-##  from RCWA(Z) to U(Z) = C_2.
-##
-DeclareAttribute( "Sign", IsRcwaMapping );
 
 #############################################################################
 ##

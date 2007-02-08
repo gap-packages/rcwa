@@ -95,6 +95,15 @@ DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 
 #############################################################################
 ##
+#A  Sign( <g> ) . . . . . . . . . .  the sign of the element <g> of RCWA( Z )
+##
+##  The *sign* of the rcwa permutation <g>.
+##  The sign mapping is an epimorphism from RCWA(Z) to U(Z) = C_2.
+##
+DeclareAttribute( "Sign", IsRcwaMapping );
+
+#############################################################################
+##
 #O  CTCons( <R> ) . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
 #F  CT( <R> ) . . . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
 ##
@@ -432,6 +441,25 @@ DeclareOperation( "RepresentativeActionOp",
 ##
 DeclareOperation( "PreImagesRepresentatives",
                   [ IsGeneralMapping, IsObject ] );
+
+#############################################################################
+##
+#O  Factorization( [ <G>, ], <g> ) . . . . . .  factorization into generators
+##
+##  If `Factorization' is not yet an operation, turn it into one and install
+##  the GAP library function of the same name as a method for it.
+##
+if not IsOperation( Factorization ) then
+  DefaultFactorization := Factorization;
+  MakeReadWriteGlobal( "Factorization" ); Unbind( Factorization );
+  DeclareOperation( "Factorization",
+                    [ IsGroup, IsMultiplicativeElementWithInverse ] );
+  InstallMethod( Factorization,"default method", true,
+               [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
+               DefaultFactorization );
+fi;
+DeclareOperation( "Factorization",
+                  [ IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##
