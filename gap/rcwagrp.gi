@@ -654,7 +654,7 @@ InstallOtherMethod( Determinant,
 #M  Random( RCWA( Integers ) ) . . . . . . . .  a `random' element of RCWA(Z)
 ##
 InstallMethod( Random,
-               "for RCWA(Z) (RCWA)", true, [ IsNaturalRCWA_Z ], 0,
+               "for RCWA(Z) (RCWA)", true, [ IsNaturalRCWA_Z ], SUM_FLAGS,
 
   function ( RCWA_Z )
 
@@ -722,15 +722,16 @@ InstallMethod( Random,
 #M  Random( CT( Integers ) ) . . . . . . . . . .  a `random' element of CT(Z)
 ##
 InstallMethod( Random,
-               "for CT(Z) (RCWA)", true, [ IsNaturalCT_Z ], 0,
+               "for CT(Z) (RCWA)", true, [ IsNaturalCT_Z ], SUM_FLAGS,
 
   function ( CT_Z )
 
     local  noct;
 
     noct := ValueOption("NumberOfCTs");
-    if noct = fail then noct := RootInt(Random([0..125],3)); fi;
-    return Random(RCWA(Integers):nocs:=0,nocr:=0,noct:=noct);
+    if noct = fail then noct := RootInt(Random([0..125]),3); fi;
+    return Random(RCWA(Integers):NumberOfCTs:=noct,NumberOfCSs:=0,
+                                 NumberOfCRs:=0);
   end );
 
 #############################################################################
@@ -750,7 +751,7 @@ InstallMethod( Random,
     R := Support(CT_R);
     tame := ValueOption("IsTame") = true;
     noct := ValueOption("NumberOfCTs");
-    if noct = fail then if not tame then noct := RootInt(Random([0..100],3));
+    if noct = fail then if not tame then noct := RootInt(Random([0..100]),3);
                                     else noct := Random([0..2]); fi; fi;
     if IsZ_pi(R) then
       maxm := Maximum(NoninvertiblePrimes(R));
