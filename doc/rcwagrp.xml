@@ -67,7 +67,7 @@ true
 </ManSection>
 
 Examples of rcwa permutations can be obtained via
-<C>Random(RCWA(Integers))</C>, see Section&nbsp;<Ref Label="sec:Random"/>.
+<C>Random(RCWA(<A>R</A>))</C>, see Section&nbsp;<Ref Label="sec:Random"/>.
 <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
@@ -112,7 +112,7 @@ rcwa representation:
     (cp. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
     method for free groups uses an adaptation of the construction given
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
-    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>). <P/>
+    PSL(2,<M>\C</M>) to RCWA(<M>\Z</M>). <P/>
 
     In case <A>G</A> is a finite-degree permutation group,
     the image under a specific embedding can be obtained by
@@ -211,10 +211,12 @@ gap> StructureDescription(G:short);
 <Heading>Direct products and wreath products</Heading>
 
 The class of groups which can faithfully be represented as rcwa groups
-is closed under forming direct products, wreath products with finite
-groups and wreath products with the infinite cyclic group <M>(\Z,+)</M>.
+over the integers is closed under taking direct products, wreath products
+with finite groups and wreath products with the infinite cyclic group
+<M>(\Z,+)</M>.
+
 For information on how direct products and wreath products of subgroups
-of RCWA(<M>\Z</M>) are embedded in RCWA(<M>\Z</M>), see
+of RCWA(<M>\Z</M>) are embedded into RCWA(<M>\Z</M>), see
 Section&nbsp;<Ref Label="sec:RestrictionAndInduction"/> below.
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
@@ -250,9 +252,9 @@ true
   <Meth Name="WreathProduct" Arg="G, Z" Label="G, Z"/>
   <Returns>
     An rcwa group isomorphic to the wreath product of the rcwa
-    group&nbsp;<A>G</A> over&nbsp;<M>\mathbb{Z}</M> with the finite
-    permutation group&nbsp;<A>P</A>, resp. with the infinite cyclic
-    group&nbsp;<A>Z</A>.
+    group&nbsp;<A>G</A> over&nbsp;<M>\Z</M> with the finite
+    permutation group&nbsp;<A>P</A>, respectively with the
+    infinite cyclic group&nbsp;<A>Z</A>.
   </Returns>
   <Description>
     The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
@@ -489,16 +491,14 @@ gap> Display(GeneratorsOfGroup(Image(phi))[2]*One(GF(5)));
   <Meth Name ="PreImagesRepresentative" Arg="phi, g" Label="phi, g"/>
   <Returns>
     A representative of the set of preimages of&nbsp;<A>g</A> under
-    the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group
-    over&nbsp;<M>\mathbb{Z}</M>.
+    the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group.
   </Returns>
   <Description>
-    This method can be used for factoring elements of rcwa groups
-    over <M>\mathbb{Z}</M> into generators. It can also be used for finding
-    nontrivial relations among the generators if the respective group is not
-    free and the method returns a factorization which does not happen to be
-    equal to one which is already known.
-    The homomorphism <A>phi</A> must map the generators of the free
+    This method can be used for factoring elements of rcwa groups into
+    generators. It can also be used for finding nontrivial relations among
+    the generators if the respective group is not free and the method returns
+    a factorization which does not happen to be equal to one which is already
+    known. The homomorphism <A>phi</A> must map the generators of the free
     group to the generators of the rcwa group one-by-one.
     This method is also suitable for wild groups. The implementation
     is based on <Ref Oper="RepresentativeActionPreImage"
@@ -536,9 +536,8 @@ IdentityMapping( Integers )
 <ManSection>
   <Oper Name ="PreImagesRepresentatives" Arg="phi, g" Label="phi, g"/>
   <Returns>
-    A list of representatives of the set of preimages of&nbsp;<A>g</A>
-    under the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa
-    group over&nbsp;<M>\mathbb{Z}</M>.
+    A list of representatives of the set of preimages of&nbsp;<A>g</A> under
+    the homomorphism&nbsp;<A>phi</A> from a free group to an rcwa group.
   </Returns>
   <Description>
     Quite frequently, computing several preimages is not harder than
@@ -713,19 +712,19 @@ gap> List([1,2,3,4],n->n^elm2); # `OnTuples' does not permit reordering
 </ManSection>
 
 <ManSection>
-  <Meth Name="RepresentativeAction" Arg="RCWA_Z, P1, P2"
-                                    Label="RCWA( Integers ), P1, P2"/>
+  <Meth Name="RepresentativeAction" Arg="RCWA(R), P1, P2"
+                                    Label="RCWA(R), P1, P2"/>
   <Returns>
-    An element of RCWA(<M>\Z</M>) which maps the partition&nbsp;<A>P1</A>
+    An element of RCWA(<M>R</M>) which maps the partition&nbsp;<A>P1</A>
     to&nbsp;<A>P2</A>.
   </Returns>
   <Description>
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
     underlying ring <M>R</M> into the same number of disjoint unions of
     residue classes.
-    The method recognizes the option <C>IsTame</C>. If this option
-    is set, the returned mapping is tame provided that there is a tame
-    mapping which satisfies the given condition.
+    The method for <M>R = \Z</M> recognizes the option <C>IsTame</C>.
+    If this option is set, the returned mapping is tame provided that
+    there is a tame mapping which satisfies the given condition.
     If the option <C>IsTame</C> is not set and the partitions <A>P1</A>
     and <A>P2</A> both consist entirely of single residue classes, then
     the returned mapping is affine on any residue class in&nbsp;<A>P1</A>.
@@ -865,20 +864,21 @@ gap> Ball(Group((1,2),(2,3),(3,4)),(),2);
 
 <!-- #################################################################### -->
 
-<Section Label="sec:ConjugacyInRCWA_Z">
-<Heading>Conjugacy in RCWA(Z)</Heading>
+<Section Label="sec:ConjugacyInRCWA_R">
+<Heading>Conjugacy in RCWA(R) and CT(R)</Heading>
 
 <ManSection>
-  <Meth Name="IsConjugate" Arg="RCWA(Integers), f, g"
-                           Label="RCWA(Integers), f, g"/>
+  <Meth Name="IsConjugate" Arg="RCWA(R), f, g" Label="RCWA(R), f, g"/>
+  <Meth Name="IsConjugate" Arg="CT(R), f, g"   Label="CT(R), f, g"/>
   <Returns>
     <C>true</C> if the bijective rcwa mappings <A>f</A> and&nbsp;<A>g</A>
-    are conjugate in RCWA(<M>\Z</M>), and <C>false</C> otherwise.
+    are conjugate in RCWA(<M>R</M>) or CT(<M>R</M>), respectively, and
+    <C>false</C> otherwise.
   </Returns>
   <Description>
     The author does not know a general way to solve the conjugacy problem
-    for elements of RCWA(<M>\Z</M>), thus the method may fail or run into
-    an infinite loop.
+    for elements of RCWA(<M>R</M>) or CT(<M>R</M>), thus the method may fail
+    or run into an infinite loop.
 <Example>
 <![CDATA[
 gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),
@@ -910,8 +910,10 @@ gap> ShortCycles(a,5);
 </Example>
 
 <ManSection>
-  <Meth Name="RepresentativeAction" Arg="RCWA(Integers), f, g"
-                                    Label="RCWA(Integers), f, g"/>
+  <Meth Name="RepresentativeAction" Arg="RCWA(R), f, g"
+                                    Label="RCWA(R), f, g"/>
+  <Meth Name="RepresentativeAction" Arg="CT(R), f, g"
+                                    Label="CT(R), f, g"/>
   <Returns>
     An rcwa mapping&nbsp;<C>x</C> such that
     <C><A>f</A>&circum;x = <A>g</A></C>, if such an <C>x</C>
@@ -919,18 +921,16 @@ gap> ShortCycles(a,5);
   </Returns>
   <Description>
     This method may fail for the same reasons as
-    <Ref Meth="IsConjugate" Label="RCWA(Integers), f, g"/>.
+    <Ref Meth="IsConjugate" Label="RCWA(R), f, g"/>.
 <Example>
 <![CDATA[
 gap> rep := RepresentativeAction(RCWA(Integers),ClassTransposition(0,2,1,4),
 >                                               ClassTransposition(1,2,0,4));
-<bijective rcwa mapping of Z with modulus 32>
+<bijective rcwa mapping of Z with modulus 2>
 gap> ClassTransposition(0,2,1,4)^rep = ClassTransposition(1,2,0,4); # check
 true
 gap> Factorization(rep);
-[ ClassTransposition(0,2,3,16), ClassTransposition(1,4,11,16),
-  ClassTransposition(2,8,3,16), ClassTransposition(6,8,11,16),
-  ClassTransposition(1,2,2,8), ClassTransposition(0,4,6,8) ]
+[ ClassTransposition(0,2,1,2) ]
 ]]>
 </Example>
   </Description>
@@ -1031,12 +1031,13 @@ true
 <!-- #################################################################### -->
 
 <Section Label="sec:Random">
-<Heading>Getting pseudo-random elements of RCWA(Z)</Heading>
+<Heading>Getting pseudo-random elements of RCWA(R) and CT(R)</Heading>
 
-<Index Key="Random" Subkey="RCWA(Z)"><C>Random</C></Index>
-There is a method for the operation <C>Random</C> for RCWA(<M>\Z</M>).
-This method is designed to be suitable for generating interesting
-examples. No particular distribution is guaranteed.
+<Index Key="Random" Subkey="RCWA(R)"><C>Random</C></Index>
+<Index Key="Random" Subkey="CT(R)"><C>Random</C></Index>
+There are methods for the operation <C>Random</C> for RCWA(<M>R</M>)
+and CT(<M>R</M>). These methods are designed to be suitable for generating
+interesting examples. No particular distribution is guaranteed.
 
 <Log>
 <![CDATA[
@@ -1079,7 +1080,7 @@ In its one-argument form, this function returns a list of 4-tuples
 <M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
 pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
 with <M>m_1, m_2 \leq m</M>. In its two-argument form, it does
-<Q>the same</Q> for the ring&nbsp;<A>R</A>.
+<Q>the equivalent</Q> for the ring&nbsp;<A>R</A>.
 
 <Example>
 <![CDATA[
@@ -1238,7 +1239,7 @@ gap> IsomorphismPcpGroup(K);
   <Returns>
     Some integral conjugate of the tame rcwa group&nbsp;<A>G</A> resp.
     of the tame bijective rcwa mapping&nbsp;<A>g</A> in the group
-    RCWA(<M>\Z</M>).
+    RCWA(<M>R</M>).
   </Returns>
   <Description>
     Such conjugates exist, see&nbsp;<Cite Key="Kohl05"/>,

@@ -347,7 +347,7 @@ necessary for understanding this manual or for using this package.
     <C>[</C><M>a_{r(m)}</M>, <M>b_{r(m)}</M>, <M>c_{r(m)}</M><C>]</C>.
     Their ordering is determined by the ordering of the representatives of
     the residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
-    <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \mathbb{Z}</M>
+    <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \Z</M>
     this means that the coefficient triple for the residue class <M>0(m)</M>
     comes first and is followed by the one for <M>1(m)</M>, the one for
     <M>2(m)</M> and so on. In case one or several of the arguments <A>R</A>,
@@ -365,24 +365,24 @@ necessary for understanding this manual or for using this package.
       </Item>
       <Mark>(b)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> or <A>R</A> =
-        <M>\mathbb{Z}_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
+        of <A>R</A> = <M>\Z</M> or <A>R</A> =
+        <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
         and coefficients <A>coeffs</A>, resp.
       </Item>
       <Mark>(c)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> with modulus
+        of <A>R</A> = <M>\Z</M> with modulus
         <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>, resp.
       </Item>
       <Mark>(d)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M>, permuting any set
+        of <A>R</A> = <M>\Z</M>, permuting any set
         <C><A>range</A>+k*Length(<A>range</A>)</C> like <A>perm</A>
         permutes <A>range</A>, resp.
       </Item>
       <Mark>(e)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>m</A> and
+        of <A>R</A> = <M>\Z</M> with modulus <A>m</A> and
         values given by a list <A>val</A> of 2 pairs <C>[</C>preimage<C>,
         </C>image<C>]</C> per residue class (mod <A>m</A>), resp.
       </Item>
@@ -653,7 +653,7 @@ of a given rcwa mapping. The meaning of the return values is as described
 in the previous section.
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
-than <M>\mathbb{Z}</M>, not for all operations applicable methods are
+than <M>\Z</M>, not for all operations applicable methods are
 available. <P/>
 
 </Section>

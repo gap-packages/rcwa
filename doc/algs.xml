@@ -381,11 +381,11 @@ found in&nbsp;<Cite Key="Kohl07a"/>.
     To get into a situation where the Table-Tennis Lemma is applicable,
     the method computes conjugates of the images of the mentioned permutation
     representations under bijective rcwa mappings <M>\sigma_r</M> which
-    satisfy <M>0(n_r)^{\sigma_r} = \mathbb{Z} \setminus r(m)</M>. <P/>
+    satisfy <M>0(n_r)^{\sigma_r} = \Z \setminus r(m)</M>. <P/>
 
     The method for free groups uses an adaptation of the construction
     given on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
-    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>).
+    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\Z</M>).
     As an equivalent for the closed discs used there, the method takes
     the residue classes modulo two times the rank of the free group.
   </Item>
@@ -445,7 +445,7 @@ found in&nbsp;<Cite Key="Kohl07a"/>.
     <M>g</M> of <A>G</A>, and repeat this until <M>S</M> remains constant.
     This may run into an infinite loop. <P/>
 
-    If it terminates: If <M>S = \mathbb{Z}</M>, return <C>true</C>,
+    If it terminates: If <M>S = \Z</M>, return <C>true</C>,
     otherwise return <C>false</C>.
   </Item>
 
