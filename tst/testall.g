@@ -6,7 +6,7 @@
 #H  @(#)$Id$
 ##
 ##  This is an adaptation of the test file for the GAP library to the
-##  `RCWA' - package.
+##  RCWA package.
 ##
 
 #############################################################################
@@ -88,13 +88,13 @@ end;
 ##  grep -h "STOP_TEST" *.tst | sed -e 's:^gap> STOP_TEST( ":[ ":' | \
 ##  sed -e 's: );: ],:'
 ##
-TEST_FILES := [ [ "Ngens.tst"  ,     20000000 ],
-                [ "semiloc.tst"  ,   30000000 ],
-                [ "modular.tst"  ,  250000000 ],
-                [ "integral.tst" , 4000000000 ] ];
+TEST_FILES := [ [ "ngens.tst",      20000000 ],
+                [ "semiloc.tst",    30000000 ],
+                [ "rcwa_ct.tst",   100000000 ],
+                [ "modular.tst",   250000000 ],
+                [ "integral.tst", 4000000000 ] ];
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
-
 
 #############################################################################
 ##

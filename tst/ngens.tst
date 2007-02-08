@@ -1,12 +1,8 @@
 #############################################################################
 ##
-#W  Ngens.tst                 GAP4 Package `RCWA'                 Stefan Kohl
+#W  ngens.tst                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
 #H  @(#)$Id$
-##
-##  This file contains checks of the computations done in a preprint
-##  `On Normal Subgroups of the Group of Residue Class-Wise Affine Permuta-
-##  tions of the Integers'.
 ##
 gap> START_TEST("$Id$");
 gap> nu  := ClassShift(0,1);;
@@ -41,11 +37,12 @@ true
 gap> ClassTransposition(1,3,2,3)^gamma3 * ClassTransposition(1,3,2,3)^gamma4
 >  = tau;
 true
-gap> Comm(ClassShift(1,2),ClassShift(1,3))^Comm(ClassShift(0,2),ClassShift(0,3))
+gap> Comm(ClassShift(1,2),ClassShift(1,3))^
+>    Comm(ClassShift(0,2),ClassShift(0,3))
 >  * Comm(ClassShift(0,2),ClassShift(2,3)) = ClassTransposition(1,3,2,3);
 true
 gap> STOP_TEST( "Ngens.tst", 1000000 );
 
 #############################################################################
 ##
-#E  Ngens.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  ngens.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
