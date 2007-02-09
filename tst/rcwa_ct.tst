@@ -225,6 +225,22 @@ gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
+gap> Zpi := Z_pi([2,3]);
+Z_( 2, 3 )
+gap> ct1 := ClassTransposition(ResidueClass(Zpi,4,0),ResidueClass(Zpi,6,1));
+ClassTransposition(0,4,1,6)
+gap> ct2 := ClassTransposition(ResidueClass(Zpi,2,1),ResidueClass(Zpi,4,2));
+ClassTransposition(1,2,2,4)
+gap> elm := RepresentativeAction(G,ct1,ct2);
+<bijective rcwa mapping of Z_( 2, 3 ) with modulus 48>
+gap> ct1^elm = ct2;
+true
+gap> Factorization(elm);
+[ ClassTransposition(0,4,2,16), ClassTransposition(1,6,10,16),
+  ClassTransposition(0,8,2,16), ClassTransposition(4,8,10,16),
+  ClassTransposition(1,2,0,8), ClassTransposition(2,4,4,8) ]
+gap> IsSubset(G,last);
+true
 gap> G := CT(R);
 CT(GF(2)[x])
 gap> KnownPropertiesOfObject(G);
