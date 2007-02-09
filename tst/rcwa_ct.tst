@@ -31,6 +31,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
 [ "RCWA(Z)", infinity, Rcwa mapping of Z: n -> -n, 
   IdentityMapping( Integers ), IdentityMapping( Integers ), 
   Trivial rcwa group over Z, "RCWA(Z)", infinity, infinity, 0 ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> StructureDescription(RCWA(Integers));
 "RCWA(Z)"
 gap> NrConjugacyClassesOfRCWAZOfOrder(2);
@@ -95,6 +99,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( Z_( 2, 3 ) ), IdentityMapping( Z_( 2, 3 ) ), 
   Trivial rcwa group over Z_( 2, 3 ), "RCWA(Z_( 2, 3 ))", infinity, infinity, 
   0 ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
@@ -117,6 +125,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( GF(2)[x] ), IdentityMapping( GF(2)[x] ), 
   Trivial rcwa group over GF(2)[x], "RCWA(GF(2)[x])", infinity, infinity, 
   0*Z(2) ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> ct := ClassTransposition(ResidueClass(R,x,Zero(R)),
 >                             ResidueClass(R,x^2,One(R)));
 ClassTransposition(0*Z(2),x,Z(2)^0,x^2)
@@ -146,6 +158,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
 [ "CT(Z)", infinity, ClassTransposition(0,2,1,2), IdentityMapping( Integers ),
   IdentityMapping( Integers ), Trivial rcwa group over Z, "CT(Z)", Integers, 
   infinity, infinity, 0 ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> conj := RepresentativeAction(CT(Integers),ClassTransposition(1,4,2,6),
 >                                              ClassTransposition(2,8,3,10));
 <bijective rcwa mapping of Z with modulus 480>
@@ -175,6 +191,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( Z_( 2, 3 ) ), IdentityMapping( Z_( 2, 3 ) ), 
   Trivial rcwa group over Z_( 2, 3 ), "CT(Z_( 2, 3 ))", Z_( 2, 3 ), infinity, 
   infinity, 0 ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> G := CT(R);
 CT(GF(2)[x])
 gap> KnownPropertiesOfObject(G);
@@ -194,6 +214,10 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( GF(2)[x] ), IdentityMapping( GF(2)[x] ), 
   Trivial rcwa group over GF(2)[x], "CT(GF(2)[x])", GF(2)[x], infinity, 
   infinity, 0*Z(2) ]
+gap> One(G) in G;
+true
+gap> Random(G) in G;
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "rcwa_ct.tst", 100000000 );
