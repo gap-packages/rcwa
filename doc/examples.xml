@@ -69,6 +69,8 @@ i.e. involutions interchanging two disjoint residue classes:
 
 <Example>
 <![CDATA[
+gap> Collatz in CT(Integers);  # `Collatz' lies in the simple group CT(Z).
+true
 gap> Length(Factorization(Collatz));
 212
 ]]>
