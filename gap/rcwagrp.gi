@@ -532,10 +532,10 @@ InstallMethod( \in,
 
 #############################################################################
 ## 
-#M  IsSubset( RCWA( <R> ), G ) . . . . . for RCWA(R) and an rcwa group over R
+#M  IsSubset( RCWA( <R> ), G ) . . . . . . . .  for RCWA(R) and an rcwa group
 ## 
 InstallMethod( IsSubset,
-               "for RCWA(R) and an rcwa group over R (RCWA)", ReturnTrue,
+               "for RCWA(R) and an rcwa group (RCWA)", ReturnTrue,
                [ IsNaturalRCWA, IsRcwaGroup ], SUM_FLAGS,
 
   function ( RCWA_R, G )
@@ -556,6 +556,19 @@ InstallMethod( IsSubset,
       or Minimum(Ball(G,0,4,OnPoints)) < 0
     then return false; fi;
     return ForAll(GeneratorsOfGroup(G),g->g in CT_Z);
+  end );
+
+#############################################################################
+## 
+#M  IsSubset( CT( <R> ), G ) . . . . . . . . . .  for CT(R) and an rcwa group
+## 
+InstallMethod( IsSubset,
+               "for CT(R) and an rcwa group (RCWA)", ReturnTrue,
+               [ IsNaturalCT, IsRcwaGroup ], 100,
+
+  function ( CT_R, G )
+    if FamilyObj(One(G)) <> FamilyObj(One(CT_R)) then return false; fi;
+    return ForAll(GeneratorsOfGroup(G),g->g in CT_R);
   end );
 
 #############################################################################
