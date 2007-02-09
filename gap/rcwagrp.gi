@@ -227,7 +227,7 @@ InstallMethod( RCWACons,
     local  G, pi, id;
 
     pi := NoninvertiblePrimes( R );
-    id := RcwaMapping( pi, [ [1,0,1] ] );
+    id := RcwaMapping( pi, [ [1,0,1] ] ); IsOne( id );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsRcwaGroupOverZ_pi
                               and IsAttributeStoringRep ),
@@ -266,7 +266,7 @@ InstallMethod( RCWACons,
     local  G, q, id, rep;
 
     q  := Size( CoefficientsRing( R ) );
-    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
+    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] ); IsOne( id );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsRcwaGroupOverGFqx
                               and IsAttributeStoringRep ),
@@ -381,7 +381,7 @@ InstallMethod( CTCons,
     local  G, pi, id, rep;
 
     pi := NoninvertiblePrimes( R );
-    id := RcwaMapping( pi, [ [1,0,1] ] );
+    id := RcwaMapping( pi, [ [1,0,1] ] ); IsOne( id );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsRcwaGroupOverZ_pi
                               and IsAttributeStoringRep ),
@@ -423,7 +423,7 @@ InstallMethod( CTCons,
     local  G, q, id, rep;
 
     q  := Size( CoefficientsRing( R ) );
-    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] );
+    id := RcwaMapping( q, One(R), [ [1,0,1] * One(R) ] ); IsOne( id );
     G  := Objectify( NewType( FamilyObj( Group( id ) ),
                                   IsRcwaGroupOverGFqx
                               and IsAttributeStoringRep ),
@@ -514,7 +514,7 @@ InstallMethod( \in,
     local  R;
 
     if   FamilyObj(g) <> FamilyObj(One(CT_R)) or not IsBijective(g)
-    then return false; fi;
+    then return false; elif IsOne(g) then return true; fi;
     R := Support(CT_R);
     if IsIntegers(R) or IsZ_pi(R) then 
       if not IsClassWiseOrderPreserving(g) then return false; fi;
@@ -756,7 +756,9 @@ InstallMethod( Random,
     if IsZ_pi(R) then
       maxm := Maximum(NoninvertiblePrimes(R));
       maxm := Maximum(maxm,Minimum(NoninvertiblePrimes(R))^2);
-      classpairs := ClassPairs(R,maxm);
+      classpairs := List(ClassPairs(R,maxm),
+                         t->[ResidueClass(R,t[2],t[1]),
+                             ResidueClass(R,t[4],t[3])]);
     elif IsFiniteFieldPolynomialRing(R) then
       x          := IndeterminatesOfPolynomialRing(R)[1];
       classpairs := ClassPairs(R,x^3);

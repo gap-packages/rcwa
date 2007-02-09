@@ -4674,6 +4674,14 @@ InstallMethod( FactorizationIntoCSCRCT,
 
 #############################################################################
 ##
+#M  FactorizationIntoCSCRCT( <g> ) . . . . . . . . . for the identity mapping
+##
+InstallMethod( FactorizationIntoCSCRCT,
+               "for the identity mapping (RCWA)",
+               true, [ IsRcwaMapping and IsOne ], 0, one -> [ one ] );
+
+#############################################################################
+##
 #M  Factorization( <g> ) . . . for bijective rcwa mappings, into cs / cr / ct
 ##
 InstallMethod( Factorization,
