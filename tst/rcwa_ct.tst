@@ -162,6 +162,13 @@ gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
+gap> H := Group(ClassTransposition(0,2,1,4)  * ClassTransposition(1,3,5,9),
+>               ClassTransposition(4,6,2,12) * ClassTransposition(2,6,7,12));;
+gap> IsSubgroup(G,H);
+true
+gap> H := ClosureGroup(H,ClassReflection(0,3)^ClassShift(0,2));;
+gap> IsSubgroup(G,H);
+false
 gap> conj := RepresentativeAction(CT(Integers),ClassTransposition(1,4,2,6),
 >                                              ClassTransposition(2,8,3,10));
 <bijective rcwa mapping of Z with modulus 480>
