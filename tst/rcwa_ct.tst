@@ -103,6 +103,19 @@ gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
+gap> P1 := RandomPartitionIntoResidueClasses(Z_pi([2,3]),5,[2,3]);;
+gap> P2 := RandomPartitionIntoResidueClasses(Z_pi([2,3]),5,[2,3]);;
+gap> elm := RepresentativeAction(G,P1,P2);;
+gap> P1^elm = P2;
+true
+gap> S1 := ResidueClassUnion(Z_pi([2,3]),3,[1,2]);
+Z_( 2, 3 ) \ 0(3)
+gap> S2 := ResidueClassUnion(Z_pi([2,3]),8,[3,6,7]);
+3(4) U 6(8)
+gap> elm := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z_( 2, 3 ) with modulus 12>
+gap> S1^elm = S2;
+true
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
@@ -129,9 +142,10 @@ gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
-gap> ct := ClassTransposition(ResidueClass(R,x,Zero(R)),
->                             ResidueClass(R,x^2,One(R)));
+gap> ct := ClassTransposition(Zero(R),x,One(R),x^2);
 ClassTransposition(0*Z(2),x,Z(2)^0,x^2)
+gap> IsSubgroup(RCWA(R),Group(ct));
+true
 gap> P1 := RespectedPartition(ct);
 [ 0*Z(2)(mod x), Z(2)^0(mod x^2), x+Z(2)^0(mod x^2) ]
 gap> P2 := Permuted(P1,ct);
@@ -139,6 +153,15 @@ gap> P2 := Permuted(P1,ct);
 gap> g := RepresentativeAction(RCWA(R),P1,P2);
 <bijective rcwa mapping of GF(2)[x] with modulus x^2>
 gap> P1^g = P2;
+true
+gap> cls := AllResidueClassesModulo(R,x^3);;
+gap> S1 := Union(cls{[1,4,8]});
+x+Z(2)^0(mod x^2) U x^2+x+Z(2)^0(mod x^3)
+gap> S2 := Union(cls{[1,7]});
+0*Z(2)(mod x^3) U x^2+x(mod x^3)
+gap> elm := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of GF(2)[x] with modulus x^3>
+gap> S1^elm = S2;
 true
 gap> G := CT(Integers);
 CT(Z)
@@ -225,6 +248,23 @@ gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
+gap> IsSubgroup(G,Group(ClassTransposition(Zero(R),x,One(R),x)));
+true
+gap> ct1 := ClassTransposition(One(R),x,x,x^2+x);
+ClassTransposition(Z(2)^0,x,x,x^2+x)
+gap> ct2 := ClassTransposition(One(R),x^2,x,x^2+x);
+ClassTransposition(Z(2)^0,x^2,x,x^2+x)
+gap> elm := RepresentativeAction(G,ct1,ct2);
+<bijective rcwa mapping of GF(2)[x] with modulus x^5+x^4>
+gap> ct1^elm = ct2;
+true
+gap> Factorization(elm);
+[ ClassTransposition(Z(2)^0,x,0*Z(2),x^4+x^3),
+  ClassTransposition(x,x^2+x,x^3+x^2,x^4+x^3),
+  ClassTransposition(x+Z(2)^0,x^2,0*Z(2),x^4+x^3),
+  ClassTransposition(x^2+x,x^3+x^2,x^3+x^2,x^4+x^3),
+  ClassTransposition(Z(2)^0,x^2,x+Z(2)^0,x^2),
+  ClassTransposition(x,x^2+x,x^2+x,x^3+x^2) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "rcwa_ct.tst", 100000000 );
