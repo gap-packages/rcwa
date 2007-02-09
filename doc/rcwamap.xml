@@ -646,6 +646,8 @@ gap> [ Image((a + b)), Image((a - b)) ];
 <Index Key="Modulus" Subkey="f"><C>Modulus</C></Index>
 <Index Key="Mod" Subkey="f"><C>Mod</C></Index>
 <Index Key="Coefficients" Subkey="f"><C>Coefficients</C></Index>
+<Index Key="rcwa mapping" Subkey="coercion">rcwa mapping</Index>
+<Index Key="rcwa group" Subkey="coercion">rcwa group</Index>
 
 There are operations <C>Modulus</C> (abbreviated <C>Mod</C>) and
 <C>Coefficients</C> for extracting the modulus resp. the coefficient list
@@ -654,7 +656,10 @@ in the previous section.
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
 than <M>\Z</M>, not for all operations applicable methods are
-available. <P/>
+available. As in general a subring relation <M>R_1&lt;R_2</M> does <E>not</E>
+give rise to a natural embedding of RCWA(<M>R_1</M>) into RCWA(<M>R_2</M>),
+there is no coercion between rcwa mappings or rcwa groups over different
+rings. <P/>
 
 </Section>
 
