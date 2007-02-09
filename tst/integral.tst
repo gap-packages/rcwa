@@ -262,19 +262,19 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
 gap> Print(LaTeXObj(ab));
 n \ \longmapsto \
 \begin{cases}
-  n               & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
-  2n - 5          & \text{if} \ n \in 1(9), \\
-  n + 3           & \text{if} \ n \in 4(9) \cup 7(9), \\
-  2n - 4          & \text{if} \ n \in 5(9), \\
-  \frac{n + 2}{2} & \text{if} \ n \in 6(18), \\
-  \frac{n - 5}{2} & \text{if} \ n \in 15(18).
+  n         & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
+  2n - 5    & \text{if} \ n \in 1(9), \\
+  n + 3     & \text{if} \ n \in 4(9) \cup 7(9), \\
+  2n - 4    & \text{if} \ n \in 5(9), \\
+  (n + 2)/2 & \text{if} \ n \in 6(18), \\
+  (n - 5)/2 & \text{if} \ n \in 15(18).
 \end{cases}
 gap> Print(LaTeXObj(a:Indentation:=2));
   n \ \longmapsto \
   \begin{cases}
-    \frac{3n}{2}     & \text{if} \ n \in 0(2), \\
-    \frac{3n + 1}{4} & \text{if} \ n \in 1(4), \\
-    \frac{3n - 1}{4} & \text{if} \ n \in 3(4).
+    3n/2       & \text{if} \ n \in 0(2), \\
+    (3n + 1)/4 & \text{if} \ n \in 1(4), \\
+    (3n - 1)/4 & \text{if} \ n \in 3(4).
   \end{cases}
 gap> Print(LaTeXObj(a:german));
 n \ \longmapsto \
