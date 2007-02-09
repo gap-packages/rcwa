@@ -523,7 +523,9 @@ InstallMethod( \in,
         or Maximum([-Mod(g)..-1]^g) >= 0
       then return false; fi;
     fi;
-    if   ForAll(FactorizationIntoCSCRCT(g),IsClassTransposition)
+    if   ForAll(FactorizationIntoCSCRCT(g),
+                gi ->    IsClassTransposition(gi)
+                      or IsPrimeSwitch(gi) or IsPrimeSwitch(gi^-1))
     then return true; fi;
     TryNextMethod();
   end );
