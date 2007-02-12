@@ -9,7 +9,7 @@
 <Chapter Label="ch:RcwaMappings">
 <Heading>Residue-Class-Wise Affine Mappings</Heading>
 
-This chapter gives the basic definitions, describes how to enter
+This chapter gives the basic definitions, and describes how to enter
 residue-class-wise affine mappings and how to compute with them.
 The functionality of this package which is dedicated to residue-class-wise
 affine groups is described in detail in the next chapter. The reader is
@@ -24,7 +24,7 @@ this chapter, and to look up definitions as he needs to.
 <Index Key="rcwa mapping" Subkey="definition">rcwa mapping</Index>
 <Index Key="rcwa group" Subkey="definition">rcwa group</Index>
 
-Residue-class-wise affine groups, or for short <E>rcwa</E> groups, are
+Residue-class-wise affine groups, or <E>rcwa</E> groups for short, are
 permutation groups whose elements are bijective residue-class-wise affine
 mappings. <P/>
 
@@ -87,9 +87,9 @@ while wild rcwa groups are the objects of primary interest. <P/>
 
 The definitions of residue-class-wise affine mappings and -groups can be
 generalized in an obvious way to suitable rings other than&nbsp;<M>\Z</M>.
-In fact, this package provides at least rudimentary support for
-residue-class-wise affine groups over semilocalizations of&nbsp;<M>\Z</M>
-and over univariate polynomial rings over finite fields.
+In fact, this package provides also some support for residue-class-wise
+affine groups over semilocalizations of&nbsp;<M>\Z</M> and over univariate
+polynomial rings over finite fields.
 
 </Section>
 
@@ -278,12 +278,23 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
 </ManSection>
 
 <Alt Only="LaTeX">\noindent</Alt>
-The set of all class transpositions generates the simple group
-mentioned in the preface. <P/>
+The set of all class transpositions of the ring of integers generates the
+simple group mentioned in the preface. This group has a representation as
+a &GAP; object -- see&nbsp;<Ref Func="CT" Label="R"/>. <P/>
 
-The permutations of the following kind play an important role in factoring
-bijective rcwa mappings into class shifts, class reflections and class
-transpositions (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
+Class shifts, class reflections and class transpositions of rings
+<M>R</M> other than <M>\Z</M> are defined in an entirely analogous way --
+all one needs to do is to replace <M>\Z</M> by&nbsp;<M>R</M>.
+They can also be entered basically as described above.
+The ring <M>R</M> is taken to be the <Q>default ring</Q>
+(<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP; Reference Manual)
+of the arguments, or if the argument is a residue class, then <M>R</M>
+is taken to be its underlying ring. <P/>
+
+The permutations of the following kind play an important role in
+factoring bijective rcwa mappings of&nbsp;<M>\Z</M> into class shifts,
+class reflections and class transpositions
+(cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="PrimeSwitch" Arg="p" Label="p"/>
@@ -350,10 +361,12 @@ necessary for understanding this manual or for using this package.
     <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \Z</M>
     this means that the coefficient triple for the residue class <M>0(m)</M>
     comes first and is followed by the one for <M>1(m)</M>, the one for
-    <M>2(m)</M> and so on. In case one or several of the arguments <A>R</A>,
-    <A>m</A> and <A>coeffs</A> are omitted or replaced by other arguments,
-    the former are either derived from the latter or default values are
-    taken. The meaning of the other arguments is defined in the detailed
+    <M>2(m)</M> and so on. <P/>
+
+    In case one or several of the arguments <A>R</A>, <A>m</A> and
+    <A>coeffs</A> are omitted or replaced by other arguments, the former
+    are either derived from the latter or default values are taken.
+    The meaning of the other arguments is defined in the detailed
     description of the particular methods given in the sequel:
 
     The above methods return the rcwa mapping
@@ -414,9 +427,6 @@ necessary for understanding this manual or for using this package.
     The methods for the operation <C>RcwaMapping</C> perform a number of
     argument checks, which can be skipped by using <C>RcwaMappingNC</C>
     instead.
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <Example>
 <![CDATA[
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
@@ -476,8 +486,8 @@ the elements of the underlying ring is so. There is also a method for
     switches is printed (cp. <Ref Attr="FactorizationIntoCSCRCT"
     Label="g"/>).
     For rcwa mappings with modulus greater than&nbsp;1, an indentation by
-    <A>Indentation</A> characters can be specified by setting this option
-    value accordingly.
+    <A>Indentation</A> characters can be demanded by setting this option
+    value accor\-dingly.
 <Example>
 <![CDATA[
 gap> Print(LaTeXObj(T));
@@ -486,10 +496,6 @@ n \ \longmapsto \
   \frac{n}{2}      & \text{if} \ n \in 0(2), \\
   \frac{3n + 1}{2} & \text{if} \ n \in 1(2).
 \end{cases}
-]]>
-</Example>
-<Example>
-<![CDATA[
 gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
       &\nu_{4(8)} \cdot \nu_{0(8)}^{-1}
  \cdot \tau_{0(8),4(8)} \cdot \tau_{5(16),11(16)}
