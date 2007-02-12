@@ -255,6 +255,38 @@ gap> String(f);
 "RcwaMapping( 9, Z(3)^0, [ [ 0*Z(3), x^2+Z(3)^0, Z(3)^0 ] ] )"
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(3^2)[x]: P -> Z(3^2)*P
+gap> ClassReflection(R);
+ClassReflection(0*Z(3),Z(3)^0)
+gap> last^2;
+IdentityMapping( GF(3^2)[x] )
+gap> cr := ClassReflection([R]);
+ClassReflection(0*Z(3),Z(3)^0)
+gap> Order(cr);
+2
+gap> Support(cr);
+GF(3^2)[x] \ [ 0*Z(3) ]
+gap> Display(cr);
+Bijective rcwa mapping of GF(3^2)[x]: P -> -P
+gap> ClassReflection(x,x^2);
+ClassReflection(x,x^2)
+gap> cr := ClassReflection([x,x^2]);
+ClassReflection(x,x^2)
+gap> x^cr;
+x
+gap> (x^2+x)^cr;
+-x^2+x
+gap> Support(cr);
+x(mod x^2) \ [ x ]
+gap> Order(cr);
+2
+gap> LargestSourcesOfAffineMappings(cr);
+[ GF(3)[x] \ x(mod x^2), x(mod x^2) ]
+gap> cr := ClassReflection(ResidueClass(R,x^2,x));
+ClassReflection(x,x^2)
+gap> UnderlyingRing(FamilyObj(cr));
+GF(3^2)[x]
+gap> LargestSourcesOfAffineMappings(cr);
+[ GF(3^2)[x] \ x(mod x^2), x(mod x^2) ]
 gap> LargestSourcesOfAffineMappings(r);
 [ 0*Z(2)(mod x^2+Z(2)^0), Z(2)^0(mod x^2+Z(2)^0), x(mod x^2+Z(2)^0), 
   x+Z(2)^0(mod x^2+Z(2)^0) ]
@@ -298,6 +330,14 @@ gap> (cs1*cs2)^4;
 IdentityMapping( GF(2)[x] )
 gap> Order(cs1*cs2);
 4
+gap> ClassReflection(R);
+IdentityMapping( GF(2)[x] )
+gap> ClassReflection([R]);
+IdentityMapping( GF(2)[x] )
+gap> ClassReflection(Zero(R),x);
+IdentityMapping( GF(2)[x] )
+gap> ClassReflection([Zero(R),x]);
+IdentityMapping( GF(2)[x] )
 gap> ct := ClassTransposition(ResidueClass(R,x,One(x)),
 >                             ResidueClass(R,x^2+x,x));
 ClassTransposition(Z(2)^0,x,x,x^2+x)
