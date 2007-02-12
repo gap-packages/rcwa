@@ -265,11 +265,14 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZ" );
 #############################################################################
 ##
 #F  ClassShift( <r>, <m> ) . . . . . . . . . . . . . . .  class shift nu_r(m)
-#F  ClassShift( [ <r>, <m> ] )
+#F  ClassShift( [ <r>, <m> ] ) . . . . . . . . . . . . . . . . . . . . (dito)
+#F  ClassShift( <cl> ) . . . . . . . . . class shift nu_r(m), where cl = r(m)
+#F  ClassShift( <R> )  . . . . . . . . . . . . . class shift nu_R: n -> n + 1
 #P  IsClassShift( <sigma> )
 ##
-##  The *class shift* nu_r(m) maps n in r(m) to n + m and fixes the comple-
-##  ment of the residue class r(m) pointwise.
+##  The *class shift* nu_r(m) is the rcwa permutation which maps n in r(m)
+##  to n + m and which fixes the complement of the residue class r(m)
+##  pointwise.
 ##
 DeclareGlobalFunction( "ClassShift" );
 DeclareProperty( "IsClassShift", IsRcwaMapping );
@@ -277,12 +280,14 @@ DeclareProperty( "IsClassShift", IsRcwaMapping );
 #############################################################################
 ##
 #F  ClassReflection( <r>, <m> ) . . . . . . .  class reflection varsigma_r(m)
-#F  ClassReflection( [ <r>, <m> ] )
+#F  ClassReflection( [ <r>, <m> ] ) . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassReflection( <cl> ) . class reflection varsigma_r(m), where cl = r(m)
+#F  ClassReflection( <R> )  . . . . . .  class reflection varsigma_R: n -> -n
 #P  IsClassReflection( <sigma> )
 ##
-##  The *class reflection* varsigma_r(m) is the rcwa permutation of Z or
-##  Z_(pi) which maps n in r(m) to -n + 2r and which fixes the complement of
-##  the residue class r(m) pointwise.
+##  The *class reflection* varsigma_r(m) is the rcwa permutation which maps
+##  n in r(m) to -n + 2r and which fixes the complement of the residue class
+##  r(m) pointwise.
 ##
 DeclareGlobalFunction( "ClassReflection" );
 DeclareProperty( "IsClassReflection", IsRcwaMapping );
@@ -290,7 +295,8 @@ DeclareProperty( "IsClassReflection", IsRcwaMapping );
 #############################################################################
 ##
 #F  ClassTransposition( <r1>, <m1>, <r2>, <m2> ) . . . .  class transposition
-#F  ClassTransposition( [ <r1>, <m1>, <r2>, <m2> ] )
+#F  ClassTransposition( [ <r1>, <m1>, <r2>, <m2> ] )        tau_r1(m1),r2(m2)
+#F  ClassTransposition( <cl1>, <cl2> ) ) .  dito, where cl1=r1(m1) cl2=r2(m2)
 #P  IsClassTransposition( <sigma> )
 #A  TransposedClasses( <ct> )
 ##
@@ -303,9 +309,9 @@ DeclareProperty( "IsClassReflection", IsRcwaMapping );
 ##                    | otherwise,
 ##                     \
 ##
-##  where it is understood that 0 <= r1 < m1 and that 0 <= r2 < m2.
-##  The class transposition tau_(r1(m1),r2(m2)) is an involution which
-##  interchanges the residue classes r1(m1) and r2(m2) and which fixes
+##  where it is understood that 0 <= r1 < m1 and 0 <= r2 < m2 in the ordering
+##  used by GAP. The class transposition tau_(r1(m1),r2(m2)) is an involution
+##  which interchanges the residue classes r1(m1) and r2(m2) and which fixes
 ##  the complement of their union pointwise.
 ##
 DeclareGlobalFunction( "ClassTransposition" );
