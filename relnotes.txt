@@ -418,6 +418,8 @@ Changes between version 2.3.3 and version 2.4.0:
      - For RCWA(GF(q)[x]) resp. RCWA(Z_(pi)) and two unions of
        residue classes of GF(q)[x] resp. Z_(pi).
 
+ - An operation `ClassRotation' has been introduced.
+
  - A method for `Permuted' for a list of residue classes and an
    rcwa permutation has been added.
 
