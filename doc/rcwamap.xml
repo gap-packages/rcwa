@@ -9,7 +9,7 @@
 <Chapter Label="ch:RcwaMappings">
 <Heading>Residue-Class-Wise Affine Mappings</Heading>
 
-This chapter gives the basic definitions, and describes how to enter
+In this chapter, we give the basic definitions, and describe how to enter
 residue-class-wise affine mappings and how to compute with them.
 The functionality of this package which is dedicated to residue-class-wise
 affine groups is described in detail in the next chapter. The reader is
@@ -168,13 +168,16 @@ simple structure (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
-  <Func Name="ClassShift" Arg="ResidueClass(r,m)" Label="r(m)"/>
+  <Func Name="ClassShift" Arg="cl" Label="cl"/>
   <Returns> The class shift <M>\nu_{r(m)}</M>. </Returns>
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwise.
-    Enclosing the argument list in list brackets is permitted.
+    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwise. <P/>
+
+    In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
+    residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
+    brackets is permitted.
 <Example>
 <![CDATA[
 gap> Display(ClassShift(5,12));    
@@ -193,13 +196,16 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 
 <ManSection>
   <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
-  <Func Name="ClassReflection" Arg="ResidueClass(r,m)" Label="r(m)"/>
+  <Func Name="ClassReflection" Arg="cl" Label="cl"/>
   <Returns> The class reflection <M>\varsigma_{r(m)}</M>. </Returns>
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise.
-    Enclosing the argument list in list brackets is permitted.
+    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise. <P/>
+
+    In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
+    residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
+    brackets is permitted.
 <Example>
 <![CDATA[
 gap> Display(ClassReflection(5,9));
@@ -219,12 +225,10 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Func Name="ClassTransposition"
-        Arg="r1, m1, r2, m2"
-        Label="r1, m1, r2, m2"/>
-  <Func Name="ClassTransposition"
-        Arg="ResidueClass(r1,m1),ResidueClass(r2,m2)"
-        Label="r1(m1), r2(m2)"/>
+  <Func Name="ClassTransposition" Arg="r1, m1, r2, m2"
+                                  Label="r1, m1, r2, m2"/>
+  <Func Name="ClassTransposition" Arg="cl1, cl2"
+                                  Label="cl1, cl2"/>
   <Returns>
     The class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
   </Returns>
@@ -257,7 +261,13 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     the residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> and which fixes
     the complement of their union pointwise. <P/>
 
-    Enclosing the argument list in list brackets is permitted.
+    <Index Key="TransposedClasses" Subkey="g">
+      <C>TransposedClasses</C>
+    </Index>
+
+    In the two-argument form, the arguments <A>cl1</A> and&nbsp;<A>cl2</A>
+    stand for the residue classes <M>r_1(m_1)</M> and&nbsp;<M>r_2(m_2)</M>,
+    respectively. Enclosing the argument list in list brackets is permitted.
     The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> are stored
     as an attribute <C>TransposedClasses</C>.
 <Example>
@@ -286,13 +296,13 @@ Class shifts, class reflections and class transpositions of rings
 <M>R</M> other than <M>\Z</M> are defined in an entirely analogous way --
 all one needs to do is to replace <M>\Z</M> by&nbsp;<M>R</M>.
 They can also be entered basically as described above.
-The ring <M>R</M> is taken to be the <Q>default ring</Q>
-(<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP; Reference Manual)
-of the arguments, or if the argument is a residue class, then <M>R</M>
-is taken to be its underlying ring. <P/>
+If the arguments are ring elements, then the ring <M>R</M> is taken to
+be their <Q>default ring</Q> (<M>\rightarrow</M> <C>DefaultRing</C> in
+the &GAP; Reference Manual). If residue classes are given as arguments,
+then <M>R</M> is taken to be their underlying ring. <P/>
 
 The permutations of the following kind play an important role in
-factoring bijective rcwa mappings of&nbsp;<M>\Z</M> into class shifts,
+factoring rcwa permutations of&nbsp;<M>\Z</M> into class shifts,
 class reflections and class transpositions
 (cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
 
@@ -537,8 +547,8 @@ approximately exponentially with the exponent. How expensive multiplying
 a couple of wild mappings is, varies very much. In any case, the amount of
 memory required for storing an rcwa mapping is proportional to its modulus.
 Whether a given mapping is tame or wild can be determined by the operation
-<C>IsTame</C>. There are methods for <C>Order</C>, which can not only
-compute a finite order, but can also detect infinite order.
+<C>IsTame</C>. There is a method for <C>Order</C>, which can not only
+compute a finite order, but which can also detect infinite order.
 
 <Example>
 <![CDATA[

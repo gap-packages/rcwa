@@ -9,7 +9,7 @@
 <Chapter Label="ch:RcwaGroups">
 <Heading>Residue-Class-Wise Affine Groups</Heading>
 
-This chapter describes the functionality provided by this package for
+In this chapter, we describe the functionality provided by this package for
 computing with residue-class-wise affine groups.
 
 <!-- #################################################################### -->
