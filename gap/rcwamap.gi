@@ -1,5 +1,5 @@
 #############################################################################
-##
+##,
 #W  rcwamap.gi                GAP4 Package `RCWA'                 Stefan Kohl
 ##
 #H  @(#)$Id$
@@ -759,10 +759,13 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
 
 #############################################################################
 ##
-#F  ClassShift( <r>, <m> ) . . . . . . . . . . . . . . .  class shift nu_r(m)
-#F  ClassShift( [ <r>, <m> ] ) . . . . . . . . . . . . . . . . . . . . (dito)
-#F  ClassShift( <cl> ) . . . . . . . . . class shift nu_r(m), where cl = r(m)
-#F  ClassShift( <R> )  . . . . . . . . . . . . . class shift nu_R: n -> n + 1
+#F  ClassShift( <R>, <r>, <m> ) . . . . . . . . . . . . . class shift nu_r(m)
+#F  ClassShift( <r>, <m> )  . . . . . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassShift( <R>, <cl> ) . . . . . .  class shift nu_r(m), where cl = r(m)
+#F  ClassShift( <cl> )  . . . . . . . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassShift( <R> ) . . . . . . . . . . . . .  class shift nu_R: n -> n + 1
+##
+##  Enclosing the argument list in list brackets is permitted.
 ##
 InstallGlobalFunction( ClassShift,
 
@@ -771,16 +774,30 @@ InstallGlobalFunction( ClassShift,
     local  result, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsResidueClass(arg[1]) and not IsRing(arg[1])
-    then R   := UnderlyingRing(FamilyObj(arg[1]));
-         arg := [Residues(arg[1])[1],Modulus(arg[1])];
-    elif IsRing(arg[1])
-    then R := arg[1]; arg := [0,1]*One(R);
-    else R := DefaultRing(arg[2]); fi;
-    if   Length(arg) <> 2 or not IsSubset(R,arg) or IsZero(arg[2])
+
+    if not Length(arg) in [1..3]
+      or     Length(arg) = 1 and not IsResidueClass(arg[1])
+      or     Length(arg) = 2
+         and not (   ForAll(arg,IsRingElement)
+                  or     IsRing(arg[1])
+                     and IsResidueClass(arg[2])
+                     and arg[1] = UnderlyingRing(FamilyObj(arg[2])))
+      or     Length(arg) = 3
+         and not (    IsRing(arg[1])
+                  and IsSubset(arg[1],arg{[2,3]}))
     then Error("usage: see ?ClassShift( r, m )\n"); fi;
-    if IsInt(arg[2]) then arg[2] := AbsInt(arg[2]); fi;
-    r := arg[1]; m := arg[2]; r := r mod m;
+
+    if IsRing(arg[1]) then R := arg[1]; arg := arg{[2..Length(arg)]}; fi;
+    if   IsBound(R) and IsEmpty(arg)
+    then arg := [0,1] * One(R);
+    elif IsResidueClass(arg[1])
+    then if not IsBound(R) then R := UnderlyingRing(FamilyObj(arg[1])); fi;
+         arg := [Residue(arg[1]),Modulus(arg[1])] * One(R);
+    elif not IsBound(R) then R := DefaultRing(arg[2]); fi;
+    arg := arg * One(R); # Now we know R, and we have arg = [r,m].
+
+    m          := StandardAssociate(R,arg[2]);
+    r          := arg[1] mod m;
     res        := AllResidues(R,m);
     idcoeff    := [1,0,1]*One(R);
     coeff      := List(res,r->idcoeff);
@@ -810,10 +827,13 @@ InstallMethod( IsClassShift,
 
 #############################################################################
 ##
-#F  ClassReflection( <r>, <m> ) . . . . . . .  class reflection varsigma_r(m)
-#F  ClassReflection( [ <r>, <m> ] ) . . . . . . . . . . . . . . . . .  (dito)
-#F  ClassReflection( <cl> ) . class reflection varsigma_r(m), where cl = r(m)
+#F  ClassReflection( <R>, <r>, <m> )  . . . .  class reflection varsigma_r(m)
+#F  ClassReflection( <r>, <m> ) . . . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassReflection( <R>, <cl> )  . class reflection varsigma_r(m), cl = r(m)
+#F  ClassReflection( <cl> ) . . . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassReflection( <R> )  . . . . . .  class reflection varsigma_R: n -> -n
+##
+##  Enclosing the argument list in list brackets is permitted.
 ##
 InstallGlobalFunction( ClassReflection,
 
@@ -822,23 +842,40 @@ InstallGlobalFunction( ClassReflection,
     local  result, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if   IsResidueClass(arg[1]) and not IsRing(arg[1])
-    then R   := UnderlyingRing(FamilyObj(arg[1]));
-         arg := [Residues(arg[1])[1],Modulus(arg[1])];
-    elif IsRing(arg[1])
-    then R := arg[1]; arg := [0,1]*One(R);
-    else R := DefaultRing(arg[2]); fi;
-    if   Length(arg) <> 2 or not IsSubset(R,arg) or IsZero(arg[2])
+
+    if not Length(arg) in [1..3]
+      or     Length(arg) = 1 and not IsResidueClass(arg[1])
+      or     Length(arg) = 2
+         and not (   ForAll(arg,IsRingElement)
+                  or     IsRing(arg[1])
+                     and IsResidueClass(arg[2])
+                     and arg[1] = UnderlyingRing(FamilyObj(arg[2])))
+      or     Length(arg) = 3
+         and not (    IsRing(arg[1])
+                  and IsSubset(arg[1],arg{[2,3]}))
     then Error("usage: see ?ClassReflection( r, m )\n"); fi;
-    if Characteristic(R) = 2 then return One(RCWA(R)); fi;
-    r := arg[1]; m := arg[2]; r := r mod m;
+
+    if IsRing(arg[1]) then R := arg[1]; arg := arg{[2..Length(arg)]}; fi;
+    if   IsBound(R) and IsEmpty(arg)
+    then arg := [0,1] * One(R);
+    elif IsResidueClass(arg[1])
+    then if not IsBound(R) then R := UnderlyingRing(FamilyObj(arg[1])); fi;
+         arg := [Residue(arg[1]),Modulus(arg[1])] * One(R);
+    elif not IsBound(R) then R := DefaultRing(arg[2]); fi;
+    if Characteristic(R) = 2 then return One(RCWA(R)); fi; # Now we know R...
+    arg := arg * One(R); # ...and we have arg = [r,m].
+
+    m          := StandardAssociate(R,arg[2]);
+    r          := arg[1] mod m;
     res        := AllResidues(R,m);
     idcoeff    := [1,0,1]*One(R);
     coeff      := List(res,r->idcoeff);
     pos        := PositionSorted(res,r);
     coeff[pos] := [-1,2*r,1]*One(R);
     result     := RcwaMapping(R,m,coeff);
-    SetIsClassReflection(result,true); SetIsBijective(result,true);
+    SetIsClassReflection(result,true);
+    SetRotationFactor(result,-1);
+    SetIsBijective(result,true);
     SetOrder(result,2); SetIsTame(result,true);
     SetName(result,Concatenation("ClassReflection(",
                                  String(r),",",String(m),")"));
@@ -850,21 +887,117 @@ InstallGlobalFunction( ClassReflection,
 
 #############################################################################
 ##
-#M  IsClassReflection( <sigma> ) . . . . . . for rcwa mappings of Z or Z_(pi)
+#M  IsClassReflection( <sigma> ) . . . . . . . . . . . . .  for rcwa mappings
 ##
 InstallMethod( IsClassReflection,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                sigma -> IsResidueClass(Union(Support(sigma),
-                                       Union(ShortCycles(sigma,1)))) and
+                                       ExcludedElements(Support(sigma)))) and
                sigma = ClassReflection(Union(Support(sigma),
-                                       Union(ShortCycles(sigma,1)))) );
+                                       ExcludedElements(Support(sigma)))) );
 
 #############################################################################
 ##
-#F  ClassTransposition( <r1>, <m1>, <r2>, <m2> ) . . . .  class transposition
-#F  ClassTransposition( [ <r1>, <m1>, <r2>, <m2> ] )        tau_r1(m1),r2(m2)
-#F  ClassTransposition( <cl1>, <cl2> ) ) .  dito, where cl1=r1(m1) cl2=r2(m2)
+#F  ClassRotation( <R>, <r>, <m>, <u> ) . . . . . class rotation rho_(r(m),u)
+#F  ClassRotation( <r>, <m>, <u> )  . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassRotation( <R>, <cl>, <u> ) .  class rotation rho_(r(m),u), cl = r(m)
+#F  ClassRotation( <cl>, <u> )  . . . . . . . . . . . . . . . . . . .  (dito)
+#F  ClassRotation( <R>, <u> ) . . . . . . . class rotation rho_(R,u): n -> un
+##
+##  Enclosing the argument list in list brackets is permitted.
+##
+InstallGlobalFunction( ClassRotation,
+
+  function ( arg )
+
+    local  result, R, coeff, idcoeff, res, pos, r, m, u;
+
+    if IsList(arg[1]) then arg := arg[1]; fi;
+
+    if not Length(arg) in [2..4]
+      or     Length(arg) = 2
+         and not (    IsResidueClass(arg[1])
+                  and IsCollsElms(FamilyObj(arg[1]),FamilyObj(arg[2])))
+      or     Length(arg) = 3
+         and not (   ForAll(arg,IsRingElement)
+                  or     IsRing(arg[1])
+                     and IsResidueClass(arg[2])
+                     and arg[1] = UnderlyingRing(FamilyObj(arg[2]))
+                     and arg[3] in arg[1])
+      or     Length(arg) = 4
+         and not (    IsRing(arg[1])
+                  and IsSubset(arg[1],arg{[2,3,4]}))
+    then Error("usage: see ?ClassRotation( r, m, u )\n"); fi;
+
+    if IsRing(arg[1]) then R := arg[1]; arg := arg{[2..Length(arg)]}; fi;
+    if   IsBound(R) and Length(arg) = 1
+    then arg := [0,1,arg[1]] * One(R);
+    elif IsResidueClass(arg[1])
+    then if not IsBound(R) then R := UnderlyingRing(FamilyObj(arg[1])); fi;
+         arg := [Residue(arg[1]),Modulus(arg[1]),arg[2]] * One(R);
+    elif not IsBound(R) then R := DefaultRing(arg{[2,3]}); fi;
+    arg := arg * One(R); # Now we know R, and we have arg = [r,m,u].
+
+    m          := StandardAssociate(R,arg[2]);
+    r          := arg[1] mod m;
+    u          := arg[3];
+
+    if   IsOne( u) then return One(RCWA(R));
+    elif IsOne(-u) then return ClassReflection(ResidueClass(R,m,r)); fi;
+
+    res        := AllResidues(R,m);
+    idcoeff    := [1,0,1]*One(R);
+    coeff      := List(res,r->idcoeff);
+    pos        := PositionSorted(res,r);
+    coeff[pos] := [u,(1-u)*r,1]*One(R);
+    result     := RcwaMapping(R,m,coeff);
+    SetIsClassRotation(result,true);
+    SetRotationFactor(result,u);
+    SetIsBijective(result,true);
+    SetOrder(result,Order(u)); SetIsTame(result,true);
+    SetName(result,Concatenation("ClassRotation(",
+                                 String(r),",",String(m),",",String(u),")"));
+    SetLaTeXName(result,Concatenation("\\rho_{",String(r),"(",String(m),"),",
+                                                String(u),"}"));
+    SetFactorizationIntoCSCRCT(result,[result]);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  IsClassRotation( <sigma> ) . . . . . . . . . . . . . .  for rcwa mappings
+##
+InstallMethod( IsClassRotation,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  S, u, c;
+
+    S := Union(Support(sigma),ExcludedElements(Support(sigma)));
+    if not IsResidueClass(S) then return false; fi;
+    c := First(Coefficients(sigma),c->not IsOne(c[1]));
+    if c = fail then return false; else u := c[1]; fi;
+    if sigma = ClassRotation(S,u) then
+      SetRotationFactor(sigma,u);
+      return true;
+    else return false; fi;
+  end );
+
+#############################################################################
+##
+#M  IsClassRotation( <sigma> ) . . . . . . . . . . . .  for class reflections
+##
+InstallTrueMethod( IsClassRotation, IsClassReflection );
+
+#############################################################################
+##
+#F  ClassTransposition( <R>, <r1>, <m1>, <r2>, <m2> ) . . class transposition
+#F  ClassTransposition( <r1>, <m1>, <r2>, <m2>              tau_r1(m1),r2(m2)
+#F  ClassTransposition( <R>, <cl1>, <cl2> ) ) . . dito, cl1=r1(m1) cl2=r2(m2)
+#F  ClassTransposition( <cl1>, <cl2> ) )  . . . . . . . . . . . . . .  (dito)
+##
+##  Enclosing the argument list in list brackets is permitted.
 ##
 InstallGlobalFunction( ClassTransposition,
 
@@ -873,17 +1006,32 @@ InstallGlobalFunction( ClassTransposition,
     local  result, R, r1, m1, r2, m2, cl1, cl2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
-    if Length(arg) = 2 and ForAll(arg,IsResidueClass) then
-      R   := UnderlyingRing(FamilyObj(arg[1]));
-      arg := [Residues(arg[1])[1],Modulus(arg[1]),
-              Residues(arg[2])[1],Modulus(arg[2])];
-    else R := DefaultRing(arg[1]); fi;
-    if   Length(arg) <> 4 or not IsSubset(R,arg)
+
+    if not Length(arg) in [2..5]
+      or     Length(arg) = 2 and not ForAll(arg,IsResidueClass)
+      or     Length(arg) = 3
+         and not (     IsRing(arg[1]) and ForAll(arg{[2,3]},IsResidueClass)
+                   and arg[1] = UnderlyingRing(FamilyObj(arg[2]))
+                   and arg[1] = UnderlyingRing(FamilyObj(arg[3])))
+      or     Length(arg) = 4 and not ForAll(arg,IsRingElement)
+      or     Length(arg) = 5 and not (    IsRing(arg[1])
+                                      and IsSubset(arg[1],arg{[2..5]}))
     then Error("usage: see ?ClassTransposition( r1, m1, r2, m2 )\n"); fi;
+
+    if IsRing(arg[1]) then R := arg[1]; arg := arg{[2..Length(arg)]}; fi;
+    if   IsResidueClass(arg[1])
+    then if not IsBound(R) then R := UnderlyingRing(FamilyObj(arg[1])); fi;
+         arg := [Residue(arg[1]),Modulus(arg[1]),
+                 Residue(arg[2]),Modulus(arg[2])] * One(R);
+    elif not IsBound(R) then R := DefaultRing(arg{[2,4]}); fi;
+    arg := arg * One(R); # Now we know R, and we have arg = [r1,m1,r2,m2].
+
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
+
     if   IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(m1,m2)) then
       Error("ClassTransposition: The residue classes must be disjoint.\n");
     fi;
+
     r1 := r1 mod m1; r2 := r2 mod m2;
     if   m1 > m2 or (m1 = m2 and r1 > r2)
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
@@ -1924,7 +2072,8 @@ InstallMethod( Coefficients,
 InstallMethod( Multiplier,
                "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0,
-               f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
+               f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
+                         List( f!.coeffs, c -> c[1] ) ) );
 
 #############################################################################
 ##
@@ -1944,7 +2093,8 @@ InstallMethod( Multiplier,
 InstallMethod( Divisor,
                "for rcwa mappings (RCWA)",
                true, [ IsRcwaMappingInStandardRep ], 0,
-               f -> Lcm( List( f!.coeffs, c -> c[ 3 ] ) ) );
+               f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
+                         List( f!.coeffs, c -> c[3] ) ) );
 
 #############################################################################
 ##
@@ -2999,6 +3149,71 @@ InstallMethod( \*,
 
 #############################################################################
 ##
+#S  Technical functions for deriving names of powers from names of bases. ///
+##
+#############################################################################
+
+#############################################################################
+##
+#F  NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER( <name>, <n>, <order> )
+##
+##  Appends ^<n> to <name>, or multiplies an existing exponent by <n>.
+##  Reduces the exponent modulo <order>, if known (i.e. <> fail).
+##
+BindGlobal( "NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
+
+  function ( name, n, order )
+
+    local  strings, e;
+
+    strings := SplitString(name,"^");
+    if not IsSubset("-0123456789",strings[Length(strings)]) then
+      e    := n;
+    else
+      e    := Int(strings[Length(strings)]) * n;
+      name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
+    fi;
+    if order = fail or order = infinity then
+      return Concatenation(name,"^",String(e));
+    elif not (e mod order in [0,1]) then
+      return Concatenation(name,"^",String(e mod order));
+    elif e mod order = 1 then
+      return name;
+    fi;
+  end );
+
+#############################################################################
+##
+#F  LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER( <name>, <n>, <order> )
+##
+##  Appends ^{<n>} to <name>, if <name> does not already include an exponent.
+##  Reduces the exponent <n> modulo <order>, if known (i.e. <> fail).
+##
+BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
+
+  function ( name, n, order )
+
+    local  strings, e;
+
+    strings := SplitString(name,"^");
+    if not IsSubset("-0123456789{}",strings[Length(strings)]) then
+      e    := n;
+    else
+      e    := Int(Filtered(strings[Length(strings)],
+                           ch->ch in "0123456789")) * n;
+      name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
+    fi;
+    if order = fail or order = infinity then
+      return Concatenation(name,"^{",String(e),"}");
+    elif not (e mod order in [0,1]) then
+      return Concatenation(name,"^{",String(e mod order),"}");
+    elif e mod order = 1 then
+      return name;
+    fi;
+  end );
+
+#############################################################################
+##
 #S  Computing inverses of rcwa permutations. ////////////////////////////////
 ##
 #############################################################################
@@ -3015,7 +3230,7 @@ InstallMethod( InverseOp,
                
   function ( f )
 
-    local  Result, c, cInv, m, mInv, n, t, tm, tn, Classes, cl, pi;
+    local  Result, order, c, cInv, m, mInv, n, t, tm, tn, Classes, cl, pi;
 
     if HasOrder(f) and Order(f) = 2 then return f; fi;
 
@@ -3041,17 +3256,15 @@ InstallMethod( InverseOp,
          Result := RcwaMappingNC( pi, cInv );
     fi;
     SetInverse(f,Result); SetInverse(Result,f);
-    if HasOrder(f) then SetOrder(Result,Order(f)); fi;
+    if HasOrder(f) then SetOrder(Result,Order(f)); order := Order(f);
+                   else order := fail; fi;
     if HasName(f) then
-      if   HasOrder(f) and Order(f) < infinity
-      then SetName(Result,Concatenation(Name(f),"^",String(Order(f)-1)));
-      else SetName(Result,Concatenation(Name(f),"^-1")); fi;
+      SetName(Result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                       Name(f),-1,order));
     fi;
     if HasLaTeXName(f) then
-      if   HasOrder(f) and Order(f) < infinity
-      then SetLaTeXName(Result,Concatenation(LaTeXName(f),
-                                             "^{",String(Order(f)-1),"}"));
-      else SetLaTeXName(Result,Concatenation(LaTeXName(f),"^{-1}")); fi;
+      SetLaTeXName(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXName(f),n,order));
     fi;
 
     return Result;
@@ -3069,7 +3282,7 @@ InstallMethod( InverseOp,
                
   function ( f )
 
-    local  Result, c, cInv, m, mInv, d, dInv, R, q, x,
+    local  Result, order, c, cInv, m, mInv, d, dInv, R, q, x,
            respols, res, resInv, r, n, t, tm, tr, tn, Classes, cl, pos;
 
     if HasOrder(f) and Order(f) = 2 then return f; fi;
@@ -3107,11 +3320,15 @@ InstallMethod( InverseOp,
 
     Result := RcwaMappingNC( q, mInv, cInv );
     SetInverse(f,Result); SetInverse(Result,f);
-    if HasOrder(f) then SetOrder(Result,Order(f)); fi;
+    if HasOrder(f) then SetOrder(Result,Order(f)); order := Order(f);
+                   else order := fail; fi;
     if HasName(f) then
-      if   HasOrder(f) and Order(f) < infinity
-      then SetName(Result,Concatenation(Name(f),"^",String(Order(f)-1)));
-      else SetName(Result,Concatenation(Name(f),"^-1")); fi;
+      SetName(Result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                       Name(f),-1,order));
+    fi;
+    if HasLaTeXName(f) then
+      SetLaTeXName(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXName(f),n,order));
     fi;
 
     return Result;
@@ -3286,8 +3503,10 @@ InstallMethod( \^,
     elif n = 1 then return f;
     elif HasOrder(f) and Order(f) <> infinity and n mod Order(f) = 1
     then return f;
-    elif n > 1 then pow := POW(f,n:UseKernelPOW);
-               else pow := POW(Inverse( f ),-n:UseKernelPOW);
+    else if   HasOrder(f) and Order(f) <> infinity
+         then n := n mod Order(f); fi;
+         if n > 1 then pow := POW(f,n:UseKernelPOW);
+                  else pow := POW(Inverse( f ),-n:UseKernelPOW); fi;
     fi;
 
     if HasIsTame(f) then SetIsTame(pow,IsTame(f)); fi;
@@ -3297,27 +3516,12 @@ InstallMethod( \^,
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
       fi;
       if HasName(f) and HasIsTame(f) and IsTame(f) then
-        name := SplitString(Name(f),'^');
-        if   Length(name) = 2 and Int(name[2]) <> fail
-        then e := Int(name[2]) * n; else e := n; fi;
-        if   Order(f) = infinity
-        then SetName(pow,Concatenation(name[1],"^",String(e)));
-        elif not (e mod Order(f) in [0,1])
-        then SetName(pow,Concatenation(name[1],"^",String(e mod Order(f))));
-        elif e mod Order(f) = 1
-        then SetName(pow,name[1]);
-        fi;
+        SetName(pow,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                      Name(f),n,Order(f)));
       fi;
       if HasLaTeXName(f) and Position(LaTeXName(f),'^') = fail then
-        if   Order(f) = infinity
-        then SetLaTeXName(pow,Concatenation(LaTeXName(f),"^{",
-                                            String(n),"}"));
-        elif not (n mod Order(f) in [0,1])
-        then SetLaTeXName(pow,Concatenation(LaTeXName(f),"^{",
-                                            String(n mod Order(f)),"}"));
-        elif n mod Order(f) = 1
-        then SetLaTeXName(pow,LaTeXName(f));
-        fi;
+        SetLaTeXName(pow,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                           LaTeXName(f),n,Order(f)));
       fi;
     fi;
 
