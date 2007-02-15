@@ -10,7 +10,8 @@
 <Heading>Residue-Class-Wise Affine Mappings</Heading>
 
 In this chapter, we give the basic definitions, and describe how to enter
-residue-class-wise affine mappings and how to compute with them.
+residue-class-wise affine mappings and how to compute with them. <P/>
+
 The functionality of this package which is dedicated to residue-class-wise
 affine groups is described in detail in the next chapter. The reader is
 encouraged to look there already after having read the first few pages of
@@ -201,7 +202,8 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise. <P/>
+    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise,
+    where it is understood that <M>0 \leq r &lt; m</M>. <P/>
 
     In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
@@ -294,12 +296,64 @@ a &GAP; object -- see&nbsp;<Ref Func="CT" Label="R"/>. <P/>
 
 Class shifts, class reflections and class transpositions of rings
 <M>R</M> other than <M>\Z</M> are defined in an entirely analogous way --
-all one needs to do is to replace <M>\Z</M> by&nbsp;<M>R</M>.
-They can also be entered basically as described above.
-If the arguments are ring elements, then the ring <M>R</M> is taken to
-be their <Q>default ring</Q> (<M>\rightarrow</M> <C>DefaultRing</C> in
-the &GAP; Reference Manual). If residue classes are given as arguments,
-then <M>R</M> is taken to be their underlying ring. <P/>
+all one needs to do is to replace <M>\Z</M> by&nbsp;<M>R</M> and to
+read <M>&lt;</M> and <M>\leq</M> in the sense of the ordering used
+by&nbsp;&GAP;.
+They can also be entered basically as described above -- just prepend
+the desired ring&nbsp;<M>R</M> to the argument list. Often also a sensible
+<Q>default ring</Q> (<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP;
+Reference Manual) is chosen if that optional first argument is omitted. <P/>
+
+On rings which have more than two units, there is another basic series
+of rcwa permutations which generalizes class reflections:
+
+<ManSection>
+  <Func Name="ClassRotation" Arg="r, m, u" Label="r, m, u"/>
+  <Func Name="ClassRotation" Arg="cl, u" Label="cl, u"/>
+  <Returns> The class rotation <M>\rho_{r(m),u}</M>. </Returns>
+  <Description>
+    Given a residue class <M>r(m)</M> and a unit&nbsp;<M>u</M> of a suitable
+    ring&nbsp;<M>R</M>, the <E>class rotation</E> <M>\rho_{r(m),u}</M>
+    is the rcwa mapping which maps <M>n \in r(m)</M> to <M>un + (1-u)r</M>
+    and which fixes <M>R \setminus r(m)</M> pointwise.
+    Class rotations generalize class reflections, as we have
+    <M>\rho_{r(m),-1} = \varsigma_{r(m)}</M>. <P/>
+
+    <Index Key="RotationFactor" Subkey="g"><C>RotationFactor</C></Index>
+
+    In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
+    residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
+    brackets is permitted. The argument <A>u</A> is stored as an attribute
+    <C>RotationFactor</C>.
+<Example>
+<![CDATA[
+gap> Display(ClassRotation(ResidueClass(Z_pi(2),2,1),1/3));
+
+Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
+
+                n mod 2                |       n^ClassRotation(1,2,1/3)
+---------------------------------------+--------------------------------------
+  0                                    | n
+  1                                    | 1/3 n + 2/3
+
+gap> x := Indeterminate(GF(8),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(8),1);;
+gap> Display(ClassRotation(1,x,Z(8)*One(R)));
+
+Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
+
+         P mod x          |        P^(ClassRotation(Z(2)^0,x,Z(2^3)))
+--------------------------+---------------------------------------------------
+ 0*Z(2)   Z(2^3)          | 
+ Z(2^3)^2 Z(2^3)^3        | 
+ Z(2^3)^4 Z(2^3)^5        | 
+ Z(2^3)^6                 | P
+ Z(2)^0                   | Z(2^3)*P + Z(2^3)^3
+
+]]>
+</Example>
+  </Description>
+</ManSection>
 
 The permutations of the following kind play an important role in
 factoring rcwa permutations of&nbsp;<M>\Z</M> into class shifts,
@@ -496,7 +550,7 @@ the elements of the underlying ring is so. There is also a method for
     switches is printed (cp. <Ref Attr="FactorizationIntoCSCRCT"
     Label="g"/>).
     For rcwa mappings with modulus greater than&nbsp;1, an indentation by
-    <A>Indentation</A> characters can be demanded by setting this option
+    <A>Indentation</A> characters can be obtained by setting this option
     value accor\-dingly.
 <Example>
 <![CDATA[
@@ -506,6 +560,11 @@ n \ \longmapsto \
   \frac{n}{2}      & \text{if} \ n \in 0(2), \\
   \frac{3n + 1}{2} & \text{if} \ n \in 1(2).
 \end{cases}
+]]>
+</Example>
+
+<Example>
+<![CDATA[
 gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
       &\nu_{4(8)} \cdot \nu_{0(8)}^{-1}
  \cdot \tau_{0(8),4(8)} \cdot \tau_{5(16),11(16)}
