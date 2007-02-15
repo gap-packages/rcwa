@@ -35,6 +35,69 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
+#M  DefaultRingByGenerators( <gens> )   . . . .  ring containing a collection
+##
+##  GAP library bugfix -- overwrites erroneous library method:
+##
+##  gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
+##  gap> x in DefaultRing(x);                               
+##  false
+##
+InstallMethod( DefaultRingByGenerators,
+               true, [ IsRationalFunctionCollection ], 0,
+
+  function( ogens )
+
+    local  gens, ind, cfs, g, ext, exp, i, univ;
+
+    if not ForAll( ogens, IsPolynomial ) then TryNextMethod(); fi;
+
+    # The indices of the non-constant functions that have an indeterminate
+    # number.
+    g := Filtered([1..Length(ogens)],
+           i -> HasIndeterminateNumberOfUnivariateRationalFunction(ogens[i])
+                and HasCoefficientsOfLaurentPolynomial(ogens[i]));
+
+    univ := Filtered(ogens{g},
+              i -> DegreeOfUnivariateLaurentPolynomial(i)<infinity);
+
+    gens := ogens{Difference([1..Length(ogens)],g)};
+
+    # Univariate indeterminates set.
+    ind := Set(List(univ,IndeterminateNumberOfUnivariateRationalFunction));
+    cfs := []; # univariate coefficients set
+    for g in univ do
+      UniteSet(cfs,CoefficientsOfUnivariateLaurentPolynomial(g)[1]);
+    od;
+
+    # The nonunivariate ones.
+    for g in gens do
+      ext := ExtRepPolynomialRatFun(g);
+      for exp in ext{[ 1, 3 .. Length(ext)-1 ]} do
+        for i in exp{[ 1, 3 .. Length(exp)-1 ]} do
+          AddSet( ind, i );
+        od;
+      od;
+      for i in ext{[ 2, 4 .. Length(ext) ]} do
+        Add( cfs, i );
+      od;
+    od;
+
+    if Length(cfs)=0 then
+      # Special case for zero polynomial
+      Add(cfs,Zero(CoefficientsFamily(FamilyObj(ogens[1]))));
+    fi;
+
+    if Length(ind)=0 then
+      # This can only happen if the polynomials are constant. Enforce Index 1
+      return PolynomialRing( DefaultField(cfs), [1] );
+    else
+      return PolynomialRing( DefaultField(cfs), ind );
+    fi;
+  end );
+
+#############################################################################
+##
 #F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
 DeclareGlobalFunction( "SearchCycle" );
