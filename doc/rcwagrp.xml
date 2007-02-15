@@ -963,10 +963,11 @@ gap> List([2,105],NrConjugacyClassesOfRCWAZOfOrder);
 There are monomorphisms from the group RCWA(<M>\Z</M>) into itself.
 The support of the image of such a monomorphism is the image of a given
 injective rcwa mapping. Therefore these monomorphisms are called
-<E>restriction monomorphisms</E>. Taking images of rcwa groups under
-restrictions by rcwa mappings with pairwise distinct images permits
-forming their direct product and their wreath product with some finite
-permutation group, regardless of whether they are tame or not
+<E>restriction monomorphisms</E>. They play a key role in various methods
+to construct rcwa groups of certain types. To mention the simplest example:
+Given a set of rcwa groups, their images under restriction monomorphisms
+associated to rcwa mappings with pairwise distjoint images generate
+a group which is isomorphic to their direct product
 (cp. Section&nbsp;<Ref Label="sec:DirectProductsAndWreathProducts"/>).
 
 <ManSection>
