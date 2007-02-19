@@ -84,11 +84,29 @@ implemented in this package can be found in&nbsp;<Cite Key="Kohl07a"/>.
 <Section Label="sec:Purpose">
 <Heading>Purpose of this package</Heading>
 
-So far, compared to classes of groups like for example finite groups,
-matrix groups, finitely presented groups or polycyclic groups, not very much
-is known about residue-class-wise affine groups. This package is intended
-to serve as a tool for obtaining a better understanding of their rich and
-interesting group theoretical and combinatorial structure.
+The present scope of computational group theory essentially comprises finite
+permutation groups, matrix groups, finitely presented groups, polycyclically
+presented groups and automata groups.
+For details, we refer to&nbsp;<Cite Key="HoltEickOBrien05"/>. <P/>
+The purpose of this package is twofold:
+
+<List>
+
+  <Item>
+    On the one hand, it introduces a new class of groups which are
+    accessible to computational methods, and it therefore extends the
+    current scope of computational group theory as outlined above.
+  </Item>
+
+  <Item>
+    On the other, residue-class-wise affine groups are interesting
+    mathematical objects in their own right, and this package is
+    intended to serve as a tool for obtaining a better understanding of
+    their rich and often complicated group theoretical and combinatorial
+    structure.
+  </Item>
+
+</List>
 
 </Section>
 
