@@ -3202,7 +3202,7 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
       e    := n;
     else
       e    := Int(Filtered(strings[Length(strings)],
-                           ch->ch in "0123456789")) * n;
+                           ch->ch in "-0123456789")) * n;
       name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
     fi;
     if order = fail or order = infinity then
@@ -3521,7 +3521,7 @@ InstallMethod( \^,
         name := NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(Name(f),n,Order(f));
         if name <> fail then SetName(pow,name); fi;
       fi;
-      if HasLaTeXName(f) and Position(LaTeXName(f),'^') = fail then
+      if HasLaTeXName(f) then
         latexname := LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
                        LaTeXName(f),n,Order(f));
         if latexname <> fail then SetLaTeXName(pow,latexname); fi;
