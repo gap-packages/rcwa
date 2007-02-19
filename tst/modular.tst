@@ -383,7 +383,7 @@ IdentityMapping( GF(2)[x] )
 gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> STOP_TEST( "modular.tst", 250000000 );
+gap> STOP_TEST( "modular.tst", 1800000000 );
 
 #############################################################################
 ##

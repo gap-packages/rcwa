@@ -283,7 +283,7 @@ gap> Factorization(elm);
   ClassTransposition(x,x^2+x,x^2+x,x^3+x^2) ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "rcwa_ct.tst", 100000000 );
+gap> STOP_TEST( "rcwa_ct.tst", 1100000000 );
 
 #############################################################################
 ##

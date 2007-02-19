@@ -1447,7 +1447,7 @@ gap> Permuted(P,RcwaMapping([P])) = Permuted(P,(1,2,3,4,5));
 true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "integral.tst", 4000000000 );
+gap> STOP_TEST( "integral.tst", 8000000000 );
 
 #############################################################################
 ##
