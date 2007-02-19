@@ -3175,10 +3175,12 @@ BindGlobal( "NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
     fi;
     if order = fail or order = infinity then
       return Concatenation(name,"^",String(e));
-    elif not (e mod order in [0,1]) then
-      return Concatenation(name,"^",String(e mod order));
     elif e mod order = 1 then
       return name;
+    elif e mod order = 0 then
+      return fail;
+    else
+      return Concatenation(name,"^",String(e mod order));
     fi;
   end );
 
@@ -3205,10 +3207,12 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
     fi;
     if order = fail or order = infinity then
       return Concatenation(name,"^{",String(e),"}");
-    elif not (e mod order in [0,1]) then
-      return Concatenation(name,"^{",String(e mod order),"}");
     elif e mod order = 1 then
       return name;
+    elif e mod order = 0 then
+      return fail;
+    else
+      return Concatenation(name,"^{",String(e mod order),"}");
     fi;
   end );
 
@@ -3495,18 +3499,16 @@ InstallMethod( \^,
 
   function ( f, n )
 
-    local  pow, e, name;
+    local  pow, e, name, latexname;
 
     if ValueOption("UseKernelPOW") = true then TryNextMethod(); fi;
 
-    if   n = 0 then return One( f );
+    if HasOrder(f) and Order(f) <> infinity then n := n mod Order(f); fi;
+
+    if   n = 0 then return One(f);
     elif n = 1 then return f;
-    elif HasOrder(f) and Order(f) <> infinity and n mod Order(f) = 1
-    then return f;
-    else if   HasOrder(f) and Order(f) <> infinity
-         then n := n mod Order(f); fi;
-         if n > 1 then pow := POW(f,n:UseKernelPOW);
-                  else pow := POW(Inverse( f ),-n:UseKernelPOW); fi;
+    else if n > 1 then pow := POW(f,n:UseKernelPOW);
+                  else pow := POW(Inverse(f),-n:UseKernelPOW); fi;
     fi;
 
     if HasIsTame(f) then SetIsTame(pow,IsTame(f)); fi;
@@ -3516,12 +3518,13 @@ InstallMethod( \^,
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
       fi;
       if HasName(f) and HasIsTame(f) and IsTame(f) then
-        SetName(pow,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                      Name(f),n,Order(f)));
+        name := NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(Name(f),n,Order(f));
+        if name <> fail then SetName(pow,name); fi;
       fi;
       if HasLaTeXName(f) and Position(LaTeXName(f),'^') = fail then
-        SetLaTeXName(pow,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                           LaTeXName(f),n,Order(f)));
+        latexname := LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                       LaTeXName(f),n,Order(f));
+        if latexname <> fail then SetLaTeXName(pow,latexname); fi;
       fi;
     fi;
 

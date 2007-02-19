@@ -43,6 +43,7 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 ##  gap> x in DefaultRing(x);                               
 ##  false
 ##
+if not CompareVersionNumbers(GAPInfo.Version,"4.4.10") then
 InstallMethod( DefaultRingByGenerators,
                true, [ IsRationalFunctionCollection ], 0,
 
@@ -59,7 +60,8 @@ InstallMethod( DefaultRingByGenerators,
                 and HasCoefficientsOfLaurentPolynomial(ogens[i]));
 
     univ := Filtered(ogens{g},
-              i -> DegreeOfUnivariateLaurentPolynomial(i)<infinity);
+                     i -> DegreeOfUnivariateLaurentPolynomial(i) >- 1 and
+                          DegreeOfUnivariateLaurentPolynomial(i) < infinity);
 
     gens := ogens{Difference([1..Length(ogens)],g)};
 
@@ -95,6 +97,7 @@ InstallMethod( DefaultRingByGenerators,
       return PolynomialRing( DefaultField(cfs), ind );
     fi;
   end );
+fi;
 
 #############################################################################
 ##
