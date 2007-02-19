@@ -3268,7 +3268,7 @@ InstallMethod( InverseOp,
     fi;
     if HasLaTeXName(f) then
       SetLaTeXName(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                            LaTeXName(f),n,order));
+                            LaTeXName(f),-1,order));
     fi;
 
     return Result;

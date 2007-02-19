@@ -557,8 +557,8 @@ the elements of the underlying ring is so. There is also a method for
 gap> Print(LaTeXObj(T));
 n \ \longmapsto \
 \begin{cases}
-  \frac{n}{2}      & \text{if} \ n \in 0(2), \\
-  \frac{3n + 1}{2} & \text{if} \ n \in 1(2).
+  n/2        & \text{if} \ n \in 0(2), \\
+  (3n + 1)/2 & \text{if} \ n \in 1(2).
 \end{cases}
 ]]>
 </Example>
