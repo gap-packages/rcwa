@@ -289,7 +289,7 @@ gap> IsRcwaMapping(last);
 true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "cscrct.tst", 15000000 );
+gap> STOP_TEST( "cscrct.tst", 900000000 );
 
 #############################################################################
 ##
