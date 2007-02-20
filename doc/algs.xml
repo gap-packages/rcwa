@@ -15,8 +15,8 @@ short, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that
 essentially nothing is done except of storing or recalling one or several
 values, and <Q>straightforward</Q> means that no sophisticated algorithm
-is used. Longer descriptions of many of the algorithms and methods can be
-found in&nbsp;<Cite Key="Kohl07a"/>.
+is used. Longer and better descriptions of many of the algorithms and methods
+can be found in&nbsp;<Cite Key="Kohl07a"/>.
 
 <List>
 
