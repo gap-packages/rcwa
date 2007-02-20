@@ -427,6 +427,8 @@ Changes between version 2.3.3 and version 2.4.0:
    been improved, and the declarations / implementations have been rearranged
    and grouped together by "topic".
 
+ - The documentation has been improved in a few places.
+
  - Now RCWA needs ResClasses 2.4.0, which provides improved support for
    unions of residue classes of rings Z_(pi) and GF(q)[x].
 
