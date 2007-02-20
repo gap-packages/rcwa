@@ -14,23 +14,22 @@ gap> SetInfoLevel(InfoWarning,0);
 gap> ResidueClassUnionViewingFormat("short");
 gap> G := RCWA(Integers);
 RCWA(Z)
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", 
-  "IsFinitelyGeneratedGroup", "IsPerfectGroup", "IsSimpleGroup", 
-  "IsSolvableGroup", "IsNaturalRCWA", "IsNaturalRCWA_Z", 
-  "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", 
+  "IsNaturalRCWA_Z", "IsNonTrivial", "IsPerfectGroup", "IsSimpleGroup", 
+  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, false, false, 
-  false, true, true, true ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable", 
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription", 
-  "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+[ true, false, true, false, false, false, true, true, true, true, false, 
+  false, true, false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "RCWA(Z)", infinity, Rcwa mapping of Z: n -> -n, 
-  IdentityMapping( Integers ), IdentityMapping( Integers ), 
-  Trivial rcwa group over Z, "RCWA(Z)", infinity, infinity, 0 ]
+[ Trivial rcwa group over Z, infinity, 0, IdentityMapping( Integers ), 
+  infinity, "RCWA(Z)", IdentityMapping( Integers ), 
+  Rcwa mapping of Z: n -> -n, infinity, "RCWA(Z)" ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -83,22 +82,22 @@ gap> Modulus(RepresentativeAction(RCWA(Integers),
 36
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", "IsSolvableGroup", 
-  "IsNaturalRCWA", "IsNaturalRCWA_Z_pi", "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_Z_pi", 
+  "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, true, true, true 
+[ true, false, true, false, false, true, true, true, true, true, false, false 
  ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable",
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription",
-  "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "RCWA(Z_( 2, 3 ))", infinity, Rcwa mapping of Z_( 2, 3 ): n -> -n, 
-  IdentityMapping( Z_( 2, 3 ) ), IdentityMapping( Z_( 2, 3 ) ), 
-  Trivial rcwa group over Z_( 2, 3 ), "RCWA(Z_( 2, 3 ))", infinity, infinity, 
-  0 ]
+[ Trivial rcwa group over Z_( 2, 3 ), infinity, 0, 
+  IdentityMapping( Z_( 2, 3 ) ), infinity, "RCWA(Z_( 2, 3 ))", 
+  IdentityMapping( Z_( 2, 3 ) ), Rcwa mapping of Z_( 2, 3 ): n -> -n, 
+  infinity, "RCWA(Z_( 2, 3 ))" ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -121,23 +120,23 @@ gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
 gap> G := RCWA(R);
 RCWA(GF(2)[x])
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", 
-  "IsFinitelyGeneratedGroup", "IsSolvableGroup", "IsNaturalRCWA", 
-  "IsNaturalRCWA_GFqx", "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalRCWA", "IsNaturalRCWA_GFqx", 
+  "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsSimpleSemigroup", 
+  "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, false, true, 
-  true, true ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable", 
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription", 
-  "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+[ true, false, true, false, false, false, true, true, true, true, true, 
+  false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "RCWA(GF(2)[x])", infinity, ClassTransposition(0*Z(2),x,Z(2)^0,x), 
-  IdentityMapping( GF(2)[x] ), IdentityMapping( GF(2)[x] ), 
-  Trivial rcwa group over GF(2)[x], "RCWA(GF(2)[x])", infinity, infinity, 
-  0*Z(2) ]
+[ Trivial rcwa group over GF(2)[x], infinity, 0*Z(2), 
+  IdentityMapping( GF(2)[x] ), infinity, "RCWA(GF(2)[x])", 
+  IdentityMapping( GF(2)[x] ), ClassTransposition(0*Z(2),x,Z(2)^0,x), 
+  infinity, "RCWA(GF(2)[x])" ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -165,22 +164,22 @@ gap> S1^elm = S2;
 true
 gap> G := CT(Integers);
 CT(Z)
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", 
-  "IsFinitelyGeneratedGroup", "IsPerfectGroup", "IsSimpleGroup", 
-  "IsSolvableGroup", "IsNaturalCT", "IsNaturalCT_Z", "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalCT", "IsNaturalCT_Z", 
+  "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsPerfectGroup", "IsSimpleGroup", 
+  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, true, true, 
-  false, true, true, true ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable", 
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription", 
-  "Support", "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+[ true, false, true, false, false, false, true, true, true, true, true, true, 
+  true, false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "CT(Z)", infinity, ClassTransposition(0,2,1,2), IdentityMapping( Integers ),
-  IdentityMapping( Integers ), Trivial rcwa group over Z, "CT(Z)", Integers, 
-  infinity, infinity, 0 ]
+[ Trivial rcwa group over Z, infinity, 0, IdentityMapping( Integers ), 
+  infinity, "CT(Z)", IdentityMapping( Integers ), ClassTransposition(0,2,1,2), 
+  infinity, "CT(Z)", Integers ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -205,22 +204,22 @@ gap> conj = Product(last);
 true
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", "IsSolvableGroup", 
-  "IsNaturalCT", "IsNaturalCT_Z_pi", "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalCT", "IsNaturalCT_Z_pi", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
+  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, true, true, true 
+[ true, false, true, false, false, true, true, true, true, true, false, false 
  ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable", 
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription", 
-  "Support", "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "CT(Z_( 2, 3 ))", infinity, ClassTransposition(0,2,1,2), 
-  IdentityMapping( Z_( 2, 3 ) ), IdentityMapping( Z_( 2, 3 ) ), 
-  Trivial rcwa group over Z_( 2, 3 ), "CT(Z_( 2, 3 ))", Z_( 2, 3 ), infinity, 
-  infinity, 0 ]
+[ Trivial rcwa group over Z_( 2, 3 ), infinity, 0, 
+  IdentityMapping( Z_( 2, 3 ) ), infinity, "CT(Z_( 2, 3 ))", 
+  IdentityMapping( Z_( 2, 3 ) ), ClassTransposition(0,2,1,2), infinity, 
+  "CT(Z_( 2, 3 ))", Z_( 2, 3 ) ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -243,23 +242,23 @@ gap> IsSubset(G,last);
 true
 gap> G := CT(R);
 CT(GF(2)[x])
-gap> KnownPropertiesOfObject(G);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsSimpleSemigroup", 
-  "IsFinitelyGeneratedGroup", "IsSolvableGroup", "IsNaturalCT", 
-  "IsNaturalCT_GFqx", "IsNaturalRCWA_OR_CT" ]
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalCT", "IsNaturalCT_GFqx", 
+  "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsSimpleSemigroup", 
+  "IsSolvableGroup", "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
-[ false, false, true, false, true, true, false, true, false, false, true, 
-  true, true ]
-gap> KnownAttributesOfObject(G);
-[ "Name", "Size", "Representative", "OneImmutable", 
-  "MultiplicativeNeutralElement", "Centre", "StructureDescription", 
-  "Support", "Multiplier", "Divisor", "ModulusOfRcwaGroup" ]
+[ true, false, true, false, false, false, true, true, true, true, true, 
+  false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ "CT(GF(2)[x])", infinity, ClassTransposition(0*Z(2),x,Z(2)^0,x), 
-  IdentityMapping( GF(2)[x] ), IdentityMapping( GF(2)[x] ), 
-  Trivial rcwa group over GF(2)[x], "CT(GF(2)[x])", GF(2)[x], infinity, 
-  infinity, 0*Z(2) ]
+[ Trivial rcwa group over GF(2)[x], infinity, 0*Z(2), 
+  IdentityMapping( GF(2)[x] ), infinity, "CT(GF(2)[x])", 
+  IdentityMapping( GF(2)[x] ), ClassTransposition(0*Z(2),x,Z(2)^0,x), 
+  infinity, "CT(GF(2)[x])", GF(2)[x] ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
