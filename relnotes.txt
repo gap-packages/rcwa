@@ -406,7 +406,7 @@ Changes between version 2.3.2 and version 2.3.3:
    supports the rings Z_pi and GF(q)[x] as well. The ring has to be given as
    the first argument.
 
-Changes between version 2.3.3 and version 2.4.0:
+Changes between version 2.3.3 and version 2.4.0 (February 20, 2007):
 
  - The groups CT(R) are now available as GAP objects.
 
