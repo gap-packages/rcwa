@@ -1205,15 +1205,17 @@ gap> StructureDescription(H);
 
 <ManSection>
   <Attr Name="KernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
-  <Attr Name="RankOfKernelOfActionOnRespectedPartition" Arg="G" Label="G"/>
   <Returns>
     The kernel of the action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedPartition(<A>G</A>)</C>, resp. the rank of the largest
-    free abelian subgroup of this kernel.
+    <C>RespectedPartition(<A>G</A>)</C>.
   </Returns>
   <Description>
-    The method for <C>KernelOfActionOnRespectedPartition</C> uses
-    the package <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>.
+    The method for <C>KernelOfActionOnRespectedPartition</C> uses the
+    package <Package>Polycyclic</Package>&nbsp;<Cite Key="Polycyclic"/>.
+
+    The rank of the largest free abelian subgroup of the kernel of the
+    action of&nbsp;<A>G</A> on its stored respected partition can be
+    computed by <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>.
 <Example>
 <![CDATA[
 gap> K := KernelOfActionOnRespectedPartition(G);
@@ -1438,25 +1440,18 @@ all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
     Often the same methods can be used for rcwa groups over the ring of
     integers and over its semilocalizations. For this reason there is
     a category <C>IsRcwaGroupOverZOrZ&uscore;pi</C> which is the union of
-    <C>IsRcwaGroupOverZ</C> and <C>IsRcwaGroupOverZ&uscore;pi</C>.
+    <C>IsRcwaGroupOverZ</C> and <C>IsRcwaGroupOverZ&uscore;pi</C>. <P/>
 
-    <Index Key="IsNaturalRCWA_Z" Subkey="G">
-      <C>IsNaturalRCWA&uscore;Z</C>
+    <Index Key="IsNaturalRCWA" Subkey="G">
+      <C>IsNaturalRCWA</C>
     </Index>
-    <Index Key="IsNaturalRCWA_Z_pi" Subkey="G">
-      <C>IsNaturalRCWA&uscore;Z&uscore;pi</C>
-    </Index>
-    <Index Key="IsNaturalRCWA_GFqx" Subkey="G">
-      <C>IsNaturalRCWA&uscore;GFqx</C>
+    <Index Key="IsNaturalCT" Subkey="G">
+      <C>IsNaturalCT</C>
     </Index>
 
-    To allow distinguishing the entire group RCWA(<M>R</M>) from others
-    by means of the method selection, it has the characteristic property
-    <C>IsNaturalRCWA&uscore;Z</C> resp. one of the properties
-    <C>IsNaturalRCWA&uscore;Z&uscore;pi</C> or
-    <C>IsNaturalRCWA&uscore;GFqx</C>, depending on whether <M>R</M>
-    is the ring of integers, one of its semilocalizations or a univariate
-    polynomial ring over a finite field.
+    To allow distinguishing the groups RCWA(<M>R</M>) and CT(<M>R</M>) from
+    others, they have the characteristic property <C>IsNaturalRCWA</C> or
+    <C>IsNaturalCT</C>, respectively.
 
   </Description>
 </ManSection>
