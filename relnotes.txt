@@ -434,5 +434,5 @@ Changes between version 2.3.3 and version 2.4.0 (February 20, 2007):
 
 Changes between version 2.4.0 and version 2.4.1:
 
- - Minor improvements of the documentation.
+ - Some improvements of the documentation have been made.
 
