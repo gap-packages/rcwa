@@ -271,7 +271,15 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     stand for the residue classes <M>r_1(m_1)</M> and&nbsp;<M>r_2(m_2)</M>,
     respectively. Enclosing the argument list in list brackets is permitted.
     The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> are stored
-    as an attribute <C>TransposedClasses</C>.
+    as an attribute <C>TransposedClasses</C>. <P/>
+
+    <Index Key="SplittedClassTransposition" Subkey="G">
+      <C>SplittedClassTransposition</C>
+    </Index>
+
+    A class transposition can be written as a product of any given number
+    <M>k</M> of class transpositions. Such a decomposition can be obtained
+    by <C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>. <P/>
 <Example>
 <![CDATA[
 gap> Display(ClassTransposition(1,2,8,10));
@@ -303,6 +311,8 @@ They can also be entered basically as described above -- just prepend
 the desired ring&nbsp;<M>R</M> to the argument list. Often also a sensible
 <Q>default ring</Q> (<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP;
 Reference Manual) is chosen if that optional first argument is omitted. <P/>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 On rings which have more than two units, there is another basic series
 of rcwa permutations which generalizes class reflections:
@@ -355,39 +365,18 @@ Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
   </Description>
 </ManSection>
 
-The permutations of the following kind play an important role in
-factoring rcwa permutations of&nbsp;<M>\Z</M> into class shifts,
-class reflections and class transpositions
-(cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>):
-
-<ManSection>
-  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
-  <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
-  <Returns>
-    In the one-argument form the <E>prime switch</E>
-    <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
-    \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
-    \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
-    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
-  </Returns>
-  <Description>
-    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
-    is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
-    multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
-<Example>
-<![CDATA[
-gap> Factorization(PrimeSwitch(3));
-[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
-  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
-  ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ]
-]]>
-</Example>
-  </Description>
-</ManSection>
+<Index Key="IsClassShift" Subkey="f"><C>IsClassShift</C></Index>
+<Index Key="IsClassReflection" Subkey="f"><C>IsClassReflection</C></Index>
+<Index Key="IsClassRotation" Subkey="f"><C>IsClassRotation</C></Index>
+<Index Key="IsClassTransposition" Subkey="f">
+  <C>IsClassTransposition</C>
+</Index>
 
 There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
-<C>IsClassTransposition</C> and <C>IsPrimeSwitch</C> which indicate
-whether a given rcwa mapping belongs to the corresponding series. <P/>
+<C>IsClassTransposition</C> and <C>IsClassRotation</C> which indicate whether
+a given rcwa mapping belongs to the corresponding series. <P/>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 In the sequel, a description of the general-purpose constructor for rcwa
 mappings is given. This might look a bit technical on a first glance,
@@ -522,36 +511,41 @@ gap> Cycle(last,ResidueClass(0,2));
   </Description>
 </ManSection>
 
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:ViewingPrintingAndDisplayingRcwaMappings">
+<Heading>Printing and displaying residue-class-wise affine mappings</Heading>
+
 <Index Key="View" Subkey="f"><C>View</C></Index>
 <Index Key="Display" Subkey="f"><C>Display</C></Index>
 <Index Key="Print" Subkey="f"><C>Print</C></Index>
 <Index Key="String" Subkey="f"><C>String</C></Index>
 
 <Alt Only="LaTeX">\noindent</Alt>
-In most cases the output of the <C>View</C> method does not describe an
-rcwa mapping completely. In these cases the output is enclosed in
-brackets. There are methods installed for <C>Display</C>, <C>Print</C>
-and <C>String</C>.  The <C>Print</C>ed representation of an rcwa mapping
-is &GAP; - readable if and only if the <C>Print</C>ed representation of
-the elements of the underlying ring is so. There is also a method for
-<C>LaTeX</C>:
+There are methods available for <C>View</C>, <C>Display</C>, <C>Print</C>
+and <C>String</C>. The output of the <C>View</C> method is kept reasonably
+short. In most cases it does not describe an rcwa mapping completely.
+In these cases the output is enclosed in brackets. The output of the methods
+for <C>Display</C> and <C>Print</C> describe an rcwa mapping in full.
+The <C>Print</C>ed representation of an rcwa mapping is &GAP; - readable if
+and only if the <C>Print</C>ed representation of the elements of the
+underlying ring is so. <P/>
 
-<ManSection>
-  <Meth Name="LaTeXObj" Arg="f" Label="f"/>
-  <Meth Name="LaTeX" Arg="f" Label="f"/>
-  <Returns>
-    A &LaTeX; representation of the rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    The output makes use of the &LaTeX; macro package
-    <Package>amsmath</Package>.
-    If the option <A>Factorization</A> is set, a factorization of <A>f</A>
-    into class shifts, class reflections, class transpositions and prime
-    switches is printed (cp. <Ref Attr="FactorizationIntoCSCRCT"
-    Label="g"/>).
-    For rcwa mappings with modulus greater than&nbsp;1, an indentation by
-    <A>Indentation</A> characters can be obtained by setting this option
-    value accor\-dingly.
+<Index Key="LaTeX" Subkey="f"><C>LaTeX</C></Index>
+<Index Key="LaTeXObj" Subkey="f"><C>LaTeXObj</C></Index>
+
+There is also a method for <C>LaTeX</C>, respectively <C>LaTeXObj</C>.
+The output of this method makes use of the &LaTeX; macro package
+<Package>amsmath</Package>. If the option <A>Factorization</A> is set
+and the argument is bijective, a factorization into class shifts,
+class reflections, class transpositions and prime switches is printed
+(cp. <Ref Attr="FactorizationIntoCSCRCT" Label="g"/>).
+For rcwa mappings with modulus greater than&nbsp;1, an indentation by
+<A>Indentation</A> characters can be obtained by setting this option
+value accor\-dingly.
+
 <Example>
 <![CDATA[
 gap> Print(LaTeXObj(T));
@@ -562,17 +556,6 @@ n \ \longmapsto \
 \end{cases}
 ]]>
 </Example>
-
-<Example>
-<![CDATA[
-gap> Print(LaTeXObj(Comm(a,ClassShift(0,4)):Factorization));
-      &\nu_{4(8)} \cdot \nu_{0(8)}^{-1}
- \cdot \tau_{0(8),4(8)} \cdot \tau_{5(16),11(16)}
- \cdot \tau_{4(8),11(16)}
-]]>
-</Example>
-  </Description>
-</ManSection>
 
 <Index Key="LaTeXAndXDVI" Subkey="f"><C>LaTeXAndXDVI</C></Index>
 There is an operation <C>LaTeXAndXDVI</C> which displays an rcwa mapping
@@ -743,9 +726,10 @@ rings. <P/>
 <Section Label="sec:FactoringRcwaMappings">
 <Heading>Factoring residue-class-wise affine permutations</Heading>
 
-Factoring group elements into elements of some <Q>nice</Q> set of generators
-is often helpful. The following can be seen as an attempt towards getting
-a satisfactory solution of this problem for the group RCWA(<M>\Z</M>):
+Factoring group elements into the members of some <Q>nice</Q> set of
+generators is often helpful. The following can be seen as an attempt
+towards getting a satisfactory solution of this problem for the group
+RCWA(<M>\Z</M>):
 
 <ManSection>
   <Attr Name="FactorizationIntoCSCRCT" Arg="g" Label="g"/>
@@ -795,13 +779,39 @@ in Section&nbsp;<Ref Label="sec:FactoringTheCollatzPermutation"/>
 Collatz' permutation is factored. Lothar Collatz has investigated this
 permutation in&nbsp;1932. Its cycle structure is unknown so far. <P/>
 
-Class transpositions can be written as products of any given number <M>k</M>
-of class transpositions, as long as the underlying ring has a residue class
-ring of cardinality&nbsp;<M>k</M>. Such a decomposition can be obtained by
-<C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>. <P/>
-<Index Key="SplittedClassTransposition" Subkey="G">
-  <C>SplittedClassTransposition</C>
-</Index>
+The permutations of the following kind play an important role in
+factoring rcwa permutations of&nbsp;<M>\Z</M> into class shifts,
+class reflections and class transpositions:
+
+<ManSection>
+  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
+  <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
+  <Returns>
+    In the one-argument form the <E>prime switch</E>
+    <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
+    \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
+    \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
+    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
+  </Returns>
+  <Description>
+    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
+    is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
+    multiplier&nbsp;<M>p</M> and divisor&nbsp;2. The key mathematical
+    property of a prime switch is that it is a product of class
+    transpositions, but that its multiplier and its divisor are coprime
+    anyway. Prime switches can be distinguished from other rcwa mappings
+    by their &GAP; property <C>IsPrimeSwitch</C>.
+    <Index Key="IsPrimeSwitch" Subkey="f"><C>IsPrimeSwitch</C></Index>
+<Example>
+<![CDATA[
+gap> Factorization(PrimeSwitch(3));
+[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
+  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
+  ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
 
 Obtaining a factorization of a bijective rcwa mapping into class shifts,
 class reflections and class transpositions is particularly difficult if
@@ -866,8 +876,7 @@ cannot have infinitely many cycles of any given finite length.
     </Alt> 
     <Alt Only="LaTeX">
       <Display>
-        \frac{1}{m}
-        \left( \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}|} \right).
+        \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}.
       </Display>
     </Alt>
     The determinant mapping is an epimorphism from the group of all
@@ -903,10 +912,8 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
     </Alt> 
     <Alt Only="LaTeX">
       <Display>
-        (-1)^{\displaystyle{{\rm det}(\sigma) + \frac{1}{m}
-        \left(
-          \sum_{r(m): \ a_{r(m)} &lt; 0} (m - 2r)
-        \right)}}.
+        (-1)^{\displaystyle{{\rm det}(\sigma)
+            + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}.
       </Display>
     </Alt>
     The sign mapping is an epimorphism from RCWA(<M>\Z</M>) to the group
