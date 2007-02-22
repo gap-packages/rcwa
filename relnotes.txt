@@ -432,4 +432,7 @@ Changes between version 2.3.3 and version 2.4.0 (February 20, 2007):
  - Now RCWA needs ResClasses 2.4.0, which provides improved support for
    unions of residue classes of rings Z_(pi) and GF(q)[x].
 
+Changes between version 2.4.0 and version 2.4.1:
+
+ - Minor improvements of the documentation.
 
