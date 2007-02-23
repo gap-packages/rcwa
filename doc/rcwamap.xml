@@ -744,26 +744,29 @@ RCWA(<M>\Z</M>):
     into an infinite loop. If it returns a result, this result is always
     correct. <P/>
 
-    By default, prime switches are taken as one factor. 
-    If the option <A>ExpandPrimeSwitches</A> is set, they are each
-    decomposed into the 6 class transpositions given in
-    the definition (see <Ref Func="PrimeSwitch" Label="p"/>).
-    By default, the factoring process begins with splitting off factors
-    from the right. This can be changed by setting the option
-    <A>Direction</A> to <C>"from the left"</C>. By default, a reasonably
-    coarse respected partition of the integral mapping occuring
-    in the final stage of the algorithm is computed.
-    This can be suppressed by setting the option <A>ShortenPartition</A>
-    equal to <C>false</C>.
-    By default, at the end it is checked whether the product of the
-    determined factors indeed equals <A>g</A>. This check can be
-    suppressed by setting the option <A>NC</A>.<P/>
-    
     The problem of obtaining a factorization as described is algorithmically
     difficult, and this factorization routine is currently perhaps the most
     sophisticated part of the &RCWA; package. Information about the
-    progress of the factorization process can be obtained by setting
-    the info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2.
+    progress of the factorization process can be obtained by setting the
+    info level of the Info class <Ref InfoClass="InfoRCWA"/> to&nbsp;2. <P/>
+
+    By default, prime switches (<M>\rightarrow</M>
+    <Ref Func="PrimeSwitch" Label="p"/>) are taken as one factor. 
+    If the option <A>ExpandPrimeSwitches</A> is set, they are each
+    decomposed into the 6 class transpositions given in the definition. <P/>
+
+    By default, the factoring process begins with splitting off factors
+    from the right. This can be changed by setting the option
+    <A>Direction</A> to <C>"from the left"</C>. <P/>
+
+    By default, a reasonably coarse respected partition of the integral
+    mapping occuring in the final stage of the algorithm is computed.
+    This can be suppressed by setting the option <A>ShortenPartition</A>
+    equal to <C>false</C>. <P/>
+
+    By default, at the end it is checked whether the product of the
+    determined factors indeed equals <A>g</A>. This check can be
+    suppressed by setting the option <A>NC</A>.
 <Example>
 <![CDATA[
 gap> Factorization(Comm(ClassShift(0,3)*ClassReflection(1,2),ClassShift(0,2)));
@@ -794,7 +797,7 @@ class reflections and class transpositions:
     the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
   </Returns>
   <Description>
-    For an odd prime <M>p</M>, the <E>prime switch</E> <M>\sigma_p</M>
+    For an odd prime <M>p</M>, the prime switch <M>\sigma_p</M>
     is a bijective rcwa mapping of <M>\Z</M> with modulus&nbsp;<M>4p</M>,
     multiplier&nbsp;<M>p</M> and divisor&nbsp;2. The key mathematical
     property of a prime switch is that it is a product of class
