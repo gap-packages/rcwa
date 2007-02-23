@@ -136,14 +136,16 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 
 #############################################################################
 ##
-#A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . . . rcwa representation of <G>
-#A  IsomorphismRcwaGroup( <G> )
+#O  IsomorphismRcwaGroup( <G>, <R> ) . .  rcwa representation of <G> over <R>
+#O  IsomorphismRcwaGroup( <G> )  . . . . .  rcwa representation of <G> over Z
+#A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . .  the corresponding attribute
 ##
-##  A faithful rcwa representation of the group <G> over Z.
+##  A faithful rcwa representation of the group <G> over the ring <R>,
+##  respectively over Z.
 ##
+DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsRing ] );
+DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup ] );
 DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
-DeclareSynonym( "IsomorphismRcwaGroup", IsomorphismRcwaGroupOverZ );
-DeclareSynonym( "IsomorphismIntegralRcwaGroup", IsomorphismRcwaGroupOverZ );
 
 #############################################################################
 ##

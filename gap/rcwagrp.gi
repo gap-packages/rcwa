@@ -1262,6 +1262,55 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 #############################################################################
 ##
 #S  Constructing rcwa groups: ///////////////////////////////////////////////
+#S  The general things. /////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  IsomorphismRcwaGroup( <G> ) . . . dispatch to `IsomorphismRcwaGroupOverZ'
+##
+InstallMethod( IsomorphismRcwaGroup,
+               "dispatch to `IsomorphismRcwaGroupOverZ' (RCWA)", true,
+               [ IsGroup ], 0, IsomorphismRcwaGroupOverZ );
+
+#############################################################################
+##
+#M  IsomorphismRcwaGroup( <G>, <R> ) . . . . . . . . . general wrapper method
+##
+InstallMethod( IsomorphismRcwaGroup,
+               "general wrapper method (RCWA)", true,
+               [ IsGroup, IsRing ], 0,
+
+  function ( G, R )
+
+    local  phi, phi1, phi2, H, gensG, gensH, pi;
+
+    if IsIntegers(R) then return IsomorphismRcwaGroupOverZ(G); fi;
+    if IsRcwaGroupOverZ(G) and IsZ_pi(R) then
+      gensG := GeneratorsOfGroup(G);
+      pi    := NoninvertiblePrimes(R);
+      if   not ForAll(gensG,g->IsSubset(pi,Factors(Modulus(g))))
+      then TryNextMethod(); fi;
+      gensH := List(gensG,g->SemilocalizedRcwaMapping(g,pi));
+      if not IsGeneratorsOfMagmaWithInverses(gensH) then TryNextMethod(); fi;
+      H     := Group(gensH);
+      phi   := EpimorphismByGeneratorsNC(G,H);
+      SetIsBijective(phi,true);
+      return phi;
+    fi;
+    if not IsRcwaGroup(G) and IsZ_pi(R) then
+      phi1 := IsomorphismRcwaGroupOverZ(G);
+      phi2 := IsomorphismRcwaGroup(Image(phi1),R);
+      phi  := CompositionMapping(phi2,phi1);
+      return phi;
+    fi;
+    TryNextMethod();
+  end );
+
+#############################################################################
+##
+#S  Constructing rcwa groups: ///////////////////////////////////////////////
 #S  Tame groups (cyclic, dihedral, finitely generated abelian, finite). /////
 ##
 #############################################################################
@@ -1274,7 +1323,7 @@ InstallMethod( CyclicGroupCons,
                "rcwa group over Z, for a positive integer (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
 
-  function( filt, n )
+  function ( filt, n )
 
     local  result;
 
@@ -1293,7 +1342,7 @@ InstallOtherMethod( CyclicGroupCons,
                     "(Z,+) as an rcwa group (RCWA)", ReturnTrue,
                     [ IsRcwaGroupOverZ, IsInfinity ], 0,
 
-  function( filt, infty )
+  function ( filt, infty )
 
     local  result;
 
@@ -1311,7 +1360,7 @@ InstallOtherMethod( DihedralGroupCons,
                     "the rcwa group < n |-> n+1, n |-> -n > (RCWA)",
                     ReturnTrue, [ IsRcwaGroupOverZ, IsInfinity ], 0,
 
-  function( filt, infty )
+  function ( filt, infty )
 
     local  result;
 
@@ -1329,7 +1378,7 @@ InstallMethod( AbelianGroupCons,
                "rcwa group over Z, for list of abelian inv's (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsList ], 0,
 
-  function( filt, invs )
+  function ( filt, invs )
 
     local  result;
 
@@ -1343,7 +1392,6 @@ InstallMethod( AbelianGroupCons,
 #############################################################################
 ##
 #M  IsomorphismRcwaGroupOverZ( <G> ) . . . . default method for finite groups
-#M  IsomorphismRcwaGroup( <G> )
 ##
 ##  This is a simple method which just embeds <G> into Sym(Z/mZ).
 ##
@@ -1399,7 +1447,6 @@ InstallGlobalFunction( RcwaGroupOverZByPermGroup,
 #############################################################################
 ##
 #M  IsomorphismRcwaGroupOverZ( <F> ) . . . . . . . . . . . .  for free groups
-#M  IsomorphismRcwaGroup( <F> )
 ##
 ##  This method uses an adaptation of the construction given on page 27
 ##  of the book Pierre de la Harpe: Topics in Geometric Group Theory from
@@ -1441,7 +1488,6 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 #############################################################################
 ##
 #M  IsomorphismRcwaGroupOverZ( <F> ) . . . for free products of finite groups
-#M  IsomorphismRcwaGroup( <F> )
 ##
 ##  This method uses the Table-Tennis Lemma -- see e.g. Section II.B. in
 ##  the book Pierre de la Harpe: Topics in Geometric Group Theory.
@@ -1475,7 +1521,7 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
       or ForAny(groups,IsTrivial) or not ForAll(groups,IsFinite) 
     then TryNextMethod(); fi;
     regreps  := List(groups,RegularActionHomomorphism);
-    rcwareps := List(regreps,phi->IsomorphismRcwaGroup(Image(phi)));
+    rcwareps := List(regreps,phi->IsomorphismRcwaGroupOverZ(Image(phi)));
     conjelms := List([0..m-1],r->RepresentativeAction(RCWA(Integers),
                                  ResidueClass(0,degs[r+1]),
                                  Difference(Integers,ResidueClass(r,m))));
@@ -1503,7 +1549,6 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 #############################################################################
 ##
 #M  IsomorphismRcwaGroupOverZ( <F> ) . . . . for the free product of two C2's
-#M  IsomorphismRcwaGroup( <F> )
 ##
 ##  This method covers the case that the free product is C2 * C2.
 ##

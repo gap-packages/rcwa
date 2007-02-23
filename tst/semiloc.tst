@@ -242,7 +242,26 @@ Bijective rcwa mapping of Z_( 2, 3 ) with modulus 6, of order 2
 
 gap> ct^2;
 IdentityMapping( Z_( 2, 3 ) )
-gap> STOP_TEST( "semiloc.tst", 40000000 );
+gap> phi := IsomorphismRcwaGroup(SymmetricGroup(5),Z_pi([2,3,5]));
+[ (1,2,3,4,5), (1,2) ] -> 
+[ <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 5>, 
+  <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 5> ]
+gap> IsBijective(phi);
+true
+gap> Image(phi);
+<rcwa group over Z_( 2, 3, 5 ) with 2 generators, of size 120>
+gap> Size(Image(phi));
+120
+gap> phi := IsomorphismRcwaGroup(FreeGroup(2),Z_pi(2));
+[ f1, f2 ] -> [ <bijective rcwa mapping of Z_( 2 ) with modulus 8>, 
+  <bijective rcwa mapping of Z_( 2 ) with modulus 8> ]
+gap> IsBijective(phi);
+true
+gap> F2 := Source(phi);
+<free group on the generators [ f1, f2 ]>
+gap> (F2.1*F2.2^2)^phi;
+<bijective rcwa mapping of Z_( 2 ) with modulus 128>
+gap> STOP_TEST( "semiloc.tst", 200000000 );
 
 #############################################################################
 ##
