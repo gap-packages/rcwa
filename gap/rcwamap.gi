@@ -3856,6 +3856,14 @@ InstallMethod( Order,
         if IsOne(pow) then return e; fi;
       fi;
 
+    else # for rcwa permutations of rings other than Z or Z_(pi)
+
+      e := Lcm(List(ShortCycles(g,AllResidues(Source(g),Modulus(g)^2),12),
+                    Length));
+      pow := g^e;
+      if IsIntegral(pow) then SetIsTame(g,true); fi;
+      if IsOne(pow) then return e; fi;
+
     fi;
 
     if not IsTame(g) then
