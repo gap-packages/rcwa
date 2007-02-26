@@ -100,12 +100,14 @@ Another way of constructing an rcwa group is taking the image of an
 rcwa representation:
 
 <ManSection>
-  <Attr Name="IsomorphismRcwaGroupOverZ" Arg="G" Label="G"/>
+  <Attr Name="IsomorphismRcwaGroup" Arg="G, R" Label="G, R"/>
   <Attr Name="IsomorphismRcwaGroup" Arg="G" Label="G"/>
   <Returns>
-    A monomorphism from the group <A>G</A> to&nbsp;RCWA(<M>\Z</M>).
+    A monomorphism from the group <A>G</A> to&nbsp;RCWA(<A>R</A>)
+    or to&nbsp;RCWA(<M>\Z</M>), respectively.
   </Returns>
   <Description>
+    The best-supported case is <A>R</A> = <M>\Z</M>.
     Currently there are methods available for finite groups, for
     free products of finite groups and for free groups. The method for
     free products of finite groups uses the Table-Tennis Lemma
@@ -114,13 +116,13 @@ rcwa representation:
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
     PSL(2,<M>\C</M>) to RCWA(<M>\Z</M>). <P/>
 
-    In case <A>G</A> is a finite-degree permutation group,
-    the image under a specific embedding can be obtained by
-    <C>RcwaGroupByPermGroup(<A>G</A>)</C>.
+    If the group <A>G</A> is a finite-degree permutation group,
+    then its image under a specific embedding into RCWA(<M>\Z</M>)
+    can be obtained by <C>RcwaGroupByPermGroup(<A>G</A>)</C>.
     <Index Key="RcwaGroupByPermGroup" Subkey="G">
       <C>RcwaGroupByPermGroup</C>
     </Index>
-    The resulting group&nbsp;<C>H</C> satisfies the relation
+    The group&nbsp;<C>H</C> resulting from this satisfies the relation
     <C>Action(H&circum;ClassShift(0,1),[1..LargestMovedPoint(<A>G</A>)])
     =&nbsp;G</C>.
 <Example>
