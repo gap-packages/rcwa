@@ -441,3 +441,6 @@ Changes between version 2.4.1 and version 2.4.2:
  - A method IsomorphismRcwaGroup( <G>, <R> ) for the case that <R> is
    a (semi-) localization of Z has been added.
 
+ - The `Order' method for rcwa permutations of polynomial rings GF(q)[x]
+   has been improved.
+
