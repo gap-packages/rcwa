@@ -1400,6 +1400,9 @@ The pictures created in the examples are shown on &RCWA;'s webpage.
 <Index Key="EpimorphismByGenerators" Subkey="G, H">
   <C>EpimorphismByGenerators</C>
 </Index>
+<Index Key="ListOfPowers" Subkey="g, exp">
+  <C>ListOfPowers</C>
+</Index>
 <Index Key="AllProducts" Subkey="l, k">
   <C>AllProducts</C>
 </Index>
@@ -1410,7 +1413,10 @@ returns a list of generators of <A>G</A> and their inverses,
 <C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is
 a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
 GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
-(there is also an <C>NC</C> version of this) and the function
+(there is also an <C>NC</C> version of this), the function
+<C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> returns the list
+<C>[<A>g</A>,<A>g</A>&circum;2,...,<A>g</A>&circum;<A>exp</A>]</C>
+of powers of&nbsp;<A>g</A>, and the function
 <C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
 all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
 

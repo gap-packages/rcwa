@@ -134,6 +134,22 @@ InstallMethod( AllProducts,
 
 #############################################################################
 ##
+#F  ListOfPowers( <g>, <exp> ) . . . . . .  list of powers <g>^1 .. <g>^<exp>
+##
+DeclareGlobalFunction( "ListOfPowers" );
+InstallGlobalFunction(  ListOfPowers,
+
+  function ( g, exp )
+
+    local  powers, n;
+
+    powers := [g];
+    for n in [2..exp] do Add(powers,powers[n-1]*g); od;
+    return powers;
+  end );
+
+#############################################################################
+##
 #O  GeneratorsAndInverses( <D> ) list of generators of <D> and their inverses
 #M  GeneratorsAndInverses( <G> ) . . . . . . . . . . . . . . . . . for groups
 ##
