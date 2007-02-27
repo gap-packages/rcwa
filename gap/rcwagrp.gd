@@ -7,10 +7,7 @@
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa groups.
 ##
-##  We call a subgroup of RCWA(R) a *residue-class-wise affine* group, or
-##  in short an *rcwa* group.
-##
-##  See also the definitions given in the file rcwamap.gd.
+##  See the definitions given in the file rcwamap.gd.
 ##
 Revision.rcwagrp_gd :=
   "@(#)$Id$";

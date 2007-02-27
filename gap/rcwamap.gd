@@ -7,66 +7,72 @@
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa mappings.
 ##
-##  Let R be an infinite euclidean ring which is not a field and all of
-##  whose proper residue class rings are finite. We call a mapping f: R -> R
-##  *residue-class-wise affine*, or in short an *rcwa* mapping, if there is
-##  a nonzero m in R such that f is affine on residue classes (mod m).
-##      This means that for any residue class r(m) in R/mR there are
-##  coefficients a_r(m), b_r(m), c_r(m) in R such that the restriction of f
-##  to the set r(m) = { r + km | k in R } is given by
-##  
-##                  n  |->  (a_r(m) * n + b_r(m))/c_r(m).
-##  
-##  We always assume that c_r(m) is normalized to a certain 'standard
-##  associate' (e.g. for R = Z this means that c_r(m) > 0) , that all
-##  fractions are reduced, i.e. that gcd( a_r(m), b_r(m), c_r(m) ) = 1,
-##  and that m is chosen multiplicatively minimal.
-##      Apart from the restrictions imposed by the condition that the image
-##  of any residue class r(m) under f must be a subset of R and that one
-##  cannot divide by 0, the coefficients a_r(m), b_r(m) and c_r(m) can be
-##  any ring elements.
-##      We call m the *modulus* of f. By *products* of rcwa mappings we
-##  always mean their compositions as mappings, and by the *inverse* of
-##  a bijective rcwa mapping we mean its inverse mapping. 
-##      The set RCWA(R) := { g in Sym(R) | g is residue-class-wise affine }
-##  is closed under multiplication and taking inverses (this can be verified
+##  Let R be an infinite euclidean ring which is not a field and all of whose
+##  proper residue class rings are finite.
+##      We call a mapping f: R -> R *residue-class-wise affine*,  or in short
+##  an *rcwa* mapping,  if there is a nonzero m in R such that f is affine on
+##  residue classes (mod m).
+##      This means that for any residue class r(m) in R/mR there are  coeffi-
+##  cients a_r(m), b_r(m), c_r(m) in R  such that the restriction of f to the
+##  set r(m) = { r + km | k in R } is given by
+##
+##                                a_r(m) * n + b_r(m)
+##                      n  |-->   -------------------
+##                                       c_r(m)      .
+##
+##  We always assume that  c_r(m) is normalized to a certain  "standard asso-
+##  ciate"  (e.g. for R = Z this means that  c_r(m) > 0),  that all fractions
+##  are reduced,  i.e. that gcd( a_r(m), b_r(m), c_r(m) ) = 1,  and that m is
+##  chosen multiplicatively minimal.
+##      Apart from the restrictions  imposed by the condition that  the image
+##  of any residue class r(m) under f must be a subset of R and that one can-
+##  not divide by 0,  the coefficients  a_r(m), b_r(m) and c_r(m)  can be any
+##  ring elements.
+##      We call m the  *modulus* of f.  By *products* of rcwa mappings we al-
+##  ways mean their compositions as mappings,  and by the *inverse* of  a bi-
+##  jective rcwa mapping we mean its inverse mapping. 
+##      The set RCWA(R)  :=  { g in Sym(R) | g is residue-class-wise affine }
+##  is closed under multiplication and taking inverses  (this can be verified
 ##  easily), hence forms a subgroup of Sym(R).
-##      While computing with permutations of infinite sets in general is
-##  a very difficult task, the bijective rcwa mappings form a class of
-##  permutations which is accessible to computations.
+##      We call a subgroup of RCWA(R) a *residue-class-wise affine* group, or
+##  in short an *rcwa* group.
+##      While computing with infinite permutation groups in general is a very
+##  difficult task, the rcwa groups form a class of groups which are accessi-
+##  ble to computations.
 ##
 ##  An rcwa mapping object stores the following data:
 ##
-##  - Underlying Ring: The underlying ring R is stored as the
-##                     `UnderlyingRing' of the family the rcwa mapping object
-##                     belongs to, and as value of the attribute `Source'.
+##  - Underlying Ring: The source and range R of the mapping,  hence its "un-
+##                     derlying ring",  is stored as the  `UnderlyingRing' of
+##                     the family  the rcwa mapping object belongs to.  It is
+##                     also available as the value of the attribute `Source'.
 ##
-##  - Modulus:         The modulus m is stored as a component <modulus> in
+##  - Modulus:         The modulus m is stored  as a component  <modulus>  in
 ##                     any rcwa mapping object. 
 ##
-##  - Coefficients:    The list of coefficients is stored as a component
-##                     <coeffs> in any rcwa mapping object. The component
-##                     <coeffs> is a list of |R/mR| lists of three elements
-##                     of R, each, giving the coefficients a_r(m), b_r(m)
-##                     and c_r(m) for r(m) running through all residue
-##                     classes (mod m). The ordering of these triples is
-##                     defined by the ordering of the residues r mod m
-##                     in `AllResidues( <R>, <m> )'.
+##  - Coefficients:    The coefficient list is stored as a component <coeffs>
+##                     in any rcwa mapping object.  The component <coeffs> is
+##                     a list of  |R/mR| lists of three elements of R,  each,
+##                     giving the coefficients a_r(m), b_r(m) and c_r(m)  for
+##                     r(m) running through all residue classes (mod m).
+##                         The ordering  of these triples  is defined  by the
+##                     ordering  of the residues  r mod m  in the sorted list
+##                     `AllResidues( <R>, <m> )'.
 ##
-##  It is always taken care that the entries of the stored coefficient
-##  triples of an rcwa mapping are coprime, that the third entry of any
-##  coefficient triple equals its standard conjugate and that the number of
-##  stored coefficient triples equals the number of residue classes modulo
-##  the modulus of the mapping. Given this, an rcwa mapping determines its
-##  internal representation uniquely. Thus testing rcwa mappings for equality
-##  is very cheap. The reduction of coefficient lists mentioned above
-##  prevents also unnecessary coefficient explosion.
+##  It is always taken care that the entries of the stored  coefficient trip-
+##  les of an rcwa mapping are coprime,  that the third entry of any  coeffi-
+##  cient triple equals its standard conjugate  and that the number of stored
+##  coefficient triples equals the number of residue classes modulo the modu-
+##  lus of the mapping.  Given this,  an rcwa mapping determines its internal
+##  representation uniquely.  Thus testing rcwa mappings for equality is very
+##  cheap.  The reduction of coefficient lists mentioned above  prevents also
+##  unnecessary coefficient explosion.
 ##
-##  We use the notation for the modulus and the coefficients of an rcwa
-##  mapping introduced above throughout this file.
+##  We use the notation for the modulus and the coefficients  of an rcwa map-
+##  ping introduced above throughout this file.
 ##
-##  Algorithms and methods for computing with rcwa mappings are described
-##  in the author's preprint
+##  Algorithms and methods for computing with  rcwa mappings  and -groups are
+##  described in the author's preprint
 ##
 ##  "A New Class of Groups Which are Accessible to Computational Methods".
 ##
