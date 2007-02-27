@@ -2041,7 +2041,7 @@ InstallMethod( Modulus,
   function ( G )
 
     local  CheckModulus,
-           R, m, oldmod, maxfinmod, g, gens, els, step, maxstep;
+           R, m, oldmod, maxfinmod, g, gens, pow, els, step, maxstep;
 
     CheckModulus := function ( G, m )
 
@@ -2085,9 +2085,15 @@ InstallMethod( Modulus,
     fi;
     if Length(gens) = 1 then
       Info(InfoRCWA,3,"Modulus: <G> is cyclic and the generator is tame.");
-      m := Lcm(R,Modulus(gens[1]),   Modulus(gens[1]^-1),
-                 Modulus(gens[1]^17),Modulus(gens[1]^97)); # probabilistic.
-      SetModulusOfRcwaGroup(G,m); CheckModulus(G,m); return m;
+      g   := gens[1];
+      m   := Lcm(R,Modulus(g),Modulus(g^-1));      # probabilistic
+      pow := g^2;     m := Lcm(R,m,Modulus(pow));
+      pow := pow * g; m := Lcm(R,m,Modulus(pow));
+      pow := pow * g; m := Lcm(R,m,Modulus(pow));
+      pow := pow^2;   m := Lcm(R,m,Modulus(pow));
+      SetModulusOfRcwaGroup(G,m);
+      CheckModulus(G,m);                           # check
+      return m;
     fi;
     els := Union(gens,List(Tuples(gens,2),t->t[1]*t[2]),
                       List(Tuples(gens,2),t->Comm(t[1],t[2])));
