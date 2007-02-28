@@ -3413,7 +3413,7 @@ InstallMethod( PreImagesRepresentatives,
       gens      := GeneratorsOfGroup(G);
       letters   := LetterRepAssocWord(cand);
       factors   := List(letters,i->gens[AbsInt(i)]^SignInt(i));
-      testrange := [1..3*Length(letters)];
+      testrange := [1..3*Length(letters)+1];
       if   IsRcwaGroupOverGFqx(G)
       then testrange := AllResidues(R,x^(LogInt(Length(testrange),q)+1)); fi;
       for n in testrange do
