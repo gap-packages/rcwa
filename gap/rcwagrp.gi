@@ -3398,22 +3398,25 @@ InstallMethod( EpimorphismFromFreeGroup,
 #M  PreImagesRepresentatives( <phi>, <g> )
 ##
 InstallMethod( PreImagesRepresentatives,
-               "for hom's from free groups to rcwa groups over Z (RCWA)",
+               "for hom's from free groups to rcwa groups (RCWA)",
                ReturnTrue, [ IsGroupHomomorphism, IsObject ], 0,
 
   function ( phi, g )
 
-    local  F, G, IsCorrect, candidates, minlng, shortest,
+    local  IsCorrect, F, G, R, q, x, candidates, minlng, shortest,
            preimage, image, lng, add;
 
     IsCorrect := function ( cand )
 
-      local  gens, letters, factors, f, n, m;
+      local  gens, letters, factors, testrange, f, n, m;
 
-      gens    := GeneratorsOfGroup(G);
-      letters := LetterRepAssocWord(cand);
-      factors := List(letters,i->gens[AbsInt(i)]^SignInt(i));
-      for n in [1..3*Length(letters)] do
+      gens      := GeneratorsOfGroup(G);
+      letters   := LetterRepAssocWord(cand);
+      factors   := List(letters,i->gens[AbsInt(i)]^SignInt(i));
+      testrange := [1..3*Length(letters)];
+      if   IsRcwaGroupOverGFqx(G)
+      then testrange := AllResidues(R,x^(LogInt(Length(testrange),q)+1)); fi;
+      for n in testrange do
         m := n; for f in factors do m := m^f; od;
         if m <> n^g then return false; fi;
       od;
@@ -3422,14 +3425,21 @@ InstallMethod( PreImagesRepresentatives,
 
     F := Source(phi); G := Range(phi);
     if   not IsFreeGroup(F)
-      or not (IsRcwaGroupOverZ(G) or IsPermGroup(G))
+      or not (   IsRcwaGroupOverZOrZ_pi(G) or IsRcwaGroupOverGFqx(G)
+              or IsPermGroup(G))
       or FamilyObj(g) <> FamilyObj(One(G))
       or MappingGeneratorsImages(phi) <> List([F,G],GeneratorsOfGroup)
     then TryNextMethod(); fi;
     lng := 1; add := 1;
     repeat
-      lng        := lng + add; if IsPermGroup(G) then add := add + 1; fi;
-      preimage   := [1..lng];
+      lng := lng + add; if IsPermGroup(G) then add := add + 1; fi;
+      preimage := [1..lng];
+      if IsRcwaGroupOverGFqx(G) then
+        R        := Source(One(G));
+        q        := Size(CoefficientsRing(R));
+        x        := IndeterminatesOfPolynomialRing(R)[1];
+        preimage := AllResidues(R,x^(LogInt(lng,q)+1)){preimage};
+      fi;
       image      := List(preimage,n->n^g);
       candidates := RepresentativesActionPreImage(G,preimage,image,
                                                   OnTuples,F);
