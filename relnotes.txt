@@ -444,3 +444,7 @@ Changes between version 2.4.1 and version 2.4.2:
  - The `Order' method for rcwa permutations of polynomial rings GF(q)[x]
    has been improved.
 
+ - The membership test for rcwa groups over polynomial rings GF(q)[x]
+   has been improved. This also includes improved or new methods for
+   a couple of related operations.
+
