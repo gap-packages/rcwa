@@ -1909,6 +1909,37 @@ InstallMethod( ShortOrbits,
 
 #############################################################################
 ##
+#M  OrbitsModulo( <G>, <m> ) . . . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( OrbitsModulo,
+               "for rcwa groups (RCWA)", true,
+               [ IsRcwaGroup, IsRingElement ], 0,
+
+  function ( G, m )
+
+    local  result, R, gens, orbit, oldorbit, orbitset, img, remaining;
+
+    R := Source(One(G));
+    if not m in R then TryNextMethod(); fi;
+    gens      := GeneratorsAndInverses(G);
+    remaining := AllResidueClassesModulo(R,m); result := [];
+    repeat
+      orbit := [remaining[1]];
+      repeat
+        oldorbit := ShallowCopy(orbit);
+        orbitset := Union(orbit);
+        img      := Union(List(gens,gen->orbitset^gen));
+        orbit    := Union(orbit,
+                          Filtered(remaining,cl->Intersection(cl,img)<>[]));
+      until orbit = oldorbit;
+      Add(result,List(orbit,Residue));
+      remaining := Difference(remaining,orbit);
+    until remaining = [];
+    return result;
+  end );
+
+#############################################################################
+##
 #M  OrbitsModulo( <G>, <m> ) . . . . . . . . for rcwa groups over Z or Z_(pi)
 ##
 InstallMethod( OrbitsModulo,
@@ -1938,18 +1969,19 @@ InstallMethod( OrbitsModulo,
 
 #############################################################################
 ##
-#M  Projections( <G>, <m> ) . . . . . . . . . . . . .  for rcwa groups over Z
+#M  Projections( <G>, <m> ) . . . . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( Projections,
-               "for rcwa groups over Z (RCWA)", ReturnTrue,
-               [ IsRcwaGroupOverZ, IsPosInt ], 0,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRingElement ], 0,
 
   function ( G, m )
 
-    local  orbs, gens, groups;
+    local  R, orbs, gens, groups;
 
+    R := Source(One(G)); if not m in R then TryNextMethod(); fi;
     gens   := GeneratorsOfGroup(G);
-    orbs   := List(OrbitsModulo(G,m),orb->ResidueClassUnion(Integers,m,orb));
+    orbs   := List(OrbitsModulo(G,m),orb->ResidueClassUnion(R,m,orb));
     groups := List(orbs,orb->Group(List(gens,gen->RestrictedPerm(gen,orb))));
     return List(groups,grp->EpimorphismByGeneratorsNC(G,grp));
   end );
@@ -2210,6 +2242,35 @@ InstallMethod( RespectedPartitionLong,
 
 #############################################################################
 ##
+#M  RespectsPartition( <sigma>, <P> ) . . . . . . . . . . . for rcwa mappings
+##
+InstallMethod( RespectsPartition,
+               "for rcwa mappings (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsList ], 0,
+
+  function ( sigma, P )
+
+    local  R, cl, c, c_rest, pos, res, r, m;
+
+    R := Source(sigma);
+    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(R,cl))
+      or Union(P) <> R or Sum(List(P,Density)) <> 1
+    then TryNextMethod(); fi;
+    if Permutation(sigma,P) = fail then return false; fi;
+    c   := Coefficients(sigma);
+    res := AllResidues(R,Modulus(sigma));
+    for cl in P do
+      r      := Residue(cl);
+      m      := Modulus(cl);
+      pos    := Filtered([1..Length(res)],i->res[i] mod m = r);
+      c_rest := c{pos};
+      if Length(Set(c_rest)) > 1 then return false; fi;
+    od;
+    return true;
+  end );
+
+#############################################################################
+##
 #M  RespectsPartition( <sigma>, <P> ) . . . . . . . .  for rcwa mappings of Z
 ##
 InstallMethod( RespectsPartition,
@@ -2227,7 +2288,7 @@ InstallMethod( RespectsPartition,
     if Permutation(sigma,P) = fail then return false; fi;
     c := Coefficients(sigma);
     for cl in P do
-      r := Residues(cl)[1];
+      r := Residue(cl);
       m := Modulus(cl);
       l := Int(Modulus(sigma)/m);
       c_rest := c{[r+1,r+m+1..r+(l-1)*m+1]};
@@ -2714,13 +2775,39 @@ InstallMethod( Size,
 
 #############################################################################
 ##
-#M  \in( <g>, <G> ) . . . . for an rcwa mapping of Z and an rcwa group over Z
+#M  \in( <g>, <G> ) . . . . . . . . . . for an rcwa mapping and an rcwa group
+##
+##  This may run into an infinite loop if <G> is infinite and <g> is not an
+##  element of <G>.
+##
+InstallMethod( \in,
+               "for an rcwa mapping and an rcwa group (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsRcwaGroup ], 0,
+
+  function ( g, G )
+
+    local  gens, phi;
+
+    if FamilyObj(g) <> FamilyObj(One(G)) then return false; fi;
+    gens := GeneratorsOfGroup(G);
+    if IsOne(g) or g in gens or g^-1 in gens then return true; fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(g)) then return false; fi;
+    if   g in List(Combinations(gens,2), t -> Product(t))
+    then return true; fi;
+    Info(InfoRCWA,2,"\\in: trying to factor <g> into gen's ...");
+    phi := EpimorphismFromFreeGroup(G);
+    return PreImagesRepresentative(phi,g) <> fail;
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, <G> ) . . . . . . . . . . . . . . . . .  for rcwa groups over Z
 ##
 ##  If <G> is wild this may run into an infinite loop if <g> is not an
 ##  element of <G>.
 ##
 InstallMethod( \in,
-               "for an rcwa mapping of Z and an rcwa group over Z (RCWA)",
+               "for rcwa groups over Z (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsRcwaGroupOverZ ], 0,
 
   function ( g, G )
@@ -2876,32 +2963,135 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  \in( <g>, <G> ) . . . . . . . . . . for an rcwa mapping and an rcwa group
+#M  \in( <g>, <G> ) . . . . . . . . . . . . . . for rcwa groups over GF(q)[x]
 ##
-##  This may run into an infinite loop if <G> is infinite and <g> is not an
+##  If <G> is wild this may run into an infinite loop if <g> is not an
 ##  element of <G>.
 ##
 InstallMethod( \in,
-               "for an rcwa mapping and an rcwa group (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsRcwaGroup ], 0,
+               "for rcwa groups over GF(q)[x] (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfGFqx, IsRcwaGroupOverGFqx ], 0,
 
   function ( g, G )
 
-    local  gens, k;
+    local  R, x, P, H, h, phi, gens, orbs, orbsmod, m;
 
-    if FamilyObj(g) <> FamilyObj(One(G)) then return false; fi;
+    R := Source(g); x := IndeterminatesOfPolynomialRing(R)[1];
+    Info(InfoRCWA,2,"\\in for an rcwa permutation <g> of ",R);
+    Info(InfoRCWA,2,"    and an rcwa group <G> over ",R);
+    if   FamilyObj(g) <> FamilyObj(One(G))
+    then Info(InfoRCWA,4,"The underlying rings differ."); return false; fi;
+    if   not IsBijective(g)
+    then Info(InfoRCWA,4,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);
-    if IsOne(g) or g in gens or g^-1 in gens then return true; fi;
-    if not IsSubset(PrimeSet(G),PrimeSet(g)) then return false; fi;
-    if   g in List(Combinations(gens,2), t -> Product(t))
-    then return true; fi;
-    gens := Union(gens,List(gens, g -> g^-1));
-    k := 2;
-    repeat
-      if   g in List(Tuples(gens,k), t -> Product(t))
+    if IsOne(g) or g in gens or g^-1 in gens then
+      Info(InfoRCWA,2,"<g> = 1 or one of <g> or <g>^-1 ",
+                      "in generator list of <G>.");
+      return true;
+    fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(g)) then
+      Info(InfoRCWA,2,"<g> and <G> have incompatible prime sets.");
+      return false;
+    fi;
+    if not IsSubset(Factors(   Product(List(gens,Multiplier))
+                             * Product(List(gens,Divisor))),
+                    Filtered(Factors(Multiplier(g)*Divisor(g)),
+                             p->not IsOne(p)))
+    then
+      Info(InfoRCWA,2,"The multiplier or divisor of <g> has factors which");
+      Info(InfoRCWA,2,"no multiplier or divisor of a generator of <G> has.");
+      return false;
+    fi;
+    if not IsSubset(Support(G),Support(g)) then
+      Info(InfoRCWA,2,"Support(<g>) is not a subset of Support(<G>).");
+      return false;
+    fi;
+    if not IsTame(G) then
+      orbs := ShortOrbits(G,Intersection(Support(G),AllResidues(R,x^4)),30);
+      if orbs <> [] then
+        if ForAny(orbs,orb->Permutation(g,orb)=fail) then
+          Info(InfoRCWA,2,"<g> does not act on some finite orbit of <G>.");
+          return false;
+        fi;
+        if ForAny(orbs,orb->not Permutation(g,orb) in Action(G,orb)) then
+          Info(InfoRCWA,2,"<g> induces a permutation on some finite orbit");
+          Info(InfoRCWA,2,"of <G> which does not lie in the group induced");
+          Info(InfoRCWA,2,"by <G> on this orbit.");
+          return false;
+        fi;
+      fi;
+      m       := Lcm(List(Concatenation(gens,[g]),Modulus));
+      orbsmod := List(Projections(G,m),proj->Support(Image(proj)));
+      if ForAny(orbsmod,orb->orb^g<>orb) then
+        Info(InfoRCWA,2,"<g> does not leave the partition of ",R," into");
+        Info(InfoRCWA,2,"unions of residue classes (mod ",m,") invariant");
+        Info(InfoRCWA,2,"which is fixed by <G>.");
+        return false;
+      fi;
+      Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
+      phi := EpimorphismFromFreeGroup(G);
+      return PreImagesRepresentative(phi,g) <> fail;
+    else
+      if Modulus(G) mod Modulus(g) <> 0 then
+        Info(InfoRCWA,2,"Mod(<g>) does not divide Mod(<G>).");
+        return false;
+      fi;
+      if not IsTame(g) then # This covers also the case of infinite order.
+        Info(InfoRCWA,2,"<G> is tame, but <g> is wild.");
+        return false;
+      fi;
+      P := RespectedPartition(G);
+      H := ActionOnRespectedPartition(G);
+      h := Permutation(g,P);
+      if h = fail then
+        Info(InfoRCWA,2,"<g> does not act on RespectedPartition(<G>).");
+        return false;
+      fi;
+      if not RespectsPartition(g,P) then
+        Info(InfoRCWA,2,"<g> does not respect RespectedPartition(<G>).");
+        return false;
+      fi;
+      if not h in H then
+        Info(InfoRCWA,2,"The permutation induced by <g> on ",
+                        "P := RespectedPartition(<G>)");
+        Info(InfoRCWA,2,"is not an element of the permutation group ",
+                        "which is induced by <G> on P.");
+        return false;
+      elif CoefficientsRing(R) = GF(2) # R has no units except of 1.
       then return true; fi;
-      k := k + 1;
-    until false;
+      Info(InfoRCWA,2,"Trying to factor <g> into gen's ...");
+      phi := EpimorphismFromFreeGroup(G);            # <G> is tame -> this
+      return PreImagesRepresentative(phi,g) <> fail; # could be improved.
+    fi;
+  end );
+
+#############################################################################
+##
+#M  IsSubset( <G>, <H> ) . . . . . . . . . . . . . . . .  for two rcwa groups
+##
+##  Checking for a subgroup relation.
+##
+InstallMethod( IsSubset,
+               "for two rcwa groups (RCWA)", true,
+               [ IsRcwaGroup, IsRcwaGroup ], 0,
+
+  function ( G, H )
+
+    if   IsSubset(GeneratorsOfGroup(G),GeneratorsOfGroup(H))
+    then return true; fi;
+    if not IsSubset(PrimeSet(G),PrimeSet(H)) then return false; fi;
+    if not IsSubset(Support(G),Support(H)) then return false; fi;
+    if IsTame(G) and not IsTame(H) then return false; fi;
+    if IsTame(G) and IsTame(H) then
+      if not IsZero(Multiplier(G) mod Multiplier(H)) then return false; fi;
+      if   not RespectsPartition(H,RespectedPartition(G))
+      then return false; fi;
+      if not IsSubgroup(ActionOnRespectedPartition(G),
+                        Action(H,RespectedPartition(G)))
+      then return false; fi;
+      if Size(H) > Size(G) then return false; fi;
+    fi;
+    return ForAll(GeneratorsOfGroup(H),h->h in G);
   end );
 
 #############################################################################
@@ -2921,6 +3111,7 @@ InstallMethod( IsSubset,
     gensG := GeneratorsOfGroup(G); gensH := GeneratorsOfGroup(H);
     if IsSubset(gensG,gensH) then return true; fi;
     if not IsSubset(PrimeSet(G),PrimeSet(H)) then return false; fi;
+    if not IsSubset(Support(G),Support(H)) then return false; fi;
     if   ForAll(gensG,g->Sign(g) = 1) and ForAny(gensH,h->Sign(h)=-1)
     then return false; fi;
     if IsClassWiseOrderPreserving(G) then
