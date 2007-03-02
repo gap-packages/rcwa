@@ -2977,8 +2977,8 @@ InstallMethod( \in,
     local  R, x, P, H, h, phi, gens, orbs, orbsmod, m;
 
     R := Source(g); x := IndeterminatesOfPolynomialRing(R)[1];
-    Info(InfoRCWA,2,"\\in for an rcwa permutation <g> of ",R);
-    Info(InfoRCWA,2,"    and an rcwa group <G> over ",R);
+    Info(InfoRCWA,2,"\\in for an rcwa permutation <g> of ",RingToString(R));
+    Info(InfoRCWA,2,"    and an rcwa group <G> over ",RingToString(R));
     if   FamilyObj(g) <> FamilyObj(One(G))
     then Info(InfoRCWA,4,"The underlying rings differ."); return false; fi;
     if   not IsBijective(g)
