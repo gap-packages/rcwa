@@ -3023,7 +3023,8 @@ InstallMethod( \in,
       m       := Lcm(List(Concatenation(gens,[g]),Modulus));
       orbsmod := List(Projections(G,m),proj->Support(Image(proj)));
       if ForAny(orbsmod,orb->orb^g<>orb) then
-        Info(InfoRCWA,2,"<g> does not leave the partition of ",R," into");
+        Info(InfoRCWA,2,"<g> does not leave the partition of ",
+                        RingToString(R)," into");
         Info(InfoRCWA,2,"unions of residue classes (mod ",m,") invariant");
         Info(InfoRCWA,2,"which is fixed by <G>.");
         return false;
