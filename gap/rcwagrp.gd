@@ -421,7 +421,7 @@ DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
 ##
 #O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
 ##
-DeclareOperation( "Projections", [ IsRcwaGroup, IsPosInt ] );
+DeclareOperation( "Projections", [ IsRcwaGroup, IsRingElement ] );
 
 #############################################################################
 ##
