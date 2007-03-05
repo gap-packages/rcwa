@@ -78,7 +78,7 @@
 
 <!-- #################################################################### -->
 
-<Bibliography Databases="rcwa.bib"/>
+<Bibliography Databases="rcwabib.xml"/>
 
 <TheIndex/>
 
