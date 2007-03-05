@@ -1,33 +1,48 @@
-/* ####################################################################### */
-/* ##                                                                   ## */
-/* ##  manual.css            RCWA documentation            Stefan Kohl  ## */
-/* ##                                                                   ## */
-/* ##  $Id$           ## */
-/* ##                                                                   ## */
-/* ####################################################################### */
+/* gapdoc.css Frank Lübeck, adjusted for RCWA by Stefan Kohl */
+/* $Id$  */
 
-body {
-  background: #ffffff;
-  /* background-image: url(rcwa.jpg); */
+/* basic settings */
+body { 
+  position: relative;
+  background: #ffffff; 
   color: #000000; 
+/*  background-image: url(gapdoc.jpg);
   margin-top: 15px; 
   margin-bottom: 15px;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 10px; */
+  width: 70%;
+  margin: 0pt;
+  padding: 15pt;
   font-family: Helvetica,Verdana,Arial,sans-serif;
   text-align: justify;
 }
 
-/* ####################################################################### */
-
-h1 { font-size: 300%; }
+h1 { font-size: 200%; }
 h2 { font-size: 160%; }
 h3 { font-size: 160%; }
 h4 { font-size: 130%; }
 h5 { font-size: 100%; }
 
-/* ####################################################################### */
+p.foot {
+  font-size: 60%;
+  font-style: normal;
+}
 
+a:link { 
+  color: #00008e; 
+  text-decoration: none; 
+}
+a:visited { 
+  color: #00008e; 
+  text-decoration: none; 
+}
+a:active { 
+  color: #000000; 
+  text-decoration: none; 
+}
+
+/* general alignment classes */
 .pcenter {
   text-align: center;
 }
@@ -40,13 +55,13 @@ h5 { font-size: 100%; }
   text-align: right;
 }
 
-/* ####################################################################### */
-
+/* layout for the Func-like elements  */
 div.func {
-  background-color: transparent; 
+  background-color: #e0e0e0; 
   margin: 0pt 0pt; 
 }
 
+/* general and special table settings */
 table {
   margin-left: auto;
   margin-right: auto;
@@ -66,8 +81,9 @@ table.func {
   width: 100%; 
 }
 
+/* Example elements */
 table.example {
-  background-color: #eeeeee;
+  background-color: #efefef; 
   border-style: none; 
   border-width: 0pt; 
   padding: 0px;  
@@ -79,19 +95,92 @@ table.example td {
   padding: 0ex 1ex;
 }
 
-table.chlink {
-  background-color: #eeeeee;
-  border-style: none; 
+/* links to chapters in all files */
+/* if there are too many chapters then use 'display: none' here */
+div.chlinktop {
+  background-color: #dddddd; 
+  border-style: solid; 
+  border-width: thin;  
+  margin: 2px;
+  text-align: center;
+  /* width: 100%;  */
+}
+
+div.chlinktop a {
+  background-color: #e9e9e9;
+}
+
+div.chlinkbot {
+  background-color: #dddddd; 
+  border-style: solid; 
+  border-width: thin;  
+  margin: 2px;
+  text-align: center;
+  /* width: 100%;  */
+}
+
+div.chlinkbot a {
+  background-color: #e9e9e9;
+}
+
+span.chlink1 {
+}
+
+/* and this is for  the "Top", "Prev", "Next" links */
+div.chlinkprevnexttop {
+  background-color: #dddddd; 
+  border-style: solid; 
   border-width: thin;  
   text-align: center;
-  width: 100%;
+  margin: 2px;
+  /* width: 100%;  */
 }
 
-table.chlink td {
-  border-style: groove;
-  border-width: thin;
+div.chlinkprevnexttop a {
+  background-color: #e9e9e9;
 }
 
+div.chlinkprevnextbot {
+  background-color: #dddddd; 
+  border-style: solid; 
+  border-width: thin;  
+  text-align: center;
+  margin: 2px;
+  /* width: 100%;  */
+}
+
+div.chlinkprevnextbot a {
+  background-color: #e9e9e9;
+}
+
+/* table of contents */
+div.ContChap {
+}
+
+div.ContSect {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+span.ContSS {
+  display: none;
+  margin-left: 2em;
+  margin-right: 1em;
+}
+
+div.ContSect:hover span.ContSS {
+  display: block;
+  margin-left: 2em;
+  margin-right: 1em;
+}
+
+div.ChapSects {
+  position: fixed;
+  left: 75%;
+  font-size: 80%;
+}
+
+/* Table elements */
 table.GAPDocTable {
   border-collapse: collapse;
   border-style: none;
@@ -125,60 +214,96 @@ td.tdcenter {
   text-align: center;
 }
 
-div.chlink {
-  text-align: center;
-}
-td.chlink1 {
-  background-color: #cccccc;
-}
-
+/* general settings */
 pre { 
   font-family: "Courier New",Courier,monospace; 
-  font-size: 100%; 
-  color:#284d49; 
+  font-size: 80%; 
+  color:#111111; 
 }
 
 tt,code { 
   font-family: "Courier New",Courier,monospace; 
-  font-size: 100%; 
+  font-size: 110%; 
   color: #284d49; }
 
 var {
   color: #cf0000;
 }
 
+/* may be overwritten for some types of elements  */
+/* Verb elements */
 pre.normal {
   color: #000000;
 }
 
+/* Func-like  elements and Ref to Func-like */
 code.func {
   color: #006500;
 }
+
+/* K elements */
 code.keyw {
   color: #ff0000;
 }
+
+/* F elements */
 code.file {
   color: #8e4510;
 }
 
-p.foot {
-  font-size: 60%;
-  font-style: normal;
+/* C elements */
+code.code {
 }
 
-/* ####################################################################### */
-
-a:link { 
-  color: #00008e; 
-  text-decoration: none; 
-}
-a:visited { 
-  color: #00008e; 
-  text-decoration: none; 
-}
-a:active { 
-  color: #000000; 
-  text-decoration: none; 
+/* Item elements */
+code.i {
 }
 
-/* ####################################################################### */
+/* Button elements */
+strong.button {
+}
+
+/* Headings  */
+span.Heading {
+}
+
+/* Arg elements */
+var.Arg {
+}
+
+/* Example elements, is in tables, see above */
+div.Example {
+}
+
+/* Package elements */
+strong.pkg {
+}
+
+/* URL-like  elements */
+span.URL {
+}
+
+/* Mark elements */
+strong.Mark {
+}
+
+/* Ref elements */
+b.Ref {
+}
+
+/* this contains the contents page */
+div.contents {
+}
+
+/* this contains the index page */
+div.index {
+}
+
+dd { margin-top: -12mm;
+     margin-bottom: 0mm;
+}
+
+dt { margin-top:  0mm;
+     margin-bottom: 0mm;
+}
+
