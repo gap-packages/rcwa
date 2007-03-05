@@ -155,7 +155,7 @@ gap> P1^g = P2;
 true
 gap> cls := AllResidueClassesModulo(R,x^3);;
 gap> S1 := Union(cls{[1,4,8]});
-x+Z(2)^0(mod x^2) U x^2+x+Z(2)^0(mod x^3)
+x+Z(2)^0(mod x^2) U 0*Z(2)(mod x^3)
 gap> S2 := Union(cls{[1,7]});
 0*Z(2)(mod x^3) U x^2+x(mod x^3)
 gap> elm := RepresentativeAction(G,S1,S2);

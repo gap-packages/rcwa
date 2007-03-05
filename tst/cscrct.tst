@@ -254,7 +254,7 @@ ClassTransposition(0*Z(2),x,x+Z(2)^0,x^2)
 gap> TransposedClasses(last);
 [ 0*Z(2)(mod x), x+Z(2)^0(mod x^2) ]
 gap> Support(last2);
-0*Z(2)(mod x) U Z(2^2)^2*x(mod x^2)
+0*Z(2)(mod x) U x+Z(2)^0(mod x^2)
 gap> Source(last3);
 GF(2^2)[x]
 gap> ClassTransposition(ResidueClass(R1,x,Zero(R1)),
