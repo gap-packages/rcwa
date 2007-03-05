@@ -2271,34 +2271,6 @@ InstallMethod( RespectsPartition,
 
 #############################################################################
 ##
-#M  RespectsPartition( <sigma>, <P> ) . . . . . . . .  for rcwa mappings of Z
-##
-InstallMethod( RespectsPartition,
-               "for rcwa mappings of Z (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfZ, IsList ], 0,
-
-  function ( sigma, P )
-
-    local  cl, c, c_rest, r, m, l;
-
-    if   not ForAll(P,cl->IsResidueClassUnionOfZ(cl) or IsIntegers(cl))
-      or not ForAll(P,IsResidueClass)
-      or not IsIntegers(Union(P)) or Sum(List(P,Density)) <> 1
-    then TryNextMethod(); fi;
-    if Permutation(sigma,P) = fail then return false; fi;
-    c := Coefficients(sigma);
-    for cl in P do
-      r := Residue(cl);
-      m := Modulus(cl);
-      l := Int(Modulus(sigma)/m);
-      c_rest := c{[r+1,r+m+1..r+(l-1)*m+1]};
-      if Length(Set(c_rest)) > 1 then return false; fi;
-    od;
-    return true;
-  end );
-
-#############################################################################
-##
 #M  RespectsPartition( <G>, <P> ) . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( RespectsPartition,
