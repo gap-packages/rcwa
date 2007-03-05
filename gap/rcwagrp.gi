@@ -2979,8 +2979,6 @@ InstallMethod( \in,
     R := Source(g); x := IndeterminatesOfPolynomialRing(R)[1];
     Info(InfoRCWA,2,"\\in for an rcwa permutation <g> of ",RingToString(R));
     Info(InfoRCWA,2,"    and an rcwa group <G> over ",RingToString(R));
-    if   FamilyObj(g) <> FamilyObj(One(G))
-    then Info(InfoRCWA,4,"The underlying rings differ."); return false; fi;
     if   not IsBijective(g)
     then Info(InfoRCWA,4,"<g> is not bijective."); return false; fi;
     gens := GeneratorsOfGroup(G);
