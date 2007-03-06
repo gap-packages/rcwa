@@ -90,9 +90,9 @@ end;
 ##
 TEST_FILES := [ [ "ngens.tst",      25000000 ],
                 [ "semiloc.tst",   200000000 ],
+                [ "modular.tst",   800000000 ],
                 [ "cscrct.tst",    900000000 ],
                 [ "rcwa_ct.tst",  1100000000 ],
-                [ "modular.tst",  1800000000 ],
                 [ "integral.tst", 8000000000 ] ];
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
