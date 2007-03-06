@@ -39,7 +39,11 @@ residue classes <M>r(m) \in \Z/m\Z</M> are all affine, i.e. given&nbsp;by
     n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}
   </Display>
 </Alt>
-<Alt Only="Text,HTML"><Verb>
+<Alt Only="HTML"><Verb><![CDATA[<center>
+  <img src = "rcwamap.png" width = "366" height = "49"
+       alt = "f|_r(m): n |-> (a_r(m) * n + b_r(m)) / c_r(m)" />
+</center>]]></Verb></Alt>
+<Alt Only="Text"><Verb>
                                         a_r(m) * n + b_r(m)
            f|_r(m):  r(m) -> Z,  n |->  -------------------
                                               c_r(m)
@@ -250,7 +254,11 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
       ]]>
     </Display>
     </Alt>
-    <Alt Only="Text,HTML"><Verb>
+    <Alt Only="HTML"><Verb><![CDATA[<center>
+      <img src = "ct.png" width = "574" height = "84"
+           alt = "(see the PDF- or ASCII text version of the manual),"/>
+    </center>]]></Verb></Alt>
+    <Alt Only="Text"><Verb>
               /
              | (m_2 n + m_1 r_2 - m_2 r_1)/m_1 if n in r_1(m_1),
       n |-> &lt;  (m_1 n + m_2 r_1 - m_1 r_2)/m_2 if n in r_2(m_2),
@@ -863,7 +871,8 @@ cannot have infinitely many cycles of any given finite length.
   <Meth Name="Determinant" Arg="g" Label="g"/>
   <Meth Name="Determinant" Arg="g, S" Label="g, S"/>
   <Returns>
-    The determinant of the bijective rcwa mapping&nbsp;<A>g</A>.
+    The determinant of the bijective rcwa mapping&nbsp;<A>g</A>
+    of&nbsp;<M>\Z</M>.
   </Returns>
   <Description>
     The <E>determinant</E> of an affine mapping <M>n \mapsto (an+b)/c</M>
@@ -871,17 +880,27 @@ cannot have infinitely many cycles of any given finite length.
     This definition is extended additively to determinants of rcwa mappings
     and their restrictions to unions of residue classes. <P/>
 
-    Using the notation from the definition of an rcwa mapping,
-    the <E>determinant</E> det(<M>\sigma</M>) of an rcwa mapping
-    <M>\sigma</M> is given by
-    <Alt Not="LaTeX">
-      (see LaTeX version of the manual).
-    </Alt> 
+    Using the notation for the coefficients introduced in
+    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the
+    <E>determinant</E> of an rcwa mapping is given by
     <Alt Only="LaTeX">
       <Display>
-        \sum_{r(m) \in R/mR} \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}.
+        \sum_{r(m) \in \Z/m\Z} \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}.
       </Display>
     </Alt>
+    <Alt Only="HTML"><Verb><![CDATA[<center>
+      <img src = "det.png" width = "177" height = "58"
+           alt = "\sum_{r(m) \in \Z/m\Z}
+                  \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}."/>
+    </center>]]></Verb></Alt>
+    <Alt Only="Text"><Verb>
+                          -----
+                           \           b_r(m)
+                            >     --------------
+                           /       |a_{r(m)}| * m
+                          -----
+                      r(m) in Z/mZ                .
+    </Verb></Alt> 
     The determinant mapping is an epimorphism from the group of all
     class-wise order-preserving bijective rcwa mappings of <M>\Z</M>
     to <M>(\Z,+)</M>, see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.11.9.
@@ -904,21 +923,33 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
 <ManSection>
   <Attr Name="Sign" Arg="g" Label="g"/>
   <Returns>
-    The sign of the bijective rcwa mapping&nbsp;<A>g</A>.
+    The sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;<M>\Z</M>.
   </Returns>
   <Description>
-    Using the notation from the definition of an rcwa mapping,
-    the <E>sign</E> of a bijective rcwa mapping&nbsp;<M>\sigma</M>
+    Using the notation for the coefficients introduced in
+    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the
+    <E>sign</E> of a bijective rcwa mapping&nbsp;<M>\sigma</M>
     of&nbsp;<M>\Z</M> is defined by
-    <Alt Not="LaTeX">
-      (see LaTeX version of the manual).
-    </Alt> 
     <Alt Only="LaTeX">
       <Display>
         (-1)^{\displaystyle{{\rm det}(\sigma)
             + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}.
       </Display>
     </Alt>
+    <Alt Only="HTML"><Verb><![CDATA[<center>
+      <img src = "sgn.png" width = "284" height = "63"
+           alt = "(-1)^{{\rm det}(\sigma)
+                  + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}."/>
+    </center>]]></Verb></Alt>
+    <Alt Only="Text"><Verb>
+                                    -----
+                                     \       m - 2r
+                      det(sigma) +    >      -------
+                                     /          m
+                                    -----
+                                 a_r(m) &lt; 0
+              (-1)                                   .
+    </Verb></Alt> 
     The sign mapping is an epimorphism from RCWA(<M>\Z</M>) to the group
     <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>,
     see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.12.8.
@@ -974,8 +1005,6 @@ An rcwa mapping of the ring of integers or of one of its semilocalizations
 is called <E>class-wise order-preserving</E> if and only if all coefficients
 <M>a_{r(m)}</M> in the numerators of the affine partial mappings are
 positive. The corresponding property is <C>IsClassWiseOrderPreserving</C>.
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -1216,12 +1245,16 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
           \wedge r^f \in r_2(m)\right\}\right|,
         ]]>
       </Display>
-      where <M>\hat{m}</M> is the product of <A>m</A> and the square of the
-      modulus of&nbsp;<A>f</A>.
     </Alt>
-    <Alt Not="LaTeX">
-      (See LaTeX version of the manual.)
+    <Alt Only="HTML"><Verb><![CDATA[<center>
+      <img src = "transmat.png" width = "599" height = "47"
+           alt = "(see the PDF version of the manual),"/>
+    </center>]]></Verb></Alt>
+    <Alt Only="Text">
+      (see the PDF- or HTML version of the manual),
     </Alt>
+    where <M>\hat{m}</M> is the product of <A>m</A> and the square of the
+    modulus of&nbsp;<A>f</A>.
     The assignment of the residue classes (mod&nbsp;<A>m</A>) to the rows and
     columns of the matrix corresponds to the ordering of the residues in
     <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>. <P/>
