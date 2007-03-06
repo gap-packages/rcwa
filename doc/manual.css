@@ -1,5 +1,6 @@
-/* gapdoc.css Frank Lübeck, adjusted for RCWA by Stefan Kohl */
+/* gapdoc.css        Frank LÃ¼beck */
 /* $Id$  */
+
 
 /* basic settings */
 body { 
@@ -60,6 +61,7 @@ div.func {
   background-color: #e0e0e0; 
   margin: 0pt 0pt; 
 }
+
 
 /* general and special table settings */
 table {
@@ -153,25 +155,29 @@ div.chlinkprevnextbot a {
   background-color: #e9e9e9;
 }
 
+
 /* table of contents */
 div.ContChap {
 }
 
 div.ContSect {
+  text-align: left;
   margin-left: 1em;
-  margin-right: 1em;
 }
 
 span.ContSS {
   display: none;
   margin-left: 2em;
-  margin-right: 1em;
+}
+
+span.ContSS br {
+  display: none;
 }
 
 div.ContSect:hover span.ContSS {
   display: block;
-  margin-left: 2em;
-  margin-right: 1em;
+  text-align: left;
+  margin-left: 1em;
 }
 
 div.ChapSects {
@@ -217,7 +223,7 @@ td.tdcenter {
 /* general settings */
 pre { 
   font-family: "Courier New",Courier,monospace; 
-  font-size: 80%; 
+  font-size: 70%; 
   color:#111111; 
 }
 
@@ -299,11 +305,7 @@ div.contents {
 div.index {
 }
 
-dd { margin-top:  0mm;
-     margin-bottom: 0mm;
+/* ignore some text for non-css layout */
+span.nocss {
+  display: none;
 }
-
-dt { margin-top:  0mm;
-     margin-bottom: 0mm;
-}
-
