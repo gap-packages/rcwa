@@ -17,9 +17,9 @@
 The &RCWA; package needs at least &GAP;&nbsp;4.4.7, &ResClasses;&nbsp;2.4.2,
 <Package>GRAPE</Package>&nbsp;4.0&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.1&nbsp;<Cite Key="Polycyclic"/> and
-&GAPDoc;&nbsp;0.999&nbsp;<Cite Key="GAPDoc"/>. With possible exception of the
-most recent version of &ResClasses;, all needed packages are already present
-in an up-to-date standard &GAP; installation.
+&GAPDoc;&nbsp;0.99999&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
+the most recent version of &ResClasses;, all needed packages are already
+present in an up-to-date standard &GAP; installation.
 The &RCWA; package can be used under UNIX, under Windows and on the
 MacIntosh. It is completely written in the &GAP; language and does neither
 contain nor require external binaries. In particular, warnings concerning
