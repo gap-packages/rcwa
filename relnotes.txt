@@ -450,5 +450,15 @@ Changes between version 2.4.1 and version 2.4.2:
 
 Changes between version 2.4.2 and version 2.4.3:
 
- - Fixed a quirk with the style file for the HTML version of the manual.
+ - The documentation has been improved in a few places.
+
+ - The HTML version of the manual has been made a bit nicer by adding
+   a couple of images for displayed formulae.
+
+ - A few formulae in ASCII art have been added to the text version of
+   the manual.
+
+ - A quirk with the style file for the HTML version of the manual has
+   been fixed.
+
 
