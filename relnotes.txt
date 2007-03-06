@@ -448,3 +448,7 @@ Changes between version 2.4.1 and version 2.4.2:
    has been improved. This also includes improved or new methods for
    a couple of related operations.
 
+Changes between version 2.4.2 and version 2.4.3:
+
+ - Fixed a quirk with the style file for the HTML version of the manual.
+
