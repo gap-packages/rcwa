@@ -53,7 +53,7 @@ Dependencies     := rec(
                          NeededOtherPackages    := [ ["ResClasses", ">=2.4.2"], ["GRAPE",">=4.0"],
                                                      ["Polycyclic",">=2.1"],
                                                      ["GAPDoc",">=0.99999"] ],
-                         SuggestedOtherPackages := [ ],
+                         SuggestedOtherPackages := [ ["GAPDoc",">=1.0"] ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,
