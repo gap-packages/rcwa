@@ -1488,6 +1488,10 @@ InstallMethod( IsomorphismRcwaGroup,
 
     if   IsRcwaGroup(G) and Source(One(G)) = R
     then return IdentityMapping(G); fi;
+    if IsTrivial(G) then
+      return GroupHomomorphismByImagesNC(G,TrivialSubgroup(RCWA(R)),
+               [One(G)],GeneratorsOfGroup(TrivialSubgroup(RCWA(R))));
+    fi;
     if   not IsPermGroup(G) 
     then phi1 := IsomorphismPermGroup(G); Gperm := Image(phi1);
     else phi1 := IdentityMapping(G);      Gperm := G; fi;
