@@ -1138,6 +1138,15 @@ gap> G := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
 >               ClassTransposition(0,3,1,3),ClassReflection(0,3));;
 gap> Size(G);
 48
+gap> IsomorphismRcwaGroup(Group(()));
+[ () ] -> [ IdentityMapping( Integers ) ]
+gap> IsomorphismRcwaGroup(SmallGroup(1,1));
+[ <identity> of ... ] -> [ IdentityMapping( Integers ) ]
+gap> IsomorphismRcwaGroup(SmallGroup(6,1),Integers);
+[ f1, f2 ] -> [ <bijective rcwa mapping of Z with modulus 6>, 
+  <bijective rcwa mapping of Z with modulus 3> ]
+gap> StructureDescription(Image(last));
+"S3"
 gap> M11 := MathieuGroup(11);;
 gap> Action(Image(IsomorphismRcwaGroup(M11))^ClassShift(0,1),
 >           [1..LargestMovedPoint(M11)]) = M11;

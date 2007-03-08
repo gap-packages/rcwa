@@ -382,6 +382,19 @@ gap> prod2^3;
 IdentityMapping( GF(2)[x] )
 gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
+gap> IsomorphismRcwaGroup(Group(()),R);
+[ () ] -> [ IdentityMapping( GF(2)[x] ) ]
+gap> IsomorphismRcwaGroup(SmallGroup(1,1),R);
+[ <identity> of ... ] -> [ IdentityMapping( GF(2)[x] ) ]
+gap> IsomorphismRcwaGroup(SmallGroup(6,1),R);
+[ f1, f2 ] -> [ <bijective rcwa mapping of GF(2)[x] with modulus x^2>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^3> ]
+gap> StructureDescription(Image(last));
+"S3"
+gap> IsomorphismRcwaGroup(MathieuGroup(11),R);
+[ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ] -> 
+[ <bijective rcwa mapping of GF(2)[x] with modulus x^4, of order 11>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^4, of order 4> ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> STOP_TEST( "modular.tst", 800000000 );
 
