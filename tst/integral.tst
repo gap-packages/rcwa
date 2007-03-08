@@ -562,8 +562,9 @@ gap> A4 := DerivedSubgroup(G);
 <rcwa group over Z with 3 generators, of size 12>
 gap> IsBijective(IsomorphismGroups(AlternatingGroup(4),A4));
 true
-gap> H := RcwaGroupByPermGroup(Group((1,2),(3,4),(5,6),(7,8),
->                                    (1,3)(2,4),(1,3,5,7)(2,4,6,8)));
+gap> H := Image(IsomorphismRcwaGroup(Group((1,2),(3,4),(5,6),(7,8),
+>                                          (1,3)(2,4),(1,3,5,7)(2,4,6,8)),
+>                                    Integers));
 <rcwa group over Z with 6 generators>
 gap> Size(H);
 384
@@ -751,6 +752,12 @@ gap> Multiplier(G);
 2
 gap> Divisor(G);
 2
+gap> SymmetricGroup(P);
+<rcwa group over Z with 2 generators, of size 5040>
+gap> DihedralGroup(ResidueClass(3,4));
+<tame rcwa group over Z with 2 generators>
+gap> GeneratorsOfGroup(last);
+[ ClassShift(3,4), ClassReflection(3,4) ]
 gap> Divisor(Group(ClassTransposition(0,2,1,6)));
 3
 gap> Multiplier(Group(a,b));
@@ -1132,7 +1139,7 @@ gap> G := Group(ClassTransposition(0,3,1,3)*ClassTransposition(0,3,2,3),
 gap> Size(G);
 48
 gap> M11 := MathieuGroup(11);;
-gap> Action(RcwaGroupByPermGroup(M11)^ClassShift(0,1),
+gap> Action(Image(IsomorphismRcwaGroup(M11))^ClassShift(0,1),
 >           [1..LargestMovedPoint(M11)]) = M11;
 true
 gap> phi := IsomorphismRcwaGroup(FreeGroup(2)); F2 := Image(phi);;

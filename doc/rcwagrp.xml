@@ -115,16 +115,6 @@ rcwa representation:
     method for free groups uses an adaptation of the construction given
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
     PSL(2,<M>\C</M>) to RCWA(<M>\Z</M>). <P/>
-
-    If the group <A>G</A> is a finite-degree permutation group,
-    then its image under a specific embedding into RCWA(<M>\Z</M>)
-    can be obtained by <C>RcwaGroupByPermGroup(<A>G</A>)</C>.
-    <Index Key="RcwaGroupByPermGroup" Subkey="G">
-      <C>RcwaGroupByPermGroup</C>
-    </Index>
-    The group&nbsp;<C>H</C> resulting from this satisfies the relation
-    <C>Action(H&circum;ClassShift(0,1),[1..LargestMovedPoint(<A>G</A>)])
-    =&nbsp;G</C>.
 <Example>
 <![CDATA[
 gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),

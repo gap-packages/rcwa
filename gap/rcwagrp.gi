@@ -1268,14 +1268,6 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroup( <G> ) . . . dispatch to `IsomorphismRcwaGroupOverZ'
-##
-InstallMethod( IsomorphismRcwaGroup,
-               "dispatch to `IsomorphismRcwaGroupOverZ' (RCWA)", true,
-               [ IsGroup ], 0, IsomorphismRcwaGroupOverZ );
-
-#############################################################################
-##
 #M  IsomorphismRcwaGroup( <G>, <R> ) . . . . . . . . . general wrapper method
 ##
 InstallMethod( IsomorphismRcwaGroup,
@@ -1286,8 +1278,10 @@ InstallMethod( IsomorphismRcwaGroup,
 
     local  phi, phi1, phi2, H, gensG, gensH, pi;
 
-    if IsIntegers(R) then return IsomorphismRcwaGroupOverZ(G); fi;
-    if IsRcwaGroupOverZ(G) and IsZ_pi(R) then
+    if   IsIntegers(R) and HasIsomorphismRcwaGroupOverZ(G)
+    then return IsomorphismRcwaGroupOverZ(G); fi;
+    if IsFinite(G) then TryNextMethod(); fi;  # Handled in a separate method.
+    if IsRcwaGroupOverZ(G) and IsZ_pi(R) then # Use "1 to 1" translation.
       gensG := GeneratorsOfGroup(G);
       pi    := NoninvertiblePrimes(R);
       if   not ForAll(gensG,g->IsSubset(pi,Factors(Modulus(g))))
@@ -1299,14 +1293,30 @@ InstallMethod( IsomorphismRcwaGroup,
       SetIsBijective(phi,true);
       return phi;
     fi;
-    if not IsRcwaGroup(G) and IsZ_pi(R) then
-      phi1 := IsomorphismRcwaGroupOverZ(G);
+    if not IsRcwaGroup(G) and IsZ_pi(R) then  # Use rcwa group over Z as an
+      phi1 := IsomorphismRcwaGroupOverZ(G);   # intermediate step.
       phi2 := IsomorphismRcwaGroup(Image(phi1),R);
       phi  := CompositionMapping(phi2,phi1);
       return phi;
     fi;
     TryNextMethod();
   end );
+
+#############################################################################
+##
+#M  IsomorphismRcwaGroup( <G> ) . . . one-argument method, use Z as base ring
+##
+InstallMethod( IsomorphismRcwaGroup,
+               "one-argument method, use Z as base ring (RCWA)", true,
+               [ IsGroup ], 0, G -> IsomorphismRcwaGroup( G, Integers ) );
+
+#############################################################################
+##
+#M  IsomorphismRcwaGroupOverZ( <G> ) . . . dispatch to `IsomorphismRcwaGroup'
+##
+InstallMethod( IsomorphismRcwaGroupOverZ,
+               "dispatch to `IsomorphismRcwaGroup' (RCWA)", true,
+               [ IsGroup ], 0, IsomorphismRcwaGroup );
 
 #############################################################################
 ##
@@ -1323,7 +1333,7 @@ InstallMethod( CyclicGroupCons,
                "rcwa group over Z, for a positive integer (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
 
-  function ( filt, n )
+  function ( filter, n )
 
     local  result;
 
@@ -1342,7 +1352,7 @@ InstallOtherMethod( CyclicGroupCons,
                     "(Z,+) as an rcwa group (RCWA)", ReturnTrue,
                     [ IsRcwaGroupOverZ, IsInfinity ], 0,
 
-  function ( filt, infty )
+  function ( filter, infty )
 
     local  result;
 
@@ -1360,7 +1370,7 @@ InstallOtherMethod( DihedralGroupCons,
                     "the rcwa group < n |-> n+1, n |-> -n > (RCWA)",
                     ReturnTrue, [ IsRcwaGroupOverZ, IsInfinity ], 0,
 
-  function ( filt, infty )
+  function ( filter, infty )
 
     local  result;
 
@@ -1372,13 +1382,88 @@ InstallOtherMethod( DihedralGroupCons,
 
 #############################################################################
 ##
+#M  DihedralGroupCons( IsRcwaGroup, <cl> ) . . . . . . .  for a residue class
+##
+InstallOtherMethod( DihedralGroupCons,
+                    "for a residue class (RCWA)",
+                    ReturnTrue, [ IsRcwaGroup, IsResidueClass ], 0,
+
+  function ( filter, cl )
+
+    local  result;
+
+    result := Group(ClassShift(cl),ClassReflection(cl));
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  DihedralGroupCons( IsPcGroup, <cl> ) . . . . . . . .  for a residue class
+##
+##  This is a dirty hack to make DihedralGroup( <cl> ) work.
+##
+InstallOtherMethod( DihedralGroupCons,
+                    "for a residue class (RCWA)",
+                    ReturnTrue, [ IsPcGroup, IsResidueClass ], 0,
+
+  function ( filter, cl )
+
+    local  result;
+
+    result := Group(ClassShift(cl),ClassReflection(cl));
+    SetIsTame(result,true); SetIsIntegral(result,true);
+    return result;
+  end );
+
+#############################################################################
+##
+#M  SymmetricGroupCons( IsRcwaGroup, <P> ) for a part. of a ring into res.cl.
+##
+InstallOtherMethod( SymmetricGroupCons,
+                    "for a partition of a ring into residue classes (RCWA)",
+                    ReturnTrue, [ IsRcwaGroup, IsList ], 0,
+
+  function ( filter, P )
+
+    local  Sym, g;
+
+    if    ForAll(P,IsResidueClass)
+      and Length(Set(List(P,cl->UnderlyingRing(FamilyObj(cl))))) = 1
+    then
+      Sym := Group(RcwaMapping([P]),RcwaMapping([P{[1,2]}]));
+      SetSize(Sym,Factorial(Length(P)));
+      SetIsTame(Sym,true);
+      SetRespectedPartition(Sym,P);
+      return Sym;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  SymmetricGroupCons( IsPermGroup, <P> ) for a part. of a ring into res.cl.
+##
+##  This is a dirty hack to make SymmetricGroup( <P> ) work.
+##
+InstallOtherMethod( SymmetricGroupCons,
+                    "for a partition of a ring into residue classes (RCWA)",
+                    ReturnTrue, [ IsPermGroup, IsList ], SUM_FLAGS,
+
+  function ( filter, P )
+    if   ForAll(P,IsResidueClass)
+    then return SymmetricGroupCons(IsRcwaGroup,P);
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  AbelianGroupCons( IsRcwaGroupOverZ, <invs> )
 ##
 InstallMethod( AbelianGroupCons,
                "rcwa group over Z, for list of abelian inv's (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsList ], 0,
 
-  function ( filt, invs )
+  function ( filter, invs )
 
     local  result;
 
@@ -1391,50 +1476,41 @@ InstallMethod( AbelianGroupCons,
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroupOverZ( <G> ) . . . . default method for finite groups
+#M  IsomorphismRcwaGroup( <G>, <R> ) . . . . default method for finite groups
 ##
-##  This is a simple method which just embeds <G> into Sym(Z/mZ).
-##
-InstallMethod( IsomorphismRcwaGroupOverZ,
+InstallMethod( IsomorphismRcwaGroup,
                "default method for finite groups (RCWA)", true,
-               [ IsGroup and IsFinite ], 0,
+               [ IsGroup and IsFinite, IsRing ], 0,
 
-  function ( G )
+  function ( G, R )
 
-    local  G2, H, phi1, phi2, n;
+    local  H, Hgens, phi1, phi2, Gperm, n, P, p, pos, maxdensity;
 
-    if IsRcwaGroupOverZ(G) then return IdentityMapping(G); fi;
+    if   IsRcwaGroup(G) and Source(One(G)) = R
+    then return IdentityMapping(G); fi;
     if   not IsPermGroup(G) 
-    then phi1 := IsomorphismPermGroup(G); G2 := Image(phi1);
-    else phi1 := IdentityMapping(G);      G2 := G; fi;
-    n := LargestMovedPoint(G2);
-    H := GroupWithGenerators(List(GeneratorsOfGroup(G2),
-           g -> RcwaMapping(g,[1..n])))^(ClassShift(0,1)^-1);
-    phi2 := GroupHomomorphismByImagesNC(G2,H,GeneratorsOfGroup(G2),
-                                             GeneratorsOfGroup(H));
+    then phi1 := IsomorphismPermGroup(G); Gperm := Image(phi1);
+    else phi1 := IdentityMapping(G);      Gperm := G; fi;
+    n := LargestMovedPoint(Gperm);
+    if IsIntegers(R) then P := AllResidueClassesModulo(Integers,n); else
+      p := SizeOfSmallestResidueClassRing(R);
+      P := [R];
+      while Length(P) < n do
+        maxdensity := Maximum(List(P,Density));
+        pos := First([1..Length(P)], i -> Density(P[i]) = maxdensity);
+        P[pos] := SplittedClass(P[pos],p);
+        P := Flat(P);
+      od;
+      P := Set(P);
+    fi;
+    Hgens := List(GeneratorsOfGroup(Gperm),
+                  g->RcwaMapping(List(Cycles(g,[1..n]),cyc->P{cyc})));
+    H    := GroupWithGenerators(Hgens);
+    SetIsTame(H,true);
+    SetRespectedPartition(H,P);
+    if HasSize(G) then SetSize(H,Size(G)); fi;
+    phi2 := EpimorphismByGeneratorsNC(Gperm,H);
     return Immutable(CompositionMapping(phi2,phi1));
-  end );
-
-#############################################################################
-##
-#F  RcwaGroupOverZByPermGroup( <G> ) . an rcwa group over Z isomorphic to <G>
-#F  RcwaGroupByPermGroup( <G> )
-##
-InstallGlobalFunction( RcwaGroupOverZByPermGroup,
-
-  function ( G )
-
-    local  H, phi, phi_1;
-
-    if   not IsPermGroup(G) 
-    then Error("<G> must be a permutation group"); fi;
-    phi := IsomorphismRcwaGroupOverZ(G);
-    H   := Image(phi);
-    phi_1 := InverseGeneralMapping(phi);
-    SetIsomorphismPermGroup(H,phi_1);
-    SetNiceMonomorphism(H,phi_1);
-    SetNiceObject(H,G);
-    return H;
   end );
 
 #############################################################################
@@ -1446,16 +1522,17 @@ InstallGlobalFunction( RcwaGroupOverZByPermGroup,
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroupOverZ( <F> ) . . . . . . . . . . . .  for free groups
+#M  IsomorphismRcwaGroup( <F>, Integers ) . . . . . . for free groups, over Z
 ##
 ##  This method uses an adaptation of the construction given on page 27
 ##  of the book Pierre de la Harpe: Topics in Geometric Group Theory from
 ##  PSL(2,C) to RCWA(Z).
 ##
-InstallMethod( IsomorphismRcwaGroupOverZ,
-               "for free groups (RCWA)", true, [ IsFreeGroup ], 0,
+InstallMethod( IsomorphismRcwaGroup,
+               "for free groups, over Z (RCWA)", ReturnTrue,
+               [ IsFreeGroup, IsIntegers ], 0,
 
-  function ( F )
+  function ( F, ints )
 
     local  rank, m, D, gamma, RCWA_Z, phi, image, i;
 
@@ -1487,7 +1564,7 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroupOverZ( <F> ) . . . for free products of finite groups
+#M  IsomorphismRcwaGroup( <F>, Integers )  for free products of finite groups
 ##
 ##  This method uses the Table-Tennis Lemma -- see e.g. Section II.B. in
 ##  the book Pierre de la Harpe: Topics in Geometric Group Theory.
@@ -1504,11 +1581,12 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 ##  representations under bijective rcwa mappings g_r which satisfy
 ##  0(n_r)^g_r = Z \ r(m).
 ##
-InstallMethod( IsomorphismRcwaGroupOverZ,
-               "for free products of finite groups (RCWA)",
-               ReturnTrue, [ IsFpGroup and HasFreeProductInfo ], 0,
+InstallMethod( IsomorphismRcwaGroup,
+               "for free products of finite groups, over Z (RCWA)",
+               ReturnTrue, [ IsFpGroup and HasFreeProductInfo,
+                             IsIntegers ], 0,
 
-  function ( F )
+  function ( F, ints )
 
     local  phi, img, gens, gensF, info, groups, degs, embs, embsF, embnrs,
            regreps, rcwareps, conjisos, conjelms, r, m, i;
@@ -1548,15 +1626,16 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
 #############################################################################
 ##
-#M  IsomorphismRcwaGroupOverZ( <F> ) . . . . for the free product of two C2's
+#M  IsomorphismRcwaGroup( <F>, Integers ) .  for the free product of two C2's
 ##
 ##  This method covers the case that the free product is C2 * C2.
 ##
-InstallMethod( IsomorphismRcwaGroupOverZ,
+InstallMethod( IsomorphismRcwaGroup,
                "for free products of cyclic groups of order 2 (RCWA)",
-               ReturnTrue, [ IsFpGroup and HasFreeProductInfo ], 0,
+               ReturnTrue, [ IsFpGroup and HasFreeProductInfo,
+                             IsIntegers ], 0,
 
-  function ( F )
+  function ( F, ints )
 
     local  phi, img, gens, info, groups, degs;
 
@@ -1693,7 +1772,7 @@ InstallMethod( WreathProduct,
                                 Restriction(G,RcwaMapping([[m,r-1,1]])))));
     blocks     := AllResidueClassesModulo(m);
     base       := DirectProduct(List([0..m-1],r->G));
-    h          := RcwaGroupByPermGroup(P);
+    h          := Image(IsomorphismRcwaGroup(P,Integers));
     prod       := Group(Concatenation(gensonreps,GeneratorsOfGroup(h)));
     info       := rec( groups := [ G, P ], alpha := IdentityMapping(P),
                        base := base, basegens := GeneratorsOfGroup(base),

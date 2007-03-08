@@ -461,4 +461,20 @@ Changes between version 2.4.2 and version 2.4.3:
  - A quirk with the style file for the HTML version of the manual has
    been fixed.
 
+Changes between version 2.4.3 and version 2.4.4:
+
+ - A `SymmetricGroup' method for partitions of a ring into residue classes
+   has been added.
+
+ - The `IsomorphismRcwaGroup' method for finite groups has been improved.
+   It works now over all rings which are currently supported by RCWA.
+
+ - A method to construct a dihedral group acting on a given residue class
+   has been added.  
+
+ - The operation `RcwaGroupByPermGroup' / `RcwaGroupOverZByPermGroup' is
+   no longer needed, and has been removed.
+
+ - Now RCWA needs GAPDoc 0.99999.
+
 

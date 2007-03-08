@@ -244,13 +244,15 @@ gap> ct^2;
 IdentityMapping( Z_( 2, 3 ) )
 gap> phi := IsomorphismRcwaGroup(SymmetricGroup(5),Z_pi([2,3,5]));
 [ (1,2,3,4,5), (1,2) ] -> 
-[ <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 5>, 
-  <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 5> ]
+[ <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 8, of order 5>, 
+  <bijective rcwa mapping of Z_( 2, 3, 5 ) with modulus 4, of order 2> ]
 gap> IsBijective(phi);
 true
 gap> Image(phi);
 <rcwa group over Z_( 2, 3, 5 ) with 2 generators, of size 120>
 gap> Size(Image(phi));
+120
+gap> Size(Group(GeneratorsOfGroup(Image(phi))));
 120
 gap> phi := IsomorphismRcwaGroup(FreeGroup(2),Z_pi(2));
 [ f1, f2 ] -> [ <bijective rcwa mapping of Z_( 2 ) with modulus 8>, 

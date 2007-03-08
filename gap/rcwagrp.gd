@@ -146,18 +146,6 @@ DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
 
 #############################################################################
 ##
-#F  RcwaGroupOverZByPermGroup( <G> ) . . . . . . rcwa group isomorphic to <G>
-#F  RcwaGroupByPermGroup( <G> )
-##
-##  Constructs an rcwa group over Z isomorphic to the permutation group <G>,
-##  which acts on [ 1 .. LargestMovedPoint( <G> ) ] as <G> does.
-##
-DeclareGlobalFunction( "RcwaGroupOverZByPermGroup" );
-DeclareSynonym( "RcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
-DeclareSynonym( "IntegralRcwaGroupByPermGroup", RcwaGroupOverZByPermGroup );
-
-#############################################################################
-##
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 #O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
 ##
