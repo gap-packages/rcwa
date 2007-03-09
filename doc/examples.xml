@@ -2312,7 +2312,11 @@ it seems likely that <Q>most</Q> trajectories of the two mappings
   ]]>
   </Display>
 </Alt>
-<Alt Only="Text,HTML"><Verb><![CDATA[
+<Alt Only="HTML"><![CDATA[<center>
+  <img src = "t5pm.png" width = "372" height = "61"
+       alt = "T5+/-: Z -> Z, n |-> (n/2 if n even, (5n+/-1)/2 if n odd)" />
+</center>]]></Alt>
+<Alt Only="Text"><Verb><![CDATA[
                                        /
                                       | n/2          if n even,
           T_5+/-:  Z -> Z,   n  |->  <

@@ -39,10 +39,10 @@ residue classes <M>r(m) \in \Z/m\Z</M> are all affine, i.e. given&nbsp;by
     n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}
   </Display>
 </Alt>
-<Alt Only="HTML"><Verb><![CDATA[<center>
+<Alt Only="HTML"><![CDATA[<center>
   <img src = "rcwamap.png" width = "366" height = "49"
        alt = "f|_r(m): n |-> (a_r(m) * n + b_r(m)) / c_r(m)" />
-</center>]]></Verb></Alt>
+</center>]]></Alt>
 <Alt Only="Text"><Verb>
                                         a_r(m) * n + b_r(m)
            f|_r(m):  r(m) -> Z,  n |->  -------------------
@@ -254,10 +254,10 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
       ]]>
     </Display>
     </Alt>
-    <Alt Only="HTML"><Verb><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<center>
       <img src = "ct.png" width = "574" height = "84"
            alt = "(see the PDF- or ASCII text version of the manual),"/>
-    </center>]]></Verb></Alt>
+    </center>]]></Alt>
     <Alt Only="Text"><Verb>
               /
              | (m_2 n + m_1 r_2 - m_2 r_1)/m_1 if n in r_1(m_1),
@@ -888,11 +888,11 @@ cannot have infinitely many cycles of any given finite length.
         \sum_{r(m) \in \Z/m\Z} \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}.
       </Display>
     </Alt>
-    <Alt Only="HTML"><Verb><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<center>
       <img src = "det.png" width = "177" height = "58"
            alt = "\sum_{r(m) \in \Z/m\Z}
                   \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}."/>
-    </center>]]></Verb></Alt>
+    </center>]]></Alt>
     <Alt Only="Text"><Verb>
                           -----
                            \           b_r(m)
@@ -936,11 +936,11 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
             + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}.
       </Display>
     </Alt>
-    <Alt Only="HTML"><Verb><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<center>
       <img src = "sgn.png" width = "284" height = "63"
            alt = "(-1)^{{\rm det}(\sigma)
                   + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}."/>
-    </center>]]></Verb></Alt>
+    </center>]]></Alt>
     <Alt Only="Text"><Verb>
                                     -----
                                      \       m - 2r
@@ -1246,10 +1246,10 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
         ]]>
       </Display>
     </Alt>
-    <Alt Only="HTML"><Verb><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<center>
       <img src = "transmat.png" width = "599" height = "47"
            alt = "(see the PDF version of the manual),"/>
-    </center>]]></Verb></Alt>
+    </center>]]></Alt>
     <Alt Only="Text">
       (see the PDF- or HTML version of the manual),
     </Alt>
