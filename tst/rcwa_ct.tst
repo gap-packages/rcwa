@@ -5,13 +5,58 @@
 #H  @(#)$Id$
 ##
 ##  This file contains automated tests of RCWA's specialized functionality
-##  for the groups RCWA(R) and CT(R).
+##  for the monoids Rcwa(R) and the groups RCWA(R) and CT(R).
 ##
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> oldwarninglevel := InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning,0);
 gap> ResidueClassUnionViewingFormat("short");
+gap> M := Rcwa(Integers);
+Rcwa(Z)
+gap> Set(KnownPropertiesOfObject(M));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
+gap> List(last,prop->ValueGlobal(prop)(M));
+[ true, false, true, false, false, true, true, false, false, true ]
+gap> Set(KnownAttributesOfObject(M));
+[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+  "OneImmutable", "Representative", "Size", "StructureDescription" ]
+gap> List(last,attr->ValueGlobal(attr)(M));
+[ infinity, IdentityMapping( Integers ), infinity, "Rcwa(Z)", 
+  IdentityMapping( Integers ), Rcwa mapping of Z: n -> 2n, infinity, 
+  "Rcwa(Z)" ]
+gap> M := Rcwa(Z_pi(2));
+Rcwa(Z_( 2 ))
+gap> Set(KnownPropertiesOfObject(M));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
+gap> List(last,prop->ValueGlobal(prop)(M));
+[ true, false, true, false, false, true, true, false, false, true ]
+gap> Set(KnownAttributesOfObject(M));
+[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+  "OneImmutable", "Representative", "Size", "StructureDescription" ]
+gap> List(last,attr->ValueGlobal(attr)(M));
+[ infinity, IdentityMapping( Z_( 2 ) ), infinity, "Rcwa(Z_( 2 ))", 
+  IdentityMapping( Z_( 2 ) ), Rcwa mapping of Z_( 2 ): n -> 2 n, infinity, 
+  "Rcwa(Z_( 2 ))" ]
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
+GF(2)[x]
+gap> M := Rcwa(R);
+Rcwa(GF(2)[x])
+gap> Set(KnownPropertiesOfObject(M));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
+gap> List(last,prop->ValueGlobal(prop)(M));
+[ true, false, true, false, false, true, true, false, false, true ]
+gap> Set(KnownAttributesOfObject(M));
+[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+  "OneImmutable", "Representative", "Size", "StructureDescription" ]
+gap> List(last,attr->ValueGlobal(attr)(M));
+[ infinity, IdentityMapping( GF(2)[x] ), infinity, "Rcwa(GF(2)[x])", 
+  IdentityMapping( GF(2)[x] ), Rcwa mapping of GF(2)[x]: P -> x*P, infinity, 
+  "Rcwa(GF(2)[x])" ]
 gap> G := RCWA(Integers);
 RCWA(Z)
 gap> Set(KnownPropertiesOfObject(G));
@@ -115,9 +160,6 @@ gap> elm := RepresentativeAction(G,S1,S2);
 <bijective rcwa mapping of Z_( 2, 3 ) with modulus 12>
 gap> S1^elm = S2;
 true
-gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
-gap> R := PolynomialRing(GF(2),1);
-GF(2)[x]
 gap> G := RCWA(R);
 RCWA(GF(2)[x])
 gap> Set(KnownPropertiesOfObject(G));
