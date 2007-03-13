@@ -273,7 +273,7 @@ gap> F2 := Source(phi);
 <free group on the generators [ f1, f2 ]>
 gap> (F2.1*F2.2^2)^phi;
 <bijective rcwa mapping of Z_( 2 ) with modulus 128>
-gap> STOP_TEST( "semiloc.tst", 200000000 );
+gap> STOP_TEST( "semiloc.tst", 400000000 );
 
 #############################################################################
 ##
