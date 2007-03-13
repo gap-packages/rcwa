@@ -104,11 +104,14 @@ DeclareGlobalFunction( "RCWAInfo" );
 #############################################################################
 ##
 #C  IsRcwaMapping . . . . . . . . . . . . . . . . . . . . . all rcwa mappings
+#C  IsRcwaMonoid  . . . . . . . . . . . . . . . . . . . . .  all rcwa monoids
 #C  IsRcwaGroup . . . . . . . . . . . . . . . . . . . . . . . all rcwa groups
 ##
-##  The category of all rcwa mappings / -groups.
+##  The category of all rcwa mappings / -monoids / -groups.
 ##
 DeclareCategory( "IsRcwaMapping", IsRingElement );
+DeclareSynonym( "IsRcwaMonoid",
+                 CategoryCollections(IsRcwaMapping) and IsMonoid );
 DeclareSynonym( "IsRcwaGroup",
                  CategoryCollections(IsRcwaMapping) and IsGroup );
 
