@@ -341,7 +341,9 @@ order of the finite permutation group induced on the respected partition.
 
 <Index Key="Modulus" Subkey="G"><C>Modulus</C></Index>
 <Index Key="Mod" Subkey="G"><C>Mod</C></Index>
-<Index Key="ModulusOfRcwaGroup" Subkey="G"><C>ModulusOfRcwaGroup</C></Index>
+<Index Key="ModulusOfRcwaMonoid" Subkey="G">
+  <C>ModulusOfRcwaMonoid</C>
+</Index>
 <Index Key="Multiplier" Subkey="G"><C>Multiplier</C></Index>
 <Index Key="Mult" Subkey="G"><C>Mult</C></Index>
 <Index Key="Divisor" Subkey="G"><C>Divisor</C></Index>
@@ -361,7 +363,7 @@ its elements.
 There are shorthands <C>Mod</C>, <C>Mult</C> and <C>Div</C> defined for
 <C>Modulus</C>, <C>Multiplier</C> resp. <C>Divisor</C>. 
 Technically, the modulus of an rcwa group is stored as an attribute
-<C>ModulusOfRcwaGroup</C>. <P/>
+<C>ModulusOfRcwaMonoid</C>. <P/>
 
 <Index Key="rcwa group" Subkey="integral">rcwa group</Index>
 <Index Key="rcwa group" Subkey="class-wise order-preserving">
