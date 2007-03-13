@@ -23,7 +23,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, false, true, true, true, true, false, 
   false, true, false, false ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
@@ -90,7 +90,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, true, true, true, true, true, false, false 
  ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
@@ -129,7 +129,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, false, true, true, true, true, true, 
   false, false ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
@@ -173,7 +173,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, false, true, true, true, true, true, true, 
   true, false, false ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
@@ -212,7 +212,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, true, true, true, true, true, false, false 
  ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
@@ -251,7 +251,7 @@ gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, false, true, false, false, false, true, true, true, true, true, 
   false, false ]
 gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaGroup", "MultiplicativeNeutralElement", 
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
