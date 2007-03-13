@@ -202,7 +202,7 @@ InstallMethod( RCWACons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_Z( G, true );
-    SetModulusOfRcwaGroup( G, 0 );
+    SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -244,7 +244,7 @@ InstallMethod( RCWACons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_Z_pi( G, true );
-    SetModulusOfRcwaGroup( G, 0 );
+    SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -283,7 +283,7 @@ InstallMethod( RCWACons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalRCWA( G, true );
     SetIsNaturalRCWA_GFqx( G, true );
-    SetModulusOfRcwaGroup( G, Zero( R ) );
+    SetModulusOfRcwaMonoid( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -354,7 +354,7 @@ InstallMethod( CTCons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalCT( G, true );
     SetIsNaturalCT_Z( G, true );
-    SetModulusOfRcwaGroup( G, 0 );
+    SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -398,7 +398,7 @@ InstallMethod( CTCons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalCT( G, true );
     SetIsNaturalCT_Z_pi( G, true );
-    SetModulusOfRcwaGroup( G, 0 );
+    SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -440,7 +440,7 @@ InstallMethod( CTCons,
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalCT( G, true );
     SetIsNaturalCT_GFqx( G, true );
-    SetModulusOfRcwaGroup( G, Zero( R ) );
+    SetModulusOfRcwaMonoid( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
     SetIsFinite( G, false );
@@ -1921,9 +1921,6 @@ InstallMethod( IsIntegral,
 ##
 #M  IsClassWiseOrderPreserving( <G> ) . . .  for rcwa groups over Z or Z_(pi)
 ##
-##  We say that an rcwa group over Z or Z_(pi) is *class-wise
-##  order-preserving* if all of its elements are.
-##
 InstallMethod( IsClassWiseOrderPreserving,
                "for rcwa groups over Z or Z_(pi) (RCWA)",
                true, [ IsRcwaGroupOverZOrZ_pi ], 0,
@@ -1943,21 +1940,12 @@ InstallMethod( IsClassWiseOrderPreserving,
 ##  The set of moved points (support) of the rcwa group <G>.
 ##
 InstallMethod( MovedPoints,
-               "for rcwa group (RCWA)", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
-    if IsNaturalRCWA_Z(G) or IsNaturalRCWA_Z_pi(G) or IsNaturalRCWA_GFqx(G)
-    then return Source(One(G)); fi;
+    if IsNaturalRCWA(G) or IsNaturalCT(G) then return Source(One(G)); fi;
     return Union(List(GeneratorsOfGroup(G),MovedPoints));
   end );
-
-#############################################################################
-##
-#M  Support( <G> ) . . . . . . . . . . . . . . . .  default method for groups
-##
-InstallMethod( Support,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               MovedPoints );
 
 #############################################################################
 ##
@@ -2087,8 +2075,8 @@ InstallMethod( Projections,
 ##
 #M  Ball( <G>, <g>, <r> ) . . . . . . . .  for a group and an element thereof
 ##
-##  As element tests can be expensive, this method does not check whether
-##  <g> is indeed an element of <G>.
+##  As element tests can be expensive, this method does not check whether <g>
+##  is indeed an element of <G>.
 ##
 InstallMethod( Ball,
                "for a group and an element thereof (RCWA)", ReturnTrue,
@@ -2103,7 +2091,7 @@ InstallMethod( Ball,
     ball := [g];
     gens := Set(GeneratorsAndInverses(G));
     for k in [1..r] do
-      ball := Union(ball,Union(List(gens,gen->ball*gen)));
+      ball := Union(ball,Union(List(gens,gen->Union(ball*gen,gen*ball))));
     od;
     return ball;
   end );
@@ -2138,24 +2126,7 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
-#M  IsTame( <G> ) . . . . . . . . . . . . . . . . . . . . . . for rcwa groups
-##
-InstallMethod( IsTame,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-
-  function ( G )
-    if   Modulus( G ) <> Zero( Source( One( G ) ) ) then return true;
-    else SetSize(G,infinity); return false; fi;
-  end );
-
-#############################################################################
-##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
-##
-##  Modulus of the rcwa group <G>.
-##
-##  We define the modulus of an rcwa group <G> by the least common multiple
-##  of the moduli of its elements.
 ##
 InstallMethod( Modulus,
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
@@ -2194,16 +2165,16 @@ InstallMethod( Modulus,
       then Error(errormessage); fi;
     end;
 
-    if HasModulusOfRcwaGroup(G) then return ModulusOfRcwaGroup(G); fi;
+    if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
     R := Source(One(G)); gens := GeneratorsOfGroup(G);
     if IsIntegral(G) then
       Info(InfoRCWA,3,"Modulus: <G> is integral.");
       m := Lcm(R,List(gens,Modulus));
-      SetModulusOfRcwaGroup(G,m); return m;
+      SetModulusOfRcwaMonoid(G,m); return m;
     fi;
     if not ForAll(gens,IsTame) then
       Info(InfoRCWA,3,"Modulus: <G> has a wild generator.");
-      SetModulusOfRcwaGroup(G,Zero(R)); return Zero(R);
+      SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
     fi;
     if Length(gens) = 1 then
       Info(InfoRCWA,3,"Modulus: <G> is cyclic and the generator is tame.");
@@ -2213,7 +2184,7 @@ InstallMethod( Modulus,
       pow := pow * g; m := Lcm(R,m,Modulus(pow));
       pow := pow * g; m := Lcm(R,m,Modulus(pow));
       pow := pow^2;   m := Lcm(R,m,Modulus(pow));
-      SetModulusOfRcwaGroup(G,m);
+      SetModulusOfRcwaMonoid(G,m);
       CheckModulus(G,m);                           # check
       return m;
     fi;
@@ -2222,7 +2193,7 @@ InstallMethod( Modulus,
     if not ForAll(els,IsTame) then
       Info(InfoRCWA,3,"Modulus: <G> has a wild 2-generator product ",
                       "or 2-generator commutator.");
-      SetModulusOfRcwaGroup(G,Zero(R)); return Zero(R);
+      SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
     fi;
     m := Lcm(R,List(els,Modulus));
     Info(InfoRCWA,1,"Trying probabilistic random walk, initial m = ",m);
@@ -2236,18 +2207,10 @@ InstallMethod( Modulus,
       if   Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod))
       then TryNextMethod(); fi; # Here the modulus is likely 0.
     until step > maxstep;
-    SetModulusOfRcwaGroup(G,m);
+    SetModulusOfRcwaMonoid(G,m);
     CheckModulus(G,m); # Verification of probabilistic result.
     return m;
   end );
-
-#############################################################################
-##
-#M  ModulusOfRcwaGroup( <G> ) . . . . . . . . . . . . . . . . for rcwa groups
-##
-InstallMethod( ModulusOfRcwaGroup,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Modulus( G ) );
 
 #############################################################################
 ##

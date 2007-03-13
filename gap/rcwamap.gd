@@ -242,7 +242,7 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 #O  Modulus( <f> ) . . . . . . . . . . .  the modulus of the rcwa mapping <f>
 #O  Modulus( <M> ) . . . . . . . . . . .  the modulus of the rcwa monoid <M>
 ##
-##  See also the attributes `ModulusOfRcwaMonoid' and `ModulusOfRcwaGroup'.
+##  See also the attribute `ModulusOfRcwaMonoid'.
 ##
 DeclareOperation( "Modulus", [ IsRcwaMapping ] );
 DeclareOperation( "Modulus", [ IsRcwaMonoid ] );

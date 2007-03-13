@@ -50,10 +50,8 @@ DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
 #############################################################################
 ##
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
-#V  TrivialRcwaGroup
 ##
 DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );
-DeclareSynonym( "TrivialRcwaGroup", TrivialRcwaGroupOverZ );
 
 #############################################################################
 ##
@@ -221,8 +219,8 @@ DeclareOperation( "RepresentativesActionPreImage",
 ##
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt ] );
-DeclareOperation( "Ball", [ IsGroup, IsObject, IsInt, IsFunction ] );
+DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
+DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
 
 #############################################################################
 ##
@@ -260,15 +258,6 @@ DeclareGlobalFunction( "DrawOrbitPicture" );
 #S  Tame rcwa groups and respected partitions. //////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#A  ModulusOfRcwaGroup( <G> ) . . . . . . . . . modulus of the rcwa group <G>
-##
-##  We define the *modulus* of an rcwa group by the lcm of the moduli of its
-##  elements in case such an lcm exists, and by 0 otherwise. 
-##
-DeclareAttribute( "ModulusOfRcwaGroup", IsRcwaGroup );
 
 #############################################################################
 ##
