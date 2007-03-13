@@ -9,7 +9,7 @@
 ##
 ##  Let R be an infinite euclidean ring which is not a field and all of whose
 ##  proper residue class rings are finite.
-##      We call a mapping f: R -> R *residue-class-wise affine*,  or in short
+##      We call a mapping f: R -> R *residue-class-wise affine*, or for short
 ##  an *rcwa* mapping,  if there is a nonzero m in R such that f is affine on
 ##  residue classes (mod m).
 ##      This means that for any residue class r(m) in R/mR there are  coeffi-
@@ -30,12 +30,14 @@
 ##  ring elements.
 ##      We call m the  *modulus* of f.  By *products* of rcwa mappings we al-
 ##  ways mean their compositions as mappings,  and by the *inverse* of  a bi-
-##  jective rcwa mapping we mean its inverse mapping. 
+##  jective rcwa mapping we mean its inverse mapping.
+##      The set Rcwa(R) of all rcwa mappings of R forms a monoid under multi-
+##  plication.  We call a submonoid of Rcwa(R)  a *residue-class-wise affine*
+##  monoid, or for short an *rcwa* monoid.
 ##      The set RCWA(R)  :=  { g in Sym(R) | g is residue-class-wise affine }
 ##  is closed under multiplication and taking inverses  (this can be verified
-##  easily), hence forms a subgroup of Sym(R).
-##      We call a subgroup of RCWA(R) a *residue-class-wise affine* group, or
-##  in short an *rcwa* group.
+##  easily), hence forms a subgroup of Sym(R).  We call a subgroup of RCWA(R)
+##  a *residue-class-wise affine* group, or for short an *rcwa* group.
 ##      While computing with infinite permutation groups in general is a very
 ##  difficult task, the rcwa groups form a class of groups which are accessi-
 ##  ble to computations.
@@ -238,12 +240,12 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 #############################################################################
 ##
 #O  Modulus( <f> ) . . . . . . . . . . .  the modulus of the rcwa mapping <f>
-#O  Modulus( <G> ) . . . . . . . . . . .  the modulus of the rcwa group <G>
+#O  Modulus( <M> ) . . . . . . . . . . .  the modulus of the rcwa monoid <M>
 ##
-##  See also the attribute `ModulusOfRcwaGroup'.
+##  See also the attributes `ModulusOfRcwaMonoid' and `ModulusOfRcwaGroup'.
 ##
 DeclareOperation( "Modulus", [ IsRcwaMapping ] );
-DeclareOperation( "Modulus", [ IsRcwaGroup ] );
+DeclareOperation( "Modulus", [ IsRcwaMonoid ] );
 
 #############################################################################
 ##
@@ -452,52 +454,53 @@ DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 #############################################################################
 ##
 #A  Multiplier( <f> ) . . . . . . . .  the multiplier of the rcwa mapping <f>
-#A  Multiplier( <G> ) . . . . . . . . .  the multiplier of the rcwa group <G>
+#A  Multiplier( <M> ) . . . . . . . . . the multiplier of the rcwa monoid <M>
 #A  Divisor( <f> )  . . . . . . . . . . . the divisor of the rcwa mapping <f>
-#A  Divisor( <G> )  . . . . . . . . . . . . the divisor of the rcwa group <G>
+#A  Divisor( <M> )  . . . . . . . . . . .  the divisor of the rcwa monoid <M>
 #A  PrimeSet( <f> ) . . . . . . . . . . the prime set of the rcwa mapping <f>
-#A  PrimeSet( <G> ) . . . . . . . . . . . the prime set of the rcwa group <G>
+#A  PrimeSet( <M> ) . . . . . . . . . .  the prime set of the rcwa monoid <M>
 #P  IsIntegral( <f> ) . . . . . indicates whether the divisor of <f> equals 1
-#P  IsIntegral( <G> ) . .  indicates whether all elements of <G> are integral
+#P  IsIntegral( <M> ) . .  indicates whether all elements of <M> are integral
 #P  IsBalanced( <f> ) . .  indicates whether the rcwa mapping <f> is balanced
 #P  IsClassWiseOrderPreserving( <f> ) . . . .  indicates whether <f> is cwop.
-#P  IsClassWiseOrderPreserving( <f> ) . . . .  indicates whether <G> is cwop.
+#P  IsClassWiseOrderPreserving( <M> ) . . . .  indicates whether <M> is cwop.
 ##
 ##  We define the *multiplier* of an rcwa mapping <f> by the least common
 ##  multiple of the coefficients a_r(m), and we define its *divisor* by the
 ##  least common multiple of the coefficients c_r(m).
 ##
-##  We define the *multiplier* / *divisor* of an rcwa group by the lcm of the
-##  multipliers / divisors of its elements, if such an lcm exists, and by
-##  infinity otherwise.
+##  We define the *multiplier* / *divisor* of an rcwa group or -monoid by the
+##  lcm of the multipliers / divisors of its elements, if such an lcm exists,
+##  and by infinity otherwise.
 ##
 ##  We define the *prime set* of an rcwa mapping <f> by the set of all primes
 ##  dividing its modulus or its multiplier, and we define the *prime set* of
-##  an rcwa group by the union of the prime sets of its elements.
+##  an rcwa group or -monoid by the union of the prime sets of its elements.
 ##
 ##  We say that an rcwa mapping is *integral* if its divisor is 1, and we say
-##  that an rcwa group is *integral* if all of its elements are so.
+##  that an rcwa group / -monoid is *integral* if all of its elements are so.
 ##
 ##  We say that an rcwa mapping is *balanced* if its multiplier and its
 ##  divisor have the same prime divisors.
 ##
 ##  We say that an rcwa mapping of Z or Z_(pi) is *class-wise order-preser-
 ##  ving* if all coefficients a_r(m) are positive, and we say that an rcwa
-##  group is *class-wise order-preserving* if all of its elements are so.
+##  group or -monoid is *class-wise order-preserving* if all of its elements
+##  are so.
 ##
 DeclareAttribute( "Multiplier", IsRcwaMapping );
-DeclareAttribute( "Multiplier", IsRcwaGroup );
+DeclareAttribute( "Multiplier", IsRcwaMonoid );
 DeclareSynonym( "Mult", Multiplier );
 DeclareAttribute( "Divisor", IsRcwaMapping );
-DeclareAttribute( "Divisor", IsRcwaGroup );
+DeclareAttribute( "Divisor", IsRcwaMonoid );
 DeclareSynonym( "Div", Divisor );
 DeclareAttribute( "PrimeSet", IsRcwaMapping );
-DeclareAttribute( "PrimeSet", IsRcwaGroup );
+DeclareAttribute( "PrimeSet", IsRcwaMonoid );
 DeclareProperty( "IsIntegral", IsRcwaMapping );
-DeclareProperty( "IsIntegral", IsRcwaGroup );
+DeclareProperty( "IsIntegral", IsRcwaMonoid );
 DeclareProperty( "IsBalanced", IsRcwaMapping );
 DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMappingOfZOrZ_pi ); 
-DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaGroup );
+DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMonoid );
 
 #############################################################################
 ##
@@ -583,14 +586,15 @@ DeclareAttribute( "ImageDensity", IsRcwaMapping );
 #############################################################################
 ##
 #P  IsTame( <f> ) . . . . indicates whether or not <f> is a tame rcwa mapping
-#P  IsTame( <G> ) . . . . indicates whether or not <G> is a tame rcwa group
+#P  IsTame( <M> ) . . . . indicates whether or not <M> is a tame rcwa monoid
 ##
 ##  We say that an rcwa mapping <f> is *tame* if and only if the moduli
 ##  of its powers are bounded, and *wild* otherwise. We say that an rcwa
-##  group is *tame* if and only if the moduli of its elements are bounded.
+##  group or an rcwa monoid is *tame* if and only if the moduli of its
+##  elements are bounded.
 ##
 DeclareProperty( "IsTame", IsRcwaMapping );
-DeclareProperty( "IsTame", IsRcwaGroup );
+DeclareProperty( "IsTame", IsRcwaMonoid );
 
 #############################################################################
 ##
@@ -601,16 +605,17 @@ DeclareProperty( "IsTame", IsRcwaGroup );
 #############################################################################
 ##
 #A  Support( <f> ) . . . . . . . . . . .  the support of the rcwa mapping <f>
-#A  Support( <G> ) . . . . . . . . . . . .  the support of the rcwa group <G>
+#A  Support( <M> ) . . . . . . . . . . . . the support of the rcwa monoid <M>
 #A  MovedPoints( <f> )
-#A  MovedPoints( <G> )
+#A  MovedPoints( <M> )
 ##
-##  For rcwa mappings and -groups, `Support' and `MovedPoints' are synonyms.
+##  For rcwa mappings, -groups and -monoids, `Support' and `MovedPoints' are
+##  synonyms.
 ##
 DeclareAttribute( "Support", IsRcwaMapping );
-DeclareAttribute( "Support", IsRcwaGroup );
+DeclareAttribute( "Support", IsRcwaMonoid );
 DeclareAttribute( "MovedPoints", IsRcwaMapping );
-DeclareAttribute( "MovedPoints", IsRcwaGroup );
+DeclareAttribute( "MovedPoints", IsRcwaMonoid );
 
 #############################################################################
 ##
