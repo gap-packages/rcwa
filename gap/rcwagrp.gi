@@ -54,6 +54,14 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
 
 #############################################################################
 ##
+#M  IsWholeFamily . . . . . . . . . . . . . for an rcwa group -- return false
+##
+InstallMethod( IsWholeFamily,
+               "for an rcwa group -- return false (RCWA)", true,
+               [ IsRcwaGroup ], 0, ReturnFalse );
+
+#############################################################################
+##
 #S  Methods for `View' and `Display'. ///////////////////////////////////////
 ##
 #############################################################################
