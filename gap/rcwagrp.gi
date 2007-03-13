@@ -11,7 +11,7 @@
 ##    - the semilocalizations Z_(pi) of the ring of integers, and over
 ##    - the polynomial rings GF(q)[x] in one variable over a finite field.
 ##
-##  See the definitions given in the files rcwamap.gd and rcwagrp.gd.
+##  See the definitions given in the files rcwamap.gd.
 ##
 Revision.rcwagrp_gi :=
   "@(#)$Id$";
