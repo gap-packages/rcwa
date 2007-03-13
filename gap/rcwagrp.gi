@@ -153,8 +153,7 @@ InstallMethod( Display,
 
 #############################################################################
 ##
-#V  TrivialRcwaGroupOverZ( <G> ) . . . . . . . . .  trivial rcwa group over Z
-#V  TrivialRcwaGroup( <G> )
+#V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
 ##
 InstallValue( TrivialRcwaGroupOverZ, Group( IdentityRcwaMappingOfZ ) );
 
