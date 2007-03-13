@@ -8,6 +8,7 @@
 # Read the declaration part of the package.
 
 ReadPackage( "rcwa", "gap/rcwamap.gd" );
+ReadPackage( "rcwa", "gap/rcwamono.gd" );
 ReadPackage( "rcwa", "gap/rcwagrp.gd" );
 
 #############################################################################
