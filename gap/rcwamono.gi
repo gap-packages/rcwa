@@ -118,7 +118,7 @@ InstallMethod( TrivialSubmagmaWithOne,
 
 #############################################################################
 ##
-#S  The construction of the monoids RCWA(R) of all rcwa mappings of R. //////
+#S  The construction of the monoids Rcwa(R) of all rcwa mappings of R. //////
 ##
 #############################################################################
 
@@ -134,12 +134,19 @@ InstallMethod( RcwaCons,
 
   function ( filter, R )
 
-    local  M, type, id;
+    local  M, id, type, rep;
 
-    if   IsIntegers( R )                  then type := IsRcwaMonoidOverZ;
-    elif IsZ_pi( R )                      then type := IsRcwaMonoidOverZ_pi;
-    elif IsUnivariatePolynomialRing( R )
-     and IsFiniteFieldPolynomialRing( R ) then type := IsRcwaMonoidOverGFqx;
+    if   IsIntegers( R ) then
+      type := IsRcwaMonoidOverZ;
+      rep  := 2 * IdentityRcwaMappingOfZ;
+    elif IsZ_pi( R ) then
+      type := IsRcwaMonoidOverZ_pi;
+      rep  := NoninvertiblePrimes( R )[ 1 ] * One( RCWA( R ) );
+    elif IsUnivariatePolynomialRing( R ) and
+         IsFiniteFieldPolynomialRing( R )
+    then
+      type := IsRcwaMonoidOverGFqx;
+      rep  := IndeterminatesOfPolynomialRing( R )[ 1 ] * One( RCWA( R ) );
     else TryNextMethod( ); fi;
 
     id := One( RCWA( R ) );
@@ -157,7 +164,7 @@ InstallMethod( RcwaCons,
     SetMultiplier( M, infinity );
     SetDivisor( M, infinity );
     SetIsCommutative( M, false );
-    SetRepresentative( M, Representative( RCWA( R ) ) );
+    SetRepresentative( M, rep );
     SetName( M, Concatenation( "Rcwa(", RingToString(R), ")" ) );
     SetStructureDescription( M, Name( M ) );
 
