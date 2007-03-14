@@ -2028,7 +2028,7 @@ InstallMethod( Ball,
     ball := [g];
     gens := Set(GeneratorsAndInverses(G));
     for k in [1..r] do
-      ball := Union(ball,Union(List(gens,gen->Union(ball*gen,gen*ball))));
+      ball := Union(ball,Union(List(gens,gen->ball*gen)));
     od;
     return ball;
   end );
