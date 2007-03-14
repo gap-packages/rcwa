@@ -2802,8 +2802,8 @@ InstallMethod( Size,
 ##
 #M  \in( <g>, <G> ) . . . . . . . . . . for an rcwa mapping and an rcwa group
 ##
-##  This may run into an infinite loop if <G> is infinite and <g> is not an
-##  element of <G>.
+##  This method may run into an infinite loop if <G> is infinite and <g> is
+##  not an element of <G>.
 ##
 InstallMethod( \in,
                "for an rcwa mapping and an rcwa group (RCWA)",
@@ -2828,7 +2828,7 @@ InstallMethod( \in,
 ##
 #M  \in( <g>, <G> ) . . . . . . . . . . . . . . . . .  for rcwa groups over Z
 ##
-##  If <G> is wild this may run into an infinite loop if <g> is not an
+##  If <G> is wild this method may run into an infinite loop if <g> is not an
 ##  element of <G>.
 ##
 InstallMethod( \in,
@@ -2990,7 +2990,7 @@ InstallMethod( \in,
 ##
 #M  \in( <g>, <G> ) . . . . . . . . . . . . . . for rcwa groups over GF(q)[x]
 ##
-##  If <G> is wild this may run into an infinite loop if <g> is not an
+##  If <G> is wild this method may run into an infinite loop if <g> is not an
 ##  element of <G>.
 ##
 InstallMethod( \in,
