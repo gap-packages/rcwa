@@ -3155,11 +3155,13 @@ InstallMethod( \*,
 InstallMethod( \*,
                "for rcwa mappings, multiplication by a constant (RCWA)",
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
-               function ( n, f )
-                 if not n in Source(f) then TryNextMethod(); fi;
-                 return RcwaMapping( Source(f), One( Source(f) ),
-                                    [ [ n, 0, 1 ] ] * One( Source(f) ) ) * f;
-               end );
+
+  function ( n, f )
+    if not n in Source(f) then TryNextMethod(); fi;
+    return RcwaMapping( Source(f), One( Source(f) ),
+                        [ [ n, 0, 1 ] ] * One( Source(f) ) ) * f;
+  end );
+
 InstallMethod( \*,
                "for rcwa mappings, multiplication by a constant (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
