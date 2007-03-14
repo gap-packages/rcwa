@@ -89,6 +89,7 @@ end;
 ##  sed -e 's: );: ],:'
 ##
 TEST_FILES := [ [ "ngens.tst",      25000000 ],
+                [ "monoids.tst",   120000000 ],
                 [ "semiloc.tst",   400000000 ],
                 [ "modular.tst",   800000000 ],
                 [ "cscrct.tst",    900000000 ],
