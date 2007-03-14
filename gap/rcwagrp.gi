@@ -1955,6 +1955,37 @@ InstallMethod( MovedPoints,
 
 #############################################################################
 ##
+#M  OrbitsModulo( <G>, <m> ) . . . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( OrbitsModulo,
+               "for rcwa groups (RCWA)", true,
+               [ IsRcwaGroup, IsRingElement ], 0,
+
+  function ( G, m )
+
+    local  result, R, gens, orbit, oldorbit, orbitset, img, remaining;
+
+    R := Source(One(G));
+    if not m in R then TryNextMethod(); fi;
+    gens      := GeneratorsAndInverses(G);
+    remaining := AllResidueClassesModulo(R,m); result := [];
+    repeat
+      orbit := [remaining[1]];
+      repeat
+        oldorbit := ShallowCopy(orbit);
+        orbitset := Union(orbit);
+        img      := Union(List(gens,gen->orbitset^gen));
+        orbit    := Union(orbit,
+                          Filtered(remaining,cl->Intersection(cl,img)<>[]));
+      until orbit = oldorbit;
+      Add(result,List(orbit,Residue));
+      remaining := Difference(remaining,orbit);
+    until remaining = [];
+    return result;
+  end );
+
+#############################################################################
+##
 #M  OrbitsModulo( <G>, <m> ) . . . . . . . . for rcwa groups over Z or Z_(pi)
 ##
 InstallMethod( OrbitsModulo,
