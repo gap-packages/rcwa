@@ -36,7 +36,7 @@ InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverGFqx );
 
 #############################################################################
 ##
-#M  ViewObj( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa monoids
+#M  ViewObj( <M> ) . . . . . . . . . . . . . . . . . . . . . for rcwa monoids
 ##
 InstallMethod( ViewObj,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
@@ -61,7 +61,7 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  Display( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa monoids
+#M  Display( <M> ) . . . . . . . . . . . . . . . . . . . . . for rcwa monoids
 ##
 InstallMethod( Display,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid], 0,
@@ -115,6 +115,15 @@ InstallMethod( TrivialSubmagmaWithOne,
     SetParentAttr(triv,M);
     return triv;
   end );
+
+#############################################################################
+##
+#M  IsTrivial( <M> ) . . . . . . . . . . . . . . . . . . . . for rcwa monoids
+##
+InstallMethod( IsTrivial,
+               "for rcwa monoids (RCWA)", true,
+               [ IsRcwaMonoid and HasGeneratorsOfMonoid ], 0,
+               M -> ForAll( GeneratorsOfMonoid( M ), IsOne ) );
 
 #############################################################################
 ##
@@ -197,6 +206,61 @@ InstallMethod( IsWholeFamily,
 
 #############################################################################
 ##
+#S  Constructing rcwa monoids: //////////////////////////////////////////////
+#S  Restriction monomorphisms and induction epimorphisms. ///////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Restriction( <M>, <f> ) . . . . . . . . . . . . . . . .  for rcwa monoids
+##
+InstallMethod( Restriction,
+               "for rcwa monoids (RCWA)", ReturnTrue,
+               [ IsRcwaMonoid, IsRcwaMapping ], 0,
+
+  function ( M, f )
+
+    local Mf;
+
+    if   Source(One(M)) <> Source(f) or not IsInjective(f)
+    then return fail; fi;
+
+    Mf := MonoidByGenerators(List(GeneratorsOfMonoid(M),
+                                  g->Restriction(g,f)));
+
+    if HasIsTame(M) then SetIsTame(Mf,IsTame(M)); fi;
+    if HasSize(M)   then SetSize(Mf,Size(M)); fi;
+
+    return Mf;
+  end );
+
+#############################################################################
+##
+#M  Induction( <M>, <f> ) . . . . . . . . . . . . . . . . .  for rcwa monoids
+##
+InstallMethod( Induction,
+               "for rcwa monoids (RCWA)", ReturnTrue,
+               [ IsRcwaMonoid, IsRcwaMapping ], 0,
+
+  function ( M, f )
+
+    local Mf;
+
+    if Source(One(M)) <> Source(f) or not IsInjective(f)
+      or not IsSubset(Image(f),MovedPoints(M))
+    then return fail; fi;
+
+    Mf := MonoidByGenerators(List(GeneratorsOfMonoid(M),g->Induction(g,f)));
+
+    if HasIsTame(M) then SetIsTame(Mf,IsTame(M)); fi;
+    if HasSize(M)   then SetSize(Mf,Size(M)); fi;
+
+    return Mf;
+  end );
+
+#############################################################################
+##
 #S  Methods for the attributes and properties derived from the coefficients.
 ##
 #############################################################################
@@ -254,6 +318,77 @@ InstallMethod( MovedPoints,
 InstallMethod( Support,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
                MovedPoints );
+
+#############################################################################
+##
+#S  Finding finite orbits of rcwa monoids. //////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+## 
+#M  ShortOrbits( <M>, <S>, <maxlng> ) . . . . . . . . . . .  for rcwa monoids
+## 
+InstallMethod( ShortOrbits,
+               "for rcwa monoids (RCWA)", true,
+               [ IsRcwaMonoid, IsList, IsPosInt ], 0,
+
+  function ( M, S, maxlng )
+
+    local  gens, f, orbs, orb, oldorb, remaining, n;
+
+    if IsRcwaGroup(M) then gens := GeneratorsOfGroup(M);
+                      else gens := GeneratorsOfMonoid(M); fi;
+    orbs := []; remaining := ShallowCopy(Set(S));
+    while remaining <> [] do
+      orb := [remaining[1]];
+      repeat
+        oldorb := ShallowCopy(orb);
+        for f in gens do orb := Union(orb,orb^f); od;
+      until Length(orb) > maxlng or Length(orb) = Length(oldorb);
+      if Length(orb) <= maxlng then Add(orbs,Set(orb)); fi;
+      remaining := Difference(remaining,orb);
+    od;
+    return orbs;
+  end );
+
+#############################################################################
+##
+#S  Orbits of rcwa monoids on the set of residue classes (mod m). ///////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  OrbitsModulo( <M>, <m> ) . . . . . . . . . . . . . . . . for rcwa monoids
+##
+InstallMethod( OrbitsModulo,
+               "for rcwa monoids (RCWA)", true,
+               [ IsRcwaMonoid, IsRingElement ], 0,
+
+  function ( M, m )
+
+    local  result, R, gens, orbit, oldorbit, orbitset, img, remaining;
+
+    R := Source(One(M));
+    if not m in R then TryNextMethod(); fi;
+    if IsRcwaGroup(M) then gens := GeneratorsAndInverses(M);
+                      else gens := GeneratorsOfMonoid(M); fi;
+    remaining := AllResidueClassesModulo(R,m); result := [];
+    repeat
+      orbit := [remaining[1]];
+      repeat
+        oldorbit := ShallowCopy(orbit);
+        orbitset := Union(orbit);
+        img      := Union(List(gens,gen->orbitset^gen));
+        orbit    := Union(orbit,
+                          Filtered(remaining,cl->Intersection(cl,img)<>[]));
+      until orbit = oldorbit;
+      Add(result,List(orbit,Residue));
+      remaining := Difference(remaining,orbit);
+    until remaining = [];
+    return result;
+  end );
 
 #############################################################################
 ##
@@ -340,7 +475,7 @@ InstallMethod( Modulus,
 
 #############################################################################
 ##
-#M  ModulusOfRcwaMonoid( <G> ) . . . . . . . . . . . .  dispatch to `Modulus'
+#M  ModulusOfRcwaMonoid( <M> ) . . . . . . . . . . . .  dispatch to `Modulus'
 ##
 InstallMethod( ModulusOfRcwaMonoid,
                "dispatch to `Modulus' (RCWA)", true, [ IsRcwaMonoid ], 0,
@@ -348,7 +483,7 @@ InstallMethod( ModulusOfRcwaMonoid,
 
 #############################################################################
 ##
-#M  IsTame( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa monoids
+#M  IsTame( <M> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa monoids
 ##
 InstallMethod( IsTame,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
@@ -356,6 +491,192 @@ InstallMethod( IsTame,
   function ( M )
     if   Modulus( M ) <> Zero( Source( One( M ) ) ) then return true;
     else SetSize( M, infinity ); return false; fi;
+  end );
+
+#############################################################################
+##
+#S  Computing the order of an rcwa monoid. //////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Size( <M> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa monoids
+##
+##  This method may run into an infinite loop if <M> is infinite.
+##
+InstallMethod( Size,
+               "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
+
+  function ( M )
+
+    local  R, gens;
+
+    if IsTrivial(M)   then return 1; fi;
+    if IsRcwaGroup(M) then TryNextMethod(); fi;
+    R    := Source(One(M));
+    gens := GeneratorsOfMonoid(M);
+    if   ForAny(gens,f->IsSurjective(f) and not IsInjective(f))
+    then return infinity; fi; # surjective & not injective -> wild
+    if   ForAny(gens,f->IsBijective(f) and Order(f)=infinity)
+    then return infinity; fi;
+    if not ForAll(gens,IsTame) then return infinity; fi;
+    if   ForAny(Ball(M,One(M),2),f->(IsBijective(f) and Order(f)=infinity)
+                                    or not IsTame(f))
+    then return infinity; fi;
+    return Length(AsList(M));
+  end );
+
+#############################################################################
+##
+#S  The membership- / submonoid test. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  \in( <f>, <M> ) . . . . . . . . . . . . . . . . . . . .  for rcwa monoids
+##
+##  This method may run into an infinite loop if <f> is not an element of
+##  the monoid <M>.
+##
+InstallMethod( \in,
+               "for rcwa monoids (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZ, IsRcwaMonoid ], 0,
+
+  function ( f, M )
+
+    local  R, gens, orbs, max, r;
+
+    if IsRcwaGroup(M) then TryNextMethod(); fi;
+    Info(InfoRCWA,2,"\\in for an rcwa mapping <f> and an rcwa monoid <M>");
+    R    := Source(One(M));
+    gens := GeneratorsOfMonoid(M);
+    if f = One(M) or f in gens then
+      Info(InfoRCWA,2,"<f> = 1 or <f> lies in list of generators of <M>.");
+      return true;
+    fi;
+    if    IsZero(Multiplier(f))
+      and not ForAny(gens,g->IsZero(Multiplier(g)))
+    then
+     Info(InfoRCWA,2,"Mult(<f>) = 0, but Mult(<M>) <> 0.");
+     return false;
+    fi;
+    if not ForAny(Concatenation(gens,[f]),g->IsZero(Multiplier(g))) then
+      if not IsSubset(PrimeSet(M),PrimeSet(f)) then
+        Info(InfoRCWA,2,"<f> and <M> have incompatible prime sets.");
+        return false;
+      fi;
+      if not IsSubset(Factors(Product(List(gens,Multiplier))),
+                      Filtered(Factors(Multiplier(f)),p->p<>1))
+      then
+        Info(InfoRCWA,2,"The multiplier of <f> has factors which");
+        Info(InfoRCWA,2,"no multiplier of a generator of <M> has.");
+        return false;
+      fi;
+    fi;
+    if not IsSubset(Factors(Product(List(gens,Divisor))),
+                    Filtered(Factors(Divisor(f)),p->p<>1))
+    then
+      Info(InfoRCWA,2,"The divisor of <f> has factors which");
+      Info(InfoRCWA,2,"no divisor of a generator of <M> has.");
+      return false;
+    fi;
+    if (IsIntegers(R) or IsZ_pi(R)) and IsClassWiseOrderPreserving(M)
+      and not IsClassWiseOrderPreserving(f) then
+      Info(InfoRCWA,2,"<M> is class-wise order-preserving, but <f> is not.");
+      return false;
+    fi;
+    if   not IsInjective(f) and ForAll(gens,IsInjective) then
+      Info(InfoRCWA,2,"<f> is not injective, ",
+                      "but all generators of <M> are.");
+      return false;
+    fi;
+    if   not IsSurjective(f) and ForAll(gens,IsSurjective) then
+      Info(InfoRCWA,2,"<f> is not surjective, ",
+                      "but all generators of <M> are.");
+      return false;
+    fi;
+    if not IsSubset(Support(M),Support(f)) then
+      Info(InfoRCWA,2,"Support(<f>) is not a subset of Support(<M>).");
+      return false;
+    fi;
+    if IsIntegers(R) and IsClassWiseOrderPreserving(M) then
+      max := Maximum(Concatenation(List(Concatenation(gens,[f]),
+                                        g->Maximum(List(Coefficients(g),
+                                                        c->AbsInt(c[2])))),
+                                   List(Concatenation(gens,[f]),Modulus)));
+      if Minimum([0..max]^f) < 0 or Maximum([-max..-1]^f) >= 0 then
+        if    ForAll(gens,g->Minimum([0..max]^g)>=0)
+          and ForAll(gens,g->Maximum([-max..-1]^g)<0)
+        then
+          Info(InfoRCWA,2,"<M> fixes the nonnegative integers setwise,");
+          Info(InfoRCWA,2,"but <f> does not.");
+          return false;
+        fi;
+      fi;
+    fi;
+    if IsTame(M) then
+      if Modulus(M) mod Modulus(f) <> 0 then
+        Info(InfoRCWA,2,"Mod(<f>) does not divide Mod(<M>).");
+        return false;
+      fi;
+      if not IsTame(f) then
+        Info(InfoRCWA,2,"<M> is tame, but <f> is wild.");
+        return false;
+      fi;
+      if IsFinite(M) and IsBijective(f) and Order(f) = infinity then
+        Info(InfoRCWA,2,"<M> is finite, but <f> has infinite order.");
+        return false;
+      fi;
+    fi;
+    orbs := ShortOrbits(M,Intersection(Support(M),[-100..100]),50);
+    if orbs <> [] and not ForAll(orbs,orb->IsSubset(orb,orb^f)) then
+      Info(InfoRCWA,2,"<f> does not leave some finite orbit of <M> ",
+                      "invariant.");
+      return false;
+    fi;
+    Info(InfoRCWA,2,"Trying to find <f> in balls around 1 ...");
+    r := 1;
+    repeat
+      r := r + 1;
+      if f in Ball(M,One(M),r) then
+        Info(InfoRCWA,2,"<f> lies in the ball with radius ",r,".");
+        return true;
+      fi;
+    until false;
+  end );
+
+#############################################################################
+##
+#M  IsSubset( <M>, <N> ) . . . . . . . . . . . . . . . . for two rcwa monoids
+##
+##  Checking for a submonoid relation.
+##
+InstallMethod( IsSubset,
+               "for two rcwa monoids (RCWA)", true,
+               [ IsRcwaMonoid, IsRcwaMonoid ], 0,
+
+  function ( M, N )
+
+    local  gensM, gensN, Mmultzero, Nmultzero;
+
+    gensM := GeneratorsOfMonoid(M); gensN := GeneratorsOfMonoid(N);
+    if IsSubset(gensM,gensN) then return true; fi;
+    Mmultzero := ForAny(gensM,f->IsZero(Multiplier(f)));
+    Nmultzero := ForAny(gensN,f->IsZero(Multiplier(f)));
+    if Nmultzero and not Mmultzero then return false; fi;
+    if not Mmultzero and not Nmultzero then
+      if not IsSubset(Union(Factors(Product(List(gensM,Multiplier))),[1]),
+                            Factors(Product(List(gensN,Multiplier))))
+      then return false; fi;
+    fi;
+    if not IsSubset(Union(Factors(Product(List(gensM,Divisor))),[1]),
+                          Factors(Product(List(gensN,Divisor))))
+    then return false; fi;
+    if not IsSubset(Support(M),Support(N)) then return false; fi;
+    if IsTame(M) and not IsTame(N) then return false; fi;
+    return ForAll(GeneratorsOfMonoid(N),f->f in M);
   end );
 
 #############################################################################

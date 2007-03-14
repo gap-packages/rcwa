@@ -145,31 +145,36 @@ DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
 #############################################################################
 ##
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
-#O  Restriction( <G>, <f> ) . . . . . . . . . . . . restriction of <G> by <f>
+#O  Restriction( <M>, <f> ) . . . . . . . . . . . . restriction of <M> by <f>
 ##
-##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa group <G>
+##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa monoid <M>
 ##  by (i.e. to the image of) the rcwa mapping <f>. The mapping <f> must be
 ##  injective.
 ##
 DeclareOperation( "Restriction", [ IsRcwaMapping, IsRcwaMapping ] );
-DeclareOperation( "Restriction", [ IsRcwaGroup, IsRcwaMapping ] );
+DeclareOperation( "Restriction", [ IsRcwaMonoid, IsRcwaMapping ] );
 
 #############################################################################
 ##
 #O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
-#O  Induction( <G>, <f> ) . . . . . . . . . . . . . . induction of <G> by <f>
+#O  Induction( <M>, <f> ) . . . . . . . . . . . . . . induction of <M> by <f>
 ##
-##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa group <G>
-##  by the rcwa mapping <f>.
+##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa monoid
+##  <M> by the rcwa mapping <f>.
 ##
-##  The mapping <f> must be injective, and both the support of <g> and its
-##  image under <g>, resp. the support of <G>, must lie in the image of <f>.
+##  The mapping <f> must be injective. In the first case, the support of <g>
+##  and its images under powers of <g> must be subsets of the image of <f>.
+##  In the second case, the support of <M> and its images under all elements
+##  of <M> must be subsets of the image of <f>. If <M> is an rcwa group, the
+##  latter simplifies to the condition that the support of <M> is a subset of
+##  the image of <f>.
+##
 ##  We have Induction( Restriction( <g>, <f> ), <f> ) = <g> as well as
-##  Induction( Restriction( <G>, <f> ), <f> ) = <G>. Therefore induction is
+##  Induction( Restriction( <M>, <f> ), <f> ) = <M>. Therefore induction is
 ##  the right inverse of restriction.
 ##
 DeclareOperation( "Induction", [ IsRcwaMapping, IsRcwaMapping ] );
-DeclareOperation( "Induction", [ IsRcwaGroup, IsRcwaMapping ] );
+DeclareOperation( "Induction", [ IsRcwaMonoid, IsRcwaMapping ] );
 
 #############################################################################
 ##
@@ -194,7 +199,8 @@ DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 ##  Computes all finite orbits of the rcwa group <G> of length <= <maxlng>,
 ##  which intersect nontrivially with the set <S>.
 ##
-DeclareOperation( "ShortOrbits", [ IsGroup, IsListOrCollection, IsPosInt ] );
+DeclareOperation( "ShortOrbits",
+                  [ IsMonoid, IsListOrCollection, IsPosInt ] );
 
 #############################################################################
 ##

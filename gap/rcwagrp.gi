@@ -1949,72 +1949,9 @@ InstallMethod( MovedPoints,
 
 #############################################################################
 ##
-#S  Finding finite orbits of rcwa groups. ///////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-## 
-#M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . . . . . . for rcwa groups
-## 
-InstallMethod( ShortOrbits,
-               "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsList, IsPosInt ], 0,
-
-  function ( G, S, maxlng )
-
-    local  gens, g, orbs, orb, oldorb, remaining, n;
-
-    gens := GeneratorsOfGroup(G);
-    orbs := []; remaining := ShallowCopy(Set(S));
-    while remaining <> [] do
-      orb := [remaining[1]];
-      repeat
-        oldorb := ShallowCopy(orb);
-        for g in gens do for n in oldorb do AddSet(orb,n^g); od; od;
-      until Length(orb) > maxlng or Length(orb) = Length(oldorb);
-      if Length(orb) <= maxlng then Add(orbs,Set(orb)); fi;
-      remaining := Difference(remaining,orb);
-    od;
-    return orbs;
-  end );
-
-#############################################################################
-##
 #S  Orbits of rcwa groups on the set of residue classes (mod m). ////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#M  OrbitsModulo( <G>, <m> ) . . . . . . . . . . . . . . . .  for rcwa groups
-##
-InstallMethod( OrbitsModulo,
-               "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsRingElement ], 0,
-
-  function ( G, m )
-
-    local  result, R, gens, orbit, oldorbit, orbitset, img, remaining;
-
-    R := Source(One(G));
-    if not m in R then TryNextMethod(); fi;
-    gens      := GeneratorsAndInverses(G);
-    remaining := AllResidueClassesModulo(R,m); result := [];
-    repeat
-      orbit := [remaining[1]];
-      repeat
-        oldorbit := ShallowCopy(orbit);
-        orbitset := Union(orbit);
-        img      := Union(List(gens,gen->orbitset^gen));
-        orbit    := Union(orbit,
-                          Filtered(remaining,cl->Intersection(cl,img)<>[]));
-      until orbit = oldorbit;
-      Add(result,List(orbit,Residue));
-      remaining := Difference(remaining,orbit);
-    until remaining = [];
-    return result;
-  end );
 
 #############################################################################
 ##
@@ -2864,7 +2801,7 @@ InstallMethod( \in,
     fi;
     if        IsClassWiseOrderPreserving(G)
       and not IsClassWiseOrderPreserving(g) then
-      Info(InfoRCWA,2,"<G> is class-wise order-preserving, <g> is not.");
+      Info(InfoRCWA,2,"<G> is class-wise order-preserving, but <g> is not.");
       return false;
     fi;
     if Sign(g) = -1 and Set(gens,Sign) = [1] then

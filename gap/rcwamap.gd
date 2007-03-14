@@ -750,14 +750,14 @@ DeclareAttribute( "Loops", IsRcwaMapping );
 #############################################################################
 ##
 #O  OrbitsModulo( <f>, <m> ) . . . orbit partition of R/mR under `Group(<f>)'
-#O  OrbitsModulo( <G>, <m> ) . . . . . . .  orbit partition of R/mR under <G>
+#O  OrbitsModulo( <M>, <m> ) . . . . . . .  orbit partition of R/mR under <M>
 ##
 ##  Returns the set of the sets of vertices of the weakly-connected
 ##  components of the transition graph Gamma_(<f>,<m>), respectively
-##  a partition of R/<m>R into orbits under the action of <G>.
+##  a partition of R/<m>R into orbits under the action of <M>.
 ##
 DeclareOperation( "OrbitsModulo", [ IsRcwaMapping, IsRingElement ] );
-DeclareOperation( "OrbitsModulo", [ IsRcwaGroup, IsRingElement ] );
+DeclareOperation( "OrbitsModulo", [ IsRcwaMonoid, IsRingElement ] );
 
 #############################################################################
 ##
