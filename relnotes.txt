@@ -461,7 +461,14 @@ Changes between version 2.4.2 and version 2.4.3:
  - A quirk with the style file for the HTML version of the manual has
    been fixed.
 
-Changes between version 2.4.3 and version 2.4.4:
+Changes between version 2.4.3 and version 2.5.0:
+
+ - Some functionality for rcwa monoids has been added --
+   see the short new manual chapter "Residue-Class-Wise Affine Monoids".
+
+ - The manual has undergone a slight revision.
+   Nothing has been rewritten completely, but little improvements and
+   updates have been made in many places.
 
  - A `SymmetricGroup' method for partitions of a ring into residue classes
    has been added.
