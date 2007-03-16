@@ -70,6 +70,7 @@
 <#Include SYSTEM "about.xml">
 <#Include SYSTEM "rcwamap.xml">
 <#Include SYSTEM "rcwagrp.xml">
+<#Include SYSTEM "rcwamono.xml">
 <#Include SYSTEM "examples.xml">
 <#Include SYSTEM "algs.xml">
 <#Include SYSTEM "rcwaaux.xml">

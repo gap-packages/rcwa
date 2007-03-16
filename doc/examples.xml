@@ -2447,7 +2447,8 @@ gap> Factorization(gamma2);
 </Example>
 
 The above construction is used by <Ref Attr="IsomorphismRcwaGroup"
-Label="G"/> to embed free groups of any rank&nbsp;<M>\geq 2</M>. <P/>
+Label="for a group"/> to embed free groups of any rank&nbsp;<M>\geq 2</M>.
+<P/>
 
 We give another only slightly different representation of the free group
 of rank&nbsp;2. We verify that it really is one by applying the
