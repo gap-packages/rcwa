@@ -1,0 +1,227 @@
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  rcwamono.xml         RCWA documentation          Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$       ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
+
+<Chapter Label="ch:RcwaMonoids">
+<Heading>Residue-Class-Wise Affine Monoids</Heading>
+
+In this short chapter, we describe how to compute with residue-class-wise
+affine monoids.
+
+<Index Key="rcwa monoid" Subkey="definition">rcwa monoid</Index>
+
+Residue-class-wise affine monoids, or <E>rcwa</E> monoids for short,
+are monoids whose elements are residue-class-wise affine mappings.
+
+<!-- #################################################################### -->
+
+<Section Label="sec:ContructingRcwaMonoids">
+<Heading>Constructing residue-class-wise affine monoids</Heading>
+
+<Index Key="Monoid"><C>Monoid</C></Index>
+<Index Key="MonoidByGenerators"><C>MonoidByGenerators</C></Index>
+
+As any other monoids in &GAP;, residue-class-wise affine monoids can be
+constructed by <C>Monoid</C> or <C>MonoidByGenerators</C>.
+
+<Example>
+<![CDATA[
+gap> Tp := RcwaMapping([[1,0,2],[3, 1,2]]);; SetName(Tp,"T+");
+gap> Tm := RcwaMapping([[1,0,2],[3,-1,2]]);; SetName(Tm,"T-");
+gap> M  := Monoid(Tp,Tm);
+<rcwa monoid over Z with 2 generators>
+]]>
+</Example>
+
+<Index Key="View" Subkey="for an rcwa monoid"><C>View</C></Index>
+<Index Key="Display" Subkey="for an rcwa monoid"><C>Display</C></Index>
+<Index Key="Print" Subkey="for an rcwa monoid"><C>Print</C></Index>
+<Index Key="String" Subkey="for an rcwa monoid"><C>String</C></Index>
+
+There are methods for the operations <C>View</C>, <C>Display</C>,
+<C>Print</C> and <C>String</C> which are applicable to rcwa monoids.
+All rcwa monoids over a ring <M>R</M> are submonoids of Rcwa(<M>R</M>).
+The monoid Rcwa(<M>R</M>) itself is not finitely generated, thus cannot
+be constructed as described above. It is handled as a special case:
+
+<ManSection>
+  <Func Name="Rcwa"
+        Arg="R" Label="the monoid of all rcwa mappings of a ring"/>
+  <Returns>
+    The monoid Rcwa(<A>R</A>) of all residue-class-wise affine
+    mappings of the ring&nbsp;<A>R</A>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> RcwaZ := Rcwa(Integers);
+Rcwa(Z)
+gap> IsSubset(RcwaZ,M);
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:ComputingWithRcwaMonoids">
+<Heading>Computing with residue-class-wise affine monoids</Heading>
+
+<Index Key="Size" Subkey="for an rcwa monoid"><C>Size</C></Index>
+<Index Key="rcwa monoids" Subkey="membership test">
+  <C>rcwa monoids</C>
+</Index>
+<Index Key="IsSubset" Subkey="for two rcwa monoids"><C>IsSubset</C></Index>
+
+There is a method for <C>Size</C> which computes the order of an rcwa monoid.
+Further there is a method for <C>in</C> which checks whether a given
+rcwa mapping lies in a given rcwa monoid (membership test), and there
+is a method for <C>IsSubset</C> which checks for a submonoid relation. <P/>
+
+<Index Key="Support" Subkey="of an rcwa monoid"><C>Support</C></Index>
+<Index Key="IsTame" Subkey="for an rcwa monoid"><C>IsTame</C></Index>
+<Index Key="Modulus" Subkey="of an rcwa monoid"><C>Modulus</C></Index>
+<Index Key="IsIntegral" Subkey="for an rcwa monoid"><C>IsIntegral</C></Index>
+<Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa monoid">
+  <C>IsClassWiseOrderPreserving</C>
+</Index>
+<Index Key="PrimeSet" Subkey="of an rcwa monoid"><C>PrimeSet</C></Index>
+
+There are also methods for <C>Support</C>, <C>Modulus</C>, <C>IsTame</C>,
+<C>PrimeSet</C>, <C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>
+available for rcwa monoids. <P/>
+
+<Index Key="rcwa monoid" Subkey="modulus">rcwa monoid</Index>
+<Index Key="rcwa monoid" Subkey="integral">rcwa monoid</Index>
+<Index Key="rcwa monoid" Subkey="class-wise order-preserving">
+  rcwa monoid
+</Index>
+<Index Key="rcwa monoid" Subkey="prime set">rcwa monoid</Index>
+<Index Key="rcwa monoid" Subkey="tame">rcwa monoid</Index>
+<Index Key="rcwa monoid" Subkey="wild">rcwa monoid</Index>
+
+The <E>support</E> of an rcwa monoid is the union of the supports of
+its elements. The <E>modulus</E> of an rcwa monoid is the lcm of the
+moduli of its elements in case such an lcm exists and 0 otherwise.
+An rcwa monoid is called <E>tame</E> if its modulus is nonzero, and
+<E>wild</E> otherwise. The <E>prime set</E> of an rcwa monoid is the
+union of the prime sets of its elements. An rcwa monoid is called
+<E>integral</E> or <E>class-wise order-preserving</E> if all of its
+elements are so.
+
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+
+Finite forward orbits under the action of an rcwa monoid can be found
+by the operation <C>ShortOrbits</C>:
+
+<ManSection>
+  <Meth Name="ShortOrbits" Arg="M, S, maxlng"
+        Label="for rcwa monoid, set of points and bound on length"/>
+  <Returns>
+    A list of all finite forward orbits of the rcwa monoid&nbsp;<A>M</A>
+    of length at most&nbsp;<A>maxlng</A> which intersect nontrivially with
+    the set&nbsp;<A>S</A>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Balls of given radius around an element of an rcwa monoid can be computed
+by the operation <C>Ball</C>. This operation can also be used for computing
+forward orbits or subsets of such under the action of an rcwa monoid:
+
+<ManSection>
+  <Meth Name ="Ball"
+        Arg="M, f, r" Label="for rcwa monoid, element and radius"/>
+  <Meth Name ="Ball"
+        Arg="M, p, r, action" Label="for rcwa monoid, point, radius and action"/>
+  <Returns>
+    The ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>f</A> in
+    the monoid&nbsp;<A>M</A>, respectively
+    the ball of radius&nbsp;<A>r</A> around the point&nbsp;<A>p</A> under
+    the action&nbsp;<A>action</A> of the monoid&nbsp;<A>M</A>
+  </Returns>
+  <Description>
+    All balls are understood w.r.t. <C>GeneratorsOfMonoid(<A>M</A>)</C>.
+    As membership tests can be expensive, the latter method does not check
+    whether <A>f</A> is indeed an element of&nbsp;<A>M</A>.
+    The methods require that point comparisons resp. element
+    comparisons are cheap. They are not only applicable to rcwa monoids.
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+There are methods for computing images of rcwa monoids under
+restriction monomorphisms (cp.&nbsp;<Ref Oper="Restriction"
+Label="of an rcwa mapping, by an injective rcwa mapping"/>)
+and induction epimorphisms (cp.&nbsp;<Ref Oper="Induction"
+Label="of an rcwa mapping, by an injective rcwa mapping"/>):
+
+<ManSection>
+  <Meth Name="Restriction"
+        Arg="M, f" Label="of an rcwa monoid, by an injective rcwa mapping"/>
+  <Returns>
+    The <E>restriction</E> of the rcwa monoid <A>M</A> by the injective rcwa
+    mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    The restriction of an rcwa monoid&nbsp;<A>M</A> by an injective
+    rcwa mapping&nbsp;<A>f</A> is defined as the monoid whose elements are
+    the restrictions of the elements of&nbsp;<A>M</A> by&nbsp;<A>f</A>.
+    The restriction of&nbsp;<A>M</A> by&nbsp;<A>f</A> acts on the
+    image of&nbsp;<A>f</A> and fixes its complement pointwise.
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Meth Name ="Induction"
+        Arg="M, f" Label="of an rcwa monoid, by an injective rcwa mapping"/>
+  <Returns>
+    The <E>induction</E> of the rcwa monoid <A>M</A> by the injective rcwa
+    mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    Induction is the right inverse of restriction, i.e. it is
+    <C>Induction(Restriction(<A>M</A>,<A>f</A>),<A>f</A>) = <A>M</A></C>.
+    The monoid&nbsp;<A>M</A> must not move points outside the image
+    of&nbsp;<A>f</A>.
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+</Chapter>
+
+<!-- #################################################################### -->
