@@ -1203,7 +1203,7 @@ rcwa group.
     </Index>
 <Example>
 <![CDATA[
-gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
+gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
 true
