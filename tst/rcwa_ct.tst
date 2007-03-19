@@ -322,6 +322,40 @@ gap> Factorization(elm);
   ClassTransposition(x^2+x,x^3+x^2,x^3+x^2,x^4+x^3),
   ClassTransposition(Z(2)^0,x^2,x+Z(2)^0,x^2),
   ClassTransposition(x,x^2+x,x^2+x,x^3+x^2) ]
+gap> IsSubgroup(RCWA(Integers),CT(Integers));
+true
+gap> IsSubgroup(CT(Integers),RCWA(Integers));
+false
+gap> IsSubgroup(RCWA(Integers),CT(Z_pi(2,3)));
+false
+gap> IsSubgroup(RCWA(Z_pi(2,3)),CT(Z_pi(2,3)));
+true
+gap> IsSubgroup(CT(Z_pi(2,3)),RCWA(Z_pi(2,3)));
+false
+gap> IsSubgroup(RCWA(R),CT(R));
+true
+gap> IsSubgroup(RCWA(R),Group(ClassTransposition(0,x,1,x)));
+true
+gap> IsSubset(Rcwa(Integers),RCWA(Integers));
+true
+gap> IsSubset(Rcwa(Integers),CT(Integers));
+true
+gap> IsSubset(RCWA(Integers),Rcwa(Integers));
+false
+gap> IsSubset(CT(Integers),Rcwa(Integers));
+false
+gap> IsSubset(Group(ClassTransposition(0,2,1,2)),Rcwa(Integers));
+false
+gap> IsSubset(Rcwa(Integers),Group(ClassTransposition(0,2,1,2)));
+true
+gap> IsSubset(Rcwa(R),Group(ClassTransposition(0,x,1,x)));
+true
+gap> IsSubset(Group(ClassTransposition(0,x,1,x)),Rcwa(R));
+false
+gap> List([RCWA(Integers),CT(Integers),
+>          RCWA(Z_pi(2,3)),CT(Z_pi(3)),
+>          RCWA(R),CT(R)],Exponent);
+[ infinity, infinity, infinity, infinity, infinity, infinity ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "rcwa_ct.tst", 1100000000 );
