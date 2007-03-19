@@ -1911,6 +1911,7 @@ InstallMethod( \<,
 ##
 InstallValue( ZeroRcwaMappingOfZ, RcwaMapping( [ [ 0, 0, 1 ] ] ) );
 SetIsZero( ZeroRcwaMappingOfZ, true );
+SetImagesSource( ZeroRcwaMappingOfZ, [ 0 ] );
 
 #############################################################################
 ##
@@ -1938,7 +1939,9 @@ InstallMethod( Zero,
     local  zero;
 
     zero := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[0,0,1]] );
-    SetIsZero( zero, true ); return zero;
+    SetIsZero( zero, true );
+    SetImagesSource( zero, [ 0 ] );
+    return zero;
   end );
 
 #############################################################################
@@ -1957,7 +1960,9 @@ InstallMethod( Zero,
 
     zero := RcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
                            [[0,0,1]] * One(Source(f)) );
-    SetIsZero( zero, true ); return zero;
+    SetIsZero( zero, true );
+    SetImagesSource( zero, [ Zero(Source(f)) ] );
+    return zero;
   end );
 
 #############################################################################
@@ -2484,7 +2489,8 @@ InstallMethod( ImagesElm,
 ##
 InstallMethod( ImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
-               true, [ IsRcwaMapping, IsListOrCollection ], 0,
+               ReturnTrue, [ IsRcwaMapping, IsListOrCollection ],
+               2 * SUM_FLAGS,
 
   function ( f, S )
 
@@ -2498,6 +2504,17 @@ InstallMethod( ImagesSet,
                       r->(c[r][1]*Intersection(S,rc(res[r],m))+c[r][2])/
                           c[r][3]));
   end );
+
+#############################################################################
+##
+#M  ImagesSource( <f> ) . . . . . . . . . . . . . . . . . for an rcwa mapping
+##
+##  Image of the rcwa mapping <f>.
+##
+InstallMethod( ImagesSource,
+               "for an rcwa mapping and a residue class union (RCWA)",
+               true, [ IsRcwaMapping ], 2 * SUM_FLAGS,
+               f -> ImagesSet( f, Source( f ) ) );
 
 #############################################################################
 ##
