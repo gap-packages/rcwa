@@ -1452,6 +1452,12 @@ gap> G/N;
 Group([ (), (1,2)(3,5)(4,6)(7,8), (1,3)(2,4)(5,7)(6,8) ])
 gap> StructureDescription(last);
 "D8"
+gap> Exponent(G);
+infinity
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));
+<rcwa group over Z with 2 generators>
+gap> Exponent(G);
+4
 gap> (1,2,3,4,5,6,7,8,9,10,11,12)^Collatz;
 (1,3,2,5,7,4,9,11,6,13,15,8)
 gap> C := RcwaMapping([[1,0,2],[3,1,1]]);;
