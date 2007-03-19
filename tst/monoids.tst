@@ -178,6 +178,15 @@ gap> ImagesSource(z);
 [ 0 ]
 gap> Image(z,Integers);
 [ 0 ]
+gap> M := Monoid(2*IdentityRcwaMappingOfZ);
+<rcwa monoid over Z with 1 generator>
+gap> Size(M);
+infinity
+gap> Ball(M,One(M),7);
+[ IdentityMapping( Integers ), Rcwa mapping of Z: n -> 2n, 
+  Rcwa mapping of Z: n -> 4n, Rcwa mapping of Z: n -> 8n, 
+  Rcwa mapping of Z: n -> 16n, Rcwa mapping of Z: n -> 32n, 
+  Rcwa mapping of Z: n -> 64n, Rcwa mapping of Z: n -> 128n ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "monoids.tst", 120000000 );
