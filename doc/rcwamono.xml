@@ -32,7 +32,7 @@ constructed by <C>Monoid</C> or <C>MonoidByGenerators</C>.
 <![CDATA[
 gap> Tp := RcwaMapping([[1,0,2],[3, 1,2]]);; SetName(Tp,"T+");
 gap> Tm := RcwaMapping([[1,0,2],[3,-1,2]]);; SetName(Tm,"T-");
-gap> M  := Monoid(Tp,Tm);
+gap> C  := Monoid(Tp,Tm);
 <rcwa monoid over Z with 2 generators>
 ]]>
 </Example>
@@ -60,7 +60,7 @@ be constructed as described above. It is handled as a special case:
 <![CDATA[
 gap> RcwaZ := Rcwa(Integers);
 Rcwa(Z)
-gap> IsSubset(RcwaZ,M);
+gap> IsSubset(RcwaZ,C);
 true
 ]]>
 </Example>
@@ -118,7 +118,40 @@ elements are so.
 
 <Example>
 <![CDATA[
-
+gap> f1 := RcwaMapping([[-1, 1, 1],[ 0,-1, 1]]);;
+gap> f2 := RcwaMapping([[ 1,-1, 1],[-1,-2, 1],[-1, 2, 1]]);; 
+gap> f3 := RcwaMapping([[ 1, 0, 1],[-1, 0, 1]]);; 
+gap> M := Monoid(f1,f2,f3);
+<rcwa monoid over Z with 3 generators>
+gap> Size(M);
+366
+gap> List([Monoid(f1,f2),Monoid(f1,f3),Monoid(f2,f3)],Size);
+[ 96, 6, 66 ]
+gap> Tp in M;
+false
+gap> IsSubset(C,M);
+false
+gap> IsSubset(M,Monoid(f1*f2,f3*f2));
+true
+gap> Support(M);
+Integers
+gap> Modulus(M);
+6
+gap> IsTame(M); IsTame(C);
+true
+false
+gap> IsIntegral(M);
+true
+gap> IsClassWiseOrderPreserving(M);
+false
+gap> Collected(List(AsList(M),Image)); # The images of the elements of M.
+[ [ Integers, 2 ], [ 1(2), 2 ], [ Z \ 1(3), 32 ], [ 0(6), 44 ], 
+  [ 0(6) U 1(6), 4 ], [ Z \ 4(6) U 5(6), 32 ], [ 0(6) U 2(6), 4 ], 
+  [ 0(6) U 5(6), 4 ], [ 1(6), 44 ], [ 1(6) U [ -1 ], 2 ], [ 1(6) U 3(6), 4 ], 
+  [ 1(6) U 5(6), 40 ], [ 2(6), 44 ], [ 2(6) U 3(6), 4 ], [ 3(6), 44 ], 
+  [ 3(6) U 5(6), 4 ], [ 5(6), 44 ], [ 5(6) U [ 1 ], 2 ], [ [ -5 ], 1 ], 
+  [ [ -4 ], 1 ], [ [ -3 ], 1 ], [ [ -1 ], 1 ], [ [ 0 ], 1 ], [ [ 1 ], 1 ], 
+  [ [ 2 ], 1 ], [ [ 3 ], 1 ], [ [ 5 ], 1 ], [ [ 6 ], 1 ] ]
 ]]>
 </Example>
 
@@ -129,14 +162,18 @@ by the operation <C>ShortOrbits</C>:
   <Meth Name="ShortOrbits" Arg="M, S, maxlng"
         Label="for rcwa monoid, set of points and bound on length"/>
   <Returns>
-    A list of all finite forward orbits of the rcwa monoid&nbsp;<A>M</A>
-    of length at most&nbsp;<A>maxlng</A> which intersect nontrivially with
+    A list of finite forward orbits of the rcwa monoid&nbsp;<A>M</A>
+    of length at most&nbsp;<A>maxlng</A> which start at points in
     the set&nbsp;<A>S</A>.
   </Returns>
   <Description>
 <Example>
 <![CDATA[
-
+gap> ShortOrbits(M,[-10..10],20);  
+[ [ -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, 2, 3, 5, 6, 7, 8, 9, 11, 12 ], 
+  [ -5, -4, -3, -2, -1, 0, 1, 2, 3, 5, 6 ] ]
+gap> ShortOrbits(C,[-100..100],50);
+[ [ 0 ], [ 1, 2 ] ]
 ]]>
 </Example>
   </Description>
@@ -155,17 +192,31 @@ forward orbits or subsets of such under the action of an rcwa monoid:
     The ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>f</A> in
     the monoid&nbsp;<A>M</A>, respectively
     the ball of radius&nbsp;<A>r</A> around the point&nbsp;<A>p</A> under
-    the action&nbsp;<A>action</A> of the monoid&nbsp;<A>M</A>
+    the action&nbsp;<A>action</A> of the monoid&nbsp;<A>M</A>.
   </Returns>
   <Description>
-    All balls are understood w.r.t. <C>GeneratorsOfMonoid(<A>M</A>)</C>.
+    All balls are understood with respect to <C>GeneratorsOfMonoid(<A>M</A>)</C>.
     As membership tests can be expensive, the latter method does not check
     whether <A>f</A> is indeed an element of&nbsp;<A>M</A>.
-    The methods require that point comparisons resp. element
-    comparisons are cheap. They are not only applicable to rcwa monoids.
+    The methods require that point- / element comparisons are cheap.
+    They are not only applicable to rcwa monoids.
 <Example>
 <![CDATA[
-
+gap> List([0..12],k->Length(Ball(M,One(M),k)));
+[ 1, 4, 11, 26, 53, 99, 163, 228, 285, 329, 354, 364, 366 ]
+gap> List([0..5],k->Length(Ball(C,One(C),k)));
+[ 1, 3, 7, 15, 31, 63 ]
+gap> Collected(List(Ball(M,One(M),5),Modulus));
+[ [ 1, 8 ], [ 2, 3 ], [ 3, 4 ], [ 6, 84 ] ]
+gap> Collected(List(Ball(C,One(C),5),Modulus));
+[ [ 1, 1 ], [ 2, 2 ], [ 4, 4 ], [ 8, 8 ], [ 16, 16 ], [ 32, 32 ] ]
+gap> Ball(M,[0..3],2,OnPoints);
+[ [ -4, -1, 0, 3 ], [ -3, -1, 0, 2 ], [ -3, 3 ], [ -1 ], [ -1, 1 ], 
+  [ 0 .. 3 ] ]
+gap> Ball(M,[0..3],2,OnTuples);
+[ [ -3, 3, 3, 3 ], [ -1, -3, 0, 2 ], [ -1, -1, -1, -1 ], [ -1, -1, 1, -1 ], 
+  [ -1, 1, 1, 1 ], [ -1, 3, 0, -4 ], [ 0, -1, 2, -3 ], [ 0, 1, 2, 3 ], 
+  [ 1, -1, -1, -1 ], [ 1, 3, 0, 2 ], [ 3, -4, -1, 0 ] ]
 ]]>
 </Example>
   </Description>
@@ -192,7 +243,10 @@ Label="of an rcwa mapping, by an injective rcwa mapping"/>):
     image of&nbsp;<A>f</A> and fixes its complement pointwise.
 <Example>
 <![CDATA[
-
+gap> M2 := Restriction(M,2*One(Rcwa(Integers)));
+<rcwa monoid over Z with 3 generators, of size 366>
+gap> Support(M2);
+0(2)
 ]]>
 </Example>
   </Description>
@@ -212,7 +266,8 @@ Label="of an rcwa mapping, by an injective rcwa mapping"/>):
     of&nbsp;<A>f</A>.
 <Example>
 <![CDATA[
-
+gap> Induction(M2,2*One(Rcwa(Integers))) = M;
+true
 ]]>
 </Example>
   </Description>
