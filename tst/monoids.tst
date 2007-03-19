@@ -170,6 +170,14 @@ gap> RcwaMapping([[0,2,1],[-1,2,1]]) in F;
 true
 gap> T in F;
 false
+gap> z := Zero(One(F));
+ZeroMapping( Integers, Integers )
+gap> Image(z);
+[ 0 ]
+gap> ImagesSource(z);
+[ 0 ]
+gap> Image(z,Integers);
+[ 0 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "monoids.tst", 120000000 );
