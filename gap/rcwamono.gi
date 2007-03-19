@@ -485,7 +485,7 @@ InstallMethod( Size,
 
   function ( M )
 
-    local  R, gens;
+    local  R, gens, B2;
 
     if IsTrivial(M)   then return 1; fi;
     if IsRcwaGroup(M) then TryNextMethod(); fi;
@@ -493,11 +493,16 @@ InstallMethod( Size,
     gens := GeneratorsOfMonoid(M);
     if   ForAny(gens,f->IsSurjective(f) and not IsInjective(f))
     then return infinity; fi; # surjective & not injective -> wild
+    if   not ForAll(gens,f->IsFinite(Union(Loops(f)^f)))
+    then return infinity; fi;
     if   ForAny(gens,f->IsBijective(f) and Order(f)=infinity)
     then return infinity; fi;
     if not ForAll(gens,IsTame) then return infinity; fi;
-    if   ForAny(Ball(M,One(M),2),f->(IsBijective(f) and Order(f)=infinity)
-                                    or not IsTame(f))
+    B2 := Ball(M,One(M),2);
+    if   not ForAll(B2,f->IsFinite(Union(Loops(f)^f)))
+    then return infinity; fi;
+    if   ForAny(B2,f->(IsBijective(f) and Order(f)=infinity)
+                       or not IsTame(f))
     then return infinity; fi;
     return Length(AsList(M));
   end );
