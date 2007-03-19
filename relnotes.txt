@@ -476,6 +476,8 @@ Changes between version 2.4.3 and version 2.5.0:
  - The `IsomorphismRcwaGroup' method for finite groups has been improved.
    It works now over all rings which are currently supported by RCWA.
 
+ - An `Exponent' method for rcwa groups has been added.
+
  - A method to construct a dihedral group acting on a given residue class
    has been added.  
 
