@@ -668,4 +668,12 @@ InstallMethod( \=,
 
 #############################################################################
 ##
+#M  IsSubset( <G>, Rcwa(R) ) . . . . . . . . .  for an rcwa group and Rcwa(R)
+##
+InstallMethod( IsSubset,
+               "for an rcwa group and Rcwa(R) (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsNaturalRcwa ], SUM_FLAGS, ReturnFalse );
+
+#############################################################################
+##
 #E  rcwamono.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
