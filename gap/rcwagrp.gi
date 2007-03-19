@@ -30,6 +30,16 @@ InstallTrueMethod( IsRcwaGroup, IsRcwaGroupOverGFqx );
 
 #############################################################################
 ##
+#S  Implications of `IsRcwaGroup'. //////////////////////////////////////////
+##
+#############################################################################
+
+InstallTrueMethod( CanComputeSizeAnySubgroup, IsRcwaGroup );
+InstallTrueMethod( KnowsHowToDecompose,
+                   IsRcwaGroup and HasGeneratorsOfGroup );
+
+#############################################################################
+##
 #S  Checking whether a list is a set of generators of an rcwa group. ////////
 ##
 #############################################################################
@@ -483,6 +493,14 @@ od;
 
 #############################################################################
 ##
+#M  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . . . RCWA(R) or CT(R)
+##
+InstallMethod( IsNaturalRCWA_OR_CT,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               ReturnFalse );
+
+#############################################################################
+##
 #M  Display( <G> ) . . . . . . . . . . . . . . . . . .  for RCWA(R) and CT(R)
 ##
 InstallMethod( Display,
@@ -576,6 +594,25 @@ InstallMethod( IsSubset,
   function ( CT_R, G )
     if FamilyObj(One(G)) <> FamilyObj(One(CT_R)) then return false; fi;
     return ForAll(GeneratorsOfGroup(G),g->g in CT_R);
+  end );
+
+#############################################################################
+## 
+#M  IsSubset( CT( <R> ), RCWA( <R> ) ) . . . . . . . . . for CT(R) and RCWA(R)
+## 
+##  Note that it is currently not known e.g. whether
+##  CT(GF(2)[x]) = RCWA(GF(2)[x]) or not.
+##
+InstallMethod( IsSubset,
+               "for CT(R) and RCWA(R) (RCWA)", ReturnTrue,
+               [ IsNaturalCT, IsNaturalRCWA ], SUM_FLAGS,
+
+  function ( CT_R, RCWA_R )
+    if FamilyObj(One(CT_R)) <> FamilyObj(One(RCWA_R)) then return false; fi;
+    if IsRcwaGroupOverZOrZ_pi(RCWA_R) then return false; fi;
+    if   not IsTrivial(Units(CoefficientsRing(Source(One(RCWA_R)))))
+    then return false; fi;
+    TryNextMethod();
   end );
 
 #############################################################################
@@ -3670,7 +3707,7 @@ InstallMethod( Factorization,
 
 #############################################################################
 ##
-#S  Methods for `IsSolvable', `IsPerfect' and `IsSimple'. ///////////////////
+#S  Methods for `IsSolvable', `IsPerfect', `IsSimple' and `Exponent'. ///////
 ##
 #############################################################################
 
@@ -3769,6 +3806,30 @@ InstallMethod( IsSimpleGroup,
     if   IsFinite(G)
     then return IsSimpleGroup(Image(IsomorphismPermGroup(G))); fi;
     TryNextMethod();
+  end );
+
+#############################################################################
+##
+#M  Exponent( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallMethod( Exponent,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  k;
+
+    if IsNaturalRCWA_OR_CT(G) then return infinity; fi;
+    if IsFinite(G) then return Exponent(Image(IsomorphismPermGroup(G))); fi;
+    if IsTame(G)   then return infinity; fi;
+    if   ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
+    then return infinity; fi;
+    k := 1;    
+    repeat
+      k := k + 1;
+      if   ForAny(Ball(G,One(G),k),g->Order(g)=infinity)
+      then return infinity; fi;
+    until false;
   end );
 
 #############################################################################
