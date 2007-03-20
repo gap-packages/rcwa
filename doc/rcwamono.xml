@@ -30,10 +30,23 @@ constructed by <C>Monoid</C> or <C>MonoidByGenerators</C>.
 
 <Example>
 <![CDATA[
-gap> Tp := RcwaMapping([[1,0,2],[3, 1,2]]);; SetName(Tp,"T+");
-gap> Tm := RcwaMapping([[1,0,2],[3,-1,2]]);; SetName(Tm,"T-");
-gap> C  := Monoid(Tp,Tm);
+gap> M := Monoid(RcwaMapping([[ 0,1,1],[1,1,1]]),
+>                RcwaMapping([[-1,3,1],[0,2,1]]));
 <rcwa monoid over Z with 2 generators>
+gap> Size(M);
+11
+gap> Display(MultiplicationTable(M));
+[ [   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11 ], 
+  [   2,   8,   5,  11,   8,   3,  10,   5,   2,   8,   5 ], 
+  [   3,  10,  11,   5,   5,   5,   8,   8,   8,   2,   3 ], 
+  [   4,   9,   6,   8,   8,   8,   5,   5,   5,   7,   4 ], 
+  [   5,   8,   5,   8,   8,   8,   5,   5,   5,   8,   5 ], 
+  [   6,   7,   4,   8,   8,   8,   5,   5,   5,   9,   6 ], 
+  [   7,   5,   8,   6,   5,   4,   9,   8,   7,   5,   8 ], 
+  [   8,   5,   8,   5,   5,   5,   8,   8,   8,   5,   8 ], 
+  [   9,   5,   8,   4,   5,   6,   7,   8,   9,   5,   8 ], 
+  [  10,   8,   5,   3,   8,  11,   2,   5,  10,   8,   5 ], 
+  [  11,   2,   3,   5,   5,   5,   8,   8,   8,  10,  11 ] ]
 ]]>
 </Example>
 
@@ -121,30 +134,34 @@ elements are so.
 gap> f1 := RcwaMapping([[-1, 1, 1],[ 0,-1, 1]]);;
 gap> f2 := RcwaMapping([[ 1,-1, 1],[-1,-2, 1],[-1, 2, 1]]);; 
 gap> f3 := RcwaMapping([[ 1, 0, 1],[-1, 0, 1]]);; 
-gap> M := Monoid(f1,f2,f3);
+gap> N := Monoid(f1,f2,f3);
 <rcwa monoid over Z with 3 generators>
-gap> Size(M);
+gap> Size(N);
 366
 gap> List([Monoid(f1,f2),Monoid(f1,f3),Monoid(f2,f3)],Size);
 [ 96, 6, 66 ]
-gap> Tp in M;
-false
-gap> IsSubset(C,M);
-false
-gap> IsSubset(M,Monoid(f1*f2,f3*f2));
+gap> f1*f2*f3 in N;
 true
-gap> Support(M);
+gap> IsSubset(N,M);
+false
+gap> IsSubset(N,Monoid(f1*f2,f3*f2));
+true
+gap> Support(N);
 Integers
-gap> Modulus(M);
+gap> Modulus(N);
 6
-gap> IsTame(M); IsTame(C);
+gap> IsTame(N) and IsIntegral(N);
 true
+gap> IsClassWiseOrderPreserving(N);
 false
-gap> IsIntegral(M);
-true
-gap> IsClassWiseOrderPreserving(M);
-false
-gap> Collected(List(AsList(M),Image)); # The images of the elements of M.
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
+<Example>
+<![CDATA[
+gap> Collected(List(AsList(N),Image)); # The images of the elements of N.
 [ [ Integers, 2 ], [ 1(2), 2 ], [ Z \ 1(3), 32 ], [ 0(6), 44 ], 
   [ 0(6) U 1(6), 4 ], [ Z \ 4(6) U 5(6), 32 ], [ 0(6) U 2(6), 4 ], 
   [ 0(6) U 5(6), 4 ], [ 1(6), 44 ], [ 1(6) U [ -1 ], 2 ], [ 1(6) U 3(6), 4 ], 
@@ -169,11 +186,8 @@ by the operation <C>ShortOrbits</C>:
   <Description>
 <Example>
 <![CDATA[
-gap> ShortOrbits(M,[-10..10],20);  
-[ [ -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, 2, 3, 5, 6, 7, 8, 9, 11, 12 ], 
-  [ -5, -4, -3, -2, -1, 0, 1, 2, 3, 5, 6 ] ]
-gap> ShortOrbits(C,[-100..100],50);
-[ [ 0 ], [ 1, 2 ] ]
+gap> ShortOrbits(M,[-5..5],20);
+[ [ -5, -4, 1, 2, 7, 8 ], [ -3, -2, 1, 2, 5, 6 ], [ -1, 0, 1, 2, 3, 4 ] ]
 ]]>
 </Example>
   </Description>
@@ -202,18 +216,12 @@ forward orbits or subsets of such under the action of an rcwa monoid:
     They are not only applicable to rcwa monoids.
 <Example>
 <![CDATA[
-gap> List([0..12],k->Length(Ball(M,One(M),k)));
+gap> List([0..12],k->Length(Ball(N,One(N),k)));
 [ 1, 4, 11, 26, 53, 99, 163, 228, 285, 329, 354, 364, 366 ]
-gap> List([0..5],k->Length(Ball(C,One(C),k)));
-[ 1, 3, 7, 15, 31, 63 ]
-gap> Collected(List(Ball(M,One(M),5),Modulus));
-[ [ 1, 8 ], [ 2, 3 ], [ 3, 4 ], [ 6, 84 ] ]
-gap> Collected(List(Ball(C,One(C),5),Modulus));
-[ [ 1, 1 ], [ 2, 2 ], [ 4, 4 ], [ 8, 8 ], [ 16, 16 ], [ 32, 32 ] ]
-gap> Ball(M,[0..3],2,OnPoints);
+gap> Ball(N,[0..3],2,OnPoints);
 [ [ -4, -1, 0, 3 ], [ -3, -1, 0, 2 ], [ -3, 3 ], [ -1 ], [ -1, 1 ], 
   [ 0 .. 3 ] ]
-gap> Ball(M,[0..3],2,OnTuples);
+gap> Ball(N,[0..3],2,OnTuples);
 [ [ -3, 3, 3, 3 ], [ -1, -3, 0, 2 ], [ -1, -1, -1, -1 ], [ -1, -1, 1, -1 ], 
   [ -1, 1, 1, 1 ], [ -1, 3, 0, -4 ], [ 0, -1, 2, -3 ], [ 0, 1, 2, 3 ], 
   [ 1, -1, -1, -1 ], [ 1, 3, 0, 2 ], [ 3, -4, -1, 0 ] ]
@@ -244,7 +252,7 @@ Label="of an rcwa mapping, by an injective rcwa mapping"/>):
 <Example>
 <![CDATA[
 gap> M2 := Restriction(M,2*One(Rcwa(Integers)));
-<rcwa monoid over Z with 3 generators, of size 366>
+<rcwa monoid over Z with 2 generators, of size 11>
 gap> Support(M2);
 0(2)
 ]]>
