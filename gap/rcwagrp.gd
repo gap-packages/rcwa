@@ -49,6 +49,14 @@ DeclareSynonym( "IsRcwaGroupOverZOrZ_pi",
 
 #############################################################################
 ##
+#R  IsRcwaGroupsIteratorRep . . . . . . . . . . . . . iterator representation
+##
+DeclareRepresentation( "IsRcwaGroupsIteratorRep",
+                       IsComponentObjectRep,
+                       [ "G", "sphere", "oldsphere", "pos" ] );
+
+#############################################################################
+##
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
 ##
 DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );

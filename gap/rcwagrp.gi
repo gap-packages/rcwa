@@ -1275,7 +1275,7 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#M  RepresentativeActionOp( CT( <R> ),   <ct1>, <ct2>, <act> ) 
+#M  RepresentativeActionOp( CT( <R> ), <ct1>, <ct2>, <act> ) 
 ##
 ##  Special method for two class transpositions which are both not equal to
 ##  n -> n + (-1)^n. The factorization of the result into 6 class transposi-
@@ -1962,6 +1962,92 @@ InstallMethod( Embedding,
   function ( W, i )
     if not i in [1,2] then TryNextMethod(); fi;
     return WreathProductInfo(W).embeddings[i];
+  end );
+
+#############################################################################
+##
+#S  Iterators for rcwa groups. //////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Iterator( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallMethod( Iterator,
+               "for rcwa groups (RCWA)", true,
+               [ IsRcwaGroup and HasGeneratorsOfGroup ], 0,
+
+  function ( G )
+    return Objectify( NewType( IteratorsFamily, IsIterator
+                                            and IsMutable
+                                            and IsRcwaGroupsIteratorRep ),
+                      rec( G         := G,
+                           sphere    := [One(G)],
+                           oldsphere := [],
+                           pos       := 1 ) );
+  end );
+
+#############################################################################
+##
+#M  NextIterator( <iter> ) . . . . . . . . . . . for iterators of rcwa groups
+##
+InstallMethod( NextIterator,
+               "for iterators of rcwa groups (RCWA)", true,
+               [ IsIterator and IsMutable and IsRcwaGroupsIteratorRep ], 0,
+
+  function ( iter )
+
+    local  G, gens, sphere, g;
+
+    G := iter!.G;
+    if not HasGeneratorsOfGroup(G) then TryNextMethod(); fi;
+    gens := GeneratorsAndInverses(G);
+    g := iter!.sphere[iter!.pos];
+    if iter!.pos < Length(iter!.sphere) then iter!.pos := iter!.pos + 1; else
+      sphere := Difference(Union(List(gens,g->iter!.sphere*g)),
+                           Union(iter!.sphere,iter!.oldsphere));
+      iter!.oldsphere := iter!.sphere;
+      iter!.sphere    := sphere;
+      iter!.pos       := 1;
+    fi;
+    return g;
+  end );
+
+#############################################################################
+##
+#M  IsDoneIterator( <iter> ) . . . . . . . . . . for iterators of rcwa groups
+##
+InstallMethod( IsDoneIterator,
+               "for iterators of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupsIteratorRep ], 0,
+               iter -> IsEmpty( iter!.sphere ) );
+
+#############################################################################
+##
+#M  ShallowCopy( <iter> ) . . . . . . . . . . .  for iterators of rcwa groups
+##
+InstallMethod( ShallowCopy,
+               "for iterators of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupsIteratorRep ], 0,
+
+  iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
+                     rec( G         := iter!.G,
+                          sphere    := iter!.sphere,
+                          oldsphere := iter!.oldsphere,
+                          pos       := iter!.pos ) ) );
+
+#############################################################################
+##
+#M  ViewObj( <iter> ) . . . . . . . . . . . . .  for iterators of rcwa groups
+##
+InstallMethod( ViewObj,
+               "for iterators of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupsIteratorRep ], 0,
+
+  function ( iter )
+    Print("Iterator of ");
+    ViewObj(iter!.G);
   end );
 
 #############################################################################
