@@ -1467,6 +1467,14 @@ true
 gap> P := RandomPartitionIntoResidueClasses(Integers,5,[2,3]);;
 gap> Permuted(P,RcwaMapping([P])) = Permuted(P,(1,2,3,4,5));
 true
+gap> G := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
+<wild rcwa group over Z with 2 generators>
+gap> elm := First(G,g->Density(Support(g))>0 and Density(Support(g))<1/4);
+<bijective rcwa mapping of Z with modulus 8>
+gap> Support(elm);
+5(8)
+gap> Factorization(elm);
+[ ClassShift(5,8)^-1 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
