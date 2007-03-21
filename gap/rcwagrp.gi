@@ -81,7 +81,8 @@ InstallMethod( IsWholeFamily,
 #M  ViewObj( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
 InstallMethod( ViewObj,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+               "for rcwa groups (RCWA)", true,
+               [ IsRcwaGroup and HasGeneratorsOfGroup ], 0,
 
   function ( G )
 
@@ -108,6 +109,26 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  ViewObj( <G> ) . . . . . . . . . for rcwa groups without known generators
+##
+InstallMethod( ViewObj,
+               "for rcwa groups without known generators (RCWA)",
+               true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+    Print("<");
+    if   HasIsTame(G)
+    then if IsTame(G) then Print("tame "); else Print("wild "); fi; fi;
+    Print("rcwa group over ",RingToString(Source(One(G))));
+    if   HasElementTestFunction(G)
+    then Print(", with membership test"); fi;
+    if   not HasGeneratorsOfGroup(G)
+    then Print(", without known generators"); fi;
+    Print(">");
+  end );
+
+#############################################################################
+##
 #M  ViewObj( <RG> ) . . . . . . . . . . . . .  for group rings of rcwa groups
 ##
 InstallMethod( ViewObj,
@@ -121,6 +142,17 @@ InstallMethod( ViewObj,
     R := LeftActingDomain(RG); G := UnderlyingGroup(RG);
     if not IsRcwaGroup(G) or R <> Source(One(G)) then TryNextMethod(); fi;
     Print(RingToString(R)," "); ViewObj(G);
+  end );
+
+#############################################################################
+##
+#M  Print( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( PrintObj,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+    Print( "Group( ", GeneratorsOfGroup( G ), " )" );
   end );
 
 #############################################################################
@@ -2805,14 +2837,28 @@ InstallMethod( Size,
 
 #############################################################################
 ##
-#M  \in( <g>, <G> ) . . . . . . . . . . for an rcwa mapping and an rcwa group
+#M  \in( <g>, <G> ) . . . . . . for rcwa groups with membership test function
+##
+InstallMethod( \in,
+               "for rcwa groups with membership test function (RCWA)",
+               ReturnTrue,
+               [ IsRcwaMapping, IsRcwaGroup and HasElementTestFunction ], 0,
+
+  function ( g, G )
+    if HasParent(G) and not g in Parent(G) then return false; fi;
+    return ElementTestFunction(G)(g);
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
 ##  This method may run into an infinite loop if <G> is infinite and <g> is
 ##  not an element of <G>.
 ##
 InstallMethod( \in,
-               "for an rcwa mapping and an rcwa group (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsRcwaGroup ], 0,
+               "for an rcwa mapping and an rcwa group (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsRcwaGroup and HasGeneratorsOfGroup ], 0,
 
   function ( g, G )
 
