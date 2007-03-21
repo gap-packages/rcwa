@@ -395,8 +395,37 @@ gap> IsomorphismRcwaGroup(MathieuGroup(11),R);
 [ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ] -> 
 [ <bijective rcwa mapping of GF(2)[x] with modulus x^4, of order 11>, 
   <bijective rcwa mapping of GF(2)[x] with modulus x^4, of order 4> ]
+gap> a := ClassTransposition(0,x,1,x);;
+gap> b := ClassTransposition(0,x^2+1,1,x^2+1);;
+gap> c := ClassTransposition(1,x,0,x^2+x);;
+gap> G := Group(a,b,c);
+<rcwa group over GF(2)[x] with 3 generators>
+gap> ab := a*b;; SetName(ab,"ab");
+gap> ac := a*c;; SetName(ac,"ac");
+gap> H  := Subgroup(G,[ab,ac]);
+<rcwa group over GF(2)[x] with 2 generators>
+gap> IsNormal(G,H);
+true
+gap> Index(G,H);
+2
+gap> G/H;
+Group([ (1,2), (1,2), (1,2) ])
+gap> phi := EpimorphismFromFreeGroup(H);
+[ ab, ac ] -> [ ab, ac ]
+gap> F := Source(phi);;
+gap> H2 := Subgroup(G,[a*b*c,a*c]);;
+gap> IsNormal(G,H2);
+true
+gap> elm := First(G,g->not IsTame(g));
+<wild bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
+gap> elm in H;
+true
+gap> elm in H2;
+true
+gap> PreImagesRepresentative(phi,elm);
+ac^-1
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> STOP_TEST( "modular.tst", 800000000 );
+gap> STOP_TEST( "modular.tst", 1500000000 );
 
 #############################################################################
 ##
