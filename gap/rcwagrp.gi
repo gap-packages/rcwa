@@ -1972,13 +1972,15 @@ InstallMethod( Embedding,
 
 #############################################################################
 ##
-#M  Iterator( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa groups
+#M  Iterator( <G> ) . . . .  for rcwa groups (and infinite groups in general)
 ##
 InstallMethod( Iterator,
-               "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup and HasGeneratorsOfGroup ], 0,
+               "for rcwa groups (and infinite groups in general) (RCWA)",
+               true, [ IsGroup and HasGeneratorsOfGroup ], SUM_FLAGS,
 
   function ( G )
+    if   not IsRcwaGroup(G) and HasIsFinite(G) and IsFinite(G)
+    then TryNextMethod(); fi;
     return Objectify( NewType( IteratorsFamily, IsIterator
                                             and IsMutable
                                             and IsRcwaGroupsIteratorRep ),
