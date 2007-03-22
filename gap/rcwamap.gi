@@ -2350,7 +2350,7 @@ InstallMethod( Support,
 ##
 InstallMethod( RestrictedMapping,
                "for an rcwa mapping and a residue class union (RCWA)",
-               true, [ IsRcwaMapping, IsResidueClassUnion ], 0,
+               ReturnTrue, [ IsRcwaMapping, IsResidueClassUnion ], 0,
 
   function ( f, S )
 
@@ -2380,8 +2380,8 @@ InstallMethod( RestrictedMapping,
 #M  RestrictedMapping( <f>, <R> ) . . for an rcwa mapping and its full source
 ##
 InstallMethod( RestrictedMapping,
-               "for an rcwa mapping and its full source (RCWA)", true,
-               [ IsRcwaMapping, IsRing ], 0,
+               "for an rcwa mapping and its full source (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsRing ], 0,
 
   function ( f, R )
     if R = Source(f) then return f; else TryNextMethod(); fi;
