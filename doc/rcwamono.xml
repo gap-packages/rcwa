@@ -188,6 +188,23 @@ by the operation <C>ShortOrbits</C>:
 <![CDATA[
 gap> ShortOrbits(M,[-5..5],20);
 [ [ -5, -4, 1, 2, 7, 8 ], [ -3, -2, 1, 2, 5, 6 ], [ -1, 0, 1, 2, 3, 4 ] ]
+gap> Action(M,last[1]);
+<monoid with 2 generators>
+gap> Display(last);
+Monoid( [ Transformation( [ 2, 3, 4, 3, 6, 3 ] ), 
+  Transformation( [ 4, 5, 4, 3, 4, 1 ] ) ], ... )
+gap> IsTransformationMonoid(last);
+true
+gap> orbs := ShortOrbits(N,[0..10],50);
+[ [ -5, -4, -3, -1, 0, 1, 2, 3, 5, 6 ], 
+  [ -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 
+      12 ], [ -17, -16, -15, -13, -12, -11, -10, -9, -7, -6, -5, -4, -3, -1, 
+      0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18 ] ]
+gap> quots := List(orbs,orb->Action(N,orb));
+[ <monoid with 3 generators>, <monoid with 3 generators>,
+  <monoid with 3 generators> ]
+gap> List(quots,Size);
+[ 268, 332, 366 ]
 ]]>
 </Example>
   </Description>
@@ -255,6 +272,8 @@ gap> M2 := Restriction(M,2*One(Rcwa(Integers)));
 <rcwa monoid over Z with 2 generators, of size 11>
 gap> Support(M2);
 0(2)
+gap> Action(M2,ResidueClass(1,2));
+Trivial rcwa group over Z
 ]]>
 </Example>
   </Description>
