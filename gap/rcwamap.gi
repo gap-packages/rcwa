@@ -2346,46 +2346,55 @@ InstallMethod( Support,
 
 #############################################################################
 ##
-#M  RestrictedPerm( <g>, <S> )  for an rcwa mapping and a residue class union
+#M  RestrictedMapping( <f>, <S> ) for an rcwa mapping and a res.- class union
 ##
-InstallMethod( RestrictedPerm,
+InstallMethod( RestrictedMapping,
                "for an rcwa mapping and a residue class union (RCWA)",
                true, [ IsRcwaMapping, IsResidueClassUnion ], 0,
 
-  function ( g, S )
+  function ( f, S )
 
-    local  R, mg, mS, m, resg, resS, resm, cg, cgS, gS, r, pos;
+    local  R, mf, mS, m, resf, resS, resm, cf, cfS, fS, r, pos;
 
-    R := Source(g);
+    R := Source(f);
     if UnderlyingRing(FamilyObj(S)) <> R
       or IncludedElements(S) <> [] or ExcludedElements(S) <> []
-      or not IsSubset(S,S^g)
+      or not IsSubset(S,S^f)
     then TryNextMethod(); fi;
-    mg := Modulus(g); mS := Modulus(S); m := Lcm(mg,mS);
-    resg := AllResidues(R,mg); resS := Residues(S); resm := AllResidues(R,m);
-    cg := Coefficients(g);
-    cgS := List(resm,r->[1,0,1]*One(R));
+    mf := Modulus(f); mS := Modulus(S); m := Lcm(mf,mS);
+    resf := AllResidues(R,mf); resS := Residues(S); resm := AllResidues(R,m);
+    cf := Coefficients(f);
+    cfS := List(resm,r->[1,0,1]*One(R));
     for pos in [1..Length(resm)] do
       r := resm[pos];
       if r mod mS in resS then
-        cgS[pos] := cg[Position(resg,r mod mg)];
+        cfS[pos] := cf[Position(resf,r mod mf)];
       fi;
     od;
-    gS := RcwaMapping(R,m,cgS);
-    return gS;
+    fS := RcwaMapping(R,m,cfS);
+    return fS;
   end );
 
 #############################################################################
 ##
-#M  RestrictedPerm( <g>, <R> ) . . . . . . . . . . . . . .  for rcwa mappings
+#M  RestrictedMapping( <f>, <R> ) . . for an rcwa mapping and its full source
 ##
-InstallMethod( RestrictedPerm,
+InstallMethod( RestrictedMapping,
                "for an rcwa mapping and its full source (RCWA)", true,
                [ IsRcwaMapping, IsRing ], 0,
 
-  function ( g, R )
-    if R = Source(g) then return g; else TryNextMethod(); fi;
+  function ( f, R )
+    if R = Source(f) then return f; else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  RestrictedPerm( <g>, <S> ) . . . . . .  for an rcwa permutation and a set
+##
+InstallMethod( RestrictedPerm,
+               "for an rcwa permutation and a set (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsListOrCollection ], 0,
+               RestrictedMapping );
 
 #############################################################################
 ##
