@@ -187,6 +187,23 @@ gap> Ball(M,One(M),7);
   Rcwa mapping of Z: n -> 4n, Rcwa mapping of Z: n -> 8n, 
   Rcwa mapping of Z: n -> 16n, Rcwa mapping of Z: n -> 32n, 
   Rcwa mapping of Z: n -> 64n, Rcwa mapping of Z: n -> 128n ]
+gap> Action(Restriction(F,RcwaMapping([[2,0,1]])),ResidueClass(0,2));
+<rcwa monoid over Z with 2 generators>
+gap> Induction(last,RcwaMapping([[2,0,1]])) = F;
+true
+gap> orbs := ShortOrbits(F,[0..10],20);
+[ [ -1, 0, 1, 2, 3, 4 ], [ -3, -2, 1, 2, 5, 6 ], [ -5, -4, 1, 2, 7, 8 ], 
+  [ -7, -6, 1, 2, 9, 10 ] ]
+gap> T := Action(F,orbs[1]);
+<monoid with 2 generators>
+gap> IsTransformationMonoid(T);
+true
+gap> Size(T);
+11
+gap> List(MultiplicationTable(T),l->Length(Set(l)));
+[ 11, 6, 6, 6, 2, 6, 6, 2, 6, 6, 6 ]
+gap> List(TransposedMat(MultiplicationTable(T)),l->Length(Set(l)));
+[ 11, 6, 6, 6, 2, 6, 6, 2, 6, 6, 6 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "monoids.tst", 120000000 );

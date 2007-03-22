@@ -1162,6 +1162,12 @@ gap> G := Group(g,h);;
 gap> IsTame(G); Size(G);
 true
 infinity
+gap> H := DirectProduct(G,G);
+<tame rcwa group over Z with 4 generators, of size infinity>
+gap> H1 := Action(H,ResidueClass(0,2));
+<rcwa group over Z with 4 generators>
+gap> Induction(H1,RcwaMapping([[2,0,1]])) = G;
+true
 gap> H := WreathProduct(G,AlternatingGroup(5));
 <tame rcwa group over Z with 4 generators, of size infinity>
 gap> Embedding(H,1);
