@@ -3302,6 +3302,70 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#S  The action of rcwa groups on subsets of the underlying ring. ////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  ActionHomomorphism( <G>, <S> )  of an rcwa group on a residue class union
+##
+BindGlobal( "ActionHomomorphism_LIBRARY", ActionHomomorphism ); #
+MakeReadWriteGlobal( "ActionHomomorphism" );                    # dirty hack
+Unbind( ActionHomomorphism );                                   #
+BindGlobal( "ActionHomomorphism",
+
+  function ( arg )
+
+    local  G, H, S, phi, imgs;
+
+    if   not IsRcwaGroup(arg[1]) or Length(arg) <> 2
+      or not IsResidueClassUnion(arg[2])
+      or not IsSubset(Source(One(arg[1])),arg[2])
+    then return CallFuncList(ActionHomomorphism_LIBRARY,arg); fi;
+    G := arg[1]; S := arg[2];
+    imgs := List(GeneratorsOfGroup(G),g->RestrictedPerm(g,S));
+    H := GroupWithGenerators(imgs);
+    phi := EpimorphismByGeneratorsNC(G,H);
+    return phi;
+  end );
+
+#############################################################################
+##
+#F  Action( <G>, <S> ) . . . . . .  of an rcwa group on a residue class union
+#F  Action( <M>, <S> ) . . . . . . of an rcwa monoid on a residue class union
+#F  Action( <M>, <l> ) . . . . . . . . . .  of an rcwa monoid on a finite set
+##
+BindGlobal( "Action_LIBRARY", Action ); #
+MakeReadWriteGlobal( "Action" );        # dirty hack ...
+Unbind( Action );                       #
+BindGlobal( "Action",
+
+  function ( arg )
+
+    local  G, M, S;
+
+    if   not IsRcwaMonoid(arg[1]) or Length(arg) <> 2
+      or not (IsResidueClassUnion(arg[2]) or IsList(arg[2]))
+      or not IsSubset(Source(One(arg[1])),arg[2])
+    then return CallFuncList(Action_LIBRARY,arg); fi;
+    if IsRcwaGroup(arg[1]) then
+      G := arg[1]; S := arg[2];
+      return Image(ActionHomomorphism(G,S));
+    else
+      M := arg[1]; S := arg[2];
+      if IsResidueClassUnion(S) then
+        return MonoidByGenerators(List(GeneratorsOfMonoid(M),
+                 f->RestrictedMapping(f,S)));
+      else
+        return MonoidByGenerators(List(GeneratorsOfMonoid(M),
+                 f->Transformation(List(OnTuples(S,f),n->Position(S,n)))));
+      fi;
+    fi;
+  end );
+
+#############################################################################
+##
 #S  Testing for transitivity. ///////////////////////////////////////////////
 ##
 #############################################################################
