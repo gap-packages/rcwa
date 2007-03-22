@@ -1168,6 +1168,8 @@ gap> H1 := Action(H,ResidueClass(0,2));
 <rcwa group over Z with 4 generators>
 gap> Induction(H1,RcwaMapping([[2,0,1]])) = G;
 true
+gap> Action(H1,ResidueClass(1,2));
+Trivial rcwa group over Z
 gap> H := WreathProduct(G,AlternatingGroup(5));
 <tame rcwa group over Z with 4 generators, of size infinity>
 gap> Embedding(H,1);
