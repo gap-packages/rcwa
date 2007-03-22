@@ -476,7 +476,15 @@ Changes between version 2.4.3 and version 2.5.0:
  - The `IsomorphismRcwaGroup' method for finite groups has been improved.
    It works now over all rings which are currently supported by RCWA.
 
+ - Iterators for rcwa groups have been implemented.
+
  - An `Exponent' method for rcwa groups has been added.
+
+ - Methods for `Action' and `ActionHomomorphism' to compute the action of
+   an rcwa group on a subset of its underlying ring have been added.
+
+ - Basic functionality for subgroups of rcwa groups "by property" has
+   been implemented.
 
  - A method to construct a dihedral group acting on a given residue class
    has been added.  
