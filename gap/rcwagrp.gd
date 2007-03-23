@@ -202,6 +202,17 @@ DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#O  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
+#O  StabilizerOp( <G>, <S>, <action> ) . . .  set stabilizer in an rcwa group
+#A  StabilizerInfo( <G> ) . .  info. on what is stabilized under which action
+##
+DeclareOperation( "StabilizerOp", [ IsRcwaGroup, IsRingElement ] );
+DeclareOperation( "StabilizerOp", [ IsRcwaGroup, IsListOrCollection,
+                                    IsFunction ] );
+DeclareAttribute( "StabilizerInfo", IsRcwaGroup );
+
+#############################################################################
+##
 #O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
 ##
 ##  Computes all finite orbits of the rcwa group <G> of length <= <maxlng>,

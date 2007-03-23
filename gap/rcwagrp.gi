@@ -1976,7 +1976,7 @@ InstallMethod( Embedding,
 ##
 InstallMethod( Iterator,
                "for rcwa groups (and infinite groups in general) (RCWA)",
-               true, [ IsGroup and HasGeneratorsOfGroup ], SUM_FLAGS,
+               true, [ IsGroup ], SUM_FLAGS,
 
   function ( G )
     if   not IsRcwaGroup(G) and HasIsFinite(G) and IsFinite(G)
@@ -1996,7 +1996,7 @@ InstallMethod( Iterator,
 ##
 InstallMethod( NextIterator,
                "for iterators of rcwa groups (RCWA)", true,
-               [ IsIterator and IsMutable and IsRcwaGroupsIteratorRep ], 0,
+               [ IsIterator and IsMutable and IsRcwaGroupsIteratorRep ], 5,
 
   function ( iter )
 
@@ -2013,6 +2013,43 @@ InstallMethod( NextIterator,
       iter!.sphere    := sphere;
       iter!.pos       := 1;
     fi;
+    return g;
+  end );
+
+#############################################################################
+##
+#M  NextIterator( <iter> ) . .  for iterators of rcwa groups, by parent group
+##
+InstallMethod( NextIterator,
+               "for iterators of rcwa groups, by parent group (RCWA)", true,
+               [ IsIterator and IsMutable and IsRcwaGroupsIteratorRep ], 0,
+
+  function ( iter )
+
+    local  G, gens, sphere, g;
+
+    G := iter!.G;
+    if   not HasParent(G) or not HasElementTestFunction(G)
+    then TryNextMethod(); fi;
+    P := Parent(G);
+    if not HasGeneratorsOfGroup(P) then TryNextMethod(); fi;
+    gens := GeneratorsAndInverses(P);
+    g := iter!.sphere[iter!.pos];
+    repeat
+      iter!.pos := iter!.pos + 1;
+    until    iter!.pos > Length(iter!.sphere)
+          or ElementTestFunction(G)(iter!.sphere[iter!.pos]) = true;
+    while iter!.pos > Length(iter!.sphere) do
+      sphere := Difference(Union(List(gens,g->iter!.sphere*g)),
+                           Union(iter!.sphere,iter!.oldsphere));
+      iter!.oldsphere := iter!.sphere;
+      iter!.sphere    := sphere;
+      iter!.pos       := 1;
+      repeat
+        iter!.pos := iter!.pos + 1;
+      until    iter!.pos > Length(iter!.sphere)
+            or ElementTestFunction(G)(iter!.sphere[iter!.pos]) = true;
+    od;
     return g;
   end );
 
@@ -2945,7 +2982,7 @@ InstallMethod( \in,
 ##  not an element of <G>.
 ##
 InstallMethod( \in,
-               "for an rcwa mapping and an rcwa group (RCWA)", ReturnTrue,
+               "for rcwa groups (RCWA)", ReturnTrue,
                [ IsRcwaMapping, IsRcwaGroup and HasGeneratorsOfGroup ], 0,
 
   function ( g, G )
@@ -2971,8 +3008,9 @@ InstallMethod( \in,
 ##  element of <G>.
 ##
 InstallMethod( \in,
-               "for rcwa groups over Z (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfZ, IsRcwaGroupOverZ ], 0,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaMappingOfZ,
+                 IsRcwaGroupOverZ and HasGeneratorsOfGroup ], 0,
 
   function ( g, G )
 
@@ -3133,8 +3171,8 @@ InstallMethod( \in,
 ##  element of <G>.
 ##
 InstallMethod( \in,
-               "for rcwa groups over GF(q)[x] (RCWA)",
-               ReturnTrue, [ IsRcwaMappingOfGFqx, IsRcwaGroupOverGFqx ], 0,
+               "for rcwa groups over GF(q)[x] (RCWA)", ReturnTrue,
+               [ IsRcwaMappingOfGFqx, IsRcwaGroupOverGFqx ], 0,
 
   function ( g, G )
 
@@ -3236,7 +3274,8 @@ InstallMethod( \in,
 ##
 InstallMethod( IsSubset,
                "for two rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsRcwaGroup ], 0,
+               [ IsRcwaGroup and HasGeneratorsOfGroup,
+                 IsRcwaGroup and HasGeneratorsOfGroup ], 0,
 
   function ( G, H )
 
@@ -3265,7 +3304,8 @@ InstallMethod( IsSubset,
 ##
 InstallMethod( IsSubset,
                "for two rcwa groups over Z (RCWA)", true,
-               [ IsRcwaGroupOverZ, IsRcwaGroupOverZ ], 0,
+               [ IsRcwaGroupOverZ and HasGeneratorsOfGroup,
+                 IsRcwaGroupOverZ and HasGeneratorsOfGroup ], 0,
 
   function ( G, H )
 
@@ -3362,6 +3402,90 @@ BindGlobal( "Action",
                  f->Transformation(List(OnTuples(S,f),n->Position(S,n)))));
       fi;
     fi;
+  end );
+
+#############################################################################
+##
+#S  Stabilizers. ////////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  Stabilizer( <arg> ) . . . . . . . . . .  use StabilizerOp for rcwa groups
+##
+MakeReadWriteGlobal( "Stabilizer" ); Unbind( Stabilizer );
+BindGlobal( "Stabilizer",
+
+  function ( arg )
+    if   Length( arg ) = 1   then return StabilizerOfExternalSet( arg[1] );
+    elif IsRcwaGroup(arg[1]) then return CallFuncList( StabilizerOp, arg );
+    else return CallFuncList( StabilizerFunc, arg ); fi;
+    return;
+  end );
+
+#############################################################################
+##
+#M  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
+##
+InstallMethod( StabilizerOp,
+               "point stabilizer in an rcwa group (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRingElement ], 0,
+
+  function ( G, n )
+
+    local  R, H;
+
+    R := Source(One(G));
+    if not n in R then TryNextMethod(); fi;
+    H := SubgroupByProperty(G,g->n^g=n);
+    SetStabilizerInfo(H, rec(set    := [n],
+                             action := OnPoints));
+    return H;
+  end );
+
+#############################################################################
+##
+#M  StabilizerOp( <G>, <S>, <action> ) . .  point stabilizer in an rcwa group
+##
+InstallMethod( StabilizerOp,
+               "point stabilizer in an rcwa group (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsListOrCollection, IsFunction ], 0,
+
+  function ( G, S, action )
+
+    local  R, H;
+
+    R := Source(One(G));
+    if not IsSubset(R,S) then TryNextMethod(); fi;
+    if   not IsFinite(S) and action = OnTuples
+    then H := SubgroupByProperty(G,g->IsTrivial(Intersection(Support(g),S)));
+    else H := SubgroupByProperty(G,g->action(S,g)=S); fi;
+    SetStabilizerInfo(H, rec(set    := S,
+                             action := action));
+    return H;
+  end );
+
+#############################################################################
+##
+#M  IsTrivial( <G> ) . . . . . . . . . . . . . for stabilizers in rcwa groups
+##
+InstallMethod( IsTrivial,
+               "for stabilizers in rcwa groups", true,
+               [ IsRcwaGroup and HasParent and
+                 HasElementTestFunction and HasStabilizerInfo ], 0,
+
+  function ( G )
+
+    local  iter;
+
+    if     IsFinite(Difference(Support(Parent(G)),StabilizerInfo(G).set))
+       and StabilizerInfo(G).action = OnTuples
+    then return true; fi;
+    if IsNaturalRCWA_OR_CT(Parent(G)) then return false; fi;
+    iter := Iterator(G);
+    NextIterator(iter);
+    return IsDoneIterator(iter);
   end );
 
 #############################################################################
