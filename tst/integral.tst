@@ -729,6 +729,8 @@ gap> Trajectory(a,8,10,"AllCoeffs");
 gap> G := Group(g,h);;
 gap> P := RespectedPartition(G);
 [ 0(6), 1(6), 3(6), 4(6), 5(6), 2(12), 8(12) ]
+gap> SymmetricGroup(P);
+<rcwa group over Z with 2 generators, of size 5040>
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> M := Image(phi);
 <matrix group with 2 generators>
@@ -752,8 +754,6 @@ gap> Multiplier(G);
 2
 gap> Divisor(G);
 2
-gap> SymmetricGroup(P);
-<rcwa group over Z with 2 generators, of size 5040>
 gap> DihedralGroup(ResidueClass(3,4));
 <tame rcwa group over Z with 2 generators>
 gap> GeneratorsOfGroup(last);
@@ -1483,6 +1483,31 @@ gap> Support(elm);
 5(8)
 gap> Factorization(elm);
 [ ClassShift(5,8)^-1 ]
+gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
+gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
+gap> SetName(g,"g"); SetName(h,"h");
+gap> G := Group(g,h);;
+gap> H := Stabilizer(G,0);
+<rcwa group over Z, with membership test, without known generators>
+gap> IsTrivial(H);
+false
+gap> ClassTransposition(1,3,2,3) in H;
+false
+gap> g in H;
+false
+gap> h/g in H;
+true
+gap> First(H,h->not IsOne(h));
+<bijective rcwa mapping of Z with modulus 6>
+gap> phi := EpimorphismFromFreeGroup(G);
+[ g, h ] -> [ g, h ]
+gap> l := [];;
+gap> for h in H do Add(l,h); if Length(l) = 10 then break; fi; od;
+gap> List(l,h->0^h);
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> List(l,h->PreImagesRepresentative(phi,h));
+[ <identity ...>, h*g^-1, g*h^-1, h*g^-1*h*g^-1, g^-1*h^-1*g^2, g^-2*h*g, 
+  g*h^-1*g*h^-1, h^-3*g^-1, h*g*h^2, h^-4 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );

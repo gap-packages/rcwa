@@ -244,6 +244,16 @@ gap> Factorization(conj);
   ClassTransposition(0,4,2,8), ClassTransposition(6,8,3,10) ]
 gap> conj = Product(last);
 true
+gap> S := Stabilizer(G,0);
+<rcwa group over Z, with membership test, without known generators>
+gap> IsTrivial(S);
+false
+gap> ClassTransposition(0,2,1,2) in S;
+false
+gap> ClassTransposition(1,3,2,3) in S;
+true
+gap> ClassShift(1,2) in S;
+false
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));
