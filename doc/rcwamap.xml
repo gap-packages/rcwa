@@ -1774,6 +1774,10 @@ gap> GuessedDivergence(T);
     <Index Key="IsRcwaMappingStandardRep">
       <C>IsRcwaMappingStandardRep</C>
     </Index>
+    There are methods available for <C>ExtRepOfObj</C> and
+    <C>ObjByExtRep</C>.
+    <Index Key="ExtRepOfObj"><C>ExtRepOfObj</C></Index>
+    <Index Key="ObjByExtRep"><C>ObjByExtRep</C></Index>
   </Description>
 </ManSection>
 
