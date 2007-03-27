@@ -65,6 +65,15 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>ClassWiseOrderPreservingOn(<A>f</A>)</C>, etc.
+  </Mark>
+  <Item>
+    Forms the union of the residue classes modulo the modulus
+    of&nbsp;<A>f</A> in whose corresponding coefficient triple
+    the first entry is positive, zero or negative, respectively.
+  </Item>
+
+  <Mark>
     <C>Coefficients(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -782,15 +791,6 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
-  </Item>
-
-  <Mark>
-    <C>ClassWiseOrderPreservingOn(<A>f</A>)</C>, etc.
-  </Mark>
-  <Item>
-    Forms the union of the residue classes modulo the modulus of the mapping,
-    in whose corresponding coefficient triple the first entry is positive,
-    zero or negative, respectively.
   </Item>
 
   <Mark>
