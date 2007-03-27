@@ -948,15 +948,15 @@ gap> Sign((a*b)^2);
 1
 gap> Sign(Comm(a,b));
 1
-gap> SetOnWhichMappingIsClassWiseOrderPreserving(T);
+gap> ClassWiseOrderPreservingOn(T);
 Integers
-gap> SetOnWhichMappingIsClassWiseOrderPreserving(u);
+gap> ClassWiseOrderPreservingOn(u);
 Integers
-gap> SetOnWhichMappingIsClassWiseOrderReversing(t);
+gap> ClassWiseOrderReversingOn(t);
 Integers
-gap> SetOnWhichMappingIsClassWiseOrderPreserving(t);
+gap> ClassWiseOrderPreservingOn(t);
 [  ]
-gap> SetOnWhichMappingIsClassWiseConstant(RcwaMapping([[2,0,1],[0,4,1]]));
+gap> ClassWiseConstantOn(RcwaMapping([[2,0,1],[0,4,1]]));
 1(2)
 gap> LargestSourcesOfAffineMappings(a);
 [ 0(2), 1(4), 3(4) ]

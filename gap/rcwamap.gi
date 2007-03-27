@@ -2177,23 +2177,23 @@ InstallMethod( IsClassWiseOrderPreserving,
 
 #############################################################################
 ##
-#M  SetOnWhichMappingIsClassWiseOrderPreserving for rcwa map's of Z or Z_(pi)
-#M  SetOnWhichMappingIsClassWiseOrderReversing  for rcwa map's of Z or Z_(pi)
-#M  SetOnWhichMappingIsClassWiseConstant . . .  for rcwa map's of Z or Z_(pi)
+#M  ClassWiseOrderPreservingOn( <f> )  . . . for rcwa mappings of Z or Z_(pi)
+#M  ClassWiseOrderReversingOn( <f> ) . . . . for rcwa mappings of Z or Z_(pi)
+#M  ClassWiseConstantOn( <f> ) . . . . . . . for rcwa mappings of Z or Z_(pi)
 ##
-InstallMethod( SetOnWhichMappingIsClassWiseOrderPreserving,
+InstallMethod( ClassWiseOrderPreservingOn,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",
                true, [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] > 0 ) ) );
-InstallMethod( SetOnWhichMappingIsClassWiseOrderReversing,
+InstallMethod( ClassWiseOrderReversingOn,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",
                true, [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] < 0 ) ) );
-InstallMethod( SetOnWhichMappingIsClassWiseConstant,
+InstallMethod( ClassWiseConstantOn,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",
                true, [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
@@ -4723,7 +4723,7 @@ InstallMethod( FactorizationIntoCSCRCT,
 
       Info(InfoRCWA,1,"Making the mapping class-wise order-preserving.");
 
-      rev    := SetOnWhichMappingIsClassWiseOrderReversing(g);
+      rev    := ClassWiseOrderReversingOn(g);
       revert := [List(AsUnionOfFewClasses(rev  ),ClassReflection),
                  List(AsUnionOfFewClasses(rev^g),ClassReflection)];
       if   Length(revert[1]) <= Length(revert[2])

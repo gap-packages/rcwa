@@ -504,19 +504,16 @@ DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMonoid );
 
 #############################################################################
 ##
-#A  SetOnWhichMappingIsClassWiseOrderPreserving( <f> )
-#A  SetOnWhichMappingIsClassWiseOrderReversing( <f> )
-#A  SetOnWhichMappingIsClassWiseConstant( <f> )
+#A  ClassWiseOrderPreservingOn( <f> )
+#A  ClassWiseOrderReversingOn( <f> )
+#A  ClassWiseConstantOn( <f> )
 ##
 ##  The union of the residue classes r(m) for which a_r(m) > 0, a_r(m) < 0
 ##  or a_r(m) = 0, respectively.
 ##
-DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderPreserving",
-                  IsRcwaMappingOfZOrZ_pi );
-DeclareAttribute( "SetOnWhichMappingIsClassWiseOrderReversing",
-                  IsRcwaMappingOfZOrZ_pi );
-DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
-                  IsRcwaMappingOfZOrZ_pi );
+DeclareAttribute( "ClassWiseOrderPreservingOn", IsRcwaMappingOfZOrZ_pi );
+DeclareAttribute( "ClassWiseOrderReversingOn", IsRcwaMappingOfZOrZ_pi );
+DeclareAttribute( "ClassWiseConstantOn", IsRcwaMappingOfZOrZ_pi );
 
 #############################################################################
 ##
@@ -528,6 +525,21 @@ DeclareAttribute( "SetOnWhichMappingIsClassWiseConstant",
 ##
 DeclareAttribute( "IncreasingOn", IsRcwaMapping );
 DeclareAttribute( "DecreasingOn", IsRcwaMapping );
+
+#############################################################################
+##
+#A  ShiftsUpOn( <f> ) . . . union of residue classes S s.th. f|_S: n -> n + c
+#A  ShiftsDownOn( <f> ) . . union of residue classes S s.th. f|_S: n -> n - c
+##
+##  Let f be an rcwa mapping of Z with modulus m.
+##
+##  ShiftsUpOn(f) denotes the union of all residue classes r(m) such that
+##  the restriction f|_r(m) is given by n -> n + b_r(m) for positive b_r(m).
+##  ShiftsDownOn(f) denotes the union of all residue classes r(m) such that
+##  the restriction f|_r(m) is given by n -> n + b_r(m) for negative b_r(m).
+##
+DeclareAttribute( "ShiftsUpOn", IsRcwaMappingOfZ );
+DeclareAttribute( "ShiftsDownOn", IsRcwaMappingOfZ );
 
 #############################################################################
 ##

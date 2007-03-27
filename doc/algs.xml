@@ -785,12 +785,12 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
-    <C>SetOnWhichMappingIsClassWiseOrderPreserving(<A>f</A>)</C>, etc.
+    <C>ClassWiseOrderPreservingOn(<A>f</A>)</C>, etc.
   </Mark>
   <Item>
     Forms the union of the residue classes modulo the modulus of the mapping,
     in whose corresponding coefficient triple the first entry is positive,
-    zero resp. negative.
+    zero or negative, respectively.
   </Item>
 
   <Mark>

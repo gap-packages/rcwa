@@ -192,8 +192,7 @@ gap> f := RcwaMapping([2],[[1/3,1,1],[3,-3,1]]);
 <rcwa mapping of Z_( 2 ) with modulus 2>
 gap> Order(f);
 2
-gap> SetOnWhichMappingIsClassWiseOrderPreserving(
->      RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
+gap> ClassWiseOrderPreservingOn(RcwaMapping(Z_pi(2),[[2,0,1],[0,4,1]]));
 0(2)
 gap> LargestSourcesOfAffineMappings(a);
 [ 0(2), 1(4), 3(4) ]
