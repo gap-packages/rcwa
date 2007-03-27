@@ -492,6 +492,8 @@ Changes between version 2.4.3 and version 2.5.0:
  - Methods for `ExtRepOfObj' and `ObjByExtRep' for rcwa mappings have been
    added.
 
+ - Attributes `ShiftsUpOn' and `ShiftsDownOn' have been introduced.
+
  - The operation `RcwaGroupByPermGroup' / `RcwaGroupOverZByPermGroup' is
    no longer needed, and has been removed.
 

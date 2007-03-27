@@ -2240,6 +2240,30 @@ InstallMethod( DecreasingOn,
 
 #############################################################################
 ##
+#M  ShiftsUpOn( <f> )  . . . . . . . . . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( ShiftsUpOn,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+  f -> ResidueClassUnion( Integers, Modulus(f),
+                          Filtered( [0..Modulus(f)-1],
+                                    r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
+                                     and Coefficients(f)[r+1][2] > 0 ) ) );
+
+#############################################################################
+##
+#M  ShiftsDownOn( <f> )  . . . . . . . . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( ShiftsDownOn,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+  f -> ResidueClassUnion( Integers, Modulus(f),
+                          Filtered( [0..Modulus(f)-1],
+                                    r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
+                                     and Coefficients(f)[r+1][2] < 0 ) ) );
+
+#############################################################################
+##
 #M  LargestSourcesOfAffineMappings( <f> ) . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( LargestSourcesOfAffineMappings,

@@ -1514,6 +1514,26 @@ gap> Collatz2 := ObjByExtRep(FamilyObj(Collatz),l);
 <rcwa mapping of Z with modulus 3>
 gap> Collatz2 = Collatz;
 true
+gap> ShiftsUpOn(ClassShift(0,1));
+Integers
+gap> ShiftsDownOn(ClassShift(0,1)^-1);
+Integers
+gap> ShiftsUpOn(ClassShift(2,3));
+2(3)
+gap> ShiftsDownOn(ClassShift(2,3));
+[  ]
+gap> ShiftsUpOn(ClassShift(2,3)^-1);
+[  ]
+gap> ShiftsDownOn(ClassShift(2,3)^-1);
+2(3)
+gap> ShiftsUpOn(ClassReflection(0,1));
+[  ]
+gap> ShiftsDownOn(ClassReflection(0,1));
+[  ]
+gap> ShiftsUpOn(Collatz);
+[  ]
+gap> ShiftsDownOn(Collatz);
+[  ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
