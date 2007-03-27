@@ -1508,6 +1508,12 @@ gap> List(l,h->0^h);
 gap> List(l,h->PreImagesRepresentative(phi,h));
 [ <identity ...>, h*g^-1, g*h^-1, h*g^-1*h*g^-1, g^-1*h^-1*g^2, g^-2*h*g, 
   g*h^-1*g*h^-1, h^-3*g^-1, h*g*h^2, h^-4 ]
+gap> l := ExtRepOfObj(Collatz);
+[ 3, [ [ 2, 0, 3 ], [ 4, -1, 3 ], [ 4, 1, 3 ] ] ]
+gap> Collatz2 := ObjByExtRep(FamilyObj(Collatz),l);
+<rcwa mapping of Z with modulus 3>
+gap> Collatz2 = Collatz;
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );

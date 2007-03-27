@@ -722,6 +722,38 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
+#S  ExtRepOfObj / ObjByExtRep for rcwa mappings. ////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  ExtRepOfObj( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings
+##
+InstallMethod( ExtRepOfObj,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               f -> [ Modulus( f ), ShallowCopy( Coefficients( f ) ) ] );
+
+#############################################################################
+##
+#M  ObjByExtRep( <fam>, <l> ) . rcwa mapping, by list [ <modulus>, <coeffs> ]
+##
+InstallMethod( ObjByExtRep,
+               "rcwa mapping, by list [ <modulus>, <coefficients> ] (RCWA)",
+               ReturnTrue, [ IsFamily, IsList ], 0,
+
+  function ( fam, l )
+
+    local  R;
+
+    if not HasUnderlyingRing(fam) or Length(l) <> 2 then TryNextMethod(); fi;
+    R := UnderlyingRing(fam);
+    if fam <> RcwaMappingsFamily(R) then TryNextMethod(); fi;
+    return RcwaMapping(R,l[1],l[2]);
+  end );
+
+#############################################################################
+##
 #S  Translating rcwa mappings of Z to rcwa mappings of Z_(pi). //////////////
 ##
 #############################################################################
