@@ -470,13 +470,15 @@ Changes between version 2.4.3 and version 2.5.0:
    Nothing has been rewritten completely, but little improvements and
    updates have been made in many places.
 
+ - Iterators for rcwa groups have been implemented.
+
+ - An operation `EpimorphismFromFpGroup' has been introduced.
+
  - A `SymmetricGroup' method for partitions of a ring into residue classes
    has been added.
 
  - The `IsomorphismRcwaGroup' method for finite groups has been improved.
    It works now over all rings which are currently supported by RCWA.
-
- - Iterators for rcwa groups have been implemented.
 
  - An `Exponent' method for rcwa groups has been added.
 
