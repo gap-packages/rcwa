@@ -135,6 +135,17 @@ InstallGlobalFunction( SearchCycle,
 
 #############################################################################
 ##
+#F  FloatQuotients( <list> ) . . . . .  quotients of consecutive list entries
+##
+##  This utility function can for example be used in trying to estimate
+##  growth rates.
+##
+BindGlobal( "FloatQuotients",
+            list -> List( [ 2 .. Length( list ) ],
+                          pos -> Float( list[ pos ] / list[ pos - 1 ] ) ) );
+
+#############################################################################
+##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
