@@ -391,7 +391,7 @@ a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 
 #############################################################################
 ##
-##  Section 4.14: A group which acts 4-transitive on the positive integers
+##  Section 4.14: A group which acts 4-transitively on the positive integers
 ##
 a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]); SetName(a,"a");
 u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);
@@ -399,7 +399,7 @@ SetName(u,"u");
 
 #############################################################################
 ##
-##  Section 4.15: A group which acts 3-transitive, but not 4-transitive on Z
+##  Section 4.15: A group which acts 3-, but not 4-transitively on Z
 ##
 ##  This example does not define rcwa mappings whose inclusion here would
 ##  save any typing.
