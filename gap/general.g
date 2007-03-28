@@ -13,6 +13,17 @@ Revision.general_g :=
 
 #############################################################################
 ##
+#F  Positions( <list>, <elm> ) . (the Library function, for old GAP versions)
+##
+if not IsBound( Positions ) then
+BindGlobal( "Positions", 
+  function ( list, elm )
+    return Filtered( [ 1 .. Length( list ) ], i -> list[ i ] = elm );
+  end );
+fi;
+
+#############################################################################
+##
 #M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
 #M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
 #M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
