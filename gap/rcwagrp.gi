@@ -4215,6 +4215,50 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 
 #############################################################################
 ##
+#S  Rcwa groups as epimorphic images of finitely presented groups. //////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  EpimorphismFromFpGroup( <G>, <r> )
+##
+InstallMethod( EpimorphismFromFpGroup,
+               "default method (RCWA)", ReturnTrue, [ IsGroup, IsInt ], 0,
+
+  function ( G, r )
+
+    local  Fp, FpS, phi, phiFp, phiFpS, F, BF, BG, BGset, rels, gensF, g, w;
+
+    if IsFpGroup(G) then return IdentityMapping(G); fi;
+
+    phi       := EpimorphismFromFreeGroup(G); if r <= 0 then return phi; fi;
+    F         := Source(phi);
+    gensF     := GeneratorsOfGroup(F);
+
+    BF        := Ball(F,One(F),r);
+    BG        := List(BF,g->Image(phi,g));
+    BGset     := Set(BG);
+
+    rels      := [];
+    for g in BGset do
+      Append(rels,List(Combinations(BF{Positions(BG,g)},2),w->w[1]/w[2]));
+      if Order(g) < infinity then
+        w := BF[Position(BG,g)];
+        if Maximum(ExponentSums(w)) >= 0 then Add(rels,w^Order(g)); fi;
+      fi;
+    od;
+    rels := Difference(rels,[One(F)]);
+
+    Fp     := F/rels;
+    phiFp  := EpimorphismByGeneratorsNC(Fp,G);
+    phiFpS := InverseGeneralMapping(IsomorphismSimplifiedFpGroup(Fp));
+
+    return CompositionMapping(phiFp,phiFpS);
+  end );
+
+#############################################################################
+##
 #S  Computing structure descriptions for rcwa groups. ///////////////////////
 ##
 #############################################################################

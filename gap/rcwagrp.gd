@@ -421,6 +421,15 @@ DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
 
 #############################################################################
 ##
+#O  EpimorphismFromFpGroup( <G>, <r> ) . .  epimorphism from an fp group to G
+##
+##  The argument <r> denotes the radius of the ball around 1 which should be
+##  searched for relations.
+##
+DeclareOperation( "EpimorphismFromFpGroup", [ IsGroup, IsInt ] );
+
+#############################################################################
+##
 #O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
 ##
 DeclareOperation( "Projections", [ IsRcwaGroup, IsRingElement ] );
