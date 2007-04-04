@@ -16,10 +16,19 @@ Revision.general_g :=
 #F  Positions( <list>, <elm> ) . (the Library function, for old GAP versions)
 ##
 if not IsBound( Positions ) then
-BindGlobal( "Positions", 
+BindGlobal( "Positions",
   function ( list, elm )
     return Filtered( [ 1 .. Length( list ) ], i -> list[ i ] = elm );
   end );
+fi;
+
+#############################################################################
+##
+#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
+##
+if not IsBound( DifferencesList ) then # Don't overwrite if bound otherwise.
+BindGlobal( "DifferencesList",
+            list -> List( [ 2..Length(list) ], i -> list[i] - list[i-1] ) );
 fi;
 
 #############################################################################
