@@ -221,6 +221,33 @@
   </other>
 </misc></entry>
 
+<entry id="Kohl07b"><misc>
+  <author>
+    <name><first>Stefan</first><last>Kohl</last></name>
+  </author>
+  <title>
+    Graph Theoretical Criteria for the Wildness of Residue-Class-Wise Affine Permutations
+  </title>
+  <year>2007</year>
+  <other type="note">
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/graphcrit.pdf</URL>
+  </other>
+</misc></entry>
+
+<entry id="Kohl07c"><misc>
+  <author>
+    <name><first>Stefan</first><last>Kohl</last></name>
+  </author>
+  <title>
+    A Reformulation of the 3n+1 Conjecture in Terms of a Mapping
+    from the Free Monoid of Rank 2 to the Positive Integers
+  </title>
+  <year>2007</year>
+  <other type="note">
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/3n+1tree.pdf</URL>
+  </other>
+</misc></entry>
+
 <entry id="Lagarias06"><misc>
   <author>
     <name><first>Jeffrey C.</first><last>Lagarias</last></name>
