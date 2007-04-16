@@ -171,7 +171,7 @@ InstallGlobalFunction( RcwaMappingsFamily,
 
 #############################################################################
 ##
-#F  RcwaMapping( <R>, <modulus>, <coeffs> ) . . . .  method (a) in the manual
+#M  RcwaMapping( <R>, <modulus>, <coeffs> ) . . . .  method (a) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping by ring, modulus and coefficients (RCWA)",
@@ -189,7 +189,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <R>, <modulus>, <coeffs> ) . . NC-method (a) in the manual
+#M  RcwaMappingNC( <R>, <modulus>, <coeffs> ) . . NC-method (a) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping by ring, modulus and coefficients (RCWA)",
@@ -207,7 +207,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <R>, <coeffs> ) . . . . . . . . . . method (b) in the manual
+#M  RcwaMapping( <R>, <coeffs> ) . . . . . . . . . . method (b) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping by ring and coefficients (RCWA)",
@@ -224,7 +224,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <R>, <coeffs> ) . . . . . . .  NC-method (b) in the manual
+#M  RcwaMappingNC( <R>, <coeffs> ) . . . . . . .  NC-method (b) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping by ring and coefficients (RCWA)",
@@ -241,7 +241,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <coeffs> ) . . . . . . . . . . . .  method (c) in the manual
+#M  RcwaMapping( <coeffs> ) . . . . . . . . . . . .  method (c) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping of Z by coefficients (RCWA)",
@@ -273,7 +273,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <coeffs> ) . . . . . . . . . . NC-method (c) in the manual
+#M  RcwaMappingNC( <coeffs> ) . . . . . . . . . . NC-method (c) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping of Z by coefficients (RCWA)",
@@ -319,7 +319,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <perm>, <range> ) . . . . . . . . . method (d) in the manual
+#M  RcwaMapping( <perm>, <range> ) . . . . . . . . . method (d) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping of Z by permutation and range (RCWA)",
@@ -340,7 +340,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <perm>, <range> ) . . . . . .  NC-method (d) in the manual
+#M  RcwaMappingNC( <perm>, <range> ) . . . . . .  NC-method (d) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping of Z by permutation and range (RCWA)",
@@ -365,7 +365,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <modulus>, <values> ) . . . . . . . method (e) in the manual
+#M  RcwaMapping( <modulus>, <values> ) . . . . . . . method (e) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping of Z by modulus and values (RCWA)",
@@ -396,7 +396,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <modulus>, <values> ) . . . .  NC-method (e) in the manual
+#M  RcwaMappingNC( <modulus>, <values> ) . . . .  NC-method (e) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping of Z by modulus and values (RCWA)",
@@ -419,7 +419,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <pi>, <coeffs> ) . . . . . . . . .  method (f) in the manual
+#M  RcwaMapping( <pi>, <coeffs> ) . . . . . . . . .  method (f) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping by noninvertible primes and coeff's (RCWA)",
@@ -455,7 +455,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <pi>, <coeffs> ) . . . . . . . NC-method (f) in the manual
+#M  RcwaMappingNC( <pi>, <coeffs> ) . . . . . . . NC-method (f) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping by noninvertible primes and coeff's (RCWA)",
@@ -504,7 +504,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <q>, <modulus>, <coeffs> ) . . . .  method (g) in the manual
+#M  RcwaMapping( <q>, <modulus>, <coeffs> ) . . . .  method (g) in the manual
 ##
 InstallMethod( RcwaMapping,
                Concatenation("rcwa mapping by finite field size, ",
@@ -540,7 +540,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <q>, <modulus>, <coeffs> ) . . NC-method (g) in the manual
+#M  RcwaMappingNC( <q>, <modulus>, <coeffs> ) . . NC-method (g) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                Concatenation("rcwa mapping by finite field size, ",
@@ -603,7 +603,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <P1>, <P2> ) . . . . . . . . . . .  method (h) in the manual
+#M  RcwaMapping( <P1>, <P2> ) . . . . . . . . . . .  method (h) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping by two class partitions (RCWA)",
@@ -625,7 +625,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <P1>, <P2> ) . . . . . . . . . NC-method (h) in the manual
+#M  RcwaMappingNC( <P1>, <P2> ) . . . . . . . . . NC-method (h) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping by two class partitions (RCWA)",
@@ -651,7 +651,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#F  RcwaMapping( <cycles> ) . . . . . . . . . . . .  method (i) in the manual
+#M  RcwaMapping( <cycles> ) . . . . . . . . . . . .  method (i) in the manual
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping by class cycles (RCWA)", true, [ IsList ], 0,
@@ -681,7 +681,7 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
-#F  RcwaMappingNC( <cycles> ) . . . . . . . . . . NC-method (i) in the manual
+#M  RcwaMappingNC( <cycles> ) . . . . . . . . . . NC-method (i) in the manual
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping by class cycles (RCWA)", true, [ IsList ], 0,
