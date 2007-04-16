@@ -461,6 +461,27 @@ SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
+##  A permutation with cycle lengths 12 + 6k, k in N_0
+##
+##  The name reflects the shape of the transition graph.
+##
+Hexagon := RcwaMapping(
+             [ [ 1,  0, 1 ], [ 1,  0, 1 ], [ 3,  -2, 2 ], [ 2,  3, 3 ],
+               [ 1,  0, 1 ], [ 2,  5, 3 ], [ 3,  -6, 2 ], [ 2,  7, 3 ],
+               [ 1,  0, 1 ], [ 1,  0, 1 ], [ 3, -10, 2 ], [ 1,  0, 1 ],
+               [ 1,  0, 1 ], [ 1,  0, 1 ], [ 3,  -2, 2 ], [ 1,  7, 1 ],
+               [ 1,  0, 1 ], [ 1, -3, 1 ], [ 3,  -6, 2 ], [ 1, -1, 1 ],
+               [ 1,  1, 1 ], [ 2,  3, 3 ], [ 3, -10, 2 ], [ 2,  5, 3 ],
+               [ 1, -1, 1 ], [ 2,  7, 3 ], [ 3,  -2, 2 ], [ 1,  7, 1 ],
+               [ 1, -3, 1 ], [ 1, -3, 1 ], [ 3,  -6, 2 ], [ 1, -1, 1 ],
+               [ 1,  0, 1 ], [ 1,  0, 1 ], [ 3, -10, 2 ], [ 1,  0, 1 ] ] );
+SetName(Hexagon,"Hexagon");
+HexagonFacts := Factorization(Hexagon);
+Hexagon1     := Product(HexagonFacts{[1..13]});  # integral perm. of order 4
+Hexagon2     := Product(HexagonFacts{[14..22]}); # an involution
+
+#############################################################################
+##
 ##  A group which has any symmetric group of odd degree as a quotient
 ##
 SmOdd := Group( ClassTransposition(0,4,3,4),
