@@ -482,6 +482,44 @@ Hexagon2     := Product(HexagonFacts{[14..22]}); # an involution
 
 #############################################################################
 ##
+##  A permutation with finite cycles of various lengths,
+##  and likely also infinite cycles
+##
+##  The name again reflects the shape of the transition graph. Cycle lengths
+##  are e.g. 12, 14, 15, 18, 21, 30, 36, 42, 48. Constructing the permutation
+##  needs a couple of seconds, thus the code is wrapped into a function to
+##  avoid it being executed at any time this file is read into GAP.
+##
+Hexagon235 := function ( )
+
+  local  edges, classes, source, range, fixed;
+
+  edges :=
+    [[1,60,1,90],[2,90,2,60],[3,20,3,50],[4,50,4,20],[5,45,5,75],[6,75,6,45],
+     [91,720,23,100],[271,720,43,100],[451,720,63,100],[631,720,83,100],
+     [53,200,81,225],[153,200,156,225],
+     [51,225,92,720],[96,225,272,720],[141,225,452,720],[186,225,632,720],
+     [62,180,54,200],[122,180,154,200],
+     [24,100,50,225],[44,100,95,225],[64,100,140,225],[84,100,185,225],
+     [80,225,61,180],[155,225,121,180]];
+
+  classes := List(edges,edge->[ResidueClass(edge[1],edge[2]),
+                               ResidueClass(edge[3],edge[4])]);
+
+  source := List(classes,cls->cls[1]);
+  range  := List(classes,cls->cls[2]);
+
+  fixed  := Difference(Integers,Union(source));
+
+  Append(source,AsUnionOfFewClasses(fixed));
+  Append(range, AsUnionOfFewClasses(fixed));
+
+  return RepresentativeAction(RCWA(Integers),source,range);
+
+end;
+
+#############################################################################
+##
 ##  A group which has any symmetric group of odd degree as a quotient
 ##
 SmOdd := Group( ClassTransposition(0,4,3,4),
