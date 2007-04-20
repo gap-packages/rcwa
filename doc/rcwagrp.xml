@@ -864,9 +864,9 @@ gap> List(last,phi->Support(Image(phi)));
 
 <ManSection>
   <Meth Name ="Ball" Arg="G, g, r"
-        Label="for rcwa group, element and radius"/>
+        Label="for group, element and radius"/>
   <Meth Name ="Ball" Arg="G, p, r, action"
-        Label="for rcwa group, point, radius and action"/>
+        Label="for group, point, radius and action"/>
   <Returns>
     The ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>g</A> in
     the group&nbsp;<A>G</A>, respectively

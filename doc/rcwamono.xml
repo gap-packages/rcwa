@@ -216,9 +216,9 @@ forward orbits or subsets of such under the action of an rcwa monoid:
 
 <ManSection>
   <Meth Name ="Ball"
-        Arg="M, f, r" Label="for rcwa monoid, element and radius"/>
+        Arg="M, f, r" Label="for monoid, element and radius"/>
   <Meth Name ="Ball"
-        Arg="M, p, r, action" Label="for rcwa monoid, point, radius and action"/>
+        Arg="M, p, r, action" Label="for monoid, point, radius and action"/>
   <Returns>
     The ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>f</A> in
     the monoid&nbsp;<A>M</A>, respectively
