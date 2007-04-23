@@ -491,8 +491,8 @@ Changes between version 2.4.3 and version 2.5.0:
  - A method to construct a dihedral group acting on a given residue class
    has been added.  
 
- - Methods for `ExtRepOfObj' and `ObjByExtRep' for rcwa mappings have been
-   added.
+ - Methods for `ExtRepOfObj', `ObjByExtRep' and `ShallowCopy' for
+   rcwa mappings have been added.
 
  - Attributes `ShiftsUpOn' and `ShiftsDownOn' have been introduced.
 
