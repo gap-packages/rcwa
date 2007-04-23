@@ -9,6 +9,7 @@
 
 <!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"
 [
+ <!ENTITY GAP "<Package>GAP</Package>">
  <!ENTITY tamp "<Alt Only='BibTeX,BibTeXhref'>\&amp;</Alt><Alt Not='BibTeX,BibTeXhref'>&amp;</Alt>">
  <!ENTITY nbsp "<Alt Only='BibTeX,BibTeXhref'>~</Alt><Alt Not='BibTeX,BibTeXhref'>&#x00a0;</Alt>">
 ]>

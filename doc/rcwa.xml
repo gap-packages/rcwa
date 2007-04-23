@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
- [ <!ENTITY RCWA "<Package>RCWA</Package>">
+ [ <!ENTITY GAP "<Package>GAP</Package>">
+   <!ENTITY RCWA "<Package>RCWA</Package>">
    <!ENTITY ResClasses "<Package>ResClasses</Package>"> ] >
 <?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
 <?LaTeX ExtraPreamble="\usepackage{amsxtra}"?>
@@ -13,7 +14,7 @@
 <!-- ##  $Id$         ## -->
 <!-- ##                                                                ## -->
 <!-- #################################################################### -->
-     
+
 <Book Name="RCWA"> 
 
 <!-- #################################################################### -->
