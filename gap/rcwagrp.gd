@@ -426,7 +426,7 @@ DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
 ##  The argument <r> denotes the radius of the ball around 1 which should be
 ##  searched for relations.
 ##
-DeclareOperation( "EpimorphismFromFpGroup", [ IsGroup, IsInt ] );
+DeclareOperation( "EpimorphismFromFpGroup", [ IsGroup, IsPosInt ] );
 
 #############################################################################
 ##

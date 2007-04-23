@@ -4224,7 +4224,7 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 #M  EpimorphismFromFpGroup( <G>, <r> )
 ##
 InstallMethod( EpimorphismFromFpGroup,
-               "default method (RCWA)", ReturnTrue, [ IsGroup, IsInt ], 0,
+               "default method (RCWA)", ReturnTrue, [ IsGroup, IsPosInt ], 0,
 
   function ( G, r )
 
@@ -4232,23 +4232,32 @@ InstallMethod( EpimorphismFromFpGroup,
 
     if IsFpGroup(G) then return IdentityMapping(G); fi;
 
-    phi       := EpimorphismFromFreeGroup(G); if r <= 0 then return phi; fi;
+    phi       := EpimorphismFromFreeGroup(G);
     F         := Source(phi);
     gensF     := GeneratorsOfGroup(F);
 
-    BF        := Ball(F,One(F),r);
-    BG        := List(BF,g->Image(phi,g));
-    BGset     := Set(BG);
+    if IsBound( FindGroupRelations ) then # FR package is loaded.
 
-    rels      := [];
-    for g in BGset do
-      Append(rels,List(Combinations(BF{Positions(BG,g)},2),w->w[1]/w[2]));
-      if Order(g) < infinity then
-        w := BF[Position(BG,g)];
-        if Maximum(ExponentSums(w)) >= 0 then Add(rels,w^Order(g)); fi;
-      fi;
-    od;
-    rels := Difference(rels,[One(F)]);
+      rels := FindGroupRelations(G,r);
+      rels := rels{[2..Length(rels)]};
+
+    else
+
+      BF        := Ball(F,One(F),r);
+      BG        := List(BF,g->Image(phi,g));
+      BGset     := Set(BG);
+
+      rels      := [];
+      for g in BGset do
+        Append(rels,List(Combinations(BF{Positions(BG,g)},2),w->w[1]/w[2]));
+        if Order(g) < infinity then
+          w := BF[Position(BG,g)];
+          if Maximum(ExponentSums(w)) >= 0 then Add(rels,w^Order(g)); fi;
+        fi;
+      od;
+      rels := Difference(rels,[One(F)]);
+
+    fi;
 
     Fp     := F/rels;
     phiFp  := EpimorphismByGeneratorsNC(Fp,G);
