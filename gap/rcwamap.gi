@@ -722,7 +722,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#S  ExtRepOfObj / ObjByExtRep for rcwa mappings. ////////////////////////////
+#S  ExtRepOfObj / ObjByExtRep and ShallowCopy for rcwa mappings. ////////////
 ##
 #############################################################################
 
@@ -750,6 +750,17 @@ InstallMethod( ObjByExtRep,
     R := UnderlyingRing(fam);
     if fam <> RcwaMappingsFamily(R) then TryNextMethod(); fi;
     return RcwaMapping(R,l[1],l[2]);
+  end );
+
+#############################################################################
+##
+#M  ShallowCopy( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings
+##
+InstallMethod( ShallowCopy,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( f )
+    return RcwaMapping(Source(f),Modulus(f),ShallowCopy(Coefficients(f)));
   end );
 
 #############################################################################
