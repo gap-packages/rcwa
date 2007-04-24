@@ -4279,7 +4279,6 @@ InstallMethod( Trajectory,
     local  seq;
 
     if   not (n in Source(f) or IsSubset(Source(f),n))
-      or not IsSubset(Source(f),terminal)
     then TryNextMethod(); fi;
     seq := [n];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
@@ -4305,8 +4304,7 @@ InstallMethod( Trajectory,
 
     local  seq;
 
-    if   not (n in Source(f) or IsSubset(Source(f),n))
-      or not IsSubset(Source(f),terminal) or IsZero(m)
+    if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
     then TryNextMethod(); fi;
     seq := [n mod m];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
@@ -4335,9 +4333,7 @@ InstallMethod( Trajectory,
     if   IsPosInt(lngterm)           then length   := lngterm;
     elif IsListOrCollection(lngterm) then terminal := lngterm;
     else TryNextMethod(); fi;
-    if not n in Source(f)
-      or IsBound(terminal) and not IsSubset(Source(f),terminal)
-      or not whichcoeffs in ["AllCoeffs","LastCoeffs"]
+    if   not n in Source(f) or not whichcoeffs in ["AllCoeffs","LastCoeffs"]
     then TryNextMethod(); fi;
     c := Coefficients(f); m := Modulus(f);
     traj := [n mod m];
