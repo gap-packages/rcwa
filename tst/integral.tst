@@ -1534,6 +1534,22 @@ gap> ShiftsUpOn(Collatz);
 [  ]
 gap> ShiftsDownOn(Collatz);
 [  ]
+gap> ClassShift(0,1:Name:="a");
+a
+gap> ClassShift(0,1:Name:="");
+Tame bijective rcwa mapping of Z: n -> n + 1
+gap> ClassReflection(0,1:Name:="a");
+a
+gap> ClassReflection(0,1:Name:="");
+Bijective rcwa mapping of Z: n -> -n
+gap> ClassRotation(0,1,-1:Name:="a");
+a
+gap> ClassRotation(0,1,-1:Name:="");
+Bijective rcwa mapping of Z: n -> -n
+gap> ClassTransposition(0,2,1,2:Name:="a");
+a
+gap> ClassTransposition(0,2,1,2:Name:="");
+<bijective rcwa mapping of Z with modulus 2, of order 2>
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
