@@ -722,7 +722,7 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
-#S  ExtRepOfObj / ObjByExtRep and ShallowCopy for rcwa mappings. ////////////
+#S  ExtRepOfObj / ObjByExtRep for rcwa mappings. ////////////////////////////
 ##
 #############################################################################
 
@@ -750,17 +750,6 @@ InstallMethod( ObjByExtRep,
     R := UnderlyingRing(fam);
     if fam <> RcwaMappingsFamily(R) then TryNextMethod(); fi;
     return RcwaMapping(R,l[1],l[2]);
-  end );
-
-#############################################################################
-##
-#M  ShallowCopy( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings
-##
-InstallMethod( ShallowCopy,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-
-  function ( f )
-    return RcwaMapping(Source(f),Modulus(f),ShallowCopy(Coefficients(f)));
   end );
 
 #############################################################################
@@ -814,7 +803,7 @@ InstallGlobalFunction( ClassShift,
 
   function ( arg )
 
-    local  result, R, coeff, idcoeff, res, pos, r, m;
+    local  result, name, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -852,9 +841,15 @@ InstallGlobalFunction( ClassShift,
     then SetOrder(result,infinity);
     else SetOrder(result,Characteristic(R)); fi;
     SetIsTame(result,true);
-    SetName(result,Concatenation("ClassShift(",String(r),",",String(m),")"));
-    SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
-                                               String(m),")}"));
+    name := ValueOption("Name");
+    if name = fail then
+      SetName(result,Concatenation("ClassShift(",String(r),","
+                                                ,String(m),")"));
+      SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
+                                                 String(m),")}"));
+    elif not IsEmpty(name) then
+      SetName(result,name); SetLaTeXName(result,name);
+    fi;
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
@@ -882,7 +877,7 @@ InstallGlobalFunction( ClassReflection,
 
   function ( arg )
 
-    local  result, R, coeff, idcoeff, res, pos, r, m;
+    local  result, name, R, coeff, idcoeff, res, pos, r, m;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -920,10 +915,15 @@ InstallGlobalFunction( ClassReflection,
     SetRotationFactor(result,-1);
     SetIsBijective(result,true);
     SetOrder(result,2); SetIsTame(result,true);
-    SetName(result,Concatenation("ClassReflection(",
-                                 String(r),",",String(m),")"));
-    SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
-                                                     String(m),")}"));
+    name := ValueOption("Name");
+    if name = fail then
+      SetName(result,Concatenation("ClassReflection(",String(r),",",
+                                                      String(m),")"));
+      SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
+                                                       String(m),")}"));
+    elif not IsEmpty(name) then
+      SetName(result,name); SetLaTeXName(result,name);
+    fi;
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
@@ -953,7 +953,7 @@ InstallGlobalFunction( ClassRotation,
 
   function ( arg )
 
-    local  result, R, coeff, idcoeff, res, pos, r, m, u;
+    local  result, name, R, coeff, idcoeff, res, pos, r, m, u;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -998,10 +998,15 @@ InstallGlobalFunction( ClassRotation,
     SetRotationFactor(result,u);
     SetIsBijective(result,true);
     SetOrder(result,Order(u)); SetIsTame(result,true);
-    SetName(result,Concatenation("ClassRotation(",
-                                 String(r),",",String(m),",",String(u),")"));
-    SetLaTeXName(result,Concatenation("\\rho_{",String(r),"(",String(m),"),",
-                                                String(u),"}"));
+    name := ValueOption("Name");
+    if name = fail then
+      SetName(result,Concatenation("ClassRotation(",String(r),",",String(m),
+                                                ",",String(u),")"));
+      SetLaTeXName(result,Concatenation("\\rho_{",String(r),"(",String(m),
+                                             "),",String(u),"}"));
+    elif not IsEmpty(name) then
+      SetName(result,name); SetLaTeXName(result,name);
+    fi;
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
@@ -1046,7 +1051,7 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, R, r1, m1, r2, m2, cl1, cl2, h;
+    local  result, name, R, r1, m1, r2, m2, cl1, cl2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -1083,12 +1088,17 @@ InstallGlobalFunction( ClassTransposition,
     result := RcwaMapping([[cl1,cl2]]);
     SetIsClassTransposition(result,true);
     SetTransposedClasses(result,[cl1,cl2]);
-    SetName(result,Concatenation("ClassTransposition(",
-                                 String(r1),",",String(m1),",",
-                                 String(r2),",",String(m2),")"));
-    SetLaTeXName(result,
-                 Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
-                                         String(r2),"(",String(m2),")}"));
+    name := ValueOption("Name");
+    if name = fail then
+      SetName(result,Concatenation("ClassTransposition(",
+                                   String(r1),",",String(m1),",",
+                                   String(r2),",",String(m2),")"));
+      SetLaTeXName(result,
+                   Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
+                                           String(r2),"(",String(m2),")}"));
+    elif not IsEmpty(name) then
+      SetName(result,name); SetLaTeXName(result,name);
+    fi;
     SetFactorizationIntoCSCRCT(result,[result]);
     return result;
   end );
