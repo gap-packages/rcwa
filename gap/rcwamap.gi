@@ -2676,28 +2676,31 @@ InstallMethod( PreImageElm,
 
 #############################################################################
 ##
-#M  PreImagesElm( <f>, <n> ) . . . .  for an rcwa mapping of Z and an integer
+#M  PreImagesElm( <f>, <n> ) . . . . . for an rcwa mapping and a ring element
 ##
-##  Preimages of the integer <n> under the rcwa mapping <f>. 
+##  Preimages of <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesElm,
-               "for an rcwa mapping of Z and an integer (RCWA)", true, 
-               [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
+               "for an rcwa mapping and a ring element (RCWA)", ReturnTrue, 
+               [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
 
   function ( f, n )
     
-    local  c, m, preimage, modulus, residues, singletons, n1, pre;
+    local  R, c, m, preimage, singletons, residues, n1, pre;
 
+    R := Source(f); if not n in R then TryNextMethod(); fi;
     c := f!.coeffs; m := f!.modulus;
     preimage := []; singletons := [];
-    for n1 in [1..m] do
-      if c[n1][1] <> 0 then
+    residues := AllResidues(R,m);
+    for n1 in [1..Length(residues)] do
+      if not IsZero(c[n1][1]) then
         pre := (c[n1][3] * n - c[n1][2])/c[n1][1];
-        if IsInt(pre) and pre mod m = n1 - 1 then Add(singletons,pre); fi;
+        if   pre in R and pre mod m = residues[n1]
+        then Add(singletons,pre); fi;
       else
         if c[n1][2] = n then
-          if   m = 1 then return Integers;
-          else preimage := Union(preimage,ResidueClass(Integers,m,n1-1)); fi;
+          if   IsOne(m) then return R;
+          else preimage := Union(preimage,ResidueClass(R,m,residues[n1])); fi;
         fi;
       fi;
     od;
@@ -2707,26 +2710,28 @@ InstallMethod( PreImagesElm,
 
 #############################################################################
 ##
-#M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping of Z and integer
+#M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping and ring element
 ##
 ##  A representative of the set of preimages of the integer <n> under the
 ##  rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesRepresentative,
-               "for an rcwa mapping of Z and an integer (RCWA)", true, 
-               [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
+               "for an rcwa mapping and a ring element (RCWA)", true, 
+               [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
 
   function ( f, n )
     
-    local  c, m, n1, pre;
+    local  R, c, m, residues, n1, pre;
 
+    R := Source(f); if not n in R then return fail; fi;
     c := f!.coeffs; m := f!.modulus;
-    for n1 in [1..m] do
-      if c[n1][1] <> 0 then
+    residues := AllResidues(R,m);
+    for n1 in [1..Length(residues)] do
+      if not IsZero(c[n1][1]) then
         pre := (n * c[n1][3] - c[n1][2])/c[n1][1];
-        if IsInt(pre) and pre mod m = n1 - 1 then return pre; fi;
+        if pre in R and pre mod m = residues[n1] then return pre; fi;
       else
-        if c[n1][2] = n then return n1 - 1; fi;
+        if c[n1][2] = n then return residues[n1]; fi;
       fi;
     od;
     return fail;
@@ -2761,23 +2766,24 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <S> )  for an rcwa mapping of Z and a res. class union
+#M  PreImagesSet( <f>, <S> ) .  for an rcwa mapping and a residue class union
 ##
 ##  Preimage of the residue class union <S> under the rcwa mapping <f>.
 ##
 InstallMethod( PreImagesSet,
-               "for an rcwa mapping of Z and a residue class union (RCWA)",
-               true, [ IsRcwaMappingOfZ, IsResidueClassUnionOfZ ], 0,
+               "for an rcwa mapping and a residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsResidueClassUnion ], 0,
 
   function ( f, S )
 
-    local  preimage, parts, premod, preres, rump,
+    local  R, preimage, parts, premod, preres, rump,
            pre, pre2, im, diff, excluded, n;
 
-    rump := ResidueClassUnion( Integers, Modulus(S), Residues(S) );
+    R := Source(f); if not IsSubset(R,S) then TryNextMethod(); fi;
+    rump := ResidueClassUnion( R, Modulus(S), Residues(S) );
     premod := Modulus(f) * Divisor(f) * Modulus(S);
-    preres := Filtered( [ 0 .. premod ], n -> n^f in rump );
-    parts := [ ResidueClassUnion( Integers, premod, preres ) ];
+    preres := Filtered( AllResidues( R, premod ), n -> n^f in rump );
+    parts := [ ResidueClassUnion( R, premod, preres ) ];
     Append( parts, List( IncludedElements(S), n -> PreImagesElm( f, n ) ) );
     preimage := Union( parts );
     excluded := ExcludedElements(S);
@@ -2786,7 +2792,7 @@ InstallMethod( PreImagesSet,
       im   := ImagesSet( f, pre );
       pre2 := PreImagesSet( f, Difference( im, excluded ) );
       diff := Difference( pre, pre2 );
-      if   diff <> [ ]
+      if   not IsEmpty( diff )
       then preimage := Difference( preimage, diff ); fi;
     od;
     return preimage;
