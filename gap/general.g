@@ -33,6 +33,24 @@ fi;
 
 #############################################################################
 ##
+#F  FloatQuotients( <list> ) . . . . .  quotients of consecutive list entries
+##
+##  This utility function can for example be used in trying to estimate
+##  growth rates.
+##
+BindGlobal( "FloatQuotients",
+            list -> List( [ 2 .. Length( list ) ],
+                          pos -> Float( list[ pos ] / list[ pos - 1 ] ) ) );
+
+#############################################################################
+##
+#F  FindGroupRelations( <G>, <r> ) . placebo `ReturnFail' if FR is not loaded
+##
+if   not IsReadOnlyGlobal( "FindGroupRelations" )
+then FindGroupRelations := ReturnFail; fi;
+
+#############################################################################
+##
 #M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
 #M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
 #M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
@@ -141,17 +159,6 @@ InstallGlobalFunction( SearchCycle,
     if refine <> fail then return refine;
                       else return l{[pos..pos+incr-1]}; fi;
   end );
-
-#############################################################################
-##
-#F  FloatQuotients( <list> ) . . . . .  quotients of consecutive list entries
-##
-##  This utility function can for example be used in trying to estimate
-##  growth rates.
-##
-BindGlobal( "FloatQuotients",
-            list -> List( [ 2 .. Length( list ) ],
-                          pos -> Float( list[ pos ] / list[ pos - 1 ] ) ) );
 
 #############################################################################
 ##
