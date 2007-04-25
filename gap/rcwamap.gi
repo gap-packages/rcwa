@@ -2236,8 +2236,8 @@ InstallMethod( IncreasingOn,
     numres := Length(AllResidues(R,m));
     return ResidueClassUnion(R,m,
              AllResidues(R,m)
-               {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
-                                         < Length(AllResidues(R,c[r][1])))});
+               {Filtered([1..numres], r -> NumberOfResidues(R,c[r][3])
+                                         < NumberOfResidues(R,c[r][1]))});
   end );
 
 #############################################################################
@@ -2255,8 +2255,8 @@ InstallMethod( DecreasingOn,
     numres := Length(AllResidues(R,m));
     return ResidueClassUnion(R,m,
             AllResidues(R,m)
-              {Filtered([1..numres], r -> Length(AllResidues(R,c[r][3]))
-                                        > Length(AllResidues(R,c[r][1])))});
+              {Filtered([1..numres], r -> NumberOfResidues(R,c[r][3])
+                                        > NumberOfResidues(R,c[r][1]))});
   end );
 
 #############################################################################
