@@ -3649,6 +3649,12 @@ InstallMethod( IsPrimitive,
 #############################################################################
 
 #############################################################################
+##
+#V  IsOrbitInStandardRep . . . . . . . . . shorthand to specify orbit objects
+##
+BindGlobal( "IsOrbitInStandardRep", IsOrbit and IsOrbitStandardRep );
+
+#############################################################################
 ## 
 #M  OrbitUnion( <G>, <S> ) . . . . . . . . . . .  for an rcwa group and a set
 ##
@@ -3711,6 +3717,290 @@ InstallOtherMethod( OrbitOp,
     if   not IsEmpty(noncwoppos)
     then S := Union(S,S^gensrests[noncwoppos[1]]); fi;
     return OrbitUnion(G,S);
+  end );
+
+#############################################################################
+##
+#M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> ) . . . for rcwa groups over Z
+##
+InstallOtherMethod( OrbitOp,
+                    "for rcwa groups over Z (RCWA)", ReturnTrue,
+                    [ IsRcwaGroupOverZ, IsObject, IsList, IsList,
+                      IsFunction ], 0,
+
+  function ( G, pnt, gens, acts, act )
+
+    local  orbit, ball, oldball;
+
+    if IsTame(G) and act = OnPoints then TryNextMethod(); fi;
+
+    gens := Union(gens,List(gens,Inverse));
+    ball := [pnt];
+    repeat    
+      oldball := ShallowCopy(ball);
+      ball    := Union(oldball,
+                       Union(List(gens,gen->List(oldball,pt->act(pt,gen)))));
+    until ball = oldball or Length(ball) > 1000;
+    if ball = oldball then return Set(ball); fi;
+    
+    orbit := Objectify( NewType( CollectionsFamily( FamilyObj( pnt ) ),
+                                 IsOrbitInStandardRep ),
+                        rec( group          := G,
+                             representative := pnt,
+                             action         := act ) );
+    return orbit;
+  end );
+
+#############################################################################
+##
+#M  UnderlyingGroup( <orbit> ) . . . . . . . . . . . . . . . . . . for orbits
+##
+InstallMethod( UnderlyingGroup,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               orbit -> orbit!.group );
+
+#############################################################################
+##
+#M  Representative( <orbit> ) . . . . . . . . . . . . . . . . . .  for orbits
+##
+InstallMethod( Representative,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               orbit -> orbit!.representative );
+
+#############################################################################
+##
+#M  IsSubset( <R>, <orbit> ) . for underlying ring and orbit of an rcwa group
+##
+InstallMethod( IsSubset,
+               "for underlying ring and orbit of an rcwa group (RCWA)",
+               ReturnTrue, [ IsRing, IsOrbitInStandardRep ], 0,
+
+  function ( R, orbit )
+    if   IsRcwaGroup(orbit!.group) and IsSubset(R,Source(One(orbit!.group)))
+    then return true;
+    elif not orbit!.representative in R then return false;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  ViewObj( <orbit> ) . . . . . . . . . . . . . . . . . . . . . . for orbits
+##
+InstallMethod( ViewObj,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+
+  function ( orbit )
+    Print("<orbit of ");
+    ViewObj(orbit!.representative);
+    Print(" under ");
+    ViewObj(orbit!.group);
+    Print(">");
+  end );
+
+#############################################################################
+##
+#M  \=( <orbit1>, <orbit2> ) . . . . . . . . . . . . . . . . . . . for orbits
+##
+InstallMethod( \=,
+               "for orbits (RCWA)", IsIdenticalObj,
+               [ IsOrbitInStandardRep, IsOrbitInStandardRep ], 0,
+
+  function ( orbit1, orbit2 )
+
+    local  balls, oldballs, acts, gens;
+
+    if   orbit1!.group  <> orbit2!.group
+      or orbit1!.action <> orbit2!.action
+    then return AsList(orbit1) = AsList(orbit2); fi;
+
+    gens  := [ Set(GeneratorsAndInverses(orbit1!.group)),
+               Set(GeneratorsAndInverses(orbit2!.group)) ];
+    acts  := [ orbit1!.action, orbit2!.action ];
+
+    balls := [ [ orbit1!.representative ], [ orbit2!.representative ] ];
+    repeat    
+      oldballs := List(balls,ShallowCopy);
+      balls    := List([1..2],i->Union(oldballs[i],
+                       Union(List(gens[i],gen->List(oldballs[i],
+                                                    pt->acts[i](pt,gen))))));
+      if   balls[1] = oldballs[1] and Length(balls[2]) > Length(balls[1])
+        or balls[2] = oldballs[2] and Length(balls[1]) > Length(balls[2])
+      then return false; fi;
+    until not IsEmpty(Intersection(balls));
+    return true;
+  end );
+
+#############################################################################
+##
+#M  \=( <orbit>, <list> ) . . . . . . . . . . . . . . for an orbit and a list
+##
+InstallMethod( \=,
+               "for an orbit and a list (RCWA)", ReturnTrue,
+               [ IsOrbitInStandardRep, IsList ], 0,
+
+  function ( orbit, list )
+
+    local  ball, act, gens;
+
+    gens := Set(GeneratorsAndInverses(orbit!.group));
+    act  := orbit!.action;
+    ball := [orbit!.representative];
+    repeat    
+      ball := Union(ball,Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+      if   ball = list             then return true;
+      elif not IsSubset(list,ball) then return false; fi;
+    until Length(ball) > Length(list);
+    return false;
+  end );
+
+#############################################################################
+##
+#M  \=( <list>, <orbit> ) . . . . . . . . . . . . . . for a list and an orbit
+##
+InstallMethod( \=,
+               "for a list and an orbit (RCWA)", ReturnTrue,
+               [ IsList, IsOrbitInStandardRep ], 0,
+               function ( list, orbit ) return orbit = list; end );
+
+#############################################################################
+##
+#M  AsList( <orbit> ) . . . . . . . . . . . . . . . . . . . . . .  for orbits
+##
+InstallMethod( AsList,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+
+  function ( orbit )
+
+    local  ball, oldball, gens, act;
+
+    gens := Set(GeneratorsAndInverses(orbit!.group));
+    act  := orbit!.action;
+    ball := [orbit!.representative];
+    repeat    
+      oldball := ShallowCopy(ball);
+      ball    := Union(oldball,
+                       Union(List(gens,gen->List(oldball,pt->act(pt,gen)))));
+    until ball = oldball;
+    return Set(ball);
+  end );
+
+#############################################################################
+##
+#M  \in( <point>, <orbit> ) . . . . . . . . . . . . . for a point in an orbit
+##
+InstallMethod( \in,
+               "for a point in an orbit (RCWA)", ReturnTrue,
+               [ IsObject, IsOrbitInStandardRep ], 0,
+
+  function ( point, orbit )
+    return Orbit(orbit!.group,point,orbit!.action) = orbit;
+  end );
+
+#############################################################################
+##
+#M  Intersection2( <orbit>, <list> ) . . . . . . . .  for an orbit and a list
+##
+InstallMethod( Intersection2,
+               "for an orbit and a list (RCWA)", ReturnTrue,
+               [ IsOrbitInStandardRep, IsList ], 0,
+
+  function ( orbit, list )
+    return Intersection( list, orbit );
+  end );
+
+#############################################################################
+##
+#M  Size( <orbit> ) . . . . . . . . . . . . . . . . . . . . . . .  for orbits
+##
+InstallMethod( Size,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+
+  function ( orbit )
+    if HasIsFinite(orbit) and not IsFinite(orbit) then return infinity; fi;
+    return Length(AsList(orbit));
+  end );
+
+#############################################################################
+##
+#M  Iterator( <orbit> ) . . . . . . . . . . . . . . . . . . . . .  for orbits
+##
+InstallMethod( Iterator,
+               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+
+  function ( orbit )
+    return Objectify( NewType( IteratorsFamily, IsIterator
+                                            and IsMutable
+                                            and IsOrbitsIteratorRep ),
+                      rec( orbit     := orbit,
+                           sphere    := [Representative(orbit)],
+                           oldsphere := [],
+                           pos       := 1 ) );
+  end );
+
+#############################################################################
+##
+#M  NextIterator( <iter> ) . . . . . . . . . . . . .  for iterators of orbits
+##
+InstallMethod( NextIterator,
+               "for iterators of orbits (RCWA)", true,
+               [ IsIterator and IsMutable and IsOrbitsIteratorRep ], 0,
+
+  function ( iter )
+
+    local  orbit, G, action, gens, sphere, point;
+
+    if not HasGeneratorsOfGroup(iter!.orbit!.group) then TryNextMethod(); fi;
+
+    orbit  := iter!.orbit;
+    G      := orbit!.group;
+    action := orbit!.action;
+    gens   := GeneratorsAndInverses(G);
+    point  := iter!.sphere[iter!.pos];
+    if iter!.pos < Length(iter!.sphere) then iter!.pos := iter!.pos + 1; else
+      sphere := Difference(Union(List(gens,g->List(iter!.sphere,
+                                                   pt->action(pt,g)))),
+                           Union(iter!.sphere,iter!.oldsphere));
+      iter!.oldsphere := iter!.sphere;
+      iter!.sphere    := sphere;
+      iter!.pos       := 1;
+    fi;
+    return point;
+  end );
+
+#############################################################################
+##
+#M  IsDoneIterator( <iter> ) . . . . . . . . . . . .  for iterators of orbits
+##
+InstallMethod( IsDoneIterator,
+               "for iterators of orbits (RCWA)", true,
+               [ IsIterator and IsOrbitsIteratorRep ], 0,
+               iter -> IsEmpty( iter!.sphere ) );
+
+#############################################################################
+##
+#M  ShallowCopy( <iter> ) . . . . . . . . . . . . . . for iterators of orbits
+##
+InstallMethod( ShallowCopy,
+               "for iterators of orbits (RCWA)", true,
+               [ IsIterator and IsOrbitsIteratorRep ], 0,
+
+  iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
+                     rec( orbit     := iter!.orbit,
+                          sphere    := iter!.sphere,
+                          oldsphere := iter!.oldsphere,
+                          pos       := iter!.pos ) ) );
+
+#############################################################################
+##
+#M  ViewObj( <iter> ) . . . . . . . . . . . . . . . . for iterators of orbits
+##
+InstallMethod( ViewObj,
+               "for iterators of orbits (RCWA)", true,
+               [ IsIterator and IsOrbitsIteratorRep ], 0,
+
+  function ( iter )
+    Print("Iterator of ");
+    ViewObj(iter!.orbit);
   end );
 
 #############################################################################

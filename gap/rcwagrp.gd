@@ -192,6 +192,34 @@ DeclareOperation( "Induction", [ IsRcwaMonoid, IsRcwaMapping ] );
 
 #############################################################################
 ##
+#C  IsOrbit . . . . . . . . . . . . all orbits which are not written as lists
+##
+DeclareCategory( "IsOrbit", IsDomain and IsListOrCollection );
+
+#############################################################################
+##
+#A  UnderlyingGroup( <orbit> ) . . . . . . . . . underlying group of an orbit
+##
+DeclareAttribute( "UnderlyingGroup", IsOrbit );
+
+#############################################################################
+##
+#R  IsOrbitStandardRep . . . . . . . . .  "standard" representation of orbits
+##
+DeclareRepresentation( "IsOrbitStandardRep",
+                       IsComponentObjectRep and IsAttributeStoringRep,
+                       [ "group", "representative", "action" ] );
+
+#############################################################################
+##
+#R  IsOrbitsIteratorRep . . . . . . . . . . . . . . . iterator representation
+##
+DeclareRepresentation( "IsOrbitsIteratorRep",
+                       IsComponentObjectRep,
+                       [ "orbit", "sphere", "oldsphere", "pos" ] );
+
+#############################################################################
+##
 #O  IsTransitive( <G>, <S> ) . . . . . . . . . . . . . . . .  for rcwa groups
 #O  Transitivity( <G>, <S> )
 #O  IsPrimitive( <G>, <S> )
