@@ -3721,12 +3721,12 @@ InstallOtherMethod( OrbitOp,
 
 #############################################################################
 ##
-#M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> ) . . . for rcwa groups over Z
+#M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> )  for wild rcwa groups over Z
 ##
 InstallOtherMethod( OrbitOp,
-                    "for rcwa groups over Z (RCWA)", ReturnTrue,
-                    [ IsRcwaGroupOverZ, IsObject, IsList, IsList,
-                      IsFunction ], 0,
+                    "for wild rcwa groups over Z (RCWA)", ReturnTrue,
+                    [ IsRcwaGroupOverZ, IsInt, IsList, IsList, IsFunction ],
+                    0,
 
   function ( G, pnt, gens, acts, act )
 
