@@ -1550,6 +1550,61 @@ gap> ClassTransposition(0,2,1,2:Name:="a");
 a
 gap> ClassTransposition(0,2,1,2:Name:="");
 <bijective rcwa mapping of Z with modulus 2, of order 2>
+gap> a := ClassTransposition(2,4,3,4 :Name:="a");;
+gap> b := ClassTransposition(4,6,8,12:Name:="b");;
+gap> c := ClassTransposition(3,4,4,6 :Name:="c");;
+gap> G := Group(a,b,c);
+<rcwa group over Z with 3 generators>
+gap> phi := EpimorphismFromFpGroup(G,3);
+[ a, b, c ] -> [ a, b, c ]
+gap> RelatorsOfFpGroup(Source(phi));
+[ a^2, b^2, c^2, c*b*c*b*c*b ]
+gap> G := Group(ClassShift(0,2),ClassTransposition(0,3,1,3));
+<rcwa group over Z with 2 generators>
+gap> Orbit(G,0);
+Z \ 5(6)
+gap> Orbit(G,5);
+[ 5 ]
+gap> Orbit(G,ResidueClass(0,2));
+[ 0(2), 1(6) U 2(6) U 3(6), 1(3) U 3(6), 0(3) U 1(6), 0(3) U 4(6),
+  1(3) U 0(6), 0(3) U 2(6), 0(6) U 1(6) U 2(6), 2(6) U 3(6) U 4(6),
+  1(3) U 2(6) ]
+gap> Union(last);
+Z \ 5(6)
+gap> G := Group(Collatz,ClassTransposition(0,2,1,6));
+<rcwa group over Z with 2 generators>
+gap> orb1 := Orbit(G,0);
+[ 0, 1 ]
+gap> orb2 := Orbit(G,2);
+<orbit of 2 under <wild rcwa group over Z with 2 generators>>
+gap> orb3 := Orbit(G,37);
+<orbit of 37 under <wild rcwa group over Z with 2 generators>>
+gap> orb2 = orb3;
+true
+gap> orb1 = orb2;
+false
+gap> orb3 = orb1;
+false
+gap> UnderlyingGroup(orb2) = G;
+true
+gap> Representative(orb3);
+37
+gap> Iterator(orb2);
+Iterator of <orbit of 2 under <wild rcwa group over Z with 2 generators>>
+gap> IsDoneIterator(last);
+false
+gap> First(orb2,n->n>1000);
+1099
+gap> 0 in orb2;
+false
+gap> 1 in orb2;
+false
+gap> 2 in orb2;
+true
+gap> 6754 in orb2;
+true
+gap> Intersection(orb2,[-1..5]);
+[ 2, 3, 4, 5 ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
