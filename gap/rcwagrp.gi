@@ -3665,8 +3665,8 @@ InstallMethod( OrbitUnion,
     if InfoLevel(InfoRCWA) >= 1 then
       Print("#I  OrbitUnion: initial set = "); ViewObj(S); Print("\n");
     fi;
-    R := Source(One(G));
-    gen := GeneratorsOfGroup(G); gen := Union(gen,List(gen,g->g^-1));
+    R     := Source(One(G));
+    gen   := GeneratorsAndInverses(G);
     image := S;
     repeat
       oldimage := image;
@@ -3708,7 +3708,8 @@ InstallOtherMethod( OrbitOp,
                     Determinant))
          * Modulus(where);
     S := ResidueClass(Integers,m,pnt);
-    S := Union(S,S^gensrests[noncwoppos[1]]);
+    if   not IsEmpty(noncwoppos)
+    then S := Union(S,S^gensrests[noncwoppos[1]]); fi;
     return OrbitUnion(G,S);
   end );
 
