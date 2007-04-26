@@ -471,6 +471,12 @@ Changes between version 2.4.3 and version 2.5.0:
    updates have been made in many places.
 
  - Iterators for rcwa groups have been implemented.
+   These iterators can be used for finitely generated infinite groups
+   in general.
+
+ - The functionality for orbits under the action of rcwa groups has been
+   improved. There are now orbit objects representing possibly infinite
+   orbits. There are methods to compare such orbits, and to loop over them.
 
  - An operation `EpimorphismFromFpGroup' has been introduced.
 
