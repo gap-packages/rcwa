@@ -69,6 +69,19 @@
   <publisher>Amer. Math. Soc.</publisher>
 </inproceedings></entry>
 
+<entry id="FR"><manual>
+  <author>
+    <name><first>Laurent</first><last>Bartholdi</last></name>
+  </author>
+  <title>
+    <C>FR -- Computations with functionally recursive groups. Version 0.714285</C>
+  </title>
+  <year>2007</year>
+  <other type="note">
+    &GAP; package, <URL>http://mad.epfl.ch/~laurent/FR/</URL>
+  </other>
+</manual></entry>
+
 <entry id="Fuerstenberg55"><article>
   <author>
     <name><first>Harry</first><last>Fürstenberg</last></name>
