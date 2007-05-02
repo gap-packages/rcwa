@@ -604,7 +604,7 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 <!-- #################################################################### -->
 
 <Section Label="sec:BasicFunctionalityForRcwaMappings">
-<Heading>Basic functionality for residue-class-wise affine mappings</Heading>
+<Heading>Basic arithmetic for residue-class-wise affine mappings</Heading>
 
 <Index Key="rcwa mapping" Subkey="arithmetic operations">rcwa mapping</Index>
 <Index Key="Order" Subkey="of an rcwa permutation"><C>Order</C></Index>
@@ -789,9 +789,11 @@ rings.
 <Heading>Factoring residue-class-wise affine permutations</Heading>
 
 Factoring group elements into the members of some <Q>nice</Q> set of
-generators is often helpful. The following can be seen as an attempt
-towards getting a satisfactory solution of this problem for the group
-RCWA(<M>\Z</M>):
+generators is often helpful. In this section we describe an operation which
+attempts to solve this problem for the group RCWA(<M>\Z</M>).
+Elements of finitely generated rcwa groups can be factored into generators
+<Q>as usual</Q>, see&nbsp;<Ref Meth="PreImagesRepresentative"
+Label="for an epi. from a free group to an rcwa group"/>.
 
 <ManSection>
   <Attr Name="FactorizationIntoCSCRCT"
@@ -1046,6 +1048,9 @@ gap> Sign (ClassTransposition(3,4,2,6)*ClassShift(0,3)*ClassReflection(2,5));
 <Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa mapping">
   <C>IsClassWiseOrderPreserving</C>
 </Index>
+<Index Key="IsSignPreserving" Subkey="for an rcwa mapping">
+  <C>IsSignPreserving</C>
+</Index>
 
 A number of basic attributes and properties of an rcwa mapping are derived
 immediately from the coefficients of its affine partial mappings. This holds
@@ -1062,6 +1067,9 @@ An rcwa mapping of the ring of integers or of one of its semilocalizations
 is called <E>class-wise order-preserving</E> if and only if all coefficients
 <M>a_{r(m)}</M> in the numerators of the affine partial mappings are
 positive. The corresponding property is <C>IsClassWiseOrderPreserving</C>.
+There is a property <C>IsSignPreserving</C>, which indicates
+whether a given rcwa mapping of&nbsp;<M>\Z</M> does not map nonnegative
+integers to negative integers or vice versa.
 
 <Example>
 <![CDATA[
@@ -1086,7 +1094,7 @@ gap> PrimeSet(u);
 [ 3, 5 ]
 gap> IsIntegral(u) or IsBalanced(u);
 false
-gap> IsClassWiseOrderPreserving(u);
+gap> IsClassWiseOrderPreserving(u) and IsSignPreserving(u);
 true
 ]]>
 </Example>
