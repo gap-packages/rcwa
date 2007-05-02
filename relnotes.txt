@@ -500,10 +500,13 @@ Changes between version 2.4.3 and version 2.5.0:
  - Methods for `ExtRepOfObj' and `ObjByExtRep' for rcwa mappings have
    been added.
 
- - Attributes `ShiftsUpOn' and `ShiftsDownOn' have been introduced.
+ - Attributes `ShiftsUpOn' and `ShiftsDownOn' as well as a property
+   `IsSignPreserving' have been introduced.
 
  - Class shifts, class reflections, class rotations and class transpositions
    can now be given user-defined names via an option `Name'.
+
+ - An operation `SpannedTree' has been introduced.
 
  - The methods for `PreImagesElm', `PreImagesRepresentative' and
    `PreImagesSet' have been generalized to rcwa mappings of rings other
