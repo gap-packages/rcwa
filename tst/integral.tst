@@ -654,6 +654,19 @@ gap> IsClassWiseOrderPreserving(G);
 true
 gap> IsClassWiseOrderPreserving(Group(t,g,h));
 false
+gap> IsSignPreserving(ClassShift(0,2));            
+false
+gap> IsSignPreserving(ClassReflection(0,1));       
+false
+gap> IsSignPreserving(ClassShift(1,2));     
+false
+gap> IsSignPreserving(ClassTransposition(0,2,1,2));
+true
+gap> IsSignPreserving(Group(ClassTransposition(0,2,1,4),
+>                           ClassTransposition(1,2,0,6)));                          
+true
+gap> IsSignPreserving(Group(ClassTransposition(0,2,1,4),ClassShift(7,8)));
+false
 gap> y := RcwaMapping([[28,   0, 9], [ 7, -16, 9], [28,   7, 9],
 >                      [28,  42, 9], [ 7,   8, 9], [ 7, -17, 9],
 >                      [ 7,  12,18], [ 7,  -4, 9], [28, -35, 9],
@@ -1605,6 +1618,10 @@ gap> 6754 in orb2;
 true
 gap> Intersection(orb2,[-1..5]);
 [ 2, 3, 4, 5 ]
+gap> SpannedTree([L4,R4],1,4);
+[ [ 1 ], [ 8, 4 ], [ 64, 6, 32, 3 ], [ 512, 51, 48, 12, 256, 53, 24, 2 ], 
+  [ 4096, 821, 408, 84, 384, 38, 96, 21, 2048, 412, 424, 42, 192, 19, 16, 5 ]
+ ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
