@@ -283,26 +283,56 @@ InstallMethod( Induction,
 #M  PrimeSet( <M> ) . . . . . . . . . . . . . . . . . . . .  for rcwa monoids
 ##
 InstallMethod( PrimeSet,
-               "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
-               M -> Union( List( GeneratorsOfMonoid( M ), PrimeSet ) ) );
+               "for rcwa monoids over Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMonoid ], 0,
+
+  function ( M )
+    if   IsRcwaGroup(M)
+    then return Union(List(GeneratorsOfGroup (M),PrimeSet));
+    else return Union(List(GeneratorsOfMonoid(M),PrimeSet)); fi;
+  end );
 
 #############################################################################
 ##
 #M  IsIntegral( <M> ) . . . . . . . . . . . . . . . . . . .  for rcwa monoids
 ##
 InstallMethod( IsIntegral,
-               "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0, 
-               M -> ForAll( GeneratorsOfMonoid( M ), IsIntegral ) );
+               "for rcwa monoids over Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMonoid ], 0,
+
+  function ( M )
+    if   IsRcwaGroup(M)
+    then return ForAll(GeneratorsOfGroup (M),IsIntegral);
+    else return ForAll(GeneratorsOfMonoid(M),IsIntegral); fi;
+  end );
 
 #############################################################################
 ##
 #M  IsClassWiseOrderPreserving( <M> ) . . . for rcwa monoids over Z or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,
-               "for rcwa monoids over Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMonoidOverZOrZ_pi ], 0,
-               M -> ForAll( GeneratorsOfMonoid( M ),
-                            IsClassWiseOrderPreserving ) );
+               "for rcwa monoids over Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMonoidOverZOrZ_pi ], 0,
+
+  function ( M )
+    if   IsRcwaGroup(M)
+    then return ForAll(GeneratorsOfGroup (M),IsClassWiseOrderPreserving);
+    else return ForAll(GeneratorsOfMonoid(M),IsClassWiseOrderPreserving); fi;
+  end );
+
+#############################################################################
+##
+#M  IsSignPreserving( <M> ) . . . . . . . . for rcwa monoids over Z or Z_(pi)
+##
+InstallMethod( IsSignPreserving,
+               "for rcwa monoids over Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMonoidOverZOrZ_pi ], 0,
+
+  function ( M )
+    if   IsRcwaGroup(M)
+    then return ForAll(GeneratorsOfGroup (M),IsSignPreserving);
+    else return ForAll(GeneratorsOfMonoid(M),IsSignPreserving); fi;
+  end );
 
 #############################################################################
 ##

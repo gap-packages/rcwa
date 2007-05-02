@@ -464,6 +464,8 @@ DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 #P  IsBalanced( <f> ) . .  indicates whether the rcwa mapping <f> is balanced
 #P  IsClassWiseOrderPreserving( <f> ) . . . .  indicates whether <f> is cwop.
 #P  IsClassWiseOrderPreserving( <M> ) . . . .  indicates whether <M> is cwop.
+#P  IsSignPreserving( <f> )  indicates whether the rcwa mapping <f> fixes N_0
+#P  IsSignPreserving( <M> ) . indicates whether the rcwa monoid <M> fixes N_0
 ##
 ##  We define the *multiplier* of an rcwa mapping <f> by the least common
 ##  multiple of the coefficients a_r(m), and we define its *divisor* by the
@@ -488,6 +490,9 @@ DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 ##  group or -monoid is *class-wise order-preserving* if all of its elements
 ##  are so.
 ##
+##  We say that an rcwa mapping of Z or Z_(pi) is *sign-preserving* if it
+##  does not map nonnegative integers to negative integers or vice versa.
+##
 DeclareAttribute( "Multiplier", IsRcwaMapping );
 DeclareAttribute( "Multiplier", IsRcwaMonoid );
 DeclareSynonym( "Mult", Multiplier );
@@ -499,8 +504,10 @@ DeclareAttribute( "PrimeSet", IsRcwaMonoid );
 DeclareProperty( "IsIntegral", IsRcwaMapping );
 DeclareProperty( "IsIntegral", IsRcwaMonoid );
 DeclareProperty( "IsBalanced", IsRcwaMapping );
-DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMappingOfZOrZ_pi ); 
+DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMapping ); 
 DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMonoid );
+DeclareProperty( "IsSignPreserving", IsRcwaMapping );
+DeclareProperty( "IsSignPreserving", IsRcwaMonoid );
 
 #############################################################################
 ##
@@ -860,6 +867,16 @@ DeclareGlobalFunction( "GluckTaylorInvariant" );
 ##           *unions* of the returned sets of residue classes!
 ##
 DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
+
+#############################################################################
+##
+#O  SpannedTree( <maps>, <root>, <depth> )
+##
+##  The tree with root <root> in which the childs of a vertex are its images
+##  under the mappings <maps>. The tree is returned as the list of the lists
+##  of vertices on level 0, 1, 2, 3, ..., <depth>.
+##
+DeclareOperation( "SpannedTree", [ IsList, IsObject, IsInt ] );
 
 #############################################################################
 ##

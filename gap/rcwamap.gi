@@ -2223,6 +2223,23 @@ InstallMethod( ClassWiseConstantOn,
 
 #############################################################################
 ##
+#P  IsSignPreserving( <f> ) . . . . . . . . . . . . .  for rcwa mappings of Z
+##
+InstallMethod( IsSignPreserving,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( f )
+
+    local  bound;
+
+    if not IsClassWiseOrderPreserving(f) then return false; fi;
+    bound := Maximum(1,Maximum(List(Coefficients(f),c->AbsInt(c[2]))));
+    return Minimum([0..bound]^f) >= 0 and Maximum([-bound..-1]^f) < 0;
+  end );
+
+#############################################################################
+##
 #M  IncreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( IncreasingOn,
@@ -4389,6 +4406,31 @@ InstallGlobalFunction( TraceTrajectoriesOfClasses,
       Print("k = ",k,": "); View(l[k]); Print("\n");
     until Runtime() - starttime >= timeout or l[k] in l{[1..k-1]};
     return l;
+  end );
+
+#############################################################################
+##
+#M  SpannedTree( <maps>, <root>, <depth> )
+##
+InstallMethod( SpannedTree,
+               "general method (RCWA)", ReturnTrue,
+               [ IsList, IsObject, IsInt ], 0,
+
+  function ( maps, root, depth )
+
+    local  tree, k;
+
+    if depth <= 0 then return [[root]]; fi;
+
+    if   not ForAll(maps,IsMapping)
+      or not ForAll(maps,map->root in Source(map))
+    then TryNextMethod(); fi;
+
+    tree := [[root]];
+    for k in [1..depth] do
+      Add(tree,Flat(List(tree[k],n->List(maps,map->n^map))));
+    od;
+    return tree;
   end );
 
 #############################################################################

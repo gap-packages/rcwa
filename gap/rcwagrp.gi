@@ -2091,38 +2091,6 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#S  Methods for the attributes and properties derived from the coefficients.
-##
-#############################################################################
-
-#############################################################################
-##
-#M  PrimeSet( <G> ) . . . . . . . . . . . . . . . . . . . . . for rcwa groups
-##
-InstallMethod( PrimeSet,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Union( List( GeneratorsOfGroup( G ), PrimeSet ) ) );
-
-#############################################################################
-##
-#M  IsIntegral( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
-##
-InstallMethod( IsIntegral,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0, 
-               G -> ForAll( GeneratorsOfGroup( G ), IsIntegral ) );
-
-#############################################################################
-##
-#M  IsClassWiseOrderPreserving( <G> ) . . .  for rcwa groups over Z or Z_(pi)
-##
-InstallMethod( IsClassWiseOrderPreserving,
-               "for rcwa groups over Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaGroupOverZOrZ_pi ], 0,
-               G -> ForAll( GeneratorsOfGroup( G ),
-                            IsClassWiseOrderPreserving ) );
-
-#############################################################################
-##
 #S  The support of an rcwa group. ///////////////////////////////////////////
 ##
 #############################################################################
@@ -4515,7 +4483,8 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 #M  EpimorphismFromFpGroup( <G>, <r> )
 ##
 InstallMethod( EpimorphismFromFpGroup,
-               "default method (RCWA)", ReturnTrue, [ IsGroup, IsPosInt ], 0,
+               "default method (RCWA)", ReturnTrue,
+               [ IsFinitelyGeneratedGroup, IsPosInt ], 0,
 
   function ( G, r )
 
