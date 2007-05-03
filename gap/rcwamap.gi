@@ -4410,31 +4410,6 @@ InstallGlobalFunction( TraceTrajectoriesOfClasses,
 
 #############################################################################
 ##
-#M  SpannedTree( <maps>, <root>, <depth> )
-##
-InstallMethod( SpannedTree,
-               "general method (RCWA)", ReturnTrue,
-               [ IsList, IsObject, IsInt ], 0,
-
-  function ( maps, root, depth )
-
-    local  tree, k;
-
-    if depth <= 0 then return [[root]]; fi;
-
-    if   not ForAll(maps,IsMapping)
-      or not ForAll(maps,map->root in Source(map))
-    then TryNextMethod(); fi;
-
-    tree := [[root]];
-    for k in [1..depth] do
-      Add(tree,Flat(List(tree[k],n->List(maps,map->n^map))));
-    od;
-    return tree;
-  end );
-
-#############################################################################
-##
 #S  Probabilistic guesses concerning the behaviour of trajectories. /////////
 ##
 #############################################################################

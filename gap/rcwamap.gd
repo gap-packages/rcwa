@@ -870,34 +870,6 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 
 #############################################################################
 ##
-#O  SpannedTree( <maps>, <root>, <depth> )
-##
-##  The tree with root <root> in which the childs of a vertex are its images
-##  under the mappings <maps>. The tree is returned as the list of the lists
-##  of vertices on level 0, 1, 2, 3, ..., <depth>.
-##
-DeclareOperation( "SpannedTree", [ IsList, IsObject, IsInt ] );
-
-#############################################################################
-##
-#S  LaTeX output. ///////////////////////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#A  LaTeXName( <obj> ) . . . . . . . . . . . .  LaTeX string for object <obj>
-##
-DeclareAttribute( "LaTeXName", IsObject );
-
-#############################################################################
-##
-#O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
-##
-DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
-
-#############################################################################
-##
 #S  Probabilistic guesses. //////////////////////////////////////////////////
 ##
 #############################################################################
@@ -933,6 +905,24 @@ DeclareSynonym( "LikelyContractionCenter", LikelyContractionCentre );
 ##  values. 
 ##
 DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
+
+#############################################################################
+##
+#S  LaTeX output. ///////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#A  LaTeXName( <obj> ) . . . . . . . . . . . .  LaTeX string for object <obj>
+##
+DeclareAttribute( "LaTeXName", IsObject );
+
+#############################################################################
+##
+#O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
+##
+DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
 
 #############################################################################
 ##

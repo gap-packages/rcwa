@@ -413,16 +413,23 @@ InstallMethod( Ball,
                "for a monoid and an element thereof (RCWA)", ReturnTrue,
                [ IsMonoid, IsMultiplicativeElement, IsInt ], 0,
 
-  function ( M, f, r )
+  function ( G, g, r )
 
-    local  ball, gens, k;
+    local  ball, gens, k, spheres;
 
-    if   not IsCollsElms(FamilyObj(M),FamilyObj(f)) or r < 0
+    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or r < 0
     then TryNextMethod(); fi;
-    ball := [f];
-    gens := Set(GeneratorsOfMonoid(M));
+    spheres := true in List(["spheres","Spheres"],ValueOption);
+    if spheres then ball := [[g]]; else ball := [g]; fi;
+    if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
+                  else gens := Set(GeneratorsOfMonoid(G)); fi;
     for k in [1..r] do
-      ball := Union(ball,Union(List(gens,gen->ball*gen)));
+      if spheres then
+        Add(ball,Difference(Union(List(gens,gen->ball[k]*gen)),
+                            Union(ball[Maximum(1,k-1)],ball[k])));
+      else
+        ball := Union(ball,Union(List(gens,gen->ball*gen)));
+      fi;
     od;
     return ball;
   end );
@@ -435,15 +442,24 @@ InstallMethod( Ball,
                "for a transformation monoid and a point (RCWA)", ReturnTrue,
                [ IsMonoid, IsObject, IsInt, IsFunction ], 0,
 
-  function ( M, p, r, act )
+  function ( G, p, r, act )
 
-    local  ball, gens, k;
+    local  ball, gens, k, spheres;
 
     if r < 0 then TryNextMethod(); fi;
-    ball := [p];
-    gens := Set(GeneratorsOfMonoid(M));
+    spheres := true in List(["spheres","Spheres"],ValueOption);
+    if spheres then ball := [[p]]; else ball := [p]; fi;
+    if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
+                  else gens := Set(GeneratorsOfMonoid(G)); fi;
     for k in [1..r] do
-      ball := Union(ball,Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+      if spheres then
+        Add(ball,Difference(Union(List(gens,
+                                       gen->List(ball[k],pt->act(pt,gen)))),
+                            Union(ball[Maximum(1,k-1)],ball[k])));
+      else
+        ball := Union(ball,
+                      Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+      fi;
     od;
     return ball;
   end );

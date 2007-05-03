@@ -271,6 +271,8 @@ DeclareOperation( "RepresentativesActionPreImage",
 #O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
 ##
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
+##  An option `Spheres' is recognized. If set, the returned ball is splitted
+##  into a list of spheres.
 ##
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
