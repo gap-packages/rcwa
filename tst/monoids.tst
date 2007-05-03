@@ -204,6 +204,15 @@ gap> List(MultiplicationTable(T),l->Length(Set(l)));
 [ 11, 6, 6, 6, 2, 6, 6, 2, 6, 6, 6 ]
 gap> List(TransposedMat(MultiplicationTable(T)),l->Length(Set(l)));
 [ 11, 6, 6, 6, 2, 6, 6, 2, 6, 6, 6 ]
+gap> L := RcwaMapping( [ [ 4, 1, 1 ], [ 16, 12, 1 ] ] );
+<rcwa mapping of Z with modulus 2>
+gap> R := RcwaMapping( [ [ 4, 0, 3 ], [ 8,  4, 3 ], [ 16,  4, 3 ],
+>                        [ 2, 0, 3 ], [ 4, -1, 3 ], [  2, -1, 3 ] ] );
+<rcwa mapping of Z with modulus 6>
+gap> Ball(Monoid(L,R),1,4,OnPoints:Spheres);
+[ [ 1 ], [ 4, 28 ], [ 5, 17, 37, 113 ], [ 3, 11, 75, 92, 100, 284, 604, 1820 ]
+    , [ 2, 7, 50, 60, 133, 188, 369, 401, 492, 805, 1137, 1212, 1516, 2417, 
+      7281, 9708 ] ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "monoids.tst", 120000000 );

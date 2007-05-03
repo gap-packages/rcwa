@@ -1618,10 +1618,6 @@ gap> 6754 in orb2;
 true
 gap> Intersection(orb2,[-1..5]);
 [ 2, 3, 4, 5 ]
-gap> SpannedTree([L4,R4],1,4);
-[ [ 1 ], [ 8, 4 ], [ 64, 6, 32, 3 ], [ 512, 51, 48, 12, 256, 53, 24, 2 ], 
-  [ 4096, 821, 408, 84, 384, 38, 96, 21, 2048, 412, 424, 42, 192, 19, 16, 5 ]
- ]
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
