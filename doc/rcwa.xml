@@ -3,7 +3,10 @@
 <!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
  [ <!ENTITY GAP "<Package>GAP</Package>">
    <!ENTITY RCWA "<Package>RCWA</Package>">
-   <!ENTITY ResClasses "<Package>ResClasses</Package>"> ] >
+   <!ENTITY ResClasses "<Package>ResClasses</Package>">
+   <!ENTITY tilde
+     "<Alt Only='LaTeX'>{\textasciitilde}</Alt><Alt Not='LaTeX'>~</Alt>">
+ ]>
 <?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
 <?LaTeX ExtraPreamble="\usepackage{amsxtra}"?>
 
