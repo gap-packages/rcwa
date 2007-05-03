@@ -2975,20 +2975,10 @@ InstallMethod( \in,
       Info(InfoRCWA,2,"Support(<g>) is not a subset of Support(<G>).");
       return false;
     fi;
-    if IsClassWiseOrderPreserving(G) then
-      max := Maximum(Concatenation(List(Concatenation(gens,[g]),
-                                        gen->Maximum(List(Coefficients(gen),
-                                                          c->AbsInt(c[2])))),
-                                   List(Concatenation(gens,[g]),Modulus)));
-      if Minimum([0..max]^g) < 0 or Maximum([-max..-1]^g) >= 0 then
-        if    ForAll(gens,gen->Minimum([0..max]^gen)>=0)
-          and ForAll(gens,gen->Maximum([-max..-1]^gen)<0)
-        then
-          Info(InfoRCWA,2,"<G> fixes the nonnegative integers setwise,");
-          Info(InfoRCWA,2,"but <g> does not.");
-          return false;
-        fi;
-      fi;
+    if IsSignPreserving(G) and not IsSignPreserving(g) then
+      Info(InfoRCWA,2,"<G> fixes the nonnegative integers setwise,");
+      Info(InfoRCWA,2,"but <g> does not.");
+      return false;
     fi;
     if not IsTame(G) then
       orbs := ShortOrbits(G,Intersection(Support(G),[-100..100]),50);
@@ -3722,22 +3712,31 @@ InstallMethod( \=,
 
   function ( orbit1, orbit2 )
 
-    local  balls, oldballs, acts, gens;
+    local  G, gens, act, reps, m, orbs_mod_m, balls, oldballs;
 
     if   orbit1!.group  <> orbit2!.group
       or orbit1!.action <> orbit2!.action
-    then return AsList(orbit1) = AsList(orbit2); fi;
+    then return Set(AsList(orbit1)) = Set(AsList(orbit2)); fi;
 
-    gens  := [ Set(GeneratorsAndInverses(orbit1!.group)),
-               Set(GeneratorsAndInverses(orbit2!.group)) ];
-    acts  := [ orbit1!.action, orbit2!.action ];
+    G    := orbit1!.group;
+    gens := Set(GeneratorsAndInverses(G));
+    act  := orbit1!.action;
+    reps := [orbit1!.representative,orbit2!.representative];
 
-    balls := [ [ orbit1!.representative ], [ orbit2!.representative ] ];
-    repeat    
+    if act = OnPoints and IsSubset(Source(One(G)),reps) then
+      m          := Lcm(List(gens,Modulus));
+      orbs_mod_m := OrbitsModulo(G,m);
+      if    First(orbs_mod_m,orb->reps[1] mod m in orb)
+         <> First(orbs_mod_m,orb->reps[2] mod m in orb)
+      then return false; fi;
+    fi;
+
+    balls := [[reps[1]],[reps[2]]];
+    repeat
       oldballs := List(balls,ShallowCopy);
       balls    := List([1..2],i->Union(oldballs[i],
-                       Union(List(gens[i],gen->List(oldballs[i],
-                                                    pt->acts[i](pt,gen))))));
+                       Union(List(gens,gen->List(oldballs[i],
+                                                 pt->act(pt,gen))))));
       if   balls[1] = oldballs[1] and Length(balls[2]) > Length(balls[1])
         or balls[2] = oldballs[2] and Length(balls[1]) > Length(balls[2])
       then return false; fi;
