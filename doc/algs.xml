@@ -410,7 +410,7 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <C>IsTame(<A>G</A>)</C>
   </Mark>
   <Item>
-    Checks whether the modulus of the group is non-zero.
+    Checks whether the modulus of the group is nonzero.
   </Item>
 
   <Mark>

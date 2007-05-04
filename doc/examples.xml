@@ -1403,7 +1403,7 @@ Thus the image gets stable after applying the mapping <M>T</M> for
 the 6th time. Hence <M>T^6</M> maps the residue class 1(2) surjectively
 onto the union of the residue classes 1(3) and 2(3), which <M>T</M>
 stabilizes setwise.
-Now we would like to determine the preimages of 1(3) resp. 2(3) in 1(2)
+Now we would like to determine the preimages of 1(3) and 2(3) in 1(2)
 under <M>T^6</M>. The residue class 1(2) has to be the disjoint union of
 these sets.
 

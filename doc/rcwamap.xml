@@ -95,7 +95,9 @@ The definitions of residue-class-wise affine mappings and -groups can be
 generalized in an obvious way to suitable rings other than&nbsp;<M>\Z</M>.
 In fact, this package provides also some support for residue-class-wise
 affine groups over semilocalizations of&nbsp;<M>\Z</M> and over univariate
-polynomial rings over finite fields.
+polynomial rings over finite fields. The former of these rings have been
+chosen as examples of rings with only finitely prime elements, and the
+latter have been chosen as examples of rings with nonzero characteristic.
 
 </Section>
 
@@ -456,54 +458,54 @@ necessary for understanding this manual or for using this package.
       <Mark>(a)</Mark>
       <Item>
         of <A>R</A> with modulus <A>m</A> and coefficients
-        <A>coeffs</A>, resp.
+        <A>coeffs</A>,
       </Item>
       <Mark>(b)</Mark>
       <Item>
         of <A>R</A> = <M>\Z</M> or <A>R</A> =
         <M>\Z_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
-        and coefficients <A>coeffs</A>, resp.
+        and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(c)</Mark>
       <Item>
         of <A>R</A> = <M>\Z</M> with modulus
-        <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>, resp.
+        <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(d)</Mark>
       <Item>
         of <A>R</A> = <M>\Z</M>, permuting any set
         <C><A>range</A>+k*Length(<A>range</A>)</C> like <A>perm</A>
-        permutes <A>range</A>, resp.
+        permutes <A>range</A>,
       </Item>
       <Mark>(e)</Mark>
       <Item>
         of <A>R</A> = <M>\Z</M> with modulus <A>m</A> and
         values given by a list <A>val</A> of 2 pairs <C>[</C>preimage<C>,
-        </C>image<C>]</C> per residue class (mod <A>m</A>), resp.
+        </C>image<C>]</C> per residue class (mod <A>m</A>),
       </Item>
       <Mark>(f)</Mark>
       <Item>
         of <A>R</A> = <M>\Z_{(\pi)}</M> with modulus
         <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>
         (the set of primes <M>\pi</M> which denotes the underlying ring is
-        passed as argument <A>pi</A>), resp.
+        passed as argument <A>pi</A>),
       </Item>
       <Mark>(g)</Mark>
       <Item>
         of <A>R</A> = GF(<A>q</A>)[<A>x</A>] with modulus
-        <A>m</A> and coefficients <A>coeffs</A>, resp.
+        <A>m</A> and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(h)</Mark>
       <Item>
         a bijective rcwa mapping which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of&nbsp;<A>R</A> into residue
-        classes and which is affine on the elements of <A>P1</A>, resp.
+        classes and which is affine on the elements of <A>P1</A>, or
       </Item>
       <Mark>(i)</Mark>
       <Item>
-        a bijective rcwa mapping with <Q>residue class cycles</Q> as given
-        by <A>cycles</A>. The latter is a list of lists of pairwise disjoint
-        residue classes which the mapping should permute cyclically, each.
+        a bijective rcwa mapping with <Q>residue class cycles</Q> given
+        by a list <A>cycles</A> of lists of pairwise disjoint residue classes
+        which are to be permuted cyclically, each, respectively.
       </Item>
     </List>
     The methods for the operation <C>RcwaMapping</C> perform a number of
@@ -511,9 +513,7 @@ necessary for understanding this manual or for using this package.
     instead.
 <Example>
 <![CDATA[
-gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
-gap> R := PolynomialRing(GF(2),1);
-GF(2)[x]
+gap> R := PolynomialRing(GF(2),1);; x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> RcwaMapping(R,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));      # (a)
 <rcwa mapping of GF(2)[x] with modulus x+Z(2)^0>
 gap> RcwaMapping(Z_pi(2),[[1/3,0,1]]);                               # (b)
@@ -549,14 +549,15 @@ of some semilocalization <M>\Z_{(\pi)}</M> of&nbsp;<M>\Z</M>:
   <Func Name="SemilocalizedRcwaMapping"
         Arg="f, pi" Label="for an rcwa mapping of Z and a set of primes"/>
   <Returns>
-    The rcwa mapping of <M>\Z_{(p)}</M> resp. <M>\Z_{(\pi)}</M> with the
-    same coefficients as the rcwa mapping <A>f</A> of&nbsp;<M>\Z</M>.
+    The rcwa mapping of <M>\Z_{(p)}</M> respectively <M>\Z_{(\pi)}</M> with
+    the same coefficients as the rcwa mapping <A>f</A> of&nbsp;<M>\Z</M>.
   </Returns>
   <Description>
-    The argument <A>p</A> resp. <A>pi</A> must be a prime resp. a set
-    of primes, and the argument&nbsp;<A>f</A> must be an rcwa mapping
-    of&nbsp;<M>\Z</M> whose modulus is a power of&nbsp;<A>p</A>, resp.
-    whose modulus has only prime divisors which lie in&nbsp;<A>pi</A>.
+    The argument <A>p</A> or <A>pi</A> must be a prime or a set of primes,
+    respectively. The argument&nbsp;<A>f</A> must be an rcwa mapping
+    of&nbsp;<M>\Z</M> whose modulus is a power of&nbsp;<A>p</A>, or whose
+    modulus has only prime divisors which lie in&nbsp;<A>pi</A>,
+    respectively.
 <Example>
 <![CDATA[
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
@@ -633,11 +634,12 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 <Index Key="Order" Subkey="of an rcwa permutation"><C>Order</C></Index>
 <Index Key="IsTame" Subkey="for an rcwa mapping"><C>IsTame</C></Index> <P/>
 
-Checking whether two rcwa mappings are equal is cheap.
+Testing rcwa mappings for equality requires only comparing their
+coefficient lists, hence is cheap.
 Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
 Bijective rcwa mappings can also be inverted, thus there is a method for
 <C>Inverse</C>. The latter method is usually accessed by raising a mapping
-to some power with negative exponent. Multiplying, inverting and computing
+to a power with negative exponent. Multiplying, inverting and computing
 powers of tame rcwa mappings is cheap. Computing powers of wild mappings
 is usually expensive -- runtime and memory requirements normally grow
 approximately exponentially with the exponent. How expensive multiplying
@@ -851,10 +853,11 @@ have the same prime divisors. An integral mapping has the property
 <C>IsIntegral</C> and a balanced mapping has the property <C>IsBalanced</C>.
 An rcwa mapping of the ring of integers or of one of its semilocalizations
 is called <E>class-wise order-preserving</E> if and only if all coefficients
-<M>a_{r(m)}</M> in the numerators of the affine partial mappings are
-positive. The corresponding property is <C>IsClassWiseOrderPreserving</C>.
-An rcwa mapping of <M>\Z</M> is called <E>sign-preserving</E> if it does not
-map nonnegative integers to negative integers or vice versa.
+<M>a_{r(m)}</M> (cp.&nbsp;Section&nbsp;<Ref Label="sec:basicdefinitions"/>)
+in the numerators of the affine partial mappings are positive.
+The corresponding property is <C>IsClassWiseOrderPreserving</C>.
+An rcwa mapping of <M>\Z</M> is called <E>sign-preserving</E> if it does
+not map nonnegative integers to negative integers or vice versa.
 The corresponding property is <C>IsSignPreserving</C>. All elements of the
 simple group CT(<M>\Z</M>) generated by the set of all class transpositions
 are sign-preserving.
@@ -908,34 +911,10 @@ gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> List( [ u, u^-1 ], LargestSourcesOfAffineMappings );
 [ [ 0(5), 1(5), 2(5), 3(5), 4(5) ], [ 0(3), 1(3), 2(9), 5(9), 8(9) ] ]
 gap> kappa := ClassTransposition(2,4,3,4) * ClassTransposition(4,6,8,12)
->           * ClassTransposition(3,4,4,6);; SetName(kappa,"kappa");
+>           * ClassTransposition(3,4,4,6);;
+
 gap> LargestSourcesOfAffineMappings(kappa);
 [ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Oper Name="Multpk" Arg="f, p, k"
-        Label="for an rcwa mapping, a prime and an exponent"/>
-  <Returns>
-    The union of the residue classes <M>r(m)</M> such that
-    <M>p^k||a_{r(m)}</M> if <M>k \geq 0</M>, and the union of the residue
-    classes <M>r(m)</M> such that <M>p^k||c_{r(m)}</M> if <M>k \leq 0</M>.
-    In this context, <M>m</M> denotes the modulus and <M>a_{r(m)}</M>
-    and <M>c_{r(m)}</M> denote the coefficients of&nbsp;<A>f</A> as
-    introduced in the definition of an rcwa mapping.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
-gap> [ Multpk(T,2,-1), Multpk(T,3,1) ];
-[ Integers, 1(2) ]
-gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
-gap> [ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];
-[ [  ], 0(5) U 2(5), Z \ 0(5) U 2(5), Integers ]
 ]]>
 </Example>
   </Description>
@@ -967,6 +946,32 @@ gap> List([1..3],k->FixedPointsOfAffinePartialMappings(T^k));
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="Multpk" Arg="f, p, k"
+        Label="for an rcwa mapping, a prime and an exponent"/>
+  <Returns>
+    The union of the residue classes <M>r(m)</M> such that
+    <M>p^k||a_{r(m)}</M> if <M>k \geq 0</M>, and the union of the residue
+    classes <M>r(m)</M> such that <M>p^k||c_{r(m)}</M> if <M>k \leq 0</M>.
+    In this context, <M>m</M> denotes the modulus of&nbsp;<A>f</A>, and
+    <M>a_{r(m)}</M> and <M>c_{r(m)}</M> denote the coefficients
+    of&nbsp;<A>f</A> as introduced in
+    Section&nbsp;<Ref Label="sec:basicdefinitions"/>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.
+gap> [ Multpk(T,2,-1), Multpk(T,3,1) ];
+[ Integers, 1(2) ]
+gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
+gap> [ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];
+[ [  ], 0(5) U 2(5), Z \ 0(5) U 2(5), Integers ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 <Index Key="ClassWiseOrderPreservingOn">
   <C>ClassWiseOrderPreservingOn</C>
 </Index>
@@ -989,8 +994,6 @@ constant or class-wise order-reversing, respectively.
 gap> List([ClassTransposition(1,2,0,4),ClassShift(2,3),ClassReflection(2,5)],
 >          ClassWiseOrderPreservingOn );
 [ Integers, Integers, Z \ 2(5) ]
-gap> ClassWiseConstantOn(RcwaMapping([[2,0,1],[0,4,1]]));
-1(2)
 gap> ClassWiseOrderReversingOn(ClassReflection(13,17));
 13(17)
 ]]>
@@ -1001,9 +1004,9 @@ by all class-wise order-preserving elements to (<M>\Z</M>,+) and from
 RCWA(<M>\Z</M>) itself to the cyclic group of order&nbsp;2, respectively:
 
 <ManSection>
-  <Meth Name="Determinant" Arg="g" Label="of an rcwa permutation of Z"/>
+  <Meth Name="Determinant" Arg="f" Label="of an rcwa mapping of Z"/>
   <Returns>
-    The determinant of the bijective rcwa mapping&nbsp;<A>g</A>
+    The determinant of the rcwa mapping&nbsp;<A>f</A>
     of&nbsp;<M>\Z</M>.
   </Returns>
   <Description>
@@ -1013,11 +1016,11 @@ RCWA(<M>\Z</M>) itself to the cyclic group of order&nbsp;2, respectively:
     <P/>
 
     Using the notation for the coefficients introduced in
-    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the
-    <E>determinant</E> of an rcwa mapping is given by
+    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the <E>determinant</E>
+    det(<M>f</M>) of an rcwa mapping&nbsp;<M>f</M> is given by
     <Alt Only="LaTeX">
       <Display>
-        \sum_{r(m) \in \Z/m\Z} \frac{b_{r(m)}}{|a_{r(m)}| \cdot m}.
+        \sum_{r(m) \in \Z/m\Z} b_{r(m)}/(|a_{r(m)}| \cdot m).
       </Display>
     </Alt>
     <Alt Only="HTML"><![CDATA[<center>
@@ -1081,7 +1084,8 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
     <M>\Z^\times</M> of units of&nbsp;<M>\Z</M>,
     see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.12.8.
     Therefore the kernel of the sign mapping is a normal subgroup
-    of RCWA(<M>\Z</M>) of index&nbsp;2.
+    of RCWA(<M>\Z</M>) of index&nbsp;2. The simple group CT(<M>\Z</M>) is
+    a subgroup of this kernel.
 <Example>
 <![CDATA[
 gap> List([ClassTransposition(3,4,2,6),ClassShift(0,3),ClassReflection(2,5)],Sign);
@@ -1446,11 +1450,12 @@ get larger or smaller when applying a given rcwa mapping:
   <Attr Name="DecreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Returns>
     The union of all residue classes <M>r(m)</M> such that
-    <M>|R/a_{r(m)}R| &gt; |R/c_{r(m)}R|</M> resp.
-    <M>|R/a_{r(m)}R| &lt; |R/c_{r(m)}R|</M>, where <M>R</M> denotes the
-    source, <M>m</M> the modulus and <M>a_{r(m)}</M>, <M>b_{r(m)}</M>
-    and <M>c_{r(m)}</M> the coefficients of&nbsp;<A>f</A> as
-    introduced in the definition of an rcwa mapping.
+    <M>|R/a_{r(m)}R| &gt; |R/c_{r(m)}R|</M> or
+    <M>|R/a_{r(m)}R| &lt; |R/c_{r(m)}R|</M>, respectively, where <M>R</M>
+    denotes the source, <M>m</M> denotes the modulus and <M>a_{r(m)}</M>,
+    <M>b_{r(m)}</M> and <M>c_{r(m)}</M> denote the coefficients
+    of&nbsp;<A>f</A> as introduced in
+    Section&nbsp;<Ref Label="sec:basicdefinitions"/>.
   </Returns>
   <Description>
 <Example>
