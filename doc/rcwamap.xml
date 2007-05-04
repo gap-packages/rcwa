@@ -1191,6 +1191,19 @@ class reflections and class transpositions:
     </Index>
 <Example>
 <![CDATA[
+gap> Display(PrimeSwitch(3));
+
+Wild bijective rcwa mapping of Z with modulus 12
+
+               n mod 12                |           n^PrimeSwitch(3)
+---------------------------------------+--------------------------------------
+   0                                   | n/2
+   1  7                                | n + 1
+   2  6 10                             | (3n + 4)/2
+   3  9                                | n
+   4                                   | n - 3
+   5  8 11                             | n - 1
+
 gap> Factorization(PrimeSwitch(3));
 [ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
   ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
@@ -1254,11 +1267,22 @@ cannot have infinitely many cycles of any given finite length.
     which can determine it.
   </Returns>
   <Description>
-    Currently, extracting roots works for rcwa permutations of finite order.
+    Currently, extracting roots is implemented for rcwa permutations
+    of finite order.
 <Example>
 <![CDATA[
 gap> Root(ClassTransposition(0,2,1,2),100);
 <bijective rcwa mapping of Z with modulus 8>
+gap> Display(last);
+
+Bijective rcwa mapping of Z with modulus 8
+
+                n mod 8                |                 n^f
+---------------------------------------+--------------------------------------
+  0 1 2 3 4 5                          | n + 2
+  6                                    | n - 5
+  7                                    | n - 7
+
 gap> last^100 = ClassTransposition(0,2,1,2);
 true
 ]]>
@@ -1272,7 +1296,7 @@ true
 
 <Section Label="sec:NonBijectiveMappings">
 <Heading>
-  Special functions for non-bijective residue-class-wise affine mappings
+  Special functions for non-bijective mappings
 </Heading>
 
 <ManSection>
@@ -1472,9 +1496,8 @@ gap> List([-2..2],k->IncreasingOn(a^k));
   </Description>
 </ManSection>
 
-We assign certain directed graphs to rcwa mappings, which encode the
-the order in which trajectories may traverse the residue classes modulo
-some modulus:
+We assign certain directed graphs to rcwa mappings, which encode the order
+in which trajectories may traverse the residue classes modulo some modulus:
 
 <ManSection>
   <Oper Name="TransitionGraph"
@@ -1502,7 +1525,7 @@ some modulus:
     vertices of the graph corresponds to the ordering of the residues in
     <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>.
     The result is returned in the format used by the package
-    <Package>GRAPE</Package>.
+    <Package>GRAPE</Package>&nbsp;<Cite Key="GRAPE"/>.
 <Example>
 <![CDATA[
 gap> TransitionGraph(ClassShift(0,1),6);
@@ -1689,15 +1712,15 @@ gap> List([3,5..49],n->Float(GluckTaylorInvariant(Trajectory(C,n,[1]))));
   </Description>
 </ManSection>
 
-Often one can make <Q>educated guesses</Q> on the overall behaviour of
-the trajectories of a given rcwa mapping. For example it is straightforward
-to make the conjecture that all trajectories of the Collatz mapping
-eventually enter the finite set <M>\{-136, -91, -82, -68, -61, -55, -41, -37,
--34, -25, -17, -10, -7, -5, -1, 0, 1, 2 \}</M>, or that <Q>on average</Q>
-the next number in a trajectory of the Collatz mapping is smaller than the
-preceding one by a factor of <M>\sqrt{3}/2</M>. However it is clear that
-such guesses can be wrong, and that they therefore cannot be used to prove
-anything. Nevertheless they can sometimes be useful:
+Quite often one can make certain <Q>educated guesses</Q> on the overall
+behaviour of the trajectories of a given rcwa mapping. For example it is
+reasonably straightforward to make the conjecture that all trajectories of
+the Collatz mapping eventually enter the finite set <M>\{-136, -91, -82, -68,
+-61, -55, -41, -37, -34, -25, -17, -10, -7, -5, -1, 0, 1, 2 \}</M>, or that
+<Q>on average</Q> the next number in a trajectory of the Collatz mapping is
+smaller than the preceding one by a factor of <M>\sqrt{3}/2</M>. However it
+is clear that such guesses can be wrong, and that they therefore cannot be
+used to prove anything. Nevertheless they can sometimes be useful:
 
 <ManSection>
   <Oper Name="LikelyContractionCentre"
