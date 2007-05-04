@@ -234,18 +234,18 @@ under them:
   <Oper Name="Restriction"
         Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
   <Returns>
-    The <E>restriction</E> of the rcwa mapping <A>g</A> (respectively the
+    The restriction of the rcwa mapping <A>g</A> (respectively the
     rcwa group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    By definition, the restriction <M>g_f</M> of an rcwa mapping <A>g</A>
-    by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa mapping
-    which satisfies the equation <M>f \cdot g_f = g \cdot f</M> and which
-    fixes the complement of the image of <A>f</A> pointwise.
+    By definition, the <E>restriction</E> <M>g_f</M> of an rcwa mapping
+    <A>g</A> by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa
+    mapping which satisfies the equation <M>f \cdot g_f = g \cdot f</M>
+    and which fixes the complement of the image of <A>f</A> pointwise.
     If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
     is just the conjugate of <A>g</A> under&nbsp;<A>f</A>. <P/>
 
-    The restriction of an rcwa group&nbsp;<A>G</A> by an injective
+    The <E>restriction</E> of an rcwa group&nbsp;<A>G</A> by an injective
     rcwa mapping&nbsp;<A>f</A> is defined as the group whose elements are
     the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
     The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
@@ -267,11 +267,11 @@ gap> Support(F2tilde);
   <Oper Name ="Induction"
         Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
   <Returns>
-    The <E>induction</E> of the rcwa mapping <A>g</A> (respectively the rcwa
+    The induction of the rcwa mapping <A>g</A> (respectively the rcwa
     group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
-    Induction is the right inverse of restriction, i.e. it is
+    <E>Induction</E> is the right inverse of restriction, i.e. it is
     <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C> and
     <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
     The mapping&nbsp;<A>g</A> respectively the group&nbsp;<A>G</A> must not
@@ -312,9 +312,9 @@ true
   <C>IsSignPreserving</C>
 </Index>
 
-Basic attributes of an rcwa group which are derived from the affine partial
-mappings of its elements and their coefficients are <C>Modulus</C>,
-<C>Multiplier</C>, <C>Divisor</C> and <C>PrimeSet</C>.
+Basic attributes of an rcwa group which are derived from the coefficients
+of its elements are <C>Modulus</C>, <C>Multiplier</C>, <C>Divisor</C> and
+<C>PrimeSet</C>.
 The <E>modulus</E> of an rcwa group is the lcm of the moduli of its
 elements if such an lcm exists, i.e. if the group is tame, and 0 otherwise.
 The <E>multiplier</E> respectively <E>divisor</E> of an rcwa group is the
@@ -330,6 +330,7 @@ There are corresponding methods available for <C>IsIntegral</C>
 and <C>IsClassWiseOrderPreserving</C>. There is a property
 <C>IsSignPreserving</C>, which indicates whether a given rcwa
 group over&nbsp;<M>\Z</M> acts on the set of nonnegative integers.
+The latter holds for any subgroup of CT(<M>\Z</M>).
 
 <Example>
 <![CDATA[
