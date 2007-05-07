@@ -7,13 +7,7 @@
 <!-- ##                                                                                       ## -->
 <!-- ########################################################################################### -->
 
-<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"
-[
- <!ENTITY GAP "<Package>GAP</Package>">
- <!ENTITY tamp "<Alt Only='BibTeX,BibTeXhref'>\&amp;</Alt><Alt Not='BibTeX,BibTeXhref'>&amp;</Alt>">
- <!ENTITY nbsp "<Alt Only='BibTeX,BibTeXhref'>~</Alt><Alt Not='BibTeX,BibTeXhref'>&#x00a0;</Alt>">
- <!ENTITY tilde "<Alt Only='LaTeX'>{\textasciitilde}</Alt><Alt Not='LaTeX'>~</Alt>">
-]>
+<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"[]>
 
 <file>
 
@@ -79,7 +73,7 @@
   </title>
   <year>2007</year>
   <other type="note">
-    &GAP; package, <URL>http://mad.epfl.ch/~laurent/FR/</URL>
+    GAP package, <URL>http://mad.epfl.ch/~laurent/FR/</URL>
   </other>
 </manual></entry>
 
@@ -104,7 +98,7 @@
   <organization>RWTH Aachen</organization>
   <year>2002</year>
   <other type="note">
-    &GAP; package, <URL>http://www.gap-system.org/Packages/gapdoc.html</URL>
+    GAP package, <URL>http://www.gap-system.org/Packages/gapdoc.html</URL>
   </other>
 </manual></entry>
 
@@ -130,7 +124,7 @@
   <organization>Queen Mary, University of London</organization>
   <year>2002</year>
   <other type="note">
-    &GAP; package, <URL>http://www.gap-system.org/Packages/grape.html</URL>
+    GAP package, <URL>http://www.gap-system.org/Packages/grape.html</URL>
   </other>
 </manual></entry>
 
@@ -219,7 +213,7 @@
   </title>
   <year>2006</year>
   <other type="note">
-    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/simplegp.pdf</URL>
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/preprints/simplegp.pdf</URL>
   </other>
 </misc></entry>
 
@@ -232,7 +226,7 @@
   </title>
   <year>2007</year>
   <other type="note">
-    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/compute.pdf</URL>
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/preprints/compute.pdf</URL>
   </other>
 </misc></entry>
 
@@ -245,7 +239,7 @@
   </title>
   <year>2007</year>
   <other type="note">
-    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/graphcrit.pdf</URL>
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/preprints/graphcrit.pdf</URL>
   </other>
 </misc></entry>
 
@@ -259,7 +253,7 @@
   </title>
   <year>2007</year>
   <other type="note">
-    <URL>http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/preprints/3n+1tree.pdf</URL>
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/preprints/3n+1tree.pdf</URL>
   </other>
 </misc></entry>
 
@@ -334,7 +328,7 @@
   </title>
   <year>2006</year>
   <other type="note">
-    &GAP; package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
+    GAP package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
   </other>
 </manual></entry>
 
