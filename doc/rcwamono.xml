@@ -14,7 +14,7 @@ affine monoids.
 
 <Index Key="rcwa monoid" Subkey="definition">rcwa monoid</Index>
 
-Residue-class-wise affine monoids, or <E>rcwa</E> monoids for short,
+<E>Residue-class-wise affine</E> monoids, or <E>rcwa</E> monoids for short,
 are monoids whose elements are residue-class-wise affine mappings.
 
 <!-- #################################################################### -->
@@ -73,7 +73,7 @@ be constructed as described above. It is handled as a special case:
 <![CDATA[
 gap> RcwaZ := Rcwa(Integers);
 Rcwa(Z)
-gap> IsSubset(RcwaZ,C);
+gap> IsSubset(RcwaZ,M);
 true
 ]]>
 </Example>
@@ -170,8 +170,7 @@ if all of its elements are so.
 gap> f1 := RcwaMapping([[-1, 1, 1],[ 0,-1, 1]]);;
 gap> f2 := RcwaMapping([[ 1,-1, 1],[-1,-2, 1],[-1, 2, 1]]);; 
 gap> f3 := RcwaMapping([[ 1, 0, 1],[-1, 0, 1]]);; 
-gap> N := Monoid(f1,f2,f3);
-<rcwa monoid over Z with 3 generators>
+gap> N := Monoid(f1,f2,f3);;
 gap> Size(N);
 366
 gap> List([Monoid(f1,f2),Monoid(f1,f3),Monoid(f2,f3)],Size);
@@ -217,13 +216,9 @@ by the operation <C>ShortOrbits</C>:
 <![CDATA[
 gap> ShortOrbits(M,[-5..5],20);
 [ [ -5, -4, 1, 2, 7, 8 ], [ -3, -2, 1, 2, 5, 6 ], [ -1, 0, 1, 2, 3, 4 ] ]
-gap> Action(M,last[1]);
-<monoid with 2 generators>
-gap> Display(last);
+gap> Display(Action(M,last[1]));
 Monoid( [ Transformation( [ 2, 3, 4, 3, 6, 3 ] ), 
   Transformation( [ 4, 5, 4, 3, 4, 1 ] ) ], ... )
-gap> IsTransformationMonoid(last);
-true
 gap> orbs := ShortOrbits(N,[0..10],50);
 [ [ -5, -4, -3, -1, 0, 1, 2, 3, 5, 6 ], 
   [ -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 
@@ -256,8 +251,8 @@ forward orbits or subsets of such under the action of an rcwa monoid:
   </Returns>
   <Description>
     All balls are understood with respect to <C>GeneratorsOfMonoid(<A>M</A>)</C>.
-    As membership tests can be expensive, the latter method does not check
-    whether <A>f</A> is indeed an element of&nbsp;<A>M</A>.
+    As membership tests can be expensive, the first-mentioned method does not
+    check whether <A>f</A> is indeed an element of&nbsp;<A>M</A>.
     The methods require that point- / element comparisons are cheap.
     They are not only applicable to rcwa monoids.
     If the option <A>Spheres</A> is set, the ball is splitted up and

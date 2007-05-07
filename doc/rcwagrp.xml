@@ -418,7 +418,8 @@ gap> StructureDescription(G:short);
 However the extent to which the structure of an rcwa group can be exhibited
 automatically is certainly limited. In general, one can find out much more
 about the structure of a given rcwa group in an interactive session using
-the functionality described in the rest of this section. <P/>
+the functionality described in the rest of this section and elsewhere in
+this manual. <P/>
 
 <Index Key="Size" Subkey="for an rcwa group"><C>Size</C></Index>
 
@@ -470,6 +471,8 @@ The direct product of two free groups of rank&nbsp;2 can faithfully be
 represented as an rcwa group. According to&nbsp;<Cite Key="Mihailova58"/>
 this implies that in general the membership problem for rcwa groups is
 algorithmically undecidable.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -549,7 +552,7 @@ false
 
 For tame rcwa groups, there are methods for <C>IsSolvable</C> and
 <C>IsPerfect</C> available, and usually derived subgroups and subgroup
-indices be computed as well. Linear representations of tame groups
+indices can be computed as well. Linear representations of tame groups
 over the rationals can be determined by the operation
 <C>IsomorphismMatrixGroup</C>. Testing a wild group for solvability
 or perfectness is currently not always feasible, and wild groups
@@ -562,14 +565,19 @@ gap> IsPerfect(G);
 false
 gap> IsSolvable(G);
 true
-gap> D := DerivedSubgroup(G);
-<tame rcwa group over Z with 3 generators, of size infinity>
-gap> Index(G,D);
+gap> D1 := DerivedSubgroup(G);; D2 := DerivedSubgroup(D1);;
+gap> IsAbelian(D2);
+true
+gap> Index(G,D1); Index(D1,D2);
 infinity
-gap> StructureDescription(G);
+9
+gap> StructureDescription(G); StructureDescription(D1);
 "(Z x Z x Z) . S3"
-gap> StructureDescription(D);
 "(Z x Z) . C3"
+gap> Q := D1/D2;
+Group([ (), (1,2,4)(3,5,7)(6,8,9), (1,3,6)(2,5,8)(4,7,9) ])
+gap> StructureDescription(Q); 
+"C3 x C3"
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> g := ClassTransposition(0,2,1,4)*ClassShift(1,2)^3;
 <bijective rcwa mapping of Z with modulus 4>
@@ -603,7 +611,10 @@ the generators:
 
     Both the performance and the returned epimorphism depend on whether
     the package <Package>FR</Package>&nbsp;<Cite Key="FR"/> is present
-    or&nbsp;not. 
+    or&nbsp;not.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> a := ClassTransposition(2,4,3,4 :Name:="a");;
@@ -656,21 +667,19 @@ A related very common task is to factor group elements into generators:
 <![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
 gap> b := ClassShift(0,1:Name:="b");;
-gap> G := Group(a,b); # G = <<Collatz permutation>, n -> n + 1>.
-<rcwa group over Z with 2 generators>
-gap> phi := EpimorphismFromFreeGroup(G);
-[ a, b ] -> [ a, b ]
-gap> g := Comm(a^2*b^4,a*b^3); # A sample element g to be factored.
+gap> G := Group(a,b);; # G = <<Collatz permutation>, n -> n + 1>
+gap> phi := EpimorphismFromFreeGroup(G);;
+gap> g := Comm(a^2*b^4,a*b^3); # a sample element to be factored
 <bijective rcwa mapping of Z with modulus 8>
-gap> PreImagesRepresentative(phi,g); # -> A factorization of g.
+gap> PreImagesRepresentative(phi,g); # -> a factorization of g
 b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3
-gap> g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # Check.
+gap> g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check
 true
 gap> g := Comm(a*b,Comm(a,b^3));
 <bijective rcwa mapping of Z with modulus 8>
 gap> pre := PreImagesRepresentatives(phi,g);
 [ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
-gap> rel := CyclicallyReducedWord(pre[1]/pre[2]); # -> A nontrivial relation.
+gap> rel := CyclicallyReducedWord(pre[1]/pre[2]); # -> a nontrivial relation
 b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1
 gap> rel^phi;
 IdentityMapping( Integers )
@@ -685,19 +694,19 @@ IdentityMapping( Integers )
 
 <Section Label="sec:ActionOnR">
 <Heading>
-  The action of a residue-class-wise affine group on the underlying ring
+  The natural action of an rcwa group on the underlying ring
 </Heading>
 
 Knowing a natural permutation representation of a group usually helps
 significantly in computing with it and in obtaining results on its structure.
 This holds particularly for the natural action of an rcwa group on its
 underlying ring. In this section we describe &RCWA;'s functionality
-related to this action.
+related to this action. <P/>
 
 <Index Key="Support" Subkey="of an rcwa group"><C>Support</C></Index>
 <Index Key="MovedPoints" Subkey="of an rcwa group"><C>MovedPoints</C></Index>
 
-The support, i.e. set of moved points, of an rcwa group can be determined
+The support, i.e. the set of moved points, of an rcwa group can be determined
 by <C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 There are methods to compute orbits under the action of an rcwa group:
 
@@ -769,7 +778,7 @@ true
 </Example>
 
 Finite orbits give rise to finite quotients of a group, and finite cycles
-can help to check for conjugacy. Therefore it is important to have a function
+can help to check for conjugacy. Therefore it is important to be able
 to determine them:
 
 <ManSection>
@@ -795,8 +804,8 @@ to determine them:
   <Description>
 <Example>
 <![CDATA[
-gap> G := Group(ClassTransposition(1,4,2,4)  * ClassTransposition(1,4,3,4),
->               ClassTransposition(3,9,6,18) * ClassTransposition(1,6,3,9));;
+gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
+>               ClassTransposition(3,9,6,18)*ClassTransposition(1,6,3,9));;
 gap> List(ShortOrbits(G,[-15..15],100),orb->StructureDescription(Action(G,orb)));
 [ "A15", "A4", "1", "1", "C3", "1", "((C2 x C2 x C2) : C7) : C3", "1", "1", 
   "C3", "A19" ]
@@ -839,8 +848,7 @@ properties or be it for other purposes:
 <Example>
 <![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
->                                                    CyclicGroup(3))));
-<wild rcwa group over Z with 2 generators>
+>                                                    CyclicGroup(3))));;
 gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnTuples)));
 [ 4, 8, 14, 22, 34, 50, 74, 106, 154, 218 ]
 gap> Ball(Group((1,2),(2,3),(3,4)),(),2:Spheres);
@@ -890,8 +898,7 @@ of the underlying ring to a given other tuple, if such elements exist:
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
-gap> b := ClassShift(1,4:Name:="b");;
-gap> G := Group(a,b);;
+gap> b := ClassShift(1,4:Name:="b");; G := Group(a,b);;
 gap> elm := RepresentativeAction(G,[7,4,9],[4,5,13],OnTuples);;
 gap> Display(elm);
 
@@ -920,9 +927,8 @@ Bijective rcwa mapping of Z with modulus 12
    5                                   | (4n - 17)/3
    9                                   | (4n - 15)/3
 
-gap> [6,-3,8]^elm;
+gap> [6,-3,8]^elm; List([6,-3,8],n->n^elm); # `OnPoints' permits reordering.
 [ -9, 4, 11 ]
-gap> List([6,-3,8],n->n^elm); # `OnPoints' permits reordering.
 [ 4, -9, 11 ]
 gap> F := FreeGroup("a","b");; phi := EpimorphismByGenerators(F,G);;
 gap> w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],OnTuples,F);
@@ -987,8 +993,8 @@ maps the one to the other:
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
     underlying ring <M>R</M> into the same number of unions of residue
     classes.
-    The method for <M>R = \Z</M> recognizes the option <C>IsTame</C>,
-    which demands a tame result. If this option is set and there is
+    The method for <M>R = \Z</M> recognizes the option <C>IsTame</C>, which
+    can be used to demand a tame result. If this option is set and there is
     no tame rcwa permutation which maps <A>P1</A> to&nbsp;<A>P2</A>,
     the method runs into an infinite loop. This happens if the condition
     in Theorem&nbsp;2.8.9 in&nbsp;<Cite Key="Kohl05"/> is not satisfied.
@@ -1038,8 +1044,9 @@ such group can be obtained.
 We have already seen above that there are for example methods for
 <C>IsSolvable</C>, <C>IsPerfect</C> and <C>DerivedSubgroup</C> available
 for tame rcwa groups, while testing wild groups for solvability or
-perfectness is currently not always feasible. These methods make use of
-specific attributes of tame groups, which are described in this section.
+perfectness is currently not always feasible. The purpose of this section
+is to describe the specific attributes of tame groups which are needed for
+these computations.
 
 <ManSection>
   <Attr Name ="RespectedPartition"
@@ -1147,11 +1154,8 @@ gap> Index(G,K);
 48
 gap> List(GeneratorsOfGroup(K),Factorization);
 [ [ ClassShift(0,4)^2 ], [ ClassShift(2,4)^2 ], [ ClassShift(1,6)^2 ] ]
-gap> IsomorphismPcpGroup(K);
-[ <bijective rcwa mapping of Z with modulus 4>, 
-  <bijective rcwa mapping of Z with modulus 4>, 
-  <bijective rcwa mapping of Z with modulus 6> ] -> [ g6*g10, g8*g12, g14*g16
- ]
+gap> Image(IsomorphismPcpGroup(K));
+Pcp-group with orders [ 0, 0, 0 ]
 ]]>
 </Example>
   </Description>
@@ -1188,8 +1192,6 @@ uniquely.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
-gap> IsIntegral(IntegralConjugate(G));
-true
 gap> G^IntegralizingConjugator(G) = IntegralConjugate(G);
 true
 gap> RespectedPartition(G);
@@ -1216,8 +1218,7 @@ interesting examples. No particular distribution is guaranteed.
 
 <Log>
 <![CDATA[
-gap> elm := Random(RCWA(Integers));
-<bijective rcwa mapping of Z with modulus 60>
+gap> elm := Random(RCWA(Integers));;
 gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
@@ -1379,9 +1380,11 @@ The pictures created in the examples are shown on &RCWA;'s webpage.
 </Index>
 <Index Key="ListOfPowers"><C>ListOfPowers</C></Index>
 <Index Key="AllProducts"><C>AllProducts</C></Index>
+<Index Key="DifferencesList"><C>DifferencesList</C></Index>
+<Index Key="FloatQuotients"><C>FloatQuotients</C></Index>
 
-&RCWA; introduces a few small utility functions which can be used for
-groups in general: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
+&RCWA; introduces a couple of small utility functions which can be used in
+a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
 returns a list of generators of <A>G</A> and their inverses,
 <C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is
 a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
@@ -1389,9 +1392,14 @@ GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
 (there is also an <C>NC</C> version of this), the function
 <C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> returns the list
 <C>[<A>g</A>,<A>g</A>&circum;2,...,<A>g</A>&circum;<A>exp</A>]</C>
-of powers of&nbsp;<A>g</A>, and the function
+of powers of&nbsp;<A>g</A>, the function
 <C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
-all products of <A>k</A> entries of the list&nbsp;<A>l</A>.
+all products of <A>k</A> entries of the list&nbsp;<A>l</A>,
+the function <C>DifferencesList(<A>l</A>)</C> returns the list of
+differences of consecutive entries of the list&nbsp;<A>l</A>, and
+the function <C>FloatQuotients(<A>l</A>)</C> returns the list of
+floating point approximations of quotients of consecutive entries
+of the list&nbsp;<A>l</A>.
 
 </Section>
 
