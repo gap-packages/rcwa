@@ -3712,7 +3712,9 @@ InstallMethod( \=,
 
   function ( orbit1, orbit2 )
 
-    local  G, gens, act, reps, m, orbs_mod_m, balls, oldballs;
+    local  G, gens, act, reps,
+           m, orbs_mod_m, orbs_mod_m_tested,
+           balls, oldballs;
 
     if   orbit1!.group  <> orbit2!.group
       or orbit1!.action <> orbit2!.action
@@ -3723,15 +3725,8 @@ InstallMethod( \=,
     act  := orbit1!.action;
     reps := [orbit1!.representative,orbit2!.representative];
 
-    if act = OnPoints and IsSubset(Source(One(G)),reps) then
-      m          := Lcm(List(gens,Modulus));
-      orbs_mod_m := OrbitsModulo(G,m);
-      if    First(orbs_mod_m,orb->reps[1] mod m in orb)
-         <> First(orbs_mod_m,orb->reps[2] mod m in orb)
-      then return false; fi;
-    fi;
-
-    balls := [[reps[1]],[reps[2]]];
+    balls             := [[reps[1]],[reps[2]]];
+    orbs_mod_m_tested := false;
     repeat
       oldballs := List(balls,ShallowCopy);
       balls    := List([1..2],i->Union(oldballs[i],
@@ -3740,6 +3735,17 @@ InstallMethod( \=,
       if   balls[1] = oldballs[1] and Length(balls[2]) > Length(balls[1])
         or balls[2] = oldballs[2] and Length(balls[1]) > Length(balls[2])
       then return false; fi;
+      if    not orbs_mod_m_tested
+        and act = OnPoints and IsSubset(Source(One(G)),reps)
+        and Maximum(List(balls,Length)) > Lcm(List(gens,Modulus))^2
+      then
+        m          := Lcm(List(gens,Modulus));
+        orbs_mod_m := OrbitsModulo(G,m);
+        if    First(orbs_mod_m,orb->reps[1] mod m in orb)
+           <> First(orbs_mod_m,orb->reps[2] mod m in orb)
+        then return false; fi;
+        orbs_mod_m_tested := true;
+      fi;
     until not IsEmpty(Intersection(balls));
     return true;
   end );
