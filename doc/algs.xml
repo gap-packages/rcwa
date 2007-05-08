@@ -15,8 +15,11 @@ short, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that
 essentially nothing is done except of storing or recalling one or several
 values, and <Q>straightforward</Q> means that no sophisticated algorithm
-is used. Longer and better descriptions of many of the algorithms and methods
-can be found in&nbsp;<Cite Key="Kohl07a"/>.
+is used. Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
+as <E>mathematically</E> trivial respectively straightforward, and that the
+code of a function or method attributed in this way can still be reasonably
+long and complicated. Longer and better descriptions of many of the
+algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
 
 <List>
 
@@ -44,7 +47,22 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>ClassPairs</C>
+  </Mark>
+  <Item>
+    Run over all 4-tuples, and filter by divisibility criteria,
+    size comparisons, ordering of the entries etc.
+  </Item>
+
+  <Mark>
     <C>ClassReflection(<A>r</A>,<A>m</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>ClassRotation(<A>r</A>,<A>m</A>,<A>u</A>)</C>
   </Mark>
   <Item>
     <Q>Trivial</Q>.
@@ -88,11 +106,26 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>CT(<A>R</A>)</C>
+  </Mark>
+  <Item>
+    Attributes and properties are set according
+    to&nbsp;<Cite Key="Kohl06b"/>.
+  </Item>
+
+  <Mark>
     <C>DecreasingOn(<A>f</A>)</C>
   </Mark>
   <Item>
     Forms the union of the residue classes which are determined by the
     coefficients as indicated.
+  </Item>
+
+  <Mark>
+    <C>DerivedSubgroup(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    No genuine method -- &GAP; Library methods already work for tame groups.
   </Item>
 
   <Mark>
@@ -125,6 +158,45 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Mark>
   <Item>
     Lcm of coefficients, as indicated.
+  </Item>
+
+  <Mark>
+    <C>DrawOrbitPicture</C>
+  </Mark>
+  <Item>
+    Compute spheres of radius <M>1, \dots, r</M> around the given point(s).
+    Choose the origin either in the lower left corner of the picture
+    (if all points lie in the first quadrant) or in the middle of the picture
+    (if they don't). Mark points of the ball with black pixels in case of
+    a monochrome picture. Choose colors from the given palette depending on
+    the distance from the starting points in case of a colored picture.
+  </Item>
+
+  <Mark>
+    <C>EpimorphismFromFpGroup(<A>G</A>,<A>r</A>)</C>
+  </Mark>
+  <Item>
+    If the <Package>FR</Package> package&nbsp;<Cite Key="FR"/> is loaded,
+    then use its function <C>FindGroupRelations</C> to find relations.
+    Otherwise proceed as follows: First compute the ball of
+    radius&nbsp;<A>r</A> around&nbsp;1 in the free group whose rank is the
+    number of stored generators of&nbsp;<A>G</A>. Then compute the images
+    of the elements of that ball under the natural projection onto the
+    group&nbsp;<A>G</A>. Take pairs of elements of the ball whose images
+    coincide, and add their quotients to the set of known relations.
+    For images which have finite order, add the corresponding power
+    relations. Finally, regardless of whether <Package>FR</Package>
+    is present or not, simplify the finitely presented group with the
+    determined relations by the operation <C>IsomorphismSimplifiedFpGroup</C>
+    from the &GAP; Library, and return the natural epimorphism from it
+    to&nbsp;<A>G</A>.
+  </Item>
+
+  <Mark>
+    <C> </C>
+  </Mark>
+  <Item>
+
   </Item>
 
   <Mark>
@@ -663,7 +735,7 @@ can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <C>RCWA(<A>R</A>)</C>
   </Mark>
   <Item>
-    Attributes are set according to Theorem&nbsp;2.1.1,
+    Attributes and properties are set according to Theorem&nbsp;2.1.1,
     Theorem&nbsp;2.1.2, Corollary&nbsp;2.1.6 and Theorem&nbsp;2.12.8
     in&nbsp;<Cite Key="Kohl05"/>.
   </Item>
