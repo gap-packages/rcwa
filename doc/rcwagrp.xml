@@ -762,7 +762,7 @@ gap> First(orb1,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
 see Section&nbsp;<Ref Label="sec:DrawingPictures"/>.
 
 <Index Key="IsTransitive" Subkey="for an rcwa group, on its underlying ring">
-  <C>Support</C>
+  <C>IsTransitive</C>
 </Index>
 
 Testing for transitivity on the underlying ring is often feasible:
