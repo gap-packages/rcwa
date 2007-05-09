@@ -4305,6 +4305,7 @@ InstallMethod( IsPerfect,
              and ForAny(GeneratorsOfGroup(G),g->Determinant(g)<>0))
       then return false; fi;
     fi;
+    if IsFinite(G) then return IsPerfect(Image(IsomorphismPermGroup(G))); fi;
     if not IsTame(G) then TryNextMethod(); fi;
     H := ActionOnRespectedPartition(G);
     if   IsTransitive(H,[1..LargestMovedPoint(H)])
