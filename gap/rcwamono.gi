@@ -22,7 +22,7 @@ Revision.rcwamono_gi :=
 ##
 #############################################################################
 
-InstallTrueMethod( IsMonoid,     IsRcwaMonoid );
+InstallTrueMethod( IsMonoid, IsRcwaMonoid );
 InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverZOrZ_pi );
 InstallTrueMethod( IsRcwaMonoidOverZOrZ_pi, IsRcwaMonoidOverZ );
 InstallTrueMethod( IsRcwaMonoidOverZOrZ_pi, IsRcwaMonoidOverZ_pi );
