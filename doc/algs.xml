@@ -478,6 +478,48 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>IsBalanced(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Checks whether the sets of prime factors of the multiplier and
+    the divisor of&nbsp;<A>f</A> are the same.
+  </Item>
+
+  <Mark>
+    <C>IsClassReflection(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    Computes the support of&nbsp;<A>g</A>, and compares&nbsp;<A>g</A> with
+    the corresponding class reflection.
+  </Item>
+
+  <Mark>
+    <C>IsClassRotation(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    Computes the support of&nbsp;<A>g</A>, extracts the possible rotation
+    factor from the coefficients and compares&nbsp;<A>g</A> with the
+    corresponding class rotation.
+  </Item>
+
+  <Mark>
+    <C>IsClassShift(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    Computes the support of&nbsp;<A>g</A>, and compares&nbsp;<A>g</A> with
+    the corresponding class shift.
+  </Item>
+
+  <Mark>
+    <C>IsClassTransposition(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    Computes the support of&nbsp;<A>g</A>, writes it as a disjoint union of
+    two residue classes and compares&nbsp;<A>g</A> with the class transposition
+    which interchanges them.
+  </Item>
+
+  <Mark>
     <C>IsClassWiseOrderPreserving(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -532,9 +574,14 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <C>IsomorphismPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
-    If the group <A>G</A> is infinite, there is no isomorphism to
-    a finite permutation group, thus return <C>fail</C>.
-    Otherwise use <C>ActionOnRespectedPartition</C>.
+    If the group <A>G</A> is finite and class-wise order-preserving,
+    use <C>ActionOnRespectedPartition</C>.
+    If <A>G</A> is finite, but not class-wise order-preserving, compute
+    the action on the respected partition which is obtained by splitting
+    any residue class <M>r(m)</M> in <C>RespectedPartition(<A>G</A></C>
+    into three residue classes <M>r(3m), r+m(3m), r+2m(3m)</M>. 
+    If <A>G</A> is infinite, there is no isomorphism to a finite
+    permutation group, thus return <C>fail</C>.
   </Item>
 
   <Mark>
@@ -562,6 +609,32 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\Z</M>).
     As an equivalent for the closed discs used there, the method takes
     the residue classes modulo two times the rank of the free group.
+  </Item>
+
+  <Mark>
+    <C>IsPerfect(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    If the group <A>G</A> is trivial, then return <C>true</C>.
+    Otherwise if it is abelian, then return <C>false</C>. <P/>
+
+    If the underlying ring is&nbsp;<M>\Z</M>, then do the following:
+    If one of the generators of&nbsp;<A>G</A> has sign&nbsp;-1, then
+    return <C>false</C>. If&nbsp;<A>G</A> is class-wise order-preserving
+    and one of the generators has nonzero determinant, then return
+    <C>false</C>. <P/>
+
+    If <A>G</A> is wild, and perfectness has not been decided so far,
+    then give up. If <A>G</A> is finite, then check the image of
+    <C>IsomorphismPermGroup(<A>G</A>)</C> for perfectness, and return
+    <C>true</C> or <C>false</C> accordingly. <P/>
+
+    If the group&nbsp;<A>G</A> is tame and if it acts transitively
+    on its stored respected partition, then return <C>true</C> or
+    <C>false</C> depending on whether the finite permutation group
+    <C>ActionOnRespectedPartition(<A>G</A>)</C> is perfect or not.
+    If&nbsp;<A>G</A> does not act transitively on its stored respected
+    partition, then give up.
   </Item>
 
   <Mark>
