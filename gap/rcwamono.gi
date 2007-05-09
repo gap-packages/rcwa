@@ -627,20 +627,10 @@ InstallMethod( \in,
       Info(InfoRCWA,2,"Support(<f>) is not a subset of Support(<M>).");
       return false;
     fi;
-    if IsIntegers(R) and IsClassWiseOrderPreserving(M) then
-      max := Maximum(Concatenation(List(Concatenation(gens,[f]),
-                                        g->Maximum(List(Coefficients(g),
-                                                        c->AbsInt(c[2])))),
-                                   List(Concatenation(gens,[f]),Modulus)));
-      if Minimum([0..max]^f) < 0 or Maximum([-max..-1]^f) >= 0 then
-        if    ForAll(gens,g->Minimum([0..max]^g)>=0)
-          and ForAll(gens,g->Maximum([-max..-1]^g)<0)
-        then
-          Info(InfoRCWA,2,"<M> fixes the nonnegative integers setwise,");
-          Info(InfoRCWA,2,"but <f> does not.");
-          return false;
-        fi;
-      fi;
+    if IsIntegers(R) and IsSignPreserving(M) and not IsSignPreserving(f) then
+      Info(InfoRCWA,2,"<M> fixes the nonnegative integers setwise,");
+      Info(InfoRCWA,2,"but <f> does not.");
+      return false;
     fi;
     if IsTame(M) then
       if Modulus(M) mod Modulus(f) <> 0 then
