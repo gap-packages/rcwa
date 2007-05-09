@@ -193,13 +193,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
-    <C> </C>
-  </Mark>
-  <Item>
-
-  </Item>
-
-  <Mark>
     <C>FactorizationIntoCSCRCT(<A>g</A>)</C>
   </Mark>
   <Item>
@@ -342,7 +335,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     prime factors of the multiplier of&nbsp;<A>f</A> is a subset of the union
     of the sets of prime factors of the multipliers of the generators
     of&nbsp;<A>M</A>. If one of these is not the case, return <C>false</C>.
-    Check whether the the set of prime factors of the divisor
+    Check whether the set of prime factors of the divisor
     of&nbsp;<A>f</A> is a subset of the union of the sets of prime factors
     of the divisors of the generators of&nbsp;<A>M</A>.
     If not, return <C>false</C>.
@@ -375,6 +368,24 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     If <A>f</A> is an element of&nbsp;<A>M</A>, this will eventually
     terminate, but if at this stage <A>f</A> is not an element
     of&nbsp;<A>M</A>, this will run into an infinite loop.
+  </Item>
+
+  <Mark>
+    <C><A>point</A> in <A>orbit</A></C> (membership test for orbits)
+  </Mark>
+  <Item>
+    Uses the equality test for orbits:
+    The orbit equality test computes balls of increasing radius around the
+    orbit representatives until they intersect nontrivially. Once they do so,
+    it returns <C>true</C>. If it finds that one or both of the orbits are
+    finite, it makes use of that information, and returns <C>false</C> if
+    appropriate. In between, i.e. after having computed balls to a certain
+    extent depending on the properties of the group, it chooses a suitable
+    modulus&nbsp;<M>m</M> and computes orbits (modulo&nbsp;<M>m</M>).
+    If the representatives of the orbits to be compared belong to different
+    orbits (mod&nbsp;<M>m</M>), it returns <C>false</C>. If this is not the
+    case although the orbits are different, the equality test runs into an
+    infinite loop.
   </Item>
 
   <Mark>
