@@ -397,6 +397,32 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>Index(<A>G</A>,<A>H</A>)</C>
+  </Mark>
+  <Item>
+    In general, i.e. if the underlying ring is not&nbsp;<M>\Z</M>, proceed
+    as follows: If both groups <A>G</A> and&nbsp;<A>H</A> are finite, return
+    the quotient of their orders. If <A>G</A> is infinite, but <A>H</A> is
+    finite, return <C>infinity</C>. Otherwise return the number of right
+    cosets of <A>H</A> in&nbsp;<A>G</A>, computed by the &GAP; Library
+    function <C>RightCosets</C>. <P/>
+
+    If the underlying ring is&nbsp;<M>\Z</M>, do additionally the following
+    before attempting to compute the list of right cosets:
+    If the group <A>G</A> is class-wise order-preserving, check whether one
+    of its generators has nonzero determinant, and whether all generators
+    of&nbsp;<A>H</A> have determinant&nbsp;zero.
+    If so, then return <C>infinity</C>.
+    Check whether <A>H</A> is tame, but <A>G</A> is not.
+    If so, then return <C>infinity</C>.
+    If <A>G</A> is tame, then check whether the rank of the largest free
+    abelian subgroup of the kernel of the action of <A>G</A> on a respected
+    partition is higher than the corresponding rank for&nbsp;<A>H</A>.
+    For this check, use <C>RankOfKernelOfActionOnRespectedPartition</C>.
+    If it is, then return <C>infinity</C>.
+  </Item>
+
+  <Mark>
     <C>Induction(<A>g</A>,<A>f</A>)</C>
   </Mark>
   <Item>
