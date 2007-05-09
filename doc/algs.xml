@@ -176,7 +176,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <C>EpimorphismFromFpGroup(<A>G</A>,<A>r</A>)</C>
   </Mark>
   <Item>
-    If the <Package>FR</Package> package&nbsp;<Cite Key="FR"/> is loaded,
+    If the package <Package>FR</Package>&nbsp;<Cite Key="FR"/> is loaded,
     then use its function <C>FindGroupRelations</C> to find relations.
     Otherwise proceed as follows: First compute the ball of
     radius&nbsp;<A>r</A> around&nbsp;1 in the free group whose rank is the
@@ -233,6 +233,13 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>GluckTaylorInvariant(<A>a</A>(</C>
+  </Mark>
+  <Item>
+    Evaluation of the given expression.
+  </Item>
+
+  <Mark>
     <C>GuessedDivergence(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -258,7 +265,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
-    <C><A>g</A> in <A>G</A></C> (membership test)
+    <C><A>g</A> in <A>G</A></C> (membership test for rcwa groups)
   </Mark>
   <Item>
     Test whether the mapping <A>g</A> or its inverse is in the list of
@@ -319,6 +326,55 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     terminates after a finite number of steps. Both runtime and memory
     requirements are exponential in the word length. If <A>g</A> is not
     in <A>G</A> at this stage, the method runs into an infinite loop.
+  </Item>
+
+  <Mark>
+    <C><A>f</A> in <A>M</A></C> (membership test for rcwa monoids)
+  </Mark>
+  <Item>
+    Test whether the mapping <A>f</A> is in the list of generators
+    of&nbsp;<A>G</A>. If it is, return <C>true</C>.
+    Test whether the multiplier of <A>f</A> is zero, but all generators
+    of&nbsp;<A>M</A> have nonzero multiplier. If yes, return <C>false</C>.
+    Test if neither&nbsp;<A>f</A> nor any generator of&nbsp;<A>M</A>
+    has multiplier zero. If so, check whether the prime set of&nbsp;<A>f</A>
+    is a subset of the prime set of&nbsp;<A>M</A>, and whether the set of
+    prime factors of the multiplier of&nbsp;<A>f</A> is a subset of the union
+    of the sets of prime factors of the multipliers of the generators
+    of&nbsp;<A>M</A>. If one of these is not the case, return <C>false</C>.
+    Check whether the the set of prime factors of the divisor
+    of&nbsp;<A>f</A> is a subset of the union of the sets of prime factors
+    of the divisors of the generators of&nbsp;<A>M</A>.
+    If not, return <C>false</C>.
+    If the underlying ring is <M>\Z</M> or a semilocalization thereof,
+    then check whether <A>f</A> is not class-wise order-preserving, but
+    <A>M</A>&nbsp;is. If so, return <C>false</C>. <P/>
+
+    If <A>f</A> is not injective, but all generators of&nbsp;<A>M</A> are,
+    then return <C>false</C>.
+    If <A>f</A> is not surjective, but all generators of&nbsp;<A>M</A> are,
+    then return <C>false</C>.
+    If the support of&nbsp;<A>f</A> is not a subset of the support
+    of&nbsp;<A>M</A>, then return <C>false</C>.
+    If <A>f</A> is not sign-preserving, but <A>M</A> is,
+    then return <C>false</C>. <P/>
+
+    Check whether <A>M</A> is tame. If so, then return <C>false</C> provided
+    that one of the following three conditions hold: 1.&nbsp;The modulus
+    of&nbsp;<A>f</A> does not divide the modulus of&nbsp;<A>M</A>.
+    2.&nbsp;<A>f</A> is not tame. 3.&nbsp;<A>M</A> is finite, and <A>f</A>
+    is bijective and has infinite order. <P/>
+
+    Use <C>ShortOrbits</C> to look for finite orbits of&nbsp;<A>M</A>,
+    and check whether <A>f</A> fixes all of them setwise. If a finite orbit
+    is found which <A>f</A> does not map to itself, then return <C>false</C>.
+    <P/>
+
+    Finally compute balls of increasing radius around&nbsp;1 until <A>f</A>
+    is found to lie in one of them. If that happens, return <C>true</C>.
+    If <A>f</A> is an element of&nbsp;<A>M</A>, this will eventually
+    terminate, but if at this stage <A>f</A> is not an element
+    of&nbsp;<A>M</A>, this will run into an infinite loop.
   </Item>
 
   <Mark>
