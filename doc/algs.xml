@@ -638,6 +638,68 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>IsPrimeSwitch(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    Checks whether the multiplier of&nbsp;<A>g</A> is an odd prime,
+    and compares <A>g</A> with the corresponding prime switch.
+  </Item>
+
+  <Mark>
+    <C>IsSignPreserving(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    If <A>f</A> is not class-wise order-preserving, then return <C>false</C>.
+    Otherwise let <M>c \geq 1</M> be greater than or equal to the maximum of
+    the absolute values of the coefficients <M>b_{r(m)}</M> of the affine
+    partial mappings of&nbsp;<A>f</A>, and check whether
+    the minimum of the image of <M>\{0, \dots, c\}</M> under&nbsp;<A>f</A>
+    is nonnegative and whether the maximum of the image of
+    <M>\{-c, \dots, -1\}</M> under&nbsp;<A>f</A> is negative.
+    If both is the case, then return <C>true</C>, otherwise
+    return <C>false</C>.
+  </Item>
+
+  <Mark>
+    <C>IsSolvable(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    If <A>G</A> is abelian, then return <C>true</C>.
+    If <A>G</A> is tame, then return <C>true</C> or <C>false</C> depending on
+    whether <C>ActionOnRespectedPartition(<A>G</A>)</C> is solvable or not.
+    If <A>G</A> is wild, then give up.
+  </Item>
+
+  <Mark>
+    <C>IsSubset(<A>G</A>,<A>H</A>)</C> (checking for a subgroup relation)
+  </Mark>
+  <Item>
+    Check whether the set of stored generators of&nbsp;<A>H</A> is a subset
+    of the set of stored generators of&nbsp;<A>G</A>. If so, return
+    <C>true</C>. Check whether the prime set of&nbsp;<A>H</A> is a subset
+    of the prime set of&nbsp;<A>G</A>. If not, return <C>false</C>.
+    Check whether the support of&nbsp;<A>H</A> is a subset
+    of the support of&nbsp;<A>G</A>. If not, return <C>false</C>.
+    Check whether <A>G</A> is tame, but <A>H</A> is wild.
+    If so, return <C>false</C>. <P/>
+
+    If <A>G</A> and <A>H</A> are both tame, then proceed as follows:
+    If the multiplier of <A>H</A> does not divide the multiplier
+    of&nbsp;<A>G</A>, then return <C>false</C>.
+    If <A>H</A> does not respect the stored respected partition
+    of&nbsp;<A>G</A>, then return <C>false</C>.
+    Check whether the finite permutation group induced by <A>H</A> on
+    <C>RespectedPartition(<A>G</A>)</C> is a subgroup of
+    <C>ActionOnRespectedPartition(<A>G</A>)</C>. If yes, return <C>true</C>.
+    Check whether the order of&nbsp;<A>H</A> is greater than the order
+    of&nbsp;<A>G</A>. If so, return <C>false</C>. <P/>
+
+    Finally use the membership test to check whether all generators
+    of&nbsp;<A>H</A> lie in&nbsp;<A>G</A>, and return <C>true</C> or
+    <C>false</C> accordingly.
+  </Item>
+
+  <Mark>
     <C>IsSurjective(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -748,6 +810,15 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>Loops(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Runs over the residue classes modulo the modulus of&nbsp;<A>f</A>,
+    and selects those of them which <A>f</A> does not map to themselves,
+    but which intersect nontrivially with their images under&nbsp;<A>f</A>.
   </Item>
 
   <Mark>
