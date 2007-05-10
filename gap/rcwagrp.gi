@@ -4358,12 +4358,7 @@ InstallMethod( Exponent,
     if IsTame(G)   then return infinity; fi;
     if   ForAny(GeneratorsOfGroup(G),g->Order(g)=infinity)
     then return infinity; fi;
-    k := 1;    
-    repeat
-      k := k + 1;
-      if   ForAny(Ball(G,One(G),k),g->Order(g)=infinity)
-      then return infinity; fi;
-    until false;
+    if First(G,g->Order(g)=infinity) <> fail then return infinity; fi;
   end );
 
 #############################################################################
