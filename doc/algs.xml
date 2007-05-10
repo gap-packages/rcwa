@@ -894,6 +894,32 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>Orbit(<A>G</A>,<A>pnt</A>,<A>gens</A>,<A>acts</A>,<A>act</A>)</C>
+  </Mark>
+  <Item>
+    Check if the orbit has length less than a certain bound.
+    If so, then return it as a list.
+    Otherwise test whether the group <A>G</A> is tame or wild. <P/>
+
+    If <A>G</A> is tame, then test whether <A>G</A> is finite.
+    If yes, then compute the orbit by the &GAP; Library method.
+    Otherwise proceed as follows:
+    Compute a respected partition&nbsp;<M>\mathcal{P}</M> of&nbsp;<A>G</A>.
+    Use&nbsp;<M>\mathcal{P}</M> to find a residue class&nbsp;<M>r(m)</M>
+    which is a subset of the orbit to be computed. In general, <M>r(m)</M>
+    will not be one of the residue classes in&nbsp;<M>\mathcal{P}</M>, but
+    a subset of one of them.
+    Put <M>\Omega := r(m)</M>. Unite the set&nbsp;<M>\Omega</M> with its
+    images under all the generators of&nbsp;<A>G</A> and their inverses.
+    Repeat that until <M>\Omega</M> does not change any more.
+    Return&nbsp;<M>\Omega</M>. <P/>
+
+    If <A>G</A> is wild, then return an orbit object which stores the
+    group&nbsp;<A>G</A>, the representative&nbsp;<A>rep</A> and the
+    action&nbsp;<A>act</A>.
+  </Item>
+
+  <Mark>
     <C>OrbitsModulo(<A>f</A>,<A>m</A>)</C>
   </Mark>
   <Item>
