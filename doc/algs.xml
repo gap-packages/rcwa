@@ -193,6 +193,22 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>Exponent(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Check whether <A>G</A> is finite. If it is, then use the &GAP; Library
+    method, applied to <C>Image(IsomorphismPermGroup(<A>G</A>))</C>.
+    Check whether <A>G</A> is tame. If yes, return <C>infinity</C>.
+    If not, run a loop over <A>G</A> until finding an element of infinite
+    order. Once one is found, return <C>infinity</C>. <P/>
+
+    The final loop to find a non-torsion element can be left away under
+    the assumption that any finitely generated wild rcwa group has a wild
+    element. It looks likely that this holds, but currently the author does
+    not know a proof.
+  </Item>
+
+  <Mark>
     <C>FactorizationIntoCSCRCT(<A>g</A>)</C>
   </Mark>
   <Item>
