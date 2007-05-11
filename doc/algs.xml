@@ -366,18 +366,16 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     If the support of&nbsp;<A>f</A> is not a subset of the support
     of&nbsp;<A>M</A>, then return <C>false</C>.
     If <A>f</A> is not sign-preserving, but <A>M</A> is,
-    then return <C>false</C>. <P/>
-
+    then return <C>false</C>.
     Check whether <A>M</A> is tame. If so, then return <C>false</C> provided
     that one of the following three conditions hold: 1.&nbsp;The modulus
     of&nbsp;<A>f</A> does not divide the modulus of&nbsp;<A>M</A>.
     2.&nbsp;<A>f</A> is not tame. 3.&nbsp;<A>M</A> is finite, and <A>f</A>
-    is bijective and has infinite order. <P/>
-
-    Use <C>ShortOrbits</C> to look for finite orbits of&nbsp;<A>M</A>,
-    and check whether <A>f</A> fixes all of them setwise. If a finite orbit
-    is found which <A>f</A> does not map to itself, then return <C>false</C>.
-    <P/>
+    is bijective and has infinite order.
+    If membership has still not been decided, use <C>ShortOrbits</C> to look
+    for finite orbits of&nbsp;<A>M</A>, and check whether <A>f</A> fixes all
+    of them setwise. If a finite orbit is found which <A>f</A> does not map
+    to itself, then return <C>false</C>. <P/>
 
     Finally compute balls of increasing radius around&nbsp;1 until <A>f</A>
     is found to lie in one of them. If that happens, return <C>true</C>.
