@@ -466,9 +466,10 @@ Changes between version 2.4.3 and version 2.5.0:
  - Some functionality for rcwa monoids has been added --
    see the short new manual chapter "Residue-Class-Wise Affine Monoids".
 
- - The manual has undergone a slight revision.
-   Nothing has been rewritten completely, but little improvements and
-   updates have been made in many places.
+ - The manual has undergone a revision.
+   Nothing has been rewritten completely, but lots of improvements and
+   updates have been made in many places, and the chapter "The Algorithms
+   Implemented in RCWA" has been extended considerably.
 
  - Iterators for rcwa groups have been implemented.
    These iterators can be used for finitely generated infinite groups
