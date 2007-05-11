@@ -994,6 +994,15 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>Projections(<A>G</A>,<A>m</A>)</C>
+  </Mark>
+  <Item>
+    Use <C>OrbitsModulo</C> to determine the supports of the images of the
+    epimorphisms to be determined, and use <C>RestrictedPerm</C> to compute
+    the images of the generators of&nbsp;<A>G</A> under these epimorphisms.
+  </Item>
+
+  <Mark>
     <C>Random(RCWA(Integers))</C>
   </Mark>
   <Item>
@@ -1078,6 +1087,20 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>RespectsPartition(<A>G</A>,<A>P</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>RestrictedPerm(<A>g</A>,<A>S</A></C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
     <C>Restriction(<A>g</A>,<A>f</A>)</C>
   </Mark>
   <Item>
@@ -1124,6 +1147,13 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>RotationFactor(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>SemilocalizedRcwaMapping(<A>f</A>,<A>pi</A>)</C>
   </Mark>
   <Item>
@@ -1155,7 +1185,18 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
-    <C>Size(<A>G</A>)</C>
+    <C>Sinks(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Computes the strongly connected components of the transition graph
+    by the function
+    <C>STRONGLY&uscore;CONNECTED&uscore;COMPONENTS&uscore;DIGRAPH</C>,
+    and selects those which are proper subsets of their preimages and
+    proper supersets of their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>Size(<A>G</A>)</C> (order of an rcwa group)
   </Mark>
   <Item>
     Test whether one of the generators of the group&nbsp;<A>G</A> has
@@ -1172,10 +1213,51 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
+    <C>Size(<A>M</A>)</C> (order of an rcwa monoid)
+  </Mark>
+  <Item>
+    Check whether <A>M</A> is in fact an rcwa group. If so, use the method
+    for rcwa groups instead. Check whether one of the generators
+    of&nbsp;<A>M</A> is surjective, but not injective. If so, return
+    <C>infinity</C>. Check whether for all generators&nbsp;<M>f</M>
+    of&nbsp;<A>M</A>, the image of the union of the loops of&nbsp;<M>f</M>
+    under&nbsp;<M>f</M> is finite. If not, return <C>infinity</C>.
+    Check whether one of the generators of&nbsp;<A>M</A> is bijective and
+    has infinite order. If so, return <C>infinity</C>.
+    Check whether one of the generators of&nbsp;<A>M</A> is wild.
+    If so, return <C>infinity</C>.
+    Apply the above criteria to the elements of the ball of radius&nbsp;2
+    around&nbsp;1, and return <C>infinity</C> if appropriate.
+    Finally attempt to compute the list of elements of&nbsp;<A>M</A>.
+    If this is successful, return the length of the resulting list.
+  </Item>
+
+  <Mark>
+    <C>Sources(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Computes the strongly connected components of the transition graph
+    by the function
+    <C>STRONGLY&uscore;CONNECTED&uscore;COMPONENTS&uscore;DIGRAPH</C>,
+    and selects those which are proper supersets of their preimages and
+    proper subsets of their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
     <C>StructureDescription(<A>G</A>)</C>
   </Mark>
   <Item>
-    (Not described here.)
+    This method uses a combination of techniques to obtain some basic
+    information on the structure of an rcwa group.
+    The returned description reflects the way the group has been built
+    (<C>DirectProduct</C>, <C>WreathProduct</C>, etc.).
   </Item>
 
   <Mark>
@@ -1183,6 +1265,13 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Mark>
   <Item>
     Pointwise addition of affine mappings.
+  </Item>
+
+  <Mark>
+    <C>Support(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -1209,7 +1298,14 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Item>
 
   <Mark>
-    <C>ViewObj(<A>f</A>)</C>
+    <C>TransposedClasses(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>View(<A>f</A>)</C>
   </Mark>
   <Item>
     <Q>Trivial</Q>.
