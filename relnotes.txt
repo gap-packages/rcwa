@@ -518,6 +518,8 @@ Changes between version 2.4.3 and version 2.5.0:
    Now they are called `ClassWiseOrderPreservingOn', `ClassWiseConstantOn'
    and `ClassWiseOrderReversingOn'.
 
+ - The bibliography format has been changed from BibTeX to GAPDoc XML.
+
  - Now RCWA needs GAPDoc 0.99999.
 
 
