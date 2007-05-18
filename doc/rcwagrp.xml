@@ -175,6 +175,10 @@ true
 </ManSection>
 
 <ManSection>
+  <Heading>
+    WreathProduct
+    (for an rcwa group over Z, with a permutation group or (<M>\Z</M>,+))
+  </Heading>
   <Meth Name="WreathProduct" Arg="G, P"
         Label="for an rcwa group over Z and a permutation group"/>
   <Meth Name="WreathProduct" Arg="G, Z"
@@ -229,6 +233,9 @@ The following operation computes images of rcwa mappings and -groups
 under them:
 
 <ManSection>
+  <Heading>
+    Restriction (of an rcwa mapping or -group, by an injective rcwa mapping)
+  </Heading>
   <Oper Name="Restriction"
         Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
   <Oper Name="Restriction"
@@ -262,6 +269,9 @@ gap> Support(F2tilde);
 </ManSection>
 
 <ManSection>
+  <Heading>
+    Induction (of an rcwa mapping or -group, by an injective rcwa mapping)
+  </Heading>
   <Oper Name ="Induction"
         Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
   <Oper Name ="Induction"
@@ -714,6 +724,7 @@ by <C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 There are methods to compute orbits under the action of an rcwa group:
 
 <ManSection>
+  <Heading> Orbit (for an rcwa group and either a point or a set) </Heading>
   <Meth Name="Orbit" Arg="G, point" Label="for an rcwa group and a point"/>
   <Meth Name="Orbit" Arg="G, set"   Label="for an rcwa group and a set"/>
   <Returns>
@@ -785,6 +796,9 @@ can help to check for conjugacy. Therefore it is important to be able
 to determine them:
 
 <ManSection>
+  <Heading>
+    ShortOrbits (for rcwa groups) &tamp; ShortCycles (for rcwa permutations)
+  </Heading>
   <Oper Name="ShortOrbits" Arg="G, S, maxlng"
         Label="for rcwa group, set of points and bound on length"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng"
@@ -829,6 +843,9 @@ an orbit looks like, be it to search for a group element with certain
 properties or be it for other purposes:
 
 <ManSection>
+  <Heading>
+    Ball (for group, element and radius or group, point, radius and action)
+  </Heading>
   <Meth Name ="Ball" Arg="G, g, r"
         Label="for group, element and radius"/>
   <Meth Name ="Ball" Arg="G, p, r, action"
@@ -1038,7 +1055,7 @@ gap> [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))]^elm;
 
 <Section Label="sec:MethodsForTameGroups">
 <Heading>
-  Special attributes for tame residue-class-wise affine groups
+  Special attributes of tame residue-class-wise affine groups
 </Heading>
 
 There are a couple of attributes which a priori make only sense for tame
@@ -1052,9 +1069,12 @@ is to describe the specific attributes of tame groups which are needed for
 these computations.
 
 <ManSection>
-  <Attr Name ="RespectedPartition"
+  <Heading>
+    RespectedPartition (of a tame rcwa group or -permutation)
+  </Heading>
+  <Attr Name="RespectedPartition"
         Arg="G" Label="of a tame rcwa group"/>
-  <Attr Name ="RespectedPartition"
+  <Attr Name="RespectedPartition"
         Arg="g" Label="of a tame rcwa permutation"/>
   <Returns>
     A respected partition of the rcwa group <A>G</A> /
@@ -1124,6 +1144,9 @@ gap> P := RespectedPartition(G);
 </ManSection>
 
 <ManSection>
+  <Heading>
+    ActionOnRespectedPartition &tamp; KernelOfActionOnRespectedPartition
+  </Heading>
   <Attr Name="ActionOnRespectedPartition"
         Arg="G" Label="for a tame rcwa group"/>
   <Attr Name="KernelOfActionOnRespectedPartition"

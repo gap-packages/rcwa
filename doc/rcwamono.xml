@@ -239,6 +239,9 @@ by the operation <C>Ball</C>. This operation can also be used for computing
 forward orbits or subsets of such under the action of an rcwa monoid:
 
 <ManSection>
+  <Heading>
+    Ball (for monoid, element and radius or monoid, point, radius and action)
+  </Heading>
   <Meth Name ="Ball"
         Arg="M, f, r" Label="for monoid, element and radius"/>
   <Meth Name ="Ball"

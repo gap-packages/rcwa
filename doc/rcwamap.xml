@@ -245,35 +245,15 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
   <Description>
     Given two disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
     of the integers, the <E>class transposition</E>
-    <M>\tau_{r_1(m_1),r_2(m_2)}</M> <M>\in</M> RCWA(<M>\Z</M>) is defined by
-    <Alt Only="LaTeX">
-    <Display>
-      <![CDATA[
-      \tau_{r_1(m_1),r_2(m_2)}: \ \ \ n \ \longmapsto \
-      \begin{cases}
-        (m_2 n + m_1 r_2 - m_2 r_1)/m_1 & \text{if} \ n \in r_1(m_1), \\
-        (m_1 n + m_2 r_1 - m_1 r_2)/m_2 & \text{if} \ n \in r_2(m_2), \\
-        n                               & \text{otherwise},
-      \end{cases}
-      ]]>
-    </Display>
-    </Alt>
-    <Alt Only="HTML"><![CDATA[<center>
-      <img src = "ct.png" width = "574" height = "84"
-           alt = "(see the PDF- or ASCII text version of the manual),"/>
-    </center>]]></Alt>
-    <Alt Only="Text"><Verb>
-              /
-             | (m_2 n + m_1 r_2 - m_2 r_1)/m_1 if n in r_1(m_1),
-      n |-> &lt;  (m_1 n + m_2 r_1 - m_1 r_2)/m_2 if n in r_2(m_2),
-             | otherwise,
-              \
-    </Verb></Alt>
-    where it is understood that <M>0 \leq r_1 &lt; m_1</M> and that
-    <M>0 \leq r_2 &lt; m_2</M>. The class transposition
-    <M>\tau_{r_1(m_1),r_2(m_2)}</M> is an involution which interchanges
-    the residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> and which fixes
-    the complement of their union pointwise. <P/>
+    <M>\tau_{r_1(m_1),r_2(m_2)}</M> <M>\in</M> RCWA(<M>\Z</M>) is defined as
+    the involution which interchanges <M>r_1+km_1</M> and <M>r_2+km_2</M>
+    for any integer&nbsp;<M>k</M> and which fixes all other points.
+    It is understood that <M>0 \leq r_1 &lt; m_1</M> and that
+    <M>0 \leq r_2 &lt; m_2</M>. <P/>
+
+    The class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M> interchanges
+    the residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> and fixes the
+    complement of their union pointwise. <P/>
 
     <Index Key="TransposedClasses" Subkey="of a class transposition">
       <C>TransposedClasses</C>
@@ -415,6 +395,7 @@ but knowing all possible ways of entering an rcwa mapping is by no means
 necessary for understanding this manual or for using this package.
 
 <ManSection>
+  <Heading> RcwaMapping (the general constructor) </Heading>
   <Meth Name="RcwaMapping" Arg="R, m, coeffs"
         Label="by ring, modulus and list of coefficients"/>
   <Meth Name="RcwaMapping" Arg="R, coeffs"
@@ -1220,7 +1201,7 @@ this property has been introduced in a different context
 in&nbsp;<Cite Key="Keller99"/>: 
 
 <ManSection>
-  <Func Name="mKnot" Arg="m" Label="m"/>
+  <Func Name="mKnot" Arg="m" Label="for an odd integer"/>
   <Returns>
     The permutation <M>g_m</M> as introduced in&nbsp;<Cite Key="Keller99"/>.
   </Returns>
@@ -1397,6 +1378,7 @@ gap> InjectiveAsMappingFrom(T);
 &RCWA; provides various methods to compute trajectories of rcwa mappings:
 
 <ManSection>
+  <Heading> Trajectory (methods for rcwa mappings) </Heading>
   <Meth Name="Trajectory" Arg="f, n, length"
         Label="for rcwa mapping, starting point, length"/>
   <Meth Name="Trajectory" Arg="f, n, length, m"
@@ -1438,6 +1420,9 @@ gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 </ManSection>
 
 <ManSection>
+  <Heading>
+    Trajectory (methods for rcwa mappings -- <Q>accumulated coefficients</Q>)
+  </Heading>
   <Meth Name="Trajectory" Arg="f, n, length, whichcoeffs"
         Label="for rcwa mapping, starting point, length, coeff.-spec."/>
   <Meth Name="Trajectory" Arg="f, n, terminal, whichcoeffs"
@@ -1473,6 +1458,7 @@ on its underlying ring, an important task is to determine the residue classes
 whose elements get larger or smaller when applying a given rcwa mapping:
 
 <ManSection>
+  <Heading> IncreasingOn &tamp; DecreasingOn (for an rcwa mapping) </Heading>
   <Attr Name="IncreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Attr Name="DecreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Returns>
@@ -1623,6 +1609,7 @@ gap> Display(TransitionMatrix(T^3,3));
 </ManSection>
 
 <ManSection>
+  <Heading> Sources &tamp; Sinks (of an rcwa mapping) </Heading>
   <Attr Name="Sources" Arg="f" Label="of an rcwa mapping"/>
   <Attr Name="Sinks" Arg="f" Label="of an rcwa mapping"/>
   <Returns>
