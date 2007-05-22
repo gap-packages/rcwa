@@ -7,7 +7,11 @@
 <!-- ##                                                                                       ## -->
 <!-- ########################################################################################### -->
 
-<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"[]>
+<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"
+ [ <!ENTITY tamp 
+     "<Alt Only='BibTeX'>\&amp;</Alt><Alt Not='BibTeX'><Alt 
+           Only='HTML'>&amp;amp;</Alt><Alt Not='HTML'>&amp;</Alt></Alt>">
+ ]>
 
 <file>
 
