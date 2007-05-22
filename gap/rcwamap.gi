@@ -640,8 +640,8 @@ InstallMethod( RcwaMappingNC,
     m := Lcm(R,List(P1,Modulus)); res := AllResidues(R,m);
     coeffs := List(res,r->[1,0,1]*One(R));
     for i in [1..Length(P1)] do
-      r1 := Residues(P1[i])[1]; m1 := Modulus(P1[i]);
-      r2 := Residues(P2[i])[1]; m2 := Modulus(P2[i]);
+      r1 := Residue(P1[i]); m1 := Modulus(P1[i]);
+      r2 := Residue(P2[i]); m2 := Modulus(P2[i]);
       for j in Filtered([1..Length(res)],j->res[j] mod m1 = r1) do
         coeffs[j] := [m2,m1*r2-m2*r1,m1];
       od;
@@ -665,14 +665,13 @@ InstallMethod( RcwaMapping,
       if not (    ForAll(cycles,IsList)
               and ForAll(Flat(cycles),S->IsResidueClass(S)
               and IsSubset(R,S)))
-         or  ForAny(Combinations(Flat(cycles),2),
-                    s->Intersection(s[1],s[2]) <> [])
+         or  ForAny(Combinations(Flat(cycles),2),s->Intersection(s) <> [])
       then Error("there is no rcwa mapping of ",R," having the class ",
                  "cycles ",cycles,".\n"); 
       fi;
     end;
 
-    if   not IsList(cycles[1]) or not IsResidueClassUnion(cycles[1][1])
+    if   not IsList(cycles[1]) or not IsResidueClass(cycles[1][1])
     then TryNextMethod(); fi;
     R := UnderlyingRing(FamilyObj(cycles[1][1]));
     CheckClassCycles(R,cycles);
@@ -691,7 +690,7 @@ InstallMethod( RcwaMappingNC,
     local  result, R, coeffs, m, res, cyc, pre, im, affectedpos,
            r1, r2, m1, m2, pos, i;
 
-    if not IsResidueClassUnion(cycles[1][1]) then TryNextMethod(); fi;
+    if not IsResidueClass(cycles[1][1]) then TryNextMethod(); fi;
 
     R      := UnderlyingRing(FamilyObj(cycles[1][1]));
     m      := Lcm(List(Union(cycles),Modulus));
@@ -701,8 +700,8 @@ InstallMethod( RcwaMappingNC,
       if Length(cyc) <= 1 then continue; fi;
       for pos in [1..Length(cyc)] do
         pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
-        r1 := Residues(pre)[1]; m1 := Modulus(pre);
-        r2 := Residues(im )[1]; m2 := Modulus(im);
+        r1 := Residue(pre); m1 := Modulus(pre);
+        r2 := Residue(im);  m2 := Modulus(im);
         affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
         for i in affectedpos do coeffs[i] := [m2,m1*r2-m2*r1,m1]; od;
       od;
@@ -1811,7 +1810,7 @@ InstallMethod( LaTeXObj,
       src := ResidueClassUnion(Integers,mred,res);
       cls := AsUnionOfFewClasses(src);
       for cl in cls do
-        append(Residues(cl)[1],"(",Modulus(cl),")");
+        append(Residue(cl),"(",Modulus(cl),")");
         if cl <> cls[Length(cls)] then append(" \\cup "); fi;
       od;
       if   pos = poses[ Length(poses) ]
@@ -4850,7 +4849,7 @@ InstallMethod( FactorizationIntoCSCRCT,
       for cl in P do
         rest := RestrictedPerm(gfixP,cl);
         if IsOne(rest) then continue; fi;
-        m := Modulus(rest); r := Residues(cl)[1];
+        m := Modulus(rest); r := Residue(cl);
         c := Coefficients(rest)[r+1];
         facts := Concatenation([ClassShift(r,m)^(c[2]/m)],facts);
       od;
