@@ -7,11 +7,7 @@
 <!-- ##                                                                                       ## -->
 <!-- ########################################################################################### -->
 
-<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"
- [ <!ENTITY tamp 
-     "<Alt Only='BibTeX'>\&amp;</Alt><Alt Not='BibTeX'><Alt 
-           Only='HTML'>&amp;amp;</Alt><Alt Not='HTML'>&amp;</Alt></Alt>">
- ]>
+<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd" []>
 
 <file>
 
@@ -163,7 +159,7 @@
     <name><first>Eamonn A.</first><last>O'Brien</last></name>
   </author>
   <title>Handbook of Computational Group Theory</title>
-  <publisher>Chapman &tamp; Hall / CRC, Boca Raton, FL</publisher>
+  <publisher>Chapman &amp; Hall / CRC, Boca Raton, FL</publisher>
   <year>2005</year>
   <series>Discrete Mathematics and its Applications (Boca Raton)</series>
   <isbn>1-58488-372-3</isbn>
