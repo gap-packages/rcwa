@@ -334,9 +334,9 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 #############################################################################
 ##
 #F  ClassTransposition( <R>, <r1>, <m1>, <r2>, <m2> ) . . class transposition
-#F  ClassTransposition( <r1>, <m1>, <r2>, <m2>              tau_r1(m1),r2(m2)
-#F  ClassTransposition( <R>, <cl1>, <cl2> ) ) . . dito, cl1=r1(m1) cl2=r2(m2)
-#F  ClassTransposition( <cl1>, <cl2> ) )  . . . . . . . . . . . . . .  (dito)
+#F  ClassTransposition( <r1>, <m1>, <r2>, <m2> )            tau_r1(m1),r2(m2)
+#F  ClassTransposition( <R>, <cl1>, <cl2> ) . . . dito, cl1=r1(m1) cl2=r2(m2)
+#F  ClassTransposition( <cl1>, <cl2> )  . . . . . . . . . . . . . . .  (dito)
 #P  IsClassTransposition( <sigma> )
 #A  TransposedClasses( <ct> )
 ##
