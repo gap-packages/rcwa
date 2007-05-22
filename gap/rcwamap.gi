@@ -680,6 +680,39 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
+#M  RcwaMapping( <cycles> ) .  method (i), variation for rc. with fixed rep's
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping by class cycles (fixed rep's) (RCWA)",
+               true, [ IsList ], 0,
+
+  function ( cycles )
+
+    local  CheckClassCycles, R;
+
+    CheckClassCycles := function ( R, cycles )
+
+      if not (    ForAll(cycles,IsList)
+              and ForAll(Flat(cycles),S->IsResidueClassWithFixedRep(S)
+              and UnderlyingRing(FamilyObj(S)) = R))
+         or  ForAny(Combinations(Flat(cycles),2),
+                    s->Intersection(List([s[1],s[2]],
+                                    AsOrdinaryUnionOfResidueClasses)) <> [])
+      then Error("there is no rcwa mapping of ",R," having the class ",
+                 "cycles ",cycles,".\n"); 
+      fi;
+    end;
+
+    if   not IsList(cycles[1])
+      or not IsResidueClassWithFixedRepresentative(cycles[1][1])
+    then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(cycles[1][1]));
+    CheckClassCycles(R,cycles);
+    return RcwaMappingNC(cycles);
+  end );
+
+#############################################################################
+##
 #M  RcwaMappingNC( <cycles> ) . . . . . . . . . . NC-method (i) in the manual
 ##
 InstallMethod( RcwaMappingNC,
@@ -690,7 +723,9 @@ InstallMethod( RcwaMappingNC,
     local  result, R, coeffs, m, res, cyc, pre, im, affectedpos,
            r1, r2, m1, m2, pos, i;
 
-    if not IsResidueClass(cycles[1][1]) then TryNextMethod(); fi;
+    if    not IsResidueClass(cycles[1][1])
+      and not IsResidueClassWithFixedRepresentative(cycles[1][1])
+    then TryNextMethod(); fi;
 
     R      := UnderlyingRing(FamilyObj(cycles[1][1]));
     m      := Lcm(List(Union(cycles),Modulus));
@@ -702,7 +737,8 @@ InstallMethod( RcwaMappingNC,
         pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
         r1 := Residue(pre); m1 := Modulus(pre);
         r2 := Residue(im);  m2 := Modulus(im);
-        affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
+        affectedpos := Filtered([1..Length(res)],
+                                i->res[i] mod m1 = r1 mod m1);
         for i in affectedpos do coeffs[i] := [m2,m1*r2-m2*r1,m1]; od;
       od;
     od;
