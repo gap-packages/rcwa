@@ -1618,6 +1618,16 @@ gap> 6754 in orb2;
 true
 gap> Intersection(orb2,[-1..5]);
 [ 2, 3, 4, 5 ]
+gap> cl := ResidueClassWithFixedRep(-4,23);
+[23/-4]
+gap> U := RepresentativeStabilizingRefinement(cl,3);
+[15/-12] U [19/-12] U [23/-12]
+gap> l := AsListOfClasses(U);
+[ [15/-12], [19/-12], [23/-12] ]
+gap> cyc3 := RcwaMapping([l]);
+<bijective rcwa mapping of Z with modulus 12, of order 3>
+gap> Permutation(cyc3,l);
+(1,2,3)
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
