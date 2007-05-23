@@ -525,6 +525,6 @@ Changes between version 2.4.3 and version 2.5.0:
 
  - The bibliography format has been changed from BibTeX to GAPDoc XML.
 
- - Now RCWA needs GAPDoc 0.99999.
+ - Now RCWA needs ResClasses 2.5.0 and GAPDoc 0.99999.
 
 
