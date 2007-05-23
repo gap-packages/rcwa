@@ -248,8 +248,10 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
     <M>\tau_{r_1(m_1),r_2(m_2)}</M> <M>\in</M> RCWA(<M>\Z</M>) is defined as
     the involution which interchanges <M>r_1+km_1</M> and <M>r_2+km_2</M>
     for any integer&nbsp;<M>k</M> and which fixes all other points.
-    It is understood that <M>0 \leq r_1 &lt; m_1</M> and that
-    <M>0 \leq r_2 &lt; m_2</M>. <P/>
+    It is understood that <M>m_1</M> and&nbsp;<M>m_2</M> are positive,
+    that <M>0 \leq r_1 &lt; m_1</M> and that <M>0 \leq r_2 &lt; m_2</M>.
+    For a <E>generalized class transposition</E>, the latter assumptions
+    are not made. <P/>
 
     The class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M> interchanges
     the residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> and fixes the
@@ -259,6 +261,9 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
       <C>TransposedClasses</C>
     </Index>
 
+    In the four-argument form, the arguments <A>r1</A>, <A>m1</A>, <A>r2</A>
+    and&nbsp;<A>m2</A> stand for <M>r_1</M>, <M>m_1</M>, <M>r_2</M>
+    and&nbsp;<M>m_2</M>, respectively.
     In the two-argument form, the arguments <A>cl1</A> and&nbsp;<A>cl2</A>
     stand for the residue classes <M>r_1(m_1)</M> and&nbsp;<M>r_2(m_2)</M>,
     respectively. Enclosing the argument list in list brackets is permitted.
@@ -374,10 +379,14 @@ Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
 <Index Key="IsClassTransposition" Subkey="for an rcwa mapping">
   <C>IsClassTransposition</C>
 </Index>
+<Index Key="IsGeneralizedClassTransposition" Subkey="for an rcwa mapping">
+  <C>IsGeneralizedClassTransposition</C>
+</Index>
 
 There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
-<C>IsClassTransposition</C> and <C>IsClassRotation</C> which indicate whether
-a given rcwa mapping belongs to the corresponding series.
+<C>IsClassRotation</C>, <C>IsClassTransposition</C> and
+<C>IsGeneralizedClassTransposition</C>, which indicate whether a given
+rcwa mapping belongs to the corresponding series.
 
 <Index Key="Name" Subkey="for cs / cr / ct"><C>Name</C></Index>
 

@@ -511,6 +511,11 @@ Changes between version 2.4.3 and version 2.5.0:
    `PreImagesSet' have been generalized to rcwa mappings of rings other
    than Z.
 
+ - "Generalized class transpositions" have been introduced.
+   The difference between them and "usual" class transpositions is that
+   the former interchange given pairs of disjoint residue classes *with
+   fixed representatives and signed moduli*.
+
  - The operation `RcwaGroupByPermGroup' / `RcwaGroupOverZByPermGroup' is
    no longer needed, and has been removed.
 

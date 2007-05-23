@@ -1086,12 +1086,13 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, name, R, r1, m1, r2, m2, cl1, cl2, h;
+    local  result, is_usual_ct, type, name, R, r1, m1, r2, m2, cl1, cl2, h;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
     if not Length(arg) in [2..5]
-      or     Length(arg) = 2 and not ForAll(arg,IsResidueClass)
+      or     Length(arg) = 2 and not (ForAll(arg,IsResidueClass)
+                                   or ForAll(arg,IsResidueClassWithFixedRep))
       or     Length(arg) = 3
          and not (     IsRing(arg[1]) and ForAll(arg{[2,3]},IsResidueClass)
                    and arg[1] = UnderlyingRing(FamilyObj(arg[2]))
@@ -1102,7 +1103,7 @@ InstallGlobalFunction( ClassTransposition,
     then Error("usage: see ?ClassTransposition( r1, m1, r2, m2 )\n"); fi;
 
     if IsRing(arg[1]) then R := arg[1]; arg := arg{[2..Length(arg)]}; fi;
-    if   IsResidueClass(arg[1])
+    if   IsResidueClass(arg[1]) or IsResidueClassWithFixedRep(arg[1])
     then if not IsBound(R) then R := UnderlyingRing(FamilyObj(arg[1])); fi;
          arg := [Residue(arg[1]),Modulus(arg[1]),
                  Residue(arg[2]),Modulus(arg[2])] * One(R);
@@ -1111,30 +1112,46 @@ InstallGlobalFunction( ClassTransposition,
 
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
 
-    if   IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(m1,m2)) then
+    if IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(m1,m2)) then
       Error("ClassTransposition: The residue classes must be disjoint.\n");
     fi;
 
-    r1 := r1 mod m1; r2 := r2 mod m2;
-    if   m1 > m2 or (m1 = m2 and r1 > r2)
+    is_usual_ct := m1 = StandardAssociate(R,m1)
+               and m2 = StandardAssociate(R,m2)
+               and r1 mod m1 = r1 and r2 mod m2 = r2;
+
+    if   [m1,r1] > [m2,r2]
     then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
-    cl1    := ResidueClass(R,m1,r1);
-    cl2    := ResidueClass(R,m2,r2);
+
+    if is_usual_ct then
+      cl1 := ResidueClass(R,m1,r1);
+      cl2 := ResidueClass(R,m2,r2);
+    else
+      cl1 := ResidueClassWithFixedRepresentative(R,m1,r1);
+      cl2 := ResidueClassWithFixedRepresentative(R,m2,r2);
+    fi;
+
     result := RcwaMapping([[cl1,cl2]]);
-    SetIsClassTransposition(result,true);
+
+    if is_usual_ct then SetIsClassTransposition(result,true); fi;
+    SetIsGeneralizedClassTransposition(result,true);
     SetTransposedClasses(result,[cl1,cl2]);
+
     name := ValueOption("Name");
     if name = fail then
-      SetName(result,Concatenation("ClassTransposition(",
-                                   String(r1),",",String(m1),",",
-                                   String(r2),",",String(m2),")"));
+      if is_usual_ct then type := "ClassTransposition(";
+                     else type := "GeneralizedClassTransposition("; fi;
+      SetName(result,Concatenation(type,String(r1),",",String(m1),",",
+                                        String(r2),",",String(m2),")"));
       SetLaTeXName(result,
                    Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
                                            String(r2),"(",String(m2),")}"));
     elif not IsEmpty(name) then
       SetName(result,name); SetLaTeXName(result,name);
     fi;
-    SetFactorizationIntoCSCRCT(result,[result]);
+
+    if is_usual_ct then SetFactorizationIntoCSCRCT(result,[result]); fi;
+
     return result;
   end );
 
@@ -1160,13 +1177,46 @@ InstallMethod( IsClassTransposition,
 
 #############################################################################
 ##
+#M  IsGeneralizedClassTransposition( <sigma> ) . . . . . .  for rcwa mappings
+##
+InstallMethod( IsGeneralizedClassTransposition,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  cls, cls_fixedrep, affsrc, r1, m1, r2, m2;
+
+    if   HasIsClassTransposition(sigma) and IsClassTransposition(sigma)
+    then return true; fi;
+    if IsOne(sigma) or not IsBijective(sigma)
+                    or Length(Set(Coefficients(sigma))) > 3
+    then return false; fi;
+    affsrc := LargestSourcesOfAffineMappings(sigma);
+    if Length(affsrc) > 3 then return false; fi;
+    cls := Filtered(affsrc,cl->IsResidueClass(cl)
+                           and IsSubset(Support(sigma),cl));
+    if Length(cls) <> 2 then return false; fi;
+    if Permutation(sigma,cls) = (1,2) then
+      m1 := Modulus(cls[1]); r1 := Residue(cls[1]);
+      m2 := Modulus(cls[2]); r2 := r1^sigma;
+      if not IsClassWiseOrderPreserving(sigma) then m2 := -m2; fi;
+      cls_fixedrep := [ ResidueClassWithFixedRep(Source(sigma),m1,r1),
+                        ResidueClassWithFixedRep(Source(sigma),m2,r2) ];
+      Assert(1,sigma=ClassTransposition(cls_fixedrep));
+      SetTransposedClasses(sigma,cls_fixedrep);
+      return true;
+    else return false; fi;
+  end );
+
+#############################################################################
+##
 #M  TransposedClasses( <sigma> ) . . . . . . . . . . for class transpositions
 ##
 InstallMethod( TransposedClasses,
                "for class transpositions (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( ct )
-    if   IsClassTransposition(ct)
+    if   IsClassTransposition(ct) or IsGeneralizedClassTransposition(ct)
     then return TransposedClasses(ct);
     else TryNextMethod(); fi;
   end );

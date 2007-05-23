@@ -337,7 +337,9 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 #F  ClassTransposition( <r1>, <m1>, <r2>, <m2> )            tau_r1(m1),r2(m2)
 #F  ClassTransposition( <R>, <cl1>, <cl2> ) . . . dito, cl1=r1(m1) cl2=r2(m2)
 #F  ClassTransposition( <cl1>, <cl2> )  . . . . . . . . . . . . . . .  (dito)
+#F  GeneralizedClassTransposition( ... )  . .  allows ri < 0, ri > mi, mi < 0
 #P  IsClassTransposition( <sigma> )
+#P  IsGeneralizedClassTransposition( <sigma> )
 #A  TransposedClasses( <ct> )
 ##
 ##  Given two disjoint residue classes r1(m1) and r2(m2) of the base ring R,
@@ -357,7 +359,9 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 ##  Enclosing the argument list in list brackets is permitted.
 ##
 DeclareGlobalFunction( "ClassTransposition" );
+DeclareSynonym( "GeneralizedClassTransposition", ClassTransposition );
 DeclareProperty( "IsClassTransposition", IsRcwaMapping );
+DeclareProperty( "IsGeneralizedClassTransposition", IsRcwaMapping );
 DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 
 #############################################################################

@@ -287,6 +287,22 @@ gap> last^2;
 IdentityMapping( GF(2^2)[x] )
 gap> IsRcwaMapping(last);
 true
+gap> ct := ClassTransposition(-100,2,141,20);
+GeneralizedClassTransposition(-100,2,141,20)
+gap> IsGeneralizedClassTransposition(ct);
+true
+gap> IsClassTransposition(ct);
+false
+gap> Sign(ct);
+1
+gap> Factorization(ct);
+[ ClassShift(1,20)^-57, ClassShift(0,2)^57, ClassTransposition(0,2,1,20) ]
+gap> Product(last)/ct;
+IdentityMapping( Integers )
+gap> TransposedClasses(ct);
+[ [-100/2], [141/20] ]
+gap> ct = ClassTransposition(last);
+true
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "cscrct.tst", 900000000 );
