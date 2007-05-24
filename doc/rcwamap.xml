@@ -986,8 +986,6 @@ constant or class-wise order-reversing, respectively.
 gap> List([ClassTransposition(1,2,0,4),ClassShift(2,3),ClassReflection(2,5)],
 >          ClassWiseOrderPreservingOn );
 [ Integers, Integers, Z \ 2(5) ]
-gap> ClassWiseOrderReversingOn(ClassReflection(13,17));
-13(17)
 ]]>
 </Example>
 
@@ -1007,9 +1005,11 @@ RCWA(<M>\Z</M>) itself to the cyclic group of order&nbsp;2, respectively:
     This definition is extended additively to determinants of rcwa mappings.
     <P/>
 
-    Using the notation for the coefficients introduced in
-    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the <E>determinant</E>
-    det(<M>f</M>) of an rcwa mapping&nbsp;<M>f</M> is given by
+    Let <M>f</M> be an rcwa mapping of the integers, and let
+    <M>m</M> denote its modulus. Using the notation
+    <M>f|_{r(m)}: n \mapsto (a_{r(m)} \cdot n + b_{r(m)})/c_{r(m)}</M>
+    for the affine partial mappings, the <E>determinant</E> det(<M>f</M>)
+    of&nbsp;<M>f</M> is given by
     <Alt Only="LaTeX">
       <Display>
         \sum_{r(m) \in \Z/m\Z} b_{r(m)}/(|a_{r(m)}| \cdot m).
@@ -1048,10 +1048,11 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
     The sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;<M>\Z</M>.
   </Returns>
   <Description>
-    Using the notation for the coefficients introduced in
-    Section&nbsp;<Ref Label="sec:basicdefinitions"/>, the
-    <E>sign</E> of a bijective rcwa mapping&nbsp;<M>\sigma</M>
-    of&nbsp;<M>\Z</M> is defined by
+    Let <M>\sigma</M> be an rcwa permutation of the integers, and let
+    <M>m</M> denote its modulus. Using the notation
+    <M>\sigma|_{r(m)}: n \mapsto (a_{r(m)} \cdot n + b_{r(m)})/c_{r(m)}</M>
+    for the affine partial mappings, the <E>sign</E> of&nbsp;<M>\sigma</M>
+    is defined by
     <Alt Only="LaTeX">
       <Display>
         (-1)^{\displaystyle{{\rm det}(\sigma)
