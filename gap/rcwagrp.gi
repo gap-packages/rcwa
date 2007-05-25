@@ -3818,18 +3818,6 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Intersection2( <orbit>, <list> ) . . . . . . . .  for an orbit and a list
-##
-InstallMethod( Intersection2,
-               "for an orbit and a list (RCWA)", ReturnTrue,
-               [ IsOrbitInStandardRep, IsList ], 0,
-
-  function ( orbit, list )
-    return Intersection( list, orbit );
-  end );
-
-#############################################################################
-##
 #M  Size( <orbit> ) . . . . . . . . . . . . . . . . . . . . . . .  for orbits
 ##
 InstallMethod( Size,
