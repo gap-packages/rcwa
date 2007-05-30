@@ -461,7 +461,7 @@ Changes between version 2.4.2 and version 2.4.3:
  - A quirk with the style file for the HTML version of the manual has
    been fixed.
 
-Changes between version 2.4.3 and version 2.5.0:
+Changes between version 2.4.3 and version 2.5.0 (May 25, 2007):
 
  - Some functionality for rcwa monoids has been added --
    see the short new manual chapter "Residue-Class-Wise Affine Monoids".
