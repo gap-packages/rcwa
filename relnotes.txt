@@ -527,4 +527,9 @@ Changes between version 2.4.3 and version 2.5.0 (May 25, 2007):
 
  - Now RCWA needs ResClasses 2.5.0 and GAPDoc 0.99999.
 
+Changes between version 2.5.0 and version 2.5.1:
+
+ - Some minor adjustments have been made, and RCWA needs now the recently
+   released version 1.0 of GAPDoc and version 2.5.1 of ResClasses.
+
 

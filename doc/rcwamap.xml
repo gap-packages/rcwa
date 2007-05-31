@@ -182,7 +182,7 @@ simple structure (cp. <Ref Attr="FactorizationIntoCSCRCT"
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and which fixes <M>\Z&nbsp;\setminus r(m)</M> pointwise. <P/>
+    and which fixes <M>\Z \setminus r(m)</M> pointwise. <P/>
 
     In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
@@ -210,7 +210,7 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of&nbsp;<M>\Z</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and which fixes <M>\Z&nbsp;\setminus&nbsp;r(m)</M> pointwise,
+    and which fixes <M>\Z \setminus r(m)</M> pointwise,
     where it is understood that <M>0 \leq r &lt; m</M>. <P/>
 
     In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
@@ -1218,7 +1218,7 @@ in&nbsp;<Cite Key="Keller99"/>:
     The permutation <M>g_m</M> as introduced in&nbsp;<Cite Key="Keller99"/>.
   </Returns>
   <Description>
-    The argument <A>m</A> must be an odd integer&nbsp;<M>\geq&nbsp;3</M>.
+    The argument <A>m</A> must be an odd integer greater than&nbsp;1.
 <Example>
 <![CDATA[
 gap> Display(mKnot(5));
@@ -1470,7 +1470,7 @@ on its underlying ring, an important task is to determine the residue classes
 whose elements get larger or smaller when applying a given rcwa mapping:
 
 <ManSection>
-  <Heading> IncreasingOn &tamp; DecreasingOn (for an rcwa mapping) </Heading>
+  <Heading> IncreasingOn &amp; DecreasingOn (for an rcwa mapping) </Heading>
   <Attr Name="IncreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Attr Name="DecreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Returns>
@@ -1621,7 +1621,7 @@ gap> Display(TransitionMatrix(T^3,3));
 </ManSection>
 
 <ManSection>
-  <Heading> Sources &tamp; Sinks (of an rcwa mapping) </Heading>
+  <Heading> Sources &amp; Sinks (of an rcwa mapping) </Heading>
   <Attr Name="Sources" Arg="f" Label="of an rcwa mapping"/>
   <Attr Name="Sinks" Arg="f" Label="of an rcwa mapping"/>
   <Returns>

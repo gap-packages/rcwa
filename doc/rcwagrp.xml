@@ -797,7 +797,7 @@ to determine them:
 
 <ManSection>
   <Heading>
-    ShortOrbits (for rcwa groups) &tamp; ShortCycles (for rcwa permutations)
+    ShortOrbits (for rcwa groups) &amp; ShortCycles (for rcwa permutations)
   </Heading>
   <Oper Name="ShortOrbits" Arg="G, S, maxlng"
         Label="for rcwa group, set of points and bound on length"/>
@@ -1145,7 +1145,7 @@ gap> P := RespectedPartition(G);
 
 <ManSection>
   <Heading>
-    ActionOnRespectedPartition &tamp; KernelOfActionOnRespectedPartition
+    ActionOnRespectedPartition &amp; KernelOfActionOnRespectedPartition
   </Heading>
   <Attr Name="ActionOnRespectedPartition"
         Arg="G" Label="for a tame rcwa group"/>
