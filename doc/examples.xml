@@ -13,6 +13,10 @@ and -groups in detail. All of them show different aspects of the package,
 and the order in which they appear is entirely arbitrary. In particular
 they are not ordered by degree of interestingness or difficulty. <P/>
 
+Please note that now since quite a while no further examples have been
+added to this chapter, and that the capabilities of this package have been
+extended considerably in the meantime. <P/>
+
 The rcwa mappings defined in this chapter (and in fact many more) can be
 found in the file <F>pkg/rcwa/examples/examples.g</F>, so there is no need
 to extract them from the manual files. This file can be read into the current
@@ -46,14 +50,7 @@ Rcwa mapping of Z with modulus 3
   1                                    | (4n - 1)/3
   2                                    | (4n + 1)/3
 
-]]>
-</Example>
-
-This permutation has a few finite cycles:
-
-<Example>
-<![CDATA[
-gap> ShortCycles(Collatz,[-50..50],50);
+gap> ShortCycles(Collatz,[-50..50],50); # This permutation has some finite cycles:
 [ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ],
   [ -9, -6, -4, -5, -7 ], [ -3, -2 ], [ -1 ], [ 0 ], [ 1 ], [ 2, 3 ],
   [ 4, 5, 7, 9, 6 ], [ 44, 59, 79, 105, 70, 93, 62, 83, 111, 74, 99, 66 ] ]
@@ -164,7 +161,7 @@ The iterates of an integer under the Collatz mapping <M>T</M> seem to
 approach its contraction centre -- this is the finite set where all
 trajectories end up after a finite number of steps -- rather quickly and
 do not get very large before doing so (of course this is a purely heuristic
-statement as the <M>3n+1</M> Conjecture has not been proven so far!):
+statement as the <M>3n+1</M> Conjecture has not been proved so far!):
 
 <Example>
 <![CDATA[
