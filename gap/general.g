@@ -121,15 +121,15 @@ InstallOtherMethod( EquivalenceClasses,
 
 #############################################################################
 ##
-#F  Decompositions( <n>, <S> )
+#F  RestrictedPartitionsWithoutRepetitions( <n>, <S> )
 ##
 ##  Given a positive integer n and a set of positive integers S, this func-
 ##  tion returns a list of all partitions of n into distinct elements of S.
 ##  The only difference to `RestrictedPartitions' is that no repetitions are
 ##  allowed.
 ##
-DeclareGlobalFunction( "Decompositions" );
-InstallGlobalFunction( Decompositions,
+DeclareGlobalFunction( "RestrictedPartitionsWithoutRepetitions" );
+InstallGlobalFunction( RestrictedPartitionsWithoutRepetitions,
 
   function ( n, S )
 

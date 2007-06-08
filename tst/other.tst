@@ -25,10 +25,10 @@ gap> EquivalenceClasses([3,5,2,6,8,7,12,14,15,16,6,3,6],n->Phi(n));
 gap> EquivalenceClasses([(1,2),(1,2),(1,2,3)],
 >                       function(g,h) return IsConjugate(S4,g,h); end);
 [ [ (1,2), (1,2) ], [ (1,2,3) ] ]
-gap> Decompositions(10,[1..10]);
+gap> RestrictedPartitionsWithoutRepetitions(10,[1..10]);
 [ [ 10 ], [ 9, 1 ], [ 8, 2 ], [ 7, 3 ], [ 7, 2, 1 ], [ 6, 4 ], [ 6, 3, 1 ], 
   [ 5, 4, 1 ], [ 5, 3, 2 ], [ 4, 3, 2, 1 ] ]
-gap> Decompositions(24,DivisorsInt(24));
+gap> RestrictedPartitionsWithoutRepetitions(24,DivisorsInt(24));
 [ [ 24 ], [ 12, 8, 4 ], [ 12, 8, 3, 1 ], [ 12, 6, 4, 2 ], [ 12, 6, 3, 2, 1 ], 
   [ 8, 6, 4, 3, 2, 1 ] ]
 gap> STOP_TEST( "other.tst", 10000000 );
