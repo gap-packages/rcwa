@@ -44,10 +44,81 @@ BindGlobal( "FloatQuotients",
 
 #############################################################################
 ##
-#F  FindGroupRelations( <G>, <r> ) . placebo `ReturnFail' if FR is not loaded
+#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
-if   not IsReadOnlyGlobal( "FindGroupRelations" )
-then FindGroupRelations := ReturnFail; fi;
+DeclareGlobalFunction( "SearchCycle" );
+InstallGlobalFunction( SearchCycle,
+
+  function ( l )
+
+    local  pos, incr, refine;
+
+    if Length(l) < 2 then return fail; fi;
+    pos := 1; incr := 1;
+    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
+                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
+      pos := pos + 1; incr := incr + 1;
+      if pos + 2*incr-1 > Length(l) then return fail; fi;
+    od;
+    refine := SearchCycle(l{[pos..pos+incr-1]});
+    if refine <> fail then return refine;
+                      else return l{[pos..pos+incr-1]}; fi;
+  end );
+
+#############################################################################
+##
+#M  EquivalenceClasses( <set>, <relation> )
+#M  EquivalenceClasses( <set>, <classinvariant> )
+##
+##  Returns a list of equivalence classes on <set> under <relation>
+##  or a list of equivalence classes on <set> given by <classinvariant>,
+##  respectively.
+##
+##  The argument <set> must be a set. 
+##  The argument <relation> must be a function which takes as arguments
+##  two elements of <set> and returns either true or false, and which
+##  describes an equivalence relation on <set>.
+##  The argument <classinvariant> must be a function which takes as argument
+##  an element of <set> and returns a class invariant.
+##  
+InstallOtherMethod( EquivalenceClasses,
+                    "for a set and a relation or a class invariant",
+                    ReturnTrue, [ IsList, IsFunction ], 0,
+
+  function ( set, relation )
+
+    local  classes, invs, longestfirst, byinvs, elm, pos, inserted, count;
+
+    if IsEmpty(set) then return []; fi;
+
+    longestfirst := function(c1,c2) return Length(c1) > Length(c2); end;
+    byinvs := function(c1,c2) return relation(c1[1]) < relation(c2[1]); end;
+
+    if   NumberArgumentsFunction(relation) = 1 then
+      invs    := List(set,relation);
+      classes := List(Set(invs),inv->set{Positions(invs,inv)});
+      Sort(classes,byinvs);
+    elif NumberArgumentsFunction(relation) = 2 then
+      classes := [[set[1]]]; count := 0;
+      for elm in set{[2..Length(set)]} do
+        inserted := false; count := count + 1;
+        for pos in [1..Length(classes)] do
+          if relation(elm,classes[pos][1]) then
+            AddSet(classes[pos],elm);
+            inserted := true;
+            break;
+          fi;
+        od;
+        if   not inserted
+        then classes := Concatenation(classes,[[elm]]); fi;
+        if   count mod 100 = 0 # rough performance heuristics ...
+        then Sort(classes,longestfirst); fi;
+      od;
+      Sort(classes,longestfirst);
+    else TryNextMethod(); fi;
+
+    return classes;
+  end );
 
 #############################################################################
 ##
@@ -139,29 +210,6 @@ fi;
 
 #############################################################################
 ##
-#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
-##
-DeclareGlobalFunction( "SearchCycle" );
-InstallGlobalFunction( SearchCycle,
-
-  function ( l )
-
-    local  pos, incr, refine;
-
-    if Length(l) < 2 then return fail; fi;
-    pos := 1; incr := 1;
-    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
-                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
-      pos := pos + 1; incr := incr + 1;
-      if pos + 2*incr-1 > Length(l) then return fail; fi;
-    od;
-    refine := SearchCycle(l{[pos..pos+incr-1]});
-    if refine <> fail then return refine;
-                      else return l{[pos..pos+incr-1]}; fi;
-  end );
-
-#############################################################################
-##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
@@ -244,6 +292,13 @@ InstallMethod( AbelianInvariants,
                "for groups knowing an isomorphism to a permutation group",
                true, [ IsGroup and HasIsomorphismPermGroup ], 0,
                G -> AbelianInvariants(Image(IsomorphismPermGroup(G))) );
+
+#############################################################################
+##
+#F  FindGroupRelations( <G>, <r> ) . placebo `ReturnFail' if FR is not loaded
+##
+if   not IsReadOnlyGlobal( "FindGroupRelations" )
+then FindGroupRelations := ReturnFail; fi;
 
 #############################################################################
 ##
