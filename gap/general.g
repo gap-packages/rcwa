@@ -121,6 +121,46 @@ InstallOtherMethod( EquivalenceClasses,
 
 #############################################################################
 ##
+#F  Decompositions( <n>, <S> )
+##
+##  Given a positive integer n and a set of positive integers S, this func-
+##  tion returns a list of all partitions of n into distinct elements of S.
+##  The only difference to `RestrictedPartitions' is that no repetitions are
+##  allowed.
+##
+DeclareGlobalFunction( "Decompositions" );
+InstallGlobalFunction( Decompositions,
+
+  function ( n, S )
+
+    local  look, comps;
+
+    look := function ( comp, remaining_n, remaining_S )
+
+      local  newcomp, newremaining_n, newremaining_S, part, l;
+
+      l := Reversed(remaining_S);
+      for part in l do
+        newcomp        := Concatenation(comp,[part]);
+        newremaining_n := remaining_n - part;
+        if newremaining_n = 0 then Add(comps,newcomp);
+        else
+          newremaining_S := Set(Filtered(remaining_S,
+                                         s->s<part and s<=newremaining_n));
+          if newremaining_S <> [] then
+            look(newcomp,newremaining_n,newremaining_S);
+          fi;
+        fi;
+      od;
+    end;
+
+    comps := [];
+    look([],n,S);
+    return comps;
+  end );
+
+#############################################################################
+##
 #M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
 #M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
 #M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
