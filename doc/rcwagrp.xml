@@ -1408,6 +1408,14 @@ The pictures created in the examples are shown on &RCWA;'s webpage.
 <Index Key="AllProducts"><C>AllProducts</C></Index>
 <Index Key="DifferencesList"><C>DifferencesList</C></Index>
 <Index Key="FloatQuotients"><C>FloatQuotients</C></Index>
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function computing a class invariant">
+  <C>EquivalenceClasses</C>
+</Index>
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function describing an equivalence relation">
+  <C>EquivalenceClasses</C>
+</Index>
 
 &RCWA; introduces a couple of small utility functions which can be used in
 a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
@@ -1425,7 +1433,16 @@ the function <C>DifferencesList(<A>l</A>)</C> returns the list of
 differences of consecutive entries of the list&nbsp;<A>l</A>, and
 the function <C>FloatQuotients(<A>l</A>)</C> returns the list of
 floating point approximations of quotients of consecutive entries
-of the list&nbsp;<A>l</A>.
+of the list&nbsp;<A>l</A>. <P/>
+
+There are also methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
+and  <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C>, which decompose
+a list&nbsp;<A>l</A> into equivalence classes under an equivalence
+relation. The equivalence relation is given either as a function <A>inv</A>
+computing a class invariant of a given list entry or as a function <A>rel</A>
+which takes as arguments two list entries and returns either <C>true</C>
+or <C>false</C> depending on whether the arguments belong to the same
+equivalence class or not.
 
 </Section>
 
