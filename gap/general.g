@@ -82,7 +82,7 @@ InstallGlobalFunction( SearchCycle,
 ##  an element of <set> and returns a class invariant.
 ##  
 InstallOtherMethod( EquivalenceClasses,
-                    "for a set and a relation or a class invariant",
+                    "for a set and a relation or a class invariant (RCWA)",
                     ReturnTrue, [ IsList, IsFunction ], 0,
 
   function ( set, relation )

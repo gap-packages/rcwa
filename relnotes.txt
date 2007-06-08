@@ -535,8 +535,8 @@ Changes between version 2.5.0 and version 2.5.1:
 Changes between version 2.5.1 and version 2.5.2:
 
  - A method for `EquivalenceClasses' has been added.
-   The arguments are a set S and either a function computing a class
-   invariant of an element of S or a function describing an equivalence
-   relation on S.
+   The arguments are either a list and a function computing a class invariant
+   of a list entry or a list and a function describing an equivalence
+   relation on the entries of the list.
 
 
