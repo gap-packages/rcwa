@@ -88,7 +88,8 @@ end;
 ##  grep -h "STOP_TEST" *.tst | sed -e 's:^gap> STOP_TEST( ":[ ":' | \
 ##  sed -e 's: );: ],:'
 ##
-TEST_FILES := [ [ "ngens.tst",      25000000 ],
+TEST_FILES := [ [ "other.tst",      10000000 ],
+                [ "ngens.tst",      25000000 ],
                 [ "monoids.tst",   120000000 ],
                 [ "semiloc.tst",   400000000 ],
                 [ "cscrct.tst",    900000000 ],
