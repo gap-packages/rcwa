@@ -532,4 +532,11 @@ Changes between version 2.5.0 and version 2.5.1:
  - Some minor adjustments have been made, and RCWA needs now the recently
    released version 1.0 of GAPDoc and version 2.5.1 of ResClasses.
 
+Changes between version 2.5.1 and version 2.5.2:
+
+ - A method for `EquivalenceClasses' has been added.
+   The arguments are a set S and either a function computing a class
+   invariant of an element of S or a function describing an equivalence
+   relation on S.
+
 
