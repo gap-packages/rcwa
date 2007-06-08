@@ -67,44 +67,43 @@ InstallGlobalFunction( SearchCycle,
 
 #############################################################################
 ##
-#M  EquivalenceClasses( <set>, <relation> )
-#M  EquivalenceClasses( <set>, <classinvariant> )
+#M  EquivalenceClasses( <list>, <relation> )
+#M  EquivalenceClasses( <list>, <classinvariant> )
 ##
-##  Returns a list of equivalence classes on <set> under <relation>
-##  or a list of equivalence classes on <set> given by <classinvariant>,
+##  Returns a list of equivalence classes on <list> under <relation>
+##  or a list of equivalence classes on <list> given by <classinvariant>,
 ##  respectively.
 ##
-##  The argument <set> must be a set. 
 ##  The argument <relation> must be a function which takes as arguments
-##  two elements of <set> and returns either true or false, and which
-##  describes an equivalence relation on <set>.
+##  two entries of <list> and returns either true or false, and which
+##  describes an equivalence relation on <list>.
 ##  The argument <classinvariant> must be a function which takes as argument
-##  an element of <set> and returns a class invariant.
+##  an element of <list> and returns a class invariant.
 ##  
 InstallOtherMethod( EquivalenceClasses,
-                    "for a set and a relation or a class invariant (RCWA)",
+                    "for a list and a relation or a class invariant (RCWA)",
                     ReturnTrue, [ IsList, IsFunction ], 0,
 
-  function ( set, relation )
+  function ( list, relation )
 
     local  classes, invs, longestfirst, byinvs, elm, pos, inserted, count;
 
-    if IsEmpty(set) then return []; fi;
+    if IsEmpty(list) then return []; fi;
 
     longestfirst := function(c1,c2) return Length(c1) > Length(c2); end;
     byinvs := function(c1,c2) return relation(c1[1]) < relation(c2[1]); end;
 
     if   NumberArgumentsFunction(relation) = 1 then
-      invs    := List(set,relation);
-      classes := List(Set(invs),inv->set{Positions(invs,inv)});
+      invs    := List(list,relation);
+      classes := List(Set(invs),inv->list{Positions(invs,inv)});
       Sort(classes,byinvs);
     elif NumberArgumentsFunction(relation) = 2 then
-      classes := [[set[1]]]; count := 0;
-      for elm in set{[2..Length(set)]} do
+      classes := [[list[1]]]; count := 0;
+      for elm in list{[2..Length(list)]} do
         inserted := false; count := count + 1;
         for pos in [1..Length(classes)] do
           if relation(elm,classes[pos][1]) then
-            AddSet(classes[pos],elm);
+            Add(classes[pos],elm);
             inserted := true;
             break;
           fi;
