@@ -539,4 +539,9 @@ Changes between version 2.5.1 and version 2.5.2:
    of a list entry or a list and a function describing an equivalence
    relation on the entries of the list.
 
+ - A function `Decompositions' has been added.
+   This is similar to `RestrictedPartitions', but the difference is that no
+   repetitions are allowed.
+
+
 
