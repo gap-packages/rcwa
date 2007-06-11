@@ -13,6 +13,106 @@ Revision.general_g :=
 
 #############################################################################
 ##
+#S  Some GAP Library bugfixes. //////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  DefaultRingByGenerators( <gens> )   . . . .  ring containing a collection
+##
+##  GAP library bugfix -- overwrites erroneous library method:
+##
+##  gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
+##  gap> x in DefaultRing(x);                               
+##  false
+##
+if not CompareVersionNumbers(GAPInfo.Version,"4.4.10") then
+InstallMethod( DefaultRingByGenerators,
+               true, [ IsRationalFunctionCollection ], 0,
+
+  function( ogens )
+
+    local  gens, ind, cfs, g, ext, exp, i, univ;
+
+    if not ForAll( ogens, IsPolynomial ) then TryNextMethod(); fi;
+
+    # The indices of the non-constant functions that have an indeterminate
+    # number.
+    g := Filtered([1..Length(ogens)],
+           i -> HasIndeterminateNumberOfUnivariateRationalFunction(ogens[i])
+                and HasCoefficientsOfLaurentPolynomial(ogens[i]));
+
+    univ := Filtered(ogens{g},
+                     i -> DegreeOfUnivariateLaurentPolynomial(i) >- 1 and
+                          DegreeOfUnivariateLaurentPolynomial(i) < infinity);
+
+    gens := ogens{Difference([1..Length(ogens)],g)};
+
+    # Univariate indeterminates set.
+    ind := Set(List(univ,IndeterminateNumberOfUnivariateRationalFunction));
+    cfs := []; # univariate coefficients set
+    for g in univ do
+      UniteSet(cfs,CoefficientsOfUnivariateLaurentPolynomial(g)[1]);
+    od;
+
+    # The nonunivariate ones.
+    for g in gens do
+      ext := ExtRepPolynomialRatFun(g);
+      for exp in ext{[ 1, 3 .. Length(ext)-1 ]} do
+        for i in exp{[ 1, 3 .. Length(exp)-1 ]} do
+          AddSet( ind, i );
+        od;
+      od;
+      for i in ext{[ 2, 4 .. Length(ext) ]} do
+        Add( cfs, i );
+      od;
+    od;
+
+    if Length(cfs)=0 then
+      # Special case for zero polynomial
+      Add(cfs,Zero(CoefficientsFamily(FamilyObj(ogens[1]))));
+    fi;
+
+    if Length(ind)=0 then
+      # This can only happen if the polynomials are constant. Enforce Index 1
+      return PolynomialRing( DefaultField(cfs), [1] );
+    else
+      return PolynomialRing( DefaultField(cfs), ind );
+    fi;
+  end );
+fi;
+
+#############################################################################
+##
+#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
+#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
+#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
+##
+##  In GAP 4.4.7, the GAP Library function `DirectProduct' and the general
+##  method for `DirectProductOp' run into error if one of the factors is
+##  known to be infinite. The methods below are installed as a workaround.
+##  As maybe there are further similar places where finiteness is assumed
+##  implicitly, it may be good if these methods remain available after 4.4.8.
+##
+InstallMethod( \*, "for positive integer and infinity (RCWA)",
+               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
+               function ( n, infty ) return infinity; end );
+InstallMethod( \*, "for infinity and positive integer (RCWA)",
+               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
+               function ( infty, n ) return infinity; end );
+InstallMethod( \*, "for infinity and infinity (RCWA)",
+               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
+               function ( infty1, infty2 ) return infinity; end );
+
+#############################################################################
+##
+#S  Some utility functions for lists. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
 #F  Positions( <list>, <elm> ) . (the Library function, for old GAP versions)
 ##
 if not IsBound( Positions ) then
@@ -121,6 +221,22 @@ InstallOtherMethod( EquivalenceClasses,
 
 #############################################################################
 ##
+#S  Some utilities for combinatorics. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
+#M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
+##
+DeclareOperation( "AllProducts", [ IsListOrCollection, IsPosInt ] );
+InstallMethod( AllProducts,
+               "for lists (RCWA)", ReturnTrue, [ IsList, IsPosInt ], 0,
+               function ( l, k ) return List(Tuples(l,k),Product); end );
+
+#############################################################################
+##
 #F  RestrictedPartitionsWithoutRepetitions( <n>, <S> )
 ##
 ##  Given a positive integer n and a set of positive integers S, this func-
@@ -161,101 +277,9 @@ InstallGlobalFunction( RestrictedPartitionsWithoutRepetitions,
 
 #############################################################################
 ##
-#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
-#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
-#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
+#S  Some utilities for groups, group elements and homomorphisms. ////////////
 ##
-##  In GAP 4.4.7, the GAP Library function `DirectProduct' and the general
-##  method for `DirectProductOp' run into error if one of the factors is
-##  known to be infinite. The methods below are installed as a workaround.
-##  As maybe there are further similar places where finiteness is assumed
-##  implicitly, it may be good if these methods remain available after 4.4.8.
-##
-InstallMethod( \*, "for positive integer and infinity (RCWA)",
-               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
-               function ( n, infty ) return infinity; end );
-InstallMethod( \*, "for infinity and positive integer (RCWA)",
-               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
-               function ( infty, n ) return infinity; end );
-InstallMethod( \*, "for infinity and infinity (RCWA)",
-               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
-               function ( infty1, infty2 ) return infinity; end );
-
 #############################################################################
-##
-#M  DefaultRingByGenerators( <gens> )   . . . .  ring containing a collection
-##
-##  GAP library bugfix -- overwrites erroneous library method:
-##
-##  gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
-##  gap> x in DefaultRing(x);                               
-##  false
-##
-if not CompareVersionNumbers(GAPInfo.Version,"4.4.10") then
-InstallMethod( DefaultRingByGenerators,
-               true, [ IsRationalFunctionCollection ], 0,
-
-  function( ogens )
-
-    local  gens, ind, cfs, g, ext, exp, i, univ;
-
-    if not ForAll( ogens, IsPolynomial ) then TryNextMethod(); fi;
-
-    # The indices of the non-constant functions that have an indeterminate
-    # number.
-    g := Filtered([1..Length(ogens)],
-           i -> HasIndeterminateNumberOfUnivariateRationalFunction(ogens[i])
-                and HasCoefficientsOfLaurentPolynomial(ogens[i]));
-
-    univ := Filtered(ogens{g},
-                     i -> DegreeOfUnivariateLaurentPolynomial(i) >- 1 and
-                          DegreeOfUnivariateLaurentPolynomial(i) < infinity);
-
-    gens := ogens{Difference([1..Length(ogens)],g)};
-
-    # Univariate indeterminates set.
-    ind := Set(List(univ,IndeterminateNumberOfUnivariateRationalFunction));
-    cfs := []; # univariate coefficients set
-    for g in univ do
-      UniteSet(cfs,CoefficientsOfUnivariateLaurentPolynomial(g)[1]);
-    od;
-
-    # The nonunivariate ones.
-    for g in gens do
-      ext := ExtRepPolynomialRatFun(g);
-      for exp in ext{[ 1, 3 .. Length(ext)-1 ]} do
-        for i in exp{[ 1, 3 .. Length(exp)-1 ]} do
-          AddSet( ind, i );
-        od;
-      od;
-      for i in ext{[ 2, 4 .. Length(ext) ]} do
-        Add( cfs, i );
-      od;
-    od;
-
-    if Length(cfs)=0 then
-      # Special case for zero polynomial
-      Add(cfs,Zero(CoefficientsFamily(FamilyObj(ogens[1]))));
-    fi;
-
-    if Length(ind)=0 then
-      # This can only happen if the polynomials are constant. Enforce Index 1
-      return PolynomialRing( DefaultField(cfs), [1] );
-    else
-      return PolynomialRing( DefaultField(cfs), ind );
-    fi;
-  end );
-fi;
-
-#############################################################################
-##
-#O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
-#M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
-##
-DeclareOperation( "AllProducts", [ IsListOrCollection, IsPosInt ] );
-InstallMethod( AllProducts,
-               "for lists (RCWA)", ReturnTrue, [ IsList, IsPosInt ], 0,
-               function ( l, k ) return List(Tuples(l,k),Product); end );
 
 #############################################################################
 ##
@@ -338,6 +362,12 @@ InstallMethod( AbelianInvariants,
 ##
 if   not IsReadOnlyGlobal( "FindGroupRelations" )
 then FindGroupRelations := ReturnFail; fi;
+
+#############################################################################
+##
+#S  The code for loading and saving bitmap images. //////////////////////////
+##
+#############################################################################
 
 #############################################################################
 ##
