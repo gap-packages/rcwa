@@ -33,8 +33,14 @@ InstallMethod( \^,
     preperiod := PrePeriod(perlist);
     period    := Period(perlist);
 
-    if   not IsBijective(g) or not IsSignPreserving(g)
-    then TryNextMethod(); fi;
+    if not IsBijective(g) then TryNextMethod(); fi;
+
+    if not IsSignPreserving(g) then
+      Error("\^ for a periodic list <l> and an rcwa permutation <g>: \n",
+            "<g> must fix the nonnegative integers setwise, as <l> \n",
+            "does not have entries at negative positions.");
+      TryNextMethod();
+    fi;
 
     inv := Inverse(g);
     period_bound := Mod(g) * Mult(g) * Div(g) * Length(period);
@@ -74,8 +80,14 @@ InstallMethod( \^,
     preperiod := PrePeriod(perlist);
     period    := Period(perlist);
 
-    if   IsBijective(f) or Multiplier(f) = 0 or not IsSignPreserving(f)
-    then TryNextMethod(); fi;
+    if IsBijective(f) or Multiplier(f) = 0 then TryNextMethod(); fi;
+
+    if not IsSignPreserving(f) then
+      Error("\^ for a periodic list <l> and an rcwa mapping <f>: \n",
+            "<f> must fix the nonnegative integers setwise, as <l> \n",
+            "does not have entries at negative positions.");
+      TryNextMethod();
+    fi;
 
     period_bound := Mod(f) * Mult(f) * Div(f) * Length(period);
     if not IsEmpty(preperiod) then
