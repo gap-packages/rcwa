@@ -107,4 +107,50 @@ InstallMethod( \^,
 
 #############################################################################
 ##
+#M  IsSubset( <C>, <perlist> ) . . . . . for a collection and a periodic list
+##
+InstallMethod( IsSubset,
+               "for a collection and a periodic list (RCWA)", ReturnTrue,
+               [ IsListOrCollection, IsPeriodicList ], 0,
+
+  function ( C, perlist )
+    return IsSubset(C,PrePeriod(perlist)) and IsSubset(C,Period(perlist));
+  end );
+
+#############################################################################
+##
+#M  SumOp( <perlist> ) . . . . . . . . . . . . . . . . . . for periodic lists
+##
+InstallMethod( SumOp,
+               "for periodic lists (RCWA)", true, [ IsPeriodicList ], 0,
+
+  function ( perlist )
+    if not IsSubset(Rationals,perlist) then TryNextMethod(); fi;
+    if   ForAll(Period(perlist),IsZero) then return Sum(PrePeriod(perlist));
+    elif Sum(Period(perlist)) > 0 then return infinity;
+    elif Sum(Period(perlist)) < 0 then TryNextMethod(); # -infinity
+    else return fail; fi; # Alternating case, like 1, -1, 1, -1, 1, -1, ...
+  end );
+
+#############################################################################
+##
+#M  ProductOp( <perlist> ) . . . . . . . . . . . . . . . . for periodic lists
+##
+InstallMethod( ProductOp,
+               "for periodic lists (RCWA)", true, [ IsPeriodicList ], 0,
+
+  function ( perlist )
+    if not IsSubset(Rationals,perlist) then TryNextMethod(); fi;
+    if   Product(PrePeriod(perlist)) = 0 or Product(Period(perlist)) = 0
+    then return 0;
+    elif Product(List(Period(perlist),AbsoluteValue)) < 1 then return 0;
+    elif Minimum(Period(perlist)) > 0 and Product(Period(perlist)) > 1
+    then return infinity;
+    elif Set(Period(perlist)) = [1] # Constant period 1, 1, 1, ... case.
+    then return Product(PrePeriod(perlist));
+    else return fail; fi; # Negative factors, non-convergent case.
+  end );
+
+#############################################################################
+##
 #E  perlist.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
