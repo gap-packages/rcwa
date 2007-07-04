@@ -972,6 +972,71 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
+#M  RepresentativeActionOp( CT( <R> ), <S1>, <S2>, <act> ) 
+##
+##  An element <g> of CT(<R>) which maps <S1> to <S2>.
+##  The sets <S1> and <S2> must be unions of residue classes of <R>.
+##  The argument <act> is ignored.
+##
+InstallMethod( RepresentativeActionOp,
+               "for CT(R) and two residue class unions (RCWA)",
+               ReturnTrue,
+               [ IsNaturalCT, IsResidueClassUnion,
+                 IsResidueClassUnion, IsFunction ], 0,
+
+  function ( CT_R, S1, S2, act )
+
+        local  Refine, Refinement, R, S, D1, D2, length, factors, g;
+
+    Refinement := function ( cls, lng )
+
+      local  m, splitcl, parts;
+
+      while Length(cls) <> lng do
+        m       := Minimum(List(cls,Modulus));
+        splitcl := First(cls,cl->Modulus(cl)=m); RemoveSet(cls,splitcl);
+        parts := SplittedClass(splitcl,SizeOfSmallestResidueClassRing(R));
+        if Length(parts) > lng - Length(cls) + 1 then return fail; fi;
+        cls := Union(cls,parts);
+      od;
+      return cls;
+    end;
+
+    Refine := function ( S )
+
+      local  maxlength, i;
+
+      maxlength := Maximum(List(S,Length));
+      for i in [1..Length(S)] do
+        if   Length(S[i]) < maxlength
+        then S[i] := Refinement(S[i],maxlength); fi;
+      od;
+    end;
+
+    R := Support(CT_R);
+    if not IsSubset(R,S1) or not IsSubset(R,S2) then return fail; fi;
+
+    D1 := Difference(R,S1);
+    if Union(D1,S2) = R then D1 := Difference(D1,S2); fi;
+    D2 := Difference(R,Union(D1,S2));
+
+    S := List([S1,D1,D2,S2],AsUnionOfFewClasses);
+    Refine(S); if fail in S then return fail; fi;
+    length := Length(S[1]);
+
+    factors := List([1..3],
+                    i->List([1..length],
+                            j->ClassTransposition(S[i][j],S[i+1][j])));
+    factors := Flat(factors);
+
+    g := Product(Flat(factors));
+    SetFactorizationIntoCSCRCT(g,factors);
+
+    return g;
+  end );
+
+#############################################################################
+##
 #M  RepresentativeActionOp( RCWA( Integers ), <P1>, <P2>, <act> ) 
 ##
 ##  An rcwa mapping <g> which maps the partition <P1> to the partition <P2>
