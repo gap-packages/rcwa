@@ -1628,6 +1628,40 @@ gap> cyc3 := RcwaMapping([l]);
 <bijective rcwa mapping of Z with modulus 12, of order 3>
 gap> Permutation(cyc3,l);
 (1,2,3)
+gap> G := CT(Integers);
+CT(Z)
+gap> S1 := ResidueClass(0,2);; S2 := ResidueClass(1,2);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 2>
+gap> S1^g;
+1(2)
+gap> RepresentativeAction(G,S1,S1);
+IdentityMapping( Integers )
+gap> S1 := ResidueClass(0,4);; S2 := ResidueClass(1,2);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 4>
+gap> S1^g;
+1(2)
+gap> S1 := ResidueClass(0,4);; S2 := ResidueClass(0,2);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 4>
+gap> S1^g;
+0(2)
+gap> S2 := ResidueClassUnion(Integers,4,[1,2,3]);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 8>
+gap> S1^g;
+Z \ 0(4)
+gap> S2 := ResidueClassUnion(Integers,4,[0,1,2]);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 8>
+gap> S1^g;
+Z \ 3(4)
+gap> S2 := ResidueClassUnion(Integers,5,[0,1,2]);;
+gap> g := RepresentativeAction(G,S1,S2);
+<bijective rcwa mapping of Z with modulus 400>
+gap> S1^g;
+Z \ 3(5) U 4(5)
 gap> SetInfoLevel(InfoWarning,oldwarninglevel);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "integral.tst", 8000000000 );
