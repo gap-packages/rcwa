@@ -80,8 +80,8 @@ BindGlobal( "GFQX_RCWAMAPPING_FAMILIES", [] );
 ##
 #F  RcwaMappingsOfZ_piFamily( <R> )
 ##
-##  The family of all rcwa mappings of a given semilocalization <R> of the
-##  ring of integers.
+##  Returns the family of all rcwa mappings of a given semilocalization <R>
+##  of the ring of integers.
 ##
 InstallGlobalFunction( RcwaMappingsOfZ_piFamily,
 
@@ -114,8 +114,8 @@ InstallGlobalFunction( RcwaMappingsOfZ_piFamily,
 ##
 #F  RcwaMappingsOfGFqxFamily( <R> )
 ##
-##  The family of all rcwa mappings of a given polynomial ring <R> in one
-##  variable over a finite field.
+##  Returns the family of all rcwa mappings of a given polynomial ring <R>
+##  in one variable over a finite field.
 ##
 InstallGlobalFunction( RcwaMappingsOfGFqxFamily,
 
@@ -832,7 +832,7 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
 #F  ClassShift( <cl> )  . . . . . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassShift( <R> ) . . . . . . . . . . . . .  class shift nu_R: n -> n + 1
 ##
-##  Enclosing the argument list in list brackets is permitted.
+##  (Enclosing the argument list in list brackets is permitted.)
 ##
 InstallGlobalFunction( ClassShift,
 
@@ -906,7 +906,7 @@ InstallMethod( IsClassShift,
 #F  ClassReflection( <cl> ) . . . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassReflection( <R> )  . . . . . .  class reflection varsigma_R: n -> -n
 ##
-##  Enclosing the argument list in list brackets is permitted.
+##  (Enclosing the argument list in list brackets is permitted.)
 ##
 InstallGlobalFunction( ClassReflection,
 
@@ -982,7 +982,7 @@ InstallMethod( IsClassReflection,
 #F  ClassRotation( <cl>, <u> )  . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassRotation( <R>, <u> ) . . . . . . . class rotation rho_(R,u): n -> un
 ##
-##  Enclosing the argument list in list brackets is permitted.
+##  (Enclosing the argument list in list brackets is permitted.)
 ##
 InstallGlobalFunction( ClassRotation,
 
@@ -1080,7 +1080,7 @@ InstallTrueMethod( IsClassRotation, IsClassReflection );
 #F  ClassTransposition( <R>, <cl1>, <cl2> ) . . . dito, cl1=r1(m1) cl2=r2(m2)
 #F  ClassTransposition( <cl1>, <cl2> )  . . . . . . . . . . . . . . .  (dito)
 ##
-##  Enclosing the argument list in list brackets is permitted.
+##  (Enclosing the argument list in list brackets is permitted.)
 ##
 InstallGlobalFunction( ClassTransposition,
 
@@ -1320,7 +1320,7 @@ InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
 
 #############################################################################
 ##
-#F  PrimeSwitch( <p> ) . .  rcwa mapping of Z with multiplier p and divisor 2
+#F  PrimeSwitch( <p> ) . an rcwa mapping of Z with multiplier p and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 ##
 InstallGlobalFunction( PrimeSwitch,
@@ -1560,7 +1560,7 @@ InstallMethod( ViewObj,
 ##
 #M  Display( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-##  Display the rcwa mapping <f> as a nice, human-readable table.
+##  Displays the rcwa mapping <f> as a nice, human-readable table.
 ##
 InstallMethod( Display,
                "for rcwa mappings (RCWA)",
@@ -2585,7 +2585,7 @@ InstallMethod( RestrictedPerm,
 ##
 #M  ImageElm( <f>, <n> ) . . . . . .  for an rcwa mapping of Z and an integer
 ##
-##  Image of the integer <n> under the rcwa mapping <f>. 
+##  Returns the image of the integer <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
                "for an rcwa mapping of Z and an integer (RCWA)",
@@ -2603,8 +2603,8 @@ InstallMethod( ImageElm,
 ##
 #M  ImageElm( <f>, <n> ) . for an rcwa mapping of Z_(pi) and an el. of Z_(pi)
 ##
-##  Image of the element <n> of the ring Z_(pi) for suitable <pi> under
-##  the rcwa mapping <f>. 
+##  Returns the image of the element <n> of the ring Z_(pi) for suitable <pi>
+##  under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
                Concatenation("for an rcwa mapping of Z_(pi) ",
@@ -2624,7 +2624,7 @@ InstallMethod( ImageElm,
 ##
 #M  ImageElm( <f>, <p> ) for rcwa mapping of GF(q)[x] and element of GF(q)[x]
 ##
-##  Image of the polynomial <p> under the rcwa mapping <f>. 
+##  Returns the image of the polynomial <p> under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
                "for rcwa mapping of GF(q)[x] and element of GF(q)[x] (RCWA)",
@@ -2644,7 +2644,7 @@ InstallMethod( ImageElm,
 ##
 #M  \^( <n>, <f> ) . . . . . . . . . . for a ring element and an rcwa mapping
 ##
-##  Image of the ring element <n> under the rcwa mapping <f>. 
+##  Returns the image of the ring element <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( \^,
                "for a ring element and an rcwa mapping (RCWA)",
@@ -2658,7 +2658,7 @@ InstallMethod( \^,
 ##
 #M  ImagesElm( <f>, <n> ) . . . . . .  for an rcwa mapping and a ring element
 ##
-##  Images of the ring element <n> under the rcwa mapping <f>.
+##  Returns the images of the ring element <n> under the rcwa mapping <f>.
 ##  For technical purposes, only.
 ##
 InstallMethod( ImagesElm,
@@ -2673,7 +2673,7 @@ InstallMethod( ImagesElm,
 ##
 #M  ImagesSet( <f>, <S> ) . . . for an rcwa mapping and a residue class union
 ##
-##  Image of the set <S> under the rcwa mapping <f>.
+##  Returns the image of the set <S> under the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
@@ -2697,7 +2697,7 @@ InstallMethod( ImagesSet,
 ##
 #M  ImagesSource( <f> ) . . . . . . . . . . . . . . . . . for an rcwa mapping
 ##
-##  Image of the rcwa mapping <f>.
+##  Returns the image of the rcwa mapping <f>.
 ##
 InstallMethod( ImagesSource,
                "for an rcwa mapping and a residue class union (RCWA)",
@@ -2708,7 +2708,8 @@ InstallMethod( ImagesSource,
 ##
 #M  \^( <S>, <f> ) . . . . . for a set or class partition and an rcwa mapping
 ##
-##  Image of the set or class partition <S> under the rcwa mapping <f>.
+##  Returns the image of the set or class partition <S> under the
+##  rcwa mapping <f>.
 ##
 ##  The argument <S> can be: 
 ##
@@ -2733,8 +2734,8 @@ InstallMethod( \^,
 ##
 #M  \^( <U>, <f> ) .  for union of res.-cl. with fixed rep's and rcwa mapping
 ##
-##  Image of the union <U> of residue classes of Z with fixed representatives
-##  under the rcwa mapping <f>.
+##  Returns the image of the union <U> of residue classes of Z with fixed
+##  representatives under the rcwa mapping <f>.
 ##
 InstallMethod( \^,
                Concatenation("for a union of residue classes with fixed ",
@@ -2766,7 +2767,8 @@ InstallMethod( \^,
 ##
 #M  PreImageElm( <f>, <n> ) . for a bijective rcwa mapping and a ring element
 ##
-##  Preimage of the ring element <n> under the bijective rcwa mapping <f>.
+##  Returns the preimage of the ring element <n> under the bijective
+##  rcwa mapping <f>.
 ##
 InstallMethod( PreImageElm,
                "for a bijective rcwa mapping and a ring element (RCWA)",
@@ -2780,7 +2782,7 @@ InstallMethod( PreImageElm,
 ##
 #M  PreImagesElm( <f>, <n> ) . . . . . for an rcwa mapping and a ring element
 ##
-##  Preimages of <n> under the rcwa mapping <f>. 
+##  Returns the preimages of <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesElm,
                "for an rcwa mapping and a ring element (RCWA)", ReturnTrue, 
@@ -2814,8 +2816,8 @@ InstallMethod( PreImagesElm,
 ##
 #M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping and ring element
 ##
-##  A representative of the set of preimages of the integer <n> under the
-##  rcwa mapping <f>. 
+##  Returns a representative of the set of preimages of the integer <n> under
+##  the rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesRepresentative,
                "for an rcwa mapping and a ring element (RCWA)", true, 
@@ -2843,7 +2845,8 @@ InstallMethod( PreImagesRepresentative,
 ##
 #M  PreImagesSet( <f>, <R> ) . .  for an rcwa mapping and its underlying ring
 ##
-##  Preimage of the rcwa mapping <f>. For technical purposes, only.
+##  Returns the source of the rcwa mapping <f>.
+##  For technical purposes, only.
 ##
 InstallMethod( PreImagesSet,
                "for an rcwa mapping and its underlying ring (RCWA)", true, 
@@ -2858,6 +2861,8 @@ InstallMethod( PreImagesSet,
 ##
 #M  PreImagesSet( <f>, <l> ) . . . . . . for an rcwa mapping and a finite set
 ##
+##  Returns the preimage of the finite set <l> under the rcwa mapping <f>.
+##
 InstallMethod( PreImagesSet,
                "for an rcwa mapping and a finite set (RCWA)",
                true, [ IsRcwaMapping, IsList ], 0,
@@ -2870,7 +2875,8 @@ InstallMethod( PreImagesSet,
 ##
 #M  PreImagesSet( <f>, <S> ) .  for an rcwa mapping and a residue class union
 ##
-##  Preimage of the residue class union <S> under the rcwa mapping <f>.
+##  Returns the preimage of the residue class union <S> under the
+##  rcwa mapping <f>.
 ##
 InstallMethod( PreImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
@@ -2904,8 +2910,8 @@ InstallMethod( PreImagesSet,
 ##
 #M  PreImagesSet( <f>, <U> ) . . . . as above, but with fixed representatives
 ##
-##  Preimage of the union <U> of residue classes of Z with fixed representa-
-##  tives under the rcwa mapping <f>.
+##  Returns the preimage of the union <U> of residue classes of Z with fixed
+##  representatives under the rcwa mapping <f>.
 ##
 InstallMethod( PreImagesSet,
                Concatenation("for an rcwa mapping of Z and a union of ",
@@ -3132,7 +3138,7 @@ InstallOtherMethod( IsUnit,
 ##
 #M  \+( <f>, <g> ) . . . . . . . . . . . for two rcwa mappings of Z or Z_(pi)
 ##
-##  Pointwise sum of the rcwa mappings <f> and <g>.
+##  Returns the pointwise sum of the rcwa mappings <f> and <g>.
 ##
 InstallMethod( \+,
                "for two rcwa mappings of Z or Z_(pi) (RCWA)",
@@ -3168,7 +3174,7 @@ InstallMethod( \+,
 ##
 #M  \+( <f>, <g> ) . . . . . . . . . . . .  for two rcwa mappings of GF(q)[x]
 ##
-##  Pointwise sum of the rcwa mappings <f> and <g>.
+##  Returns the pointwise sum of the rcwa mappings <f> and <g>.
 ##
 InstallMethod( \+,
                "for two rcwa mappings of GF(q)[x] (RCWA)",
@@ -3203,7 +3209,7 @@ InstallMethod( \+,
 ##
 #M  AdditiveInverseOp( <f> ) . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-##  Pointwise additive inverse of rcwa mapping <f>.
+##  Returns the pointwise additive inverse of rcwa mapping <f>.
 ##
 InstallMethod( AdditiveInverseOp,
                "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
@@ -3214,8 +3220,8 @@ InstallMethod( AdditiveInverseOp,
 ##
 #M  \+( <f>, <n> ) . . . . . . . . . . for an rcwa mapping and a ring element
 ##
-##  Pointwise sum of the rcwa mapping <f> and the constant rcwa mapping with
-##  value <n>.
+##  Returns the pointwise sum of the rcwa mapping <f> and the constant
+##  rcwa mapping with value <n>.
 ##
 InstallMethod( \+,
                "for an rcwa mapping and a ring element (RCWA)",
@@ -3249,7 +3255,7 @@ InstallMethod( \+,
 ##
 #M  CompositionMapping2( <g>, <f> ) . .  for two rcwa mappings of Z or Z_(pi)
 ##
-##  Product (composition) of the rcwa mappings <f> and <g>.
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
 ##  The mapping <f> is applied first.
 ##
 InstallMethod( CompositionMapping2,
@@ -3299,7 +3305,7 @@ InstallMethod( CompositionMapping2,
 ##
 #M  CompositionMapping2( <g>, <f> ) . . . . for two rcwa mappings of GF(q)[x]
 ##
-##  Product (composition) of the rcwa mappings <f> and <g>.
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
 ##  The mapping <f> is applied first.
 ##
 InstallMethod( CompositionMapping2,
@@ -3457,7 +3463,7 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
 ##
 #M  InverseOp( <f> ) . . . . . . . . . . . . for rcwa mappings of Z or Z_(pi)
 ##
-##  Inverse mapping of bijective rcwa mapping <f>.
+##  Returns the inverse mapping of the bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseOp,
                "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
@@ -3509,7 +3515,7 @@ InstallMethod( InverseOp,
 ##
 #M  InverseOp( <f> ) . . . . . . . . . . . . .  for rcwa mappings of GF(q)[x]
 ##
-##  Inverse mapping of bijective rcwa mapping <f>.
+##  Returns the inverse mapping of the bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseOp,
                "for rcwa mappings of GF(q)[x] (RCWA)", true,
@@ -3573,7 +3579,7 @@ InstallMethod( InverseOp,
 ##
 #M  InverseGeneralMapping( <f> ) . . . . . . . . . . . . .  for rcwa mappings
 ##
-##  Inverse mapping of bijective rcwa mapping <f>.
+##  Returns the inverse mapping of the bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseGeneralMapping,
                "for rcwa mappings (RCWA)",
@@ -3667,7 +3673,8 @@ InstallMethod( CommonRightInverse,
 ##
 #M  \^( <g>, <h> ) . . . . . . . . . . . . . . . . . .  for two rcwa mappings
 ##
-##  Conjugate of the rcwa mapping <g> under <h>.
+##  Returns the conjugate of the rcwa mapping <g> under <h>,
+##  i.e. <h>^-1*<g>*<h>.
 ##
 InstallMethod( \^,
                "for two rcwa mappings (RCWA)",
@@ -3692,6 +3699,10 @@ InstallMethod( \^,
 #############################################################################
 ##
 #M  \^( <perm>, <g> ) . . . . . .  for a permutation and an rcwa mapping of Z
+##
+##  Returns the conjugate of the GAP permutation <perm> under the
+##  rcwa permutation <g>. The rcwa permutation <g> must not move any point
+##  in the support of <perm> to a negative integer.
 ##
 InstallMethod( \^,
                "for a permutation and an rcwa mapping of Z (RCWA)",
@@ -3722,7 +3733,7 @@ InstallMethod( \^,
 ##
 #M  \^( <f>, <n> ) . . . . . . . . . . . . for an rcwa mapping and an integer
 ##
-##  <n>-th power of the rcwa mapping <f>. 
+##  Returns the <n>-th power of the rcwa mapping <f>. 
 ##
 InstallMethod( \^,
                "for an rcwa mapping and an integer (RCWA)",
@@ -4192,10 +4203,10 @@ InstallGlobalFunction( TransitionSets,
 ##
 #M  TransitionGraph( <f>, <m> ) . . . . . .  for rcwa mappings of Z or Z_(pi)
 ##
+##  Returns the transition graph of <f> for modulus <m> as a GRAPE graph.
+##
 ##  The vertices are labelled by 1..<m> instead of 0..<m>-1 (0 is identified
 ##  with 1, etc.) because in {\GAP}, permutations cannot move 0.
-##
-##  The result is returned as a GRAPE graph.
 ##
 InstallMethod( TransitionGraph,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",

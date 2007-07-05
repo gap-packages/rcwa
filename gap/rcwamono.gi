@@ -148,7 +148,7 @@ InstallMethod( IsTrivial,
 ##
 #M  RcwaCons( IsRcwaMonoid, <R> ) . . . . . . . . . . . . . . . . . Rcwa( R )
 ##
-##  The monoid which is formed by all rcwa mappings of R.
+##  Returns the monoid which is formed by all rcwa mappings of <R>.
 ##
 InstallMethod( RcwaCons,
                "natural Rcwa(R) (RCWA)", ReturnTrue, 
@@ -344,7 +344,7 @@ InstallMethod( IsSignPreserving,
 ##
 #M  MovedPoints( <M> ) . . . . . . . . . . . . . . . . . . . for rcwa monoids
 ##
-##  The set of moved points (support) of the rcwa monoid <M>.
+##  Returns the set of moved points (support) of the rcwa monoid <M>.
 ##
 InstallMethod( MovedPoints,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
@@ -667,7 +667,7 @@ InstallMethod( \in,
 ##
 #M  IsSubset( <M>, <N> ) . . . . . . . . . . . . . . . . for two rcwa monoids
 ##
-##  Checking for a submonoid relation.
+##  This method checks for a submonoid relation.
 ##
 InstallMethod( IsSubset,
                "for two rcwa monoids (RCWA)", ReturnTrue,

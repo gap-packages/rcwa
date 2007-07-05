@@ -91,7 +91,7 @@ DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 ##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
 ##
-##  Computes the number of conjugacy classes of the whole group RCWA(Z) of
+##  Returns the number of conjugacy classes of the whole group RCWA(Z) of
 ##  elements of order <ord>.
 ##
 DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
@@ -143,8 +143,8 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 #O  IsomorphismRcwaGroup( <G> )  . . . . .  rcwa representation of <G> over Z
 #A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . .  the corresponding attribute
 ##
-##  A faithful rcwa representation of the group <G> over the ring <R>,
-##  respectively over Z.
+##  Returns a faithful rcwa representation of the group <G> over
+##  the ring <R>, respectively over Z.
 ##
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsRing ] );
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup ] );
@@ -155,7 +155,7 @@ DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
 #O  Restriction( <g>, <f> ) . . . . . . . . . . . . restriction of <g> by <f>
 #O  Restriction( <M>, <f> ) . . . . . . . . . . . . restriction of <M> by <f>
 ##
-##  Computes the *restriction* of the rcwa mapping <g> resp. rcwa monoid <M>
+##  Returns the *restriction* of the rcwa mapping <g> resp. rcwa monoid <M>
 ##  by (i.e. to the image of) the rcwa mapping <f>. The mapping <f> must be
 ##  injective.
 ##
@@ -167,8 +167,8 @@ DeclareOperation( "Restriction", [ IsRcwaMonoid, IsRcwaMapping ] );
 #O  Induction( <g>, <f> ) . . . . . . . . . . . . . . induction of <g> by <f>
 #O  Induction( <M>, <f> ) . . . . . . . . . . . . . . induction of <M> by <f>
 ##
-##  Computes the *induction* of the rcwa mapping <g> resp. the rcwa monoid
-##  <M> by the rcwa mapping <f>.
+##  Returns the *induction* of the rcwa mapping <g> resp. the rcwa monoid <M>
+##  by the rcwa mapping <f>.
 ##
 ##  The mapping <f> must be injective. In the first case, the support of <g>
 ##  and its images under powers of <g> must be subsets of the image of <f>.
@@ -243,8 +243,8 @@ DeclareAttribute( "StabilizerInfo", IsRcwaGroup );
 ##
 #O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
 ##
-##  Computes all finite orbits of the rcwa group <G> of length <= <maxlng>,
-##  which intersect nontrivially with the set <S>.
+##  Returns a list of all finite orbits of the rcwa group <G> of
+##  length <= <maxlng>, which intersect nontrivially with the set <S>.
 ##
 DeclareOperation( "ShortOrbits",
                   [ IsMonoid, IsListOrCollection, IsPosInt ] );
@@ -254,7 +254,7 @@ DeclareOperation( "ShortOrbits",
 #O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 #O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
-##  Computes a preimage resp. possibly multiple preimages of an element of
+##  Returns a preimage, respectively a list of preimages, of an element of
 ##  <G> which maps <src> to <dest> under the natural projection from the
 ##  free group <F> onto <G>. The rank of <F> must be equal to the number of
 ##  generators of <G>. Often, finding several representatives of the preimage
@@ -270,6 +270,10 @@ DeclareOperation( "RepresentativesActionPreImage",
 #O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
 #O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
 ##
+##  Returns the ball of diameter <d> around the element <g> of <G>, or the
+##  ball of diameter <d> around the point <p> under the action of <G>,
+##  respectively.
+##
 ##  All balls are understood w.r.t. the stored generators of the group <G>.
 ##  An option `Spheres' is recognized. If set, the returned ball is splitted
 ##  into a list of spheres.
@@ -281,8 +285,8 @@ DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
 ##
 #O  OrbitUnion( <G>, <S> ) . . . . . . .  union of the orbit of <S> under <G>
 ##
-##  Computes the union of the elements of the orbit of the set <S> under
-##  the rcwa group <G>. In particular, <S> can be a union of residue classes.
+##  Returns the union of the elements of the orbit of the set <S> under the
+##  rcwa group <G>. In particular, <S> can be a union of residue classes.
 ##
 DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
@@ -385,6 +389,9 @@ DeclareAttribute( "KernelActionIndices", IsRcwaGroup );
 ##
 #A  IsomorphismMatrixGroup( <G> ) . . . . . . .  matrix representation of <G>
 ##
+##  A linear representation of the rcwa group <G> over the quotient field of
+##  its underlying ring.
+##
 ##  Tame rcwa groups have linear representations over the quotient field of
 ##  their underlying ring. There is such a representation whose degree is
 ##  twice the length of a respected partition.
@@ -398,11 +405,13 @@ DeclareAttribute( "IsomorphismMatrixGroup", IsGroup );
 #A  IntegralizingConjugator( <g> ) . . . . . . . mapping x: <g>^x is integral
 #A  IntegralizingConjugator( <G> ) . . . . . . . mapping x: <G>^x is integral
 ##
-##  Some integral conjugate of the rcwa mapping <g> resp. rcwa group <G> in
-##  RCWA(R). Such a conjugate exists always if <g> is a tame bijective rcwa
-##  mapping resp. if <G> is a tame rcwa group, and the underlying ring R has
-##  residue class rings of any finite cardinality. Integral conjugates are
-##  of course not unique.
+##  Some integral conjugate of the rcwa mapping <g> resp. rcwa group <G>
+##  in RCWA(R).
+##
+##  Such a conjugate exists always if <g> is a tame bijective rcwa mapping
+##  respectively if <G> is a tame rcwa group, and if the underlying ring R
+##  has residue class rings of any finite cardinality. Integral conjugates
+##  are of course not unique.
 ##
 DeclareAttribute( "IntegralConjugate", IsRcwaMapping );
 DeclareAttribute( "IntegralConjugate", IsRcwaGroup );
@@ -453,6 +462,7 @@ DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
 ##
 #O  EpimorphismFromFpGroup( <G>, <r> ) . .  epimorphism from an fp group to G
 ##
+##  Returns an epimorphism from a finitely presented group to the group <G>
 ##  The argument <r> denotes the radius of the ball around 1 which should be
 ##  searched for relations.
 ##
@@ -476,9 +486,9 @@ DeclareOperation( "RepresentativeActionOp",
 ##
 #O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
 ##
-##  An analogon to `PreImagesRepresentative' which returns a list of possibly
-##  several representatives if computing these is not harder than computing
-##  just one representative.
+##  This is an analogon to `PreImagesRepresentative', which returns a list
+##  of possibly several representatives if computing these is not harder than
+##  computing just one representative.
 ##
 DeclareOperation( "PreImagesRepresentatives",
                   [ IsGeneralMapping, IsObject ] );

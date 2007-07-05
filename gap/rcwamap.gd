@@ -148,8 +148,8 @@ DeclareGlobalFunction( "RcwaMappingsOfGFqxFamily" );
 ##
 #R  IsRcwaMappingStandardRep . . . "standard" representation of rcwa mappings
 ##
-##  Representation of rcwa mappings by modulus <modulus> (in the following
-##  denoted by m) and coefficient list <coeffs>.
+##  This is the representation of rcwa mappings by modulus <modulus>
+##  (in the following denoted by m) and coefficient list <coeffs>.
 ##
 ##  The component <coeffs> is a list of |R/mR| lists of three coprime ele-
 ##  ments of the underlying ring R, each, containing the coefficients a_r(m),
@@ -282,6 +282,8 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZ" );
 #F  ClassShift( <R> ) . . . . . . . . . . . . .  class shift nu_R: n -> n + 1
 #P  IsClassShift( <sigma> )
 ##
+##  Returns the class shift nu_r(m).
+##
 ##  The *class shift* nu_r(m) is the rcwa permutation which maps n in r(m)
 ##  to n + m and which fixes the complement of the residue class r(m)
 ##  pointwise.
@@ -299,6 +301,8 @@ DeclareProperty( "IsClassShift", IsRcwaMapping );
 #F  ClassReflection( <cl> ) . . . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassReflection( <R> )  . . . . . .  class reflection varsigma_R: n -> -n
 #P  IsClassReflection( <sigma> )
+##
+##  Returns the class reflection varsigma_r(m).
 ##
 ##  The *class reflection* varsigma_r(m) is the rcwa permutation which maps
 ##  n in r(m) to -n + 2r and which fixes the complement of the residue class
@@ -318,6 +322,8 @@ DeclareProperty( "IsClassReflection", IsRcwaMapping );
 #F  ClassRotation( <cl>, <u> )  . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassRotation( <R>, <u> ) . . . . . . . class rotation rho_(R,u): n -> un
 #P  IsClassRotation( <sigma> )
+##
+##  Returns the class rotation rho_(r(m),u).
 ##
 ##  The *class rotation* rho_(r(m),u) is the rcwa permutation which maps
 ##  n in r(m) to un + r(1-u) and which fixes the complement of the residue
@@ -341,6 +347,8 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 #P  IsClassTransposition( <sigma> )
 #P  IsGeneralizedClassTransposition( <sigma> )
 #A  TransposedClasses( <ct> )
+##
+##  Returns the class transposition tau_(r1(m1),r2(m2)).
 ##
 ##  Given two disjoint residue classes r1(m1) and r2(m2) of the base ring R,
 ##  the *class transposition* tau_(r1(m1),r2(m2)) in RCWA(R) is defined by
@@ -368,11 +376,12 @@ DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 ##
 #O  SplittedClassTransposition( <ct>, <k>, <cross> )
 ##
+##  Returns a decomposition of the class transposition <ct> into a product
+##  of <k> class transpositions.
+##
 ##  Class transpositions can be written as products of any given number <k>
 ##  of class transpositions, as long as the underlying ring has a residue
 ##  class ring of cardinality <k>.
-##
-##  This operation computes such a decomposition.
 ##
 DeclareOperation( "SplittedClassTransposition",
                   [ IsRcwaMapping and IsClassTransposition,
@@ -390,8 +399,8 @@ DeclareOperation( "SplittedClassTransposition",
 ##
 ##  In its one-argument form, the function `ClassPairs' returns a list of
 ##  4-tuples (r1,m1,r2,m2) of integers corresponding to the unordered pairs
-##  of disjoint residue classes r1(m1) and r2(m2) with m1, m2 <= m.
-##  In its two-argument form, it does basically "the same" for the ring R.
+##  of disjoint residue classes r1(m1) and r2(m2) with m1, m2 <= <m>.
+##  In its two-argument form, it does basically "the same" for the ring <R>.
 ##
 ##  The variables `CLASS_PAIRS' and `CLASS_PAIRS_LARGE' are used to cache
 ##  lists computed by `ClassPairs'. These caches are mainly used to generate
@@ -406,6 +415,8 @@ DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
 #F  PrimeSwitch( <p> ) . . product of ct's, with multiplier <p> and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 #P  IsPrimeSwitch( <sigma> )
+##
+##  Returns the prime switch sigma_p.
 ##
 ##  For an odd prime p, the *prime switch* sigma_p is defined by the product
 ##    tau_(0(8), 1(2p)) * tau_(4(8),-1(2p)) * tau_(0(4),    1(2p))
@@ -423,7 +434,7 @@ DeclareProperty( "IsPrimeSwitch", IsRcwaMapping );
 #F  mKnot( <m> ) . . . . . . . . . . rcwa mapping of Timothy P. Keller's type
 ##
 ##  Given an odd integer <m>, this function returns the bijective rcwa
-##  mapping g_m as defined in
+##  mapping g_<m> as defined in
 ##
 ##  Timothy P. Keller. Finite Cycles of Certain Periodically Linear
 ##  Permutations. Missouri J. Math. Sci. 11(1999), no. 3, 152-157.
@@ -434,8 +445,8 @@ DeclareGlobalFunction( "mKnot" );
 ##
 #F  ClassUnionShift( <S> ) . . shift of residue class union <S> by Mod( <S> )
 ##
-##  The rcwa mapping which maps <S> to <S> + Modulus(<S>) and fixes the
-##  complement of <S>.
+##  Returns the rcwa mapping which maps <S> to <S> + Modulus(<S>) and which
+##  fixes the complement of <S> pointwise.
 ##
 DeclareGlobalFunction( "ClassUnionShift" );
 
@@ -556,7 +567,7 @@ DeclareAttribute( "ShiftsDownOn", IsRcwaMappingOfZ );
 ##
 #O  Multpk( <f>, <p>, <k> )  the elements multiplied by a multiple of <p>^<k>
 ##
-##  The union of the residue classes r(m) such that 
+##  Returns the union of the residue classes r(m) such that 
 ##
 ##    - p^k||a_r(m) if k > 0, resp.
 ##    - p^-k||c_r(m) if k < 0, resp.
@@ -664,10 +675,10 @@ DeclareGlobalFunction( "InjectiveAsMappingFrom" );
 #O  ShortCycles( <f>, <S>, <maxlng> ) .  short cycles of the rcwa mapping <f>
 #O  ShortCycles( <f>, <maxlng> )
 ##
-##  In the 3-argument case, `ShortCycles' computes all finite cycles of the
-##  rcwa mapping <f> of length <= <maxlng> which intersect nontrivially with
-##  the set <S>. In the 2-argument case, it computes all "single" finite
-##  cycles of the rcwa mapping <f> of length <= <maxlng>.
+##  In the 3-argument case, `ShortCycles' returns a list of all finite cycles
+##  of the rcwa mapping <f> of length <= <maxlng> which intersect nontri-
+##  vially with the set <S>. In the 2-argument case, it returns a list of all
+##  "single" finite cycles of the rcwa mapping <f> of length <= <maxlng>.
 ##
 DeclareOperation( "ShortCycles",
                   [ IsRcwaMapping, IsListOrCollection, IsPosInt ] );
@@ -678,9 +689,9 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 #O  RestrictedPerm( <g>, <S> ) . . . . . . . . . .  restriction of <g> to <S>
 #O  PermutationOpNC( <g>, <P>, <act> ) . .  permutation induced by <g> on <P>
 ##
-##  The restriction of the rcwa permutation <g> to the residue class union
-##  <S>, respectively the permutation induced by <g> on the partition <P>
-##  of <R> into residue classes.
+##  Returns the restriction of the rcwa permutation <g> to the residue class
+##  union <S>, respectively the permutation induced by <g> on the partition
+##  <P> of <R> into residue classes.
 ##
 DeclareOperation( "RestrictedPerm", [ IsRcwaMapping, IsListOrCollection ] );
 DeclareOperation( "PermutationOpNC",
@@ -721,7 +732,7 @@ DeclareOperation( "CommonRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 ##
 #O  TransitionGraph( <f>, <m> ) . .  transition graph of the rcwa mapping <f>
 ##
-##  Transition graph for modulus <m> of the rcwa mapping <f>.
+##  Returns the transition graph for modulus <m> of the rcwa mapping <f>.
 ##
 ##  We define the *transition graph* Gamma_(f,m) for modulus m of an
 ##  rcwa mapping f as follows:
@@ -737,7 +748,7 @@ DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
 ##
 #O  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
 ##
-##  The *transition matrix* T of <f> for modulus <m>.
+##  Returns the *transition matrix* T of <f> for modulus <m>.
 ##
 ##  The entry T_(i,j) is the "proportion" of the elements of the <i>th
 ##  residue class which are mapped to the <j>th residue class under <f>.
@@ -798,7 +809,7 @@ DeclareOperation( "FactorizationOnConnectedComponents",
 ##
 #F  TransitionSets( <f>, <m> ) . . . . . . . . . . . .  set transition matrix
 ##
-##  The *set transition matrix* <T> of <f> for modulus <m>.
+##  Returns the *set transition matrix* <T> of <f> for modulus <m>.
 ##
 ##  The entry T_(i,j) is the subset of the <i>th residue class which is
 ##  mapped to the <j>th residue class under <f>. The numbering of the residue
@@ -822,19 +833,20 @@ DeclareGlobalFunction( "TransitionSets" );
 #O  Trajectory( <f>, <n>, <terminal>, <m> )
 #O  Trajectory( <f>, <n>, <terminal>, <whichcoeffs> )
 ##
-##  In the first case, this operation computes the first <length> iterates in
-##  the trajectory of the rcwa mapping <f> starting at <n>. In the forth case
-##  it computes the initial part of the trajectory of <f> starting at <n>
-##  which ends at the first occurence of an iterate in the set <terminal>.
+##  In the first case, this operation returns a list of the first <length>
+##  iterates in the trajectory of the rcwa mapping <f> starting at <n>.
+##  In the forth case it returns the initial part of the trajectory of <f>
+##  starting at <n> which ends at the first occurence of an iterate in the
+##  set <terminal>.
 ##  In place of the ring element <n>, a finite set of ring elements or a
 ##  union of residue classes can be given. In the second and fifth case the
 ##  iterates are reduced (mod <m>) to save memory.
 ##
-##  In the third and sixth case the operation computes "accumulated coeffi-
-##  cients" on the trajectory of <n> under the rcwa mapping <f>. The term
-##  "accumulated coefficients" denotes the list c of coefficient triples
-##  such that for any k we have <n>^(<f>^(k-1)) = (c[k][1]*<n> + c[k][2])/
-##  c[k][3]. The argument <whichcoeffs> can either be "AllCoeffs" or
+##  In the third and sixth case the operation returns a list of "accumulated
+##  coefficients" on the trajectory of <n> under the rcwa mapping <f>.
+##  The term "accumulated coefficients" denotes the list c of coefficient
+##  triples such that for any k we have <n>^(<f>^(k-1)) = (c[k][1]*<n> +
+##  c[k][2])/c[k][3]. The argument <whichcoeffs> can either be "AllCoeffs" or
 ##  "LastCoeffs", and determines whether the entire list of triples or only
 ##  the last triple is computed.
 ##
@@ -846,8 +858,8 @@ DeclareOperation( "Trajectory", [ IsRcwaMapping, IsObject, IsObject,
 ##
 #F  GluckTaylorInvariant( <l> ) . .  Gluck-Taylor invariant of trajectory <l>
 ##
-##  The Gluck-Taylor invariant of the list <l> of integers, interpreted as
-##  the trajectory of an rcwa mapping. See
+##  Returns the Gluck-Taylor invariant of the list <l> of integers,
+##  interpreted as the trajectory of an rcwa mapping. See
 ##
 ##  David Gluck and Brian D. Taylor: A New Statistic for the 3x+1 Problem,
 ##  Proc. Amer. Math. Soc. 130 (2002), 1293-1301.
@@ -866,6 +878,8 @@ DeclareGlobalFunction( "GluckTaylorInvariant" );
 ##  The function stops once it detects a cycle or it detects that a timeout
 ##  given as option "timeout" has expired.
 ##
+##  The resulting list of lists of residue classes is returned.
+##
 ##  Caution: All classes are traced separately, thus a cycle in the
 ##           trajectory usually does only cause a cycle in the list of
 ##           *unions* of the returned sets of residue classes!
@@ -882,12 +896,16 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 ##
 #O  LikelyContractionCentre( <f>, <maxn>, <bound> ) likely contraction centre
 ##
-##  Tries to compute the *contraction centre* of the rcwa mapping <f>.
-##  Assuming its existence, this is the unique finite subset S_0 of the
-##  base ring R which <f> maps bijectively to itself and which intersects
-##  nontrivially with any trajectory of <f>. The mapping <f> is assumed
-##  to be contracting.
-##      As in general contraction centres are likely not computable, methods
+##  Returns a guess of what the *contraction centre* of the rcwa mapping <f>
+##  might be.
+##
+##  Assuming its existence, the *contraction centre* is the unique finite
+##  subset S_0 of the base ring R which <f> maps bijectively to itself and
+##  which intersects nontrivially with any trajectory of <f>.
+##
+##  The mapping <f> is assumed to be contracting.
+##
+##  As in general contraction centres are likely not computable, methods
 ##  will be probabilistic. The argument <maxn> is a bound on the starting 
 ##  value and <bound> is a bound on the elements of the sequence to be
 ##  searched. If the limit <bound> is exceeded, an Info message on Info
@@ -901,12 +919,12 @@ DeclareSynonym( "LikelyContractionCenter", LikelyContractionCentre );
 ##
 #O  GuessedDivergence( <f> ) . . . . . . . . . . .  guessed divergence of <f>
 ##
-##  Guesses the "divergence" of the rcwa mapping <f>.
-##  This should give a rough hint on how fast the rcwa mapping <f> contracts
-##  (if its divergence is smaller than 1) or how fast its trajectories
-##  diverge (if its divergence is larger than 1). Nothing particular is
-##  guaranteed, and no mathematical conclusions can be made from the return
-##  values. 
+##  Returns a guess of what one might call the "divergence" of the rcwa
+##  mapping <f>. This should give a rough hint on how fast the rcwa mapping
+##  <f> contracts (if its divergence is smaller than 1) or how fast its
+##  trajectories diverge (if its divergence is larger than 1).
+##  Nothing particular is guaranteed, and no mathematical conclusions can
+##  be made from the return values. 
 ##
 DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
 

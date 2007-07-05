@@ -16,9 +16,10 @@ Revision.perlist_gi :=
 ##
 #M  \^( <perlist>, <g> ) . . for a periodic list and an rcwa permutation of Z
 ##
-##  The rcwa permutation <g> permutes the entries of the periodic list
-##  <perlist>. Periodic lists are implemented in the FR package, which
-##  therefore needs to be loaded in order to use this method.
+##  Returns the periodic list which is obtained from <perlist> by permuting
+##  the entries by the rcwa permutation <g>.
+##  Periodic lists are implemented in the FR package, which therefore needs
+##  to be loaded in order to use this method.
 ##
 InstallMethod( \^,
                "for a periodic list and an rcwa permutation of Z (RCWA)",
@@ -62,8 +63,8 @@ InstallMethod( \^,
 ##
 #M  \^( <perlist>, <f> ) for a periodic list and a non-bijective rcwa mapping
 ##
-##  The n-th entry of the returned list is the sum of the n^(f^-1)-th entries
-##  of <perlist>, where n^(f^-1) denotes the preimage of n under <f>.
+##  Returns the periodic list whose n-th entry is the sum of the n^(f^-1)-th
+##  entries of <perlist>, where n^(f^-1) denotes the preimage of n under <f>.
 ##  Periodic lists are implemented in the FR package, which therefore needs
 ##  to be loaded in order to use this method.
 ##
