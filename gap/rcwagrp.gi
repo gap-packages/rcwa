@@ -1018,8 +1018,8 @@ InstallMethod( RepresentativeActionOp,
     R := Support(CT_R);
     if not IsSubset(R,S1) or not IsSubset(R,S2) then return fail; fi;
 
-    D1 := Difference(R,S1);
-    if Union(D1,S2) = R then D1 := Difference(D1,Difference(R,S2)); fi;
+    if IsSubset(S2,S1) then D1 := Difference(S2,S1);
+                       else D1 := Difference(R,S1); fi;
     D2 := Difference(R,Union(D1,S2));
 
     S := List([S1,D1,D2,S2],AsUnionOfFewClasses);
