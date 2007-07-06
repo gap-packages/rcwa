@@ -547,5 +547,8 @@ Changes between version 2.5.1 and version 2.5.2:
    This is similar to `RestrictedPartitions', but the difference is that
    no part may occur twice.
 
+ - The documentation has been improved in a few places, and a couple of
+   comments in the source files have been improved as well.
+
 
 
