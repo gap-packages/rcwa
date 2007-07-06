@@ -711,16 +711,29 @@ IdentityMapping( Integers )
 </Heading>
 
 Knowing a natural permutation representation of a group usually helps
-significantly in computing with it and in obtaining results on its structure.
+significantly in computing in it and in obtaining results on its structure.
 This holds particularly for the natural action of an rcwa group on its
 underlying ring. In this section we describe &RCWA;'s functionality
 related to this action. <P/>
 
 <Index Key="Support" Subkey="of an rcwa group"><C>Support</C></Index>
 <Index Key="MovedPoints" Subkey="of an rcwa group"><C>MovedPoints</C></Index>
+<Index Key="IsTransitive" Subkey="for an rcwa group, on its underlying ring">
+  <C>IsTransitive</C>
+</Index>
 
 The support, i.e. the set of moved points, of an rcwa group can be determined
 by <C>Support</C> or <C>MovedPoints</C> (these are synonyms).
+Testing for transitivity on the underlying ring is often feasible:
+
+<Example>
+<![CDATA[
+gap> G := Group(ClassTransposition(1,2,0,4),ClassShift(0,2));;
+gap> IsTransitive(G,Integers);
+true
+]]>
+</Example>
+
 There are methods to compute orbits under the action of an rcwa group:
 
 <ManSection>
@@ -758,38 +771,59 @@ gap> Orbit(G,ResidueClass(0,2));
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,2,1,4),
 >               ClassReflection(0,3));
 <rcwa group over Z with 3 generators>
-gap> orb1 := Orbit(G,2); orb2 := Orbit(G,999);
+gap> orb := Orbit(G,2);
 <orbit of 2 under <wild rcwa group over Z with 3 generators>>
-<orbit of 999 under <wild rcwa group over Z with 3 generators>>
-gap> 1 in orb1;
-false
-gap> 1015808 in orb1;
+gap> 1015808 in orb;
 true
-gap> orb1 = orb2;
-true
-gap> First(orb1,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
+gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
 -19
 ]]>
 </Example>
   </Description>
 </ManSection>
 
-&RCWA; permits drawing pictures of orbits of rcwa groups on&nbsp;<M>\Z^2</M>,
-see Section&nbsp;<Ref Label="sec:DrawingPictures"/>.
+&RCWA; permits drawing pictures of orbits of rcwa groups on&nbsp;<M>\Z^2</M>.
+The pictures are written to files in bitmap- (bmp-) format.
+The author has successfully tested this feature both under Linux and under
+Windows, and the produced pictures can be processed further with many common
+graphics programs:
 
-<Index Key="IsTransitive" Subkey="for an rcwa group, on its underlying ring">
-  <C>IsTransitive</C>
-</Index>
-
-Testing for transitivity on the underlying ring is often feasible:
-
-<Example>
+<ManSection>
+  <Func Name="DrawOrbitPicture"
+        Arg="G, p0, r, h, w, colored, palette, filename"
+        Label="G, p0, r, h, w, colored, palette, filename"/>
+  <Returns> Nothing. </Returns>
+  <Description>
+    Draws a picture of the orbit(s) of the point(s) <A>p0</A> under the
+    action of the group <A>G</A> on&nbsp;<M>\Z^2</M>.
+    The argument <A>p0</A> is either one point or a list of points.
+    The argument <A>r</A> denotes the radius of the ball around <A>p0</A>
+    to be computed. The size of the created picture is
+    <A>h</A>&nbsp;x&nbsp;<A>w</A> pixels.
+    The argument <A>colored</A> is a boolean which indicates whether a 24-bit
+    True-Color picture or a monochrome picture should be drawn.
+    In the former case, <A>palette</A> must be a list of triples of integers
+    in the range <M>0, \dots, 255</M>, denoting the RGB values of colors to
+    be used. In the latter case, <A>palette</A> is not used, and any value
+    can be passed. The picture is written in bitmap- (bmp-) format to a file
+    named <A>filename</A>. This is done using the utility function
+    <Ref Func="SaveAsBitmapPicture" Label="picture, filename"/>.
+<Log>
 <![CDATA[
-gap> G := Group(ClassTransposition(1,2,0,4),ClassShift(0,2));;
-gap> IsTransitive(G,Integers);
-true
+gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
+>                                                    CyclicGroup(3))));;
+gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"example1.bmp");
+gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
+>                     [[255,0,0],[0,255,0],[0,0,255]],"example2.bmp");
+gap> G := Group(ClassShift(0,1),ClassTransposition(1,2,0,4));;
+gap> DrawOrbitPicture(G,[0,1],20,512,512,true,List([1..20],
+>                     i->[255-12*i,255-12*i,255]),"example3.bmp");
 ]]>
-</Example>
+</Log>
+  </Description>
+</ManSection>
+
+The pictures drawn in the examples are shown on &RCWA;'s webpage. <P/>
 
 Finite orbits give rise to finite quotients of a group, and finite cycles
 can help to check for conjugacy. Therefore it is important to be able
@@ -1301,148 +1335,6 @@ gap> List(last,TransposedClasses);
   [ 1(4), 3(4) ], [ 2(4), 3(4) ] ]
 ]]>
 </Example>
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:DrawingPictures">
-<Heading>Drawing pictures of orbits on <M>\Z^2</M> </Heading>
-
-&RCWA; permits drawing pictures of orbits of rcwa groups on&nbsp;<M>\Z^2</M>.
-The pictures are written to files in bitmap- (bmp-) format.
-The author has successfully tested this feature both under Linux and under
-Windows, and the produced pictures can be processed further with many common
-graphics programs.
-
-<ManSection>
-  <Func Name="DrawOrbitPicture"
-        Arg="G, p0, r, h, w, colored, palette, filename"
-        Label="G, p0, r, h, w, colored, palette, filename"/>
-  <Returns> Nothing. </Returns>
-  <Description>
-    Draws a picture of the orbit(s) of the point(s) <A>p0</A> under the
-    action of the group <A>G</A> on&nbsp;<M>\Z^2</M>.
-    The argument <A>p0</A> is either one point or a list of points.
-    The argument <A>r</A> denotes the radius of the ball around <A>p0</A>
-    to be computed. The size of the created picture is
-    <A>h</A>&nbsp;x&nbsp;<A>w</A> pixels.
-    The argument <A>colored</A> is a boolean which indicates whether a 24-bit
-    True-Color picture or a monochrome picture should be drawn.
-    In the former case, <A>palette</A> must be a list of triples of integers
-    in the range <M>0, \dots, 255</M>, denoting the RGB values of colors to
-    be used. In the latter case, <A>palette</A> is not used, and any value
-    can be passed. The picture is written in bitmap- (bmp-) format to a file
-    named <A>filename</A>.
-<Log>
-<![CDATA[
-gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
->                                                    CyclicGroup(3))));;
-gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"~/images/example1.bmp");
-gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
->                     [[255,0,0],[0,255,0],[0,0,255]],"~/images/example2.bmp");
-gap> G := Group(ClassShift(0,1),ClassTransposition(1,2,0,4));;
-gap> DrawOrbitPicture(G,[0,1],20,512,512,true,
->                     List([1..20],i->[255-12*i,255-12*i,255]),
->                     "~/images/example3.bmp");
-]]>
-</Log>
-  </Description>
-</ManSection>
-
-<Ref Func="DrawOrbitPicture"
-     Label="G, p0, r, h, w, colored, palette, filename"/>
-makes use of the following utility function:
-
-<ManSection>
-  <Func Name="SaveAsBitmapPicture"
-        Arg="picture, filename" Label="picture, filename"/>
-  <Returns> Nothing. </Returns>
-  <Description>
-    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-)
-    picture file named <A>filename</A>. The filename should include
-    the entire pathname.
-
-    The argument <A>picture</A> can be a GF(2) matrix, in which case a
-    monochrome picture file is generated. In this case, zeros stand for
-    black pixels and ones stand for white pixels.
-
-    The argument <A>picture</A> can also be an integer matrix, in which case
-    a 24-bit True Color picture file is generated. In this case, the entries
-    of the matrix are supposed to be integers <M>n = 65536 \cdot red + 256
-    \cdot green + blue</M> in the range <M>0, \dots, 2^{24}-1</M> specifying
-    the RGB values of the colors of the pixels. <P/>
-
-    <Index Key="ReadFromBitmapPicture" Subkey="filename">
-      <C>ReadFromBitmapPicture</C>
-    </Index>
-
-    The picture can be read back into &GAP; by the function
-    <C>ReadFromBitmapPicture(<A>filename</A>)</C>.
-<Log>
-<![CDATA[
-gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
-gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
-gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
-]]>
-</Log>
-  </Description>
-</ManSection>
-
-The pictures created in the examples are shown on &RCWA;'s webpage.
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:UtilityFunctions">
-<Heading>Some general utility functions</Heading>
-
-<Index Key="GeneratorsAndInverses" Subkey="for a group">
-  <C>GeneratorsAndInverses</C>
-</Index>
-<Index Key="EpimorphismByGenerators" Subkey="for two groups">
-  <C>EpimorphismByGenerators</C>
-</Index>
-<Index Key="ListOfPowers"><C>ListOfPowers</C></Index>
-<Index Key="AllProducts"><C>AllProducts</C></Index>
-<Index Key="DifferencesList"><C>DifferencesList</C></Index>
-<Index Key="FloatQuotients"><C>FloatQuotients</C></Index>
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function computing a class invariant">
-  <C>EquivalenceClasses</C>
-</Index>
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function describing an equivalence relation">
-  <C>EquivalenceClasses</C>
-</Index>
-
-&RCWA; introduces a couple of small utility functions which can be used in
-a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
-returns a list of generators of <A>G</A> and their inverses,
-<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is
-a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
-GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
-(there is also an <C>NC</C> version of this), the function
-<C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> returns the list
-<C>[<A>g</A>,<A>g</A>&circum;2,...,<A>g</A>&circum;<A>exp</A>]</C>
-of powers of&nbsp;<A>g</A>, the function
-<C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
-all products of <A>k</A> entries of the list&nbsp;<A>l</A>,
-the function <C>DifferencesList(<A>l</A>)</C> returns the list of
-differences of consecutive entries of the list&nbsp;<A>l</A>, and
-the function <C>FloatQuotients(<A>l</A>)</C> returns the list of
-floating point approximations of quotients of consecutive entries
-of the list&nbsp;<A>l</A>. <P/>
-
-There are also methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
-and  <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C>, which decompose
-a list&nbsp;<A>l</A> into equivalence classes under an equivalence
-relation. The equivalence relation is given either as a function <A>inv</A>
-computing a class invariant of a given list entry or as a function <A>rel</A>
-which takes as arguments two list entries and returns either <C>true</C>
-or <C>false</C> depending on whether the arguments belong to the same
-equivalence class or not.
 
 </Section>
 
