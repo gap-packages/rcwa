@@ -534,9 +534,9 @@ Changes between version 2.5.0 and version 2.5.1:
 
 Changes between version 2.5.1 and version 2.5.2:
 
- - The action of subgroups of CT(Z) on periodic lists as implemented in the
-   FR package has been implemented. This action is by permuting the entries.
-   An analogous action is implemented for non-bijective rcwa mappings.
+ - The action of subgroups of CT(Z) on FR's periodic lists by permuting the
+   list entries has been implemented. An analogous action has been imple-
+   mented for non-bijective rcwa mappings.
 
  - A method for `EquivalenceClasses' has been added.
    The arguments are either a list and a function computing a class invariant
