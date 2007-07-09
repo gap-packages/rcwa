@@ -3669,11 +3669,11 @@ InstallOtherMethod( OrbitOp,
 
   function ( G, pnt, gens, acts, act )
 
-    local  P, K, where, gensrests, noncwoppos, m, S, orb, i;
+    local  P, K, where, gensrests, noncwoppos, m, S, orbs, i;
 
     if act <> OnPoints then TryNextMethod(); fi;
-    orb := ShortOrbits(G,[pnt],100);
-    if orb <> [] then return orb[1]; fi;
+    orbs := ShortOrbits(G,[pnt],100);
+    if orbs <> [] then return orbs[1]; fi;
     if IsFinite(G) or not IsTame(G) then TryNextMethod(); fi;
     P          := RespectedPartition(G);
     K          := KernelOfActionOnRespectedPartition(G);
@@ -3704,7 +3704,10 @@ InstallOtherMethod( OrbitOp,
 
   function ( G, pnt, gens, acts, act )
 
-    local  orbit, ball, oldball;
+    local  orbit, ball, oldball, orbs;
+
+    orbs := ShortOrbits(G,[pnt],100);
+    if orbs <> [] then return orbs[1]; fi;
 
     if IsTame(G) and act = OnPoints then TryNextMethod(); fi;
 
@@ -4344,26 +4347,35 @@ InstallMethod( IsPerfect,
 
 #############################################################################
 ##
-#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . for rcwa groups over Z
+#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
 InstallMethod( IsPerfect,
-               "for rcwa groups over Z (RCWA)", ReturnTrue,
-               [ IsRcwaGroupOverZ ], 0,
+               "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    local  H;
+    local  H, orbs, quots;
 
     if IsTrivial(G) then return true; fi;
     if IsAbelian(G) then return false; fi;
+
     if IsRcwaGroupOverZ(G) then
       if   ForAny(GeneratorsOfGroup(G),g->Sign(g)<>1)
         or (     IsClassWiseOrderPreserving(G)
              and ForAny(GeneratorsOfGroup(G),g->Determinant(g)<>0))
       then return false; fi;
     fi;
+
+    orbs  := ShortOrbits(G,AllResidues(Source(One(G)),
+                                       Lcm(List(GeneratorsOfGroup(G),
+                                                Modulus))),64);
+    quots := List(orbs,orb->Action(G,orb));
+    if not ForAll(quots,IsPerfect) then return false; fi;
+
     if IsFinite(G) then return IsPerfect(Image(IsomorphismPermGroup(G))); fi;
+
     if not IsTame(G) then TryNextMethod(); fi;
+
     H := ActionOnRespectedPartition(G);
     if   IsTransitive(H,[1..LargestMovedPoint(H)])
     then return IsPerfect(H); else TryNextMethod(); fi;
@@ -4385,17 +4397,25 @@ InstallMethod( IsSimple,
 
 #############################################################################
 ##
-#M  IsSimpleGroup( <G> ) . . . . . . . . . . . . . . . for rcwa groups over Z
+#M  IsSimpleGroup( <G> ) . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
 InstallMethod( IsSimpleGroup,
-               "for rcwa groups over Z (RCWA)", ReturnTrue,
-               [ IsRcwaGroupOverZ ], 0,
+               "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
 
   function ( G )
-    if IsTame(G) and not IsFinite(G) then return false; fi;
-    if not IsTame(G) and not IsPerfect(G) then return false; fi;
-    if   IsFinite(G)
-    then return IsSimpleGroup(Image(IsomorphismPermGroup(G))); fi;
+
+    if   ShortOrbits(G,AllResidues(Source(One(G)),
+                                   Lcm(List(GeneratorsOfGroup(G),
+                                            Modulus))),64) <> []
+      or not IsPerfect(G)
+    then return false; fi;
+
+    if IsTame(G) then
+      if   IsFinite(G)
+      then return IsSimpleGroup(Image(IsomorphismPermGroup(G)));
+      else return false; fi;
+    fi;
+
     TryNextMethod();
   end );
 
