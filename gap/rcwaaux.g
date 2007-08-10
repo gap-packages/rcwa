@@ -14,7 +14,7 @@ Revision.rcwaaux_g :=
 #F  RCWABuildManual( ) . . . . . . . . . . . . . . . . . . . build the manual
 ##
 ##  This function builds the manual of the RCWA package in the file formats
-##  LaTeX, DVI, Postscript, PDF and HTML.
+##  LaTeX, PDF, HTML and ASCII-text.
 ##
 ##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
 ##
@@ -22,7 +22,7 @@ BindGlobal( "RCWABuildManual",
 
   function ( )
 
-    local  Manual, RCWADir;
+    local  RCWADir;
 
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
     MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
