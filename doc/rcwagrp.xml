@@ -115,7 +115,7 @@ rcwa representation:
     Currently there are methods available for finite groups, for
     free products of finite groups and for free groups. The method for
     free products of finite groups uses the Table-Tennis Lemma
-    (cp. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
+    (cf. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
     method for free groups uses an adaptation of the construction given
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
     PSL(2,<M>\C</M>) to RCWA(<M>\Z</M>). <P/>
@@ -525,7 +525,7 @@ true
 </Index>
 
 The number of conjugacy classes of RCWA(<M>\Z</M>) of elements of given order
-is known, cp. Corollary&nbsp;2.7.1&nbsp;(b) in&nbsp;<Cite Key="Kohl05"/>.
+is known, cf. Corollary&nbsp;2.7.1&nbsp;(b) in&nbsp;<Cite Key="Kohl05"/>.
 It can be determined by the function <C>NrConjugacyClassesOfRCWAZOfOrder</C>:
 
 <Example>
@@ -1227,7 +1227,7 @@ Let <M>G</M> be a tame rcwa group over&nbsp;<M>\Z</M>, let
 which maps <M>\mathcal{P}</M> to the partition of&nbsp;<M>\Z</M> into
 the residue classes (mod&nbsp;<M>m</M>), and the conjugate <M>G^g</M>
 of&nbsp;<M>G</M> under such a permutation is integral
-(cp. <Cite Key="Kohl05"/>, Theorem&nbsp;2.5.14). <P/>
+(cf. <Cite Key="Kohl05"/>, Theorem&nbsp;2.5.14). <P/>
 
 <Index Key="IntegralConjugate" Subkey="of a tame rcwa group">
   <C>IntegralConjugate</C>

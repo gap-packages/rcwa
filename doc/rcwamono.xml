@@ -90,9 +90,9 @@ true
 </Index>
 
 In our methods to construct rcwa groups, two kinds of mappings played
-a crucial role, namely the restriction monomorphisms (cp.&nbsp;<Ref
+a crucial role, namely the restriction monomorphisms (cf.&nbsp;<Ref
 Oper="Restriction" Label="of an rcwa group, by an injective rcwa mapping"/>)
-and the induction epimorphisms (cp.&nbsp;<Ref Oper="Induction"
+and the induction epimorphisms (cf.&nbsp;<Ref Oper="Induction"
 Label="of an rcwa group, by an injective rcwa mapping"/>).
 The restriction monomorphisms extend in a natural way to the monoids
 Rcwa(<M>R</M>), and the induction epimorphisms have corresponding

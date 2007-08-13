@@ -4,8 +4,6 @@
  [ <!ENTITY GAP "<Package>GAP</Package>">
    <!ENTITY RCWA "<Package>RCWA</Package>">
    <!ENTITY ResClasses "<Package>ResClasses</Package>">
-   <!ENTITY tilde
-     "<Alt Only='LaTeX'>{\textasciitilde}</Alt><Alt Not='LaTeX'>~</Alt>">
  ]>
 <?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
 <?LaTeX ExtraPreamble="\usepackage{amsxtra}"?>
@@ -32,7 +30,7 @@
     Stefan Kohl
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
     <Homepage>
-      http://www.cip.mathematik.uni-stuttgart.de/&tilde;kohlsn/
+      http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/
     </Homepage>
     <Address>
        Institut für Geometrie und Topologie <Br/>
@@ -42,7 +40,7 @@
        Germany
     </Address>
   </Author>
-  <Date>June 1, 2007</Date>
+  <Date>August 13, 2007</Date>
   <Copyright>
     &copyright; 2003 - 2007 by Stefan Kohl.
     This package is distributed under the GNU General Public License.

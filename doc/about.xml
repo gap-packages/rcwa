@@ -42,7 +42,7 @@ The development of this package has originally been inspired by the famous
                                        \
 ]]></Verb></Alt>
 to any given positive integer eventually yields&nbsp;1
-(cp.&nbsp;<Cite Key="Lagarias06"/>). <P/>
+(cf.&nbsp;<Cite Key="Lagarias06"/>). <P/>
 
 So far, no attempts have been made to investigate the structure of groups
 whose elements are permutations which are <Q>similar to the Collatz
