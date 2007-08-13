@@ -606,7 +606,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
 
     The method for free products of finite groups uses the Table-Tennis
     Lemma (which is also known as <E>Ping-Pong Lemma</E>,
-    cp. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>).
+    cf. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>).
     It uses regular permutation representations of the factors
     <M>G_r</M> (<M>r = 0, \dots ,m-1</M>) of the free product on residue
     classes modulo <M>n_r := |G_r|</M>.
@@ -743,7 +743,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     The package <Package>GRAPE</Package> is needed for the application
     of the criterion which says that an rcwa permutation is wild if
     a transition graph has a weakly-connected component which is not
-    strongly-connected (cp. Theorem&nbsp;A.11 in&nbsp;<Cite Key="Kohl05"/>).
+    strongly-connected (cf. Theorem&nbsp;A.11 in&nbsp;<Cite Key="Kohl05"/>).
   </Item>
 
   <Mark>
