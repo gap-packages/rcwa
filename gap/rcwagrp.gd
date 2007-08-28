@@ -194,7 +194,8 @@ DeclareOperation( "Induction", [ IsRcwaMonoid, IsRcwaMapping ] );
 ##
 #C  IsOrbit . . . . . . . . . . . . all orbits which are not written as lists
 ##
-DeclareCategory( "IsOrbit", IsDomain and IsListOrCollection );
+if not IsBoundGlobal( "IsOrbit" )
+then DeclareCategory( "IsOrbit", IsListOrCollection ); fi;
 
 #############################################################################
 ##
