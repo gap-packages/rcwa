@@ -1594,7 +1594,7 @@ InstallOtherMethod( SymmetricGroupCons,
                     ReturnTrue, [ IsPermGroup, IsList ], SUM_FLAGS,
 
   function ( filter, P )
-    if   ForAll(P,IsResidueClass)
+    if   not IsEmpty(P) and ForAll(P,IsResidueClass)
     then return SymmetricGroupCons(IsRcwaGroup,P);
     else TryNextMethod(); fi;
   end );
