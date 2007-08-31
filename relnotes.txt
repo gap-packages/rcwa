@@ -550,5 +550,11 @@ Changes between version 2.5.1 and version 2.5.2:
  - The documentation has been improved in a few places, and a couple of
    comments in the source files have been improved as well.
 
+Changes between version 2.5.2 and version 2.5.3:
+
+ - A bug concerning SymmetricGroup([]) has been fixed -- the empty list
+   was wrongly interpreted as empty list of residue classes, rather than
+   as empty list of integers. This caused an error message.
+   Thanks to John McDermott for reporting this bug.
 
 
