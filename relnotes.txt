@@ -557,4 +557,7 @@ Changes between version 2.5.2 and version 2.5.3:
    as empty list of integers. This caused an error message.
    Thanks to John McDermott for reporting this bug.
 
+Changes between version 2.5.3 and version 2.5.4:
+
+ - A function `RunDemonstration' has been added.
 

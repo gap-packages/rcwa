@@ -502,4 +502,54 @@ fi;
 
 #############################################################################
 ##
+#F  RunDemonstration( <filename> ) . . . . . . . . . . .  run a demonstration
+##
+##  This is a function to run little demonstrations, for example in talks.
+##  It is adapted from the function `Demonstration' in the file lib/demo.g
+##  of the main GAP distribution. 
+##
+if not IsBound(last ) then last  := fail; fi;
+if not IsBound(last2) then last2 := fail; fi;
+if not IsBound(last3) then last3 := fail; fi;
+if not IsBound(time ) then time  := fail; fi;
+
+DeclareGlobalFunction( "RunDemonstration" );
+InstallGlobalFunction( RunDemonstration,
+
+  function ( file )
+
+    local  input,  keyboard,  result, storedtime;
+
+    input := InputTextFile( file );
+    if input = fail then Error( "Cannot open file ", file ); fi;
+
+    InputLogTo( OutputTextUser(  ) );
+    keyboard := InputTextUser();
+
+    Print( "gap> \c" );
+
+    while CHAR_INT( ReadByte( keyboard ) ) <> 'q' do
+      storedtime := Runtime();
+      result := READ_COMMAND( input, true ); # Executing the command.
+      time := Runtime() - storedtime;
+      if result <> SuPeRfail then
+        last3 := last2;
+        last2 := last;
+        last := result;
+        View( result );
+        Print("\n" );
+      fi;
+      if IsEndOfStream( input ) then break; fi;
+      Print( "gap> \c" );
+    od;
+
+    CloseStream( keyboard );
+    CloseStream( input );
+    InputLogTo();
+
+  end );
+fi;
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
