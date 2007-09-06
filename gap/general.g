@@ -516,39 +516,48 @@ if not IsBound(time ) then time  := fail; fi;
 DeclareGlobalFunction( "RunDemonstration" );
 InstallGlobalFunction( RunDemonstration,
 
-  function ( file )
+  function ( filename )
 
-    local  input,  keyboard,  result, storedtime;
+    local  input, string, lines, doublesemicolonlines,
+           keyboard, linenumber, result, storedtime;
 
-    input := InputTextFile( file );
-    if input = fail then Error( "Cannot open file ", file ); fi;
+    string := StringFile( filename );
+    if string = fail then Error( "Cannot open file ", filename ); fi;
+    lines := SplitString(string,"\n");
+    doublesemicolonlines := Filtered( [1..Length(lines)],
+                                      i -> Number(lines[i],ch->ch=';') > 1 );
 
+    input := InputTextFile( filename );
     InputLogTo( OutputTextUser(  ) );
     keyboard := InputTextUser();
 
-    Print( "gap> \c" );
+    Print( "\033[1m\033[34mgap> \033[0m\c" );
+    linenumber := 1;
 
     while CHAR_INT( ReadByte( keyboard ) ) <> 'q' do
       storedtime := Runtime();
+      # Print( "\033[31m\c" );
       result := READ_COMMAND( input, true ); # Executing the command.
+      # Print( "\033[0m\c" );
       time := Runtime() - storedtime;
       if result <> SuPeRfail then
         last3 := last2;
         last2 := last;
         last := result;
-        View( result );
-        Print("\n" );
+        if   not linenumber in doublesemicolonlines
+        then View( result ); Print( "\n" ); fi;
       fi;
       if IsEndOfStream( input ) then break; fi;
-      Print( "gap> \c" );
+      Print( "\033[1m\033[34mgap> \033[0m\c" );
+      linenumber := linenumber + 1;
     od;
 
+    Print( "\n" );
     CloseStream( keyboard );
     CloseStream( input );
     InputLogTo();
 
   end );
-fi;
 
 #############################################################################
 ##
