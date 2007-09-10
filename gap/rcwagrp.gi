@@ -632,7 +632,7 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ## 
-#M  IsSubset( CT( <R> ), RCWA( <R> ) ) . . . . . . . . . for CT(R) and RCWA(R)
+#M  IsSubset( CT( <R> ), RCWA( <R> ) ) . . . . . . . .  for CT(R) and RCWA(R)
 ## 
 ##  Note that it is currently not known e.g. whether
 ##  CT(GF(2)[x]) = RCWA(GF(2)[x]) or not.
@@ -646,7 +646,8 @@ InstallMethod( IsSubset,
     if IsRcwaGroupOverZOrZ_pi(RCWA_R) then return false; fi;
     if   not IsTrivial(Units(CoefficientsRing(Source(One(RCWA_R)))))
     then return false; fi;
-    TryNextMethod();
+    Error("sorry - this is still an open question!");
+    return fail;
   end );
 
 #############################################################################
