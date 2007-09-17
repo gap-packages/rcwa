@@ -560,4 +560,7 @@ Changes between version 2.5.2 and version 2.5.3:
 Changes between version 2.5.3 and version 2.5.4:
 
  - A function `RunDemonstration' has been added.
+   The purpose of this function is to present demonstrations of this package
+   and possibly also of other GAP code.
+
 
