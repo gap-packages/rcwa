@@ -955,7 +955,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   <Item>
     As indicated in the documentation of these methods.
     The underlying idea to successively compute two balls around&nbsp;1
-    and&nbsp;<A>g</A> until they intersect non-trivially is standard
+    and&nbsp;<A>g</A> until they intersect nontrivially is standard
     in computational group theory. For rcwa groups it would mean wasting
     both memory and runtime to actually compute group elements.
     Thus only images of tuples of points are computed and stored.
@@ -1051,7 +1051,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   <Item>
     As indicated in the documentation of these methods.
     The underlying idea to successively compute two balls around
-    <A>src</A> and <A>dest</A> until they intersect non-trivially
+    <A>src</A> and <A>dest</A> until they intersect nontrivially
     is standard in computational group theory. Words standing for
     products of generators of <A>G</A> are stored for any image
     of <A>src</A> or <A>dest</A>.    
