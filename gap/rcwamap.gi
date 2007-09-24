@@ -4572,8 +4572,7 @@ InstallMethod( LikelyContractionCentre,
     Info(InfoWarning,1,"Warning: `LikelyContractionCentre' is highly ",
                        "probabilistic.\nThe returned result can only be ",
                        "regarded as a rough guess.\n",
-                       "See ?LikelyContractionCentre for information on ",
-                       "how to improve this guess.");
+                       "See ?LikelyContractionCentre for more information.");
     if IsBijective(f) then return fail; fi;
     S := ReducedSetOfStartingValues([-maxn..maxn],f,8);
     Info(InfoRCWA,1,"#Remaining values to be examined after first ",
