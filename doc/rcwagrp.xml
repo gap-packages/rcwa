@@ -9,6 +9,14 @@
 <Chapter Label="ch:RcwaGroups">
 <Heading>Residue-Class-Wise Affine Groups</Heading>
 
+<Ignore Remark="set screen width to 75, for the example tester">
+<Example>
+<![CDATA[
+gap> SizeScreen([75,24]);;
+]]>
+</Example>
+</Ignore>
+
 In this chapter, we describe how to construct residue-class-wise affine
 groups and how to compute with them.
 
@@ -125,7 +133,8 @@ gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
 >                     SymmetricGroup(3));
 <fp group on the generators [ f1, f2, f3, f4, f5 ]>
 gap> IsomorphismRcwaGroup(F);
-[ f1, f2, f3, f4, f5 ] -> [ <bijective rcwa mapping of Z with modulus 12>,
+[ f1, f2, f3, f4, f5 ] ->
+[ <bijective rcwa mapping of Z with modulus 12>,
   <bijective rcwa mapping of Z with modulus 24>,
   <bijective rcwa mapping of Z with modulus 12>,
   <bijective rcwa mapping of Z with modulus 72>,
@@ -219,7 +228,8 @@ gap> Embedding(ZwrZ,1);
 [ ClassShift(0,1) ] ->
 [ <tame bijective rcwa mapping of Z with modulus 4, of order infinity> ]
 gap> Embedding(ZwrZ,2);
-[ ClassShift(0,1) ] -> [ <wild bijective rcwa mapping of Z with modulus 4> ]
+[ ClassShift(0,1) ] ->
+[ <wild bijective rcwa mapping of Z with modulus 4> ]
 ]]>
 </Example>
   </Description>
@@ -344,7 +354,7 @@ The latter holds for any subgroup of CT(<M>\Z</M>).
 
 <Example>
 <![CDATA[
-gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),  
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),
 >               ClassReflection(2,4));
 <rcwa group over Z with 3 generators>
 gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsIntegral,
@@ -487,7 +497,8 @@ algorithmically undecidable.
 <Example>
 <![CDATA[
 gap> G := Group(ClassShift(0,3),ClassTransposition(0,3,2,6));;
-gap> ClassShift(2,6)^7*ClassTransposition(0,3,2,6)*ClassShift(0,3)^-3 in G;
+gap>  ClassShift(2,6)^7 * ClassTransposition(0,3,2,6)
+>   * ClassShift(0,3)^-3 in G;
 true
 gap> ClassShift(0,1) in G;
 false
@@ -507,7 +518,8 @@ only methods to solve it in some reasonably easy cases.
 
 <Example>
 <![CDATA[
-gap> IsConjugate(RCWA(Integers),ClassTransposition(0,2,1,4),ClassShift(0,1));
+gap> IsConjugate(RCWA(Integers),
+>                ClassTransposition(0,2,1,4),ClassShift(0,1));
 false
 gap> IsConjugate(CT(Integers),ClassTransposition(0,2,1,6),
 >                             ClassTransposition(1,4,0,8));
@@ -692,7 +704,7 @@ gap> g := Comm(a*b,Comm(a,b^3));
 <bijective rcwa mapping of Z with modulus 8>
 gap> pre := PreImagesRepresentatives(phi,g);
 [ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
-gap> rel := CyclicallyReducedWord(pre[1]/pre[2]); # -> a nontrivial relation
+gap> rel := CyclicallyReducedWord(pre[1]/pre[2]); # -> a nontriv. relation
 b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1
 gap> rel^phi;
 IdentityMapping( Integers )
@@ -815,9 +827,6 @@ gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
 gap> DrawOrbitPicture(PSL2Z,[0,1],20,512,512,false,fail,"example1.bmp");
 gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),20,512,512,true,
 >                     [[255,0,0],[0,255,0],[0,0,255]],"example2.bmp");
-gap> G := Group(ClassShift(0,1),ClassTransposition(1,2,0,4));;
-gap> DrawOrbitPicture(G,[0,1],20,512,512,true,List([1..20],
->                     i->[255-12*i,255-12*i,255]),"example3.bmp");
 ]]>
 </Log>
   </Description>
@@ -857,15 +866,17 @@ to determine them:
 <![CDATA[
 gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
 >               ClassTransposition(3,9,6,18)*ClassTransposition(1,6,3,9));;
-gap> List(ShortOrbits(G,[-15..15],100),orb->StructureDescription(Action(G,orb)));
-[ "A15", "A4", "1", "1", "C3", "1", "((C2 x C2 x C2) : C7) : C3", "1", "1", 
-  "C3", "A19" ]
+gap> List(ShortOrbits(G,[-15..15],100),
+>         orb->StructureDescription(Action(G,orb)));
+[ "A15", "A4", "1", "1", "C3", "1", "((C2 x C2 x C2) : C7) : C3", "1", 
+  "1", "C3", "A19" ]
 gap> ShortCycles(mKnot(7),[1..100],20);
-[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7, 8 ], [ 9, 10 ], [ 11, 12 ], 
-  [ 13, 14, 16, 18, 20, 22, 19, 17, 15 ], [ 21, 24 ], [ 23, 26 ], 
-  [ 25, 28, 32, 36, 31, 27, 30, 34, 38, 33, 29 ], [ 35, 40 ], 
-  [ 37, 42, 48, 54, 47, 41, 46, 52, 45, 39, 44, 50, 43 ], 
-  [ 77, 88, 100, 114, 130, 148, 127, 109, 124, 107, 122, 105, 120, 103, 89 ] ]
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7, 8 ], [ 9, 10 ], 
+  [ 11, 12 ], [ 13, 14, 16, 18, 20, 22, 19, 17, 15 ], [ 21, 24 ], 
+  [ 23, 26 ], [ 25, 28, 32, 36, 31, 27, 30, 34, 38, 33, 29 ], 
+  [ 35, 40 ], [ 37, 42, 48, 54, 47, 41, 46, 52, 45, 39, 44, 50, 43 ], 
+  [ 77, 88, 100, 114, 130, 148, 127, 109, 124, 107, 122, 105, 120, 103, 
+      89 ] ]
 ]]>
 </Example>
   </Description>
@@ -958,12 +969,12 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  2  3  6  8 11                    | n
-   1  7 10                             | n - 3
-   4                                   | n + 1
-   5  9                                | n + 4
+              n mod 12              |                n^f
+------------------------------------+------------------------------------
+   0  2  3  6  8 11                 | n
+   1  7 10                          | n - 3
+   4                                | n + 1
+   5  9                             | n + 4
 
 gap> List([7,4,9],n->n^elm);
 [ 4, 5, 13 ]
@@ -972,20 +983,21 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  3  6                             | 2n/3
-   1                                   | (2n - 8)/3
-   2  8 11                             | (4n + 1)/3
-   4  7 10                             | (4n - 1)/3
-   5                                   | (4n - 17)/3
-   9                                   | (4n - 15)/3
+              n mod 12              |                n^f
+------------------------------------+------------------------------------
+   0  3  6                          | 2n/3
+   1                                | (2n - 8)/3
+   2  8 11                          | (4n + 1)/3
+   4  7 10                          | (4n - 1)/3
+   5                                | (4n - 17)/3
+   9                                | (4n - 15)/3
 
-gap> [6,-3,8]^elm; List([6,-3,8],n->n^elm); # `OnPoints' permits reordering.
+gap> [6,-3,8]^elm; List([6,-3,8],n->n^elm); # `OnPoints' allows reordering
 [ -9, 4, 11 ]
 [ 4, -9, 11 ]
 gap> F := FreeGroup("a","b");; phi := EpimorphismByGenerators(F,G);;
-gap> w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],OnTuples,F);
+gap> w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],
+>                                      OnTuples,F);
 a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
 gap> elm := w^phi;
 <bijective rcwa mapping of Z with modulus 324>
@@ -1072,11 +1084,12 @@ gap> elm := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
 gap> P1^elm = P2;
 true
 gap> elm := RepresentativeAction(RCWA(Integers),
->             [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))],
->             [Union(ResidueClass(2,5),ResidueClass(4,5)),
->              Union(ResidueClass(0,5),ResidueClass(1,5),ResidueClass(3,5))]);
+>             [ResidueClass(1,3),
+>              ResidueClassUnion(Integers,3,[0,2])],
+>             [ResidueClassUnion(Integers,5,[2,4]),
+>              ResidueClassUnion(Integers,5,[0,1,3])]);
 <bijective rcwa mapping of Z with modulus 6>
-gap> [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))]^elm;
+gap> [ResidueClass(1,3),ResidueClassUnion(Integers,3,[0,2])]^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 ]]>
 </Example>
@@ -1283,12 +1296,12 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-               n mod 12                |                 n^f
----------------------------------------+--------------------------------------
-   0  2  4  6  8 10                    | 3n + 2
-   1  5  9                             | -n + 2
-   3  7                                | (n - 7)/2
-  11                                   | (-n + 20)/3
+              n mod 12              |                n^f
+------------------------------------+------------------------------------
+   0  2  4  6  8 10                 | 3n + 2
+   1  5  9                          | -n + 2
+   3  7                             | (n - 7)/2
+  11                                | (-n + 20)/3
 
 ]]>
 </Log>
