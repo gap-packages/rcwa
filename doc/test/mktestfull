@@ -54,3 +54,4 @@ options=$*
 $mkxtest $options -r rcwa rcwamap
 $mkxtest $options -r rcwa rcwagrp
 $mkxtest $options -r rcwa rcwamono
+$mkxtest $options -r rcwa examples
