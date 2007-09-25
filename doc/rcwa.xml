@@ -5,8 +5,13 @@
    <!ENTITY RCWA "<Package>RCWA</Package>">
    <!ENTITY ResClasses "<Package>ResClasses</Package>">
  ]>
-<?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
-<?LaTeX ExtraPreamble="\usepackage{amsxtra}"?>
+<?LaTeX ExtraPreamble="
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+\usepackage{amsfonts}
+\usepackage{amsxtra}
+"?>
 
 <!-- #################################################################### -->
 <!-- ##                                                                ## -->

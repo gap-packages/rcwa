@@ -327,7 +327,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     examined orbits one of the latter two questions has a negative answer,
     then return <C>false</C>.
     Look for a positive integer&nbsp;<M>m</M> such that <A>g</A> does
-    not leave a partition of&nbsp;<M>\Z</M> into unions of residue
+    not leave a partition of&nbsp;<M>\ZZ</M> into unions of residue
     classes (mod&nbsp;<M>m</M>) invariant which is fixed by&nbsp;<A>G</A>.
     If successful, return <C>false</C>. If not, try to factor <A>g</A> into
     generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
@@ -355,7 +355,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     of&nbsp;<A>f</A> is a subset of the union of the sets of prime factors
     of the divisors of the generators of&nbsp;<A>M</A>.
     If not, return <C>false</C>.
-    If the underlying ring is <M>\Z</M> or a semilocalization thereof,
+    If the underlying ring is <M>\ZZ</M> or a semilocalization thereof,
     then check whether <A>f</A> is not class-wise order-preserving, but
     <A>M</A>&nbsp;is. If so, return <C>false</C>. <P/>
 
@@ -414,14 +414,14 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <C>Index(<A>G</A>,<A>H</A>)</C>
   </Mark>
   <Item>
-    In general, i.e. if the underlying ring is not&nbsp;<M>\Z</M>, proceed
+    In general, i.e. if the underlying ring is not&nbsp;<M>\ZZ</M>, proceed
     as follows: If both groups <A>G</A> and&nbsp;<A>H</A> are finite, return
     the quotient of their orders. If <A>G</A> is infinite, but <A>H</A> is
     finite, return <C>infinity</C>. Otherwise return the number of right
     cosets of <A>H</A> in&nbsp;<A>G</A>, computed by the &GAP; Library
     function <C>RightCosets</C>. <P/>
 
-    If the underlying ring is&nbsp;<M>\Z</M>, do additionally the following
+    If the underlying ring is&nbsp;<M>\ZZ</M>, do additionally the following
     before attempting to compute the list of right cosets:
     If the group <A>G</A> is class-wise order-preserving, check whether one
     of its generators has nonzero determinant, and whether all generators
@@ -616,11 +616,11 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     To get into a situation where the Table-Tennis Lemma is applicable,
     the method computes conjugates of the images of the mentioned permutation
     representations under bijective rcwa mappings <M>\sigma_r</M> which
-    satisfy <M>0(n_r)^{\sigma_r} = \Z \setminus r(m)</M>. <P/>
+    satisfy <M>0(n_r)^{\sigma_r} = \ZZ \setminus r(m)</M>. <P/>
 
     The method for free groups uses an adaptation of the construction
     given on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
-    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\Z</M>).
+    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\ZZ</M>).
     As an equivalent for the closed discs used there, the method takes
     the residue classes modulo two times the rank of the free group.
   </Item>
@@ -632,7 +632,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     If the group <A>G</A> is trivial, then return <C>true</C>.
     Otherwise if it is abelian, then return <C>false</C>. <P/>
 
-    If the underlying ring is&nbsp;<M>\Z</M>, then do the following:
+    If the underlying ring is&nbsp;<M>\ZZ</M>, then do the following:
     If one of the generators of&nbsp;<A>G</A> has sign&nbsp;-1, then
     return <C>false</C>. If&nbsp;<A>G</A> is class-wise order-preserving
     and one of the generators has nonzero determinant, then return
@@ -769,7 +769,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
     <M>g</M> of <A>G</A>, and repeat this until <M>S</M> remains constant.
     This may run into an infinite loop. <P/>
 
-    If it terminates: If <M>S = \Z</M>, return <C>true</C>,
+    If it terminates: If <M>S = \ZZ</M>, return <C>true</C>,
     otherwise return <C>false</C>.
   </Item>
 
