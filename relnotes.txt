@@ -563,4 +563,8 @@ Changes between version 2.5.3 and version 2.5.4:
    The purpose of this function is to present demonstrations of this package
    and possibly also of other GAP code.
 
+ - The line length used in the examples has been reduced to 75 in order to
+   improve their appearance in the online help with standard settings.
+
+
 
