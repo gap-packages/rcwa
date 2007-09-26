@@ -6,9 +6,6 @@
    <!ENTITY ResClasses "<Package>ResClasses</Package>">
  ]>
 <?LaTeX ExtraPreamble="
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\CC}{\mathbb{C}}
 \usepackage{amsfonts}
 \usepackage{amsxtra}
 "?>
