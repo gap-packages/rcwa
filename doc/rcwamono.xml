@@ -287,6 +287,8 @@ gap> Ball(Monoid(l,r),1,4,OnPoints:Spheres);
   </Description>
 </ManSection>
 
+<Alt Only="HTML">&nbsp;</Alt>
+
 </Section>
 
 <!-- #################################################################### -->
