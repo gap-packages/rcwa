@@ -26,6 +26,7 @@ InstallTrueMethod( IsGroup,     IsRcwaGroup );
 InstallTrueMethod( IsRcwaGroup, IsRcwaGroupOverZOrZ_pi );
 InstallTrueMethod( IsRcwaGroupOverZOrZ_pi, IsRcwaGroupOverZ );
 InstallTrueMethod( IsRcwaGroupOverZOrZ_pi, IsRcwaGroupOverZ_pi );
+InstallTrueMethod( IsRcwaGroup, IsRcwaGroupOverZxZ );
 InstallTrueMethod( IsRcwaGroup, IsRcwaGroupOverGFqx );
 
 #############################################################################

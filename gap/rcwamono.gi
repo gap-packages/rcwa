@@ -26,6 +26,7 @@ InstallTrueMethod( IsMonoid, IsRcwaMonoid );
 InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverZOrZ_pi );
 InstallTrueMethod( IsRcwaMonoidOverZOrZ_pi, IsRcwaMonoidOverZ );
 InstallTrueMethod( IsRcwaMonoidOverZOrZ_pi, IsRcwaMonoidOverZ_pi );
+InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverZxZ );
 InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverGFqx );
 
 #############################################################################

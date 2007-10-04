@@ -33,6 +33,7 @@ InstallTrueMethod( IsMapping,     IsRcwaMapping );
 InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfZOrZ_pi );
 InstallTrueMethod( IsRcwaMappingOfZOrZ_pi, IsRcwaMappingOfZ );
 InstallTrueMethod( IsRcwaMappingOfZOrZ_pi, IsRcwaMappingOfZ_pi );
+InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfZxZ );
 InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfGFqx );
 
 #############################################################################
@@ -49,6 +50,8 @@ BindGlobal( "IsRcwaMappingOfZ_piInStandardRep",
              IsRcwaMappingOfZ_pi and IsRcwaMappingStandardRep );
 BindGlobal( "IsRcwaMappingOfZOrZ_piInStandardRep",
              IsRcwaMappingOfZOrZ_pi and IsRcwaMappingStandardRep );
+BindGlobal( "IsRcwaMappingOfZxZInStandardRep",
+             IsRcwaMappingOfZxZ and IsRcwaMappingStandardRep );
 BindGlobal( "IsRcwaMappingOfGFqxInStandardRep",
              IsRcwaMappingOfGFqx and IsRcwaMappingStandardRep );
 
@@ -69,6 +72,18 @@ BindGlobal( "RcwaMappingsOfZFamily",
 SetFamilySource( RcwaMappingsOfZFamily, FamilyObj( 1 ) );
 SetFamilyRange ( RcwaMappingsOfZFamily, FamilyObj( 1 ) );
 SetUnderlyingRing( RcwaMappingsOfZFamily, Integers );
+
+#############################################################################
+##
+#V  RcwaMappingsOfZxZFamily . . . . .  the family of all rcwa mappings of Z^2
+##
+BindGlobal( "RcwaMappingsOfZxZFamily",
+            NewFamily( "RcwaMappingsFamily( Integers^2 )",
+                       IsRcwaMappingOfZxZ,
+                       CanEasilySortElements, CanEasilySortElements ) );
+SetFamilySource( RcwaMappingsOfZxZFamily, FamilyObj( [ 1, 1 ] ) );
+SetFamilyRange ( RcwaMappingsOfZxZFamily, FamilyObj( [ 1, 1 ] ) );
+SetUnderlyingLeftModule( RcwaMappingsOfZxZFamily, Integers^2 );
 
 ## Internal variables storing the rcwa mapping families used in the
 ## current GAP session.
@@ -156,6 +171,7 @@ InstallGlobalFunction( RcwaMappingsFamily,
   function ( R )
 
     if   IsIntegers( R ) then return RcwaMappingsOfZFamily;
+    elif IsZxZ( R )      then return RcwaMappingsOfZxZFamily;
     elif IsZ_pi( R )     then return RcwaMappingsOfZ_piFamily( R );
     elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
     then return RcwaMappingsOfGFqxFamily( R );
