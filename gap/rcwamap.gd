@@ -119,17 +119,19 @@ DeclareSynonym( "IsRcwaGroup",
 
 #############################################################################
 ##
-#C  IsRcwaMappingOfZ . . . . . . . . . . . . . . . . . . . rcwa mappings of Z
+#C  IsRcwaMappingOfZ  . . . . . . . . . . . . . . . . . .  rcwa mappings of Z
+#C  IsRcwaMappingOfZxZ  . . . . . . . . . . . . . . . .  rcwa mappings of Z^2
 #C  IsRcwaMappingOfZ_pi . . . . . . . . . . . . . . . rcwa mappings of Z_(pi)
 #C  IsRcwaMappingOfGFqx . . . . . . . . . . . . . . rcwa mappings of GF(q)[x]
-#C  IsRcwaMappingOfZOrZ_pi . . . . . . . . . . . rcwa mappings of Z or Z_(pi)
+#C  IsRcwaMappingOfZOrZ_pi  . . . . . . . . . .  rcwa mappings of Z or Z_(pi)
 ##
-##  The category of all rcwa mappings of the ring of integers, of its (semi-)
-##  localizations or of polynomial rings in one variable over a finite field,
-##  respectively. The category `IsRcwaMappingOfZOrZ_pi' is the union of the
-##  categories `IsRcwaMappingOfZ' and `IsRcwaMappingOfZ_pi'.
+##  The category of all rcwa mappings of the ring Z of integers, of Z^2, of
+##  (semi-) localizations of Z or of polynomial rings in one variable over a
+##  finite field, respectively. The category `IsRcwaMappingOfZOrZ_pi' is the
+##  union of the categories `IsRcwaMappingOfZ' and `IsRcwaMappingOfZ_pi'.
 ##
 DeclareCategory( "IsRcwaMappingOfZ", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfZxZ", IsRingElement );
 DeclareCategory( "IsRcwaMappingOfZ_pi", IsRingElement );
 DeclareCategory( "IsRcwaMappingOfGFqx", IsRingElement );
 DeclareCategory( "IsRcwaMappingOfZOrZ_pi", IsRingElement );
