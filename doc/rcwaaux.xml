@@ -160,7 +160,7 @@ of other features of &GAP;. It is intended for being used in talks.
   <Func Name="RunDemonstration" Arg="filename" Label="filename"/>
   <Returns> Nothing. </Returns>
   <Description>
-    This function executes the code in the file named <A>filename</A>.
+    This function executes the commands in the file named <A>filename</A>.
     It shows a command and the corresponding output, waits for a keystroke,
     shows the next command and the corresponding output, waits again for
     a keystroke, and so on until the end of the file.
