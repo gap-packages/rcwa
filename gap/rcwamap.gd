@@ -151,7 +151,10 @@ DeclareGlobalFunction( "RcwaMappingsOfGFqxFamily" );
 #R  IsRcwaMappingStandardRep . . . "standard" representation of rcwa mappings
 ##
 ##  This is the representation of rcwa mappings by modulus <modulus>
-##  (in the following denoted by m) and coefficient list <coeffs>.
+##  (in the following denoted by m (ring element) or L (lattice in Z^2),
+##  respectively) and coefficient list <coeffs>.
+##
+##  Rcwa mappings of Z, Z_pi or GF(q)[x]:
 ##
 ##  The component <coeffs> is a list of |R/mR| lists of three coprime ele-
 ##  ments of the underlying ring R, each, containing the coefficients a_r(m),
@@ -159,6 +162,25 @@ DeclareGlobalFunction( "RcwaMappingsOfGFqxFamily" );
 ##
 ##  The ordering of these triples is defined by the ordering of the residues
 ##  r mod m in the sorted list returned by `AllResidues( <R>, <m> )'.
+##
+##  Rcwa mappings of Z^2:
+##
+##  The matrix L whose rows span the lattice is always stored in Hermite
+##  normal form.
+##
+##  The component <coeffs> is a list of det(L) coefficient triples
+##  ( a_r(m), b_r(m), c_r(m) ), each consisting of
+##
+##   - an invertible 2x2 matrix a_r(m) with integer entries,
+##
+##   - a vector b_r(m) in Z^2, and
+##
+##   - a positive integer c_r(m),
+##
+##  for r(m) running through all residue classes r(m) in Z^2/L.
+##
+##  The ordering of these triples is defined by the ordering of the residues
+##  in the sorted list returned by `AllResidues( Integers^2, <L> )'.
 ##
 DeclareRepresentation( "IsRcwaMappingStandardRep",
                        IsComponentObjectRep and IsAttributeStoringRep,
