@@ -116,17 +116,17 @@ rcwa representation:
         Arg="G" Label="for a group"/>
   <Returns>
     A monomorphism from the group <A>G</A> to&nbsp;RCWA(<A>R</A>)
-    or to&nbsp;RCWA(<M>\mathbb{Z}</M>), respectively.
+    or to&nbsp;RCWA(&ZZ;), respectively.
   </Returns>
   <Description>
-    The best-supported case is <A>R</A> = <M>\mathbb{Z}</M>.
+    The best-supported case is <A>R</A> = &ZZ;.
     Currently there are methods available for finite groups, for
     free products of finite groups and for free groups. The method for
     free products of finite groups uses the Table-Tennis Lemma
     (cf. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
     method for free groups uses an adaptation of the construction given
-    on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from
-    PSL(2,<M>\mathbb{C}</M>) to RCWA(<M>\mathbb{Z}</M>). <P/>
+    on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;)
+    to RCWA(&ZZ;). <P/>
 <Example>
 <![CDATA[
 gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
@@ -152,19 +152,19 @@ gap> F2 := Image(last);
 The class of groups which can faithfully be represented as rcwa groups
 over the integers is closed under taking direct products, under taking
 wreath products with finite groups and under taking wreath products with
-the infinite cyclic group <M>(\mathbb{Z},+)</M>. Therefore these
-operations can be used to build rcwa groups as well:
+the infinite cyclic group (&ZZ;,+). Therefore these operations can be
+used to build rcwa groups as well:
 
 <ManSection>
   <Meth Name="DirectProduct"
         Arg="G1, G2, ..." Label="for rcwa groups over Z"/>
   <Returns>
     An rcwa group isomorphic to the direct product of the rcwa groups
-    over&nbsp;<M>\mathbb{Z}</M> given as arguments.
+    over&nbsp;&ZZ; given as arguments.
   </Returns>
   <Description>
     There is certainly no unique or canonical way to embed a direct
-    product of rcwa groups into RCWA(<M>\mathbb{Z}</M>). 
+    product of rcwa groups into RCWA(&ZZ;). 
     This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
     <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
     <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;...
@@ -186,8 +186,7 @@ true
 <ManSection>
   <Heading>
     WreathProduct
-    (for an rcwa group over Z, with a permutation group
-    or (<M>\mathbb{Z}</M>,+))
+    (for an rcwa group over Z, with a permutation group or (&ZZ;,+))
   </Heading>
   <Meth Name="WreathProduct" Arg="G, P"
         Label="for an rcwa group over Z and a permutation group"/>
@@ -195,9 +194,9 @@ true
         Label="for an rcwa group over Z and the infinite cyclic group"/>
   <Returns>
     An rcwa group isomorphic to the wreath product of the rcwa
-    group&nbsp;<A>G</A> over&nbsp;<M>\mathbb{Z}</M> with the finite
-    permutation group&nbsp;<A>P</A> or with the infinite cyclic
-    group&nbsp;<A>Z</A>, respectively.
+    group&nbsp;<A>G</A> over&nbsp;&ZZ; with the finite permutation
+    group&nbsp;<A>P</A> or with the infinite cyclic group&nbsp;<A>Z</A>,
+    respectively.
   </Returns>
   <Description>
     The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
@@ -350,8 +349,8 @@ An rcwa group is called <E>integral</E> respectively
 There are corresponding methods available for <C>IsIntegral</C>
 and <C>IsClassWiseOrderPreserving</C>. There is a property
 <C>IsSignPreserving</C>, which indicates whether a given rcwa group
-over&nbsp;<M>\mathbb{Z}</M> acts on the set of nonnegative integers.
-The latter holds for any subgroup of CT(<M>\mathbb{Z}</M>).
+over&nbsp;&ZZ; acts on the set of nonnegative integers.
+The latter holds for any subgroup of CT(&ZZ;).
 
 <Example>
 <![CDATA[
@@ -391,9 +390,9 @@ a dedicated method for the operation <C>StructureDescription</C>:
     only issues which are specific to infinite groups, and in particular
     to rcwa groups. <P/>
 
-    Wreath products are denoted by&nbsp;<C>wr</C>, and free products are
-    denoted by&nbsp;<C>*</C>. The infinite cyclic group <M>(\mathbb{Z},+)</M>
-    is denoted by&nbsp;<C>Z</C>, the infinite dihedral group is denoted
+    Wreath products are denoted by&nbsp;<C>wr</C>, and free products
+    are denoted by&nbsp;<C>*</C>. The infinite cyclic group (&ZZ;,+) is
+    denoted by&nbsp;<C>Z</C>, the infinite dihedral group is denoted
     by&nbsp;<C>D0</C> and free groups of rank <M>2,3,4,\dots</M>
     are denoted by&nbsp;<C>F2</C>, <C>F3</C>, <C>F4</C>,&nbsp;<M>\dots</M>.
     While for finite groups the symbol&nbsp;<C>.</C> is used to denote a
@@ -537,7 +536,7 @@ true
   <C>NrConjugacyClassesOfRCWAZOfOrder</C>
 </Index>
 
-The number of conjugacy classes of RCWA(<M>\mathbb{Z}</M>) of elements of
+The number of conjugacy classes of RCWA(&ZZ;) of elements of
 given order is known, cf. Corollary&nbsp;2.7.1&nbsp;(b)
 in&nbsp;<Cite Key="Kohl05"/>. It can be determined by the function
 <C>NrConjugacyClassesOfRCWAZOfOrder</C>:
@@ -797,7 +796,7 @@ gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
 </ManSection>
 
 &RCWA; permits drawing pictures of orbits of rcwa groups
-on&nbsp;<M>\mathbb{Z}^2</M>. The pictures are written to files in bitmap-
+on&nbsp;<M>&ZZ;^2</M>. The pictures are written to files in bitmap-
 (bmp-) format. The author has successfully tested this feature both under
 Linux and under Windows, and the produced pictures can be processed further
 with many common graphics programs:
@@ -809,7 +808,7 @@ with many common graphics programs:
   <Returns> Nothing. </Returns>
   <Description>
     Draws a picture of the orbit(s) of the point(s) <A>p0</A> under the
-    action of the group <A>G</A> on&nbsp;<M>\mathbb{Z}^2</M>.
+    action of the group <A>G</A> on&nbsp;<M>&ZZ;^2</M>.
     The argument <A>p0</A> is either one point or a list of points.
     The argument <A>r</A> denotes the radius of the ball around <A>p0</A>
     to be computed. The size of the created picture is
@@ -1061,7 +1060,7 @@ maps the one to the other:
     The arguments <A>P1</A> and <A>P2</A> must be partitions of the
     underlying ring <M>R</M> into the same number of unions of residue
     classes.
-    The method for <M>R = \mathbb{Z}</M> recognizes the option <C>IsTame</C>,
+    The method for <M>R = &ZZ;</M> recognizes the option <C>IsTame</C>,
     which can be used to demand a tame result. If this option is set and
     there is no tame rcwa permutation which maps <A>P1</A> to&nbsp;<A>P2</A>,
     the method runs into an infinite loop. This happens if the condition
@@ -1236,13 +1235,12 @@ Pcp-group with orders [ 0, 0, 0 ]
   </Description>
 </ManSection>
 
-Let <M>G</M> be a tame rcwa group over&nbsp;<M>\mathbb{Z}</M>, let
-<M>\mathcal{P}</M> be a respected partition of&nbsp;<M>G</M> and put
-<M>m := |\mathcal{P}|</M>. Then there is an rcwa permutation <M>g</M>
-which maps <M>\mathcal{P}</M> to the partition of&nbsp;<M>\mathbb{Z}</M>
-into the residue classes (mod&nbsp;<M>m</M>), and the conjugate <M>G^g</M>
-of&nbsp;<M>G</M> under such a permutation is integral
-(cf. <Cite Key="Kohl05"/>, Theorem&nbsp;2.5.14). <P/>
+Let <M>G</M> be a tame rcwa group over&nbsp;&ZZ;, let <M>\mathcal{P}</M>
+be a respected partition of&nbsp;<M>G</M> and put <M>m := |\mathcal{P}|</M>.
+Then there is an rcwa permutation <M>g</M> which maps <M>\mathcal{P}</M>
+to the partition of&nbsp;&ZZ; into the residue classes (mod&nbsp;<M>m</M>),
+and the conjugate <M>G^g</M> of&nbsp;<M>G</M> under such a permutation
+is integral (cf. <Cite Key="Kohl05"/>, Theorem&nbsp;2.5.14). <P/>
 
 <Index Key="IntegralConjugate" Subkey="of a tame rcwa group">
   <C>IntegralConjugate</C>

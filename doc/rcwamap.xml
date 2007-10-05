@@ -37,11 +37,11 @@ Residue-class-wise affine groups, or <E>rcwa</E> groups for short, are
 permutation groups whose elements are bijective residue-class-wise affine
 mappings. <P/>
 
-A mapping <M>f: \mathbb{Z} \rightarrow \mathbb{Z}</M> is called
+A mapping <M>f: &ZZ; \rightarrow &ZZ;</M> is called
 <E>residue-class-wise affine</E>, or for short an <E>rcwa</E> mapping,
 if there is a positive integer&nbsp;<M>m</M> such that the restrictions
 of&nbsp;<M>f</M> to the residue classes
-<M>r(m) \in \mathbb{Z}/m\mathbb{Z}</M> are all affine,
+<M>r(m) \in &ZZ;/m&ZZ;</M> are all affine,
 i.e. given&nbsp;by
 <Alt Only="LaTeX">
   <Display>
@@ -58,7 +58,7 @@ i.e. given&nbsp;by
            f|_r(m):  r(m) -> Z,  n |->  -------------------
                                               c_r(m)
 </Verb></Alt>
-for certain coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in \mathbb{Z}</M>
+for certain coefficients <M>a_{r(m)}, b_{r(m)}, c_{r(m)} \in &ZZ;</M>
 depending on&nbsp;<M>r(m)</M>.
 
 <Index Key="modulus" Subkey="definition">modulus</Index>
@@ -76,11 +76,10 @@ is called the <E>multiplier</E> of&nbsp;<M>f</M>, and the lcm of the
 coefficients <M>c_{r(m)}</M> is called the <E>divisor</E>
 of&nbsp;<M>f</M>. <P/>
 
-It is easy to see that the residue-class-wise affine mappings
-of&nbsp;<M>\mathbb{Z}</M> form a monoid under composition, and that the
-residue-class-wise affine permutations of&nbsp;<M>\mathbb{Z}</M> form
-a countable subgroup of Sym(<M>\mathbb{Z}</M>). We denote the former
-by Rcwa(<M>\mathbb{Z}</M>), and the latter by RCWA(<M>\mathbb{Z}</M>). <P/>
+It is easy to see that the residue-class-wise affine mappings of&nbsp;&ZZ;
+form a monoid under composition, and that the residue-class-wise affine
+permutations of&nbsp;&ZZ; form a countable subgroup of Sym(&ZZ;).
+We denote the former by Rcwa(&ZZ;), and the latter by RCWA(&ZZ;). <P/>
 
 <Index Key="tame" Subkey="rcwa mapping">tame</Index>
 <Index Key="tame" Subkey="rcwa group">tame</Index>
@@ -93,7 +92,7 @@ by Rcwa(<M>\mathbb{Z}</M>), and the latter by RCWA(<M>\mathbb{Z}</M>). <P/>
 
 An rcwa mapping is called <E>tame</E> if the set of moduli of its powers
 is bounded, or equivalently if it permutes a partition
-of&nbsp;<M>\mathbb{Z}</M> into finitely many residue classes on all of which
+of&nbsp;&ZZ; into finitely many residue classes on all of which
 it is affine. An rcwa group is called <E>tame</E> if there is a common such
 partition for all of its elements, or equivalently if the set of moduli of
 its elements is bounded. Rcwa mappings and -groups which are not tame
@@ -102,12 +101,11 @@ one could call the <Q>trivial cases</Q> or <Q>basic building blocks</Q>,
 while wild rcwa groups are the objects of primary interest. <P/>
 
 The definitions of residue-class-wise affine mappings and -groups
-can be generalized in an obvious way to suitable rings other
-than&nbsp;<M>\mathbb{Z}</M>.
+can be generalized in an obvious way to suitable rings other than&nbsp;&ZZ;.
 In fact, this package provides also some support for residue-class-wise
-affine groups over semilocalizations of&nbsp;<M>\mathbb{Z}</M> and over
-univariate polynomial rings over finite fields. The former of these rings
-have been chosen as examples of rings with only finitely prime elements,
+affine groups over semilocalizations of&nbsp;&ZZ; and over univariate
+polynomial rings over finite fields. The former of these rings have
+been chosen as examples of rings with only finitely prime elements,
 and the latter have been chosen as examples of rings with nonzero
 characteristic.
 
@@ -120,8 +118,8 @@ characteristic.
 <Section Label="sec:EnteringRcwaMappings">
 <Heading>Entering residue-class-wise affine mappings</Heading>
 
-Entering an rcwa mapping of&nbsp;<M>\mathbb{Z}</M> requires giving
-the modulus&nbsp;<M>m</M> and the coefficients <M>a_{r(m)}</M>,
+Entering an rcwa mapping of&nbsp;&ZZ; requires giving the
+modulus&nbsp;<M>m</M> and the coefficients <M>a_{r(m)}</M>,
 <M>b_{r(m)}</M> and&nbsp;<M>c_{r(m)}</M> for <M>r(m)</M> running over the
 residue classes (mod&nbsp;<M>m</M>). <P/>
 
@@ -182,7 +180,7 @@ gap> Cycle(a,44);
 
 <Alt Only="LaTeX">\noindent</Alt>
 There is computational evidence for the conjecture that any
-residue-class-wise affine permutation of&nbsp;<M>\mathbb{Z}</M> can be
+residue-class-wise affine permutation of&nbsp;&ZZ; can be
 factored into members of the following three series of permutations of
 particularly simple structure
 (cf. <Ref Attr="FactorizationIntoCSCRCT"
@@ -194,8 +192,8 @@ particularly simple structure
   <Returns> The class shift <M>\nu_{r(m)}</M>. </Returns>
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
-    of&nbsp;<M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>n + m</M>
-    and which fixes <M>\mathbb{Z} \setminus r(m)</M> pointwise. <P/>
+    of&nbsp;&ZZ; which maps <M>n \in r(m)</M> to <M>n + m</M>
+    and which fixes <M>&ZZ; \setminus r(m)</M> pointwise. <P/>
 
     In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
@@ -222,9 +220,9 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
   <Returns> The class reflection <M>\varsigma_{r(m)}</M>. </Returns>
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
-    of&nbsp;<M>\mathbb{Z}</M> which maps <M>n \in r(m)</M> to <M>-n + 2r</M>
-    and which fixes <M>\mathbb{Z} \setminus r(m)</M> pointwise,
-    where it is understood that <M>0 \leq r &lt; m</M>. <P/>
+    of&nbsp;&ZZ; which maps <M>n \in r(m)</M> to <M>-n + 2r</M> and which
+    fixes <M>&ZZ; \setminus r(m)</M> pointwise, where it is understood that
+    <M>0 \leq r &lt; m</M>. <P/>
 
     In the one-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r(m)</M>. Enclosing the argument list in list
@@ -258,10 +256,9 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
   <Description>
     Given two disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
     of the integers, the <E>class transposition</E>
-    <M>\tau_{r_1(m_1),r_2(m_2)}</M> <M>\in</M> RCWA(<M>\mathbb{Z}</M>)
-    is defined as the involution which interchanges <M>r_1+km_1</M> and
-    <M>r_2+km_2</M> for any integer&nbsp;<M>k</M> and which fixes all other
-    points.
+    <M>\tau_{r_1(m_1),r_2(m_2)}</M> <M>\in</M> RCWA(&ZZ;) is defined as the
+    involution which interchanges <M>r_1+km_1</M> and <M>r_2+km_2</M> for
+    any integer&nbsp;<M>k</M> and which fixes all other points.
     It is understood that <M>m_1</M> and&nbsp;<M>m_2</M> are positive,
     that <M>0 \leq r_1 &lt; m_1</M> and that <M>0 \leq r_2 &lt; m_2</M>.
     For a <E>generalized class transposition</E>, the latter assumptions
@@ -310,17 +307,16 @@ Bijective rcwa mapping of Z with modulus 10, of order 2
 </ManSection>
 
 <Alt Only="LaTeX">\noindent</Alt>
-The set of all class transpositions of the ring of integers
-generates the simple group CT(<M>\mathbb{Z}</M>) mentioned
-in Chapter&nbsp;<Ref Label="ch:AboutRCWA"/>.
+The set of all class transpositions of the ring of integers generates the
+simple group CT(&ZZ;) mentioned in Chapter&nbsp;<Ref Label="ch:AboutRCWA"/>.
 This group has a representation as a &GAP; object -- see&nbsp;<Ref Func="CT"
 Label="the group generated by all class transpositions of a ring"/>.
-The set of all generalized class transpositions of&nbsp;<M>\mathbb{Z}</M>
+The set of all generalized class transpositions of&nbsp;&ZZ;
 generates a simple group as well, cf.&nbsp;<Cite Key="Kohl06b"/>. <P/>
 
 Class shifts, class reflections and class transpositions of rings
-<M>R</M> other than <M>\mathbb{Z}</M> are defined in an entirely analogous
-way -- all one needs to do is to replace <M>\mathbb{Z}</M> by&nbsp;<M>R</M>
+<M>R</M> other than&nbsp;&ZZ; are defined in an entirely analogous
+way -- all one needs to do is to replace &ZZ; by&nbsp;<M>R</M>
 and to read <M>&lt;</M> and <M>\leq</M> in the sense of the ordering used
 by&nbsp;&GAP;.
 They can also be entered basically as described above -- just prepend
@@ -448,7 +444,7 @@ necessary for understanding this manual or for using this package.
     <C>[</C><M>a_{r(m)}</M>, <M>b_{r(m)}</M>, <M>c_{r(m)}</M><C>]</C>.
     Their ordering is determined by the ordering of the representatives of
     the residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
-    <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = \mathbb{Z}</M>
+    <C>AllResidues(<A>R</A>, <A>m</A>)</C>. In case <M>R = &ZZ;</M>
     this means that the coefficient triple for the residue class <M>0(m)</M>
     comes first and is followed by the one for <M>1(m)</M>, the one for
     <M>2(m)</M> and so on. <P/>
@@ -463,43 +459,41 @@ necessary for understanding this manual or for using this package.
     <List>
       <Mark>(a)</Mark>
       <Item>
-        of <A>R</A> with modulus <A>m</A> and coefficients
-        <A>coeffs</A>,
+        of <A>R</A> with modulus <A>m</A> and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(b)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> or <A>R</A> =
-        <M>\mathbb{Z}_{(\pi)}</M> with modulus <C>Length(<A>coeffs</A>)</C>
-        and coefficients <A>coeffs</A>,
+        of <A>R</A> = &ZZ; or <A>R</A> = <M>&ZZ;_{(\pi)}</M> with modulus
+        <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(c)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> with modulus
-        <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>,
+        of <A>R</A> = &ZZ; with modulus <C>Length(<A>coeffs</A>)</C> and
+        coefficients <A>coeffs</A>,
       </Item>
       <Mark>(d)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M>, permuting any set
+        of <A>R</A> = &ZZ;, permuting any set
         <C><A>range</A>+k*Length(<A>range</A>)</C> like <A>perm</A>
         permutes <A>range</A>,
       </Item>
       <Mark>(e)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}</M> with modulus <A>m</A> and
-        values given by a list <A>val</A> of 2 pairs <C>[</C>preimage<C>,
-        </C>image<C>]</C> per residue class (mod <A>m</A>),
+        of <A>R</A> = &ZZ; with modulus <A>m</A> and values given by a list
+        <A>val</A> of 2 pairs <C>[</C>preimage<C>, </C>image<C>]</C> per
+        residue class (mod <A>m</A>),
       </Item>
       <Mark>(f)</Mark>
       <Item>
-        of <A>R</A> = <M>\mathbb{Z}_{(\pi)}</M> with modulus
+        of <A>R</A> = <M>&ZZ;_{(\pi)}</M> with modulus
         <C>Length(<A>coeffs</A>)</C> and coefficients <A>coeffs</A>
-        (the set of primes <M>\pi</M> which denotes the underlying ring is
-        passed as argument <A>pi</A>),
+        (the set of primes <M>\pi</M> which denotes the underlying ring
+        is passed as argument&nbsp;<A>pi</A>),
       </Item>
       <Mark>(g)</Mark>
       <Item>
-        of <A>R</A> = GF(<A>q</A>)[<A>x</A>] with modulus
-        <A>m</A> and coefficients <A>coeffs</A>,
+        of <A>R</A> = GF(<A>q</A>)[<A>x</A>] with modulus&nbsp;<A>m</A> and
+        coefficients <A>coeffs</A>,
       </Item>
       <Mark>(h)</Mark>
       <Item>
@@ -546,8 +540,8 @@ gap> Cycle(last,ResidueClass(0,2));
   </Description>
 </ManSection>
 
-Rcwa mappings of <M>\mathbb{Z}</M> can be <Q>translated</Q> to rcwa mappings
-of some semilocalization <M>\mathbb{Z}_{(\pi)}</M> of&nbsp;<M>\mathbb{Z}</M>:
+Rcwa mappings of &ZZ; can be <Q>translated</Q> to rcwa mappings
+of some semilocalization <M>&ZZ;_{(\pi)}</M> of&nbsp;&ZZ;:
 
 <ManSection>
   <Func Name="LocalizedRcwaMapping"
@@ -555,14 +549,14 @@ of some semilocalization <M>\mathbb{Z}_{(\pi)}</M> of&nbsp;<M>\mathbb{Z}</M>:
   <Func Name="SemilocalizedRcwaMapping"
         Arg="f, pi" Label="for an rcwa mapping of Z and a set of primes"/>
   <Returns>
-    The rcwa mapping of <M>\mathbb{Z}_{(p)}</M> respectively
-    <M>\mathbb{Z}_{(\pi)}</M> with the same coefficients as the rcwa mapping
-    <A>f</A> of&nbsp;<M>\mathbb{Z}</M>.
+    The rcwa mapping of <M>&ZZ;_{(p)}</M> respectively
+    <M>&ZZ;_{(\pi)}</M> with the same coefficients as the rcwa mapping
+    <A>f</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     The argument <A>p</A> or <A>pi</A> must be a prime or a set of primes,
     respectively. The argument&nbsp;<A>f</A> must be an rcwa mapping
-    of&nbsp;<M>\mathbb{Z}</M> whose modulus is a power of&nbsp;<A>p</A>,
+    of&nbsp;&ZZ; whose modulus is a power of&nbsp;<A>p</A>,
     or whose modulus has only prime divisors which lie in&nbsp;<A>pi</A>,
     respectively.
 <Example>
@@ -807,7 +801,7 @@ in Section&nbsp;<Ref Label="sec:EnteringRcwaMappings"/>. <P/>
 
 General documentation for most operations mentioned in this section can
 be found in the &GAP; reference manual. For rcwa mappings of rings other
-than <M>\mathbb{Z}</M>, not for all operations applicable methods are
+than&nbsp;&ZZ;, not for all operations applicable methods are
 available. <P/>
 
 As in general a subring relation <M>R_1&lt;R_2</M> does <E>not</E> give
@@ -865,11 +859,11 @@ is called <E>class-wise order-preserving</E> if and only if all coefficients
 <M>a_{r(m)}</M> (cf.&nbsp;Section&nbsp;<Ref Label="sec:basicdefinitions"/>)
 in the numerators of the affine partial mappings are positive.
 The corresponding property is <C>IsClassWiseOrderPreserving</C>.
-An rcwa mapping of <M>\mathbb{Z}</M> is called <E>sign-preserving</E> if
+An rcwa mapping of&nbsp;&ZZ; is called <E>sign-preserving</E> if
 it does not map nonnegative integers to negative integers or vice versa.
 The corresponding property is <C>IsSignPreserving</C>. All elements of the
-simple group CT(<M>\mathbb{Z}</M>) generated by the set of all class
-transpositions are sign-preserving.
+simple group CT(&ZZ;) generated by the set of all class transpositions are
+sign-preserving.
 
 <Example>
 <![CDATA[
@@ -994,9 +988,9 @@ gap> [ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];
 There are attributes <C>ClassWiseOrderPreservingOn</C>,
 <C>ClassWiseConstantOn</C> and <C>ClassWiseOrderReversingOn</C> which
 store the union of the residue classes (mod&nbsp;<C>Mod(<A>f</A>)</C>) on
-which an rcwa mapping&nbsp;<A>f</A> of&nbsp;<M>\mathbb{Z}</M> or of
-a semilocalization thereof is class-wise order-preserving, class-wise
-constant or class-wise order-reversing, respectively.
+which an rcwa mapping&nbsp;<A>f</A> of&nbsp;&ZZ; or of a semilocalization
+thereof is class-wise order-preserving, class-wise constant or class-wise
+order-reversing, respectively.
 
 <Example>
 <![CDATA[
@@ -1006,16 +1000,15 @@ gap> List([ClassTransposition(1,2,0,4),ClassShift(2,3),
 ]]>
 </Example>
 
-Finally, there are epimorphisms from the subgroup of RCWA(<M>\mathbb{Z}</M>)
-formed by all class-wise order-preserving elements to (<M>\mathbb{Z}</M>,+)
-and from RCWA(<M>\mathbb{Z}</M>) itself to the cyclic group of order&nbsp;2,
+Finally, there are epimorphisms from the subgroup of RCWA(&ZZ;)
+formed by all class-wise order-preserving elements to (&ZZ;,+)
+and from RCWA(&ZZ;) itself to the cyclic group of order&nbsp;2,
 respectively:
 
 <ManSection>
   <Meth Name="Determinant" Arg="f" Label="of an rcwa mapping of Z"/>
   <Returns>
-    The determinant of the rcwa mapping&nbsp;<A>f</A>
-    of&nbsp;<M>\mathbb{Z}</M>.
+    The determinant of the rcwa mapping&nbsp;<A>f</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     The <E>determinant</E> of an affine mapping <M>n \mapsto (an+b)/c</M>
@@ -1047,9 +1040,8 @@ respectively:
                       r(m) in Z/mZ                .
     </Verb></Alt> 
     The determinant mapping is an epimorphism from the group of all
-    class-wise order-preserving bijective rcwa mappings of <M>\mathbb{Z}</M>
-    to <M>(\mathbb{Z},+)</M>, see&nbsp;<Cite Key="Kohl05"/>,
-    Theorem&nbsp;2.11.9.
+    class-wise order-preserving bijective rcwa mappings of&nbsp;&ZZ;
+    to (&ZZ;,+), see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.11.9.
 <Example>
 <![CDATA[
 gap> List([ClassTransposition(0,4,5,12),ClassShift(3,7)],Determinant);
@@ -1064,8 +1056,7 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
 <ManSection>
   <Attr Name="Sign" Arg="g" Label="of an rcwa permutation of Z"/>
   <Returns>
-    The sign of the bijective rcwa mapping&nbsp;<A>g</A>
-    of&nbsp;<M>\mathbb{Z}</M>.
+    The sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     Let <M>\sigma</M> be an rcwa permutation of the integers, and let
@@ -1093,12 +1084,11 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
                                  a_r(m) &lt; 0
               (-1)                                   .
     </Verb></Alt> 
-    The sign mapping is an epimorphism from RCWA(<M>\mathbb{Z}</M>) to the
-    group <M>\mathbb{Z}^\times</M> of units of&nbsp;<M>\mathbb{Z}</M>,
-    see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.12.8.
-    Therefore the kernel of the sign mapping is a normal subgroup
-    of RCWA(<M>\mathbb{Z}</M>) of index&nbsp;2.
-    The simple group CT(<M>\mathbb{Z}</M>) is a subgroup of this kernel.
+    The sign mapping is an epimorphism from RCWA(&ZZ;) to the group
+    <M>&ZZ;^\times</M> of units of&nbsp;&ZZ;, see&nbsp;<Cite Key="Kohl05"/>,
+    Theorem&nbsp;2.12.8. Therefore the kernel of the sign mapping is a normal
+    subgroup of RCWA(&ZZ;) of index&nbsp;2. The simple group CT(&ZZ;) is
+    a subgroup of this kernel.
 <Example>
 <![CDATA[
 gap> List([ClassTransposition(3,4,2,6),
@@ -1118,7 +1108,7 @@ gap> List([ClassTransposition(3,4,2,6),
 
 Factoring group elements into the members of some <Q>nice</Q> set of
 generators is often helpful. In this section we describe an operation which
-attempts to solve this problem for the group RCWA(<M>\mathbb{Z}</M>).
+attempts to solve this problem for the group RCWA(&ZZ;).
 Elements of finitely generated rcwa groups can be factored into generators
 <Q>as usual</Q>, see&nbsp;<Ref Meth="PreImagesRepresentative"
 Label="for an epi. from a free group to an rcwa group"/>.
@@ -1128,10 +1118,9 @@ Label="for an epi. from a free group to an rcwa group"/>.
         Arg="g" Label="for an rcwa permutation of Z"/>
   <Meth Name="Factorization" Arg="g" Label="for an rcwa permutation of Z"/>
   <Returns>
-    A factorization of the bijective rcwa mapping&nbsp;<A>g</A>
-    of&nbsp;<M>\mathbb{Z}</M> into class shifts, class reflections and class
-    transpositions, provided that such a factorization exists and the
-    method finds it.
+    A factorization of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;
+    into class shifts, class reflections and class transpositions, provided
+    that such a factorization exists and the method finds it.
   </Returns>
   <Description>
     The method may return <C>fail</C>, stop with an error message or run
@@ -1178,7 +1167,7 @@ Collatz' permutation is factored. Lothar Collatz has investigated this
 permutation in&nbsp;1932. Its cycle structure is unknown so far. <P/>
 
 The permutations of the following kind play an important role in
-factoring rcwa permutations of&nbsp;<M>\mathbb{Z}</M> into class shifts,
+factoring rcwa permutations of&nbsp;&ZZ; into class shifts,
 class reflections and class transpositions:
 
 <ManSection>
@@ -1192,9 +1181,9 @@ class reflections and class transpositions:
     the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
   </Returns>
   <Description>
-    For an odd prime <M>p</M>, the prime switch <M>\sigma_p</M>
-    is a bijective rcwa mapping of <M>\mathbb{Z}</M> with
-    modulus&nbsp;<M>4p</M>, multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
+    For an odd prime <M>p</M>, the prime switch <M>\sigma_p</M> is
+    a bijective rcwa mapping of&nbsp;&ZZ; with modulus&nbsp;<M>4p</M>,
+    multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
     The key mathematical property of a prime switch is that it is a product
     of class transpositions, but that its multiplier and its divisor are
     coprime anyway. Prime switches can be distinguished from other
