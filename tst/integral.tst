@@ -422,10 +422,11 @@ gap> pre := PreImage(a,PreImage(a,im));
 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ]
 gap> C7 := Group(g);; 
 gap> orb := Orbit(C7,F);
-[ 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ], <union of 12 residue classes (mod
-    30)> U [ 4, 8 ] \ [ -2, 5 ], <union of 24 residue classes (mod 60)> U
-    [ 0, 4 ] \ [ -6, 3 ], <union of 24 residue classes (mod 60)> U [ 0, 2 ] \
-    [ -10, 8 ], <union of 24 residue classes (mod 60)> U [ 1, 2 ] \ [ -5, 4 ],
+[ 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ],
+  <union of 12 residue classes (mod 30)> U [ 4, 8 ] \ [ -2, 5 ],
+  <union of 24 residue classes (mod 60)> U [ 0, 4 ] \ [ -6, 3 ],
+  <union of 24 residue classes (mod 60)> U [ 0, 2 ] \ [ -10, 8 ],
+  <union of 24 residue classes (mod 60)> U [ 1, 2 ] \ [ -5, 4 ],
   <union of 24 residue classes (mod 60)> U [ 1, 5 ] \ [ -1, 0 ],
   <union of 12 residue classes (mod 30)> U [ 3, 5 ] \ [ -3, 2 ] ]
 gap> Union(orb{[1,2]});
@@ -1500,8 +1501,7 @@ gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> SetName(g,"g"); SetName(h,"h");
 gap> G := Group(g,h);;
-gap> H := Stabilizer(G,0);
-<rcwa group over Z, with membership test, without known generators>
+gap> H := Stabilizer(G,0);;
 gap> IsTrivial(H);
 false
 gap> ClassTransposition(1,3,2,3) in H;
