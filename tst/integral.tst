@@ -731,8 +731,8 @@ gap> Trajectory(T,27,[1],"LastCoeffs");
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
 gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
-  <union of 20 residue classes (mod 27)>, <union of 73 residue classes (mod 
-    81)>, Z \ 10(81) U 37(81), Integers ]
+  <union of 20 residue classes (mod 27)>, 
+  <union of 73 residue classes (mod 81)>, Z \ 10(81) U 37(81), Integers ]
 gap> List(Trajectory(sigma,37,37^(sigma^-1),"AllCoeffs"),
 >         c->(c[1]*37+c[2])/c[3]){[1..23]} = Cycle(sigma,37);
 true
