@@ -568,5 +568,5 @@ Changes between version 2.5.3 and version 2.5.4:
 
 Changes between version 2.5.4 and version 2.5.5:
 
- - Now, RCWA needs GAPDoc 1.1.
+ - Now, RCWA needs GAPDoc 1.1 and Polycyclic 2.2.
 

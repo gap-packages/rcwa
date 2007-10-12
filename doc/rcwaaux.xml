@@ -16,7 +16,7 @@
 
 The &RCWA; package needs at least &GAP;&nbsp;4.4.7, &ResClasses;&nbsp;2.5.1,
 <Package>GRAPE</Package>&nbsp;4.0&nbsp;<Cite Key="GRAPE"/>,
-<Package>Polycyclic</Package>&nbsp;2.1&nbsp;<Cite Key="Polycyclic"/> and
+<Package>Polycyclic</Package>&nbsp;2.2&nbsp;<Cite Key="Polycyclic"/> and
 &GAPDoc;&nbsp;1.1&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
 the most recent version of &ResClasses;, all needed packages are already
 present in an up-to-date standard &GAP; installation.

@@ -324,9 +324,9 @@
     <name><first>Werner</first><last>Nickel</last></name>
   </author>
   <title>
-    <C>Polycyclic -- Computation with polycyclic groups; Version 2.1</C>
+    <C>Polycyclic -- Computation with polycyclic groups; Version 2.2</C>
   </title>
-  <year>2006</year>
+  <year>2007</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
   </other>
