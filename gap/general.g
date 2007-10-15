@@ -502,6 +502,45 @@ fi;
 
 #############################################################################
 ##
+#S  Some routines for drawing images. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
+##
+##  Draws a picture of the residue class union <U> of Z^2.
+##
+DeclareGlobalFunction( "DrawGrid" );
+InstallGlobalFunction( DrawGrid,
+
+  function ( U, range_y, range_x, filename )
+
+    local  grid, x, y, one, offset_x, offset_y;
+
+    if   not IsResidueClassUnionOfZxZ(U)
+      or not IsRange(range_y) or not IsRange(range_x)
+      or not IsString(filename)
+    then
+      Error("usage: DrawGrid( <U>, <range_y>, <range_x>, <filename> )\n");
+      return fail;
+    fi;
+
+    grid     := NullMat(Length(range_y),Length(range_x),GF(2));
+    one      := One(GF(2));
+    offset_x := -Minimum(range_x) + 1;
+    offset_y := -Minimum(range_y) + 1;
+
+    for y in range_y do for x in range_x do
+      if not [y,x] in U then grid[y+offset_y][x+offset_x] := one; fi;
+    od; od;
+
+    SaveAsBitmapPicture( grid, filename );
+  end );
+
+#############################################################################
+##
 #S  Utilities to be used in talks. //////////////////////////////////////////
 ##
 #############################################################################
