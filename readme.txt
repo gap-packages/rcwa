@@ -26,12 +26,13 @@ ses of the integers and which all the above groups embed into.
 
                                 Requirements
 
-The RCWA package needs at least GAP 4.4.7, ResClasses 2.5.1, GRAPE 4.0, Poly-
-cyclic 2.2  and GAPDoc 1.1.  All required packages  are already present  in a
-standard GAP installation.  RCWA can be used under UNIX, under Windows and on
-the MacIntosh.  It is completely written in the GAP language and does neither
-contain  nor require  external binaries.  In particular,  warnings concerning
-missing binaries issued by GRAPE or other packages can savely be ignored.
+The  RCWA package  needs at least  GAP 4.4.10,  ResClasses 2.5.1,  GRAPE 4.0,
+Polycyclic 2.2  and GAPDoc 1.1.  All required packages are already present in
+a standard GAP installation.  RCWA can be used under UNIX,  under Windows and
+on the MacIntosh.  It is completely written in the GAP language and does nei-
+ther contain  nor require  external binaries.  In particular,  warnings  con-
+cerning missing binaries issued  by GRAPE or other packages can savely be ig-
+nored.
 
 
                                 Installation
