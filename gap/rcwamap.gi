@@ -2417,15 +2417,13 @@ InstallMethod( Multiplier, "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
                          List( f!.coeffs, c -> c[1] ) ) );
-
-#############################################################################
-##
-#M  Multiplier( <f> ) . . . . . . . . . . . . . . for rcwa mappings of Z_(pi)
-##
+InstallMethod( Multiplier, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 10,
+               f -> LatticesIntersection( List( f!.coeffs, c -> c[1] ) ) );
 InstallMethod( Multiplier, "for rcwa mappings of Z_(pi) (RCWA)", true,
                [ IsRcwaMappingOfZ_piInStandardRep ], 10,
-  f -> Lcm( List( f!.coeffs,
-                  c -> StandardAssociate( Source( f ), c[1] ) ) ) );
+               f -> Lcm( List( f!.coeffs,
+                               c -> StandardAssociate(Source(f),c[1]) ) ) );
 
 #############################################################################
 ##
@@ -2451,8 +2449,13 @@ InstallMethod( IsIntegral, "for rcwa mappings (RCWA)", true,
 #M  IsBalanced( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( IsBalanced, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0, f -> Set( Factors( Multiplier( f ) ) )
-                                        = Set( Factors( Divisor( f ) ) ) );
+               [ IsRcwaMapping ], 0,
+               f -> Set( Factors( Multiplier( f ) ) )
+                  = Set( Factors( Divisor( f ) ) ) );
+InstallMethod( IsBalanced, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+               f -> Set( Factors( DeterminantMat( Multiplier( f ) ) ) )
+                  = Set( Factors( Divisor( f ) ) ) );
 
 #############################################################################
 ##
@@ -2464,10 +2467,21 @@ InstallMethod( PrimeSet, "for rcwa mappings (RCWA)", true,
   function ( f )
     if   IsZero(Multiplier(f))
     then Error("PrimeSet: Multiplier must not be zero.\n"); fi;
-    return Filtered( Union(Set(Factors(Source(f),Modulus(f))),
-                           Set(Factors(Source(f),Multiplier(f))),
-                           Set(Factors(Source(f),Divisor(f)))),
+    return Filtered( Union( Factors(Source(f),Modulus(f)),
+                            Factors(Source(f),Multiplier(f)),
+                            Factors(Source(f),Divisor(f)) ),
                      x -> IsIrreducibleRingElement( Source( f ), x ) );
+  end );
+
+InstallMethod( PrimeSet, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( f )
+    if   IsZero(Multiplier(f))
+    then Error("PrimeSet: Multiplier must not be zero.\n"); fi;
+    return Filtered( Union( Factors(DeterminantMat(Modulus(f))),
+                            Factors(DeterminantMat(Multiplier(f))),
+                            Factors(Divisor(f)) ), IsPrimeInt );
   end );
 
 #############################################################################
