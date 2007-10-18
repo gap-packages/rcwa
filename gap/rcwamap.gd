@@ -286,10 +286,14 @@ DeclareAttribute( "UnderlyingField", IsRcwaMappingOfGFqx );
 #############################################################################
 ##
 #V  ZeroRcwaMappingOfZ . . . . . . . . . . . . . . . . zero rcwa mapping of Z
+#V  ZeroRcwaMappingOfZxZ . . . . . . . . . . . . . . zero rcwa mapping of Z^2
 #V  IdentityRcwaMappingOfZ . . . . . . . . . . . . identity rcwa mapping of Z
+#V  IdentityRcwaMappingOfZxZ . . . . . . . . . . identity rcwa mapping of Z^2
 ##
 DeclareGlobalVariable( "ZeroRcwaMappingOfZ" );
+DeclareGlobalVariable( "ZeroRcwaMappingOfZxZ" );
 DeclareGlobalVariable( "IdentityRcwaMappingOfZ" );
+DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 
 #############################################################################
 ##

@@ -914,7 +914,7 @@ InstallMethod( ObjByExtRep,
     if not HasUnderlyingRing(fam) or Length(l) <> 2 then TryNextMethod(); fi;
     R := UnderlyingRing(fam);
     if fam <> RcwaMappingsFamily(R) then TryNextMethod(); fi;
-    return RcwaMapping(R,l[1],l[2]);
+    return RcwaMappingNC(R,l[1],l[2]);
   end );
 
 #############################################################################
@@ -1544,7 +1544,26 @@ InstallMethod( String,
     local f, lng, s;
 
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
-    s := Concatenation( "RcwaMapping( ", String( f!.coeffs ), " )" );
+    s := Concatenation( "RcwaMapping( ", String( Coefficients(f) ), " )" );
+    if IsBound(lng) then s := String(s,lng); fi;
+    return s;
+  end );
+
+#############################################################################
+##
+#M  String( <f> ) . . . . . . . . . . . . . . . . .  for rcwa mappings of Z^2
+##
+InstallMethod( String,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+
+  function ( arg )
+
+    local f, lng, s;
+
+    f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
+    s := Concatenation( "RcwaMapping( Integers^2, ", String( Modulus(f) ),
+                        ", ", String( Coefficients(f) ), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
     return s;
   end );
@@ -1564,7 +1583,7 @@ InstallMethod( String,
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
     s := Concatenation( "RcwaMapping( ",
                         String(NoninvertiblePrimes(Source(f))), ", ",
-                        String(f!.coeffs), " )" );
+                        String(Coefficients(f)), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
     return s;
   end );
@@ -1584,7 +1603,8 @@ InstallMethod( String,
     f := arg[1]; if Length(arg) > 1 then lng := arg[2]; fi;
     s := Concatenation( "RcwaMapping( ",
                         String(Size(UnderlyingField(f))), ", ",
-                        String(f!.modulus), ", ", String(f!.coeffs), " )" );
+                        String(Modulus(f)), ", ",
+                        String(Coefficients(f)), " )" );
     if IsBound(lng) then s := String(s,lng); fi;
     return s;
   end );
@@ -1598,7 +1618,20 @@ InstallMethod( PrintObj,
                [ IsRcwaMappingOfZInStandardRep ], SUM_FLAGS,
 
   function ( f )
-    Print( "RcwaMapping( ", f!.coeffs, " )" );
+    Print( "RcwaMapping( ", Coefficients(f), " )" );
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <f> ) . . . . . . . . . . . . . . . .  for rcwa mappings of Z^2
+##
+InstallMethod( PrintObj,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], SUM_FLAGS,
+
+  function ( f )
+    Print( "RcwaMapping( Integers^2, ",
+                         Modulus(f), ", ", Coefficients(f), " )" );
   end );
 
 #############################################################################
@@ -1611,7 +1644,7 @@ InstallMethod( PrintObj,
 
   function ( f )
     Print( "RcwaMapping( ",
-           NoninvertiblePrimes(Source(f)), ", ", f!.coeffs, " )" );
+           NoninvertiblePrimes(Source(f)), ", ", Coefficients(f), " )" );
   end );
 
 #############################################################################
@@ -1624,7 +1657,7 @@ InstallMethod( PrintObj,
 
   function ( f )
     Print( "RcwaMapping( ", Size(UnderlyingField(f)),
-           ", ", f!.modulus, ", ", f!.coeffs, " )" );
+           ", ", Modulus(f), ", ", Coefficients(f), " )" );
   end );
 
 #############################################################################
@@ -1632,8 +1665,7 @@ InstallMethod( PrintObj,
 #M  ViewObj( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
 InstallMethod( ViewObj,
-               "for rcwa mappings (RCWA)",
-               true, [ IsRcwaMappingInStandardRep ], 0,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -1650,7 +1682,7 @@ InstallMethod( ViewObj,
     then Print("surjective ");
     fi;
     Print("rcwa mapping of ",RingToString(Source(f)));
-    Print(" with modulus ",f!.modulus);
+    Print(" with modulus ",Modulus(f));
     if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
     then Print(", of order ",Order(f)); fi;
     Print(">");
@@ -1818,7 +1850,7 @@ InstallMethod( Display,
 
     if   ValueOption("xdvi") = true and IsIntegers(Source(f))
     then LaTeXAndXDVI(f); return; fi;
-    m := f!.modulus; c := f!.coeffs;
+    m := Modulus(f); c := Coefficients(f);
     if HasName(f) then
       name := Name(f);
       if   Position(name,'^') <> fail
@@ -2137,6 +2169,20 @@ InstallMethod( \=,
 
 #############################################################################
 ##
+#M  \=( <f>, <g> ) . . . . . . . . . . . . . . . . . for rcwa mappings of Z^2
+##
+InstallMethod( \=,
+               "for two rcwa mappings of Z^2 (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZxZInStandardRep,
+                 IsRcwaMappingOfZxZInStandardRep ], 0,
+
+  function ( f, g )
+    return f!.modulus = g!.modulus and f!.coeffs = g!.coeffs;
+  end );
+
+#############################################################################
+##
 #M  \=( <f>, <g> ) . . . . . . . . . . . . . .  for rcwa mappings of GF(q)[x]
 ##
 InstallMethod( \=,
@@ -2176,21 +2222,30 @@ InstallMethod( \<,
 #############################################################################
 ##
 #V  ZeroRcwaMappingOfZ . . . . . . . . . . . . . . . . zero rcwa mapping of Z
+#V  ZeroRcwaMappingOfZxZ . . . . . . . . . . . . . . zero rcwa mapping of Z^2
 ##
 InstallValue( ZeroRcwaMappingOfZ, RcwaMapping( [ [ 0, 0, 1 ] ] ) );
 SetIsZero( ZeroRcwaMappingOfZ, true );
 SetImagesSource( ZeroRcwaMappingOfZ, [ 0 ] );
+InstallValue( ZeroRcwaMappingOfZxZ,
+              RcwaMapping( Integers^2, [ [ 1, 0 ], [ 0, 1 ] ],
+                           [ [ [ [ 0, 0 ], [ 0, 0 ] ], [ 0, 0 ], 1 ] ] ) );
+SetIsZero( ZeroRcwaMappingOfZxZ, true );
+SetImagesSource( ZeroRcwaMappingOfZ, [ 0, 0 ] );
 
 #############################################################################
 ##
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Zero( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z^2
 ##
-##  Zero rcwa mapping of Z.
+##  Zero rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( Zero,
-               "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( Zero, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZInStandardRep ], 0,
                f -> ZeroRcwaMappingOfZ );
+InstallMethod( Zero, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> ZeroRcwaMappingOfZxZ );
 
 #############################################################################
 ##
@@ -2198,15 +2253,14 @@ InstallMethod( Zero,
 ##
 ##  Zero rcwa mapping of Z_(pi).
 ##
-InstallMethod( Zero,
-               "for rcwa mappings of Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZ_piInStandardRep ], 0,
+InstallMethod( Zero, "for rcwa mappings of Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZ_piInStandardRep ], 0,
 
   function ( f )
 
     local  zero;
 
-    zero := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[0,0,1]] );
+    zero := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [ [ 0, 0, 1 ] ] );
     SetIsZero( zero, true );
     SetImagesSource( zero, [ 0 ] );
     return zero;
@@ -2218,38 +2272,49 @@ InstallMethod( Zero,
 ##
 ##  Zero rcwa mapping of GF(q)[x].
 ##
-InstallMethod( Zero,
-               "for rcwa mappings of GF(q)[x] (RCWA)",
-               true, [ IsRcwaMappingOfGFqxInStandardRep ], 0,
+InstallMethod( Zero, "for rcwa mappings of GF(q)[x] (RCWA)", true,
+               [ IsRcwaMappingOfGFqxInStandardRep ], 0,
 
   function ( f )
 
     local  zero;
 
     zero := RcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
-                           [[0,0,1]] * One(Source(f)) );
+                           [ [ 0, 0, 1 ] ] * One(Source(f)) );
     SetIsZero( zero, true );
     SetImagesSource( zero, [ Zero(Source(f)) ] );
     return zero;
   end );
 
 #############################################################################
-## 
+##
 #M  IsZero( <f> ) . . . . . . . . . . . . . . . . . . . . . for rcwa mappings
-## 
-##  <f> = zero rcwa mapping ? 
-## 
-InstallMethod( IsZero,
-               "for rcwa mappings (RCWA)", true,
+##
+##  <f> = zero rcwa mapping?
+##
+InstallMethod( IsZero, "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0,
-               f -> f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) ) );  
+
+  function ( f )
+    if not IsRing( Source( f ) ) then TryNextMethod( ); fi;
+    return f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) );
+  end );
+
+InstallMethod( IsZero, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> f = ZeroRcwaMappingOfZxZ );
 
 #############################################################################
 ##
 #V  IdentityRcwaMappingOfZ . . . . . . . . . . . . identity rcwa mapping of Z
+#V  IdentityRcwaMappingOfZxZ . . . . . . . . . . identity rcwa mapping of Z^2
 ##
 InstallValue( IdentityRcwaMappingOfZ, RcwaMapping( [ [ 1, 0, 1 ] ] ) );
 SetIsOne( IdentityRcwaMappingOfZ, true );
+InstallValue( IdentityRcwaMappingOfZxZ,
+              RcwaMapping( Integers^2, [ [ 1, 0 ], [ 0, 1 ] ],
+                           [ [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ] ] ) );
+SetIsOne( IdentityRcwaMappingOfZxZ, true );
 
 #############################################################################
 ##
