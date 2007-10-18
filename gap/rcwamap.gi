@@ -214,6 +214,11 @@ InstallMethod( RcwaMapping,
 
   function ( R, modulus, coeffs )
 
+    local  residues, errormessage, i;
+
+    errormessage := Concatenation("construction of an rcwa mapping of Z^2:",
+                                  "\nmathematically incorrect arguments.\n");
+
     if   not IsZxZ(R) or DimensionsMat(modulus) <> [2,2]
       or not ForAll(Flat(modulus),IsInt) or DeterminantMat(modulus) = 0
       or Length(coeffs) <> DeterminantMat(modulus)
@@ -231,10 +236,25 @@ InstallMethod( RcwaMapping,
                                       and ForAll(Flat(c[1]),IsInt)
                                       and c[2] in R
                                       and IsInt(c[3]) and c[3] <> 0 ) )
-    then Error("the coefficients ",coeffs," do not define a proper ",
-               "rcwa mapping of Z^2 with modulus ",modulus,".\n");
-         return fail;
+    then Error(errormessage); return fail; fi;
+
+    modulus  := HermiteNormalFormIntegerMat(modulus);
+    residues := AllResidues(R,modulus);
+
+    if Length(coeffs[1]) = 2 then
+      for i in [1..Length(coeffs)] do
+        coeffs[i][1] := coeffs[i][1] mod modulus;
+      od;
+      Sort( coeffs, function ( c1, c2 ) return c1[1] < c2[1]; end );
+      if   List(coeffs,c->c[1]) <> residues
+      then Error(errormessage); return fail; fi;
+      coeffs := List(coeffs,c->c[2]);
     fi;
+
+    if   not ForAll( [1..Length(residues)],
+                     i ->   ( residues[i]*coeffs[i][1] + coeffs[i][2] )
+                          mod coeffs[i][3] = 0 )
+    then Error(errormessage); return fail; fi;
 
     return RcwaMappingNC(R,modulus,coeffs);
   end );
@@ -267,17 +287,17 @@ InstallMethod( RcwaMappingNC,
 
   function ( R, modulus, coeffs )
 
-    local  ReduceRcwaMappingOfZxZ, result, i;
+    local  ReduceRcwaMappingOfZxZ, result;
 
     ReduceRcwaMappingOfZxZ := function ( f )
 
-      local  c, m, d, divs, res, resRed, mRed, cRed,
-             nraffs, identres, n, pos;
+      local  m, c, d, divs, res, resRed, mRed, cRed,
+             nraffs, identres, pos, i;
 
-      c := f!.coeffs; m := f!.modulus;
-      for n in [1..Length(c)] do
-        c[n] := c[n]/Gcd(Flat(c[n]));
-        if c[n][3] < 0 then c[n] := -c[n]; fi;
+      m := f!.modulus; c := f!.coeffs;
+      for i in [1..Length(c)] do
+        c[i] := c[i]/Gcd(Flat(c[i]));
+        if c[i][3] < 0 then c[i] := -c[i]; fi;
       od;
       nraffs := Length(Set(c));
       res    := AllResidues(R,m);
@@ -286,7 +306,7 @@ InstallMethod( RcwaMappingNC,
       for d in divs do
         if DeterminantMat(d) < nraffs then continue; fi;
         resRed   := List(res,r->r mod d);
-        identres := EquivalenceClasses([1..Length(c)],n->resRed[n]);
+        identres := EquivalenceClasses([1..Length(c)],i->resRed[i]);
         if ForAll(identres,res->Length(Set(c{res}))=1) then
           mRed   := d;
           pos    := List(identres,cl->cl[1]);
@@ -302,14 +322,6 @@ InstallMethod( RcwaMappingNC,
     if not IsZxZ(R) then TryNextMethod(); fi;
 
     modulus := HermiteNormalFormIntegerMat(modulus);
-
-    if Length(coeffs[1]) = 2 then
-      for i in [1..Length(coeffs)] do
-        coeffs[i][1] := coeffs[i][1] mod modulus;
-      od;
-      Sort( coeffs, function ( c1, c2 ) return c1[1] < c2[1]; end );
-      coeffs := List(coeffs,c->c[2]);
-    fi; 
 
     result := Objectify( NewType( RcwaMappingsOfZxZFamily,
                                   IsRcwaMappingOfZxZInStandardRep ),
