@@ -8,6 +8,7 @@
 ##  with rcwa groups over
 ##
 ##    - the ring Z of the integers, over
+##    - the ring Z^2, over
 ##    - the semilocalizations Z_(pi) of the ring of integers, and over
 ##    - the polynomial rings GF(q)[x] in one variable over a finite field.
 ##

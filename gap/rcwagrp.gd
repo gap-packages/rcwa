@@ -123,11 +123,13 @@ DeclareGlobalFunction( "CT" );
 ##
 #P  IsNaturalCT( <G> ) . . . . . . . . . . . . . . . . . . . . . . .  CT( R )
 #P  IsNaturalCT_Z( <G> ) . . . . . . . . . . . . . . . . . . . . . .  CT( Z )
+#P  IsNaturalCT_ZxZ( <G> ) . . . . . . . . . . . . . . . . . . . .  CT( Z^2 )
 #P  IsNaturalCT_Z_pi( <G> )  . . . . . . . . . . . . . . . . . . CT( Z_(pi) )
 #P  IsNaturalCT_GFqx( <G> )  . . . . . . . . . . . . . . . . . CT( GF(q)[x] )
 ##
 DeclareProperty( "IsNaturalCT", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_Z", IsRcwaGroup );
+DeclareProperty( "IsNaturalCT_ZxZ", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_Z_pi", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );
 

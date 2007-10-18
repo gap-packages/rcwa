@@ -76,7 +76,7 @@
 ##  Algorithms and methods for computing with  rcwa mappings  and -groups are
 ##  described in the author's preprint
 ##
-##  "A New Class of Groups Which are Accessible to Computational Methods".
+##  "Algorithms for a Class of Infinite Permutation Groups".
 ##
 Revision.rcwamap_gd :=
   "@(#)$Id$";

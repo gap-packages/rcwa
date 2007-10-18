@@ -8,6 +8,7 @@
 ##  with rcwa mappings of
 ##
 ##    - the ring Z of the integers, of
+##    - the ring Z^2, of
 ##    - the semilocalizations Z_(pi) of the ring of integers, and of
 ##    - the polynomial rings GF(q)[x] in one variable over a finite field.
 ##
@@ -205,6 +206,41 @@ InstallMethod( RcwaMapping,
 
 #############################################################################
 ##
+#M  RcwaMapping( <R>, <modulus>, <coeffs> ) . . . .  method (a) in the manual
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping by ring = Z^2, modulus and coefficients (RCWA)",
+               ReturnTrue, [ IsRowModule, IsMatrix, IsList ], 0,
+
+  function ( R, modulus, coeffs )
+
+    if   not IsZxZ(R) or DimensionsMat(modulus) <> [2,2]
+      or not ForAll(Flat(modulus),IsInt) or DeterminantMat(modulus) = 0
+      or Length(coeffs) <> DeterminantMat(modulus)
+      or not ForAll(coeffs,IsList)
+      or not Set(List(coeffs,Length)) in [[2],[3]]
+      or not (    Length(coeffs[1])=2
+              and ForAll( coeffs, c ->    c[1] in R and IsList(c[2])
+                                      and Length(c[2])=3
+                                      and IsMatrix(c[2][1])
+                                      and ForAll(Flat(c[2][1]),IsInt)
+                                      and c[2][2] in R
+                                      and IsInt(c[2][3]) and c[2][3] <> 0 )
+            or    Length(coeffs[1])=3
+              and ForAll( coeffs, c ->    IsMatrix(c[1])
+                                      and ForAll(Flat(c[1]),IsInt)
+                                      and c[2] in R
+                                      and IsInt(c[3]) and c[3] <> 0 ) )
+    then Error("the coefficients ",coeffs," do not define a proper ",
+               "rcwa mapping of Z^2 with modulus ",modulus,".\n");
+         return fail;
+    fi;
+
+    return RcwaMappingNC(R,modulus,coeffs);
+  end );
+
+#############################################################################
+##
 #M  RcwaMappingNC( <R>, <modulus>, <coeffs> ) . . NC-method (a) in the manual
 ##
 InstallMethod( RcwaMappingNC,
@@ -219,6 +255,72 @@ InstallMethod( RcwaMappingNC,
     elif IsPolynomialRing(R)
     then return RcwaMappingNC(Size(LeftActingDomain(R)),modulus,coeffs);
     else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <R>, <modulus>, <coeffs> ) . . NC-method (a) in the manual
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by ring = Z^2, modulus and coefficients (RCWA)",
+               ReturnTrue, [ IsRowModule, IsMatrix, IsList ], 0,
+
+  function ( R, modulus, coeffs )
+
+    local  ReduceRcwaMappingOfZxZ, result, i;
+
+    ReduceRcwaMappingOfZxZ := function ( f )
+
+      local  c, m, d, divs, res, resRed, mRed, cRed,
+             nraffs, identres, n, pos;
+
+      c := f!.coeffs; m := f!.modulus;
+      for n in [1..Length(c)] do
+        c[n] := c[n]/Gcd(Flat(c[n]));
+        if c[n][3] < 0 then c[n] := -c[n]; fi;
+      od;
+      nraffs := Length(Set(c));
+      res    := AllResidues(R,m);
+      divs   := Superlattices(m);
+      mRed := m; cRed := c;
+      for d in divs do
+        if DeterminantMat(d) < nraffs then continue; fi;
+        resRed   := List(res,r->r mod d);
+        identres := EquivalenceClasses([1..Length(c)],n->resRed[n]);
+        if ForAll(identres,res->Length(Set(c{res}))=1) then
+          mRed   := d;
+          pos    := List(identres,cl->cl[1]);
+          resRed := res{pos};
+          cRed   := Permuted(c{pos},SortingPerm(resRed));
+          break;
+        fi;
+      od;
+      f!.modulus := Immutable(mRed);
+      f!.coeffs  := Immutable(cRed);
+    end;
+
+    if not IsZxZ(R) then TryNextMethod(); fi;
+
+    modulus := HermiteNormalFormIntegerMat(modulus);
+
+    if Length(coeffs[1]) = 2 then
+      for i in [1..Length(coeffs)] do
+        coeffs[i][1] := coeffs[i][1] mod modulus;
+      od;
+      Sort( coeffs, function ( c1, c2 ) return c1[1] < c2[1]; end );
+      coeffs := List(coeffs,c->c[2]);
+    fi; 
+
+    result := Objectify( NewType( RcwaMappingsOfZxZFamily,
+                                  IsRcwaMappingOfZxZInStandardRep ),
+                         rec( modulus := modulus,
+                              coeffs  := coeffs ) );
+    SetSource(result,R);
+    SetRange (result,R);
+
+    ReduceRcwaMappingOfZxZ(result);
+
+    return result;
   end );
 
 #############################################################################
