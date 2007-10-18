@@ -2319,13 +2319,16 @@ SetIsOne( IdentityRcwaMappingOfZxZ, true );
 #############################################################################
 ##
 #M  One( <f> ) . . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
+#M  One( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z^2
 ##
-##  Identity rcwa mapping of Z.
+##  Identity rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( One,
-               "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( One, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZInStandardRep ], 0,
                f -> IdentityRcwaMappingOfZ );
+InstallMethod( One, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> IdentityRcwaMappingOfZxZ );
 
 #############################################################################
 ##
@@ -2333,15 +2336,14 @@ InstallMethod( One,
 ##
 ##  Identity rcwa mapping of Z_(pi).
 ##
-InstallMethod( One,
-               "for rcwa mappings of Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZ_piInStandardRep ], 0,
+InstallMethod( One, "for rcwa mappings of Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZ_piInStandardRep ], 0,
 
   function ( f )
 
     local  one;
 
-    one := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [[1,0,1]] );
+    one := RcwaMappingNC( NoninvertiblePrimes(Source(f)), [ [ 1, 0, 1 ] ] );
     SetIsOne( one, true ); return one;
   end );
 
@@ -2351,16 +2353,15 @@ InstallMethod( One,
 ##
 ##  Identity rcwa mapping of GF(q)[x].
 ##
-InstallMethod( One,
-               "for rcwa mappings of GF(q)[x] (RCWA)",
-               true, [ IsRcwaMappingOfGFqxInStandardRep ], 0,
+InstallMethod( One, "for rcwa mappings of GF(q)[x] (RCWA)", true,
+               [ IsRcwaMappingOfGFqxInStandardRep ], 0,
 
   function ( f )
 
     local  one;
  
     one := RcwaMappingNC( Size(UnderlyingField(f)), One(Source(f)),
-                          [[1,0,1]] * One(Source(f)) );
+                          [ [ 1, 0, 1 ] ] * One( Source( f ) ) );
     SetIsOne( one, true ); return one;
   end );
 
@@ -2370,10 +2371,17 @@ InstallMethod( One,
 ## 
 ##  <f> = identity rcwa mapping?
 ##
-InstallMethod( IsOne, 
-               "for rcwa mappings (RCWA)", true,
+InstallMethod( IsOne,  "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0,
-               f -> f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) ) );  
+
+  function ( f )
+    if not IsRing( Source( f ) ) then TryNextMethod( ); fi;
+    return f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) );
+  end );
+
+InstallMethod( IsOne, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> f = IdentityRcwaMappingOfZxZ );
 
 #############################################################################
 ##
@@ -2385,16 +2393,14 @@ InstallMethod( IsOne,
 ##
 #M  Modulus( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallMethod( Modulus,
-               "for rcwa mappings (RCWA)", true,
+InstallMethod( Modulus, "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0, f -> f!.modulus );
 
 #############################################################################
 ##
 #M  Coefficients( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( Coefficients,
-               "for rcwa mappings (RCWA)", true,
+InstallMethod( Coefficients, "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
 
 #############################################################################
@@ -2407,8 +2413,7 @@ InstallMethod( Coefficients,
 ##
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( Multiplier,
-               "for rcwa mappings (RCWA)", true,
+InstallMethod( Multiplier, "for rcwa mappings (RCWA)", true,
                [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
                          List( f!.coeffs, c -> c[1] ) ) );
@@ -2417,10 +2422,8 @@ InstallMethod( Multiplier,
 ##
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . for rcwa mappings of Z_(pi)
 ##
-InstallMethod( Multiplier,
-               "for rcwa mappings of Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZ_piInStandardRep ], 10,
-
+InstallMethod( Multiplier, "for rcwa mappings of Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZ_piInStandardRep ], 10,
   f -> Lcm( List( f!.coeffs,
                   c -> StandardAssociate( Source( f ), c[1] ) ) ) );
 
@@ -2428,35 +2431,35 @@ InstallMethod( Multiplier,
 ##
 #M  Divisor( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallMethod( Divisor,
-               "for rcwa mappings (RCWA)",
-               true, [ IsRcwaMappingInStandardRep ], 0,
+InstallMethod( Divisor, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
                          List( f!.coeffs, c -> c[3] ) ) );
+InstallMethod( Divisor, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> Lcm( Integers, List( f!.coeffs, c -> c[3] ) ) );
 
 #############################################################################
 ##
 #M  IsIntegral( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( IsIntegral,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               f -> IsOne( Divisor( f ) ) );
+InstallMethod( IsIntegral, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0, f -> IsOne( Divisor( f ) ) );
 
 #############################################################################
 ##
 #M  IsBalanced( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( IsBalanced,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-
-  f -> Set( Factors( Multiplier( f ) ) ) = Set( Factors( Divisor( f ) ) ) );
+InstallMethod( IsBalanced, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0, f -> Set( Factors( Multiplier( f ) ) )
+                                        = Set( Factors( Divisor( f ) ) ) );
 
 #############################################################################
 ##
 #M  PrimeSet( <f> ) . . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( PrimeSet,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( PrimeSet, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
 
   function ( f )
     if   IsZero(Multiplier(f))
@@ -2472,8 +2475,8 @@ InstallMethod( PrimeSet,
 #M  IsClassWiseOrderPreserving( <f> ) . . .  for rcwa mappings of Z or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] > 0 ) );
 
 #############################################################################
@@ -2505,8 +2508,7 @@ InstallMethod( ClassWiseConstantOn,
 ##
 #P  IsSignPreserving( <f> ) . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
-InstallMethod( IsSignPreserving,
-               "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( IsSignPreserving, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZ ], 0,
 
   function ( f )
@@ -2522,8 +2524,8 @@ InstallMethod( IsSignPreserving,
 ##
 #M  IncreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( IncreasingOn,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -2541,8 +2543,8 @@ InstallMethod( IncreasingOn,
 ##
 #M  DecreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( DecreasingOn,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -2560,8 +2562,7 @@ InstallMethod( DecreasingOn,
 ##
 #M  ShiftsUpOn( <f> )  . . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallMethod( ShiftsUpOn,
-               "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( ShiftsUpOn, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZ ], 0,
   f -> ResidueClassUnion( Integers, Modulus(f),
                           Filtered( [0..Modulus(f)-1],
@@ -2572,8 +2573,7 @@ InstallMethod( ShiftsUpOn,
 ##
 #M  ShiftsDownOn( <f> )  . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallMethod( ShiftsDownOn,
-               "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( ShiftsDownOn, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZ ], 0,
   f -> ResidueClassUnion( Integers, Modulus(f),
                           Filtered( [0..Modulus(f)-1],
@@ -2625,8 +2625,8 @@ InstallMethod( FixedPointsOfAffinePartialMappings,
 ##
 #M  ImageDensity( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( ImageDensity,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+InstallMethod( ImageDensity, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -2642,9 +2642,8 @@ InstallMethod( ImageDensity,
 ##
 #M  Multpk( <f>, <p>, <k> ) . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
-InstallMethod( Multpk,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ, IsInt, IsInt ], 0,
+InstallMethod( Multpk, "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ, IsInt, IsInt ], 0,
 
   function ( f, p, k )
 
