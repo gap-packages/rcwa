@@ -253,7 +253,7 @@ InstallMethod( RcwaMapping,
 
     if   not ForAll( [1..Length(residues)],
                      i ->   ( residues[i]*coeffs[i][1] + coeffs[i][2] )
-                          mod coeffs[i][3] = 0 )
+                          mod coeffs[i][3] = [ 0, 0 ] )
     then Error(errormessage); return fail; fi;
 
     return RcwaMappingNC(R,modulus,coeffs);
@@ -319,18 +319,18 @@ InstallMethod( RcwaMappingNC,
       f!.coeffs  := Immutable(cRed);
     end;
 
-    if not IsZxZ(R) then TryNextMethod(); fi;
+    if not IsZxZ( R ) then TryNextMethod( ); fi;
 
-    modulus := HermiteNormalFormIntegerMat(modulus);
+    modulus := HermiteNormalFormIntegerMat( modulus );
 
     result := Objectify( NewType( RcwaMappingsOfZxZFamily,
                                   IsRcwaMappingOfZxZInStandardRep ),
                          rec( modulus := modulus,
                               coeffs  := coeffs ) );
-    SetSource(result,R);
-    SetRange (result,R);
+    SetSource( result, R );
+    SetRange ( result, R );
 
-    ReduceRcwaMappingOfZxZ(result);
+    ReduceRcwaMappingOfZxZ( result );
 
     return result;
   end );
@@ -883,111 +883,6 @@ InstallMethod( RcwaMappingNC,
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
     return result;
-  end );
-
-#############################################################################
-##
-#M  RcwaMapping( Integers^2, <modulus>, <coeffs> ) . .  undoc. method for Z^2
-##
-InstallMethod( RcwaMapping,
-               "rcwa mapping of Z x Z, by modulus and coefficients (RCWA)",
-               ReturnTrue, [ IsRowModule, IsMatrix, IsList ], 0,
-
-  function ( ZxZ, modulus, coeffs )
-
-    local  quiet, l, res;
-
-    quiet := ValueOption("BeQuiet") = true;
-    if   not IsZxZ(ZxZ) then TryNextMethod(); fi;
-    if   not IsMatrix(modulus) or DimensionsMat(modulus) <> [2,2]
-      or not ForAll(Flat(modulus),IsInt) or RankMat(modulus) < 2
-    then
-      if not quiet then Error(modulus," is not a lattice in Z x Z.\n"); fi;
-      return fail;
-    fi;
-    l := Length(coeffs); res := AllResidues(ZxZ,modulus);
-    if l <> DeterminantMat(modulus)
-      or not ForAll([1..l],
-                    i ->     IsList(coeffs[i]) and IsMatrix(coeffs[i][1])
-                         and DimensionsMat(coeffs[i][1]) = [2,2]
-                         and ForAll(Flat(coeffs[i][1]),IsInt)
-                         and RankMat(coeffs[i][1]) = 2
-                         and coeffs[i][2] in ZxZ and IsInt(coeffs[i][3])
-                         and    (coeffs[i][1] * res[i] + coeffs[i][2])
-                             mod coeffs[i][3] = 0)
-    then
-      if not quiet then
-        Error("the modulus ",modulus," and the coefficients\n",coeffs,
-              "\ndo not define a proper rcwa mapping of Z x Z.\n");
-      fi; return fail;
-    fi;
-    return RcwaMappingNC( ZxZ, modulus, coeffs );
-  end );
-
-#############################################################################
-##
-#M  RcwaMappingNC( Integers^2, <modulus>, <coeffs> ) .  undoc. method for Z^2
-##
-InstallMethod( RcwaMappingNC,
-               "rcwa mapping of Z x Z, by modulus and coefficients (RCWA)",
-                ReturnTrue, [ IsRowModule, IsMatrix, IsList ], 0,
-
-  function ( ZxZ, modulus, coeffs )
-
-    local  ReduceRcwaMappingOfZxZ, Result;
-
-    ReduceRcwaMappingOfZxZ := function ( f )
-
-      local  mHNF, m, c, fact, p, cRed, cRedBuf, res, resred, partition, i;
-
-      mHNF := NormalFormIntMat(f!.modulus,6);
-      m    := mHNF.normal;
-      c    := f!.coeffs;
-      res  := List(f!.residues,r->VectorModLattice(r*mHNF.rowtrans,m));
-      for i in [1..Length(c)] do
-        c[i] := c[i]/Gcd(Flat(c[i]));
-        if c[i][3] < 0 then c[i] := -c[i]; fi;
-      od;
-      fact := Set(FactorsInt(m[2][2]));
-      cRed := c;
-      for p in fact do
-        repeat
-          cRedBuf   := StructuralCopy(cRed);
-          resred    := Set(List(res,r->VectorModLattice(r,[m[1],m[2]/p])));
-          partition := List(res,r->Position(resred,
-                                r->VectorModLattice(r,[m[1],m[2]/p])));
-          cRed := List([1..p],i->cRedBuf{Positions(partition,i)});
-          if   Length(Set(cRed)) = 1
-          then cRed := cRed[1]; m[2] := m[2]/p;
-          else cRed := cRedBuf; fi;
-        until cRed = cRedBuf or m[2][2] mod p <> 0;
-      od;
-      fact := Set(FactorsInt(Gcd(m[1])));
-      cRed := c;
-      for p in fact do
-        repeat
-          cRedBuf := StructuralCopy(cRed);
-          resred  := Set(List(res,r->VectorModLattice(r,[m[1],m[2]/p])));
-          cRed := List([1..p], i -> cRedBuf{[(i - 1) * m/p + 1 .. i * m/p]});
-          if   Length(Set(cRed)) = 1
-          then cRed := cRed[1]; m[1] := m[1]/p;
-          else cRed := cRedBuf; fi;
-        until cRed = cRedBuf or Gcd(m[1]) mod p <> 0;
-      od;
-      f!.modulus  := m;
-      f!.residues := AllResidues(ZxZ,f!.modulus);
-      f!.coeffs   := Immutable(cRed);
-    end;
-
-    Result := Objectify( NewType(    RcwaMappingsOfZxZFamily,
-                                     IsRcwaMappingOfZxZInStandardRep ),
-                         rec( coeffs   := coeffs,
-                              residues := AllResidues(ZxZ,modulus),
-                              modulus  := modulus ) );
-    SetSource(Result, Integers^2);
-    SetRange (Result, Integers^2);
-    ReduceRcwaMappingOfZxZ(Result);
-    return Result;
   end );
 
 #############################################################################
