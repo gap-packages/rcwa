@@ -2571,7 +2571,7 @@ InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
     local  R, m, c, selection;
 
     R := Source(f); m := Modulus(f); c := Coefficients(f);
-    if IsRing(R) then
+    if   IsRing(R) then
       selection := Filtered([1..NumberOfResidues(R,m)],
                             r -> NumberOfResidues(R,c[r][3])
                                < NumberOfResidues(R,c[r][1]));
@@ -2594,7 +2594,7 @@ InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
     local  R, m, c, selection;
 
     R := Source(f); m := Modulus(f); c := Coefficients(f);
-    if IsRing(R) then
+    if   IsRing(R) then
       selection := Filtered([1..NumberOfResidues(R,m)],
                             r -> NumberOfResidues(R,c[r][3])
                                > NumberOfResidues(R,c[r][1]));
@@ -2680,9 +2680,13 @@ InstallMethod( ImageDensity, "for rcwa mappings (RCWA)", true,
     local  R, c, m;
 
     R := Source(f); c := Coefficients(f);
-    m := Length(AllResidues(R,Modulus(f)));
-    return Sum(List([1..m],r->Length(AllResidues(R,c[r][3]))/
-                              Length(AllResidues(R,c[r][1]))))/m;
+    m := NumberOfResidues(R,Modulus(f));
+    if   IsRing(R) then
+      return Sum([1..m],r->NumberOfResidues(R,c[r][3])/
+                           NumberOfResidues(R,c[r][1]))/m;
+    elif IsZxZ(R) then
+      return Sum([1..m],r->c[r][3]^2/NumberOfResidues(R,c[r][1]))/m;
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -2699,6 +2703,23 @@ InstallMethod( Multpk, "for rcwa mappings of Z (RCWA)", true,
     m := Modulus(f); c := Coefficients(f);
     res := Filtered([0..m-1],r->PadicValuation(c[r+1][1]/c[r+1][3],p)=k);
     return ResidueClassUnion(Integers,m,res);
+  end );
+
+#############################################################################
+##
+#M  Multpk( <f>, <p>, <k> ) . . . . . . . . . . . .  for rcwa mappings of Z^2
+##
+InstallMethod( Multpk, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ, IsInt, IsInt ], 0,
+
+  function ( f, p, k )
+
+    local  R, m, c, r;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    r := Filtered([1..NumberOfResidues(R,m)],
+                  i->PadicValuation(DeterminantMat(c[i][1])/c[i][3]^2,p)=k);
+    return ResidueClassUnion(R,m,AllResidues(R,m){r});
   end );
 
 #############################################################################
@@ -2746,17 +2767,15 @@ InstallMethod( MovedPoints,
 ##
 #M  NrMovedPoints( <obj> ) . . . . . . . . . . . . . . . . . . default method
 ##
-InstallOtherMethod( NrMovedPoints,
-                    "default method (RCWA)", true, [ IsObject ], 0,
-                    obj -> Size( MovedPoints( obj ) ) );
+InstallOtherMethod( NrMovedPoints, "default method (RCWA)", true,
+                    [ IsObject ], 0, obj -> Size( MovedPoints( obj ) ) );
 
 #############################################################################
 ##
 #M  Support( <g> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallMethod( Support,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
-               MovedPoints );
+InstallMethod( Support, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0, MovedPoints );
 
 #############################################################################
 ##
@@ -2801,7 +2820,7 @@ InstallMethod( RestrictedMapping,
 ##
 InstallMethod( RestrictedMapping,
                "for an rcwa mapping and its full source (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsRing ], 0,
+               ReturnTrue, [ IsRcwaMapping, IsDomain ], 0,
 
   function ( f, R )
     if R = Source(f) then return f; else TryNextMethod(); fi;
@@ -2829,8 +2848,8 @@ InstallMethod( RestrictedPerm,
 ##  Returns the image of the integer <n> under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               "for an rcwa mapping of Z and an integer (RCWA)",
-               true, [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
+               "for an rcwa mapping of Z and an integer (RCWA)", true,
+               [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
 
   function ( f, n )
 
@@ -2842,14 +2861,33 @@ InstallMethod( ImageElm,
 
 #############################################################################
 ##
+#M  ImageElm( <f>, <v> ) . . . .  for an rcwa mapping of Z^2 and a row vector
+##
+##  Returns the image of the vector <v> in Z^2 under the rcwa mapping <f>. 
+##
+InstallMethod( ImageElm,
+               "for an rcwa mapping of Z^2 and a row vector (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep, IsRowVector ], 10,
+
+  function ( f, v )
+
+    local  R, m, c;
+
+    R := Source(f); if not v in R then TryNextMethod(); fi;
+    m := f!.modulus;
+    c := f!.coeffs[PositionSorted(AllResidues(R,m),v mod m)];
+    return (v * c[1] + c[2]) / c[3];
+  end );
+
+#############################################################################
+##
 #M  ImageElm( <f>, <n> ) . for an rcwa mapping of Z_(pi) and an el. of Z_(pi)
 ##
 ##  Returns the image of the element <n> of the ring Z_(pi) for suitable <pi>
 ##  under the rcwa mapping <f>. 
 ##
 InstallMethod( ImageElm,
-               Concatenation("for an rcwa mapping of Z_(pi) ",
-                             "and an element of Z_(pi) (RCWA)"),
+               "for rcwa mapping of Z_(pi) and element of Z_(pi) (RCWA)",
                true, [ IsRcwaMappingOfZ_piInStandardRep, IsRat ], 0,
 
   function ( f, n )
@@ -2887,13 +2925,12 @@ InstallMethod( ImageElm,
 ##
 ##  Returns the image of the ring element <n> under the rcwa mapping <f>. 
 ##
-InstallMethod( \^,
-               "for a ring element and an rcwa mapping (RCWA)",
+InstallMethod( \^, "for a ring element and an rcwa mapping (RCWA)",
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
-
-  function ( n, f )
-    return ImageElm( f, n );
-  end );
+               function ( n, f ) return ImageElm( f, n ); end );
+InstallMethod( \^, "for a row vector and an rcwa mapping of Z^2 (RCWA)",
+               ReturnTrue, [ IsRowVector, IsRcwaMappingOfZxZ ], 0,
+               function ( v, f ) return ImageElm( f, v ); end );
 
 #############################################################################
 ##
@@ -2902,13 +2939,12 @@ InstallMethod( \^,
 ##  Returns the images of the ring element <n> under the rcwa mapping <f>.
 ##  For technical purposes, only.
 ##
-InstallMethod( ImagesElm,
-               "for an rcwa mapping and a ring element (RCWA)",
+InstallMethod( ImagesElm, "for an rcwa mapping and a ring element (RCWA)",
                true, [ IsRcwaMapping, IsRingElement ], 0,
-
-  function ( f, n )
-    return [ ImageElm( f, n ) ];
-  end ); 
+               function ( f, n ) return [ ImageElm( f, n ) ]; end ); 
+InstallMethod( ImagesElm, "for rcwa mapping of Z^2 and row vector (RCWA)",
+               true, [ IsRcwaMappingOfZxZ, IsRowVector ], 0,
+               function ( f, n ) return [ ImageElm( f, n ) ]; end ); 
 
 #############################################################################
 ##
