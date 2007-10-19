@@ -2486,37 +2486,62 @@ InstallMethod( PrimeSet, "for rcwa mappings of Z^2 (RCWA)", true,
 
 #############################################################################
 ##
-#M  IsClassWiseOrderPreserving( <f> ) . . .  for rcwa mappings of Z or Z_(pi)
+#M  IsClassWiseOrderPreserving( <f> ) . for rcwa mappings of Z, Z^2 or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,
                "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
                [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] > 0 ) );
+InstallMethod( IsClassWiseOrderPreserving,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               f -> ForAll( f!.coeffs, c -> DeterminantMat( c[ 1 ] ) > 0 ) );
 
 #############################################################################
 ##
-#M  ClassWiseOrderPreservingOn( <f> )  . . . for rcwa mappings of Z or Z_(pi)
-#M  ClassWiseOrderReversingOn( <f> ) . . . . for rcwa mappings of Z or Z_(pi)
-#M  ClassWiseConstantOn( <f> ) . . . . . . . for rcwa mappings of Z or Z_(pi)
+#M  ClassWiseOrderPreservingOn( <f> )   for rcwa mappings of Z, Z^2 or Z_(pi)
+#M  ClassWiseOrderReversingOn( <f> ) .  for rcwa mappings of Z, Z^2 or Z_(pi)
+#M  ClassWiseConstantOn( <f> ) . . . .  for rcwa mappings of Z, Z^2 or Z_(pi)
 ##
 InstallMethod( ClassWiseOrderPreservingOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] > 0 ) ) );
+InstallMethod( ClassWiseOrderPreservingOn,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+         AllResidues( Source( f ), Modulus( f ) )
+           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                     r -> DeterminantMat(Coefficients(f)[r][1]) > 0)} ) );
 InstallMethod( ClassWiseOrderReversingOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] < 0 ) ) );
+InstallMethod( ClassWiseOrderReversingOn,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+         AllResidues( Source( f ), Modulus( f ) )
+           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                     r -> DeterminantMat(Coefficients(f)[r][1]) < 0)} ) );
 InstallMethod( ClassWiseConstantOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)",
-               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
+               [ IsRcwaMappingOfZOrZ_pi ], 0,
   f -> ResidueClassUnion( Source( f ), Modulus( f ),
                           Filtered( [ 0 .. Modulus( f ) - 1 ],
                                     r -> Coefficients( f )[r+1][1] = 0 ) ) );
+InstallMethod( ClassWiseConstantOn,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+  f -> ResidueClassUnion( Source( f ), Modulus( f ),
+         AllResidues( Source( f ), Modulus( f ) )
+           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                     r -> IsZero(Coefficients(f)[r][1]))} ) );
 
 #############################################################################
 ##
@@ -2553,6 +2578,21 @@ InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
                                          < NumberOfResidues(R,c[r][1]))});
   end );
 
+InstallMethod( IncreasingOn, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 10,
+
+  function ( f )
+
+    local  R, m, c, numres;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    numres := Length(AllResidues(R,m));
+    return ResidueClassUnion(R,m,
+             AllResidues(R,m)
+               {Filtered([1..numres],
+                         r -> c[r][3]^2 < NumberOfResidues(R,c[r][1]))});
+  end );
+
 #############################################################################
 ##
 #M  DecreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
@@ -2570,6 +2610,21 @@ InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
             AllResidues(R,m)
               {Filtered([1..numres], r -> NumberOfResidues(R,c[r][3])
                                         > NumberOfResidues(R,c[r][1]))});
+  end );
+
+InstallMethod( DecreasingOn, "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 10,
+
+  function ( f )
+
+    local  R, m, c, numres;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    numres := Length(AllResidues(R,m));
+    return ResidueClassUnion(R,m,
+             AllResidues(R,m)
+               {Filtered([1..numres],
+                         r -> c[r][3]^2 > NumberOfResidues(R,c[r][1]))});
   end );
 
 #############################################################################

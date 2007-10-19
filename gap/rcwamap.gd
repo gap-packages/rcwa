@@ -561,9 +561,9 @@ DeclareProperty( "IsSignPreserving", IsRcwaMonoid );
 ##  The union of the residue classes r(m) for which a_r(m) > 0, a_r(m) < 0
 ##  or a_r(m) = 0, respectively.
 ##
-DeclareAttribute( "ClassWiseOrderPreservingOn", IsRcwaMappingOfZOrZ_pi );
-DeclareAttribute( "ClassWiseOrderReversingOn", IsRcwaMappingOfZOrZ_pi );
-DeclareAttribute( "ClassWiseConstantOn", IsRcwaMappingOfZOrZ_pi );
+DeclareAttribute( "ClassWiseOrderPreservingOn", IsRcwaMapping );
+DeclareAttribute( "ClassWiseOrderReversingOn", IsRcwaMapping );
+DeclareAttribute( "ClassWiseConstantOn", IsRcwaMapping );
 
 #############################################################################
 ##
