@@ -2568,29 +2568,18 @@ InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
 
   function ( f )
 
-    local  R, m, c, numres;
+    local  R, m, c, selection;
 
     R := Source(f); m := Modulus(f); c := Coefficients(f);
-    numres := Length(AllResidues(R,m));
-    return ResidueClassUnion(R,m,
-             AllResidues(R,m)
-               {Filtered([1..numres], r -> NumberOfResidues(R,c[r][3])
-                                         < NumberOfResidues(R,c[r][1]))});
-  end );
-
-InstallMethod( IncreasingOn, "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 10,
-
-  function ( f )
-
-    local  R, m, c, numres;
-
-    R := Source(f); m := Modulus(f); c := Coefficients(f);
-    numres := Length(AllResidues(R,m));
-    return ResidueClassUnion(R,m,
-             AllResidues(R,m)
-               {Filtered([1..numres],
-                         r -> c[r][3]^2 < NumberOfResidues(R,c[r][1]))});
+    if IsRing(R) then
+      selection := Filtered([1..NumberOfResidues(R,m)],
+                            r -> NumberOfResidues(R,c[r][3])
+                               < NumberOfResidues(R,c[r][1]));
+    elif IsZxZ(R) then
+      selection := Filtered([1..NumberOfResidues(R,m)],
+                            r -> c[r][3]^2 < NumberOfResidues(R,c[r][1]));
+    else TryNextMethod(); fi;
+    return ResidueClassUnion(R,m,AllResidues(R,m){selection});
   end );
 
 #############################################################################
@@ -2602,29 +2591,18 @@ InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
 
   function ( f )
 
-    local  R, m, c, numres;
+    local  R, m, c, selection;
 
     R := Source(f); m := Modulus(f); c := Coefficients(f);
-    numres := Length(AllResidues(R,m));
-    return ResidueClassUnion(R,m,
-            AllResidues(R,m)
-              {Filtered([1..numres], r -> NumberOfResidues(R,c[r][3])
-                                        > NumberOfResidues(R,c[r][1]))});
-  end );
-
-InstallMethod( DecreasingOn, "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 10,
-
-  function ( f )
-
-    local  R, m, c, numres;
-
-    R := Source(f); m := Modulus(f); c := Coefficients(f);
-    numres := Length(AllResidues(R,m));
-    return ResidueClassUnion(R,m,
-             AllResidues(R,m)
-               {Filtered([1..numres],
-                         r -> c[r][3]^2 > NumberOfResidues(R,c[r][1]))});
+    if IsRing(R) then
+      selection := Filtered([1..NumberOfResidues(R,m)],
+                            r -> NumberOfResidues(R,c[r][3])
+                               > NumberOfResidues(R,c[r][1]));
+    elif IsZxZ(R) then
+      selection := Filtered([1..NumberOfResidues(R,m)],
+                            r -> c[r][3]^2 > NumberOfResidues(R,c[r][1]));
+    else TryNextMethod(); fi;
+    return ResidueClassUnion(R,m,AllResidues(R,m){selection});
   end );
 
 #############################################################################
