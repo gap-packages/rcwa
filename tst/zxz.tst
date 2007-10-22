@@ -85,6 +85,34 @@ gap> Union(l);
 ( Integers^2 )
 gap> List(l,Density);
 [ 1/2, 1/3, 1/6 ]
+gap> l^g;
+[ (0,2)+(2,0)Z+(0,3)Z, Z^2 \ (0,2)+(1,0)Z+(0,3)Z, (1,2)+(2,0)Z+(0,3)Z ]
+gap> List(last,Density);
+[ 1/6, 2/3, 1/6 ]
+gap> Union(last2);
+( Integers^2 )
+gap> cls := AllResidueClassesModulo(R,L1);
+[ (0,0)+(1,3)Z+(0,5)Z, (0,1)+(1,3)Z+(0,5)Z, (0,2)+(1,3)Z+(0,5)Z,
+  (0,3)+(1,3)Z+(0,5)Z, (0,4)+(1,3)Z+(0,5)Z ]
+gap> imgs := cls^g;
+[ <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
+  <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
+  <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
+  <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
+  <union of 30 residue classes (mod (10,0)Z+(0,15)Z)> ]
+gap> Union(imgs);
+( Integers^2 )
+gap> List(imgs,AsUnionOfFewClasses);
+[ [ (0,0)+(1,9)Z+(0,15)Z, (0,10)+(1,9)Z+(0,15)Z, (0,8)+(2,12)Z+(0,15)Z,
+      (1,5)+(2,9)Z+(0,15)Z ],
+  [ (0,3)+(1,9)Z+(0,15)Z, (0,13)+(1,9)Z+(0,15)Z, (0,2)+(2,12)Z+(0,15)Z,
+      (1,8)+(2,9)Z+(0,15)Z ],
+  [ (0,1)+(1,9)Z+(0,15)Z, (0,6)+(1,9)Z+(0,15)Z, (0,11)+(2,12)Z+(0,15)Z,
+      (1,11)+(2,9)Z+(0,15)Z ],
+  [ (0,4)+(1,9)Z+(0,15)Z, (0,9)+(1,9)Z+(0,15)Z, (0,5)+(2,12)Z+(0,15)Z,
+      (1,14)+(2,9)Z+(0,15)Z ],
+  [ (0,7)+(1,9)Z+(0,15)Z, (0,12)+(1,9)Z+(0,15)Z, (0,14)+(2,12)Z+(0,15)Z,
+      (1,2)+(2,9)Z+(0,15)Z ] ]
 gap> ImageDensity(g);
 1
 gap> Multpk(g,2,1);
