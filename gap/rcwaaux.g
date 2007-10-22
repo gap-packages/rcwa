@@ -54,17 +54,34 @@ BindGlobal( "RCWATest",
 
 #############################################################################
 ##
+#F  RCWADoThingsToBeDoneBeforeTest(  )
+#F  RCWADoThingsToBeDoneAfterTest(  )
+##
+BindGlobal( "RCWADoThingsToBeDoneBeforeTest",
+
+  function (  )
+    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+    SetInfoLevel(InfoWarning,0);
+    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    ResidueClassUnionViewingFormat("short");
+    CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+  end );
+
+BindGlobal( "RCWADoThingsToBeDoneAfterTest",
+
+  function (  )
+    CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+  end );
+
+#############################################################################
+##
 #F  RCWAReadExamples( ) . . . . . . . . . . . . . . . . .  read examples file
 ##
-BindGlobal( "RCWAReadExamples",
-
-  function ( )
-
-    local  RCWADir;
-
-    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-    Read( Concatenation( RCWADir, "/examples/examples.g" ) );
-  end );
+BindGlobal( "RCWAReadExamples", function ( )
+                                  ReadPackage("rcwa","examples/examples.g");
+                                end );
 
 ResidueClassUnionViewingFormat( "short" );
 
