@@ -108,7 +108,7 @@ gap> Image(g);
 gap> IsSurjective(g);
 true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "zxz.tst", 30000000 );
+gap> STOP_TEST( "zxz.tst", 500000000 );
 
 #############################################################################
 ##
