@@ -8,6 +8,7 @@
 ##  directly related to rcwa groups.
 ##
 gap> START_TEST("$Id$");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
 gap> x in DefaultRing(x);
 true
@@ -61,6 +62,7 @@ gap> ListOfPowers(10,8);
 [ 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 ]
 gap> GeneratorsAndInverses(SymmetricGroup(4));
 [ (1,2,3,4), (1,2), (1,4,3,2), (1,2) ]
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "other.tst", 10000000 );
 
 #############################################################################

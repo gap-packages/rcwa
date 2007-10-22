@@ -9,6 +9,7 @@
 ##  the ring of integers.
 ##
 gap> START_TEST("$Id$");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> RcwaMapping(Z_pi(2),[[2,0,1]]);
 Rcwa mapping of Z_( 2 ): n -> 2 n
 gap> RcwaMapping(Z_pi(2),1,[[2,0,1]]);
@@ -272,6 +273,7 @@ gap> F2 := Source(phi);
 <free group on the generators [ f1, f2 ]>
 gap> (F2.1*F2.2^2)^phi;
 <bijective rcwa mapping of Z_( 2 ) with modulus 128>
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "semiloc.tst", 400000000 );
 
 #############################################################################

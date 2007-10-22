@@ -8,10 +8,7 @@
 ##  rcwa mappings of and rcwa groups over the ring of integers.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> oldwarninglevel := InfoLevel(InfoWarning);;
-gap> SetInfoLevel(InfoWarning,0);
-gap> ResidueClassUnionViewingFormat("short");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> RCWAReadExamples();
 gap> IdentityRcwaMappingOfZ;
 IdentityMapping( Integers )
@@ -1662,8 +1659,7 @@ gap> g := RepresentativeAction(G,S1,S2);
 <bijective rcwa mapping of Z with modulus 400>
 gap> S1^g;
 Z \ 3(5) U 4(5)
-gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
 #############################################################################

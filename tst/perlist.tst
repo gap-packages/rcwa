@@ -8,6 +8,7 @@
 ##  periodic lists.
 ##
 gap> START_TEST("$Id$");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> l := PeriodicList([],[1,2]);
 [/ 1, 2 ]
 gap> Sum(l);
@@ -91,6 +92,7 @@ gap> l := PeriodicList([],[1..16]);
 [/ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
 gap> List([1..8],k->Length(Ball(G,l,k,OnPoints)));
 [ 4, 10, 21, 37, 58, 84, 114, 148 ]
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "perlist.tst", 100000000 );
 
 #############################################################################

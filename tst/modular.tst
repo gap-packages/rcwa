@@ -8,8 +8,7 @@
 ##  rcwa mappings of and rcwa groups over polynomial rings GF(q)[x].
 ##
 gap> START_TEST("$Id$");
-gap> oldwarninglevel := InfoLevel(InfoWarning);;
-gap> SetInfoLevel(InfoWarning,0);
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(2));; z := Zero(R);;
@@ -424,7 +423,7 @@ gap> elm in H2;
 true
 gap> PreImagesRepresentative(phi,elm);
 ac^-1
-gap> SetInfoLevel(InfoWarning,oldwarninglevel);
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "modular.tst", 1500000000 );
 
 #############################################################################

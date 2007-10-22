@@ -8,10 +8,7 @@
 ##  for the monoids Rcwa(R) and the groups RCWA(R) and CT(R).
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> oldwarninglevel := InfoLevel(InfoWarning);;
-gap> SetInfoLevel(InfoWarning,0);
-gap> ResidueClassUnionViewingFormat("short");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> M := Rcwa(Integers);
 Rcwa(Z)
 gap> Set(KnownPropertiesOfObject(M));
@@ -365,8 +362,7 @@ gap> List([RCWA(Integers),CT(Integers),
 >          RCWA(Z_pi(2,3)),CT(Z_pi(3)),
 >          RCWA(R),CT(R)],Exponent);
 [ infinity, infinity, infinity, infinity, infinity, infinity ]
-gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "rcwa_ct.tst", 1100000000 );
 
 #############################################################################

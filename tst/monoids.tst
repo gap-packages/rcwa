@@ -8,10 +8,7 @@
 ##  with rcwa monoids.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> oldwarninglevel := InfoLevel(InfoWarning);;
-gap> SetInfoLevel(InfoWarning,0);
-gap> ResidueClassUnionViewingFormat("short");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; SetName(T,"T"); IsTame(T);;
 gap> M := Monoid(T);
 <rcwa monoid over Z with 1 generator>
@@ -213,8 +210,7 @@ gap> Ball(Monoid(L,R),1,4,OnPoints:Spheres);
 [ [ 1 ], [ 4, 28 ], [ 5, 17, 37, 113 ], [ 3, 11, 75, 92, 100, 284, 604, 1820 ]
     , [ 2, 7, 50, 60, 133, 188, 369, 401, 492, 805, 1137, 1212, 1516, 2417, 
       7281, 9708 ] ]
-gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "monoids.tst", 120000000 );
 
 #############################################################################

@@ -8,10 +8,7 @@
 ##  like class shifts, -reflections, -rotations and -transpositions.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> oldwarninglevel := InfoLevel(InfoWarning);;
-gap> SetInfoLevel(InfoWarning,0);
-gap> ResidueClassUnionViewingFormat("short");
+gap> RCWADoThingsToBeDoneBeforeTest();
 gap> x := Indeterminate(GF(4),1);; SetName(x,"x");
 gap> R1 := PolynomialRing(GF(4),1);
 GF(2^2)[x]
@@ -303,8 +300,7 @@ gap> TransposedClasses(ct);
 [ [-100/2], [141/20] ]
 gap> ct = ClassTransposition(last);
 true
-gap> SetInfoLevel(InfoWarning,oldwarninglevel);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "cscrct.tst", 900000000 );
 
 #############################################################################
