@@ -3312,6 +3312,36 @@ InstallMethod( IsInjective,
 
 #############################################################################
 ##
+#M  IsInjective( <f> ) . . . . . . . . . . . . . . . for rcwa mappings of Z^2
+##
+InstallMethod( IsInjective,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( f )
+
+    local  R, c, m, det, imgs;
+
+    R := Source(f); c := Coefficients(f); m := Modulus(f);
+
+    if   DeterminantMat(Multiplier(f)) = 0 or ImageDensity(f) > 1
+    then return false; fi;
+
+    det := DeterminantMat(m);
+    if  Length(Cartesian([0..RootInt(det,2)-1],[0..RootInt(det,2)-1])^f)
+      < RootInt(det,2)^2
+    then return false; fi;
+
+    if ImageDensity(f) = 1 and IsSurjective(f) then return true; fi;
+
+    imgs := LargestSourcesOfAffineMappings(f)^f;
+    return ForAll( Combinations(imgs,2), pair -> Intersection(pair) = [] );
+
+    return true;
+  end );
+
+#############################################################################
+##
 #M  IsSurjective( <f> ) . . . . . . . . . .  for rcwa mappings of Z or Z_(pi)
 ##
 InstallMethod( IsSurjective,
