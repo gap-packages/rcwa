@@ -2959,15 +2959,14 @@ InstallMethod( ImagesSet,
 
   function ( f, S )
 
-    local  R, c, m, rc, res, r;
+    local  R, c, m, cls, i;
 
     R := Source(f); if not IsSubset(R,S) then TryNextMethod(); fi;
     if IsList(S) then return Set(List(S,n->n^f)); fi;
-    c := Coefficients(f); m := Modulus(f); res := AllResidues(R,m);
-    rc := function(r,m) return ResidueClass(R,m,r); end;
-    return Union(List([1..Length(res)],
-                      r->(c[r][1]*Intersection(S,rc(res[r],m))+c[r][2])/
-                          c[r][3]));
+    c := Coefficients(f); m := Modulus(f);
+    cls := AllResidueClassesModulo(R,m);
+    return Union(List([1..Length(cls)],
+                      i->(Intersection(S,cls[i])*c[i][1]+c[i][2])/c[i][3]));
   end );
 
 #############################################################################
