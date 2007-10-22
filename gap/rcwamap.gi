@@ -2931,6 +2931,13 @@ InstallMethod( \^, "for a ring element and an rcwa mapping (RCWA)",
 InstallMethod( \^, "for a row vector and an rcwa mapping of Z^2 (RCWA)",
                ReturnTrue, [ IsRowVector, IsRcwaMappingOfZxZ ], 0,
                function ( v, f ) return ImageElm( f, v ); end );
+InstallMethod( \^, "for list of row vectors and rcwa mapping of Z^2 (RCWA)",
+               ReturnTrue, [ IsList, IsRcwaMappingOfZxZ ], 10,
+
+  function ( l, f )
+    if not IsSubset( Source( f ), l ) then TryNextMethod( ); fi;
+    return List( l, v -> ImageElm( f, v ) );
+  end );
 
 #############################################################################
 ##
