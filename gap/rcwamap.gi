@@ -2419,7 +2419,7 @@ InstallMethod( Multiplier, "for rcwa mappings (RCWA)", true,
                          List( f!.coeffs, c -> c[1] ) ) );
 InstallMethod( Multiplier, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 10,
-               f -> LatticesIntersection( List( f!.coeffs, c -> c[1] ) ) );
+               f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
 InstallMethod( Multiplier, "for rcwa mappings of Z_(pi) (RCWA)", true,
                [ IsRcwaMappingOfZ_piInStandardRep ], 10,
                f -> Lcm( List( f!.coeffs,
@@ -2453,7 +2453,7 @@ InstallMethod( IsBalanced, "for rcwa mappings (RCWA)", true,
                f -> Set( Factors( Multiplier( f ) ) )
                   = Set( Factors( Divisor( f ) ) ) );
 InstallMethod( IsBalanced, "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+               [ IsRcwaMappingOfZxZ ], 0,
                f -> Set( Factors( DeterminantMat( Multiplier( f ) ) ) )
                   = Set( Factors( Divisor( f ) ) ) );
 
