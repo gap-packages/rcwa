@@ -85,6 +85,37 @@ gap> Union(l);
 ( Integers^2 )
 gap> List(l,Density);
 [ 1/2, 1/3, 1/6 ]
+gap> ImageDensity(g);
+1
+gap> Multpk(g,2,1);
+[  ]
+gap> Multpk(g,2,0);
+Z^2 \ (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
+gap> Multpk(g,2,-1);
+(0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
+gap> Multpk(g,3,0);
+(0,0)+(1,0)Z+(0,2)Z
+gap> Multpk(g,3,1);
+(0,1)+(1,0)Z+(0,2)Z
+gap> Union(last,last2);
+( Integers^2 )
+gap> Multpk(g,3,-1);
+[  ]
+gap> Multpk(g,3,2);
+[  ]
+gap> Image(g);
+( Integers^2 )
+gap> IsSurjective(g);
+true
+gap> [4,27]^g;
+[ 8, 41 ]
+gap> [[4,27],[8,41]]^g;
+[ [ 8, 41 ], [ 16, 62 ] ]
+gap> Cartesian([-2..2],[-2..2])^g;
+[ [ -3, -1 ], [ -4, -1 ], [ -2, 0 ], [ -4, 2 ], [ -2, 1 ], [ -1, -1 ],
+  [ -2, -1 ], [ -1, 0 ], [ -2, 2 ], [ -1, 1 ], [ 1, -1 ], [ 0, -1 ],
+  [ 0, 0 ], [ 0, 2 ], [ 0, 1 ], [ 3, -1 ], [ 2, -1 ], [ 1, 0 ], [ 2, 2 ],
+  [ 1, 1 ], [ 5, -1 ], [ 4, -1 ], [ 2, 0 ], [ 4, 2 ], [ 2, 1 ] ]
 gap> l^g;
 [ (0,2)+(2,0)Z+(0,3)Z, Z^2 \ (0,2)+(1,0)Z+(0,3)Z, (1,2)+(2,0)Z+(0,3)Z ]
 gap> List(last,Density);
@@ -113,28 +144,6 @@ gap> List(imgs,AsUnionOfFewClasses);
       (1,14)+(2,9)Z+(0,15)Z ],
   [ (0,7)+(1,9)Z+(0,15)Z, (0,12)+(1,9)Z+(0,15)Z, (0,14)+(2,12)Z+(0,15)Z,
       (1,2)+(2,9)Z+(0,15)Z ] ]
-gap> ImageDensity(g);
-1
-gap> Multpk(g,2,1);
-[  ]
-gap> Multpk(g,2,0);
-Z^2 \ (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
-gap> Multpk(g,2,-1);
-(0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
-gap> Multpk(g,3,0);
-(0,0)+(1,0)Z+(0,2)Z
-gap> Multpk(g,3,1);
-(0,1)+(1,0)Z+(0,2)Z
-gap> Union(last,last2);
-( Integers^2 )
-gap> Multpk(g,3,-1);
-[  ]
-gap> Multpk(g,3,2);
-[  ]
-gap> Image(g);
-( Integers^2 )
-gap> IsSurjective(g);
-true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 500000000 );
 
