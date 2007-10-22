@@ -154,7 +154,7 @@ InstallMethod( IsTrivial,
 ##
 InstallMethod( RcwaCons,
                "natural Rcwa(R) (RCWA)", ReturnTrue, 
-               [ IsRcwaMonoid, IsRing ], 0,
+               [ IsRcwaMonoid, IsDomain ], 0,
 
   function ( filter, R )
 
@@ -163,6 +163,9 @@ InstallMethod( RcwaCons,
     if   IsIntegers( R ) then
       type := IsRcwaMonoidOverZ;
       rep  := 2 * IdentityRcwaMappingOfZ;
+    elif IsZxZ( R ) then
+      type := IsRcwaMonoidOverZxZ;
+      rep  := RcwaMapping(R,[[1,0],[0,1]],[[[0,0],[[[1,0],[0,2]],[0,0],1]]]);
     elif IsZ_pi( R ) then
       type := IsRcwaMonoidOverZ_pi;
       rep  := NoninvertiblePrimes( R )[ 1 ] * One( RCWA( R ) );

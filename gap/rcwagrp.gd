@@ -61,8 +61,10 @@ DeclareRepresentation( "IsRcwaGroupsIteratorRep",
 #############################################################################
 ##
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
+#V  TrivialRcwaGroupOverZxZ . . . . . . . . . . . trivial rcwa group over Z^2
 ##
 DeclareGlobalVariable( "TrivialRcwaGroupOverZ" );
+DeclareGlobalVariable( "TrivialRcwaGroupOverZxZ" );
 
 #############################################################################
 ##

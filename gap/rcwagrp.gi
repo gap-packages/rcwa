@@ -198,8 +198,10 @@ InstallMethod( Display,
 #############################################################################
 ##
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
+#V  TrivialRcwaGroupOverZxZ . . . . . . . . . . . trivial rcwa group over Z^2
 ##
 InstallValue( TrivialRcwaGroupOverZ, Group( IdentityRcwaMappingOfZ ) );
+InstallValue( TrivialRcwaGroupOverZxZ, Group( IdentityRcwaMappingOfZxZ ) );
 
 #############################################################################
 ##
@@ -259,6 +261,47 @@ InstallMethod( RCWACons,
     SetIsSimpleGroup( G, false );
     SetRepresentative( G, RcwaMapping( [ [ -1, 0, 1 ] ] ) );
     SetName( G, "RCWA(Z)" );
+    SetStructureDescription( G, Name( G ) );
+    return G;
+  end );
+
+#############################################################################
+##
+#M  RCWACons( IsRcwaGroup, Integers^2 ) . . . . . . . . . . . . . RCWA( Z^2 )
+##
+##  Returns the group which is formed by all bijective rcwa mappings of Z^2.
+##
+InstallMethod( RCWACons,
+               "natural RCWA(Z^2) (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRowModule ], 0,
+
+  function ( filter, R )
+
+    local  G, id;
+
+    if not IsZxZ( R ) then TryNextMethod( ); fi;
+
+    id := IdentityRcwaMappingOfZxZ;
+    G  := Objectify( NewType( FamilyObj( Group( id ) ),
+                              IsRcwaGroupOverZxZ and IsAttributeStoringRep ),
+                     rec( ) );
+    SetIsTrivial( G, false );
+    SetOne( G, id );
+    SetIsNaturalRCWA_OR_CT( G, true );
+    SetIsNaturalRCWA( G, true );
+    SetIsNaturalRCWA_ZxZ( G, true );
+    SetModulusOfRcwaMonoid( G, [ [ 0, 0 ], [ 0, 0 ] ] );
+    SetMultiplier( G, infinity );
+    SetDivisor( G, infinity );
+    SetIsFinite( G, false );
+    SetSize( G, infinity );
+    SetIsFinitelyGeneratedGroup( G, false );
+    SetCentre( G, TrivialRcwaGroupOverZxZ );
+    SetIsAbelian( G, false );
+    SetIsSolvableGroup( G, false );
+    SetRepresentative( G, RcwaMapping( R, [ [ 1, 0 ], [ 0, 1 ] ],
+      [ [ [ 0, 0 ], [ [ [ -1, 0 ], [ 0, -1 ] ], [ 0, 0 ], 1 ] ] ] ) );
+    SetName( G, "RCWA(Z^2)" );
     SetStructureDescription( G, Name( G ) );
     return G;
   end );

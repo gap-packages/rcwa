@@ -49,8 +49,7 @@ DeclareGlobalVariable( "TrivialRcwaMonoidOverZ" );
 ##
 ##  The monoid formed by all rcwa mappings of <R>.
 ##
-DeclareConstructor( "RcwaCons", [ IsRcwaMonoid, IsRing ] );
-DeclareConstructor( "RcwaCons", [ IsRcwaMonoid, IsRowModule ] );
+DeclareConstructor( "RcwaCons", [ IsRcwaMonoid, IsDomain ] );
 DeclareGlobalFunction( "Rcwa" );
 
 #############################################################################
