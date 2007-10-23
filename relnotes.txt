@@ -566,11 +566,16 @@ Changes between version 2.5.3 and version 2.5.4:
  - The line length used in the examples has been reduced to 75 in order to
    improve their appearance in the online help with standard settings.
 
-Changes between version 2.5.4 and version 2.5.5:
+Changes between version 2.5.4 and version 3.0.0 (??? ??, 200?):
 
- - Now, RCWA needs GAP 4.4.10, GAPDoc 1.1 and Polycyclic 2.2.
+The main change is that now RCWA can deal with rcwa groups over Z^2.
+
+Further changes are:
 
  - A function `DrawGrid' to draw pictures of residue class unions of Z^2
    has been added.
+
+ - Now, RCWA needs GAP 4.4.10, ResClasses 3.0.0, GAPDoc 1.1
+   and Polycyclic 2.2.
 
 

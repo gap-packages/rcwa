@@ -14,7 +14,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-The &RCWA; package needs at least &GAP;&nbsp;4.4.10, &ResClasses;&nbsp;2.5.1,
+The &RCWA; package needs at least &GAP;&nbsp;4.4.10, &ResClasses;&nbsp;3.0.0,
 <Package>GRAPE</Package>&nbsp;4.0&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.2&nbsp;<Cite Key="Polycyclic"/> and
 &GAPDoc;&nbsp;1.1&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
