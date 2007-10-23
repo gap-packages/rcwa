@@ -1668,7 +1668,6 @@ InstallMethod( ViewObj,
                "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
 
   function ( f )
-
     if IsZero(f) or IsOne(f) then View(f); return; fi;
     if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
     Print("<");
@@ -1730,9 +1729,9 @@ InstallMethod( Display,
 
   function ( f )
 
-    local  DisplayAffineMappingWithCoeffsInZ,
-           DisplayAffineMappingWithCoeffsInZ_pi,
-           DisplayAffineMappingWithCoeffsInGFqx, IdChars,
+    local  DisplayAffineMappingOfZ, DisplayAffineMappingOfZxZ,
+           DisplayAffineMappingOfZ_pi,
+           DisplayAffineMappingOfGFqx, IdChars,
            m, c, pi, q, d, x, RingString, name, VarName,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
            mdec, mstr, MaxPolLng, FlushLng, prefix;
@@ -1741,7 +1740,7 @@ InstallMethod( Display,
       return Concatenation( ListWithIdenticalEntries( n, ch ) );
     end;
 
-    DisplayAffineMappingWithCoeffsInZ := function ( t )
+    DisplayAffineMappingOfZ := function ( t )
 
       local  a, b, c;
 
@@ -1773,7 +1772,46 @@ InstallMethod( Display,
       fi;
     end;
 
-    DisplayAffineMappingWithCoeffsInZ_pi := function ( t )
+    DisplayAffineMappingOfZxZ := function ( t )
+
+      local  CompactString, a, b, c;
+
+      CompactString := function ( obj )
+
+        local  str;
+
+        str := String(obj);
+        RemoveCharacters(str," ");
+        return str;
+      end;
+
+      a := t[1]; b := t[2]; c := t[3];
+      if   c = 1
+      then if   IsZero(a)
+           then Print(CompactString(b));
+           else if   IsOne( a) then Print("v");
+                elif IsOne(-a) then Print("-v");
+                else Print("v * ",CompactString(a)); fi;
+                if not IsZero(b) then Print(" + ",CompactString(b)); fi;
+           fi;
+      elif IsZero(b) then
+           if   IsOne( a) then Print("v");
+           elif IsOne(-a) then Print("-v");
+           else Print("v * ",CompactString(a)); fi;
+           Print(" / ",c);
+      else Print("(");
+           if   IsZero(a)
+           then Print(CompactString(b));
+           else if   IsOne( a) then Print("v");
+                elif IsOne(-a) then Print("-v");
+                else Print("v * ",CompactString(a)); fi;
+                Print(" + ",CompactString(b));
+           fi;
+           Print(") / ",c);
+      fi;
+    end;
+
+    DisplayAffineMappingOfZ_pi := function ( t )
 
       local  a, b, c;
 
@@ -1805,7 +1843,7 @@ InstallMethod( Display,
       fi;
     end;
 
-    DisplayAffineMappingWithCoeffsInGFqx := function ( t, maxlng )
+    DisplayAffineMappingOfGFqx := function ( t, maxlng )
 
       local  append, factorstr, str, a, b, c, one, zero, x;
 
@@ -1863,6 +1901,8 @@ InstallMethod( Display,
          x := IndeterminatesOfPolynomialRing(Source(f))[1];
          r := AllGFqPolynomialsModDegree(q,d,x);
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
+    elif IsRcwaMappingOfZxZ(f)
+    then VarName := "v"; NrResidues := DeterminantMat(m);
     else VarName := "n"; NrResidues := m; fi;
     if   IsOne(f)
     then Print("Identity rcwa mapping of ",RingString);
@@ -1894,11 +1934,13 @@ InstallMethod( Display,
          if IsOne(m) then
            Print(": ",VarName," -> ");
            if   IsRcwaMappingOfZ(f)
-           then DisplayAffineMappingWithCoeffsInZ(c[1]);
+           then DisplayAffineMappingOfZ(c[1]);
+           elif IsRcwaMappingOfZxZ(f)
+           then DisplayAffineMappingOfZxZ(c[1]);
            elif IsRcwaMappingOfZ_pi(f)
-           then DisplayAffineMappingWithCoeffsInZ_pi(c[1]);
+           then DisplayAffineMappingOfZ_pi(c[1]);
            else
-             DisplayAffineMappingWithCoeffsInGFqx(c[1],SizeScreen()[1]-48);
+             DisplayAffineMappingOfGFqx(c[1],SizeScreen()[1]-48);
            fi;
          else
            Print(" with modulus ",m);
@@ -1937,11 +1979,11 @@ InstallMethod( Display,
              if   str <> " " 
              then Print("\n",String(str, -l1),"| "); fi;
              if   IsRcwaMappingOfZ(f)
-             then DisplayAffineMappingWithCoeffsInZ(c[pos[1]+1]);
+             then DisplayAffineMappingOfZ(c[pos[1]+1]);
              elif IsRcwaMappingOfZ_pi(f)
-             then DisplayAffineMappingWithCoeffsInZ_pi(c[pos[1]+1]);
+             then DisplayAffineMappingOfZ_pi(c[pos[1]+1]);
              else
-               DisplayAffineMappingWithCoeffsInGFqx(c[pos[1]+1],scr-l1-4);
+               DisplayAffineMappingOfGFqx(c[pos[1]+1],scr-l1-4);
              fi;
            od;
            Print("\n");
@@ -1960,7 +2002,7 @@ InstallMethod( LaTeXObj,
 
   function ( f )
 
-    local  LaTeXAffineMappingWithCoeffsInZ, append,
+    local  LaTeXAffineMappingOfZ, append,
            c, m, mred, german, str, affs, maxafflng, t, poses, pos,
            res, src, cls, cl, indent, gens, i, j;
 
@@ -1969,7 +2011,7 @@ InstallMethod( LaTeXObj,
                           Concatenation([str],List(arg,String)));
     end;
 
-    LaTeXAffineMappingWithCoeffsInZ := function ( t )
+    LaTeXAffineMappingOfZ := function ( t )
 
       local  german, str, a, b, c, append;
 
@@ -2037,14 +2079,13 @@ InstallMethod( LaTeXObj,
     german := ValueOption("german") = true;
     c := Coefficients(f); m := Length(c);
     if m = 1 then
-      return Concatenation("n \\ \\mapsto \\ ",
-                           LaTeXAffineMappingWithCoeffsInZ(c[1]));
+      return Concatenation("n \\ \\mapsto \\ ",LaTeXAffineMappingOfZ(c[1]));
     fi;
     append("n \\ \\longmapsto \\\n",indent,"\\begin{cases}\n");
     poses := AsSortedList( List( Set(c),
                                  t -> Filtered( [0..m-1],
                                                 i -> c[i+1] = t ) ) );
-    affs := List( c, LaTeXAffineMappingWithCoeffsInZ );
+    affs := List( c, LaTeXAffineMappingOfZ );
     maxafflng := Maximum( List( affs, Length ) );
     for pos in poses do
       append( indent, "  ", affs[ pos[1] + 1 ],
