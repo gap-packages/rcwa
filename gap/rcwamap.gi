@@ -1681,7 +1681,7 @@ InstallMethod( ViewObj,
     then Print("surjective ");
     fi;
     Print("rcwa mapping of ",RingToString(Source(f)));
-    Print(" with modulus ",Modulus(f));
+    Print(" with modulus ",BlankFreeString(Modulus(f)));
     if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
     then Print(", of order ",Order(f)); fi;
     Print(">");
@@ -1773,36 +1773,27 @@ InstallMethod( Display,
 
     DisplayAffineMappingOfZxZ := function ( t )
 
-      local  CompactString, Print_vxa, a, b, c;
-
-      CompactString := function ( obj )
-
-        local  str;
-
-        str := String(obj);
-        RemoveCharacters(str," ");
-        return str;
-      end;
+      local  Print_vxa, a, b, c;
 
       Print_vxa := function ( )
         if   IsOne( a) then Print("v");
         elif IsOne(-a) then Print("-v");
-        else Print("v * ",CompactString(a)); fi;
+        else Print("v * ",BlankFreeString(a)); fi;
       end;
 
       a := t[1]; b := t[2]; c := t[3];
       if   c = 1
       then if   IsZero(a)
-           then Print(CompactString(b));
+           then Print(BlankFreeString(b));
            else Print_vxa();
                 if   not IsZero(b)
-                then Print(" + ",CompactString(b)); fi;
+                then Print(" + ",BlankFreeString(b)); fi;
            fi;
       elif IsZero(b) then Print_vxa(); Print("/",c);
       else Print("(");
            if   IsZero(a)
-           then Print(CompactString(b));
-           else Print_vxa(); Print(" + ",CompactString(b));
+           then Print(BlankFreeString(b));
+           else Print_vxa(); Print(" + ",BlankFreeString(b));
            fi;
            Print(")/",c);
       fi;
@@ -1940,7 +1931,7 @@ InstallMethod( Display,
            then DisplayAffineMappingOfZ_pi(c[1]);
            else DisplayAffineMappingOfGFqx(c[1],SizeScreen()[1]-48); fi;
          else
-           Print(" with modulus ",m);
+           Print(" with modulus ",BlankFreeString(m));
            if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
            then Print(", of order ",Order(f)); fi;
            Print("\n\n");
@@ -1948,8 +1939,7 @@ InstallMethod( Display,
            if   IsRcwaMappingOfZOrZ_pi(f) then l1 := Int(scr/2);
            elif IsRcwaMappingOfZxZ(f)     then l1 := Int(2*scr/5);
            else                                l1 := Int(scr/3); fi;
-           mstr := String(m);
-           if IsRcwaMappingOfZxZ(f) then RemoveCharacters(mstr," "); fi;
+           mstr := BlankFreeString(m);
            if l1 - Length(mstr) - 6 <= 0 then mstr := "<modulus>"; fi;
            mdec := Length(mstr);
            l2 := Int((l1 - mdec - 6)/2);
@@ -1967,7 +1957,7 @@ InstallMethod( Display,
                if   IsRcwaMappingOfZOrZ_pi(f)
                then Append(str,String(i,mdec+1));
                elif IsRcwaMappingOfZxZ(f)
-               then vstr := String(r[i+1]); RemoveCharacters(vstr," ");
+               then vstr := BlankFreeString(r[i+1]);
                     Append(str,String(vstr,-(maxvchars+1)));
                else Append(str,String(r[i+1],-(MaxPolLng+1))); fi;
                if Length(str) >= FlushLng then
