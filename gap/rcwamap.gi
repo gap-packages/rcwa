@@ -2771,28 +2771,52 @@ InstallMethod( MovedPoints,
 
   function ( f )
 
-    local  m, c, R, q, d, x, r, pols, residues, fixed, fixpoint;
+    local  R, m, c, residues, indices,
+           fixedpoint, fixedpoints, fixedline, fixedlines,
+           A, b, d, mat, i;
 
-    m := Modulus(f); c := Coefficients(f); R := Source(f);
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+    residues := AllResidues(R,m); 
     if   IsRcwaMappingOfZOrZ_pi(f)
-    then pols     := [0..m-1]; # just a dummy
-         residues := Filtered( [0..m-1], r -> c[r+1] <> [1,0,1] );
-    else q    := Size(CoefficientsRing(R));
-         d    := DegreeOfLaurentPolynomial(m);
-         x    := IndeterminatesOfPolynomialRing(R)[1];
-         pols := AllGFqPolynomialsModDegree(q,d,x);
-         residues := Filtered( [0..q^d-1], r -> c[r+1] <> [1,0,1] * One(R) );
+    then indices := Filtered([1..Length(residues)],i->c[i]<>[1,0,1]);
+    elif IsRcwaMappingOfZxZ(f)
+    then indices := Filtered([1..Length(residues)],
+                             i->c[i]<>[[[1,0],[0,1]],[0,0],1]);
+    else indices := Filtered([1..Length(residues)],i->c[i]<>[1,0,1]*One(R));
     fi;
-    fixed := [];
-    for r in residues do
-      if c[r+1]{[1,3]} <> [1,1] * One(R) then
-        fixpoint := c[r+1][2]/(c[r+1][3]-c[r+1][1]);
-        if   fixpoint in R and fixpoint mod m = pols[r+1]
-        then Add(fixed,fixpoint); fi;
-      fi;
-    od;
-    if IsRcwaMappingOfGFqx(f) then residues := pols{residues+1}; fi;
-    return ResidueClassUnion(R,m,residues,[],fixed);
+    fixedpoints := []; fixedlines := [];
+    if IsRing(R) then
+      for i in indices do
+        if c[i]{[1,3]} <> [1,1] * One(R) then
+          fixedpoint := c[i][2]/(c[i][3]-c[i][1]);
+          if   fixedpoint in R and fixedpoint mod m = residues[i]
+          then Add(fixedpoints,fixedpoint); fi;
+        fi;
+      od;
+    elif IsZxZ(R) then
+      for i in indices do
+        if c[i]{[1,3]} <> [[[1,0],[0,1]],1] then
+          A := c[i][1]; b := c[i][2]; d := c[i][3];
+          mat := A - [[d,0],[0,d]];
+          if DeterminantMat(mat) <> 0 then
+            fixedpoint := -b/mat;
+            if   fixedpoint in R and fixedpoint mod m = residues[i]
+            then Add(fixedpoints,fixedpoint); fi;
+          else
+            fixedline := SolutionNullspaceIntMat(mat,-b); # (v,w): v+k*w
+            Add(fixedlines,fixedline);
+          fi;
+        fi;
+      od;
+    else TryNextMethod(); fi;
+    if fixedlines <> [] then
+      fixedlines := Set(fixedlines);
+      Error("MovedPoints: Sorry -- Lines are not yet implemented;\nthere ",
+            "are the following fixed lines (as pairs (v,w): l = v+k*w):\n",
+            fixedlines);
+      return fail;
+    fi;
+    return ResidueClassUnion(R,m,residues{indices},[],fixedpoints);
   end );
 
 #############################################################################
