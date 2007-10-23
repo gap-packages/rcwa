@@ -199,7 +199,10 @@
     Wildness of Iteration of Certain Residue-Class-Wise Affine Mappings
   </title>
   <journal>Adv. in Appl. Math.</journal>
-  <year>2006</year>
+  <year>2007</year>
+  <volume>39</volume>
+  <number>3</number>
+  <pages>322-328</pages>
   <note>doi:10.1016/j.aam.2006.08.003</note>
 </article></entry>
 
@@ -217,12 +220,27 @@
   </other>
 </misc></entry>
 
+<entry id="Kohl06c"><article>
+  <author>
+    <name><first>Stefan</first><last>Kohl</last></name>
+  </author>
+  <title>
+    On Conjugates of Collatz-Type Mappings
+  </title>
+  <journal>Accepted by Int. J. Number Theory</journal>
+  <year>2007</year>
+  <volume>?</volume>
+  <number>?</number>
+  <pages>?-?</pages>
+  <note></note>
+</article></entry>
+
 <entry id="Kohl07a"><misc>
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
   <title>
-    A New Class of Groups which are Accessible to Computational Methods
+    Algorithms for a Class of Infinite Permutation Groups
   </title>
   <year>2007</year>
   <other type="note">
