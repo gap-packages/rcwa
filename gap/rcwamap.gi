@@ -1774,7 +1774,7 @@ InstallMethod( Display,
 
     DisplayAffineMappingOfZxZ := function ( t )
 
-      local  CompactString, a, b, c;
+      local  CompactString, Print_vxa, a, b, c;
 
       CompactString := function ( obj )
 
@@ -1785,27 +1785,25 @@ InstallMethod( Display,
         return str;
       end;
 
+      Print_vxa := function ( )
+        if   IsOne( a) then Print("v");
+        elif IsOne(-a) then Print("-v");
+        else Print("v * ",CompactString(a)); fi;
+      end;
+
       a := t[1]; b := t[2]; c := t[3];
       if   c = 1
       then if   IsZero(a)
            then Print(CompactString(b));
-           else if   IsOne( a) then Print("v");
-                elif IsOne(-a) then Print("-v");
-                else Print("v * ",CompactString(a)); fi;
-                if not IsZero(b) then Print(" + ",CompactString(b)); fi;
+           else Print_vxa();
+                if   not IsZero(b)
+                then Print(" + ",CompactString(b)); fi;
            fi;
-      elif IsZero(b) then
-           if   IsOne( a) then Print("v");
-           elif IsOne(-a) then Print("-v");
-           else Print("v * ",CompactString(a)); fi;
-           Print(" / ",c);
+      elif IsZero(b) then Print_vxa(); Print(" / ",c);
       else Print("(");
            if   IsZero(a)
            then Print(CompactString(b));
-           else if   IsOne( a) then Print("v");
-                elif IsOne(-a) then Print("-v");
-                else Print("v * ",CompactString(a)); fi;
-                Print(" + ",CompactString(b));
+           else Print_vxa(); Print(" + ",CompactString(b));
            fi;
            Print(") / ",c);
       fi;
