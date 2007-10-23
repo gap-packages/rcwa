@@ -92,9 +92,9 @@ TEST_FILES := [ [ "other.tst",      10000000 ],
                 [ "ngens.tst",      25000000 ],
                 [ "monoids.tst",   120000000 ],
                 [ "semiloc.tst",   400000000 ],
-                [ "zxz.tst",       500000000 ],
                 [ "cscrct.tst",    900000000 ],
-                [ "rcwa_ct.tst",  1100000000 ],
+                [ "zxz.tst",      1000000000 ],
+                [ "rcwa_ct.tst",  1500000000 ],
                 [ "modular.tst",  1500000000 ],
                 [ "integral.tst", 8000000000 ] ];
 

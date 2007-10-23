@@ -23,6 +23,20 @@ gap> List(last,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( Integers ), infinity, "Rcwa(Z)", 
   IdentityMapping( Integers ), Rcwa mapping of Z: n -> 2n, infinity, 
   "Rcwa(Z)" ]
+gap> M := Rcwa(Integers^2);
+Rcwa(Z^2)
+gap> Set(KnownPropertiesOfObject(M));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
+gap> List(last,prop->ValueGlobal(prop)(M));
+[ true, false, true, false, false, true, true, false, false, true ]
+gap> Set(KnownAttributesOfObject(M));
+[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+  "OneImmutable", "Representative", "Size", "StructureDescription" ]
+gap> List(last,attr->ValueGlobal(attr)(M));
+[ infinity, IdentityMapping( ( Integers^2 ) ), infinity, "Rcwa(Z^2)", 
+  IdentityMapping( ( Integers^2 ) ), 
+  Rcwa mapping of Z^2: v -> v * [[2,0],[0,2]], infinity, "Rcwa(Z^2)" ]
 gap> M := Rcwa(Z_pi(2));
 Rcwa(Z_( 2 ))
 gap> Set(KnownPropertiesOfObject(M));
@@ -122,6 +136,25 @@ gap> Modulus(RepresentativeAction(RCWA(Integers),
 >            ClassShift(3,5) * ClassTransposition(2,5,1,10)
 >          * ClassShift(4,10) * ClassReflection(9,10)));
 36
+gap> G := RCWA(Integers^2);
+RCWA(Z^2)
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", 
+  "IsNaturalRCWA_ZxZ", "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", 
+  "IsTrivial" ]
+gap> List(last,prop->ValueGlobal(prop)(G));
+[ true, false, true, false, false, false, true, true, true, true, true, 
+  false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription" ]
+gap> List(last,attr->ValueGlobal(attr)(G));
+[ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
+  IdentityMapping( ( Integers^2 ) ), infinity, "RCWA(Z^2)", 
+  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: v -> -v, infinity, 
+  "RCWA(Z^2)" ]
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));
@@ -363,7 +396,7 @@ gap> List([RCWA(Integers),CT(Integers),
 >          RCWA(R),CT(R)],Exponent);
 [ infinity, infinity, infinity, infinity, infinity, infinity ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "rcwa_ct.tst", 1100000000 );
+gap> STOP_TEST( "rcwa_ct.tst", 1500000000 );
 
 #############################################################################
 ##
