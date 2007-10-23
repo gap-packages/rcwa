@@ -3587,7 +3587,8 @@ InstallMethod( AdditiveInverseOp,
 
 #############################################################################
 ##
-#M  \+( <f>, <n> ) . . . . . . . . . . for an rcwa mapping and a ring element
+#M  \+( <f>, <n> ) . . . . . . . .  for rcwa mappings, addition of a constant
+#M  \+( <n>, <f> )
 ##
 ##  Returns the pointwise sum of the rcwa mapping <f> and the constant
 ##  rcwa mapping with value <n>.
@@ -3605,12 +3606,7 @@ InstallMethod( \+,
     return f + RcwaMapping(R,One(R),[[0,n,1]]*One(R));
   end );
 
-#############################################################################
-##
-#M  \+( <n>, <f> ) . . . . . . . . . . for a ring element and an rcwa mapping
-##
-InstallMethod( \+,
-               "for a ring element and an rcwa mapping (RCWA)",
+InstallMethod( \+, "for a ring element and an rcwa mapping (RCWA)",
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
                function ( n, f ) return f + n; end );
 
@@ -3658,6 +3654,57 @@ InstallMethod( CompositionMapping2,
     else pi := NoninvertiblePrimes(Source(f));
          fg := RcwaMappingNC(pi,c3);
     fi;
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
+  end );
+
+#############################################################################
+##
+#M  CompositionMapping2( <g>, <f> ) . . . . . .  for two rcwa mappings of Z^2
+##
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first.
+##
+InstallMethod( CompositionMapping2,
+               "for two rcwa mappings of Z^2 (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZxZInStandardRep,
+                 IsRcwaMappingOfZxZInStandardRep ], SUM_FLAGS,
+
+  function ( g, f )
+
+    local  R, fg, c1, c2, c, m1, m2, m, res1, res2, res, r1, r2, r, i1, i2;
+
+    R := Source(f);
+
+    c1 := Coefficients(f);  c2 := Coefficients(g);
+    m1 := Modulus(f);       m2 := Modulus(g);
+    m  := Lcm(m1,m2) * Divisor(f);
+
+    res1 := AllResidues(R,m1);
+    res2 := AllResidues(R,m2);
+    res  := AllResidues(R,m);
+
+    c := [];
+    for r in res do
+      r1 := r mod m1;
+      i1 := Position(res1,r1);
+      r2 := (r * c1[i1][1] + c1[i1][2])/c1[i1][3] mod m2;
+      i2 := Position(res2,r2);
+      Add(c, [ c1[i1][1] * c2[i2][1],
+               c1[i1][2] * c2[i2][1] + c1[i1][3] * c2[i2][2],
+               c1[i1][3] * c2[i2][3] ]);
+    od;
+
+    fg := RcwaMapping(R,m,c); # ... NC, once tested
 
     if    HasIsInjective(f) and IsInjective(f)
       and HasIsInjective(g) and IsInjective(g)
@@ -3748,8 +3795,7 @@ InstallMethod( \*,
                         [ [ n, 0, 1 ] ] * One( Source(f) ) ) * f;
   end );
 
-InstallMethod( \*,
-               "for rcwa mappings, multiplication by a constant (RCWA)",
+InstallMethod( \*, "for rcwa mappings, multiplication by a constant (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
                function ( f, n ) return n * f; end );
 
