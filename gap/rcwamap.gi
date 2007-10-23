@@ -1729,12 +1729,11 @@ InstallMethod( Display,
 
   function ( f )
 
-    local  DisplayAffineMappingOfZ, DisplayAffineMappingOfZxZ,
-           DisplayAffineMappingOfZ_pi,
-           DisplayAffineMappingOfGFqx, IdChars,
-           m, c, pi, q, d, x, RingString, name, VarName,
+    local  IdChars, DisplayAffineMappingOfZ, DisplayAffineMappingOfZxZ,
+           DisplayAffineMappingOfZ_pi, DisplayAffineMappingOfGFqx,
+           R, m, c, pi, q, d, x, RingString, name, VarName,
            r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
-           mdec, mstr, MaxPolLng, FlushLng, prefix;
+           mdec, mstr, vstr, maxvchars, MaxPolLng, FlushLng, prefix;
 
     IdChars := function ( n, ch )
       return Concatenation( ListWithIdenticalEntries( n, ch ) );
@@ -1799,13 +1798,13 @@ InstallMethod( Display,
                 if   not IsZero(b)
                 then Print(" + ",CompactString(b)); fi;
            fi;
-      elif IsZero(b) then Print_vxa(); Print(" / ",c);
+      elif IsZero(b) then Print_vxa(); Print("/",c);
       else Print("(");
            if   IsZero(a)
            then Print(CompactString(b));
            else Print_vxa(); Print(" + ",CompactString(b));
            fi;
-           Print(") / ",c);
+           Print(")/",c);
       fi;
     end;
 
@@ -1884,9 +1883,11 @@ InstallMethod( Display,
       Print(str);
     end;
 
-    if   ValueOption("xdvi") = true and IsIntegers(Source(f))
+    R := Source(f);
+    if   ValueOption("xdvi") = true and IsIntegers(R)
     then LaTeXAndXDVI(f); return; fi;
-    m := Modulus(f); c := Coefficients(f);
+
+    m := Modulus(f); c := Coefficients(f); r := AllResidues(R,m);
     if HasName(f) then
       name := Name(f);
       if   Position(name,'^') <> fail
@@ -1897,10 +1898,10 @@ InstallMethod( Display,
     then VarName := "P"; q := Size(UnderlyingField(f));
          d := DegreeOfLaurentPolynomial(m); NrResidues := q^d;
          x := IndeterminatesOfPolynomialRing(Source(f))[1];
-         r := AllGFqPolynomialsModDegree(q,d,x);
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
     elif IsRcwaMappingOfZxZ(f)
-    then VarName := "v"; NrResidues := DeterminantMat(m);
+    then maxvchars := Maximum(List(List(r,String),Length)) - 3;
+         VarName := "v"; NrResidues := DeterminantMat(m);
     else VarName := "n"; NrResidues := m; fi;
     if   IsOne(f)
     then Print("Identity rcwa mapping of ",RingString);
@@ -1937,35 +1938,37 @@ InstallMethod( Display,
            then DisplayAffineMappingOfZxZ(c[1]);
            elif IsRcwaMappingOfZ_pi(f)
            then DisplayAffineMappingOfZ_pi(c[1]);
-           else
-             DisplayAffineMappingOfGFqx(c[1],SizeScreen()[1]-48);
-           fi;
+           else DisplayAffineMappingOfGFqx(c[1],SizeScreen()[1]-48); fi;
          else
            Print(" with modulus ",m);
            if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
            then Print(", of order ",Order(f)); fi;
            Print("\n\n");
            scr := SizeScreen()[1] - 2;
-           if   IsRcwaMappingOfZOrZ_pi(f)
-           then l1 := Int(scr/2); else l1 := Int(scr/3); fi;
+           if   IsRcwaMappingOfZOrZ_pi(f) then l1 := Int(scr/2);
+           elif IsRcwaMappingOfZxZ(f)     then l1 := Int(2*scr/5);
+           else                                l1 := Int(scr/3); fi;
            mstr := String(m);
+           if IsRcwaMappingOfZxZ(f) then RemoveCharacters(mstr," "); fi;
            if l1 - Length(mstr) - 6 <= 0 then mstr := "<modulus>"; fi;
            mdec := Length(mstr);
            l2 := Int((l1 - mdec - 6)/2);
            l3 := Int((scr - l1 - Length(name) - 3)/2);
-           if   IsRcwaMappingOfZOrZ_pi(f)
+           if   IsRcwaMappingOfZOrZ_pi(f) or IsRcwaMappingOfZxZ(f)
            then FlushLng := l1-mdec-1; else FlushLng := l1-MaxPolLng-1; fi;
            Print(IdChars(l2," "),VarName," mod ",mstr,
                  IdChars(l1-l2-mdec-6," "),"|",IdChars(l3," "),VarName,"^",
                  name,"\n",IdChars(l1,"-"),"+",IdChars(scr-l1-1,"-"));
-           poses := AsSortedList(List(Set(c),
-                                      t -> Filtered([0..NrResidues-1],
-                                                    i -> c[i+1] = t)));
+           poses := AsSortedList(List(Set(c),t->Filtered([0..NrResidues-1],
+                                                         i->c[i+1]=t)));
            for pos in poses do
              str := " ";
              for i in pos do
                if   IsRcwaMappingOfZOrZ_pi(f)
                then Append(str,String(i,mdec+1));
+               elif IsRcwaMappingOfZxZ(f)
+               then vstr := String(r[i+1]); RemoveCharacters(vstr," ");
+                    Append(str,String(vstr,-(maxvchars+1)));
                else Append(str,String(r[i+1],-(MaxPolLng+1))); fi;
                if Length(str) >= FlushLng then
                  if   Length(str) < l1
@@ -1978,11 +1981,11 @@ InstallMethod( Display,
              then Print("\n",String(str, -l1),"| "); fi;
              if   IsRcwaMappingOfZ(f)
              then DisplayAffineMappingOfZ(c[pos[1]+1]);
+             elif IsRcwaMappingOfZxZ(f)
+             then DisplayAffineMappingOfZxZ(c[pos[1]+1]);
              elif IsRcwaMappingOfZ_pi(f)
              then DisplayAffineMappingOfZ_pi(c[pos[1]+1]);
-             else
-               DisplayAffineMappingOfGFqx(c[pos[1]+1],scr-l1-4);
-             fi;
+             else DisplayAffineMappingOfGFqx(c[pos[1]+1],scr-l1-4); fi;
            od;
            Print("\n");
          fi;
