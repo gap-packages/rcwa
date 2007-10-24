@@ -117,6 +117,16 @@ Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
  [0,1] [0,3] [0,5]             | (v * [[4,0],[0,3]] + [0,1])/2
  [0,4]                         | (v * [[4,0],[0,1]] + [2,0])/2
 
+gap> Display(g:VarNames:="mn");
+
+Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
+
+    [m,n] mod [[1,0],[0,6]]    |                   [m,n]^f
+-------------------------------+----------------------------------------------
+ [0,0] [0,2]                   | [m,n/2]
+ [0,1] [0,3] [0,5]             | [2m,(3n+1)/2]
+ [0,4]                         | [2m+1,n/2]
+
 gap> Display(g^-1);
 
 Bijective rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
