@@ -3928,6 +3928,54 @@ InstallMethod( InverseOp,
 
 #############################################################################
 ##
+#M  InverseOp( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of Z^2
+##
+##  Returns the inverse mapping of the bijective rcwa mapping <f>.
+##
+InstallMethod( InverseOp,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZInStandardRep ], 0,
+               
+  function ( f )
+
+    local  R, result, m, c, mInv, cInv, res, clsimg, indimg, t, order, i, j;
+
+    if HasOrder(f) and Order(f) = 2 then return f; fi;
+    if not IsBijective(f) then return fail; fi;
+
+    R := Source(f); m := Modulus(f); c := Coefficients(f);
+
+    clsimg := AllResidueClassesModulo(R,m)^f;
+    mInv   := Lcm(List(clsimg,Modulus));
+    res    := AllResidues(R,mInv);
+    cInv   := [];
+
+    for i in [1..Length(clsimg)] do
+      t := [c[i][3]*c[i][1]^-1,-c[i][2]*c[i][1]^-1,1];
+      t := t * Lcm(List(Flat(t),DenominatorRat));
+      indimg := Filtered([1..Length(res)],j->res[j] in clsimg[i]);
+      for j in indimg do cInv[j] := t; od;
+    od;
+
+    result := RcwaMapping(R,mInv,cInv); # ... NC, once tested
+
+    SetInverse(f,result); SetInverse(result,f);
+    if HasOrder(f) then SetOrder(result,Order(f)); order := Order(f);
+                   else order := fail; fi;
+    if HasName(f) then
+      SetName(result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                       Name(f),-1,order));
+    fi;
+    if HasLaTeXName(f) then
+      SetLaTeXName(result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXName(f),-1,order));
+    fi;
+
+    return result;
+  end );
+
+#############################################################################
+##
 #M  InverseOp( <f> ) . . . . . . . . . . . . .  for rcwa mappings of GF(q)[x]
 ##
 ##  Returns the inverse mapping of the bijective rcwa mapping <f>.
