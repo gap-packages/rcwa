@@ -1983,8 +1983,11 @@ InstallMethod( Display,
            l2 := Int((l1 - mdectop - 6)/2);
            l3 := Int((scr - l1 - Length(name) - 3)/2);
            if Length(VarName) = 5 then l3 := l3 - 2; fi;
-           if   IsRcwaMappingOfZOrZ_pi(f) or IsRcwaMappingOfZxZ(f)
-           then FlushLng := l1-mdec-1; else FlushLng := l1-MaxPolLng-1; fi;
+           if   IsRcwaMappingOfZOrZ_pi(f)
+           then FlushLng := l1-mdec-1;
+           elif IsRcwaMappingOfZxZ(f)
+           then FlushLng := l1-Maximum(List(List(r,String),Length))-1;
+           else FlushLng := l1-MaxPolLng-1; fi;
            Print(IdChars(l2," "),VarName," mod ",mstr,
                  IdChars(l1-l2-mdectop-6," "),"|",IdChars(l3," "),
                  VarName,"^",name,"\n",IdChars(l1,"-"),"+",
