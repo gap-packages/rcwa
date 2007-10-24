@@ -130,6 +130,16 @@ Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,12]]
  [0,4]  [0,8]                  | (v * [[8,0],[0,1]] + [4,0])/4
  [0,10]                        | (v * [[16,0],[0,3]] + [8,2])/4
 
+gap> g*g^-1;
+IdentityMapping( ( Integers^2 ) )
+gap> g^2*g^-1;
+<bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]>
+gap> last=g;
+true
+gap> g^-1*g^2 = g;
+true
+gap> g^-1*g^2*g^-1;
+IdentityMapping( ( Integers^2 ) )
 gap> [4,27]^g;
 [ 8, 41 ]
 gap> [[4,27],[8,41]]^g;
