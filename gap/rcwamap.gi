@@ -1924,8 +1924,8 @@ InstallMethod( Display,
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
     elif IsRcwaMappingOfZxZ(f)
     then VarName := ValueOption("VarNames");
-         if   VarName = fail then VarName := "v";
-         elif Length(VarName) = 2 then
+         if VarName = fail then VarName := "mn"; fi;
+         if Length(VarName) = 2 then
            VarName := Concatenation("[",VarName{[1]},",",VarName{[2]},"]");
          fi;
          maxvchars  := Maximum(List(List(r,String),Length)) - 3;
