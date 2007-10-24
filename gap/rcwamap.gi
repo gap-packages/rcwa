@@ -1732,8 +1732,8 @@ InstallMethod( Display,
     local  IdChars, DisplayAffineMappingOfZ, DisplayAffineMappingOfZxZ,
            DisplayAffineMappingOfZ_pi, DisplayAffineMappingOfGFqx,
            R, m, c, pi, q, d, x, RingString, name, VarName,
-           r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str,
-           mdec, mstr, vstr, maxvchars, MaxPolLng, FlushLng, prefix;
+           r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str, mdec,
+           mdectop, mstr, vstr, maxvchars, MaxPolLng, FlushLng, prefix;
 
     IdChars := function ( n, ch )
       return Concatenation( ListWithIdenticalEntries( n, ch ) );
@@ -1773,7 +1773,8 @@ InstallMethod( Display,
 
     DisplayAffineMappingOfZxZ := function ( t )
 
-      local  Print_vxa, a, b, c;
+      local  Print_vxa, PrintAff,
+             a, b, c, d, e, f, g, d1, d2, g1, g2, m, n;
 
       Print_vxa := function ( )
         if   IsOne( a) then Print("v");
@@ -1781,22 +1782,53 @@ InstallMethod( Display,
         else Print("v * ",BlankFreeString(a)); fi;
       end;
 
-      a := t[1]; b := t[2]; c := t[3];
-      if   c = 1
-      then if   IsZero(a)
-           then Print(BlankFreeString(b));
-           else Print_vxa();
-                if   not IsZero(b)
-                then Print(" + ",BlankFreeString(b)); fi;
-           fi;
-      elif IsZero(b) then Print_vxa(); Print("/",c);
-      else Print("(");
-           if   IsZero(a)
-           then Print(BlankFreeString(b));
-           else Print_vxa(); Print(" + ",BlankFreeString(b));
-           fi;
-           Print(")/",c);
-      fi;
+      PrintAff := function ( a, b, c, d )
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then Print("("); fi;
+        if a <> 0 then
+          if a = -1 then Print("-"); elif a <> 1 then Print(a); fi;
+          Print(m);
+          if b > 0 or (b = 0 and c > 0) then Print("+"); fi;
+        fi;
+        if b <> 0 then
+          if b = -1 then Print("-"); elif b <> 1 then Print(b); fi;
+          Print(n);
+          if c > 0 then Print("+"); fi;
+        fi;
+        if c <> 0 then Print(c); fi;
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then Print(")"); fi;
+        if d > 1 then Print("/",d); fi;
+      end;
+
+      if   VarName = "v" then
+        a := t[1]; b := t[2]; c := t[3];
+        if   c = 1
+        then if   IsZero(a)
+             then Print(BlankFreeString(b));
+             else Print_vxa();
+                  if   not IsZero(b)
+                  then Print(" + ",BlankFreeString(b)); fi;
+             fi;
+        elif IsZero(b) then Print_vxa(); Print("/",c);
+        else Print("(");
+             if   IsZero(a)
+             then Print(BlankFreeString(b));
+             else Print_vxa(); Print(" + ",BlankFreeString(b));
+             fi;
+             Print(")/",c);
+        fi;
+      elif Length(VarName) = 5 then
+        m := VarName{[2]}; n := VarName{[4]};
+        a := t[1][1][1]; b := t[1][1][2];
+        c := t[1][2][1]; d := t[1][2][2];
+        e := t[2][1];    f := t[2][2];
+        g := t[3];
+        d1 := Gcd(a,c,e,g); d2 := Gcd(b,d,f,g);
+        a := a/d1; c := c/d1; e := e/d1; g1 := g/d1;
+        b := b/d2; d := d/d2; f := f/d2; g2 := g/d2;
+        Print("[");
+        PrintAff(a,c,e,g1); Print(","); PrintAff(b,d,f,g2);
+        Print("]");
+      else Print("<unknown output format>"); fi;
     end;
 
     DisplayAffineMappingOfZ_pi := function ( t )
@@ -1891,8 +1923,13 @@ InstallMethod( Display,
          x := IndeterminatesOfPolynomialRing(Source(f))[1];
          MaxPolLng := Maximum(List(r,p->Length(String(p))));
     elif IsRcwaMappingOfZxZ(f)
-    then maxvchars := Maximum(List(List(r,String),Length)) - 3;
-         VarName := "v"; NrResidues := DeterminantMat(m);
+    then VarName := ValueOption("VarNames");
+         if   VarName = fail then VarName := "v";
+         elif Length(VarName) = 2 then
+           VarName := Concatenation("[",VarName{[1]},",",VarName{[2]},"]");
+         fi;
+         maxvchars  := Maximum(List(List(r,String),Length)) - 3;
+         NrResidues := DeterminantMat(m);
     else VarName := "n"; NrResidues := m; fi;
     if   IsOne(f)
     then Print("Identity rcwa mapping of ",RingString);
@@ -1942,13 +1979,16 @@ InstallMethod( Display,
            mstr := BlankFreeString(m);
            if l1 - Length(mstr) - 6 <= 0 then mstr := "<modulus>"; fi;
            mdec := Length(mstr);
-           l2 := Int((l1 - mdec - 6)/2);
+           mdectop := mdec + Length(VarName) - 1;
+           l2 := Int((l1 - mdectop - 6)/2);
            l3 := Int((scr - l1 - Length(name) - 3)/2);
+           if Length(VarName) = 5 then l3 := l3 - 2; fi;
            if   IsRcwaMappingOfZOrZ_pi(f) or IsRcwaMappingOfZxZ(f)
            then FlushLng := l1-mdec-1; else FlushLng := l1-MaxPolLng-1; fi;
            Print(IdChars(l2," "),VarName," mod ",mstr,
-                 IdChars(l1-l2-mdec-6," "),"|",IdChars(l3," "),VarName,"^",
-                 name,"\n",IdChars(l1,"-"),"+",IdChars(scr-l1-1,"-"));
+                 IdChars(l1-l2-mdectop-6," "),"|",IdChars(l3," "),
+                 VarName,"^",name,"\n",IdChars(l1,"-"),"+",
+                 IdChars(scr-l1-1,"-"));
            poses := AsSortedList(List(Set(c),t->Filtered([0..NrResidues-1],
                                                          i->c[i+1]=t)));
            for pos in poses do
