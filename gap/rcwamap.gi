@@ -4311,15 +4311,15 @@ InstallMethod( IsTame,
       return true;
     fi;
 
-    if not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f))) then
+    if IsRing(Source(f))
+      and not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f)))
+    then
       Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
       if IsBijective(f) then SetOrder(f,infinity); fi;
       return false;
     fi;
 
-    if    IsBijective(f)
-      and Set(Factors(Multiplier(f))) <> Set(Factors(Divisor(f)))
-    then
+    if IsBijective(f) and not IsBalanced(f) then
       Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
       SetOrder(f,infinity); return false;
     fi;
@@ -4554,7 +4554,7 @@ InstallMethod( Order,
       fi;
     fi;
 
-    if Set(Factors(Multiplier(g))) <> Set(Factors(Divisor(g))) then
+    if not IsBalanced(g) then
       Info(InfoRCWA,3,"Order: <g> has infinite order ",
                       "by the balancedness criterion.");
       SetIsTame(g,false); return infinity;
@@ -4613,6 +4613,8 @@ InstallMethod( Order,
       if IsOne(pow) then return e; fi;
 
     fi;
+
+    if IsRcwaMappingOfZxZ(g) then TryNextMethod(); fi;
 
     if not IsTame(g) then
       Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
