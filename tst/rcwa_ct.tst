@@ -35,8 +35,8 @@ gap> Set(KnownAttributesOfObject(M));
   "OneImmutable", "Representative", "Size", "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( ( Integers^2 ) ), infinity, "Rcwa(Z^2)", 
-  IdentityMapping( ( Integers^2 ) ), 
-  Rcwa mapping of Z^2: v -> v * [[2,0],[0,2]], infinity, "Rcwa(Z^2)" ]
+  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: [m,n] -> [2m,2n], 
+  infinity, "Rcwa(Z^2)" ]
 gap> M := Rcwa(Z_pi(2));
 Rcwa(Z_( 2 ))
 gap> Set(KnownPropertiesOfObject(M));
@@ -153,8 +153,8 @@ gap> Set(KnownAttributesOfObject(G));
 gap> List(last,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
   IdentityMapping( ( Integers^2 ) ), infinity, "RCWA(Z^2)", 
-  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: v -> -v, infinity, 
-  "RCWA(Z^2)" ]
+  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: [m,n] -> [-m,-n], 
+  infinity, "RCWA(Z^2)" ]
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));
