@@ -221,6 +221,23 @@ gap> twice;
 Injective rcwa mapping of Z^2: [m,n] -> [2m,2n]
 gap> Support(twice);
 Z^2 \ [ [ 0, 0 ] ]
+gap> g := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
+<rcwa mapping of Z^2 with modulus [[2,0],[0,3]]>
+gap> Display(g);
+
+Rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
+
+    [m,n] mod [[2,0],[0,3]]    |                   [m,n]^f
+-------------------------------+----------------------------------------------
+ [0,0]                         | [m+1,n+3]
+ [0,1] [0,2]                   | [m+1,n]
+ [1,0]                         | [m-1,n+3]
+ [1,1] [1,2]                   | [m-1,n]
+
+gap> Projections(g);
+[ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
+gap> List(last,Factorization);
+[ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 1000000000 );
 
