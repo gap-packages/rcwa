@@ -919,7 +919,7 @@ InstallMethod( ObjByExtRep,
 
 #############################################################################
 ##
-#S  Translating rcwa mappings of Z to rcwa mappings of Z_(pi). //////////////
+#S  Creating rcwa mappings from rcwa mappings of different rings. ///////////
 ##
 #############################################################################
 
@@ -946,6 +946,66 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
       and ForAll(pi,IsPrimeInt) and IsSubset(pi,Factors(Modulus(f)))
     then return RcwaMapping(Z_pi(pi),ShallowCopy(Coefficients(f)));
     else Error("usage: see ?SemilocalizedRcwaMapping( f, pi )\n"); fi;
+  end );
+
+#############################################################################
+##
+#M  RcwaMapping( <f>, <g> ) . . rcwa mapping of Z^2 by two rcwa mappings of Z
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+               function ( f, g ) return RcwaMappingNC(f,g); end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <f>, <g> ) . rcwa mapping of Z^2 by two rcwa mappings of Z
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+
+  function ( f, g )
+
+    local  m, mf, mg, c, cf, cg, res, r, t, d, d1, d2;
+
+    mf := Modulus(f);      mg  := Modulus(g);
+    m  := [[mf,0],[0,mg]]; res := AllResidues(Integers^2,m);
+    cf := Coefficients(f); cg  := Coefficients(g); c := [];
+    for r in res do
+      t := [cf[r[1]+1],cg[r[2]+1]];
+      d := Lcm(t[1][3],t[2][3]); d1 := d/t[1][3]; d2 := d/t[2][3];
+      Add(c,[[[t[1][1]*d1,0],[0,t[2][1]*d2]],[t[1][2]*d1,t[2][2]*d2],d]);
+    od;
+    return RcwaMapping(Integers^2,m,c);
+  end );
+
+#############################################################################
+##
+#M  Projections( <f> ) . . proj. of an rcwa mapping of Z^2 to the coordinates
+##
+InstallMethod( Projections,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( f )
+
+    local  m, mf, mg, c, cf, cg, res, t, t1, t2, r, i;
+
+    m := Modulus(f); c := Coefficients(f);
+    res := AllResidues(Integers^2,m);
+    mf := m[1][1]; mg := m[2][2]; cf := []; cg := [];
+    for i in [1..Length(res)] do
+      t := c[i]; r := res[i];
+      t1 := [t[1][1][1],t[2][1],t[3]]; t1 := t1/Gcd(t1);
+      t2 := [t[1][2][2],t[2][2],t[3]]; t2 := t2/Gcd(t2);
+      if   not IsBound(cf[r[1]+1]) then cf[r[1]+1] := t1;
+      elif cf[r[1]+1] <> t1        then return fail; fi;
+      if   not IsBound(cg[r[2]+1]) then cg[r[2]+1] := t2;
+      elif cg[r[2]+1] <> t2        then return fail; fi;
+      if t[1][1][2] <> 0 or t[1][2][1] <> 0 then return fail; fi;
+    od;
+    return [ RcwaMapping(cf), RcwaMapping(cg) ];
   end );
 
 #############################################################################

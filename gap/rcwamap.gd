@@ -263,6 +263,12 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 
 #############################################################################
 ##
+#O  Projections( <f> ) . . proj. of an rcwa mapping of Z^2 to the coordinates
+##
+DeclareOperation( "Projections", [ IsRcwaMappingOfZxZ ] );
+
+#############################################################################
+##
 #O  Modulus( <f> ) . . . . . . . . . . .  the modulus of the rcwa mapping <f>
 #O  Modulus( <M> ) . . . . . . . . . . .  the modulus of the rcwa monoid <M>
 ##
