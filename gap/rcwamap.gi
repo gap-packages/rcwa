@@ -3784,13 +3784,19 @@ InstallMethod( CompositionMapping2,
 
   function ( g, f )
 
-    local  R, fg, c1, c2, c, m1, m2, m, res1, res2, res, r1, r2, r, i1, i2;
+    local  R, fg, c1, c2, c, m1, m2, m,
+           res1, res2, res, r1, r2, r, i1, i2, i;
 
     R := Source(f);
 
     c1 := Coefficients(f);  c2 := Coefficients(g);
     m1 := Modulus(f);       m2 := Modulus(g);
-    m  := Lcm(m1,m2) * Divisor(f);
+
+    m := List(c1,t->m2*t[1]^-1);
+    for i in [1..Length(m)] do
+      m[i] := m[i] * Lcm(List(Flat(m[i]),DenominatorRat));
+    od; 
+    m := Lcm(m1,Lcm(m));
 
     res1 := AllResidues(R,m1);
     res2 := AllResidues(R,m2);

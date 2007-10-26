@@ -238,6 +238,22 @@ gap> Projections(g);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
+gap> transvection := RcwaMapping(R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]);
+Rcwa mapping of Z^2: [m,n] -> [m+n,m]
+gap> g := transvection*SigmaT;
+<rcwa mapping of Z^2 with modulus [[6,0],[0,1]]>
+gap> Display(g);
+
+Rcwa mapping of Z^2 with modulus [[6,0],[0,1]]
+
+    [m,n] mod [[6,0],[0,1]]    |                   [m,n]^f
+-------------------------------+----------------------------------------------
+ [0,0] [2,0]                   | [m+n,m/2]
+ [1,0] [3,0] [5,0]             | [2m+2n,(3m+1)/2]
+ [4,0]                         | [2m+2n+1,m/2]
+
+gap> IsBijective(g);
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 1000000000 );
 
