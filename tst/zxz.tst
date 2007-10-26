@@ -28,7 +28,7 @@ gap> g := RcwaMapping( Integers^2, [[1,0],[0,6]],
 >                       [[0,3],[[[4,0],[0,3]],[0,1],2]],
 >                       [[0,4],[[[4,0],[0,1]],[2,0],2]],
 >                       [[0,5],[[[4,0],[0,3]],[0,1],2]]] );
-<rcwa mapping of Z^2 with modulus [[1,0],[0,6]]>
+<rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
 gap> Mod(g);
 [ [ 1, 0 ], [ 0, 6 ] ]
 gap> Mult(g);
@@ -109,9 +109,9 @@ gap> IsBijective(g);
 true
 gap> Display(g);
 
-Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
+Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
-    [m,n] mod [[1,0],[0,6]]    |                   [m,n]^f
+    [m,n] mod (1,0)Z+(0,6)Z    |                   [m,n]^f
 -------------------------------+----------------------------------------------
  [0,0] [0,2]                   | [m,n/2]
  [0,1] [0,3] [0,5]             | [2m,(3n+1)/2]
@@ -119,9 +119,9 @@ Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
 
 gap> Display(g:VarNames:="v");
 
-Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
+Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
-      v mod [[1,0],[0,6]]      |                     v^f
+      v mod (1,0)Z+(0,6)Z      |                     v^f
 -------------------------------+----------------------------------------------
  [0,0] [0,2]                   | v * [[2,0],[0,1]]/2
  [0,1] [0,3] [0,5]             | (v * [[4,0],[0,3]] + [0,1])/2
@@ -129,9 +129,9 @@ Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]
 
 gap> Display(g^-1);
 
-Bijective rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
-    [m,n] mod [[2,0],[0,3]]    |                   [m,n]^f
+    [m,n] mod (2,0)Z+(0,3)Z    |                   [m,n]^f
 -------------------------------+----------------------------------------------
  [0,0] [0,1] [1,0] [1,1]       | [m,2n]
  [0,2]                         | [m/2,(2n-1)/3]
@@ -139,9 +139,9 @@ Bijective rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
 
 gap> Display(g^-1:VarNames:="v");
 
-Bijective rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
-      v mod [[2,0],[0,3]]      |                     v^f
+      v mod (2,0)Z+(0,3)Z      |                     v^f
 -------------------------------+----------------------------------------------
  [0,0] [0,1] [1,0] [1,1]       | v * [[1,0],[0,2]]
  [0,2]                         | (v * [[3,0],[0,4]] + [0,-2])/6
@@ -149,9 +149,9 @@ Bijective rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
 
 gap> Display(g^2);
 
-Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,12]]
+Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,12)Z
 
-   [m,n] mod [[1,0],[0,12]]    |                   [m,n]^f
+   [m,n] mod (1,0)Z+(0,12)Z    |                   [m,n]^f
 -------------------------------+----------------------------------------------
  [0,0]                         | [m,n/4]
  [0,1]  [0,5]  [0,9]           | [2m,(3n+1)/4]
@@ -163,7 +163,7 @@ Bijective rcwa mapping of Z^2 with modulus [[1,0],[0,12]]
 gap> g*g^-1;
 IdentityMapping( ( Integers^2 ) )
 gap> g^2*g^-1;
-<bijective rcwa mapping of Z^2 with modulus [[1,0],[0,6]]>
+<bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
 gap> last=g;
 true
 gap> g^-1*g^2 = g;
@@ -221,38 +221,38 @@ gap> twice;
 Injective rcwa mapping of Z^2: [m,n] -> [2m,2n]
 gap> Support(twice);
 Z^2 \ [ [ 0, 0 ] ]
-gap> g := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
-<rcwa mapping of Z^2 with modulus [[2,0],[0,3]]>
-gap> Display(g);
+gap> h := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
+<rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z>
+gap> Display(h);
 
-Rcwa mapping of Z^2 with modulus [[2,0],[0,3]]
+Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
-    [m,n] mod [[2,0],[0,3]]    |                   [m,n]^f
+    [m,n] mod (2,0)Z+(0,3)Z    |                   [m,n]^f
 -------------------------------+----------------------------------------------
  [0,0]                         | [m+1,n+3]
  [0,1] [0,2]                   | [m+1,n]
  [1,0]                         | [m-1,n+3]
  [1,1] [1,2]                   | [m-1,n]
 
-gap> Projections(g);
+gap> Projections(h);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
 gap> transvection := RcwaMapping(R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]);
 Rcwa mapping of Z^2: [m,n] -> [m+n,m]
-gap> g := transvection*SigmaT;
-<rcwa mapping of Z^2 with modulus [[6,0],[0,1]]>
-gap> Display(g);
+gap> h := transvection*g;
+<rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z>
+gap> Display(h);
 
-Rcwa mapping of Z^2 with modulus [[6,0],[0,1]]
+Rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z
 
-    [m,n] mod [[6,0],[0,1]]    |                   [m,n]^f
+    [m,n] mod (6,0)Z+(0,1)Z    |                   [m,n]^f
 -------------------------------+----------------------------------------------
  [0,0] [2,0]                   | [m+n,m/2]
  [1,0] [3,0] [5,0]             | [2m+2n,(3m+1)/2]
  [4,0]                         | [2m+2n+1,m/2]
 
-gap> IsBijective(g);
+gap> IsBijective(h);
 true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 1000000000 );

@@ -1741,7 +1741,7 @@ InstallMethod( ViewObj,
     then Print("surjective ");
     fi;
     Print("rcwa mapping of ",RingToString(Source(f)));
-    Print(" with modulus ",BlankFreeString(Modulus(f)));
+    Print(" with modulus ",ModulusAsFormattedString(Modulus(f)));
     if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
     then Print(", of order ",Order(f)); fi;
     Print(">");
@@ -2028,7 +2028,7 @@ InstallMethod( Display,
            then DisplayAffineMappingOfZ_pi(c[1]);
            else DisplayAffineMappingOfGFqx(c[1],SizeScreen()[1]-48); fi;
          else
-           Print(" with modulus ",BlankFreeString(m));
+           Print(" with modulus ",ModulusAsFormattedString(m));
            if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
            then Print(", of order ",Order(f)); fi;
            Print("\n\n");
@@ -2036,7 +2036,7 @@ InstallMethod( Display,
            if   IsRcwaMappingOfZOrZ_pi(f) then l1 := Int(scr/2);
            elif IsRcwaMappingOfZxZ(f)     then l1 := Int(2*scr/5);
            else                                l1 := Int(scr/3); fi;
-           mstr := BlankFreeString(m);
+           mstr := ModulusAsFormattedString(m);
            if l1 - Length(mstr) - 6 <= 0 then mstr := "<modulus>"; fi;
            mdec := Length(mstr);
            mdectop := mdec + Length(VarName) - 1;
