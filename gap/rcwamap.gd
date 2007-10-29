@@ -377,6 +377,7 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 #F  ClassTransposition( <r1>, <m1>, <r2>, <m2> )            tau_r1(m1),r2(m2)
 #F  ClassTransposition( <R>, <cl1>, <cl2> ) . . . dito, cl1=r1(m1) cl2=r2(m2)
 #F  ClassTransposition( <cl1>, <cl2> )  . . . . . . . . . . . . . . .  (dito)
+#F  ClassTranspositionOfZxZ( ... ) . . . . . . . . class transposition of Z^2
 #F  GeneralizedClassTransposition( ... )  . .  allows ri < 0, ri > mi, mi < 0
 #P  IsClassTransposition( <sigma> )
 #P  IsGeneralizedClassTransposition( <sigma> )
@@ -401,6 +402,7 @@ DeclareAttribute( "RotationFactor", IsRcwaMapping );
 ##  Enclosing the argument list in list brackets is permitted.
 ##
 DeclareGlobalFunction( "ClassTransposition" );
+DeclareGlobalFunction( "ClassTranspositionOfZxZ" );
 DeclareSynonym( "GeneralizedClassTransposition", ClassTransposition );
 DeclareProperty( "IsClassTransposition", IsRcwaMapping );
 DeclareProperty( "IsGeneralizedClassTransposition", IsRcwaMapping );

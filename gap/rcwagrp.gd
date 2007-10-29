@@ -116,9 +116,10 @@ DeclareAttribute( "Sign", IsRcwaMapping );
 #############################################################################
 ##
 #O  CTCons( <R> ) . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
-#F  CT( <R> ) . . . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
+#F  CT( <R> )
 ##
 DeclareConstructor( "CTCons", [ IsRcwaGroup, IsRing ] );
+DeclareConstructor( "CTCons", [ IsRcwaGroup, IsRowModule ] );
 DeclareGlobalFunction( "CT" );
 
 #############################################################################

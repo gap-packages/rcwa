@@ -781,6 +781,33 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
+#M  RcwaMappingNC( <P1>, <P2> ) . . . .  NC-method (h) in the manual, for Z^2
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping by two class partitions of Z^2 (RCWA)",
+               true, [ IsList, IsList ], 0,
+
+  function ( P1, P2 )
+
+    local  R, coeffs, m, res, affectedpos, t, r1, m1, r2, m2, i, j;
+
+    if not IsResidueClassUnionOfZxZ(P1[1]) then TryNextMethod(); fi;
+    R := UnderlyingRing(FamilyObj(P1[1]));
+    m := Lcm(List(P1,Modulus)); res := AllResidues(R,m);
+    coeffs := List(res,r->[[[1,0],[0,1]],[0,0],1]);
+    for i in [1..Length(P1)] do
+      r1 := Residue(P1[i]); m1 := Modulus(P1[i]);
+      r2 := Residue(P2[i]); m2 := Modulus(P2[i]);
+      affectedpos := Filtered([1..Length(res)],j->res[j] mod m1 = r1);
+      t := [m1^-1*m2,r2-r1*m1^-1*m2,1];
+      t := t * Lcm(List(Flat(t),DenominatorRat));
+      for i in affectedpos do coeffs[i] := t; od;
+    od;
+    return RcwaMappingNC(R,m,coeffs);
+  end );
+
+#############################################################################
+##
 #M  RcwaMapping( <cycles> ) . . . . . . . . . . . .  method (i) in the manual
 ##
 InstallMethod( RcwaMapping,
@@ -879,6 +906,46 @@ InstallMethod( RcwaMappingNC,
     elif IsPolynomialRing(R)
     then result := RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs);
     fi;
+    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    SetIsBijective(result,true); SetIsTame(result,true);
+    SetOrder(result,Lcm(List(cycles,Length)));
+    return result;
+  end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <cycles> ) . . . . .  NC-method (i) in the manual, for Z^2
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z^2 by class cycles (RCWA)", true,
+               [ IsList ], 0,
+
+  function ( cycles )
+
+    local  result, R, coeffs, m, res, cyc, pre, im, affectedpos, t,
+           r1, r2, m1, m2, pos, i;
+
+    if   not IsResidueClass(cycles[1][1])
+      or not IsResidueClassUnionOfZxZ(cycles[1][1])
+    then TryNextMethod(); fi;
+
+    R      := UnderlyingRing(FamilyObj(cycles[1][1]));
+    m      := Lcm(List(Union(cycles),Modulus));
+    res    := AllResidues(R,m);
+    coeffs := List(res,r->[[[1,0],[0,1]],[0,0],1]);
+    for cyc in cycles do
+      if Length(cyc) <= 1 then continue; fi;
+      for pos in [1..Length(cyc)] do
+        pre := cyc[pos]; im := cyc[pos mod Length(cyc) + 1];
+        r1 := Residue(pre); m1 := Modulus(pre);
+        r2 := Residue(im);  m2 := Modulus(im);
+        affectedpos := Filtered([1..Length(res)],i->res[i] mod m1 = r1);
+        t := [m1^-1*m2,r2-r1*m1^-1*m2,1];
+        t := t * Lcm(List(Flat(t),DenominatorRat));
+        for i in affectedpos do coeffs[i] := t; od;
+      od;
+    od;
+    result := RcwaMapping(R,m,coeffs);
     Assert(1,Order(result)=Lcm(List(cycles,Length)));
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
@@ -1278,7 +1345,12 @@ InstallGlobalFunction( ClassTransposition,
 
     local  result, is_usual_ct, type, name, R, r1, m1, r2, m2, cl1, cl2, h;
 
-    if IsList(arg[1]) then arg := arg[1]; fi;
+    if Length(arg) = 1 and IsList(arg[1]) then arg := arg[1]; fi;
+
+    if   IsZxZ(arg[1])
+      or IsRowVector(arg[1]) and Length(arg[1]) = 2 and ForAll(arg[1],IsInt)
+      or IsResidueClassOfZxZ(arg[1])
+    then return CallFuncList(ClassTranspositionOfZxZ,arg); fi;
 
     if not Length(arg) in [2..5]
       or     Length(arg) = 2 and not (ForAll(arg,IsResidueClass)
@@ -1302,7 +1374,7 @@ InstallGlobalFunction( ClassTransposition,
 
     r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
 
-    if IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(m1,m2)) then
+    if IsZero(m1*m2) or IsZero((r1-r2) mod Gcd(R,m1,m2)) then
       Error("ClassTransposition: The residue classes must be disjoint.\n");
     fi;
 
@@ -1341,6 +1413,83 @@ InstallGlobalFunction( ClassTransposition,
     fi;
 
     if is_usual_ct then SetFactorizationIntoCSCRCT(result,[result]); fi;
+
+    return result;
+  end );
+
+#############################################################################
+##
+#F  ClassTranspositionOfZxZ( ... ) . . . . . . . . class transposition of Z^2
+##
+##  This function is called by `ClassTransposition' if the first argument
+##  is either Integers^2, a row vector of length 2 with integer entries
+##  or a residue class of Integers^2. For recognized arguments, see there.
+##
+InstallGlobalFunction( ClassTranspositionOfZxZ,
+
+  function ( arg )
+
+    local  result, R, M, r1, m1, r2, m2, cl1, cl2, h, name, latexname;
+
+    R := Integers^2; M := FullMatrixAlgebra(Integers,2);
+
+    if Length(arg) = 1 and IsList(arg[1]) then arg := arg[1]; fi;
+
+    if not Length(arg) in [2..5]
+      or     Length(arg) = 2 and not ForAll(arg,IsResidueClassOfZxZ)
+      or     Length(arg) = 3 and not (IsZxZ(arg[1]) 
+                                  and ForAll(arg{[2,3]},IsResidueClassOfZxZ))
+      or     Length(arg) = 4 and not ( arg[1] in R and arg[2] in M
+                                   and arg[3] in R and arg[4] in M )
+      or     Length(arg) = 5 and not ( IsZxZ(arg[1])
+                                   and arg[2] in R and arg[3] in M
+                                   and arg[4] in R and arg[5] in M )
+    then Error("usage: see ?ClassTransposition( r1, m1, r2, m2 )\n"); fi;
+
+    if IsZxZ(arg[1]) then arg := arg{[2..Length(arg)]}; fi;
+    if IsResidueClass(arg[1]) then
+      arg := [Residue(arg[1]),Modulus(arg[1]),
+              Residue(arg[2]),Modulus(arg[2])];
+    fi; # Now we have arg = [r1,m1,r2,m2].
+
+    r1 := arg[1]; m1 := arg[2]; r2 := arg[3]; m2 := arg[4];
+
+    if   [m1,r1] > [m2,r2]
+    then h := r1; r1 := r2; r2 := h; h := m1; m1 := m2; m2 := h; fi;
+
+    if DeterminantMat(m1*m2) = 0 then
+      Error("ClassTransposition:\n",
+            "The moduli of the residue classes must be invertible.\n");
+    fi;
+
+    cl1 := ResidueClass(R,m1,r1);
+    cl2 := ResidueClass(R,m2,r2);
+
+    if Intersection(cl1,cl2) <> [] then
+      Error("ClassTransposition: The residue classes must be disjoint.\n");
+    fi;
+
+    result := RcwaMapping([[cl1,cl2]]);
+
+    SetIsClassTransposition(result,true);
+    SetIsGeneralizedClassTransposition(result,true);
+    SetTransposedClasses(result,[cl1,cl2]);
+    SetString(result,Concatenation("ClassTransposition(",
+                                   String(r1),",",String(m1),",",
+                                   String(r2),",",String(m2),")"));
+    name := ValueOption("Name");
+    if name = fail then
+      SetName(result,Concatenation("ClassTransposition(",
+                                   ViewString(cl1),",",ViewString(cl2),")"));
+      latexname := Concatenation("\\tau_{",ViewString(cl1),",",
+                                           ViewString(cl2),"}");
+      latexname := ReplacedString(latexname,"Z","\\mathbb{Z}");
+      SetLaTeXName(result,latexname);
+    elif not IsEmpty(name) then
+      SetName(result,name); SetLaTeXName(result,name);
+    fi;
+
+    SetFactorizationIntoCSCRCT(result,[result]);
 
     return result;
   end );
@@ -1791,9 +1940,9 @@ InstallMethod( Display,
 
     local  IdChars, DisplayAffineMappingOfZ, DisplayAffineMappingOfZxZ,
            DisplayAffineMappingOfZ_pi, DisplayAffineMappingOfGFqx,
-           R, m, c, pi, q, d, x, RingString, name, VarName,
-           r, NrResidues, poses, pos, t, i, scr, l1, l2, l3, str, mdec,
-           mdectop, mstr, vstr, maxvchars, MaxPolLng, FlushLng, prefix;
+           R, m, c, r, poses, pos, i, scr, l1, l2, l3,
+           str, ringname, mapname, varname, imageexpr,
+           mstr, mcharstop, maxreschars, flushlng, prefix;
 
     IdChars := function ( n, ch )
       return Concatenation( ListWithIdenticalEntries( n, ch ) );
@@ -1859,7 +2008,7 @@ InstallMethod( Display,
         if d > 1 then Print("/",d); fi;
       end;
 
-      if   VarName = "v" then
+      if   varname = "v" then
         a := t[1]; b := t[2]; c := t[3];
         if   c = 1
         then if   IsZero(a)
@@ -1876,8 +2025,8 @@ InstallMethod( Display,
              fi;
              Print(")/",c);
         fi;
-      elif Length(VarName) = 5 then
-        m := VarName{[2]}; n := VarName{[4]};
+      elif Length(varname) = 5 then
+        m := varname{[2]}; n := varname{[4]};
         a := t[1][1][1]; b := t[1][1][2];
         c := t[1][2][1]; d := t[1][2][2];
         e := t[2][1];    f := t[2][2];
@@ -1971,32 +2120,28 @@ InstallMethod( Display,
     then LaTeXAndXDVI(f); return; fi;
 
     m := Modulus(f); c := Coefficients(f); r := AllResidues(R,m);
-    if HasName(f) then
-      name := Name(f);
-      if   Position(name,'^') <> fail
-      then name := Concatenation("(",name,")"); fi;
-    else name := "f"; fi;
-    prefix := false; RingString := RingToString(Source(f));
-    if   IsRcwaMappingOfGFqx(f)
-    then VarName := "P"; q := Size(UnderlyingField(f));
-         d := DegreeOfLaurentPolynomial(m); NrResidues := q^d;
-         x := IndeterminatesOfPolynomialRing(Source(f))[1];
-         MaxPolLng := Maximum(List(r,p->Length(String(p))));
-    elif IsRcwaMappingOfZxZ(f)
-    then VarName := ValueOption("VarNames");
-         if VarName = fail then VarName := "mn"; fi;
-         if Length(VarName) = 2 then
-           VarName := Concatenation("[",VarName{[1]},",",VarName{[2]},"]");
-         fi;
-         maxvchars  := Maximum(List(List(r,String),Length)) - 3;
-         NrResidues := DeterminantMat(m);
-    else VarName := "n"; NrResidues := m; fi;
+    if HasName(f) and ValueOption("PrintName") <> fail then
+      mapname := Name(f);
+      if   Position(mapname,'^') <> fail
+      then mapname := Concatenation("(",mapname,")"); fi;
+    else mapname := "Image of "; fi;
+    prefix := false; ringname := RingToString(Source(f));
+    if   IsRcwaMappingOfGFqx(f) then varname := "P";
+    elif IsRcwaMappingOfZxZ(f)  then
+      varname := First(List(["varnames","VarNames"],ValueOption),
+                       names->names<>fail);
+      if varname = fail then varname := "mn"; fi;
+      if Length(varname) = 2 then
+        varname := Concatenation("[",varname{[1]},",",varname{[2]},"]");
+      fi;
+    else varname := "n"; fi;
+    maxreschars := Maximum(List(List(r,BlankFreeString),Length));
     if   IsOne(f)
-    then Print("Identity rcwa mapping of ",RingString);
+    then Print("Identity rcwa mapping of ",ringname);
     elif IsZero(f)
-    then Print("Zero rcwa mapping of ",RingString);
+    then Print("Zero rcwa mapping of ",ringname);
     elif IsOne(m) and IsZero(c[1][1])
-    then Print("Constant rcwa mapping of ",RingString,
+    then Print("Constant rcwa mapping of ",ringname,
                " with value ",c[1][2]);
     else if not IsOne(m) then Print("\n"); fi;
          if HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f))) then
@@ -2017,9 +2162,9 @@ InstallMethod( Display,
               prefix := true;
          fi;
          if prefix then Print("rcwa"); else Print("Rcwa"); fi;
-         Print(" mapping of ",RingString);
+         Print(" mapping of ",ringname);
          if IsOne(m) then
-           Print(": ",VarName," -> ");
+           Print(": ",varname," -> ");
            if   IsRcwaMappingOfZ(f)
            then DisplayAffineMappingOfZ(c[1]);
            elif IsRcwaMappingOfZxZ(f)
@@ -2038,32 +2183,29 @@ InstallMethod( Display,
            else                                l1 := Int(scr/3); fi;
            mstr := ModulusAsFormattedString(m);
            if l1 - Length(mstr) - 6 <= 0 then mstr := "<modulus>"; fi;
-           mdec := Length(mstr);
-           mdectop := mdec + Length(VarName) - 1;
-           l2 := Int((l1 - mdectop - 6)/2);
-           l3 := Int((scr - l1 - Length(name) - 3)/2);
-           if Length(VarName) = 5 then l3 := l3 - 2; fi;
-           if   IsRcwaMappingOfZOrZ_pi(f)
-           then FlushLng := l1-mdec-1;
-           elif IsRcwaMappingOfZxZ(f)
-           then FlushLng := l1-Maximum(List(List(r,String),Length))-1;
-           else FlushLng := l1-MaxPolLng-1; fi;
-           Print(IdChars(l2," "),VarName," mod ",mstr,
-                 IdChars(l1-l2-mdectop-6," "),"|",IdChars(l3," "),
-                 VarName,"^",name,"\n",IdChars(l1,"-"),"+",
-                 IdChars(scr-l1-1,"-"));
-           poses := AsSortedList(List(Set(c),t->Filtered([0..NrResidues-1],
-                                                         i->c[i+1]=t)));
+           mcharstop := Length(mstr) + Length(varname) - 1;
+           l2 := Int((l1 - mcharstop - 6)/2);
+           l3 := Int((scr - l1 - Length(mapname) - 3)/2);
+           if   l3 < 3
+           then mapname := "Image of "; l3 := Int((scr-l1-12)/2); fi;
+           if Length(varname) = 5 then l3 := l3 - 2; fi;
+           if   mapname = "Image of "
+           then imageexpr := Concatenation(mapname,varname);
+           else imageexpr := Concatenation(varname,"^",mapname); fi;
+           flushlng := l1 - maxreschars - 1;
+           Print(IdChars(l2," "),varname," mod ",mstr,
+                 IdChars(l1-l2-mcharstop-6," "),"|",IdChars(l3," "),
+                 imageexpr,"\n",IdChars(l1,"-"),"+",IdChars(scr-l1-1,"-"));
+           poses := AsSortedList(List(Set(c),t->Positions(c,t)));
            for pos in poses do
              str := " ";
              for i in pos do
-               if   IsRcwaMappingOfZOrZ_pi(f)
-               then Append(str,String(i,mdec+1));
-               elif IsRcwaMappingOfZxZ(f)
-               then vstr := BlankFreeString(r[i+1]);
-                    Append(str,String(vstr,-(maxvchars+1)));
-               else Append(str,String(r[i+1],-(MaxPolLng+1))); fi;
-               if Length(str) >= FlushLng then
+               if IsRcwaMappingOfZOrZ_pi(f) then
+                 Append(str,String(r[i],maxreschars+1));
+               else
+                 Append(str,String(BlankFreeString(r[i]),-(maxreschars+1)));
+               fi;
+               if Length(str) >= flushlng then
                  if   Length(str) < l1
                  then Print("\n",String(str, -l1),"| ");
                  else Print("\n",String(" < ... > ",-l1),"| "); fi;
@@ -2073,12 +2215,12 @@ InstallMethod( Display,
              if   str <> " " 
              then Print("\n",String(str, -l1),"| "); fi;
              if   IsRcwaMappingOfZ(f)
-             then DisplayAffineMappingOfZ(c[pos[1]+1]);
+             then DisplayAffineMappingOfZ(c[pos[1]]);
              elif IsRcwaMappingOfZxZ(f)
-             then DisplayAffineMappingOfZxZ(c[pos[1]+1]);
+             then DisplayAffineMappingOfZxZ(c[pos[1]]);
              elif IsRcwaMappingOfZ_pi(f)
-             then DisplayAffineMappingOfZ_pi(c[pos[1]+1]);
-             else DisplayAffineMappingOfGFqx(c[pos[1]+1],scr-l1-4); fi;
+             then DisplayAffineMappingOfZ_pi(c[pos[1]]);
+             else DisplayAffineMappingOfGFqx(c[pos[1]],scr-l1-4); fi;
            od;
            Print("\n");
          fi;
