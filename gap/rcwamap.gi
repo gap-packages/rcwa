@@ -3049,7 +3049,7 @@ InstallMethod( MovedPoints,
             then Add(fixedpoints,fixedpoint); fi;
           else
             fixedline := SolutionNullspaceIntMat(mat,-b); # (v,w): v+k*w
-            Add(fixedlines,fixedline);
+            if fixedline[1] <> fail then Add(fixedlines,fixedline); fi;
           fi;
         fi;
       od;
