@@ -283,6 +283,26 @@ gap> ClassTransposition(1,3,2,3) in S;
 true
 gap> ClassShift(1,2) in S;
 false
+gap> G := CT(Integers^2);       
+CT(Z^2)
+gap> Set(KnownPropertiesOfObject(G));
+[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+  "IsFinitelyGeneratedGroup", "IsNaturalCT", "IsNaturalCT_ZxZ", 
+  "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsSimpleSemigroup", 
+  "IsSolvableGroup", "IsTrivial" ]
+gap> List(last,prop->ValueGlobal(prop)(G));
+[ true, false, true, false, false, false, true, true, true, true, true, 
+  false, false ]
+gap> Set(KnownAttributesOfObject(G));
+[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+  "StructureDescription", "Support" ]
+gap> List(last,attr->ValueGlobal(attr)(G));
+[ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
+  IdentityMapping( ( Integers^2 ) ), infinity, "CT(Z^2)", 
+  IdentityMapping( ( Integers^2 ) ), 
+  ClassTransposition((0,0)+(1,0)Z+(0,2)Z,(0,1)+(1,0)Z+(0,2)Z), infinity, 
+  "CT(Z^2)", ( Integers^2 ) ]
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));

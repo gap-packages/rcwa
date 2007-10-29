@@ -64,7 +64,7 @@ gap> Display(a);
 
 Rcwa mapping of Z_( 2 ) with modulus 4
 
-                n mod 4                |                 n^f
+                n mod 4                |             Image of n
 ---------------------------------------+--------------------------------------
   0 2                                  | 3 n / 2
   1                                    | (3 n + 1) / 4
@@ -86,7 +86,7 @@ gap> Display(a2);
 
 Surjective rcwa mapping of Z_( 2 ) with modulus 16
 
-               n mod 16                |                 n^f
+               n mod 16                |             Image of n
 ---------------------------------------+--------------------------------------
    0  4  8 12                          | 9 n / 4
    1                                   | (9 n + 7) / 16
@@ -104,7 +104,7 @@ gap> Display(b);
 
 Rcwa mapping of Z_( 2, 3 ) with modulus 4
 
-                n mod 4                |                 n^f
+                n mod 4                |             Image of n
 ---------------------------------------+--------------------------------------
   0 2                                  | 3 n / 2
   1                                    | (3 n + 1) / 4
@@ -124,7 +124,7 @@ gap> Display(c);
 
 Bijective rcwa mapping of Z_( 2, 3 ) with modulus 3
 
-                n mod 3                |                 n^f
+                n mod 3                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | 2 n / 3
   1                                    | (4 n - 1) / 3
@@ -140,7 +140,7 @@ gap> Display(b+b);
 
 Rcwa mapping of Z_( 2, 3 ) with modulus 4
 
-                n mod 4                |                 n^f
+                n mod 4                |             Image of n
 ---------------------------------------+--------------------------------------
   0 2                                  | 3 n
   1                                    | (3 n + 1) / 2
@@ -154,7 +154,7 @@ gap> Display(w);
 
 Bijective rcwa mapping of Z_( 2 ) with modulus 4
 
-                n mod 4                |                 n^f
+                n mod 4                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n / 2
   1 3                                  | 2 n - 1
@@ -173,7 +173,7 @@ gap> Display(c);
 
 Bijective rcwa mapping of Z_( 2, 3 ) with modulus 3, of order 2
 
-                n mod 3                |                 n^f
+                n mod 3                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n
   1                                    | n - 1/5
@@ -207,7 +207,7 @@ gap> Display(cs);
 
 Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
 
-                n mod 2                |          n^ClassShift(0,2)
+                n mod 2                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n + 2
   1                                    | n
@@ -222,7 +222,7 @@ gap> Display(ClassReflection(ResidueClass(Z_pi(2),2,1)));
 
 Bijective rcwa mapping of Z_( 2 ) with modulus 2, of order 2
 
-                n mod 2                |        n^ClassReflection(1,2)
+                n mod 2                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n
   1                                    | -n + 2
@@ -234,7 +234,7 @@ gap> Display(ct);
 
 Bijective rcwa mapping of Z_( 2, 3 ) with modulus 6, of order 2
 
-                n mod 6                |    n^ClassTransposition(1,2,4,6)
+                n mod 6                |             Image of n
 ---------------------------------------+--------------------------------------
   0 2                                  | n
   1 3 5                                | 3 n + 1

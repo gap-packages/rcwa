@@ -49,7 +49,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of GF(2)[x] with modulus x, of order 2
 
-         P mod x          |              P^ClassShift(0*Z(2),x)
+         P mod x          |                    Image of P
 --------------------------+---------------------------------------------------
  0*Z(2)                   | P + x
  Z(2)^0                   | P
@@ -68,7 +68,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
 
-         P mod x          |              P^ClassShift(0*Z(2),x)
+         P mod x          |                    Image of P
 --------------------------+---------------------------------------------------
  0*Z(2)                   | P + x
  Z(2)^0   Z(2^2)          |
@@ -156,7 +156,7 @@ gap> Display(last);
 
 Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
 
-                n mod 2                |       n^ClassRotation(1,2,3/5)
+                n mod 2                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n
   1                                    | 3/5 n + 2/5
@@ -171,7 +171,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
 
-         P mod x          |        P^(ClassRotation(0*Z(2),x,Z(2^2)))
+         P mod x          |                    Image of P
 --------------------------+---------------------------------------------------
  0*Z(2)                   | Z(2^2)*P
  Z(2)^0   Z(2^2)          |
@@ -205,7 +205,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of Z_( 2 ) with modulus 2, of order 2
 
-                n mod 2                |    n^ClassTransposition(0,2,1,2)
+                n mod 2                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n + 1
   1                                    | n - 1
@@ -231,7 +231,7 @@ gap> Display(last2);
 
 Bijective rcwa mapping of Z_( 2, 3 ) with modulus 3, of order 2
 
-                n mod 3                |    n^ClassTransposition(0,3,1,3)
+                n mod 3                |             Image of n
 ---------------------------------------+--------------------------------------
   0                                    | n + 1
   1                                    | n - 1
@@ -261,7 +261,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x^2, of order 2
 
-        P mod x^2         |   P^(ClassTransposition(0*Z(2),x,x+Z(2)^0,x^2))
+        P mod x^2         |                    Image of P
 --------------------------+---------------------------------------------------
  0*Z(2)                   |
  x                        |
