@@ -146,16 +146,16 @@ gap> T := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.
 <rcwa mapping of Z with modulus 2>
 gap> [ IsSurjective(T), IsInjective(T) ];
 [ true, false ]
-gap> SetName(T,"T"); Display(T);
+gap> Display(T);
 
 Surjective rcwa mapping of Z with modulus 2
 
-              n mod 2               |                n^T
+              n mod 2               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | n/2
   1                                 | (3n + 1)/2
 
-gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]); SetName(a,"a");
+gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);
 <rcwa mapping of Z with modulus 3>
 gap> IsBijective(a);
 true
@@ -163,7 +163,7 @@ gap> Display(a); # This is Collatz' permutation:
 
 Bijective rcwa mapping of Z with modulus 3
 
-              n mod 3               |                n^a
+              n mod 3               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | 2n/3
   1                                 | (4n - 1)/3
@@ -204,7 +204,7 @@ gap> Display(ClassShift(5,12));
 
 Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 
-              n mod 12              |         n^ClassShift(5,12)
+              n mod 12              |            Image of n
 ------------------------------------+------------------------------------
    0  1  2  3  4  6  7  8  9 10 11  | n
    5                                | n + 12
@@ -233,7 +233,7 @@ gap> Display(ClassReflection(5,9));
 
 Bijective rcwa mapping of Z with modulus 9, of order 2
 
-              n mod 9               |       n^ClassReflection(5,9)
+              n mod 9               |            Image of n
 ------------------------------------+------------------------------------
   0 1 2 3 4 6 7 8                   | n
   5                                 | -n + 10
@@ -295,7 +295,7 @@ gap> Display(ClassTransposition(1,2,8,10));
 
 Bijective rcwa mapping of Z with modulus 10, of order 2
 
-              n mod 10              |   n^ClassTransposition(1,2,8,10)
+              n mod 10              |            Image of n
 ------------------------------------+------------------------------------
    0  2  4  6                       | n
    1  3  5  7  9                    | 5n + 3
@@ -355,7 +355,7 @@ gap> Display(ClassRotation(ResidueClass(Z_pi(2),2,1),1/3));
 
 Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
 
-              n mod 2               |      n^ClassRotation(1,2,1/3)
+              n mod 2               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | n
   1                                 | 1/3 n + 2/3
@@ -366,7 +366,7 @@ gap> Display(ClassRotation(1,x,Z(8)*One(R)));
 
 Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
 
-        P mod x         |       P^(ClassRotation(Z(2)^0,x,Z(2^3)))
+        P mod x         |                  Image of P
 ------------------------+------------------------------------------------
  0*Z(2)   Z(2^3)        |
  Z(2^3)^2 Z(2^3)^3      |
@@ -872,7 +872,7 @@ gap> IsBijective(u);; Display(u);
 
 Bijective rcwa mapping of Z with modulus 5
 
-              n mod 5               |                n^f
+              n mod 5               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | 3n/5
   1                                 | (9n + 1)/5
@@ -1197,7 +1197,7 @@ gap> Display(PrimeSwitch(3));
 
 Wild bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |          n^PrimeSwitch(3)
+              n mod 12              |            Image of n
 ------------------------------------+------------------------------------
    0                                | n/2
    1  7                             | n + 1
@@ -1234,7 +1234,7 @@ gap> Display(mKnot(5));
 
 Wild bijective rcwa mapping of Z with modulus 5
 
-              n mod 5               |             n^mKnot(5)
+              n mod 5               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | 6n/5
   1                                 | (4n + 1)/5
@@ -1279,7 +1279,7 @@ gap> Display(last);
 
 Bijective rcwa mapping of Z with modulus 8
 
-              n mod 8               |                n^f
+              n mod 8               |            Image of n
 ------------------------------------+------------------------------------
   0 1 2 3 4 5                       | n + 2
   6                                 | n - 5
@@ -1337,7 +1337,7 @@ gap> Display(CommonRightInverse(twice,twiceplus1));
 
 Rcwa mapping of Z with modulus 2
 
-              n mod 2               |                n^f
+              n mod 2               |            Image of n
 ------------------------------------+------------------------------------
   0                                 | n/2
   1                                 | (n - 1)/2

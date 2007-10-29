@@ -970,7 +970,7 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |                n^f
+              n mod 12              |            Image of n
 ------------------------------------+------------------------------------
    0  2  3  6  8 11                 | n
    1  7 10                          | n - 3
@@ -984,7 +984,7 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |                n^f
+              n mod 12              |            Image of n
 ------------------------------------+------------------------------------
    0  3  6                          | 2n/3
    1                                | (2n - 8)/3
@@ -1296,7 +1296,7 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |                n^f
+              n mod 12              |            Image of n
 ------------------------------------+------------------------------------
    0  2  4  6  8 10                 | 3n + 2
    1  5  9                          | -n + 2
