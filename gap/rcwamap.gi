@@ -954,6 +954,48 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
+#M  RcwaMapping( <R>, <f>, <g> ) . rcwa mapping of Z^2 by two rcwa map's of Z
+#M  RcwaMapping( <f>, <g> )
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
+               ReturnTrue,
+               [ IsRowModule, IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+               function ( R, f, g )
+                 if IsZxZ(R) then return RcwaMappingNC(f,g);
+                             else TryNextMethod(); fi;
+               end );
+
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+               function ( f, g ) return RcwaMappingNC(f,g); end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <f>, <g> ) . rcwa mapping of Z^2 by two rcwa mappings of Z
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+
+  function ( f, g )
+
+    local  m, mf, mg, c, cf, cg, res, r, t, d, d1, d2;
+
+    mf := Modulus(f);      mg  := Modulus(g);
+    m  := [[mf,0],[0,mg]]; res := AllResidues(Integers^2,m);
+    cf := Coefficients(f); cg  := Coefficients(g); c := [];
+    for r in res do
+      t := [cf[r[1]+1],cg[r[2]+1]];
+      d := Lcm(t[1][3],t[2][3]); d1 := d/t[1][3]; d2 := d/t[2][3];
+      Add(c,[[[t[1][1]*d1,0],[0,t[2][1]*d2]],[t[1][2]*d1,t[2][2]*d2],d]);
+    od;
+    return RcwaMapping(Integers^2,m,c);
+  end );
+
+#############################################################################
+##
 #S  ExtRepOfObj / ObjByExtRep for rcwa mappings. ////////////////////////////
 ##
 #############################################################################
@@ -1013,38 +1055,6 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
       and ForAll(pi,IsPrimeInt) and IsSubset(pi,Factors(Modulus(f)))
     then return RcwaMapping(Z_pi(pi),ShallowCopy(Coefficients(f)));
     else Error("usage: see ?SemilocalizedRcwaMapping( f, pi )\n"); fi;
-  end );
-
-#############################################################################
-##
-#M  RcwaMapping( <f>, <g> ) . . rcwa mapping of Z^2 by two rcwa mappings of Z
-##
-InstallMethod( RcwaMapping,
-               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
-               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
-               function ( f, g ) return RcwaMappingNC(f,g); end );
-
-#############################################################################
-##
-#M  RcwaMappingNC( <f>, <g> ) . rcwa mapping of Z^2 by two rcwa mappings of Z
-##
-InstallMethod( RcwaMappingNC,
-               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)",
-               IsIdenticalObj, [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
-
-  function ( f, g )
-
-    local  m, mf, mg, c, cf, cg, res, r, t, d, d1, d2;
-
-    mf := Modulus(f);      mg  := Modulus(g);
-    m  := [[mf,0],[0,mg]]; res := AllResidues(Integers^2,m);
-    cf := Coefficients(f); cg  := Coefficients(g); c := [];
-    for r in res do
-      t := [cf[r[1]+1],cg[r[2]+1]];
-      d := Lcm(t[1][3],t[2][3]); d1 := d/t[1][3]; d2 := d/t[2][3];
-      Add(c,[[[t[1][1]*d1,0],[0,t[2][1]*d2]],[t[1][2]*d1,t[2][2]*d2],d]);
-    od;
-    return RcwaMapping(Integers^2,m,c);
   end );
 
 #############################################################################
@@ -4738,7 +4748,7 @@ InstallMethod( Order,
   function ( g )
 
     local  P, k, p, gtilde, e, e_old, e_max, l, l_max, stabiter,
-           n0, n, b1, b2, m1, m2, r, pow, exp, c, i;
+           n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
 
     if   not IsBijective(g) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
@@ -4814,11 +4824,14 @@ InstallMethod( Order,
 
     else # for rcwa permutations of rings other than Z or Z_(pi)
 
-      e := Lcm(List(ShortCycles(g,AllResidues(Source(g),Modulus(g)^2),12),
-                    Length));
-      pow := g^e;
-      if IsIntegral(pow) then SetIsTame(g,true); fi;
-      if IsOne(pow) then return e; fi;
+      cycs := ShortCycles(g,AllResidues(Source(g),Modulus(g)),
+                            NumberOfResidues(Source(g),Modulus(g)));
+      if cycs <> [] then
+        e := Lcm(List(cycs,Length));
+        pow := g^e;
+        if IsIntegral(pow) then SetIsTame(g,true); fi;
+        if IsOne(pow) then return e; fi;
+      fi;
 
     fi;
 
