@@ -398,15 +398,7 @@ Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
 There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
 <C>IsClassRotation</C>, <C>IsClassTransposition</C> and
 <C>IsGeneralizedClassTransposition</C>, which indicate whether a given
-rcwa mapping belongs to the corresponding series.
-
-<Index Key="Name" Subkey="for cs / cr / ct"><C>Name</C></Index>
-
-By default, class shifts, class reflections, class transpositions and class
-rotations are given descriptive names of the form <C>Class...(...)</C>. They
-can be given user-defined names upon creation via the option <C>Name</C>.
-Setting the <C>Name</C> attribute can be avoided by passing the empty string.
-<P/>
+rcwa mapping belongs to the corresponding series. <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
