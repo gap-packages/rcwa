@@ -2051,6 +2051,21 @@ InstallMethod( String,
 
 #############################################################################
 ##
+#M  String( <f> ) . . . . . . . . . . . . .  for rcwa mappings with base root
+#M  ViewString( <f> ) . . . . . . . . . . .  for rcwa mappings with base root
+##
+InstallMethod( String, "for rcwa mappings with base root (RCWA)", true,
+               [ IsRcwaMapping and HasBaseRoot ], 20,
+               f -> Concatenation(String(BaseRoot(f)),"^",
+                                  String(PowerOverBaseRoot(f))) );
+
+InstallMethod( ViewString, "for rcwa mappings with base root (RCWA)", true,
+               [ IsRcwaMapping and HasBaseRoot ], 0,
+               f -> Concatenation(ViewString(BaseRoot(f)),"^",
+                                  String(PowerOverBaseRoot(f))) );
+
+#############################################################################
+##
 #M  PrintObj( <f> ) . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
 InstallMethod( PrintObj,
@@ -2893,6 +2908,21 @@ InstallMethod( IsOne,  "for rcwa mappings (RCWA)", true,
 InstallMethod( IsOne, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> f = IdentityRcwaMappingOfZxZ );
+
+#############################################################################
+##
+#M  ViewString( <zero> ) . . . . . . . . . . . . .  for the zero rcwa mapping
+#M  ViewString( <one> )  . . . . . . . . . . .  for the identity rcwa mapping
+##
+InstallMethod( ViewString, "for the zero rcwa mapping (RCWA)", true,
+               [ IsRcwaMapping and IsZero ], 0,
+               f -> Concatenation("ZeroMapping( ",String(Source(f)),", ",
+                                                  String(Source(f))," )") );
+
+InstallMethod( ViewString, "for the identity rcwa mapping (RCWA)", true,
+               [ IsRcwaMapping and IsOne ], 0,
+               f -> Concatenation("IdentityMapping( ",
+                                  String(Source(f))," )") );
 
 #############################################################################
 ##
