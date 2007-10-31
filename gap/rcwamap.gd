@@ -937,9 +937,10 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 ##
 ##  We say that g is a *smallest root* of f if for some k we have f = g^k,
 ##  but h^l = g implies that l is coprime to the order of g. Smallest roots
-##  are in general obviously not unique. The second-mentioned attribute
-##  stores the value of k. The third- and fourth-mentioned attributes are
-##  technical "equivalents" where no minimality is guaranteed.
+##  are in general obviously not unique, and also do not need to exist.
+##  The second-mentioned attribute stores the value of k.
+##  The third- and fourth-mentioned attributes are technical "equivalents"
+##  where no minimality is guaranteed.
 ##
 DeclareAttribute( "SmallestRoot", IsRcwaMapping );
 DeclareAttribute( "PowerOverSmallestRoot", IsRcwaMapping );
