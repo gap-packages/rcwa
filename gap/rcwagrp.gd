@@ -509,20 +509,7 @@ DeclareOperation( "PreImagesRepresentatives",
 ##
 #O  Factorization( [ <G>, ], <g> ) . . . . . .  factorization into generators
 ##
-##  If `Factorization' is not yet an operation, turn it into one and install
-##  the GAP library function of the same name as a method for it.
-##
-if not IsOperation( Factorization ) then
-  DefaultFactorization := Factorization;
-  MakeReadWriteGlobal( "Factorization" ); Unbind( Factorization );
-  DeclareOperation( "Factorization",
-                    [ IsGroup, IsMultiplicativeElementWithInverse ] );
-  InstallMethod( Factorization,"default method", true,
-               [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
-               DefaultFactorization );
-fi;
-DeclareOperation( "Factorization",
-                  [ IsMultiplicativeElementWithInverse ] );
+DeclareOperation( "Factorization", [ IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##

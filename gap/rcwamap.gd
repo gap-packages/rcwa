@@ -924,6 +924,30 @@ DeclareGlobalFunction( "TraceTrajectoriesOfClasses" );
 
 #############################################################################
 ##
+#S  Further attributes of rcwa mappings. ////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#A  SmallestRoot( <f> ) . . . . . . . . smallest root of the rcwa mapping <f>
+#A  PowerOverSmallestRoot( <f> )
+#A  BaseRoot( <f> )
+#A  PowerOverBaseRoot( <f> )
+##
+##  We say that g is a *smallest root* of f if for some k we have f = g^k,
+##  but h^l = g implies that l is coprime to the order of g. Smallest roots
+##  are in general obviously not unique. The second-mentioned attribute
+##  stores the value of k. The third- and fourth-mentioned attributes are
+##  technical "equivalents" where no minimality is guaranteed.
+##
+DeclareAttribute( "SmallestRoot", IsRcwaMapping );
+DeclareAttribute( "PowerOverSmallestRoot", IsRcwaMapping );
+DeclareAttribute( "BaseRoot", IsRcwaMapping );
+DeclareAttribute( "PowerOverBaseRoot", IsRcwaMapping );
+
+#############################################################################
+##
 #S  Probabilistic guesses. //////////////////////////////////////////////////
 ##
 #############################################################################
@@ -972,9 +996,9 @@ DeclareOperation( "GuessedDivergence", [ IsRcwaMapping ] );
 
 #############################################################################
 ##
-#A  LaTeXName( <obj> ) . . . . . . . . . . . .  LaTeX string for object <obj>
+#A  LaTeXString( <obj> ) . . . . . . . . . . .  LaTeX string for object <obj>
 ##
-DeclareAttribute( "LaTeXName", IsObject );
+DeclareAttribute( "LaTeXString", IsObject );
 
 #############################################################################
 ##

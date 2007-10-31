@@ -981,7 +981,7 @@ InstallMethod( RcwaMappingNC,
 
   function ( f, g )
 
-    local  m, mf, mg, c, cf, cg, res, r, t, d, d1, d2;
+    local  result, m, mf, mg, c, cf, cg, res, r, t, d, d1, d2;
 
     mf := Modulus(f);      mg  := Modulus(g);
     m  := [[mf,0],[0,mg]]; res := AllResidues(Integers^2,m);
@@ -991,7 +991,10 @@ InstallMethod( RcwaMappingNC,
       d := Lcm(t[1][3],t[2][3]); d1 := d/t[1][3]; d2 := d/t[2][3];
       Add(c,[[[t[1][1]*d1,0],[0,t[2][1]*d2]],[t[1][2]*d1,t[2][2]*d2],d]);
     od;
-    return RcwaMapping(Integers^2,m,c);
+    result := RcwaMapping(Integers^2,m,c);
+    if   ForAny([f,g],HasIsClassTransposition)
+    then IsClassTransposition(result); fi;
+    return result;
   end );
 
 #############################################################################
@@ -1087,7 +1090,7 @@ InstallMethod( Projections,
 
 #############################################################################
 ##
-#S  Constructors for special types of rcwa permutations. ////////////////////
+#S  Constructors and basic methods for special types of rcwa permutations. //
 ##
 #############################################################################
 
@@ -1105,7 +1108,7 @@ InstallGlobalFunction( ClassShift,
 
   function ( arg )
 
-    local  result, name, R, coeff, idcoeff, res, pos, r, m;
+    local  result, R, coeff, idcoeff, res, pos, r, m, latex;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -1143,16 +1146,16 @@ InstallGlobalFunction( ClassShift,
     then SetOrder(result,infinity);
     else SetOrder(result,Characteristic(R)); fi;
     SetIsTame(result,true);
-    name := ValueOption("Name");
-    if name = fail then
-      SetName(result,Concatenation("ClassShift(",String(r),","
-                                                ,String(m),")"));
-      SetLaTeXName(result,Concatenation("\\nu_{",String(r),"(",
-                                                 String(m),")}"));
-    elif not IsEmpty(name) then
-      SetName(result,name); SetLaTeXName(result,name);
+    SetBaseRoot(result,result); SetPowerOverBaseRoot(result,1);
+    if IsIntegers(R) then
+      SetSmallestRoot(result,result); SetPowerOverSmallestRoot(result,1);
     fi;
     SetFactorizationIntoCSCRCT(result,[result]);
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      SetLaTeXString(result,Concatenation("\\nu_{",String(r),"(",
+                                                   String(m),")}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
     return result;
   end );
 
@@ -1164,6 +1167,53 @@ InstallMethod( IsClassShift,
                "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
                sigma -> IsResidueClass(Support(sigma))
                         and sigma = ClassShift(Support(sigma)) );
+
+#############################################################################
+##
+#M  String( <cs> ) . . . . . . . . . . . . . . . . . . . . . for class shifts
+#M  ViewString( <cs> ) . . . . . . . . . . . . . . . . . . . for class shifts
+#M  PrintObj( <cs> ) . . . . . . . . . . . . . . . . . . . . for class shifts
+#M  ViewObj( <cs> )  . . . . . . . . . . . . . . . . . . . . for class shifts
+##
+InstallMethod( String, "for class shifts (RCWA)", true,
+               [ IsRcwaMapping and IsClassShift ], SUM_FLAGS,
+
+  function ( cs )
+
+    local  str;
+
+    str := Concatenation(List(["ClassShift(",Source(cs),",",
+                               Residue(Support(cs)),",",
+                               Modulus(Support(cs))],String));
+    if IsRcwaMappingOfZxZ(cs) then
+      Append(str,String(PositionNonZero(Residue(Support(cs))^cs
+                                       -Residue(Support(cs)))));
+    fi;
+    return Concatenation(str,")");
+  end );
+
+InstallMethod( ViewString, "for class shifts (RCWA)", true,
+               [ IsRcwaMapping and IsClassShift ], SUM_FLAGS,
+
+  function ( cs )
+    if   IsRing(Source(cs)) then
+      return Concatenation(List(["ClassShift(",Residue(Support(cs)),",",
+                                 Modulus(Support(cs)),")"],String));
+    elif IsRcwaMappingOfZxZ(cs) then
+      return Concatenation(List(["ClassShift(",ViewString(Support(cs)),",",
+                                 PositionNonZero(Residue(Support(cs))^cs
+                                                -Residue(Support(cs))),")"],
+                                String));
+    else TryNextMethod(); fi;
+  end );
+
+InstallMethod( PrintObj, "for class shifts (RCWA)", true,
+               [ IsRcwaMapping and IsClassShift ], SUM_FLAGS+10,
+               function ( cs ) Print( String( cs ) ); end );
+
+InstallMethod( ViewObj, "for class shifts (RCWA)", true,
+               [ IsRcwaMapping and IsClassShift ], 20,
+               function ( cs ) Print( ViewString( cs ) ); end );
 
 #############################################################################
 ##
@@ -1179,7 +1229,7 @@ InstallGlobalFunction( ClassReflection,
 
   function ( arg )
 
-    local  result, name, R, coeff, idcoeff, res, pos, r, m;
+    local  result, R, coeff, idcoeff, res, pos, r, m, latex;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -1217,16 +1267,12 @@ InstallGlobalFunction( ClassReflection,
     SetRotationFactor(result,-1);
     SetIsBijective(result,true);
     SetOrder(result,2); SetIsTame(result,true);
-    name := ValueOption("Name");
-    if name = fail then
-      SetName(result,Concatenation("ClassReflection(",String(r),",",
-                                                      String(m),")"));
-      SetLaTeXName(result,Concatenation("\\varsigma_{",String(r),"(",
-                                                       String(m),")}"));
-    elif not IsEmpty(name) then
-      SetName(result,name); SetLaTeXName(result,name);
-    fi;
     SetFactorizationIntoCSCRCT(result,[result]);
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      SetLaTeXString(result,Concatenation("\\varsigma_{",String(r),"(",
+                                                         String(m),")}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
     return result;
   end );
 
@@ -1243,6 +1289,40 @@ InstallMethod( IsClassReflection,
 
 #############################################################################
 ##
+#M  String( <cr> ) . . . . . . . . . . . . . . . . . .  for class reflections
+#M  ViewString( <cr> ) . . . . . . . . . . . . . . . .  for class reflections
+#M  PrintObj( <cr> ) . . . . . . . . . . . . . . . . .  for class reflections
+#M  ViewObj( <cr> )  . . . . . . . . . . . . . . . . .  for class reflections
+##
+InstallMethod( String, "for class reflections (RCWA)", true,
+               [ IsRcwaMapping and IsClassReflection ], SUM_FLAGS,
+               cr -> Concatenation(List(["ClassReflection(",Source(cr),",",
+                                         Residue(Support(cr)),",",
+                                         Modulus(Support(cr)),")"],String)));
+
+InstallMethod( ViewString, "for class reflections (RCWA)", true,
+               [ IsRcwaMapping and IsClassReflection ], SUM_FLAGS,
+
+  function ( cr )
+    if   IsRing(Source(cr)) then
+      return Concatenation(List(["ClassReflection(",Residue(Support(cr)),",",
+                                 Modulus(Support(cr)),")"],String));
+    elif IsRcwaMappingOfZxZ(cr) then
+      return Concatenation(List(["ClassReflection(",ViewString(Support(cr)),
+                                 ")"],String));
+    else TryNextMethod(); fi;
+  end );
+
+InstallMethod( PrintObj, "for class reflections (RCWA)", true,
+               [ IsRcwaMapping and IsClassReflection ], SUM_FLAGS+10,
+               function ( cr ) Print( String( cr ) ); end );
+
+InstallMethod( ViewObj, "for class reflections (RCWA)", true,
+               [ IsRcwaMapping and IsClassReflection ], 20,
+               function ( cr ) Print( ViewString( cr ) ); end );
+
+#############################################################################
+##
 #F  ClassRotation( <R>, <r>, <m>, <u> ) . . . . . class rotation rho_(r(m),u)
 #F  ClassRotation( <r>, <m>, <u> )  . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassRotation( <R>, <cl>, <u> ) .  class rotation rho_(r(m),u), cl = r(m)
@@ -1255,7 +1335,7 @@ InstallGlobalFunction( ClassRotation,
 
   function ( arg )
 
-    local  result, name, R, coeff, idcoeff, res, pos, r, m, u;
+    local  result, R, coeff, idcoeff, res, pos, r, m, u, latex;
 
     if IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -1300,16 +1380,13 @@ InstallGlobalFunction( ClassRotation,
     SetRotationFactor(result,u);
     SetIsBijective(result,true);
     SetOrder(result,Order(u)); SetIsTame(result,true);
-    name := ValueOption("Name");
-    if name = fail then
-      SetName(result,Concatenation("ClassRotation(",String(r),",",String(m),
-                                                ",",String(u),")"));
-      SetLaTeXName(result,Concatenation("\\rho_{",String(r),"(",String(m),
-                                             "),",String(u),"}"));
-    elif not IsEmpty(name) then
-      SetName(result,name); SetLaTeXName(result,name);
-    fi;
+    SetBaseRoot(result,result); SetPowerOverBaseRoot(result,1);
     SetFactorizationIntoCSCRCT(result,[result]);
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      SetLaTeXString(result,Concatenation("\\rho_{",String(r),"(",String(m),
+                                          "),",String(u),"}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
     return result;
   end );
 
@@ -1342,6 +1419,42 @@ InstallTrueMethod( IsClassRotation, IsClassReflection );
 
 #############################################################################
 ##
+#M  String( <cr> ) . . . . . . . . . . . . . . . . . . .  for class rotations
+#M  ViewString( <cr> ) . . . . . . . . . . . . . . . . .  for class rotations
+#M  PrintObj( <cr> ) . . . . . . . . . . . . . . . . . .  for class rotations
+#M  ViewObj( <cr> )  . . . . . . . . . . . . . . . . . .  for class rotations
+##
+InstallMethod( String, "for class rotations (RCWA)", true,
+               [ IsRcwaMapping and IsClassRotation ], SUM_FLAGS-10,
+               cr -> Concatenation(List(["ClassRotation(",Source(cr),",",
+                                         Residue(Support(cr)),",",
+                                         Modulus(Support(cr)),",",
+                                         RotationFactor(cr),")"],String)));
+
+InstallMethod( ViewString, "for class rotations (RCWA)", true,
+               [ IsRcwaMapping and IsClassRotation ], SUM_FLAGS-10,
+
+  function ( cr )
+    if   IsRing(Source(cr)) then
+      return Concatenation(List(["ClassRotation(",Residue(Support(cr)),",",
+                                 Modulus(Support(cr)),",",RotationFactor(cr),
+                                 ")"],String));
+    elif IsRcwaMappingOfZxZ(cr) then
+      return Concatenation(List(["ClassRotation(",ViewString(Support(cr)),
+                                 ",",RotationFactor(cr),")"],String));
+    else TryNextMethod(); fi;
+  end );
+
+InstallMethod( PrintObj, "for class rotations (RCWA)", true,
+               [ IsRcwaMapping and IsClassRotation ], SUM_FLAGS+10,
+               function ( cr ) Print( String( cr ) ); end );
+
+InstallMethod( ViewObj, "for class rotations (RCWA)", true,
+               [ IsRcwaMapping and IsClassRotation ], 20,
+               function ( cr ) Print( ViewString( cr ) ); end );
+
+#############################################################################
+##
 #F  ClassTransposition( <R>, <r1>, <m1>, <r2>, <m2> ) . . class transposition
 #F  ClassTransposition( <r1>, <m1>, <r2>, <m2> )            tau_r1(m1),r2(m2)
 #F  ClassTransposition( <R>, <cl1>, <cl2> ) . . . dito, cl1=r1(m1) cl2=r2(m2)
@@ -1353,7 +1466,7 @@ InstallGlobalFunction( ClassTransposition,
 
   function ( arg )
 
-    local  result, is_usual_ct, type, name, R, r1, m1, r2, m2, cl1, cl2, h;
+    local  result, is_usual_ct, type, R, r1, m1, r2, m2, cl1, cl2, h, latex;
 
     if Length(arg) = 1 and IsList(arg[1]) then arg := arg[1]; fi;
 
@@ -1409,18 +1522,14 @@ InstallGlobalFunction( ClassTransposition,
     SetIsGeneralizedClassTransposition(result,true);
     SetTransposedClasses(result,[cl1,cl2]);
 
-    name := ValueOption("Name");
-    if name = fail then
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
       if is_usual_ct then type := "ClassTransposition(";
                      else type := "GeneralizedClassTransposition("; fi;
-      SetName(result,Concatenation(type,String(r1),",",String(m1),",",
-                                        String(r2),",",String(m2),")"));
-      SetLaTeXName(result,
-                   Concatenation("\\tau_{",String(r1),"(",String(m1),"),",
-                                           String(r2),"(",String(m2),")}"));
-    elif not IsEmpty(name) then
-      SetName(result,name); SetLaTeXName(result,name);
-    fi;
+      SetLaTeXString(result,Concatenation("\\tau_{",
+                                          String(r1),"(",String(m1),"),",
+                                          String(r2),"(",String(m2),")}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     if is_usual_ct then SetFactorizationIntoCSCRCT(result,[result]); fi;
 
@@ -1439,7 +1548,7 @@ InstallGlobalFunction( ClassTranspositionOfZxZ,
 
   function ( arg )
 
-    local  result, R, M, r1, m1, r2, m2, cl1, cl2, h, name, latexname;
+    local  result, R, M, r1, m1, r2, m2, cl1, cl2, h, latex;
 
     R := Integers^2; M := FullMatrixAlgebra(Integers,2);
 
@@ -1487,17 +1596,13 @@ InstallGlobalFunction( ClassTranspositionOfZxZ,
     SetString(result,Concatenation("ClassTransposition(",
                                    String(r1),",",String(m1),",",
                                    String(r2),",",String(m2),")"));
-    name := ValueOption("Name");
-    if name = fail then
-      SetName(result,Concatenation("ClassTransposition(",
-                                   ViewString(cl1),",",ViewString(cl2),")"));
-      latexname := Concatenation("\\tau_{",ViewString(cl1),",",
-                                           ViewString(cl2),"}");
-      latexname := ReplacedString(latexname,"Z","\\mathbb{Z}");
-      SetLaTeXName(result,latexname);
-    elif not IsEmpty(name) then
-      SetName(result,name); SetLaTeXName(result,name);
-    fi;
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      latex := Concatenation("\\tau_{",ViewString(cl1),",",
+                                       ViewString(cl2),"}");
+      latex := ReplacedString(latex,"Z","\\mathbb{Z}");
+      SetLaTeXString(result,latex);
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     SetFactorizationIntoCSCRCT(result,[result]);
 
@@ -1521,6 +1626,33 @@ InstallMethod( IsClassTransposition,
     if Length(cls) > 2 then return false; fi;
     if   sigma = ClassTransposition(cls)
     then SetTransposedClasses(sigma,cls); return true;
+    else return false; fi;
+  end );
+
+#############################################################################
+##
+#M  IsClassTransposition( <sigma> ) . . . . . . . .  for rcwa mappings of Z^2
+##
+InstallMethod( IsClassTransposition,
+               "for rcwa mappings of Z^2 (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( sigma )
+
+    local  cls, split;
+
+    if IsOne(sigma) then return false; fi;
+    if Length(Set(Coefficients(sigma))) > 3 then return false; fi;
+    cls := AsUnionOfFewClasses(Support(sigma));
+    if   Length(cls) = 1 then
+      for split in List([[2,1],[1,2]],v->SplittedClass(cls[1],v)) do
+        if   sigma = ClassTransposition(split)
+        then SetTransposedClasses(sigma,split); return true; fi;
+      od;
+      return false;
+    elif Length(cls) = 2 then
+      if   sigma = ClassTransposition(cls)
+      then SetTransposedClasses(sigma,cls); return true; fi;
     else return false; fi;
   end );
 
@@ -1569,6 +1701,62 @@ InstallMethod( TransposedClasses,
     then return TransposedClasses(ct);
     else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  String( <ct> ) . . . . . . . . . . . . . . . . . for class transpositions
+#M  ViewString( <ct> ) . . . . . . . . . . . . . . . for class transpositions
+#M  PrintObj( <ct> ) . . . . . . . . . . . . . . . . for class transpositions
+#M  ViewObj( <ct> )  . . . . . . . . . . . . . . . . for class transpositions
+##
+InstallMethod( String, "for class transpositions (RCWA)", true,
+               [ IsRcwaMapping and IsGeneralizedClassTransposition ],
+               SUM_FLAGS,
+
+  function ( ct )
+
+    local  cls, type;
+
+    cls := TransposedClasses(ct);
+    if   IsClassTransposition(ct)
+    then type := "ClassTransposition(";
+    else type := "GeneralizedClassTransposition("; fi;
+    return Concatenation(List([type,Source(ct),",",
+                               Residue(cls[1]),",",Modulus(cls[1]),",",
+                               Residue(cls[2]),",",Modulus(cls[2]),")"],
+                              String));
+  end );
+
+InstallMethod( ViewString, "for class transpositions (RCWA)", true,
+               [ IsRcwaMapping and IsGeneralizedClassTransposition ],
+               SUM_FLAGS,
+
+  function ( ct )
+
+    local  cls, type;
+
+    cls := TransposedClasses(ct);
+    if   IsClassTransposition(ct)
+    then type := "ClassTransposition(";
+    else type := "GeneralizedClassTransposition("; fi;
+    if   IsRing(Source(ct)) then
+      return Concatenation(List([type,
+                                 Residue(cls[1]),",",Modulus(cls[1]),",",
+                                 Residue(cls[2]),",",Modulus(cls[2]),")"],
+                                String));
+    elif IsRcwaMappingOfZxZ(ct) then
+      return Concatenation(List([type,ViewString(cls[1]),",",
+                                      ViewString(cls[2]),")"],String));
+    else TryNextMethod(); fi;
+  end );
+
+InstallMethod( PrintObj, "for class transpositions (RCWA)", true,
+               [ IsRcwaMapping and IsGeneralizedClassTransposition ],
+               SUM_FLAGS+10, function ( ct ) Print( String( ct ) ); end );
+
+InstallMethod( ViewObj, "for class transpositions (RCWA)", true,
+               [ IsRcwaMapping and IsGeneralizedClassTransposition ], 20,
+               function ( ct ) Print( ViewString( ct ) ); end );
 
 #############################################################################
 ##
@@ -1676,7 +1864,7 @@ InstallGlobalFunction( PrimeSwitch,
 
   function ( arg )
 
-    local  p, k, result, facts, kstr;
+    local  p, k, result, facts, kstr, latex;
 
     if not Length(arg) in [1,2] then Error("usage: see ?PrimeSwitch\n"); fi;
     p := arg[1]; if Length(arg) = 2 then k := arg[2]; else k := 1; fi;
@@ -1692,7 +1880,10 @@ InstallGlobalFunction( PrimeSwitch,
     SetIsTame(result,false); SetOrder(result,infinity);
     if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
     SetName(result,Concatenation("PrimeSwitch(",String(p),kstr,")"));
-    SetLaTeXName(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      SetLaTeXString(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
     SetFactorizationIntoCSCRCT(result,facts);
     return result;
   end );
@@ -1706,6 +1897,36 @@ InstallMethod( IsPrimeSwitch,
                true, [ IsRcwaMappingOfZ ], 0,
                sigma -> Multiplier(sigma) > 2 and IsPrime(Multiplier(sigma))
                         and sigma = PrimeSwitch(Multiplier(sigma)) );
+
+#############################################################################
+##
+#M  String( <sigma_p> ) . . . . . . . . . . . . . . . . .  for prime switches
+#M  ViewString( <sigma_p> ) . . . . . . . . . . . . . . .  for prime switches
+#M  PrintObj( <sigma_p> ) . . . . . . . . . . . . . . . .  for prime switches
+#M  ViewObj( <sigma_p> )  . . . . . . . . . . . . . . . .  for prime switches
+##
+InstallMethod( String, "for prime switches (RCWA)", true,
+               [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS,
+
+  function ( sigma_p )
+
+    local  p, k, kstr;
+
+    p := Multiplier(sigma_p); k := 1/(4*Density(Multpk(sigma_p,p,1)));
+    if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
+    return Concatenation("PrimeSwitch(",String(p),kstr,")");
+  end );
+
+InstallMethod( ViewString, "for prime switches (RCWA)", true,
+               [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS, String );
+
+InstallMethod( PrintObj, "for prime switches (RCWA)", true,
+               [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS,
+               function ( sigma_p ) Print( String( sigma_p ) ); end );
+
+InstallMethod( ViewObj, "for prime switches (RCWA)", true,
+               [ IsRcwaMapping and IsPrimeSwitch ], 20,
+               function ( sigma_p ) Print( ViewString( sigma_p ) ); end );
 
 #############################################################################
 ##
@@ -1723,7 +1944,7 @@ InstallGlobalFunction ( mKnot,
     SetIsBijective(result,true);
     SetIsTame(result,false); SetOrder(result,infinity);
     SetName(result,Concatenation("mKnot(",String(m),")"));
-    SetLaTeXName(result,Concatenation("\\kappa_{",String(m),"}"));
+    SetLaTeXString(result,Concatenation("\\kappa_{",String(m),"}"));
     return result;
   end );
 
@@ -1888,6 +2109,9 @@ InstallMethod( ViewObj,
 
   function ( f )
     if IsZero(f) or IsOne(f) then View(f); return; fi;
+    if HasBaseRoot(f) then
+      View(BaseRoot(f)); Print("^",PowerOverBaseRoot(f)); return;
+    fi;
     if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
     Print("<");
     if   HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f)))
@@ -2303,13 +2527,13 @@ InstallMethod( LaTeXObj,
       return str;
     end;
 
-    if HasLaTeXName(f) then return LaTeXName(f); fi;
+    if HasLaTeXString(f) then return LaTeXString(f); fi;
     indent := ValueOption("Indentation");
     if not IsPosInt(indent)
     then indent := ""; else indent := String(" ",indent); fi;
     str := indent;
     if ValueOption("Factorization") = true and IsBijective(f) then
-      gens := List(FactorizationIntoCSCRCT(f),LaTeXName);
+      gens := List(FactorizationIntoCSCRCT(f),LaTeXString);
       append("      &");
       for pos in [1..Length(gens)] do
         append(gens[pos]);
@@ -4175,13 +4399,21 @@ InstallMethod( InverseOp,
     SetInverse(f,Result); SetInverse(Result,f);
     if HasOrder(f) then SetOrder(Result,Order(f)); order := Order(f);
                    else order := fail; fi;
+    if HasBaseRoot(f) then
+      SetBaseRoot(Result,BaseRoot(f));
+      SetPowerOverBaseRoot(Result,-PowerOverBaseRoot(f));
+    fi;
+    if HasSmallestRoot(f) then
+      SetSmallestRoot(Result,SmallestRoot(f));
+      SetPowerOverSmallestRoot(Result,-PowerOverSmallestRoot(f));
+    fi;
     if HasName(f) then
       SetName(Result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
                        Name(f),-1,order));
     fi;
-    if HasLaTeXName(f) then
-      SetLaTeXName(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                            LaTeXName(f),-1,order));
+    if HasLaTeXString(f) then
+      SetLaTeXString(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXString(f),-1,order));
     fi;
 
     return Result;
@@ -4227,9 +4459,9 @@ InstallMethod( InverseOp,
       SetName(result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
                        Name(f),-1,order));
     fi;
-    if HasLaTeXName(f) then
-      SetLaTeXName(result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                            LaTeXName(f),-1,order));
+    if HasLaTeXString(f) then
+      SetLaTeXString(result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXString(f),-1,order));
     fi;
 
     return result;
@@ -4291,9 +4523,9 @@ InstallMethod( InverseOp,
       SetName(Result,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
                        Name(f),-1,order));
     fi;
-    if HasLaTeXName(f) then
-      SetLaTeXName(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                            LaTeXName(f),n,order));
+    if HasLaTeXString(f) then
+      SetLaTeXString(Result,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXString(f),n,order));
     fi;
 
     return Result;
@@ -4417,6 +4649,10 @@ InstallMethod( \^,
     then SetStandardConjugate(f,StandardConjugate(g)); fi;
     if   HasStandardizingConjugator(g)
     then SetStandardizingConjugator(f,h^-1*StandardizingConjugator(g)); fi;
+    if HasSmallestRoot(g) and AbsInt(PowerOverSmallestRoot(g)) > 1 then
+      SetSmallestRoot(f,SmallestRoot(g)^h);
+      SetPowerOverSmallestRoot(f,PowerOverSmallestRoot(g));
+    fi;
     return f;
   end );
 
@@ -4465,7 +4701,7 @@ InstallMethod( \^,
 
   function ( f, n )
 
-    local  pow, e, name, latexname;
+    local  pow, e, name, latex;
 
     if ValueOption("UseKernelPOW") = true then TryNextMethod(); fi;
 
@@ -4479,6 +4715,16 @@ InstallMethod( \^,
 
     if HasIsTame(f) then SetIsTame(pow,IsTame(f)); fi;
 
+    if HasBaseRoot(f) then
+      SetBaseRoot(pow,BaseRoot(f));
+      SetPowerOverBaseRoot(pow,PowerOverBaseRoot(f)*n);
+    fi;
+
+    if HasSmallestRoot(f) then
+      SetSmallestRoot(pow,SmallestRoot(f));
+      SetPowerOverSmallestRoot(pow,PowerOverSmallestRoot(f)*n);
+    fi;
+
     if HasOrder(f) then
       if Order(f) = infinity then SetOrder(pow,infinity); else
         SetOrder(pow,Order(f)/Gcd(Order(f),n));
@@ -4487,10 +4733,10 @@ InstallMethod( \^,
         name := NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(Name(f),n,Order(f));
         if name <> fail then SetName(pow,name); fi;
       fi;
-      if HasLaTeXName(f) then
-        latexname := LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
-                       LaTeXName(f),n,Order(f));
-        if latexname <> fail then SetLaTeXName(pow,latexname); fi;
+      if HasLaTeXString(f) then
+        latex := LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                   LaTeXString(f),n,Order(f));
+        if latex <> fail then SetLaTeXString(pow,latex); fi;
       fi;
     fi;
 
