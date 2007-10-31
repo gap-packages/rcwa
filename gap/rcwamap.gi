@@ -3323,7 +3323,6 @@ InstallMethod( MovedPoints,
       Info(InfoWarning,1,"MovedPoints: Sorry -- Lines are not yet ",
            "implemented;\nthere are the following fixed lines ",
            "(as pairs (v,w): l = v+k*w):\n",fixedlines);
-      return fail;
     fi;
     return ResidueClassUnion(R,m,residues{indices},[],fixedpoints);
   end );
