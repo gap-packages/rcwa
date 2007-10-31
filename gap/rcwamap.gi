@@ -1878,13 +1878,13 @@ InstallGlobalFunction( PrimeSwitch,
                ClassTransposition(4*k,2*k*p,2*k*p+k,4*k*p) ];
     result := Product(facts); SetIsPrimeSwitch(result,true);
     SetIsTame(result,false); SetOrder(result,infinity);
-    if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
-    SetName(result,Concatenation("PrimeSwitch(",String(p),kstr,")"));
+    SetFactorizationIntoCSCRCT(result,facts);
+    SetFactorizationIntoCSCRCT(result^-1,Reversed(facts));
     latex := ValueOption("LaTeXString");
     if latex = fail then
+      if k=1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
       SetLaTeXString(result,Concatenation("\\sigma_{",String(p),kstr,"}"));
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
-    SetFactorizationIntoCSCRCT(result,facts);
     return result;
   end );
 
@@ -1921,7 +1921,7 @@ InstallMethod( ViewString, "for prime switches (RCWA)", true,
                [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS, String );
 
 InstallMethod( PrintObj, "for prime switches (RCWA)", true,
-               [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS,
+               [ IsRcwaMapping and IsPrimeSwitch ], SUM_FLAGS+10,
                function ( sigma_p ) Print( String( sigma_p ) ); end );
 
 InstallMethod( ViewObj, "for prime switches (RCWA)", true,
@@ -3320,9 +3320,9 @@ InstallMethod( MovedPoints,
     else TryNextMethod(); fi;
     if fixedlines <> [] then
       fixedlines := Set(fixedlines);
-      Error("MovedPoints: Sorry -- Lines are not yet implemented;\nthere ",
-            "are the following fixed lines (as pairs (v,w): l = v+k*w):\n",
-            fixedlines);
+      Info(InfoWarning,1,"MovedPoints: Sorry -- Lines are not yet ",
+           "implemented;\nthere are the following fixed lines ",
+           "(as pairs (v,w): l = v+k*w):\n",fixedlines);
       return fail;
     fi;
     return ResidueClassUnion(R,m,residues{indices},[],fixedpoints);
