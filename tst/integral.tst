@@ -1544,25 +1544,9 @@ gap> ShiftsUpOn(Collatz);
 [  ]
 gap> ShiftsDownOn(Collatz);
 [  ]
-gap> ClassShift(0,1:Name:="a");
-a
-gap> ClassShift(0,1:Name:="");
-Tame bijective rcwa mapping of Z: n -> n + 1
-gap> ClassReflection(0,1:Name:="a");
-a
-gap> ClassReflection(0,1:Name:="");
-Bijective rcwa mapping of Z: n -> -n
-gap> ClassRotation(0,1,-1:Name:="a");
-a
-gap> ClassRotation(0,1,-1:Name:="");
-Bijective rcwa mapping of Z: n -> -n
-gap> ClassTransposition(0,2,1,2:Name:="a");
-a
-gap> ClassTransposition(0,2,1,2:Name:="");
-<bijective rcwa mapping of Z with modulus 2, of order 2>
-gap> a := ClassTransposition(2,4,3,4 :Name:="a");;
-gap> b := ClassTransposition(4,6,8,12:Name:="b");;
-gap> c := ClassTransposition(3,4,4,6 :Name:="c");;
+gap> a := ClassTransposition(2,4,3,4);; SetName(a,"a");
+gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
+gap> c := ClassTransposition(3,4,4,6);; SetName(c,"c");
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
 gap> phi := EpimorphismFromFpGroup(G,3);
