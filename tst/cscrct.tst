@@ -304,6 +304,205 @@ gap> TransposedClasses(ct);
 [ [-100/2], [141/20] ]
 gap> ct = ClassTransposition(last);
 true
+gap> R := Integers^2;
+( Integers^2 )
+gap> L := [ [ 2, 1 ], [ -1, 2 ] ];;
+gap> cls := AllResidueClassesModulo(R,L);
+[ (0,0)+(1,3)Z+(0,5)Z, (0,1)+(1,3)Z+(0,5)Z, (0,2)+(1,3)Z+(0,5)Z,
+  (0,3)+(1,3)Z+(0,5)Z, (0,4)+(1,3)Z+(0,5)Z ]
+gap> cls[2] := SplittedClass(cls[2],[2,3]);
+[ (0,1)+(2,6)Z+(0,15)Z, (0,6)+(2,6)Z+(0,15)Z, (0,11)+(2,6)Z+(0,15)Z,
+  (1,4)+(2,6)Z+(0,15)Z, (1,9)+(2,6)Z+(0,15)Z, (1,14)+(2,6)Z+(0,15)Z ]
+gap> cls := Flat(cls);
+[ (0,0)+(1,3)Z+(0,5)Z, (0,1)+(2,6)Z+(0,15)Z, (0,6)+(2,6)Z+(0,15)Z,
+  (0,11)+(2,6)Z+(0,15)Z, (1,4)+(2,6)Z+(0,15)Z, (1,9)+(2,6)Z+(0,15)Z,
+  (1,14)+(2,6)Z+(0,15)Z, (0,2)+(1,3)Z+(0,5)Z, (0,3)+(1,3)Z+(0,5)Z,
+  (0,4)+(1,3)Z+(0,5)Z ]
+gap> Union(cls);
+( Integers^2 )
+gap> Sum(List(cls,Density));
+1
+gap> ct := ClassTransposition(cls[1],cls[3]);
+ClassTransposition((0,0)+(1,3)Z+(0,5)Z,(0,6)+(2,6)Z+(0,15)Z)
+gap> ct = ClassTransposition(R,cls[1],cls[3]);
+true
+gap> ct = ClassTransposition([0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]]);
+true
+gap> ct = ClassTransposition(R,[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]]);
+true
+gap> ct = ClassTransposition([R,[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]]]);
+true
+gap> ImageDensity(ct);
+1
+gap> ct*ct;
+IdentityMapping( ( Integers^2 ) )
+gap> Display(ct);
+
+Bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order 2
+
+   [m,n] mod (2,6)Z+(0,15)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]  [0,5]  [0,10] [1,3]    |
+ [1,8]  [1,13]                 | [2m,-3m+3n+6]
+ [0,1]  [0,2]  [0,3]  [0,4]    |
+ [0,7]  [0,8]  [0,9]  [0,11]   |
+ [0,12] [0,13] [0,14] [1,0]    |
+ [1,1]  [1,2]  [1,4]  [1,5]    |
+ [1,6]  [1,7]  [1,9]  [1,10]   |
+ [1,11] [1,12] [1,14]          | [m,n]
+ [0,6]                         | [m/2,(3m+2n-12)/6]
+
+gap> Cycle(ct,[1,8]);
+[ [ 1, 8 ], [ 2, 27 ] ]
+gap> Support(ct);
+(0,0)+(1,3)Z+(0,5)Z U (0,6)+(2,6)Z+(0,15)Z
+gap> String(ct);
+"ClassTransposition((Integers^2),[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]])"
+gap> ViewString(ct);
+"ClassTransposition((0,0)+(1,3)Z+(0,5)Z,(0,6)+(2,6)Z+(0,15)Z)"
+gap> Print(ct,"\n");
+ClassTransposition((Integers^2),[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]])
+gap> cs1 := ClassShift(R,1);
+ClassShift((Integers^2),1)
+gap> cs2 := ClassShift(R,2);
+ClassShift((Integers^2),2)
+gap> Order(cs1);
+infinity
+gap> String(cs1);
+"ClassShift((Integers^2),[0,0],[[1,0],[0,1]],1)"
+gap> ViewString(cs1);
+"ClassShift((Integers^2),1)"
+gap> Print(cs1,"\n");
+ClassShift((Integers^2),[0,0],[[1,0],[0,1]],1)
+gap> cs1 = ClassShift(R,1);
+true
+gap> cs1 = ClassShift(R,[0,0],[[1,0],[0,1]],1);
+true
+gap> cs1 = ClassShift([0,0],[[1,0],[0,1]],1);
+true
+gap> cs1 = ClassShift([[0,0],[[1,0],[0,1]],1]);
+true
+gap> cs1 = cs2;
+false
+gap> Display(cs1);
+Tame bijective rcwa mapping of Z^2: [m,n] -> [m+1,n]
+gap> Display(cs2);
+Tame bijective rcwa mapping of Z^2: [m,n] -> [m,n+1]
+gap> Display(cs1*cs2);
+Bijective rcwa mapping of Z^2: [m,n] -> [m+1,n+1]
+gap> Comm(cs1,cs2);
+IdentityMapping( ( Integers^2 ) )
+gap> cs := ClassShift(cls[4],1);
+ClassShift((0,11)+(2,6)Z+(0,15)Z,1)
+gap> cs = ClassShift([0,11],[[2,6],[0,15]],1);
+true
+gap> cs = ClassShift(R,[0,11],[[2,6],[0,15]],1);
+true
+gap> cs = ClassShift([R,[0,11],[[2,6],[0,15]],1]);
+true
+gap> Order(cs);
+infinity
+gap> cls[4]^cs = cls[4];
+true
+gap> Support(cs);
+(0,11)+(2,6)Z+(0,15)Z
+gap> Display(cs);
+
+Tame bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order infin\
+ity
+
+   [m,n] mod (2,6)Z+(0,15)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]  [0,1]  [0,2]  [0,3]    |
+ [0,4]  [0,5]  [0,6]  [0,7]    |
+ [0,8]  [0,9]  [0,10] [0,12]   |
+ [0,13] [0,14] [1,0]  [1,1]    |
+ [1,2]  [1,3]  [1,4]  [1,5]    |
+ [1,6]  [1,7]  [1,8]  [1,9]    |
+ [1,10] [1,11] [1,12] [1,13]   |
+ [1,14]                        | [m,n]
+ [0,11]                        | [m+2,n+6]
+
+gap> String(cs);
+"ClassShift((Integers^2),[0,11],[[2,6],[0,15]],1)"
+gap> ViewString(cs);
+"ClassShift((0,11)+(2,6)Z+(0,15)Z,1)"
+gap> Print(cs,"\n");
+ClassShift((Integers^2),[0,11],[[2,6],[0,15]],1)
+gap> cr := ClassReflection(R);
+ClassReflection((0,0)+(1,0)Z+(0,1)Z)
+gap> Order(cr);
+2
+gap> Support(cr);
+Z^2 \ [ [ 0, 0 ] ]
+gap> Display(cr);
+Bijective rcwa mapping of Z^2: [m,n] -> [-m,-n]
+gap> cr*cr;
+IdentityMapping( ( Integers^2 ) )
+gap> cr := ClassReflection(cls[1]);
+ClassReflection((0,0)+(1,3)Z+(0,5)Z)
+gap> cr = ClassReflection(R,cls[1]);
+true
+gap> cr = ClassReflection(R,[0,0],[[1,3],[0,5]]);
+true
+gap> cr = ClassReflection([R,[0,0],[[1,3],[0,5]]]);
+true
+gap> Order(cr);
+2
+gap> Support(cr);
+(0,0)+(1,3)Z+(0,5)Z \ [ [ 0, 0 ] ]
+gap> Display(cr);
+
+Bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order 2
+
+    [m,n] mod (1,3)Z+(0,5)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]                         | [-m,-n]
+ [0,1] [0,2] [0,3] [0,4]       | [m,n]
+
+gap> String(cr);
+"ClassReflection((Integers^2),[0,0],[[1,3],[0,5]])"
+gap> ViewString(cr);
+"ClassReflection((0,0)+(1,3)Z+(0,5)Z)"
+gap> Print(cr,"\n");
+ClassReflection((Integers^2),[0,0],[[1,3],[0,5]])
+gap> cr := ClassRotation(cls[7],[[1,1],[0,1]]);
+ClassRotation((1,14)+(2,6)Z+(0,15)Z,[[1,1],[0,1]])
+gap> cr = ClassRotation(R,cls[7],[[1,1],[0,1]]);
+true
+gap> cr = ClassRotation([R,cls[7],[[1,1],[0,1]]]);
+true
+gap> cr = ClassRotation([R,[1,14],[[2,6],[0,15]],[[1,1],[0,1]]]);
+true
+gap> Order(cr);
+infinity
+gap> Support(cr);
+(1,14)+(2,6)Z+(0,15)Z
+gap> last^cr;
+(1,14)+(2,6)Z+(0,15)Z
+gap> Display(cr);
+
+Tame bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order infin\
+ity
+
+   [m,n] mod (2,6)Z+(0,15)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]  [0,1]  [0,2]  [0,3]    |
+ [0,4]  [0,5]  [0,6]  [0,7]    |
+ [0,8]  [0,9]  [0,10] [0,11]   |
+ [0,12] [0,13] [0,14] [1,0]    |
+ [1,1]  [1,2]  [1,3]  [1,4]    |
+ [1,5]  [1,6]  [1,7]  [1,8]    |
+ [1,9]  [1,10] [1,11] [1,12]   |
+ [1,13]                        | [m,n]
+ [1,14]                        | [m,(15m+2n-15)/2]
+
+gap> String(cr);
+"ClassRotation((Integers^2),[1,14],[[2,6],[0,15]],[[1,1],[0,1]])"
+gap> ViewString(cr);
+"ClassRotation((1,14)+(2,6)Z+(0,15)Z,[[1,1],[0,1]])"
+gap> Print(cr,"\n");
+ClassRotation((Integers^2),[1,14],[[2,6],[0,15]],[[1,1],[0,1]])
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "cscrct.tst", 900000000 );
 
