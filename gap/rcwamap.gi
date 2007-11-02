@@ -188,6 +188,25 @@ InstallGlobalFunction( RcwaMappingsFamily,
 
 #############################################################################
 ##
+#F  RCWAMAPPING_COMPRESS_COEFFICIENT_LIST( <coeffs> ) . . . . . . . . utility
+##
+##  This function takes care of that equal coefficient triples are always
+##  also identical, in order to save memory.
+##
+BindGlobal( "RCWAMAPPING_COMPRESS_COEFFICIENT_LIST",
+
+  function ( coeffs )
+
+    local  cset, i;
+
+    cset := Set(coeffs);
+    for i in [1..Length(coeffs)] do
+      coeffs[i] := cset[PositionSorted(cset,coeffs[i])];
+    od;
+  end );
+
+#############################################################################
+##
 #M  RcwaMapping( <R>, <modulus>, <coeffs> ) . . . .  method (a) in the manual
 ##
 InstallMethod( RcwaMapping,
