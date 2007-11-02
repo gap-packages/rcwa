@@ -314,6 +314,7 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 #F  ClassShift( <R>, <cl> ) . . . . . .  class shift nu_r(m), where cl = r(m)
 #F  ClassShift( <cl> )  . . . . . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassShift( <R> ) . . . . . . . . . . . . .  class shift nu_R: n -> n + 1
+#F  ClassShiftOfZxZ( ... )  . . . . . . . . . . . . . . .  class shift of Z^2
 #P  IsClassShift( <sigma> )
 ##
 ##  Returns the class shift nu_r(m).
@@ -325,6 +326,7 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 ##  Enclosing the argument list in list brackets is permitted.
 ##
 DeclareGlobalFunction( "ClassShift" );
+DeclareGlobalFunction( "ClassShiftOfZxZ" );
 DeclareProperty( "IsClassShift", IsRcwaMapping );
 
 #############################################################################
@@ -355,6 +357,7 @@ DeclareProperty( "IsClassReflection", IsRcwaMapping );
 #F  ClassRotation( <R>, <cl>, <u> ) .  class rotation rho_(r(m),u), cl = r(m)
 #F  ClassRotation( <cl>, <u> )  . . . . . . . . . . . . . . . . . . .  (dito)
 #F  ClassRotation( <R>, <u> ) . . . . . . . class rotation rho_(R,u): n -> un
+#F  ClassRotationOfZxZ( ... ) . . . . . . . . . . . . . class rotation of Z^2
 #P  IsClassRotation( <sigma> )
 ##
 ##  Returns the class rotation rho_(r(m),u).
@@ -368,6 +371,7 @@ DeclareProperty( "IsClassReflection", IsRcwaMapping );
 ##  Enclosing the argument list in list brackets is permitted.
 ##
 DeclareGlobalFunction( "ClassRotation" );
+DeclareGlobalFunction( "ClassRotationOfZxZ" );
 DeclareProperty( "IsClassRotation", IsRcwaMapping );
 DeclareAttribute( "RotationFactor", IsRcwaMapping );
 
