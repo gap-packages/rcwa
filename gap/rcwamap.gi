@@ -199,7 +199,10 @@ BindGlobal( "RCWAMAPPING_COMPRESS_COEFFICIENT_LIST",
 
     local  cset, i;
 
+    if   Length(coeffs) >= 10 and Length(Set(coeffs{[1..10]})) > 3
+    then return; fi; # Compress only if likely one can save much memory.
     cset := Set(coeffs);
+    if Length(cset) > 64 then return; fi; # Bad complexity for large sets.
     for i in [1..Length(coeffs)] do
       coeffs[i] := cset[PositionSorted(cset,coeffs[i])];
     od;
@@ -334,6 +337,7 @@ InstallMethod( RcwaMappingNC,
           break;
         fi;
       od;
+      RCWAMAPPING_COMPRESS_COEFFICIENT_LIST(cRed);
       f!.modulus := Immutable(mRed);
       f!.coeffs  := Immutable(cRed);
     end;
@@ -450,6 +454,7 @@ InstallMethod( RcwaMappingNC,
           then cRed := cRed[1]; m := m/p; else cRed := cRedBuf; fi;
         until cRed = cRedBuf or m mod p <> 0;
       od;
+      RCWAMAPPING_COMPRESS_COEFFICIENT_LIST(cRed);
       f!.coeffs  := Immutable(cRed);
       f!.modulus := Length(cRed);
     end;
@@ -635,8 +640,10 @@ InstallMethod( RcwaMappingNC,
         d := divs[i]; i := i + 1;
         cRed := List([1..m/d], i -> c{[(i - 1) * d + 1 .. i * d]});
       until Length(Set(cRed)) = 1;
-      f!.coeffs  := Immutable(cRed[1]);
-      f!.modulus := Length(cRed[1]);
+      cRed := cRed[1];
+      RCWAMAPPING_COMPRESS_COEFFICIENT_LIST(cRed);
+      f!.coeffs  := Immutable(cRed);
+      f!.modulus := Length(cRed);
     end;
 
     if IsInt(pi) then pi := [pi]; fi;
@@ -734,6 +741,7 @@ InstallMethod( RcwaMappingNC,
           fi;
         until m <> mred or not IsZero(m mod d);
       od;
+      RCWAMAPPING_COMPRESS_COEFFICIENT_LIST(c);
       f!.coeffs  := Immutable(c);
       f!.modulus := m;
     end;
@@ -2056,6 +2064,7 @@ InstallGlobalFunction( PrimeSwitch,
                ClassTransposition(4*k,2*k*p,2*k*p+k,4*k*p) ];
     result := Product(facts); SetIsPrimeSwitch(result,true);
     SetIsTame(result,false); SetOrder(result,infinity);
+    SetBaseRoot(result,result); SetPowerOverBaseRoot(result,1);
     SetFactorizationIntoCSCRCT(result,facts);
     SetFactorizationIntoCSCRCT(result^-1,Reversed(facts));
     latex := ValueOption("LaTeXString");
@@ -6037,7 +6046,7 @@ InstallMethod( FactorizationIntoCSCRCT,
       areCTs := ValueOption("ct") = true;
       if not IsList(l) then l := [l]; fi;
       for fact in l do # Factors in divisors list must commute.
-        Info(InfoRCWA,1,"Dividing by ",Name(fact)," ",direction,".");
+        Info(InfoRCWA,1,"Dividing by ",ViewString(fact)," ",direction,".");
       od;
       if direction = "from the right" then
         if   areCTs
