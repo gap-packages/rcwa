@@ -4383,7 +4383,7 @@ InstallMethod( CompositionMapping2,
     for i in [1..Length(m)] do
       m[i] := m[i] * Lcm(List(Flat(m[i]),DenominatorRat));
     od; 
-    m := Lcm(m1,Lcm(m));
+    m := Lcm(m1,Lcm(m)) * Divisor(f);
 
     res1 := AllResidues(R,m1);
     res2 := AllResidues(R,m2);
