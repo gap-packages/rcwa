@@ -327,6 +327,11 @@ Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
 
 gap> ct*ct;
 IdentityMapping( ( Integers^2 ) )
+gap> G := SL(2,Integers);;
+gap> phi := IsomorphismRcwaGroup(G,cls[2]);
+[ [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ] ] ->
+[ ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[0,1],[-1,0]]),
+  ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 2000000000 );
 
