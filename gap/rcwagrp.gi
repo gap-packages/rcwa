@@ -1553,6 +1553,29 @@ InstallMethod( IsomorphismRcwaGroupOverZ,
 
 #############################################################################
 ##
+#M  IsomorphismRcwaGroup( <sl>, <cl> )  SL(2,Z) on given residue class of Z^2
+##
+InstallMethod( IsomorphismRcwaGroup,
+               "SL(2,Z) on a given residue class of Z^2 (RCWA)", ReturnTrue,
+               [ IsIntegerMatrixGroup and IsNaturalSL, IsResidueClassOfZxZ ],
+               0,
+
+  function ( sl, cl )
+
+    local  phi, img;
+
+    if DimensionOfMatrixGroup(sl) <> 2 then TryNextMethod(); fi;
+
+    img := Group(List(GeneratorsOfGroup(sl),gen->ClassRotation(cl,gen)));
+    phi := EpimorphismByGeneratorsNC(sl,img);
+
+    SetIsBijective(phi,true);
+
+    return phi;
+  end );
+
+#############################################################################
+##
 #S  Constructing rcwa groups: ///////////////////////////////////////////////
 #S  Tame groups (cyclic, dihedral, finitely generated abelian, finite). /////
 ##

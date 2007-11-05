@@ -151,6 +151,7 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 #############################################################################
 ##
 #O  IsomorphismRcwaGroup( <G>, <R> ) . .  rcwa representation of <G> over <R>
+#O  IsomorphismRcwaGroup( <G>, <cl> )  . . rcwa representation of <G> on <cl>
 #O  IsomorphismRcwaGroup( <G> )  . . . . .  rcwa representation of <G> over Z
 #A  IsomorphismRcwaGroupOverZ( <G> ) . . . . . .  the corresponding attribute
 ##
@@ -158,6 +159,7 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 ##  the ring <R>, respectively over Z.
 ##
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsRing ] );
+DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsResidueClass ] );
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup ] );
 DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
 
