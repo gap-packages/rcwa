@@ -254,6 +254,18 @@ Rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z
 
 gap> IsBijective(h);
 true
+gap> ct := ClassTransposition(0,2,1,2);
+ClassTransposition(0,2,1,2)
+gap> h := RcwaMapping(ct,One(ct));
+ClassTransposition((0,0)+(2,0)Z+(0,1)Z,(1,0)+(2,0)Z+(0,1)Z)
+gap> elm1 := g*h;
+<rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z>
+gap> elm2 := h*g^-1;
+<rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z>
+gap> elm1*elm2;
+IdentityMapping( ( Integers^2 ) )
+gap> elm2*elm1;
+IdentityMapping( ( Integers^2 ) )
 gap> P1 := SplittedClass(R,[2,2]);
 [ (0,0)+(2,0)Z+(0,2)Z, (0,1)+(2,0)Z+(0,2)Z, (1,0)+(2,0)Z+(0,2)Z, 
   (1,1)+(2,0)Z+(0,2)Z ]
@@ -316,7 +328,7 @@ Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
 gap> ct*ct;
 IdentityMapping( ( Integers^2 ) )
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "zxz.tst", 1000000000 );
+gap> STOP_TEST( "zxz.tst", 2000000000 );
 
 #############################################################################
 ##
