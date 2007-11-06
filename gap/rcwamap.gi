@@ -3546,7 +3546,7 @@ InstallMethod( RestrictedMapping,
 
   function ( f, S )
 
-    local  R, mf, mS, m, resf, resS, resm, cf, cfS, fS, r, pos;
+    local  R, mf, mS, m, resf, resS, resm, cf, cfS, fS, r, pos, idcoeff;
 
     R := Source(f);
     if UnderlyingRing(FamilyObj(S)) <> R
@@ -3555,8 +3555,11 @@ InstallMethod( RestrictedMapping,
     then TryNextMethod(); fi;
     mf := Modulus(f); mS := Modulus(S); m := Lcm(mf,mS);
     resf := AllResidues(R,mf); resS := Residues(S); resm := AllResidues(R,m);
+    if   IsRing(R) then idcoeff := [1,0,1]*One(R);
+    elif IsZxZ(R)  then idcoeff := [[[1,0],[0,1]],[0,0],1];
+    else TryNextMethod(); fi;
     cf := Coefficients(f);
-    cfS := List(resm,r->[1,0,1]*One(R));
+    cfS := ListWithIdenticalEntries(Length(resm),idcoeff);
     for pos in [1..Length(resm)] do
       r := resm[pos];
       if r mod mS in resS then
@@ -4311,6 +4314,34 @@ InstallMethod( \+, "for a ring element and an rcwa mapping (RCWA)",
 
 #############################################################################
 ##
+#M  \+( <f>, <v> ) . . . . . for rcwa mappings of Z^2, addition of a constant
+##
+InstallMethod( \+, "for an rcwa mappings of Z^2 and a row vector (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZxZ, IsRowVector ], 0,
+
+  function ( f, v )
+
+    local  coeffs, sum;
+
+    if not v in Source(f) then TryNextMethod(); fi;
+
+    coeffs := List(Coefficients(f),c->[c[1],c[2]+c[3]*v,c[3]]);
+    sum    := RcwaMapping(Source(f),Modulus(f),coeffs);
+
+    if   HasIsInjective(f) and IsInjective(f)
+    then SetIsInjective(sum,true); fi;
+    if   HasIsSurjective(f) and IsSurjective(f)
+    then SetIsSurjective(sum,true); fi;
+
+    return sum;
+  end );
+
+InstallMethod( \+, "for a row vector and an rcwa mapping (RCWA)",
+               ReturnTrue, [ IsRowVector, IsRcwaMappingOfZxZ ], 0,
+               function ( v, f ) return f + v; end );
+
+#############################################################################
+##
 #S  Multiplying rcwa mappings. //////////////////////////////////////////////
 ##
 #############################################################################
@@ -4503,6 +4534,39 @@ InstallMethod( \*,
 InstallMethod( \*, "for rcwa mappings, multiplication by a constant (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
                function ( f, n ) return n * f; end );
+
+#############################################################################
+##
+#M  \*( <f>, <mat> ) . . for rcwa mappings of Z^2, multiplication by a matrix
+##
+InstallMethod( \*,
+               "for rcwa mappings of Z^2, multiplication by a matrix (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZxZ, IsMatrix ], 0,
+
+  function ( f, mat )
+
+    local  coeffs, product;
+
+    if   DimensionsMat(mat) <> [2,2] or not ForAll(Flat(mat),IsInt)
+    then TryNextMethod(); fi;
+
+    coeffs  := List(Coefficients(f),c->[c[1]*mat,c[2]*mat,c[3]]);
+    product := RcwaMapping(Source(f),Modulus(f),coeffs);
+
+    if   DeterminantMat(mat) <> 0 and HasIsInjective(f) and IsInjective(f)
+    then SetIsInjective(product,true); fi;
+
+    return product;
+  end );
+
+#############################################################################
+##
+#M  \*( <n>, <f> ) . . for rcwa mappings of Z^2, multiplication by an integer
+##
+InstallMethod( \*,
+               "for rcwa mappings of Z^2, multiplication by integer (RCWA)",
+               ReturnTrue, [ IsInt, IsRcwaMappingOfZxZ ], 0,
+               function ( n, f ) return f * [ [ n, 0 ], [ 0, n ] ]; end );
 
 #############################################################################
 ##
@@ -4770,6 +4834,46 @@ InstallMethod( InverseGeneralMapping,
 #S  Computing right inverses of injective rcwa mappings. ////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#M  RightInverse( <f> ) . . . . . . . . . . . . . for injective rcwa mappings
+##
+InstallMethod( RightInverse,
+               "for injective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+
+  function ( f )
+
+    local  R, mf, cf, resf, inv, minv, cinv, resinv, imgs,
+           r1, r2, pos1, pos2, idcoeff;
+
+    if not IsInjective(f) then return fail; fi;
+    R := Source(f);
+    if   IsRing(R) then idcoeff := [1,0,1] * One(R);
+    elif IsZxZ(R)  then idcoeff := [[[1,0],[0,1]],[0,0],1];
+    else TryNextMethod(); fi;
+    mf := Modulus(f); cf := Coefficients(f);
+    imgs := AllResidueClassesModulo(R,mf)^f;
+    minv := Lcm(List(imgs,Modulus));
+    cinv := ListWithIdenticalEntries(NumberOfResidues(R,minv),idcoeff);
+    resf := AllResidues(R,mf); resinv := AllResidues(R,minv);
+    for r1 in resf do
+      pos1 := PositionSorted(resf,r1);
+      for r2 in Intersection(resinv,imgs[pos1]) do
+        pos2 := PositionSorted(resinv,r2);
+        if   IsRing(R)
+        then cinv[pos2] := [cf[pos1][3],-cf[pos1][2],cf[pos1][1]];
+        else cinv[pos2] := [cf[pos1][3]*cf[pos1][1]^-1,
+                           -cf[pos1][2]*cf[pos1][1]^-1,1];
+             cinv[pos2] := cinv[pos2] * Lcm(List(Flat(cinv[pos2]),
+                                                 DenominatorRat));
+        fi;
+      od;
+    od;
+    inv := RcwaMapping(R,minv,cinv);
+    return inv;
+  end );
 
 #############################################################################
 ##
@@ -5867,11 +5971,10 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
-#M  Restriction( <g>, <f> ) . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Restriction( <g>, <f> ) . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( Restriction,
-               "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+InstallMethod( Restriction, "for rcwa mappings (RCWA)", IsIdenticalObj,
+               [ IsRcwaMapping, IsRcwaMapping ], 0,
 
   function ( g, f )
 
@@ -5893,11 +5996,10 @@ InstallMethod( Restriction,
 
 #############################################################################
 ##
-#M  Induction( <g>, <f> ) . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Induction( <g>, <f> ) . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( Induction,
-               "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ, IsRcwaMappingOfZ ], 0,
+InstallMethod( Induction, "for rcwa mappings (RCWA)", IsIdenticalObj,
+               [ IsRcwaMapping, IsRcwaMapping ], 0,
 
   function ( g, f )
 
