@@ -155,6 +155,29 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( ( Integers^2 ) ), infinity, "RCWA(Z^2)", 
   IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: [m,n] -> [-m,-n], 
   infinity, "RCWA(Z^2)" ]
+gap> R := Integers^2;
+( Integers^2 )
+gap> L1 := [[2,0],[0,2]];;
+gap> L2 := [[2,1],[0,2]];;
+gap> P1 := AllResidueClassesModulo(R,L1);
+[ (0,0)+(2,0)Z+(0,2)Z, (0,1)+(2,0)Z+(0,2)Z, (1,0)+(2,0)Z+(0,2)Z,
+  (1,1)+(2,0)Z+(0,2)Z ]
+gap> P2 := AllResidueClassesModulo(R,L2);
+[ (0,0)+(2,1)Z+(0,2)Z, (0,1)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z,
+  (1,1)+(2,1)Z+(0,2)Z ]
+gap> g := RepresentativeAction(G,P1,P2);
+<bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z>
+gap> P1^g = P2;
+true
+gap> Display(g);
+
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z
+
+    [m,n] mod (2,0)Z+(0,1)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]                         | [m,(m+2n)/2]
+ [1,0]                         | [m,(m+2n-1)/2]
+
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));
@@ -190,6 +213,9 @@ gap> elm := RepresentativeAction(G,S1,S2);
 <bijective rcwa mapping of Z_( 2, 3 ) with modulus 12>
 gap> S1^elm = S2;
 true
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
+GF(2)[x]
 gap> G := RCWA(R);
 RCWA(GF(2)[x])
 gap> Set(KnownPropertiesOfObject(G));
@@ -303,6 +329,35 @@ gap> List(last,attr->ValueGlobal(attr)(G));
   IdentityMapping( ( Integers^2 ) ), 
   ClassTransposition((0,0)+(1,0)Z+(0,2)Z,(0,1)+(1,0)Z+(0,2)Z), infinity, 
   "CT(Z^2)", ( Integers^2 ) ]
+gap> R := Integers^2;;
+gap> L1 := [[2,0],[0,2]];;
+gap> L2 := [[2,1],[0,2]];;
+gap> P1 := AllResidueClassesModulo(R,L1);
+[ (0,0)+(2,0)Z+(0,2)Z, (0,1)+(2,0)Z+(0,2)Z, (1,0)+(2,0)Z+(0,2)Z,
+  (1,1)+(2,0)Z+(0,2)Z ]
+gap> P2 := AllResidueClassesModulo(R,L2);
+[ (0,0)+(2,1)Z+(0,2)Z, (0,1)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z,
+  (1,1)+(2,1)Z+(0,2)Z ]
+gap> ct1 := ClassTransposition(P1[1],P2[3]);
+ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(1,0)+(2,1)Z+(0,2)Z)
+gap> ct2 := ClassTransposition(P1[1],P2[4]);
+ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(1,1)+(2,1)Z+(0,2)Z)
+gap> g := RepresentativeAction(G,ct1,ct2);
+<bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z>
+gap> ct1^g = ct2;
+true
+gap> Display(g);
+
+Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z
+
+    [m,n] mod (4,0)Z+(0,4)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0] [0,2] [2,0] [2,2]       | [m,n]
+ [0,1] [2,1]                   | [m+1,(m+2n-2)/2]
+ [0,3] [2,3]                   | [m,(n-1)/2]
+ [1,0] [1,2] [3,1] [3,3]       | [m,n+1]
+ [1,1] [1,3] [3,0] [3,2]       | [m,(-m+4n+1)/2]
+
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))
 gap> Set(KnownPropertiesOfObject(G));
@@ -341,6 +396,9 @@ gap> Factorization(elm);
   ClassTransposition(1,2,0,8), ClassTransposition(2,4,4,8) ]
 gap> IsSubset(G,last);
 true
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);
+GF(2)[x]
 gap> G := CT(R);
 CT(GF(2)[x])
 gap> Set(KnownPropertiesOfObject(G));
