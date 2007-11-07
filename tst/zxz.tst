@@ -21,29 +21,29 @@ gap> Lcm(R,L1,L2);
 [ [ 6, 8 ], [ 0, 30 ] ]
 gap> Lcm(L1,L1);
 [ [ 1, 3 ], [ 0, 5 ] ]
-gap> g := RcwaMapping( Integers^2, [[1,0],[0,6]],
->                      [[[0,0],[[[2,0],[0,1]],[0,0],2]],
->                       [[0,1],[[[4,0],[0,3]],[0,1],2]],
->                       [[0,2],[[[2,0],[0,1]],[0,0],2]],
->                       [[0,3],[[[4,0],[0,3]],[0,1],2]],
->                       [[0,4],[[[4,0],[0,1]],[2,0],2]],
->                       [[0,5],[[[4,0],[0,3]],[0,1],2]]] );
+gap> SigmaT := RcwaMapping( Integers^2, [[1,0],[0,6]],
+>                           [[[0,0],[[[2,0],[0,1]],[0,0],2]],
+>                            [[0,1],[[[4,0],[0,3]],[0,1],2]],
+>                            [[0,2],[[[2,0],[0,1]],[0,0],2]],
+>                            [[0,3],[[[4,0],[0,3]],[0,1],2]],
+>                            [[0,4],[[[4,0],[0,1]],[2,0],2]],
+>                            [[0,5],[[[4,0],[0,3]],[0,1],2]]] );
 <rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
-gap> Mod(g);
+gap> Mod(SigmaT);
 [ [ 1, 0 ], [ 0, 6 ] ]
-gap> Mult(g);
+gap> Mult(SigmaT);
 [ [ 4, 0 ], [ 0, 3 ] ]
-gap> Div(g);
+gap> Div(SigmaT);
 2
-gap> IsBalanced(g);
+gap> IsBalanced(SigmaT);
 false
-gap> Lcm(Mult(g),Mod(g));
+gap> Lcm(Mult(SigmaT),Mod(SigmaT));
 [ [ 4, 0 ], [ 0, 6 ] ]
-gap> inc := IncreasingOn(g);
+gap> inc := IncreasingOn(SigmaT);
 (0,1)+(1,0)Z+(0,2)Z
 gap> Density(inc);
 1/2
-gap> dec := DecreasingOn(g);
+gap> dec := DecreasingOn(SigmaT);
 (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
 gap> Density(dec);
 1/3
@@ -51,63 +51,63 @@ gap> Intersection(inc,dec);
 [  ]
 gap> R := Integers^2;
 ( Integers^2 )
-gap> Source(g);
+gap> Source(SigmaT);
 ( Integers^2 )
 gap> Union(inc,dec);
 Z^2 \ (0,4)+(1,0)Z+(0,6)Z
 gap> S := last;;
 gap> Difference(R,S);
 (0,4)+(1,0)Z+(0,6)Z
-gap> IsClassWiseOrderPreserving(g);
+gap> IsClassWiseOrderPreserving(SigmaT);
 true
-gap> ClassWiseOrderPreservingOn(g);
+gap> ClassWiseOrderPreservingOn(SigmaT);
 ( Integers^2 )
-gap> ClassWiseOrderReversingOn(g);
+gap> ClassWiseOrderReversingOn(SigmaT);
 [  ]
-gap> ClassWiseConstantOn(g);
+gap> ClassWiseConstantOn(SigmaT);
 [  ]
-gap> ClassWiseOrderPreservingOn(One(g));
+gap> ClassWiseOrderPreservingOn(One(SigmaT));
 ( Integers^2 )
-gap> ClassWiseConstantOn(One(g));
+gap> ClassWiseConstantOn(One(SigmaT));
 [  ]
-gap> ClassWiseConstantOn(Zero(g));
+gap> ClassWiseConstantOn(Zero(SigmaT));
 ( Integers^2 )
-gap> PrimeSet(g);
+gap> PrimeSet(SigmaT);
 [ 2, 3 ]
-gap> IsOne(g);
+gap> IsOne(SigmaT);
 false
-gap> IsZero(g);
+gap> IsZero(SigmaT);
 false
-gap> l := LargestSourcesOfAffineMappings(g);
+gap> l := LargestSourcesOfAffineMappings(SigmaT);
 [ (0,1)+(1,0)Z+(0,2)Z, (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z, 
   (0,4)+(1,0)Z+(0,6)Z ]
 gap> Union(l);
 ( Integers^2 )
 gap> List(l,Density);
 [ 1/2, 1/3, 1/6 ]
-gap> ImageDensity(g);
+gap> ImageDensity(SigmaT);
 1
-gap> Multpk(g,2,1);
+gap> Multpk(SigmaT,2,1);
 [  ]
-gap> Multpk(g,2,0);
+gap> Multpk(SigmaT,2,0);
 Z^2 \ (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
-gap> Multpk(g,2,-1);
+gap> Multpk(SigmaT,2,-1);
 (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z
-gap> Multpk(g,3,0);
+gap> Multpk(SigmaT,3,0);
 (0,0)+(1,0)Z+(0,2)Z
-gap> Multpk(g,3,1);
+gap> Multpk(SigmaT,3,1);
 (0,1)+(1,0)Z+(0,2)Z
 gap> Union(last,last2);
 ( Integers^2 )
-gap> Multpk(g,3,-1);
+gap> Multpk(SigmaT,3,-1);
 [  ]
-gap> Multpk(g,3,2);
+gap> Multpk(SigmaT,3,2);
 [  ]
-gap> Image(g);
+gap> Image(SigmaT);
 ( Integers^2 )
-gap> IsBijective(g);
+gap> IsBijective(SigmaT);
 true
-gap> Display(g);
+gap> Display(SigmaT);
 
 Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
@@ -117,7 +117,7 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
  [0,1] [0,3] [0,5]             | [2m,(3n+1)/2]
  [0,4]                         | [2m+1,n/2]
 
-gap> Display(g:VarNames:="v");
+gap> Display(SigmaT:VarNames:="v");
 
 Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
@@ -127,7 +127,7 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
  [0,1] [0,3] [0,5]             | (v * [[4,0],[0,3]] + [0,1])/2
  [0,4]                         | (v * [[4,0],[0,1]] + [2,0])/2
 
-gap> Display(g^-1);
+gap> Display(SigmaT^-1);
 
 Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
@@ -137,7 +137,7 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
  [0,2]                         | [m/2,(2n-1)/3]
  [1,2]                         | [(m-1)/2,2n]
 
-gap> Display(g^-1:VarNames:="v");
+gap> Display(SigmaT^-1:VarNames:="v");
 
 Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
@@ -147,7 +147,7 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
  [0,2]                         | (v * [[3,0],[0,4]] + [0,-2])/6
  [1,2]                         | (v * [[1,0],[0,4]] + [-1,0])/2
 
-gap> Display(g^2);
+gap> Display(SigmaT^2);
 
 Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,12)Z
 
@@ -160,26 +160,26 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,12)Z
  [0,4]  [0,8]                  | [2m+1,n/4]
  [0,10]                        | [4m+2,(3n+2)/4]
 
-gap> g*g^-1;
+gap> SigmaT*SigmaT^-1;
 IdentityMapping( ( Integers^2 ) )
-gap> g^2*g^-1;
+gap> SigmaT^2*SigmaT^-1;
 <bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
-gap> last=g;
+gap> last=SigmaT;
 true
-gap> g^-1*g^2 = g;
+gap> SigmaT^-1*SigmaT^2 = SigmaT;
 true
-gap> g^-1*g^2*g^-1;
+gap> SigmaT^-1*SigmaT^2*SigmaT^-1;
 IdentityMapping( ( Integers^2 ) )
-gap> [4,27]^g;
+gap> [4,27]^SigmaT;
 [ 8, 41 ]
-gap> [[4,27],[8,41]]^g;
+gap> [[4,27],[8,41]]^SigmaT;
 [ [ 8, 41 ], [ 16, 62 ] ]
-gap> Cartesian([-2..2],[-2..2])^g;
+gap> Cartesian([-2..2],[-2..2])^SigmaT;
 [ [ -4, -1 ], [ -4, 2 ], [ -3, -1 ], [ -2, -1 ], [ -2, 0 ], [ -2, 1 ],
   [ -2, 2 ], [ -1, -1 ], [ -1, 0 ], [ -1, 1 ], [ 0, -1 ], [ 0, 0 ], [ 0, 1 ],
   [ 0, 2 ], [ 1, -1 ], [ 1, 0 ], [ 1, 1 ], [ 2, -1 ], [ 2, 0 ], [ 2, 1 ],
   [ 2, 2 ], [ 3, -1 ], [ 4, -1 ], [ 4, 2 ], [ 5, -1 ] ]
-gap> l^g;
+gap> l^SigmaT;
 [ (0,2)+(2,0)Z+(0,3)Z, Z^2 \ (0,2)+(1,0)Z+(0,3)Z, (1,2)+(2,0)Z+(0,3)Z ]
 gap> List(last,Density);
 [ 1/6, 2/3, 1/6 ]
@@ -188,7 +188,7 @@ gap> Union(last2);
 gap> cls := AllResidueClassesModulo(R,L1);
 [ (0,0)+(1,3)Z+(0,5)Z, (0,1)+(1,3)Z+(0,5)Z, (0,2)+(1,3)Z+(0,5)Z,
   (0,3)+(1,3)Z+(0,5)Z, (0,4)+(1,3)Z+(0,5)Z ]
-gap> imgs := cls^g;
+gap> imgs := cls^SigmaT;
 [ <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
   <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
   <union of 30 residue classes (mod (10,0)Z+(0,15)Z)>,
@@ -221,9 +221,9 @@ gap> twice;
 Injective rcwa mapping of Z^2: [m,n] -> [2m,2n]
 gap> Support(twice);
 Z^2 \ [ [ 0, 0 ] ]
-gap> h := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
+gap> g := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
 <rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z>
-gap> Display(h);
+gap> Display(g);
 
 Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
@@ -234,15 +234,15 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
  [1,0]                         | [m-1,n+3]
  [1,1] [1,2]                   | [m-1,n]
 
-gap> Projections(h);
+gap> Projections(g);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
 gap> transvection := RcwaMapping(R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]);
 Rcwa mapping of Z^2: [m,n] -> [m+n,m]
-gap> h := transvection*g;
+gap> g := transvection*SigmaT;
 <rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z>
-gap> Display(h);
+gap> Display(g);
 
 Rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z
 
@@ -252,15 +252,15 @@ Rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z
  [1,0] [3,0] [5,0]             | [2m+2n,(3m+1)/2]
  [4,0]                         | [2m+2n+1,m/2]
 
-gap> IsBijective(h);
+gap> IsBijective(g);
 true
 gap> ct := ClassTransposition(0,2,1,2);
 ClassTransposition(0,2,1,2)
-gap> h := RcwaMapping(ct,One(ct));
+gap> g := RcwaMapping(ct,One(ct));
 ClassTransposition((0,0)+(2,0)Z+(0,1)Z,(1,0)+(2,0)Z+(0,1)Z)
-gap> elm1 := g*h;
+gap> elm1 := SigmaT*g;
 <rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z>
-gap> elm2 := h*g^-1;
+gap> elm2 := g*SigmaT^-1;
 <rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z>
 gap> elm1*elm2;
 IdentityMapping( ( Integers^2 ) )
@@ -332,6 +332,47 @@ gap> phi := IsomorphismRcwaGroup(G,cls[2]);
 [ [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ] ] ->
 [ ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[0,1],[-1,0]]),
   ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
+gap> G := GL(2,Integers);;
+gap> phi := IsomorphismRcwaGroup(G,cls[3]);
+[ [ [ 0, 1 ], [ 1, 0 ] ], [ [ -1, 0 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ]
+ ] -> [ ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[0,1],[1,0]]),
+  ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[-1,0],[0,1]]),
+  ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
+gap> mat := [[12,7],[5,3]];;
+gap> mat^phi;
+ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[12,7],[5,3]])
+gap> Display(last);
+
+Tame bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order infini\
+ty
+
+    [m,n] mod (1,3)Z+(0,5)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0] [0,1] [0,3] [0,4]       | [m,n]
+ [0,2]                         | [9m+n-2,53m+6n-10]
+
+gap> (mat^2)^phi = (mat^phi)^2;
+true
+gap> (mat^-1)^phi = (mat^phi)^-1;
+true
+gap> r := Restriction(SigmaT,IdentityRcwaMappingOfZxZ*[[2,0],[0,1]]+[1,0]);
+<bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z>
+gap> Display(r);
+
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z
+
+    [m,n] mod (2,0)Z+(0,6)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0] [0,1] [0,2] [0,3]       |
+ [0,4] [0,5]                   | [m,n]
+ [1,0] [1,2]                   | [m,n/2]
+ [1,1] [1,3] [1,5]             | [2m-1,(3n+1)/2]
+ [1,4]                         | [2m+1,n/2]
+
+gap> Induction(r,IdentityRcwaMappingOfZxZ*[[2,0],[0,1]]+[1,0]);
+<bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
+gap> last=SigmaT;
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 2000000000 );
 
