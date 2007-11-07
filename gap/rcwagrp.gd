@@ -462,6 +462,13 @@ DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
 
 #############################################################################
 ##
+#P  IsNaturalRcwaRepresentationOfGLOrSL
+##
+DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
+                  IsGroupHomomorphism and IsBijective );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
