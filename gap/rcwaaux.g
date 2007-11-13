@@ -73,6 +73,9 @@ BindGlobal( "RCWADoThingsToBeDoneAfterTest",
     CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+    MakeReadWriteGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
+    RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED := false;
+    MakeReadOnlyGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
   end );
 
 #############################################################################
