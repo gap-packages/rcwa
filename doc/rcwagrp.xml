@@ -643,16 +643,16 @@ the generators:
 
 <Example>
 <![CDATA[
-gap> a := ClassTransposition(2,4,3,4 :Name:="a");;
-gap> b := ClassTransposition(4,6,8,12:Name:="b");;
-gap> c := ClassTransposition(3,4,4,6 :Name:="c");;
+gap> a := ClassTransposition(2,4,3,4);;  SetName(a,"a");
+gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
+gap> c := ClassTransposition(3,4,4,6);;  SetName(c,"c");
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
 gap> phi := EpimorphismFromFpGroup(G,6);
 [ a, b, c ] -> [ a, b, c ]
 gap> RelatorsOfFpGroup(Source(phi));
-[ a^2, b^2, c^2, c*b*c*b*c*b, c*b*c*a*c*b*c*a*c*b*c*a, 
-  b*a*b*a*b*a*b*a*b*a*b*a ]
+[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, 
+  a*b*a*b*a*b*a*b*a*b*a*b ]
 ]]>
 </Example>
   </Description>
@@ -692,7 +692,7 @@ A related very common task is to factor group elements into generators:
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
-gap> b := ClassShift(0,1:Name:="b");;
+gap> b := ClassShift(0,1);; SetName(b,"b");
 gap> G := Group(a,b);; # G = <<Collatz permutation>, n -> n + 1>
 gap> phi := EpimorphismFromFreeGroup(G);;
 gap> g := Comm(a^2*b^4,a*b^3); # a sample element to be factored
