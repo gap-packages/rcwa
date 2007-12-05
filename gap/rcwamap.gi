@@ -3207,7 +3207,7 @@ InstallMethod( PrimeSet, "for rcwa mappings of Z^2 (RCWA)", true,
   function ( f )
     if   IsZero(Multiplier(f))
     then Error("PrimeSet: Multiplier must not be zero.\n"); fi;
-    return Filtered( Union( Factors(DeterminantMat(Modulus(f))),
+    return Filtered( Union( # Factors(DeterminantMat(Modulus(f))),
                             Factors(DeterminantMat(Multiplier(f))),
                             Factors(Divisor(f)) ), IsPrimeInt );
   end );
