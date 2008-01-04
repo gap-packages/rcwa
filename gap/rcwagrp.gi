@@ -2453,7 +2453,7 @@ InstallMethod( Modulus,
   function ( G )
 
     local  CheckModulus,
-           R, m, oldmod, maxfinmod, g, gens, pow, els, step, maxstep;
+           R, S, m, oldmod, maxfinmod, g, gens, pow, els, step, maxstep;
 
     CheckModulus := function ( G, m )
 
@@ -2485,10 +2485,12 @@ InstallMethod( Modulus,
     end;
 
     if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
-    R := Source(One(G)); gens := GeneratorsOfGroup(G);
+    R := Source(One(G));
+    if IsRing(R) then S := R; elif IsZxZ(R) then S := Integers^[2,2]; fi;
+    gens := GeneratorsOfGroup(G);
     if IsIntegral(G) then
       Info(InfoRCWA,3,"Modulus: <G> is integral.");
-      m := Lcm(R,List(gens,Modulus));
+      m := Lcm(S,List(gens,Modulus));
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
     if not ForAll(gens,IsTame) then
@@ -2498,11 +2500,11 @@ InstallMethod( Modulus,
     if Length(gens) = 1 then
       Info(InfoRCWA,3,"Modulus: <G> is cyclic and the generator is tame.");
       g   := gens[1];
-      m   := Lcm(R,Modulus(g),Modulus(g^-1));      # probabilistic
-      pow := g^2;     m := Lcm(R,m,Modulus(pow));
-      pow := pow * g; m := Lcm(R,m,Modulus(pow));
-      pow := pow * g; m := Lcm(R,m,Modulus(pow));
-      pow := pow^2;   m := Lcm(R,m,Modulus(pow));
+      m   := Lcm(S,Modulus(g),Modulus(g^-1));      # probabilistic
+      pow := g^2;     m := Lcm(S,m,Modulus(pow));
+      pow := pow * g; m := Lcm(S,m,Modulus(pow));
+      pow := pow * g; m := Lcm(S,m,Modulus(pow));
+      pow := pow^2;   m := Lcm(S,m,Modulus(pow));
       SetModulusOfRcwaMonoid(G,m);
       CheckModulus(G,m);                           # check
       return m;
@@ -2512,11 +2514,11 @@ InstallMethod( Modulus,
     if not ForAll(els,IsTame) then
       Info(InfoRCWA,3,"Modulus: <G> has a wild 2-generator product ",
                       "or 2-generator commutator.");
-      SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
+      SetModulusOfRcwaMonoid(G,Zero(S)); return Zero(S);
     fi;
-    m := Lcm(R,List(els,Modulus));
+    m := Lcm(S,List(els,Modulus));
     Info(InfoRCWA,1,"Trying probabilistic random walk, initial m = ",m);
-    maxfinmod := Lcm(R,List(gens,Divisor)) * m;
+    maxfinmod := Lcm(S,List(gens,Divisor)) * m;
     step := 1; maxstep := 10 * Length(gens); g := gens[1];
     repeat # probabilistic
       g := g * Random(gens); step := step + 1;
