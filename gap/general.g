@@ -101,6 +101,46 @@ InstallGlobalFunction( SearchCycle,
 
 #############################################################################
 ##
+#M  Trajectory( <f>, <n>, <length> )
+#M  Trajectory( <f>, <n>, <terminal> )
+##
+##  The general trivial methods.
+##
+InstallOtherMethod( Trajectory,
+                    "for function, starting point and length (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsPosInt ], 0,
+
+  function ( f, n, length )
+
+    local  l, i;
+
+    l := [n];
+    for i in [2..length] do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+InstallOtherMethod( Trajectory,
+                    "for function, starting point and terminal set (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsListOrCollection ],
+                    0,
+
+  function ( f, n, terminal )
+
+    local  l, i;
+
+    l := [n];
+    while not n in terminal do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+#############################################################################
+##
 #M  EquivalenceClasses( <list>, <relation> )
 #M  EquivalenceClasses( <list>, <classinvariant> )
 ##
