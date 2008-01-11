@@ -203,6 +203,7 @@
   <volume>39</volume>
   <number>3</number>
   <pages>322-328</pages>
+  <mrnumber>MR2352043</mrnumber>
   <note>doi:10.1016/j.aam.2006.08.003</note>
 </article></entry>
 
@@ -228,25 +229,30 @@
     On Conjugates of Collatz-Type Mappings
   </title>
   <journal>Accepted by Int. J. Number Theory</journal>
-  <year>2007</year>
+  <year>2008</year>
   <volume>?</volume>
   <number>?</number>
   <pages>?-?</pages>
   <note></note>
 </article></entry>
 
-<entry id="Kohl07a"><misc>
+<entry id="Kohl07a"><article>
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
   <title>
     Algorithms for a Class of Infinite Permutation Groups
   </title>
+  <journal>Accepted by the Journal of Symbolic Computation</journal>
   <year>2007</year>
-  <other type="note">
-    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/preprints/compute.pdf</URL>
-  </other>
-</misc></entry>
+  <volume>?</volume>
+  <number>?</number>
+  <pages>approx. 36 pages</pages>
+  <note>
+    doi:10.1016/j.jsc.2007.12.001,
+    <URL>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/articles/compute.pdf</URL>
+  </note>
+</article></entry>
 
 <entry id="Kohl07b"><misc>
   <author>
