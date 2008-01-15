@@ -5643,12 +5643,15 @@ InstallMethod( Trajectory,
 
   function ( f, n, length )
 
-    local  seq, step;
+    local  seq, step, action;
 
-    if not (n in Source(f) or IsSubset(Source(f),n)) then TryNextMethod(); fi;
+    if   not (n in Source(f) or IsSubset(Source(f),n))
+    then TryNextMethod(); fi;
+    action := ValueOption("Action");
+    if action = fail then action := OnPoints; fi;
     seq := [n];
     for step in [1..length-1] do
-      n := n^f;
+      n := action(n,f);
       Add(seq,n);
     od;
     return seq;
@@ -5665,13 +5668,15 @@ InstallMethod( Trajectory,
 
   function ( f, n, length, m )
 
-    local  seq, step;
+    local  seq, step, action;
 
     if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
     then TryNextMethod(); fi;
+    action := ValueOption("Action");
+    if action = fail then action := OnPoints; fi;
     seq := [n mod m];
     for step in [1..length-1] do
-      n := n^f;
+      n := action(n,f);
       Add(seq,n mod m);
     od;
     return seq;
@@ -5688,15 +5693,17 @@ InstallMethod( Trajectory,
 
   function ( f, n, terminal )
 
-    local  seq;
+    local  seq, action;
 
     if   not (n in Source(f) or IsSubset(Source(f),n))
     then TryNextMethod(); fi;
+    action := ValueOption("Action");
+    if action = fail then action := OnPoints; fi;
     seq := [n];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
     then terminal := [terminal]; fi;
     while not n in terminal do
-      n := n^f;
+      n := action(n,f);
       Add(seq,n);
     od;
     return seq;
@@ -5714,15 +5721,17 @@ InstallMethod( Trajectory,
 
   function ( f, n, terminal, m )
 
-    local  seq;
+    local  seq, action;
 
     if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
     then TryNextMethod(); fi;
+    action := ValueOption("Action");
+    if action = fail then action := OnPoints; fi;
     seq := [n mod m];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
     then terminal := [terminal]; fi;
     while not n in terminal do
-      n := n^f;
+      n := action(n,f);
       Add(seq,n mod m);
     od;
     return seq;
