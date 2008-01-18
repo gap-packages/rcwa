@@ -69,4 +69,18 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 
 #############################################################################
 ##
+#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . . short orbits of rcwa monoid <G>
+#O  ShortOrbits( <M>, <S>, <maxlng> ) short forward orbits of rcwa monoid <M>
+##
+##  In the first case, this operation returns a list of all finite orbits of
+##  the rcwa group <G> of length <= <maxlng>, which intersect nontrivially
+##  with the set <S>.
+##  In the second case, it returns a list of all finite forward orbits with
+##  starting point within the set <S>.
+##
+DeclareOperation( "ShortOrbits",
+                  [ IsMonoid, IsListOrCollection, IsPosInt ] );
+
+#############################################################################
+##
 #E  rcwamono.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

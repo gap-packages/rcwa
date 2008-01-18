@@ -3721,8 +3721,11 @@ InstallMethod( IsTransitive,
     if   (IsRcwaGroupOverGFqx(G) or IsZ_pi(R))
       and IsFinitelyGeneratedGroup(G) and HasIsTame(G) and IsTame(G)
     then return false; fi;
-    if   IsIntegers(R) or IsZ_pi(R)
-    then ranges := [[-10..10],[-30..30],[-100..100]];
+    if   IsIntegers(R) or IsZ_pi(R) then
+      ranges := [[-10..10],[-30..30],[-100..100]];
+    elif IsZxZ(R) then
+      ranges := List([[[2,0],[0,2]],[[4,0],[0,4]],
+                      [[8,0],[0,8]],[[16,0],[0,16]]],m->AllResidues(R,m));
     elif IsPolynomialRing(R) then
       x := IndeterminatesOfPolynomialRing(R)[1];
       ranges := [AllResidues(R,x^2),AllResidues(R,x^3),

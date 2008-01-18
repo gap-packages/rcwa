@@ -255,16 +255,6 @@ DeclareAttribute( "StabilizerInfo", IsRcwaGroup );
 
 #############################################################################
 ##
-#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
-##
-##  Returns a list of all finite orbits of the rcwa group <G> of
-##  length <= <maxlng>, which intersect nontrivially with the set <S>.
-##
-DeclareOperation( "ShortOrbits",
-                  [ IsMonoid, IsListOrCollection, IsPosInt ] );
-
-#############################################################################
-##
 #O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 #O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##

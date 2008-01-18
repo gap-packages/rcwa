@@ -400,6 +400,14 @@ InstallMethod( ShortOrbits,
     return orbs;
   end );
 
+InstallMethod( ShortOrbits,
+               "for rcwa monoids; convert finite residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaMonoid, IsResidueClassUnion and IsFinite,
+                             IsPosInt ], 0,
+  function ( M, S, maxlng )
+    return ShortOrbits(M,AsList(S),maxlng);
+  end );
+
 #############################################################################
 ##
 #S  Computing balls of given radius in rcwa monoids and on the //////////////
