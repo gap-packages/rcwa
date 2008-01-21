@@ -18,6 +18,15 @@ tau := ClassTransposition(0,2,1,2);
 
 #############################################################################
 ##
+##  The Collatz mapping.
+##
+T := RcwaMapping([[1,0,2],[3,1,2]]); SetName(T,"T");
+
+Tp := RcwaMapping([[1,0,2],[3, 1,2]]); SetName(Tp,"T+");
+Tm := RcwaMapping([[1,0,2],[3,-1,2]]); SetName(Tm,"T-");
+
+#############################################################################
+##
 ##  Section 4.1: Factoring Collatz' permutation of the integers
 ##
 Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);
