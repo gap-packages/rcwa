@@ -103,6 +103,7 @@ InstallGlobalFunction( SearchCycle,
 ##
 #M  Trajectory( <f>, <n>, <length> )
 #M  Trajectory( <f>, <n>, <terminal> )
+#M  Trajectory( <f>, <n>, <halt> )
 ##
 ##  The general trivial methods.
 ##
@@ -133,6 +134,23 @@ InstallOtherMethod( Trajectory,
 
     l := [n];
     while not n in terminal do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+InstallOtherMethod( Trajectory,
+                    "for function, starting point and halting criterion (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsFunction ],
+                    0,
+
+  function ( f, n, halt )
+
+    local  l, i;
+
+    l := [n];
+    while not halt(n) do
       n := f(n);
       Add(l,n);
     od;
