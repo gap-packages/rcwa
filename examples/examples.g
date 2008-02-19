@@ -470,6 +470,17 @@ SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
+##  It seems that the group G defined below has the following infinite
+##  presentation:
+##
+##  G = < a,b | [a^(2k+1),b^l]^(4^l) = 1, k,l in N >
+##
+GInvPres := Group(ClassShift(0,2),
+                  ClassTransposition(0,2,1,2) * ClassTransposition(3,4,5,8)
+                * ClassTransposition(0,2,1,8));
+
+#############################################################################
+##
 ##  A permutation with cycle lengths 12 + 6k, k in N_0
 ##
 ##  The name reflects the shape of the transition graph.
