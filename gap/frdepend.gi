@@ -1,16 +1,21 @@
 #############################################################################
 ##
-#W  perlist.gi                GAP4 Package `RCWA'                 Stefan Kohl
+#W  frdepend.gi                GAP4 Package `RCWA'                Stefan Kohl
 ##
 #H  @(#)$Id$
 ##
-##  This file contains methods dealing with the action of rcwa mappings and
-##  -groups on periodic lists. As these methods need the periodic list code
-##  which is implemented in the FR package, this file is read only when FR
-##  is available.
+##  This file contains code which depends on the FR package.
+##  Therefore it is read only when FR is available.
 ##
-Revision.perlist_gi :=
+Revision.frdepend_gi :=
   "@(#)$Id$";
+
+#############################################################################
+##
+#S  Methods concerning periodic lists, e.g. the action of rcwa mappings /////
+#S  and -groups on them. ////////////////////////////////////////////////////
+##
+#############################################################################
 
 #############################################################################
 ##
@@ -154,4 +159,21 @@ InstallMethod( ProductOp,
 
 #############################################################################
 ##
-#E  perlist.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+#S  Attributes and properties of certain rcwa groups, ///////////////////////
+#S  which are defined in the FR package. ////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  IsBranch( RCWA( <R> ) ) . . . . . . . . . . . . . . . . . . . for RCWA(R)
+#M  IsBranch( CT( <R> ) ) . . . . . . . . . . . . . . . . . . . . . for CT(R)
+#M  IsBranchingSubgroup( RCWA( <R> ) )  . . . . . . . . . . . . . for RCWA(R)
+#M  IsBranchingSubgroup( CT( <R> ) )  . . . . . . . . . . . . . . . for CT(R)
+##
+InstallTrueMethod( IsBranch, IsNaturalRCWA_OR_CT );
+InstallTrueMethod( IsBranchingSubgroup, IsNaturalRCWA_OR_CT );
+
+#############################################################################
+##
+#E  frdepend.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
