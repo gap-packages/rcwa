@@ -473,7 +473,7 @@ SetName(PSL2Z,"PSL(2,Z)");
 ##  It seems that the group defined below has the following infinite
 ##  presentation:
 ##
-##  G = < a,b | [a^(2k+1),b^l]^(4^l) = 1, k,l in N >
+##  G = < a,b | [a^(2k+1),b^l]^(4^l) = 1, k,l in N_0 >
 ##
 GInvPres := Group(ClassShift(0,2),
                   ClassTransposition(0,2,1,2) * ClassTransposition(3,4,5,8)
