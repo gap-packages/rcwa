@@ -470,7 +470,7 @@ SetName(PSL2Z,"PSL(2,Z)");
 
 #############################################################################
 ##
-##  It seems that the group G defined below has the following infinite
+##  It seems that the group defined below has the following infinite
 ##  presentation:
 ##
 ##  G = < a,b | [a^(2k+1),b^l]^(4^l) = 1, k,l in N >
