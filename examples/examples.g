@@ -475,9 +475,10 @@ SetName(PSL2Z,"PSL(2,Z)");
 ##
 ##  G = < a,b | [a^(2k+1),b^l]^(4^l) = 1, k,l in N_0 >
 ##
-GInvPres := Group(ClassShift(0,2),
+GInfPres := Group(ClassShift(0,2),
                   ClassTransposition(0,2,1,2) * ClassTransposition(3,4,5,8)
                 * ClassTransposition(0,2,1,8));
+SetName(GInfPres.1,"a"); SetName(GInfPres.2,"b");
 
 #############################################################################
 ##
