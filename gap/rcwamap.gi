@@ -3357,6 +3357,14 @@ InstallMethod( ShiftsDownOn, "for rcwa mappings of Z (RCWA)", true,
 
 #############################################################################
 ##
+#M  MaximalShift( <f> )  . . . . . . . . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( MaximalShift, "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+               f -> Maximum( List( Coefficients(f), c -> AbsInt(c[2]) ) ) );
+
+#############################################################################
+##
 #M  LargestSourcesOfAffineMappings( <f> ) . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( LargestSourcesOfAffineMappings,

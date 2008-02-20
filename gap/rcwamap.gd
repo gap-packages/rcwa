@@ -556,6 +556,7 @@ DeclareAttribute( "Divisor", IsRcwaMonoid );
 DeclareSynonym( "Div", Divisor );
 DeclareAttribute( "PrimeSet", IsRcwaMapping );
 DeclareAttribute( "PrimeSet", IsRcwaMonoid );
+DeclareAttribute( "MaximalShift", IsRcwaMapping );
 DeclareProperty( "IsIntegral", IsRcwaMapping );
 DeclareProperty( "IsIntegral", IsRcwaMonoid );
 DeclareProperty( "IsBalanced", IsRcwaMapping );
@@ -592,13 +593,18 @@ DeclareAttribute( "DecreasingOn", IsRcwaMapping );
 ##
 #A  ShiftsUpOn( <f> ) . . . union of residue classes S s.th. f|_S: n -> n + c
 #A  ShiftsDownOn( <f> ) . . union of residue classes S s.th. f|_S: n -> n - c
+#A  MaximalShift( <f> ) . . . .  maximum of the absolute values of the b_r(m)
 ##
 ##  Let f be an rcwa mapping of Z with modulus m.
 ##
 ##  ShiftsUpOn(f) denotes the union of all residue classes r(m) such that
 ##  the restriction f|_r(m) is given by n -> n + b_r(m) for positive b_r(m).
+##
 ##  ShiftsDownOn(f) denotes the union of all residue classes r(m) such that
 ##  the restriction f|_r(m) is given by n -> n + b_r(m) for negative b_r(m).
+##
+##  MaximalShift(f) is the maximum of the absolute values of the
+##  coefficients b_r(m).
 ##
 DeclareAttribute( "ShiftsUpOn", IsRcwaMappingOfZ );
 DeclareAttribute( "ShiftsDownOn", IsRcwaMappingOfZ );
