@@ -1950,8 +1950,7 @@ InstallMethod( ViewObj, "for class transpositions (RCWA)", true,
 ##
 InstallMethod( SplittedClassTransposition,
                "default method (RCWA)", ReturnTrue,
-               [ IsRcwaMapping and IsClassTransposition,
-                 IsRingElement ], 0,
+               [ IsRcwaMapping and IsClassTransposition, IsObject ], 0,
                function ( ct, k )
                  return SplittedClassTransposition(ct,k,false);
                end );
@@ -1963,7 +1962,7 @@ InstallMethod( SplittedClassTransposition,
 InstallMethod( SplittedClassTransposition,
                "for a class transposition (RCWA)", ReturnTrue,
                [ IsRcwaMapping and IsClassTransposition,
-                 IsRingElement, IsBool ], 0,
+                 IsObject, IsBool ], 0,
 
   function ( ct, k, cross )
 

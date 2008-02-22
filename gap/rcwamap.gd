@@ -424,11 +424,10 @@ DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 ##  class ring of cardinality <k>.
 ##
 DeclareOperation( "SplittedClassTransposition",
-                  [ IsRcwaMapping and IsClassTransposition,
-                    IsRingElement ] );
+                  [ IsRcwaMapping and IsClassTransposition, IsObject ] );
 DeclareOperation( "SplittedClassTransposition",
                   [ IsRcwaMapping and IsClassTransposition,
-                    IsRingElement, IsBool ] );
+                    IsObject, IsBool ] );
 
 #############################################################################
 ##
