@@ -1643,6 +1643,14 @@ gap> g := RepresentativeAction(G,S1,S2);
 <bijective rcwa mapping of Z with modulus 400>
 gap> S1^g;
 Z \ 3(5) U 4(5)
+gap> MaximalShift(ClassShift(4,10));
+10
+gap> MaximalShift(ClassReflection(2,7));
+4
+gap> IsClassWiseTranslating(ClassShift(4,10));
+true
+gap> IsClassWiseTranslating(ClassReflection(2,7));
+false
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

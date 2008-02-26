@@ -373,6 +373,12 @@ gap> Induction(r,IdentityRcwaMappingOfZxZ*[[2,0],[0,1]]+[1,0]);
 <bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
 gap> last=SigmaT;
 true
+gap> IsClassWiseTranslating(SigmaT);
+false
+gap> IsClassWiseTranslating(IdentityRcwaMappingOfZxZ);
+true
+gap> IsClassWiseTranslating(ClassShift([0,0],[[2,0],[0,2]],1));
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 2000000000 );
 
