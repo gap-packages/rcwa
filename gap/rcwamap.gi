@@ -3213,6 +3213,14 @@ InstallMethod( PrimeSet, "for rcwa mappings of Z^2 (RCWA)", true,
 
 #############################################################################
 ##
+#M  IsClassWiseTranslating( <f> ) . . . . . . . . . . . . . for rcwa mappings
+##
+InstallMethod( IsClassWiseTranslating,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               f -> ForAll(Coefficients(f),c->IsOne(c[1]) and IsOne(c[3])) );
+
+#############################################################################
+##
 #M  IsClassWiseOrderPreserving( <f> ) . for rcwa mappings of Z, Z^2 or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,

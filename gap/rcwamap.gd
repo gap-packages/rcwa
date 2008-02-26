@@ -513,9 +513,12 @@ DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 #A  Divisor( <M> )  . . . . . . . . . . .  the divisor of the rcwa monoid <M>
 #A  PrimeSet( <f> ) . . . . . . . . . . the prime set of the rcwa mapping <f>
 #A  PrimeSet( <M> ) . . . . . . . . . .  the prime set of the rcwa monoid <M>
+#A  MaximalShift( <f> ) . . . .  maximum of the absolute values of the b_r(m)
+#P  IsBalanced( <f> ) . .  indicates whether the rcwa mapping <f> is balanced
 #P  IsIntegral( <f> ) . . . . . indicates whether the divisor of <f> equals 1
 #P  IsIntegral( <M> ) . .  indicates whether all elements of <M> are integral
-#P  IsBalanced( <f> ) . .  indicates whether the rcwa mapping <f> is balanced
+#P  IsClassWiseTranslating( <f> ) .  indicates whether <f> is class-wise trs.
+#P  IsClassWiseTranslating( <M> ) indicates whether all elements of <M> are "
 #P  IsClassWiseOrderPreserving( <f> ) . . . .  indicates whether <f> is cwop.
 #P  IsClassWiseOrderPreserving( <M> ) . . . .  indicates whether <M> is cwop.
 #P  IsSignPreserving( <f> )  indicates whether the rcwa mapping <f> fixes N_0
@@ -533,11 +536,18 @@ DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 ##  dividing its modulus or its multiplier, and we define the *prime set* of
 ##  an rcwa group or -monoid by the union of the prime sets of its elements.
 ##
-##  We say that an rcwa mapping is *integral* if its divisor is 1, and we say
-##  that an rcwa group / -monoid is *integral* if all of its elements are so.
+##  We define the *maximal shift* of an rcwa mapping <f> of Z as the maximum
+##  of the absolute values of the coefficients b_r(m).
 ##
 ##  We say that an rcwa mapping is *balanced* if its multiplier and its
 ##  divisor have the same prime divisors.
+##
+##  We say that an rcwa mapping is *integral* if its divisor is 1, and we say
+##  that an rcwa group / -monoid is *integral* if all of its elements are so.
+##
+##  We say that an rcwa mapping is *class-wise translating* if all of its
+##  affine partial mappings are translations. We say that an rcwa group
+##  or -monoid is *class-wise translating* if all of its elements are so.
 ##
 ##  We say that an rcwa mapping of Z or Z_(pi) is *class-wise order-preser-
 ##  ving* if all coefficients a_r(m) are positive, and we say that an rcwa
@@ -556,9 +566,11 @@ DeclareSynonym( "Div", Divisor );
 DeclareAttribute( "PrimeSet", IsRcwaMapping );
 DeclareAttribute( "PrimeSet", IsRcwaMonoid );
 DeclareAttribute( "MaximalShift", IsRcwaMapping );
+DeclareProperty( "IsBalanced", IsRcwaMapping );
 DeclareProperty( "IsIntegral", IsRcwaMapping );
 DeclareProperty( "IsIntegral", IsRcwaMonoid );
-DeclareProperty( "IsBalanced", IsRcwaMapping );
+DeclareProperty( "IsClassWiseTranslating", IsRcwaMapping );
+DeclareProperty( "IsClassWiseTranslating", IsRcwaMonoid );
 DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMapping ); 
 DeclareProperty( "IsClassWiseOrderPreserving", IsRcwaMonoid );
 DeclareProperty( "IsSignPreserving", IsRcwaMapping );
@@ -592,7 +604,6 @@ DeclareAttribute( "DecreasingOn", IsRcwaMapping );
 ##
 #A  ShiftsUpOn( <f> ) . . . union of residue classes S s.th. f|_S: n -> n + c
 #A  ShiftsDownOn( <f> ) . . union of residue classes S s.th. f|_S: n -> n - c
-#A  MaximalShift( <f> ) . . . .  maximum of the absolute values of the b_r(m)
 ##
 ##  Let f be an rcwa mapping of Z with modulus m.
 ##
@@ -601,9 +612,6 @@ DeclareAttribute( "DecreasingOn", IsRcwaMapping );
 ##
 ##  ShiftsDownOn(f) denotes the union of all residue classes r(m) such that
 ##  the restriction f|_r(m) is given by n -> n + b_r(m) for negative b_r(m).
-##
-##  MaximalShift(f) is the maximum of the absolute values of the
-##  coefficients b_r(m).
 ##
 DeclareAttribute( "ShiftsUpOn", IsRcwaMappingOfZ );
 DeclareAttribute( "ShiftsDownOn", IsRcwaMappingOfZ );

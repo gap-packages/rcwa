@@ -313,6 +313,19 @@ InstallMethod( IsIntegral,
 
 #############################################################################
 ##
+#M  IsClassWiseTranslating( <M> ) . . . . . . . . . . . . .  for rcwa monoids
+##
+InstallMethod( IsClassWiseTranslating,
+               "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
+
+  function ( M )
+    if   IsRcwaGroup(M)
+    then return ForAll(GeneratorsOfGroup (M),IsClassWiseTranslating);
+    else return ForAll(GeneratorsOfMonoid(M),IsClassWiseTranslating); fi;
+  end );
+
+#############################################################################
+##
 #M  IsClassWiseOrderPreserving( <M> ) . . . for rcwa monoids over Z or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,
