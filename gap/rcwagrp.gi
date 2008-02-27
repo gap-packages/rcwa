@@ -4170,22 +4170,25 @@ InstallGlobalFunction( DrawOrbitPicture,
 
   function ( G, p0, r, height, width, colored, palette, filename )
 
-    local  grid, orbits, orbit, balls, sphere, ps, p, k, color,
-           white, z, e, offset, i, j;
+    local  grid, orbits, orbit, balls, sphere, action, ps, p, k,
+           color, white, z, e, offset, i, j;
 
-    if   not IsRcwaGroupOverZ(G) or not IsList(p0)
+    if   not (IsRcwaGroupOverZ(G) or IsRcwaGroupOverZxZ(G)) or not IsList(p0)
       or not ForAll(Flat(p0),IsInt) or not ForAll([r,height,width],IsPosInt)
       or not IsBool(colored) or (colored = true and (not IsList(palette)
       or not ForAll(palette,IsList) or not Set(List(palette,Length)) = [3]
       or not IsSubset([0..255],Flat(palette)))) or not IsString(filename)
     then Error("DrawOrbitPicture: For usage, see manual.\n"); fi;
 
+    if   IsRcwaGroupOverZ(G)   then action := OnTuples;
+    elif IsRcwaGroupOverZxZ(G) then action := OnPoints; fi;
+
     offset := [1,1];
     if colored then
       white := 2^24-1;
       grid  := List([1..height],i->List([1..width],j->white));
       if IsInt(p0[1]) then # One orbit, color reflects distance from p0.
-        balls := List([1..r+1],k->Ball(G,p0,k-1,OnTuples));
+        balls := List([1..r+1],k->Ball(G,p0,k-1,action));
         if   Minimum(Flat(balls[r+1])) < 0
         then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
         for k in [2..r+1] do
@@ -4201,7 +4204,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         ps := p0; orbits := [];
         while ps <> [] do
           p0    := ps[1];
-          orbit := Ball(G,p0,r,OnTuples);
+          orbit := Ball(G,p0,r,action);
           ps    := Difference(ps,orbit);
           Add(orbits,orbit);
         od;
@@ -4225,7 +4228,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       if IsInt(p0[1]) then ps := [p0]; else ps := p0; fi; orbit := [];
       for p0 in ps do
         if   not p0 in orbit
-        then orbit := Union(orbit,Ball(G,p0,r,OnTuples)); fi;
+        then orbit := Union(orbit,Ball(G,p0,r,action)); fi;
       od;
       if   Minimum(Flat(orbit)) < 0
       then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
