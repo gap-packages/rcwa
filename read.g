@@ -15,7 +15,7 @@ ReadPackage( "rcwa", "gap/rcwagrp.gi" );
 
 if    IsBound( GAPInfo.PackagesLoaded.fr )
   and CompareVersionNumbers( GAPInfo.PackagesLoaded.fr[2], "0.857142" )
-then ReadPackage( "rcwa", "gap/perlist.gi" ); fi;
+then ReadPackage( "rcwa", "gap/frdepend.gi" ); fi;
 
 #############################################################################
 ##

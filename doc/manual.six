@@ -8,7 +8,7 @@ entries :=
   [ "Copyright", "-1", [ 0, 0, 1 ], 56, 2, "copyright", "X81488B807F2A1CF1" ],
   [ "Acknowledgements", "-3", [ 0, 0, 3 ], 62, 2, "acknowledgements", 
       "X82A988D47DFAFCFA" ], 
-  [ "Table of Contents", "-4", [ 0, 0, 4 ], 76, 3, "table of contents", 
+  [ "Table of Contents", "-4", [ 0, 0, 4 ], 75, 3, "table of contents", 
       "X8537FEB07AF2BEC8" ], 
   [ "\033[1XAbout the RCWA Package\033[0X", "1", [ 1, 0, 0 ], 1, 6, 
       "about the rcwa package", "X83A8C2927FAE2C23" ], 
