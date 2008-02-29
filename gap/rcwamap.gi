@@ -4875,7 +4875,7 @@ InstallMethod( RightInverse,
     resf := AllResidues(R,mf); resinv := AllResidues(R,minv);
     for r1 in resf do
       pos1 := PositionSorted(resf,r1);
-      for r2 in Intersection(resinv,imgs[pos1]) do
+      for r2 in AsList(Intersection(resinv,imgs[pos1])) do
         pos2 := PositionSorted(resinv,r2);
         if   IsRing(R)
         then cinv[pos2] := [cf[pos1][3],-cf[pos1][2],cf[pos1][1]];
