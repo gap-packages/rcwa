@@ -74,9 +74,10 @@
 ##  ping introduced above throughout this file.
 ##
 ##  Algorithms and methods for computing with  rcwa mappings  and -groups are
-##  described in the author's preprint
+##  described in the author's article
 ##
-##  "Algorithms for a Class of Infinite Permutation Groups".
+##  Algorithms for a Class of Infinite Permutation Groups.
+##  J. Symb. Comput. 2008+, 43+, 37 pages. DOI: 10.1016/j.jsc.2007.12.001. 
 ##
 Revision.rcwamap_gd :=
   "@(#)$Id$";
