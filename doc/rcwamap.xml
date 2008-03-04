@@ -17,8 +17,8 @@ gap> SizeScreen([75,24]);;
 </Example>
 </Ignore>
 
-In this chapter we give the basic definitions, and describe how to enter
-residue-class-wise affine mappings and how to compute with them. <P/>
+This chapter contains the basic definitions, and it describes how to
+enter residue-class-wise affine mappings and how to compute with them. <P/>
 
 How to compute with residue-class-wise affine groups is described in detail
 in the next chapter. The reader is encouraged to look there already after
