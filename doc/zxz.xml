@@ -1,0 +1,179 @@
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  zxz.xml            RCWA documentation            Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$           ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
+
+<Chapter Label="ch:ZxZ">
+<Heading>
+  Residue-Class-Wise Affine Mappings, Groups and Monoids over <M>&ZZ;^2</M>
+</Heading>
+
+<Ignore Remark="set screen width to 75, for the example tester">
+<Example>
+<![CDATA[
+gap> SizeScreen([75,24]);;
+]]>
+</Example>
+</Ignore>
+
+This chapter describes how to compute with residue-class-wise affine mappings
+of&nbsp;<M>&ZZ;^2</M> and with groups and monoids formed by them.
+
+<!-- #################################################################### -->
+
+<Section Label="sec:DefinitionOfRcwaMappingsOfZxZ">
+<Heading>
+  The definition of residue-class-wise affine mappings of <M>&ZZ;^d</M>
+</Heading>
+
+<Subsection Label="ssec:RcwaMappingsOfZxZPreamble">
+<Heading>Preamble</Heading>
+
+The rings on which we have defined residue-class-wise affine mappings so
+far have all been principal ideal domains, and it has been crucial that all
+nontrivial principal ideals had finite index. However, the rings
+<M>&ZZ;^d</M>, <M>d > 1</M> are not principal ideal domains. Furthermore,
+their principal ideals have infinite index. Therefore as moduli of
+residue-class-wise affine mappings we can only use lattices of full rank,
+for these are precisely the ideals of <M>&ZZ;^d</M> of finite index.
+However, on the other hand we can also be more permissive and look at
+<M>&ZZ;^d</M> not only as a ring, but also as a free &ZZ;-module.
+The consequence of this is that then an affine mapping of <M>&ZZ;^d</M>
+is not just given by <M>v \mapsto (av+b)/c</M> for some
+<M>a, b, c \in &ZZ;^d</M>, but rather by <M>v \mapsto (vA+b)/c</M>,
+where <M>A \in &ZZ;^{d \times d}</M>.
+
+</Subsection>
+
+<Subsection Label="ssec:RcwaMappingsOfZxZDefinition">
+<Heading>Definition</Heading>
+
+<Index Key="rcwa mapping" Subkey="of Z x Z, definition">rcwa mapping</Index>
+
+Let <M>d \in &NN;</M>. We call a mapping <M>f: &ZZ;^d \rightarrow &ZZ;^d</M>
+<E>residue-class-wise affine</E> if there is a lattice <M>L = &ZZ;^d M</M>
+where <M>M \in &ZZ;^{d \times d}</M> is a matrix of full rank, such that the
+restrictions of <M>f</M> to the residue classes <M>r + L \in &ZZ;^d/L</M>
+are all affine.
+This means that for any residue class <M>r + L \in &ZZ;^d/L</M>,
+there is a matrix <M>A_{r+L} \in &ZZ;^{d \times d}</M>, a vector
+<M>b_{r+L} \in &ZZ;^d</M> and a positive integer <M>c_{r+L}</M>
+such that the restriction of&nbsp;<M>f</M> to <M>r + L</M> is given by
+<M>f|_{r + L}: \ r + L \ \rightarrow \ &ZZ;^d, \ \
+v \ \mapsto \ (v \cdot A_{r+L} + b_{r+L})/c_{r+L}</M>.
+For reasons of uniqueness, we assume that <M>L</M> is chosen maximal with
+respect to inclusion, and that no prime factor of <M>c_{r+L}</M> divides all
+coefficients of <M>A_{r+L}</M> and&nbsp;<M>b_{r+L}</M>. <P/>
+
+<Index Key="rcwa mapping" Subkey="modulus">rcwa mapping</Index>
+<Index Key="rcwa mapping" Subkey="class-wise translating">
+  rcwa mapping
+</Index>
+<Index Key="class-wise translating" Subkey="definition">
+  class-wise translating
+</Index>
+<Index Key="prime set" Subkey="definition">prime set</Index>
+
+We call the lattice <M>L</M> the <E>modulus</E> of <M>f</M>,
+written Mod(<M>f</M>).
+Further we define the <E>prime set</E> of&nbsp;<M>f</M> as the set of
+all primes which divide the determinant of at least one of the coefficients
+<M>A_{r+L}</M> or which divide the determinant of&nbsp;<M>M</M>, and
+we call the mapping&nbsp;<M>f</M> <E>class-wise translating</E> if all
+coefficients&nbsp;<M>A_{r+L}</M> are identity matrices and all
+coefficients&nbsp;<M>c_{r+L}</M> are equal to&nbsp;1. <P/>
+
+For the sake of simplicity, we identify a lattice with the Hermite normal
+form of the matrix by whose rows it is spanned.
+
+</Subsection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:EnteringRcwaMappingsOfZxZ">
+<Heading>
+  Entering residue-class-wise affine mappings of <M>&ZZ;^2</M>
+</Heading>
+
+Residue-class-wise affine mappings of <M>&ZZ;^2</M> can be entered
+using the general constructor
+<Ref Meth="RcwaMapping" Label="by ring, modulus and list of coefficients"/>
+and by the more specialized functions
+<Ref Func="ClassTransposition" Label="r1, m1, r2, m2"/>,
+<Ref Func="ClassRotation" Label="cl, u"/> and
+<Ref Func="ClassShift" Label="cl"/>. The arguments differ only slightly.
+
+<ManSection>
+  <Heading>
+    RcwaMapping (the general constructor; methods for <M>&ZZ;^2</M>)
+  </Heading>
+  <Meth Name="RcwaMapping" Arg="R, L, coeffs"
+        Label="by ring = Z x Z, modulus and coefficients"/>
+  <Meth Name="RcwaMapping" Arg="P1, P2"
+        Label="by two partitions of Z x Z into residue classes"/>
+  <Meth Name="RcwaMapping" Arg="cycles"
+        Label="of Z x Z, by residue class cycles"/>
+  <Returns>
+    <List>
+      <Mark>(a)</Mark>
+      <Item>
+        The rcwa mapping of <C><A>R</A> = Integers^2</C>
+        with modulus&nbsp;<A>L</A> and coefficients <A>coeffs</A>,
+      </Item>
+      <Mark>(b)</Mark>
+      <Item>
+        a bijective rcwa mapping which induces a bijection between
+        the partitions <A>P1</A> and <A>P2</A> of&nbsp;<M>&ZZ;^2</M>
+        into residue classes and which is affine on the elements
+        of <A>P1</A>, or
+      </Item>
+      <Mark>(c)</Mark>
+      <Item>
+        a bijective rcwa mapping with <Q>residue class cycles</Q> given
+        by a list <A>cycles</A> of lists of pairwise disjoint residue classes
+        of&nbsp;<M>&ZZ;^2</M> which are to be permuted cyclically, each,
+      </Item>
+    </List>
+    respectively.
+  </Returns>
+  <Description>
+    The modulus of an rcwa mapping of <M>&ZZ;^2</M> is a lattice of full
+    rank. It is represented by a matrix <A>L</A> in Hermite normal form,
+    whose rows are the spanning vectors. <P/>
+
+    A coefficient list for an rcwa mapping of <M>&ZZ;^2</M> with
+    modulus&nbsp;<A>L</A> consists of <M>|\det(<A>L</A>)|</M> coefficient
+    triples <C>[</C><M>A_{r+&ZZ;^2<A>L</A>}</M>, <M>b_{r+&ZZ;^2<A>L</A>}</M>,
+    <M>c_{r+&ZZ;^2<A>L</A>}</M><C>]</C>.
+    The entries <M>A_{r+&ZZ;^2<A>L</A>}</M> are <M>2 \times 2</M> integer
+    matrices, the <M>b_{r+&ZZ;^2<A>L</A>}</M> are elements of <M>&ZZ;^2</M>,
+    i.e. lists of two integers, and the <M>c_{r+&ZZ;^2<A>L</A>}</M> are
+    integers.
+    The ordering of the coefficient triples is determined by the ordering of
+    the representatives of the residue classes <M>r+&ZZ;^2<A>L</A></M> in
+    the sorted list returned by <C>AllResidues(Integers^2,<A>L</A>)</C>. <P/>
+
+    The methods for the operation <C>RcwaMapping</C> perform a number of
+    argument checks, which can be skipped by using <C>RcwaMappingNC</C>
+    instead.
+<Example>
+<![CDATA[
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+</Chapter>
+
+<!-- #################################################################### -->
+
