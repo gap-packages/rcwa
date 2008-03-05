@@ -118,6 +118,8 @@ and by the more specialized functions
         Label="by two partitions of Z x Z into residue classes"/>
   <Meth Name="RcwaMapping" Arg="cycles"
         Label="of Z x Z, by residue class cycles"/>
+  <Meth Name="RcwaMapping" Arg="f, g"
+        Label="of Z x Z, by projections to coordinates"/>
   <Returns>
     <List>
       <Mark>(a)</Mark>
@@ -130,13 +132,20 @@ and by the more specialized functions
         a bijective rcwa mapping which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of&nbsp;<M>&ZZ;^2</M>
         into residue classes and which is affine on the elements
-        of <A>P1</A>, or
+        of <A>P1</A>,
       </Item>
       <Mark>(c)</Mark>
       <Item>
         a bijective rcwa mapping with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes
-        of&nbsp;<M>&ZZ;^2</M>, each of which it permutes cyclically,
+        of&nbsp;<M>&ZZ;^2</M>, each of which it permutes cyclically, or
+      </Item>
+      <Mark>(d)</Mark>
+      <Item>
+        the rcwa mapping of&nbsp;<M>&ZZ;^2</M> whose projections to the
+        coordinates are given by <A>f</A> and&nbsp;<A>g</A> (warning:
+        by far not all -- or better: only very special rcwa mappings
+        of&nbsp;<M>&ZZ;^2</M> -- can be constructed in this way!),
       </Item>
     </List>
     respectively.
@@ -274,6 +283,24 @@ Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
  [1,0] [3,1]                 | [2m-1,(m+2n+1)/2]
  [1,1]                       | [(m-1)/2,(n-1)/2]
 
+gap> g := RcwaMapping(ClassTransposition(0,2,1,2),
+>                     ClassReflection(0,2));                  # method (d)
+<rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z>
+gap> Display(g);
+
+Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
+
+   [m,n] mod (2,0)Z+(0,2)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0]                       | [m+1,-n]
+ [0,1]                       | [m+1,n]
+ [1,0]                       | [m-1,-n]
+ [1,1]                       | [m-1,n]
+
+gap> g^2;
+IdentityMapping( ( Integers^2 ) )
+gap> List(Projections(g),Factorization);
+[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
 ]]>
 </Example>
   </Description>
@@ -445,6 +472,51 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
 </Example>
   </Description>
 </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:MethodsForRcwaMappingsOfZxZ">
+<Heading>
+  Methods for residue-class-wise affine mappings of <M>&ZZ;^d</M>
+</Heading>
+
+There are methods available for rcwa mappings of <M>&ZZ;^d</M> for the
+following general operations:
+
+<List>
+  <Mark> Output </Mark>
+  <Item> <C>View</C>, <C>Display</C>, <C>Print</C>, <C>String</C>. </Item> 
+  <Mark> Access to components </Mark>
+  <Item> <C>Modulus</C>, <C>Coefficients</C>. </Item>
+  <Mark> Attributes </Mark>
+  <Item>
+    <C>Support</C> / <C>MovedPoints</C>, <C>Order</C>, <C>PrimeSet</C>,
+    <C>One</C>, <C>Zero</C>.
+  </Item>
+  <Mark> Properties </Mark>
+  <Item>
+    <C>IsInjective</C>, <C>IsSurjective</C>, <C>IsBijective</C>,
+    <C>IsIntegral</C>, <C>IsClassWiseOrderPreserving</C>, <C>IsTame</C>.
+  </Item>
+  <Mark> Action on <M>&ZZ;^d</M> </Mark>
+  <Item>
+    <C>^</C> (for points, finite sets and residue class unions),
+    <C>Trajectory</C>, <C>ShortCycles</C>.
+  </Item>
+  <Mark> Arithmetical operations </Mark>
+  <Item>
+    <C>*</C> (multiplication / composition),
+    <C>^</C> (computing powers and conjugates), <C>Inverse</C>.
+  </Item>
+ </List>
+
+The above operations are documented either in the &GAP; Reference Manual
+or earlier in this mamual. <P/>
+
+There are also some special operations for rcwa mappings
+of&nbsp;<M>&ZZ;^d</M>. These are described in the sequel.
 
 </Section>
 
