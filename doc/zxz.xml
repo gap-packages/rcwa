@@ -280,8 +280,9 @@ Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
 </ManSection>
 
 <ManSection>
-  <Func Name="ClassTransposition" Arg="R, r1, L1, r2, L2"
-                                  Label="R, r1, L1, r2, L2 (for Z x Z)"/>
+  <Heading> ClassTransposition (for <M>&ZZ;^2</M>) </Heading>
+  <Func Name="ClassTransposition" Arg="r1, L1, r2, L2"
+                                  Label="r1, L1, r2, L2 (for Z x Z)"/>
   <Func Name="ClassTransposition" Arg="cl1, cl2"
                                   Label="cl1, cl2 (for Z x Z)"/>
   <Returns>
@@ -308,9 +309,9 @@ Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
       <C>TransposedClasses</C>
     </Index>
 
-    In the five-argument form, the first argument is <C>Integers^2</C>, and
-    the arguments <A>r1</A>, <A>L1</A>, <A>r2</A> and&nbsp;<A>L2</A> stand
-    for <M>r_1</M>, <M>L_1</M>, <M>r_2</M> and&nbsp;<M>L_2</M>, respectively.
+    In the four-argument form, the arguments <A>r1</A>, <A>L1</A>,
+    <A>r2</A> and&nbsp;<A>L2</A> stand for <M>r_1</M>, <M>L_1</M>,
+    <M>r_2</M> and&nbsp;<M>L_2</M>, respectively.
     In the two-argument form, the arguments <A>cl1</A> and&nbsp;<A>cl2</A>
     stand for the residue classes <M>r_1+&ZZ;^2 L_1</M>
     and&nbsp;<M>r_2+&ZZ;^2 L_2</M>, respectively.
@@ -333,8 +334,7 @@ Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
     holds if the first entry of the second argument is&nbsp;1. <P/>
 <Example>
 <![CDATA[
-gap> ct := ClassTransposition(Integers^2,[0,0],[[2,1],[0,2]],
->                                        [1,0],[[2,1],[0,4]]);
+gap> ct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);
 ClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)
 gap> Display(ct);
 
@@ -359,6 +359,88 @@ gap> SplittedClassTransposition(ct,[2,1]);
   ClassTransposition((2,1)+(4,0)Z+(0,2)Z,(3,0)+(4,0)Z+(0,4)Z) ]
 gap> Product(last) = ct;
 false
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Heading> ClassRotation (for <M>&ZZ;^2</M>) </Heading>
+  <Func Name="ClassRotation" Arg="r, L, u" Label="r, L, u; for Z x Z"/>
+  <Func Name="ClassRotation" Arg="cl, u" Label="cl, u; for Z x Z"/>
+  <Returns> The class rotation <M>\rho_{r(m),u}</M>. </Returns>
+  <Description>
+    Let <M>d \in &NN;</M>. Given a residue class <M>r+&ZZ;^dL</M>
+    and a matrix <M>u \in {\rm GL}(d,&ZZ;)</M>, the <E>class rotation</E>
+    <M>\rho_{r+&ZZ;^dL,u}</M> is the rcwa mapping which maps
+    <M>v \in r+&ZZ;^dL</M> to <M>vu + r(1-u)</M>
+    and which fixes <M>&ZZ;^d \setminus r+&ZZ;^dL</M> pointwise.
+
+    <Index Key="RotationFactor" Subkey="of a class rotation of Z x Z">
+      <C>RotationFactor</C>
+    </Index>
+
+    In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
+    residue class&nbsp;<M>r+&ZZ;^dL</M>. Enclosing the argument list in list
+    brackets is permitted. The argument <A>u</A> is stored as an attribute
+    <C>RotationFactor</C>.
+<Example>
+<![CDATA[
+gap> interchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);
+ClassRotation((Integers^2),[[0,1],[1,0]])
+gap> Display(interchange);
+Bijective rcwa mapping of Z^2: [m,n] -> [n,m]
+gap> classes := AllResidueClassesModulo(Integers^2,[[2,1],[0,3]]);
+[ (0,0)+(2,1)Z+(0,3)Z, (0,1)+(2,1)Z+(0,3)Z, (0,2)+(2,1)Z+(0,3)Z, 
+  (1,0)+(2,1)Z+(0,3)Z, (1,1)+(2,1)Z+(0,3)Z, (1,2)+(2,1)Z+(0,3)Z ]
+gap> transvection := ClassRotation(classes[5],[[1,1],[0,1]]);
+ClassRotation((1,1)+(2,1)Z+(0,3)Z,[[1,1],[0,1]])
+gap> Display(transvection);
+
+Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
+
+   [m,n] mod (2,1)Z+(0,3)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,1] [0,2] [1,0]     |
+ [1,2]                       | [m,n]
+ [1,1]                       | [m,(3m+2n-3)/2]
+
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Heading> ClassShift (for <M>&ZZ;^2</M>) </Heading>
+  <Func Name="ClassShift" Arg="r, L, c" Label="r, L, c; for Z x Z"/>
+  <Func Name="ClassShift" Arg="cl, c" Label="cl, c; for Z x Z"/>
+  <Returns> The class shift <M>\nu_{r+&ZZ;^dL,c}</M>. </Returns>
+  <Description>
+    The <E>class shift</E> <M>\nu_{r+&ZZ;^dL,c}</M> is the rcwa mapping
+    which maps <M>v \in r+&ZZ;^dL</M> to <M>v + L_c</M>
+    and which fixes <M>&ZZ;^d \setminus r+&ZZ;^dL</M> pointwise.
+    Here <M>L_d</M> denotes the <M>d</M>th row of&nbsp;<M>L</M>. <P/>
+
+    In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
+    residue class&nbsp;<M>r+&ZZ;^dL</M>. Enclosing the argument list in
+    list brackets is permitted.
+<Example>
+<![CDATA[
+gap> shift1 := ClassShift([0,0],[[1,0],[0,1]],1);
+ClassShift((Integers^2),1)
+gap> Display(shift1);
+Tame bijective rcwa mapping of Z^2: [m,n] -> [m+1,n]
+gap> s := ClassShift(ResidueClass([1,1],[[2,1],[0,2]]),2);
+ClassShift((1,1)+(2,1)Z+(0,2)Z,2)
+gap> Display(s);
+
+Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
+
+   [m,n] mod (2,1)Z+(0,2)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,1] [1,0]           | [m,n]
+ [1,1]                       | [m,n+2]
+
 ]]>
 </Example>
   </Description>
