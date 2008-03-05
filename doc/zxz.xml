@@ -279,6 +279,91 @@ Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
   </Description>
 </ManSection>
 
+<ManSection>
+  <Func Name="ClassTransposition" Arg="R, r1, L1, r2, L2"
+                                  Label="R, r1, L1, r2, L2 (for Z x Z)"/>
+  <Func Name="ClassTransposition" Arg="cl1, cl2"
+                                  Label="cl1, cl2 (for Z x Z)"/>
+  <Returns>
+    The class transposition <M>\tau_{r_1+&ZZ;^2L_1,r_2+&ZZ;^2L_2}</M>.
+  </Returns>
+  <Description>
+    Let <M>d \in &NN;</M>, and let <M>L_1, L_2 \in &ZZ;^{d \times d}</M> be
+    matrices of full rank which are in Hermite normal form. Further let
+    <M>r_1 + &ZZ;^d L_1</M> and <M>r_2 + &ZZ;^d L_2</M> be disjoint residue
+    classes, and assume that the representatives <M>r_1</M> and <M>r_2</M>
+    are reduced modulo&nbsp;<M>&ZZ;^d L_1</M> and&nbsp;<M>&ZZ;^d L_2</M>,
+    respectively. Then we define the <E>class transposition</E>
+    <M>\tau_{r_1+&ZZ;^d L_1, r_2+&ZZ;^d L_2} \in {\rm SYM}(&ZZ;^d)</M> as the
+    involution which interchanges <M>r_1 + k L_1</M> and <M>r_2 + k L_2</M>
+    for all <M>k \in &ZZ;^d</M>. <P/>
+
+    The class transposition <M>\tau_{r_1+&ZZ;^d L_1, r_2+&ZZ;^d L_2}</M>
+    interchanges the residue classes <M>r_1+&ZZ;^d L_1</M> and
+    <M>r_2+&ZZ;^d L_2</M>, and fixes the complement of their union pointwise.
+    <P/>
+
+    <Index Key="TransposedClasses"
+           Subkey="of a class transposition of Z x Z">
+      <C>TransposedClasses</C>
+    </Index>
+
+    In the five-argument form, the first argument is <C>Integers^2</C>, and
+    the arguments <A>r1</A>, <A>L1</A>, <A>r2</A> and&nbsp;<A>L2</A> stand
+    for <M>r_1</M>, <M>L_1</M>, <M>r_2</M> and&nbsp;<M>L_2</M>, respectively.
+    In the two-argument form, the arguments <A>cl1</A> and&nbsp;<A>cl2</A>
+    stand for the residue classes <M>r_1+&ZZ;^2 L_1</M>
+    and&nbsp;<M>r_2+&ZZ;^2 L_2</M>, respectively.
+    Enclosing the argument list in list brackets is permitted.
+    The residue classes <M>r_1+&ZZ;^2 L_1</M> and <M>r_2+&ZZ;^2 L_2</M>
+    are stored as an attribute <C>TransposedClasses</C>. <P/>
+
+    <Index Key="SplittedClassTransposition"
+           Subkey="for a class transposition of Z x Z">
+      <C>SplittedClassTransposition</C>
+    </Index>
+
+    There is also a method for <C>SplittedClassTransposition</C> available
+    for class transpositions of <M>&ZZ;^2</M>. This method takes as first
+    argument the class transposition, and as second argument a list of
+    two integers. These integers are the numbers of parts into which the
+    class transposition is to be sliced in each dimension. Note that the
+    product of the returned class transpositions is not always equal to
+    the class transposition passed as first argument. However this equality
+    holds if the first entry of the second argument is&nbsp;1. <P/>
+<Example>
+<![CDATA[
+gap> ct := ClassTransposition(Integers^2,[0,0],[[2,1],[0,2]],
+>                                        [1,0],[[2,1],[0,4]]);
+ClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)
+gap> Display(ct);
+
+Bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
+
+   [m,n] mod (2,1)Z+(0,4)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,2]                 | [m+1,(-m+4n)/2]
+ [0,1] [0,3] [1,1] [1,2]     |
+ [1,3]                       | [m,n]
+ [1,0]                       | [m-1,(m+2n-1)/4]
+
+gap> TransposedClasses(ct);
+[ (1,0)+(2,0)Z+(0,4)Z, (0,0)+(2,1)Z+(0,2)Z ]
+gap> SplittedClassTransposition(ct,[1,2]);
+[ ClassTransposition((1,0)+(2,0)Z+(0,8)Z,(0,0)+(2,1)Z+(0,4)Z), 
+  ClassTransposition((1,4)+(2,0)Z+(0,8)Z,(0,2)+(2,1)Z+(0,4)Z) ]
+gap> Product(last) = ct;
+true
+gap> SplittedClassTransposition(ct,[2,1]);
+[ ClassTransposition((0,0)+(4,0)Z+(0,2)Z,(1,0)+(4,0)Z+(0,4)Z), 
+  ClassTransposition((2,1)+(4,0)Z+(0,2)Z,(3,0)+(4,0)Z+(0,4)Z) ]
+gap> Product(last) = ct;
+false
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
