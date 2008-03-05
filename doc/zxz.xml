@@ -145,7 +145,7 @@ and by the more specialized functions
         the rcwa mapping of&nbsp;<M>&ZZ;^2</M> whose projections to the
         coordinates are given by <A>f</A> and&nbsp;<A>g</A> (warning:
         by far not all -- or better: only very special rcwa mappings
-        of&nbsp;<M>&ZZ;^2</M> -- can be constructed in this way!),
+        of&nbsp;<M>&ZZ;^2</M> -- have projections to coordinates!),
       </Item>
     </List>
     respectively.
