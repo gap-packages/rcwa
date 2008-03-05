@@ -496,10 +496,11 @@ necessary for understanding this manual or for using this package.
       <Mark>(i)</Mark>
       <Item>
         a bijective rcwa mapping with <Q>residue class cycles</Q> given
-        by a list <A>cycles</A> of lists of pairwise disjoint residue classes
-        which are to be permuted cyclically, each, respectively.
+        by a list <A>cycles</A> of lists of pairwise disjoint residue classes,
+        each of which it permutes cyclically,
       </Item>
     </List>
+    respectively.
     The methods for the operation <C>RcwaMapping</C> perform a number of
     argument checks, which can be skipped by using <C>RcwaMappingNC</C>
     instead.

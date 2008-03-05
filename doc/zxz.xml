@@ -136,7 +136,7 @@ and by the more specialized functions
       <Item>
         a bijective rcwa mapping with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes
-        of&nbsp;<M>&ZZ;^2</M> which are to be permuted cyclically, each,
+        of&nbsp;<M>&ZZ;^2</M>, each of which it permutes cyclically,
       </Item>
     </List>
     respectively.
