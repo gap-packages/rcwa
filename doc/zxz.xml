@@ -473,6 +473,21 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
   </Description>
 </ManSection>
 
+<Index Key="IsClassTransposition" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsClassTransposition</C>
+</Index>
+<Index Key="IsClassRotation" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsClassRotation</C>
+</Index>
+<Index Key="IsClassShift" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsClassShift</C>
+</Index>
+
+As for other rings, class transpositions, class rotations and
+class shifts of&nbsp;<M>&ZZ;^2</M> have the distinguishing properties
+<C>IsClassTransposition</C>, <C>IsClassRotation</C>
+and <C>IsClassShift</C>.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -485,6 +500,96 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
 There are methods available for rcwa mappings of <M>&ZZ;^d</M> for the
 following general operations:
 
+<Index Key="View" Subkey="for an rcwa mapping of Z x Z">
+  <C>View</C>
+</Index>
+<Index Key="Display" Subkey="for an rcwa mapping of Z x Z">
+  <C>Display</C>
+</Index>
+<Index Key="Print" Subkey="for an rcwa mapping of Z x Z">
+  <C>Print</C>
+</Index>
+<Index Key="String" Subkey="for an rcwa mapping of Z x Z">
+  <C>String</C>
+</Index>
+<Index Key="Modulus" Subkey="of an rcwa mapping of Z x Z">
+  <C>Modulus</C>
+</Index>
+<Index Key="Coefficients" Subkey="of an rcwa mapping of Z x Z">
+  <C>Coefficients</C>
+</Index>
+<Index Key="Support" Subkey="of an rcwa mapping of Z x Z">
+  <C>Support</C>
+</Index>
+<Index Key="MovedPoints" Subkey="of an rcwa mapping of Z x Z">
+  <C>MovedPoints</C>
+</Index>
+<Index Key="Order" Subkey="of an rcwa mapping of Z x Z">
+  <C>Order</C>
+</Index>
+<Index Key="Multiplier" Subkey="of an rcwa mapping of Z x Z">
+  <C>Multiplier</C>
+</Index>
+<Index Key="Divisor" Subkey="of an rcwa mapping of Z x Z">
+  <C>Divisor</C>
+</Index>
+<Index Key="PrimeSet" Subkey="of an rcwa mapping of Z x Z">
+  <C>PrimeSet</C>
+</Index>
+<Index Key="One" Subkey="for an rcwa mapping of Z x Z">
+  <C>One</C>
+</Index>
+<Index Key="Zero" Subkey="for an rcwa mapping of Z x Z">
+  <C>Zero</C>
+</Index>
+<Index Key="IsInjective" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsInjective</C>
+</Index>
+<Index Key="IsSurjective" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsSurjective</C>
+</Index>
+<Index Key="IsBijective" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsBijective</C>
+</Index>
+<Index Key="IsTame" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsTame</C>
+</Index>
+<Index Key="IsIntegral" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsIntegral</C>
+</Index>
+<Index Key="IsBalanced" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsBalanced</C>
+</Index>
+<Index Key="IsClassWiseOrderPreserving"
+       Subkey="for an rcwa mapping of Z x Z">
+  <C>IsClassWiseOrderPreserving</C>
+</Index>
+<Index Key="IsOne" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsOne</C>
+</Index>
+<Index Key="IsZero" Subkey="for an rcwa mapping of Z x Z">
+  <C>IsZero</C>
+</Index>
+<Index Key="Trajectory" Subkey="for rcwa mappings of Z x Z">
+  <C>Trajectory</C>
+</Index>
+<Index Key="ShortCycles"
+       Subkey="for rcwa perm. of Z x Z, set of points and max. length">
+  <C>ShortCycles</C>
+</Index>
+<Index Key="Multpk" Subkey="for rcwa mapping of Z x Z, prime and exponent">
+  <C>Multpk</C>
+</Index>
+<Index Key="ClassWiseOrderPreservingOn" Subkey="for rcwa mappings of Z x Z">
+  <C>ClassWiseOrderPreservingOn</C>
+</Index>
+<Index Key="ClassWiseOrderReversingOn" Subkey="for rcwa mappings of Z x Z">
+  <C>ClassWiseOrderReversingOn</C>
+</Index>
+<Index Key="ClassWiseConstantOn" Subkey="for rcwa mappings of Z x Z">
+  <C>ClassWiseConstantOn</C>
+</Index>
+
 <List>
   <Mark> Output </Mark>
   <Item> <C>View</C>, <C>Display</C>, <C>Print</C>, <C>String</C>. </Item> 
@@ -492,31 +597,56 @@ following general operations:
   <Item> <C>Modulus</C>, <C>Coefficients</C>. </Item>
   <Mark> Attributes </Mark>
   <Item>
-    <C>Support</C> / <C>MovedPoints</C>, <C>Order</C>, <C>PrimeSet</C>,
+    <C>Support</C> / <C>MovedPoints</C>, <C>Order</C>,
+    <C>Multiplier</C>, <C>Divisor</C>, <C>PrimeSet</C>,
     <C>One</C>, <C>Zero</C>.
   </Item>
   <Mark> Properties </Mark>
   <Item>
     <C>IsInjective</C>, <C>IsSurjective</C>, <C>IsBijective</C>,
-    <C>IsIntegral</C>, <C>IsClassWiseOrderPreserving</C>, <C>IsTame</C>.
+    <C>IsTame</C>, <C>IsIntegral</C>, <C>IsBalanced</C>,
+    <C>IsClassWiseOrderPreserving</C>, <C>IsOne</C>, <C>IsZero</C>.
   </Item>
   <Mark> Action on <M>&ZZ;^d</M> </Mark>
   <Item>
-    <C>^</C> (for points, finite sets and residue class unions),
-    <C>Trajectory</C>, <C>ShortCycles</C>.
+    <C>^</C> (for points / finite sets / residue class unions),
+    <C>Trajectory</C>, <C>ShortCycles</C>, <C>Multpk</C>,
+    <C>ClassWiseOrderPreservingOn</C>, <C>ClassWiseOrderReversingOn</C>,
+    <C>ClassWiseConstantOn</C>.
   </Item>
   <Mark> Arithmetical operations </Mark>
   <Item>
-    <C>*</C> (multiplication / composition),
-    <C>^</C> (computing powers and conjugates), <C>Inverse</C>.
+    <C>=</C>, <C>*</C> (multiplication / composition and multiplication
+    by a <M>2 \times 2</M> matrix or an integer),
+    <C>^</C> (exponentiation and conjugation), <C>Inverse</C>,
+    <C>+</C> (addition of a constant).
   </Item>
  </List>
 
 The above operations are documented either in the &GAP; Reference Manual
-or earlier in this mamual. <P/>
+or earlier in this mamual. The operations which are special for rcwa mappings
+of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
 
-There are also some special operations for rcwa mappings
-of&nbsp;<M>&ZZ;^d</M>. These are described in the sequel.
+<Index Key="Projections" Subkey="of an rcwa mapping of Z x Z">
+  <C>Projections</C>
+</Index>
+
+If an rcwa mapping of <M>&ZZ;^2</M> can be projected to both coordinates,
+these projections can be obtained by the operation <C>Projections</C>.
+An rcwa mapping can be projected to the first / second coordinate if and
+only if the first / second coordinate of the image of a point depends only
+on the first / second coordinate of the preimage. Note that this is a very
+strong and restrictive condition. <P/>
+
+<Index Key="IsClassWiseTranslating" Subkey="for an rcwa mapping">
+  <C>IsClassWiseTranslating</C>
+</Index>
+
+For rcwa mappings of <M>&ZZ;^2</M>, the term <E>integral</E> is weaker than
+e.g. for rcwa mappings of &ZZ;. Therefore we introduce a stronger notion,
+and call an rcwa mapping <E>class-wise translating</E> if all of its affine
+partial mappings are translations. The corresponding &GAP; property is
+<C>IsClassWiseTranslating</C>.
 
 </Section>
 
