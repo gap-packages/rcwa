@@ -172,8 +172,7 @@ and by the more specialized functions
     instead.
 <Example>
 <![CDATA[
-gap> R := Integers^2;
-( Integers^2 )
+gap> R := Integers^2;;
 gap> twice := RcwaMapping(R,[[1,0],[0,1]],
 >                           [[[[2,0],[0,2]],[0,0],1]]);       # method (a)
 Rcwa mapping of Z^2: [m,n] -> [2m,2n]
@@ -245,31 +244,6 @@ gap> Permutation(g,classes);
 (1,2,3)
 gap> Support(g);
 (0,0)+(2,1)Z+(0,2)Z U (1,0)+(2,1)Z+(0,4)Z U (1,1)+(4,2)Z+(0,4)Z
-gap> Display(last:AsGrid);
-   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-**  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-**  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-**  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  **  *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 gap> Display(g);
 
 Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
@@ -322,7 +296,7 @@ gap> List(Projections(g),Factorization);
     classes, and assume that the representatives <M>r_1</M> and <M>r_2</M>
     are reduced modulo&nbsp;<M>&ZZ;^d L_1</M> and&nbsp;<M>&ZZ;^d L_2</M>,
     respectively. Then we define the <E>class transposition</E>
-    <M>\tau_{r_1+&ZZ;^d L_1, r_2+&ZZ;^d L_2} \in {\rm SYM}(&ZZ;^d)</M> as the
+    <M>\tau_{r_1+&ZZ;^d L_1, r_2+&ZZ;^d L_2} \in {\rm Sym}(&ZZ;^d)</M> as the
     involution which interchanges <M>r_1 + k L_1</M> and <M>r_2 + k L_2</M>
     for all <M>k \in &ZZ;^d</M>. <P/>
 
@@ -376,6 +350,8 @@ Bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
 
 gap> TransposedClasses(ct);
 [ (1,0)+(2,0)Z+(0,4)Z, (0,0)+(2,1)Z+(0,2)Z ]
+gap> ct = ClassTransposition(last);
+true
 gap> SplittedClassTransposition(ct,[1,2]);
 [ ClassTransposition((1,0)+(2,0)Z+(0,8)Z,(0,0)+(2,1)Z+(0,4)Z), 
   ClassTransposition((1,4)+(2,0)Z+(0,8)Z,(0,2)+(2,1)Z+(0,4)Z) ]
@@ -443,9 +419,11 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
   <Func Name="ClassShift" Arg="cl, c" Label="cl, c; for Z x Z"/>
   <Returns> The class shift <M>\nu_{r+&ZZ;^dL,c}</M>. </Returns>
   <Description>
-    The <E>class shift</E> <M>\nu_{r+&ZZ;^dL,c}</M> is the rcwa mapping
-    which maps <M>v \in r+&ZZ;^dL</M> to <M>v + L_c</M>
-    and which fixes <M>&ZZ;^d \setminus r+&ZZ;^dL</M> pointwise.
+    Let <M>d \in &NN;</M>. Given a residue class <M>r+&ZZ;^dL</M> and
+    an integer <M>c \in \{1, \dots, d\}</M>, the <E>class shift</E>
+    <M>\nu_{r+&ZZ;^dL,c}</M> is the rcwa mapping which maps
+    <M>v \in r+&ZZ;^dL</M> to <M>v + L_c</M> and which fixes
+    <M>&ZZ;^d \setminus r+&ZZ;^dL</M> pointwise.
     Here <M>L_d</M> denotes the <M>d</M>th row of&nbsp;<M>L</M>. <P/>
 
     In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
@@ -655,4 +633,3 @@ partial mappings are translations. The corresponding &GAP; property is
 </Chapter>
 
 <!-- #################################################################### -->
-
