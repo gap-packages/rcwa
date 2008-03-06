@@ -103,7 +103,7 @@ form of the matrix by whose rows it is spanned.
 Residue-class-wise affine mappings of <M>&ZZ;^2</M> can be entered
 using the general constructor
 <Ref Meth="RcwaMapping" Label="by ring, modulus and list of coefficients"/>
-and by the more specialized functions
+or the more specialized functions
 <Ref Func="ClassTransposition" Label="r1, m1, r2, m2"/>,
 <Ref Func="ClassRotation" Label="cl, u"/> and
 <Ref Func="ClassShift" Label="cl"/>. The arguments differ only slightly.
@@ -187,7 +187,7 @@ gap> Image(twice1);
 (0,0)+(2,0)Z+(0,1)Z
 gap> hyperbolic := RcwaMapping(R,[[1,0],[0,2]],
 >                                [[[[4,0],[0,1]],[0, 0],2],
->                                 [[[4,0],[0,1]],[2,-1],2]]);
+>                                 [[[4,0],[0,1]],[2,-1],2]]); # method (a)
 <rcwa mapping of Z^2 with modulus (1,0)Z+(0,2)Z>
 gap> IsBijective(hyperbolic);
 true
