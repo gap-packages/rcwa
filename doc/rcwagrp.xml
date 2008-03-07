@@ -309,10 +309,12 @@ true
 <Index Key="rcwa group" Subkey="multiplier">rcwa group</Index>
 <Index Key="rcwa group" Subkey="divisor">rcwa group</Index>
 <Index Key="rcwa group" Subkey="prime set">rcwa group</Index>
+<Index Key="rcwa group" Subkey="class-wise translating">rcwa group</Index>
 <Index Key="rcwa group" Subkey="integral">rcwa group</Index>
 <Index Key="rcwa group" Subkey="class-wise order-preserving">
   rcwa group
 </Index>
+<Index Key="rcwa group" Subkey="sign-preserving">rcwa group</Index>
 
 <Index Key="Modulus" Subkey="of an rcwa group"><C>Modulus</C></Index>
 <Index Key="Mod" Subkey="for an rcwa group"><C>Mod</C></Index>
@@ -324,6 +326,9 @@ true
 <Index Key="Divisor" Subkey="of an rcwa group"><C>Divisor</C></Index>
 <Index Key="Div" Subkey="for an rcwa group"><C>Div</C></Index>
 <Index Key="PrimeSet" Subkey="of an rcwa group"><C>PrimeSet</C></Index>
+<Index Key="IsClassWiseTranslating" Subkey="for an rcwa group">
+  <C>IsClassWiseTranslating</C>
+</Index>
 <Index Key="IsIntegral" Subkey="for an rcwa group"><C>IsIntegral</C></Index>
 <Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa group">
   <C>IsClassWiseOrderPreserving</C>
@@ -344,10 +349,10 @@ The <E>prime set</E> of an rcwa group is the union of the prime sets of
 its elements.
 There are shorthands <C>Mod</C>, <C>Mult</C> and <C>Div</C> defined for
 <C>Modulus</C>, <C>Multiplier</C> and <C>Divisor</C>, respectively.
-An rcwa group is called <E>integral</E> respectively
-<E>class-wise order-preserving</E> if all of its elements are so.
-There are corresponding methods available for <C>IsIntegral</C>
-and <C>IsClassWiseOrderPreserving</C>. There is a property
+An rcwa group is called <E>class-wise translating</E>, <E>integral</E>
+or <E>class-wise order-preserving</E> if all of its elements are so.
+There are corresponding methods available for <C>IsClassWiseTranslating</C>,
+<C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>. There is a property
 <C>IsSignPreserving</C>, which indicates whether a given rcwa group
 over&nbsp;&ZZ; acts on the set of nonnegative integers.
 The latter holds for any subgroup of CT(&ZZ;).
@@ -357,9 +362,9 @@ The latter holds for any subgroup of CT(&ZZ;).
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),
 >               ClassReflection(2,4));
 <rcwa group over Z with 3 generators>
-gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsIntegral,
->          IsClassWiseOrderPreserving,IsSignPreserving],f->f(G));
-[ 24, 2, 2, [ 2, 3 ], false, false, false ]
+gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsClassWiseTranslating,
+>          IsIntegral,IsClassWiseOrderPreserving,IsSignPreserving],f->f(G));
+[ 24, 2, 2, [ 2, 3 ], false, false, false, false ]
 ]]>
 </Example>
 

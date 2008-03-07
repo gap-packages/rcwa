@@ -472,10 +472,10 @@ and <C>IsClassShift</C>.
 
 <Section Label="sec:MethodsForRcwaMappingsOfZxZ">
 <Heading>
-  Methods for residue-class-wise affine mappings of <M>&ZZ;^d</M>
+  Methods for residue-class-wise affine mappings of <M>&ZZ;^2</M>
 </Heading>
 
-There are methods available for rcwa mappings of <M>&ZZ;^d</M> for the
+There are methods available for rcwa mappings of <M>&ZZ;^2</M> for the
 following general operations:
 
 <Index Key="View" Subkey="for an rcwa mapping of Z x Z">
@@ -615,16 +615,6 @@ An rcwa mapping can be projected to the first / second coordinate if and
 only if the first / second coordinate of the image of a point depends only
 on the first / second coordinate of the preimage. Note that this is a very
 strong and restrictive condition. <P/>
-
-<Index Key="IsClassWiseTranslating" Subkey="for an rcwa mapping">
-  <C>IsClassWiseTranslating</C>
-</Index>
-
-For rcwa mappings of <M>&ZZ;^2</M>, the term <E>integral</E> is weaker than
-e.g. for rcwa mappings of &ZZ;. Therefore we introduce a stronger notion,
-and call an rcwa mapping <E>class-wise translating</E> if all of its affine
-partial mappings are translations. The corresponding &GAP; property is
-<C>IsClassWiseTranslating</C>.
 
 </Section>
 

@@ -811,24 +811,40 @@ rings.
   Attributes and properties of residue-class-wise affine mappings
 </Heading>
 
+<Index Key="class-wise translating" Subkey="definition">
+  class-wise translating
+</Index>
+<Index Key="integral" Subkey="definition">integral</Index>
+<Index Key="balanced" Subkey="definition">balanced</Index>
+<Index Key="sign-preserving" Subkey="definition">sign-preserving</Index>
+
+<Index Key="rcwa mapping" Subkey="prime set">rcwa mapping</Index>
+<Index Key="rcwa mapping" Subkey="class-wise translating">
+  rcwa mapping
+</Index>
+<Index Key="rcwa mapping" Subkey="integral">rcwa mapping</Index>
+<Index Key="rcwa mapping" Subkey="balanced">rcwa mapping</Index>
+<Index Key="rcwa mapping"
+       Subkey="class-wise order-preserving">
+  rcwa mapping
+</Index>
+<Index Key="rcwa mapping" Subkey="sign-preserving">rcwa mapping</Index>
+
 <Index Key="Multiplier" Subkey="of an rcwa mapping"><C>Multiplier</C></Index>
 <Index Key="Mult" Subkey="for an rcwa mapping"><C>Mult</C></Index>
 <Index Key="Divisor" Subkey="of an rcwa mapping"><C>Divisor</C></Index>
 <Index Key="Div" Subkey="for an rcwa mapping"><C>Div</C></Index>
 <Index Key="PrimeSet" Subkey="of an rcwa mapping"><C>PrimeSet</C></Index>
-<Index Key="rcwa mapping" Subkey="prime set">rcwa mapping</Index>
-<Index Key="integral" Subkey="definition">integral</Index>
-<Index Key="rcwa mapping" Subkey="integral">rcwa mapping</Index>
+
+<Index Key="IsClassWiseTranslating" Subkey="for an rcwa mapping">
+  <C>IsClassWiseTranslating</C>
+</Index>
 <Index Key="IsIntegral" Subkey="for an rcwa mapping">
   <C>IsIntegral</C>
 </Index>
-<Index Key="balanced" Subkey="definition"><C>balanced</C></Index>
-<Index Key="rcwa mapping" Subkey="balanced">rcwa mapping</Index>
 <Index Key="IsBalanced" Subkey="for an rcwa mapping">
   <C>IsBalanced</C>
 </Index>
-<Index Key="rcwa mapping"
-       Subkey="class-wise order-preserving">rcwa mapping</Index>
 <Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa mapping">
   <C>IsClassWiseOrderPreserving</C>
 </Index>
@@ -843,10 +859,13 @@ as attributes <C>Multiplier</C> and <C>Divisor</C>, or for short <C>Mult</C>
 and <C>Div</C>. The <E>prime set</E> of an rcwa mapping is the set of
 prime divisors of the product of its modulus and its multiplier.
 It is stored as an attribute <C>PrimeSet</C>.
-An rcwa mapping is called <E>integral</E> if its divisor equals&nbsp;1.
-An rcwa mapping is called <E>balanced</E> if its multiplier and its divisor
-have the same prime divisors. An integral mapping has the property
-<C>IsIntegral</C> and a balanced mapping has the property <C>IsBalanced</C>.
+An rcwa mapping is called <E>class-wise translating</E> if all of its affine
+partial mappings are translations, it is called <E>integral</E> if its
+divisor equals&nbsp;1, and it is called <E>balanced</E> if its multiplier
+and its divisor have the same prime divisors. A class-wise translating
+mapping has the property <C>IsClassWiseTranslating</C>, an integral mapping
+has the property <C>IsIntegral</C> and a balanced mapping has the property
+<C>IsBalanced</C>.
 An rcwa mapping of the ring of integers or of one of its semilocalizations
 is called <E>class-wise order-preserving</E> if and only if all coefficients
 <M>a_{r(m)}</M> (cf.&nbsp;Section&nbsp;<Ref Label="sec:basicdefinitions"/>)
