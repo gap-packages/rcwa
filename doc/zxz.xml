@@ -20,17 +20,7 @@ gap> SizeScreen([75,24]);;
 </Ignore>
 
 This chapter describes how to compute with residue-class-wise affine mappings
-of&nbsp;<M>&ZZ;^2</M> and with groups and monoids formed by them.
-
-<!-- #################################################################### -->
-
-<Section Label="sec:DefinitionOfRcwaMappingsOfZxZ">
-<Heading>
-  The definition of residue-class-wise affine mappings of <M>&ZZ;^d</M>
-</Heading>
-
-<Subsection Label="ssec:RcwaMappingsOfZxZPreamble">
-<Heading>Preamble</Heading>
+of&nbsp;<M>&ZZ;^2</M> and with groups and monoids formed by them. <P/>
 
 The rings on which we have defined residue-class-wise affine mappings so
 far have all been principal ideal domains, and it has been crucial that all
@@ -46,10 +36,12 @@ is not just given by <M>v \mapsto (av+b)/c</M> for some
 <M>a, b, c \in &ZZ;^d</M>, but rather by <M>v \mapsto (vA+b)/c</M>,
 where <M>A \in &ZZ;^{d \times d}</M>.
 
-</Subsection>
+<!-- #################################################################### -->
 
-<Subsection Label="ssec:RcwaMappingsOfZxZDefinition">
-<Heading>Definition</Heading>
+<Section Label="sec:DefinitionOfRcwaMappingsOfZxZ">
+<Heading>
+  The definition of residue-class-wise affine mappings of <M>&ZZ;^d</M>
+</Heading>
 
 <Index Key="rcwa mapping" Subkey="of Z x Z, definition">rcwa mapping</Index>
 
@@ -88,8 +80,6 @@ coefficients&nbsp;<M>c_{r+L}</M> are equal to&nbsp;1. <P/>
 
 For the sake of simplicity, we identify a lattice with the Hermite normal
 form of the matrix by whose rows it is spanned.
-
-</Subsection>
 
 </Section>
 
