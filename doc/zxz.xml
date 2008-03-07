@@ -605,16 +605,38 @@ The above operations are documented either in the &GAP; Reference Manual
 or earlier in this mamual. The operations which are special for rcwa mappings
 of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
 
-<Index Key="Projections" Subkey="of an rcwa mapping of Z x Z">
-  <C>Projections</C>
-</Index>
+<ManSection>
+  <Oper Name="Projections" Arg="f"
+        Label="for an rcwa mapping of Z x Z"/>
+  <Returns>
+    The projections of the rcwa mapping <A>f</A> of <M>&ZZ;^2</M> to the
+    coordinates if such projections exist, and <C>fail</C> otherwise.
+  </Returns>
+  <Description>
+    An rcwa mapping can be projected to the first / second coordinate if and
+    only if the first / second coordinate of the image of a point depends
+    only on the first / second coordinate of the preimage. Note that this is
+    a very strong and restrictive condition.
+<Example>
+<![CDATA[
+gap> f := RcwaMapping(ClassTransposition(0,2,1,2),ClassReflection(0,2));;
+gap> Display(f);
 
-If an rcwa mapping of <M>&ZZ;^2</M> can be projected to both coordinates,
-these projections can be obtained by the operation <C>Projections</C>.
-An rcwa mapping can be projected to the first / second coordinate if and
-only if the first / second coordinate of the image of a point depends only
-on the first / second coordinate of the preimage. Note that this is a very
-strong and restrictive condition. <P/>
+Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
+
+    [m,n] mod (2,0)Z+(0,2)Z    |               Image of [m,n]
+-------------------------------+----------------------------------------------
+ [0,0]                         | [m+1,-n]
+ [0,1]                         | [m+1,n]
+ [1,0]                         | [m-1,-n]
+ [1,1]                         | [m-1,n]
+
+gap> List(Projections(f),Factorization);
+[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
+]]>
+</Example>
+  </Description>
+</ManSection>
 
 </Section>
 
