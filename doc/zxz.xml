@@ -293,7 +293,8 @@ gap> List(Projections(g),Factorization);
     The class transposition <M>\tau_{r_1+&ZZ;^d L_1, r_2+&ZZ;^d L_2}</M>
     interchanges the residue classes <M>r_1+&ZZ;^d L_1</M> and
     <M>r_2+&ZZ;^d L_2</M>, and fixes the complement of their union pointwise.
-    <P/>
+    The set of all class transpositions of&nbsp;<M>&ZZ;^d</M> generates the
+    simple group CT(<M>&ZZ;^d</M>) (cf.&nbsp;<Cite Key="Kohl08a"/>). <P/>
 
     <Index Key="TransposedClasses"
            Subkey="of a class transposition of Z x Z">
