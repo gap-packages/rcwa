@@ -658,7 +658,7 @@ InstallMethod( \in,
 
   function ( g, CT_R )
 
-    local  R;
+    local  R, numres;
 
     if   FamilyObj(g) <> FamilyObj(One(CT_R)) or not IsBijective(g)
     then return false; elif IsOne(g) then return true; fi;
@@ -668,6 +668,14 @@ InstallMethod( \in,
       if IsIntegers(R) and Determinant(g) <> 0 then return false; fi;
       if   Minimum([0..Mod(g)-1]^g) < 0
         or Maximum([-Mod(g)..-1]^g) >= 0
+      then return false; fi;
+    elif IsZxZ(R) then
+      numres := AbsInt(DeterminantMat(Modulus(g)));
+      if   not IsClassWiseOrderPreserving(g)
+        or not ForAll(Coefficients(g),c->IsUpperTriangularMat(c[1]))
+        or not ForAll(Coefficients(g),c->c[1][1][1] > 0)
+        or not ForAll(Cartesian([0..numres-1],[-numres..numres]),
+                      t->t^g*[1,0]>=0)
       then return false; fi;
     fi;
     if   ForAll(FactorizationIntoCSCRCT(g),
