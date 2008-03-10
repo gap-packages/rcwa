@@ -675,7 +675,8 @@ of the image is a specified residue class:
   <Returns>
     A monomorphism from <A>sl2z</A> respectively <A>gl2z</A>
     to&nbsp;RCWA(<M>&ZZ;^2</M>), such that the support of the image
-    is the residue class&nbsp;<A>cl</A>. 
+    is the residue class&nbsp;<A>cl</A> and the generators
+    are affine on&nbsp;<A>cl</A>.
   </Returns>
   <Description>
 <Example>
