@@ -57,8 +57,8 @@ The group RCWA(<M>R</M>) itself is not finitely generated, thus cannot
 be constructed as described above. It is handled as a special case:
 
 <ManSection>
-  <Func Name="RCWA"
-        Arg="R" Label="the group of all rcwa permutations of a ring"/>
+  <Func Name="RCWA" Arg="R"
+        Label="the group formed by all rcwa permutations of a ring"/>
   <Returns>
     The group RCWA(<A>R</A>) of all residue-class-wise affine
     permutations of the ring&nbsp;<A>R</A>.

@@ -70,8 +70,8 @@ The monoid Rcwa(<M>R</M>) itself is not finitely generated, thus cannot
 be constructed as described above. It is handled as a special case:
 
 <ManSection>
-  <Func Name="Rcwa"
-        Arg="R" Label="the monoid of all rcwa mappings of a ring"/>
+  <Func Name="Rcwa" Arg="R"
+        Label="the monoid formed by all rcwa mappings of a ring"/>
   <Returns>
     The monoid Rcwa(<A>R</A>) of all residue-class-wise affine
     mappings of the ring&nbsp;<A>R</A>.
