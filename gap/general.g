@@ -502,16 +502,18 @@ fi;
 ##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
-##  Draws a picture of the residue class union <U> of Z^2.
+##  Draws a picture of the residue class union <U> of Z^2 or the partition
+##  <U> of Z^2 into residue class unions, respectively.
 ##
 DeclareGlobalFunction( "DrawGrid" );
 InstallGlobalFunction( DrawGrid,
 
   function ( U, range_y, range_x, filename )
 
-    local  grid, x, y, one, offset_x, offset_y;
+    local  grid, x, y, one, offset_x, offset_y, colors, color, pos;
 
-    if   not IsResidueClassUnionOfZxZ(U)
+    if   not (   IsResidueClassUnionOfZxZ(U)
+              or IsList(U) and ForAll(U,IsResidueClassUnionOfZxZ))
       or not IsRange(range_y) or not IsRange(range_x)
       or not IsString(filename)
     then
@@ -519,16 +521,40 @@ InstallGlobalFunction( DrawGrid,
       return fail;
     fi;
 
-    grid     := NullMat(Length(range_y),Length(range_x),GF(2));
-    one      := One(GF(2));
     offset_x := -Minimum(range_x) + 1;
     offset_y := -Minimum(range_y) + 1;
 
-    for y in range_y do for x in range_x do
-      if not [y,x] in U then grid[y+offset_y][x+offset_x] := one; fi;
-    od; od;
+    if IsResidueClassUnionOfZxZ(U) then
+
+      grid     := NullMat(Length(range_y),Length(range_x),GF(2));
+      one      := One(GF(2));
+
+      for y in range_y do for x in range_x do
+        if not [y,x] in U then grid[y+offset_y][x+offset_x] := one; fi;
+      od; od;
+
+    else
+
+      colors := [[255,0,0],[0,255,0],[0,0,255],[255,255,0],[255,0,255],
+                 [0,255,255],[255,128,128],[128,255,128],[128,128,255]]
+              * [65536,256,1];
+
+      grid := NullMat(Length(range_y),Length(range_x));
+
+      for y in range_y do
+        for x in range_x do
+          pos := First([1..Length(U)],k->[y,x] in U[k]);
+          if   pos = fail then color := 0;
+          elif pos > Length(colors) then color := 2^24-1;
+          else color := colors[pos]; fi;
+          grid[y+offset_y][x+offset_x] := color;
+        od;
+      od;
+
+    fi;
 
     SaveAsBitmapPicture( grid, filename );
+
   end );
 
 #############################################################################
