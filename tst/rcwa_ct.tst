@@ -318,10 +318,11 @@ gap> Set(KnownPropertiesOfObject(G));
 [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
   "IsNaturalCT", "IsNaturalCT_ZxZ", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
-  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
+  "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
+  "IsTrivial" ]
 gap> List(last,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
-  true, false, false ]
+  true, true, true, false, false ]
 gap> Set(KnownAttributesOfObject(G));
 [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 

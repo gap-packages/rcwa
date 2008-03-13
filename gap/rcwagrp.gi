@@ -496,6 +496,8 @@ InstallMethod( CTCons,
     SetCentre( G, TrivialRcwaGroupOverZxZ );
     SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
+    SetIsPerfectGroup( G, true );
+    SetIsSimpleGroup( G, true );
     SetRepresentative( G, ClassTransposition([0,0],[[1,0],[0,2]],
                                              [0,1],[[1,0],[0,2]]) );
     SetSupport( G, R );
