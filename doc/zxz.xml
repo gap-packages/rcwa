@@ -714,6 +714,44 @@ Bijective rcwa mapping of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
   </Description>
 </ManSection>
 
+<Index Key="DrawOrbitPicture" Subkey="for rcwa groups over Z x Z">
+  <C>DrawOrbitPicture</C>
+</Index>
+
+The function <Ref Func="DrawOrbitPicture"
+                  Label="G, p0, r, h, w, colored, palette, filename"/>
+can also be used to depict orbits under the action of rcwa groups
+over&nbsp;<M>&ZZ;^2</M>. Further there is a function which depicts
+residue class unions of&nbsp;<M>&ZZ;^2</M> and partitions
+of&nbsp;<M>&ZZ;^2</M> into such:
+
+<ManSection>
+  <Heading> DrawGrid </Heading>
+  <Func Name="DrawGrid"
+        Arg="U, yrange, xrange, filename"
+        Label="U, yrange, xrange, filename"/>
+  <Func Name="DrawGrid"
+        Arg="P, yrange, xrange, filename"
+        Label="P, yrange, xrange, filename"/>
+  <Returns>
+    Nothing.
+  </Returns>
+  <Description>
+    This function depicts the residue class union <A>U</A>
+    of&nbsp;<M>&ZZ;^2</M> or the partition&nbsp;<A>P</A>
+    of&nbsp;<M>&ZZ;^2</M> into residue class unions, respectively.
+    The arguments <A>yrange</A> and <A>xrange</A> are the coordinate
+    ranges of the rectangular snippet to be drawn, and the argument
+    <A>filename</A> is the name, i.e. the full path name,
+    of the output file. If the first argument is a residue class union,
+    the output picture is black-and-white, where black pixels represent
+    members of&nbsp;<A>U</A> and white pixels represent non-members.
+    If the first argument is a partition of&nbsp;<M>&ZZ;^2</M> into residue
+    class unions, the produced picture is colored, and different colors are
+    used to denote membership in different parts.
+  </Description>
+</ManSection>
+
 </Section>
 
 <!-- #################################################################### -->
