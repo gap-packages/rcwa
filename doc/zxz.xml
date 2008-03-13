@@ -659,6 +659,32 @@ The groups RCWA(<M>&ZZ;^2</M>) and CT(<M>&ZZ;^2</M>) are entered
 as <C>RCWA(Integers^2)</C> and <C>CT(Integers^2)</C>, respectively.
 The monoid Rcwa(<M>&ZZ;^2</M>) is entered as <C>Rcwa(Integers^2)</C>. <P/>
 
+<Index Key="Size" Subkey="for an rcwa group over Z x Z">
+  <C>Size</C>
+</Index>
+<Index Key="IsIntegral" Subkey="for an rcwa group over Z x Z">
+  <C>IsIntegral</C>
+</Index>
+<Index Key="IsClassWiseTranslating" Subkey="for an rcwa group over Z x Z">
+  <C>IsClassWiseTranslating</C>
+</Index>
+<Index Key="IsTame" Subkey="for an rcwa group over Z x Z">
+  <C>IsTame</C>
+</Index>
+<Index Key="Modulus" Subkey="of an rcwa group over Z x Z">
+  <C>Modulus</C>
+</Index>
+<Index Key="Multiplier" Subkey="of an rcwa group over Z x Z">
+  <C>Multiplier</C>
+</Index>
+<Index Key="Divisor" Subkey="of an rcwa group over Z x Z">
+  <C>Divisor</C>
+</Index>
+
+There are methods provided for the operations <C>Size</C>,
+<C>IsIntegral</C>, <C>IsClassWiseTranslating</C>, <C>IsTame</C>,
+<C>Modulus</C>, <C>Multiplier</C> and <C>Divisor</C>. <P/>
+
 There are methods for <Ref Attr="IsomorphismRcwaGroup"
 Label="for a group, over a given ring"/> which embed the groups SL(2,&ZZ;)
 and GL(2,&ZZ;) into RCWA(<M>&ZZ;^2</M>) in such a way that the support
