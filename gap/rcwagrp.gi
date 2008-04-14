@@ -341,7 +341,7 @@ InstallMethod( RCWACons,
     SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     SetRepresentative( G, -id );
-    SetName( G, Concatenation( "RCWA(", Name(R), ")" ) );
+    SetName( G, Concatenation( "RCWA(", ViewString(R), ")" ) );
     SetStructureDescription( G, Name( G ) );
     return G;
   end );
@@ -543,7 +543,7 @@ InstallMethod( CTCons,
     rep := ClassTransposition(AllResidueClassesModulo(R,pi[1]){[1..2]});
     SetRepresentative( G, rep );
     SetSupport( G, R );
-    SetName( G, Concatenation( "CT(", Name(R), ")" ) );
+    SetName( G, Concatenation( "CT(", ViewString(R), ")" ) );
     SetStructureDescription( G, Name( G ) );
     return G;
   end );
