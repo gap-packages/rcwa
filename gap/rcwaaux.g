@@ -64,13 +64,13 @@ BindGlobal( "RCWADoThingsToBeDoneBeforeTest",
     SetInfoLevel(InfoWarning,0);
     RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
     ResidueClassUnionViewingFormat("short");
-    CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
   end );
 
 BindGlobal( "RCWADoThingsToBeDoneAfterTest",
 
   function (  )
-    CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
   end );
