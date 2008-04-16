@@ -186,7 +186,8 @@ of other features of &GAP;. It is intended for being used in talks.
 <Index Key="ListOfPowers"><C>ListOfPowers</C></Index>
 <Index Key="AllProducts"><C>AllProducts</C></Index>
 <Index Key="DifferencesList"><C>DifferencesList</C></Index>
-<Index Key="FloatQuotients"><C>FloatQuotients</C></Index>
+<Index Key="QuotientsList"><C>QuotientsList</C></Index>
+<Index Key="FloatQuotientsList"><C>FloatQuotientsList</C></Index>
 <Index Key="EquivalenceClasses"
        Subkey="for a list and a function computing a class invariant">
   <C>EquivalenceClasses</C>
@@ -208,11 +209,11 @@ GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
 of powers of&nbsp;<A>g</A>, the function
 <C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
 all products of <A>k</A> entries of the list&nbsp;<A>l</A>,
-the function <C>DifferencesList(<A>l</A>)</C> returns the list of
-differences of consecutive entries of the list&nbsp;<A>l</A>, and
+the functions <C>DifferencesList(<A>l</A>)</C> and
+<C>QuotientsList(<A>l</A>)</C> return the list of differences respectively
+quotients of consecutive entries of the list&nbsp;<A>l</A>, and
 the function <C>FloatQuotients(<A>l</A>)</C> returns the list of
-floating point approximations of quotients of consecutive entries
-of the list&nbsp;<A>l</A>. <P/>
+floating point approximations of the latter. <P/>
 
 There are also methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
 and  <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C>, which decompose

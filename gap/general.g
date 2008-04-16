@@ -59,22 +59,20 @@ fi;
 #############################################################################
 ##
 #F  DifferencesList( <list> ) . . . . differences of consecutive list entries
+#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
+#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
 ##
 if not IsBound( DifferencesList ) then # Don't overwrite if bound otherwise.
 BindGlobal( "DifferencesList",
             list -> List( [ 2..Length(list) ], i -> list[i] - list[i-1] ) );
 fi;
-
-#############################################################################
-##
-#F  FloatQuotients( <list> ) . . . . .  quotients of consecutive list entries
-##
-##  This utility function can for example be used in trying to estimate
-##  growth rates.
-##
-BindGlobal( "FloatQuotients",
+if not IsBound( QuotientsList ) then
+BindGlobal( "QuotientsList",
             list -> List( [ 2 .. Length( list ) ],
-                          pos -> Float( list[ pos ] / list[ pos - 1 ] ) ) );
+                          pos -> list[ pos ] / list[ pos - 1 ] ) );
+fi;
+BindGlobal( "FloatQuotientsList",
+            list -> List( QuotientsList( list ), Float ) );
 
 #############################################################################
 ##
