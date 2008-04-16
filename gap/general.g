@@ -319,21 +319,6 @@ InstallGlobalFunction( EpimorphismByGenerators,
 
 #############################################################################
 ##
-#M  IsCyclic( <G> ) . . . . . . . . . . . . . . . . default method for groups
-##
-InstallMethod( IsCyclic, "default method for groups (RCWA)", true,
-               [ IsGroup ], 50,
-
-  function ( G )
-    if   HasIsFinitelyGeneratedGroup(G) and not IsFinitelyGeneratedGroup(G)
-    then return false; fi;
-    if   HasGeneratorsOfGroup(G) and Length(GeneratorsOfGroup(G)) = 1
-    then return true;
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a pcp group
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
 ##
