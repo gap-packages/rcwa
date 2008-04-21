@@ -9,6 +9,12 @@
 ##
 gap> START_TEST("$Id$");
 gap> RCWADoThingsToBeDoneBeforeTest();
+gap> if not IsBound( IsBranch ) then
+>      DeclareProperty( "IsBranch", IsGroup );
+>      DeclareProperty( "IsBranchingSubgroup", IsGroup );
+>      InstallTrueMethod( IsBranch, IsNaturalRCWA_OR_CT );
+>      InstallTrueMethod( IsBranchingSubgroup, IsNaturalRCWA_OR_CT );
+>    fi;
 gap> M := Rcwa(Integers);
 Rcwa(Z)
 gap> Set(KnownPropertiesOfObject(M));
