@@ -406,16 +406,16 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
 
 <ManSection>
   <Heading> ClassShift (for <M>&ZZ;^2</M>) </Heading>
-  <Func Name="ClassShift" Arg="r, L, c" Label="r, L, c; for Z x Z"/>
-  <Func Name="ClassShift" Arg="cl, c" Label="cl, c; for Z x Z"/>
-  <Returns> The class shift <M>\nu_{r+&ZZ;^dL,c}</M>. </Returns>
+  <Func Name="ClassShift" Arg="r, L, k" Label="r, L, k; for Z x Z"/>
+  <Func Name="ClassShift" Arg="cl, k" Label="cl, k; for Z x Z"/>
+  <Returns> The class shift <M>\nu_{r+&ZZ;^dL,k}</M>. </Returns>
   <Description>
     Let <M>d \in &NN;</M>. Given a residue class <M>r+&ZZ;^dL</M> and
-    an integer <M>c \in \{1, \dots, d\}</M>, the <E>class shift</E>
-    <M>\nu_{r+&ZZ;^dL,c}</M> is the rcwa mapping which maps
-    <M>v \in r+&ZZ;^dL</M> to <M>v + L_c</M> and which fixes
+    an integer <M>k \in \{1, \dots, d\}</M>, the <E>class shift</E>
+    <M>\nu_{r+&ZZ;^dL,k}</M> is the rcwa mapping which maps
+    <M>v \in r+&ZZ;^dL</M> to <M>v + L_k</M> and which fixes
     <M>&ZZ;^d \setminus r+&ZZ;^dL</M> pointwise.
-    Here <M>L_d</M> denotes the <M>d</M>th row of&nbsp;<M>L</M>. <P/>
+    Here <M>L_k</M> denotes the <M>k</M>th row of&nbsp;<M>L</M>. <P/>
 
     In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r+&ZZ;^dL</M>. Enclosing the argument list in
