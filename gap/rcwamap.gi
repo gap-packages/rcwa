@@ -2783,6 +2783,129 @@ InstallMethod( LaTeXObj,
 
 #############################################################################
 ##
+#M  LaTeXObj( <f> ) . . . . . . . . . . . . . . . .  for rcwa mappings of ZxZ
+##
+InstallMethod( LaTeXObj,
+               "for rcwa mappings of ZxZ (RCWA)", true,
+               [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( f )
+
+    local  LaTeXAffineMappingOfZxZ, append, german, varname, gens,
+           c, m, res, P, str, affs, affstrings, maxafflng, indent, i, j;
+
+    append := function ( arg )
+      str := CallFuncList(Concatenation,
+                          Concatenation([str],List(arg,String)));
+    end;
+
+    LaTeXAffineMappingOfZxZ := function ( t )
+
+      local  append, LaTeXaff, str,
+             a, b, c, d, e, f, g, d1, d2, g1, g2, m, n;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      LaTeXaff := function ( a, b, c, d )
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then append("("); fi;
+        if a <> 0 then
+          if a = -1 then append("-"); elif a <> 1 then append(a); fi;
+          append(m);
+          if b > 0 or (b = 0 and c > 0) then append("+"); fi;
+        fi;
+        if b <> 0 then
+          if b = -1 then append("-"); elif b <> 1 then append(b); fi;
+          append(n);
+          if c > 0 then append("+"); fi;
+        fi;
+        if c <> 0 then append(c); fi;
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then append(")"); fi;
+        if d > 1 then append("/",d); fi;
+      end;
+
+      str := "";
+      m := varname{[1]}; n := varname{[2]};
+      a := t[1][1][1]; b := t[1][1][2];
+      c := t[1][2][1]; d := t[1][2][2];
+      e := t[2][1];    f := t[2][2];
+      g := t[3];
+      d1 := Gcd(a,c,e,g); d2 := Gcd(b,d,f,g);
+      a := a/d1; c := c/d1; e := e/d1; g1 := g/d1;
+      b := b/d2; d := d/d2; f := f/d2; g2 := g/d2;
+      append("(");
+      LaTeXaff(a,c,e,g1); append(","); LaTeXaff(b,d,f,g2);
+      append(")");
+      return str;
+    end;
+
+    if HasLaTeXString(f) then return LaTeXString(f); fi;
+
+    indent := ValueOption("Indentation");
+    if not IsPosInt(indent)
+    then indent := ""; else indent := String(" ",indent); fi;
+    str := indent;
+
+    if ValueOption("Factorization") = true and IsBijective(f) then
+      gens := List(FactorizationIntoCSCRCT(f),LaTeXString);
+      append("      &");
+      for i in [1..Length(gens)] do
+        append(gens[i]);
+        if i < Length(gens) then
+          if i mod 2 = 0 then append(" \\\\\n"); else append("\n"); fi;
+          append(" \\cdot ");
+          if i mod 2 = 0 then append("&"); fi;
+        else append("\n"); fi;
+      od;
+      return str;
+    fi;
+
+    german  := ValueOption("german") = true;
+    varname := First(List(["varnames","VarNames"],ValueOption),
+                     names->names<>fail);
+    if varname = fail then varname := "mn"; fi;
+
+    c := Coefficients(f); m := Modulus(f);
+    if IsOne(m) then
+      return Concatenation("(",varname{[1]},",",varname{[2]},")",
+                           "\\ \\mapsto \\ ",
+                           LaTeXAffineMappingOfZxZ(c[1]));
+    fi;
+    res := AllResidues(Integers^2,m);
+
+    append("(",varname{[1]},",",varname{[2]},")","\\ \\mapsto \\\n",
+           indent,"\\begin{cases}\n");
+
+    P := ShallowCopy(LargestSourcesOfAffineMappings(f));
+    Sort(P,function(Pi,Pj) return Density(Pi)>Density(Pj); end);
+
+    affs := List(P,preimg->c[First([1..Length(res)],i->res[i] in preimg)]);
+    P    := List(P,AsUnionOfFewClasses);
+
+    affstrings := List( affs, LaTeXAffineMappingOfZxZ );
+    maxafflng  := Maximum( List( affstrings, Length ) );
+
+    for i in [1..Length(P)] do
+      append(indent,"  ",affstrings[i],
+             String("",maxafflng-Length(affstrings[i])));
+      if german then append(" & \\text{falls}");
+                else append(" & \\text{if}"); fi;
+      append(" \\ (",varname{[1]},",",varname{[2]},") \\in ");
+      for j in [1..Length(P[i])] do
+        append(ReplacedString(ViewString(P[i][j]),"Z","\\mathbb{Z}"));
+        if j < Length(P[i]) then append(" \\cup "); fi;
+      od;
+      if i = Length(P) then append(".\n"); else append(", \\\\\n"); fi;
+    od;
+
+    append(indent,"\\end{cases}\n");
+    return str;
+  end );
+
+#############################################################################
+##
 #M  LaTeXAndXDVI( <f> ) . . . . . . . . . . . . . . .  for rcwa mappings of Z
 ##
 InstallMethod( LaTeXAndXDVI,
@@ -2844,6 +2967,60 @@ InstallMethod( LaTeXAndXDVI,
       fi;
     fi;
     if size < 5 then AppendTo(stream,"\n\n\\end{",sizes[size],"}"); fi;
+    AppendTo(stream,"\n\n\\end{document}\n");
+    latex := Filename(DirectoriesSystemPrograms( ),"latex");
+    Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
+    dvi := Filename(DirectoriesSystemPrograms( ),"xdvi");
+    Process(tmpdir,dvi,InputTextNone( ),OutputTextNone( ), 
+            ["-paper","a1r","rcwamap.dvi"]);
+  end );
+
+#############################################################################
+##
+#M  LaTeXAndXDVI( <f> ) . . . . . . . . . . . . . .  for rcwa mappings of ZxZ
+##
+InstallMethod( LaTeXAndXDVI,
+               "for rcwa mappings of ZxZ", true, [ IsRcwaMappingOfZxZ ], 0,
+
+  function ( f )
+
+    local  tmpdir, file, stream, str, latex, dvi, jectivity, cwop;
+
+    tmpdir := DirectoryTemporary( );
+    file   := Filename(tmpdir,"rcwamap.tex");
+    stream := OutputTextFile(file,false);
+    SetPrintFormattingStatus(stream,false);
+    AppendTo(stream,"\\documentclass[fleqn]{article}\n",
+                    "\\usepackage{amsmath}\n",
+                    "\\usepackage{amssymb}\n\n",
+                    "\\setlength{\\paperwidth}{84cm}\n",
+                    "\\setlength{\\textwidth}{80cm}\n",
+                    "\\setlength{\\paperheight}{59.5cm}\n",
+                    "\\setlength{\\textheight}{57cm}\n\n", 
+                    "\\begin{document}\n\n");
+    if   IsBijective(f)  then jectivity := " bijective";
+    elif IsInjective(f)  then jectivity := "n injective, but not surjective";
+    elif IsSurjective(f) then jectivity := " surjective, but not injective";
+    else jectivity := " neither injective nor surjective"; fi;
+    if   IsClassWiseOrderPreserving(f)
+    then cwop := " class-wise order-preserving"; else cwop := ""; fi;
+    AppendTo(stream,"\\noindent A",jectivity,cwop,
+             " rcwa mapping of \\(\\mathbb{Z}^2\\) with modulus ",
+             "\\(",ReplacedString(ModulusAsFormattedString(Modulus(f)),"Z",
+                                                           "\\mathbb{Z}"),
+             "\\), given by\n");
+    AppendTo(stream,"\\begin{align*}\n");
+    str := LaTeXObj(f:Indentation:=2);
+    AppendTo(stream,str,"\\end{align*}");
+    if HasIsTame(f) then
+      if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
+                   else AppendTo(stream,"\nThis mapping is wild."); fi;
+    fi;
+    if HasOrder(f) then
+      AppendTo(stream,"\nThe order of this mapping is \\(",
+               LaTeXObj(Order(f)),"\\).");
+    fi;
+    if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
     AppendTo(stream,"\n\n\\end{document}\n");
     latex := Filename(DirectoriesSystemPrograms( ),"latex");
     Process(tmpdir,latex,InputTextNone( ),OutputTextNone( ),[file]);
