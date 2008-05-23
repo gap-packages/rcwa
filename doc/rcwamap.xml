@@ -596,10 +596,10 @@ value accor\-dingly.
 <Example>
 <![CDATA[
 gap> Print(LaTeXObj(T));
-n \ \longmapsto \
+n \ \mapsto \
 \begin{cases}
-  n/2        & \text{if} \ n \in 0(2), \\
-  (3n + 1)/2 & \text{if} \ n \in 1(2).
+  n/2      & \text{if} \ n \in 0(2), \\
+  (3n+1)/2 & \text{if} \ n \in 1(2).
 \end{cases}
 ]]>
 </Example>
