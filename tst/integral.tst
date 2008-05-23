@@ -74,6 +74,8 @@ gap> PreImage(T,M);
 2(6) U [ 1, 3, 4, 9, 10, 28 ] \ [ 2, 8, 20 ]
 gap> Display(last);
 2(6) U [ 1, 3, 4, 9, 10, 28 ] \ [ 2, 8, 20 ]
+gap> 2*RcwaMapping([[0,1,1]]);
+Constant rcwa mapping of Z with value 2
 gap> t := RcwaMapping([[-1,0,1]]);
 Rcwa mapping of Z: n -> -n
 gap> Order(t);
@@ -257,28 +259,28 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
   15                                   | (n - 5)/2
 
 gap> Print(LaTeXObj(ab));
-n \ \longmapsto \
+n \ \mapsto \
 \begin{cases}
-  n         & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
-  2n - 5    & \text{if} \ n \in 1(9), \\
-  n + 3     & \text{if} \ n \in 4(9) \cup 7(9), \\
-  2n - 4    & \text{if} \ n \in 5(9), \\
-  (n + 2)/2 & \text{if} \ n \in 6(18), \\
-  (n - 5)/2 & \text{if} \ n \in 15(18).
+  n       & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
+  n+3     & \text{if} \ n \in 4(9) \cup 7(9), \\
+  2n-5    & \text{if} \ n \in 1(9), \\
+  2n-4    & \text{if} \ n \in 5(9), \\
+  (n+2)/2 & \text{if} \ n \in 6(18), \\
+  (n-5)/2 & \text{if} \ n \in 15(18).
 \end{cases}
 gap> Print(LaTeXObj(a:Indentation:=2));
-  n \ \longmapsto \
+  n \ \mapsto \
   \begin{cases}
-    3n/2       & \text{if} \ n \in 0(2), \\
-    (3n + 1)/4 & \text{if} \ n \in 1(4), \\
-    (3n - 1)/4 & \text{if} \ n \in 3(4).
+    3n/2     & \text{if} \ n \in 0(2), \\
+    (3n+1)/4 & \text{if} \ n \in 1(4), \\
+    (3n-1)/4 & \text{if} \ n \in 3(4).
   \end{cases}
 gap> Print(LaTeXObj(a:german));
-n \ \longmapsto \
+n \ \mapsto \
 \begin{cases}
-  \linfrac{3n}{2}     & \falls n \in 0(2), \\
-  \afffrac{3n + 1}{4} & \falls n \in 1(4), \\
-  \afffrac{3n - 1}{4} & \falls n \in 3(4).
+  3n/2     & \text{falls} \ n \in 0(2), \\
+  (3n+1)/4 & \text{falls} \ n \in 1(4), \\
+  (3n-1)/4 & \text{falls} \ n \in 3(4).
 \end{cases}
 gap> OrbitsModulo(ab,9);
 [ [ 0 ], [ 1, 4, 5, 6, 7 ], [ 2 ], [ 3 ], [ 8 ] ]
