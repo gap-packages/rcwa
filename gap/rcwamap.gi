@@ -2673,9 +2673,8 @@ InstallMethod( LaTeXObj,
 
   function ( f )
 
-    local  LaTeXAffineMappingOfZ, append,
-           c, m, mred, german, str, affs, maxafflng, t, poses, pos,
-           res, src, cls, cl, indent, gens, i, j;
+    local  LaTeXAffineMappingOfZ, append, german, varname, gens,
+           c, m, res, P, str, affs, affstrings, maxafflng, indent, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
@@ -2684,99 +2683,86 @@ InstallMethod( LaTeXObj,
 
     LaTeXAffineMappingOfZ := function ( t )
 
-      local  german, str, a, b, c, append;
+      local  append, str, a, b, c, n;
 
       append := function ( arg )
         str := CallFuncList(Concatenation,
                             Concatenation([str],List(arg,String)));
       end;
 
-      german := ValueOption("german") = true;
-      a := t[1]; b := t[2]; c := t[3]; str := "";
-      if   c = 1
-      then if   a = 0
-           then append(b);
-           else if   AbsInt(a) <> 1 then append(a);
-                elif a = -1         then append("-");
-                fi;
-                append("n");
-                if   b > 0 then append(" + ", b);
-                elif b < 0 then append(" - ",-b);
-                fi;
-           fi;
-      elif b = 0 then if german then append("\\linfrac{"); fi;
-                      if   AbsInt(a) <> 1 then append(a);
-                      elif a = -1         then append("-");
-                      fi;
-                      append("n");
-                      if german then append("}{"); else append("/"); fi;
-                      append(c);
-                      if german then append("}"); fi;
-      else if german then append("\\afffrac{");
-                     else append("("); fi;
-           if   AbsInt(a) <> 1 then append(a);
-           elif a = -1         then append("-");
-           fi;
-           append("n");
-           if   b > 0 then append(" + ", b);
-           elif b < 0 then append(" - ",-b);
-           fi;
-           if german then append("}{"); else append(")/"); fi;
-           append(c);
-           if german then append("}"); fi;
+      a := t[1]; b := t[2]; c := t[3];
+      str := ""; n := varname;
+
+      if c > 1 and Number([a,b],n->n<>0) > 1 then append("("); fi;
+      if a <> 0 then
+        if a = -1 then append("-"); elif a <> 1 then append(a); fi;
+        append(n);
+        if b > 0 then append("+"); fi;
       fi;
+      if a = 0 or b <> 0 then append(b); fi;
+      if c > 1 and Number([a,b],n->n<>0) > 1 then append(")"); fi;
+      if c > 1 then append("/",c); fi;
+
       return str;
     end;
 
     if HasLaTeXString(f) then return LaTeXString(f); fi;
+
     indent := ValueOption("Indentation");
     if not IsPosInt(indent)
     then indent := ""; else indent := String(" ",indent); fi;
     str := indent;
+
     if ValueOption("Factorization") = true and IsBijective(f) then
       gens := List(FactorizationIntoCSCRCT(f),LaTeXString);
       append("      &");
-      for pos in [1..Length(gens)] do
-        append(gens[pos]);
-        if pos < Length(gens) then
-          if pos mod 5 = 0 then append(" \\\\\n"); fi;
-          if pos mod 5 in [2,4] then append("\n"); fi;
+      for i in [1..Length(gens)] do
+        append(gens[i]);
+        if i < Length(gens) then
+          if i mod 5 = 0 then append(" \\\\\n"); fi;
+          if i mod 5 in [2,4] then append("\n"); fi;
           append(" \\cdot ");
-          if pos mod 5 = 0 then append("&"); fi;
+          if i mod 5 = 0 then append("&"); fi;
         else append("\n"); fi;
       od;
       return str;
     fi;
+
     german := ValueOption("german") = true;
+    varname := First(List(["varname","VarName"],ValueOption),
+                     name->name<>fail);
+    if varname = fail then varname := "n"; fi;
+
     c := Coefficients(f); m := Length(c);
     if m = 1 then
       return Concatenation("n \\ \\mapsto \\ ",LaTeXAffineMappingOfZ(c[1]));
     fi;
-    append("n \\ \\longmapsto \\\n",indent,"\\begin{cases}\n");
-    poses := AsSortedList( List( Set(c),
-                                 t -> Filtered( [0..m-1],
-                                                i -> c[i+1] = t ) ) );
-    affs := List( c, LaTeXAffineMappingOfZ );
-    maxafflng := Maximum( List( affs, Length ) );
-    for pos in poses do
-      append( indent, "  ", affs[ pos[1] + 1 ],
-              String( "", maxafflng - Length( affs[pos[1]+1] ) ) );
-      if german then append(" & \\falls n \\in ");
-                else append(" & \\text{if} \\ n \\in "); fi;
-      mred := Minimum( Filtered( DivisorsInt(m),
-                                 d -> ForAll(Collected(List(pos,j->j mod d)),
-                                             t -> t[2] = m/d) ) );
-      res := Set( List( pos, j -> j mod mred ) );
-      src := ResidueClassUnion(Integers,mred,res);
-      cls := AsUnionOfFewClasses(src);
-      for cl in cls do
-        append(Residue(cl),"(",Modulus(cl),")");
-        if cl <> cls[Length(cls)] then append(" \\cup "); fi;
+    res := AllResidues(Integers,m);
+
+    append("n \\ \\mapsto \\\n",indent,"\\begin{cases}\n");
+
+    P := ShallowCopy(LargestSourcesOfAffineMappings(f));
+    Sort(P,function(Pi,Pj) return Density(Pi)>Density(Pj); end);
+
+    affs := List(P,preimg->c[First([1..Length(res)],i->res[i] in preimg)]);
+    P    := List(P,AsUnionOfFewClasses);
+
+    affstrings := List( affs, LaTeXAffineMappingOfZ );
+    maxafflng  := Maximum( List( affstrings, Length ) );
+
+    for i in [1..Length(P)] do
+      append(indent,"  ",affstrings[i],
+             String("",maxafflng-Length(affstrings[i])));
+      if german then append(" & \\text{falls}");
+                else append(" & \\text{if}"); fi;
+      append(" \\ ",varname," \\in ");
+      for j in [1..Length(P[i])] do
+        append(String(Residue(P[i][j])),"(",String(Modulus(P[i][j])),")");
+        if j < Length(P[i]) then append(" \\cup "); fi;
       od;
-      if   pos = poses[ Length(poses) ]
-      then append(".\n");
-      else append(", \\\\\n"); fi;
+      if i = Length(P) then append(".\n"); else append(", \\\\\n"); fi;
     od;
+
     append(indent,"\\end{cases}\n");
     return str;
   end );
@@ -2821,7 +2807,7 @@ InstallMethod( LaTeXObj,
           append(n);
           if c > 0 then append("+"); fi;
         fi;
-        if c <> 0 then append(c); fi;
+        if (a = 0 and b = 0) or c <> 0 then append(c); fi;
         if d > 1 and Number([a,b,c],n->n<>0) > 1 then append(")"); fi;
         if d > 1 then append("/",d); fi;
       end;
@@ -4719,8 +4705,8 @@ InstallMethod( \*,
 
   function ( n, f )
     if not n in Source(f) then TryNextMethod(); fi;
-    return RcwaMapping( Source(f), One( Source(f) ),
-                        [ [ n, 0, 1 ] ] * One( Source(f) ) ) * f;
+    return RcwaMapping(Source(f),Modulus(f),
+                       List(Coefficients(f),c->[n*c[1],n*c[2],c[3]]));
   end );
 
 InstallMethod( \*, "for rcwa mappings, multiplication by a constant (RCWA)",
