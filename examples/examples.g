@@ -549,6 +549,29 @@ SmOdd := Group( ClassTransposition(0,4,3,4),
 
 #############################################################################
 ##
+##  Examples of pairs of class transpositions whose product has order 2, 3,
+##  4, 6, 10, 12, 15, 20, 30, 60 or infinity, respectively. These numbers are
+##  perhaps the only possible orders of a product of two class transpositions
+##  of the integers. The example with order infinity is at position 1 in the
+##  list. The moduli of the involved residue classes are kept as small as
+##  possible.
+##
+PairsOfCTsWhoseProductHasGivenOrder :=
+[ [ ClassTransposition(1,2,2,4), ClassTransposition(2,4,3,4) ],
+  [ ClassTransposition(0,4,1,4), ClassTransposition(2,4,3,4) ],
+  [ ClassTransposition(0,3,1,3), ClassTransposition(0,3,2,3) ],
+  [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ],,
+  [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,2,3) ],,,,
+  [ ClassTransposition(1,2,2,4), ClassTransposition(0,3,4,6) ],,
+  [ ClassTransposition(1,3,2,3), ClassTransposition(0,4,2,4) ],,,
+  [ ClassTransposition(0,3,2,3), ClassTransposition(0,2,3,4) ],,,,,
+  [ ClassTransposition(0,4,2,4), ClassTransposition(2,3,4,6) ],,,,,,,,,,
+  [ ClassTransposition(1,3,2,3), ClassTransposition(1,2,0,4) ],,,,,,,,,,
+  ,,,,,,,,,,,,,,,,,,,,
+  [ ClassTransposition(2,5,3,5), ClassTransposition(1,3,5,6) ] ];
+
+#############################################################################
+##
 ##  The ``Class Transposition Graph''
 ##
 ##  The vertices of the `Class Transposition Graph' are the class transposi-
@@ -1024,29 +1047,6 @@ ClassSwitch := function( r1, m1, r2, m2 )
   rest := RcwaMapping(c);
   return Restriction(tau,rest);
 end;
-
-#############################################################################
-##
-##  Examples of pairs of class transpositions whose product has order 2, 3,
-##  4, 6, 10, 12, 15, 20, 30, 60 or infinity, respectively. These numbers are
-##  perhaps the only possible orders of a product of two class transpositions
-##  of the integers. The example with order infinity is at position 1 in the
-##  list. The moduli of the involved residue classes are kept as small as
-##  possible.
-##
-PairsOfCTsWhoseProductHasGivenOrder :=
-[ [ ClassTransposition(1,2,2,4), ClassTransposition(2,4,3,4) ],
-  [ ClassTransposition(0,4,1,4), ClassTransposition(2,4,3,4) ],
-  [ ClassTransposition(0,3,1,3), ClassTransposition(0,3,2,3) ],
-  [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ],,
-  [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,2,3) ],,,,
-  [ ClassTransposition(1,2,2,4), ClassTransposition(0,3,4,6) ],,
-  [ ClassTransposition(1,3,2,3), ClassTransposition(0,4,2,4) ],,,
-  [ ClassTransposition(0,3,2,3), ClassTransposition(0,2,3,4) ],,,,,
-  [ ClassTransposition(0,4,2,4), ClassTransposition(2,3,4,6) ],,,,,,,,,,
-  [ ClassTransposition(1,3,2,3), ClassTransposition(1,2,0,4) ],,,,,,,,,,
-  ,,,,,,,,,,,,,,,,,,,,
-  [ ClassTransposition(2,5,3,5), ClassTransposition(1,3,5,6) ] ];
 
 #############################################################################
 ##
