@@ -435,7 +435,7 @@ sheds a light on the idea behind it.
 In this example, a simple attempt to should be made to investigate the
 structure of a given wild group by finding orders of torsion elements.
 In general, determining the structure of a given wild group seems to be
-a very hard task. First of all, the group in question has to be defined:
+a very hard task.
 
 <Example>
 <![CDATA[
@@ -460,7 +460,7 @@ false
 ]]>
 </Example>
 
-Now we would like to know which orders torsion elements of&nbsp;<C>G</C>
+We would like to know which orders torsion elements of&nbsp;<C>G</C>
 can have -- taking a look at the above generators it seems to make sense
 to try commutators:
 
