@@ -1264,6 +1264,17 @@ InstallMethod( IsClassShift,
 
 #############################################################################
 ##
+#M  IsPowerOfClassShift( <sigma> ) . . . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( IsPowerOfClassShift, "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+  sigma -> IsResidueClass(Support(sigma))
+           and sigma = ClassShift(Support(sigma))^
+                       (First(List(Coefficients(sigma),c->c[2]),b->b<>0)/
+                        Modulus(sigma)) );
+
+#############################################################################
+##
 #M  String( <cs> ) . . . . . . . . . . . . . . . . . . . . . for class shifts
 #M  ViewString( <cs> ) . . . . . . . . . . . . . . . . . . . for class shifts
 #M  PrintObj( <cs> ) . . . . . . . . . . . . . . . . . . . . for class shifts
@@ -1302,12 +1313,26 @@ InstallMethod( ViewString, "for class shifts (RCWA)", true,
     else TryNextMethod(); fi;
   end );
 
+InstallMethod( ViewString, "for powers of class shifts of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ and IsPowerOfClassShift ], SUM_FLAGS,
+
+  function ( cs )
+    if IsClassShift(cs) then TryNextMethod(); fi;
+    return Concatenation(ViewString(ClassShift(Support(cs))),"^",
+                         String(First(List(Coefficients(cs),c->c[2]),
+                                      b->b<>0)/Modulus(cs)));
+  end );
+
 InstallMethod( PrintObj, "for class shifts (RCWA)", true,
                [ IsRcwaMapping and IsClassShift ], SUM_FLAGS+10,
                function ( cs ) Print( String( cs ) ); end );
 
 InstallMethod( ViewObj, "for class shifts (RCWA)", true,
                [ IsRcwaMapping and IsClassShift ], 20,
+               function ( cs ) Print( ViewString( cs ) ); end );
+
+InstallMethod( ViewObj, "for powers of class shifts (RCWA)", true,
+               [ IsRcwaMapping and IsPowerOfClassShift ], 20,
                function ( cs ) Print( ViewString( cs ) ); end );
 
 #############################################################################
@@ -5241,6 +5266,9 @@ InstallMethod( \^,
         if latex <> fail then SetLaTeXString(pow,latex); fi;
       fi;
     fi;
+
+    if   HasIsClassShift(f) and IsClassShift(f) and not IsOne(pow)
+    then SetIsPowerOfClassShift(pow,true); fi;
 
     return pow;
   end );

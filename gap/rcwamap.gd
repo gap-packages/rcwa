@@ -317,6 +317,7 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 #F  ClassShift( <R> ) . . . . . . . . . . . . .  class shift nu_R: n -> n + 1
 #F  ClassShiftOfZxZ( ... )  . . . . . . . . . . . . . . .  class shift of Z^2
 #P  IsClassShift( <sigma> )
+#P  IsPowerOfClassShift( <sigma> )
 ##
 ##  Returns the class shift nu_r(m).
 ##
@@ -329,6 +330,7 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 DeclareGlobalFunction( "ClassShift" );
 DeclareGlobalFunction( "ClassShiftOfZxZ" );
 DeclareProperty( "IsClassShift", IsRcwaMapping );
+DeclareProperty( "IsPowerOfClassShift", IsRcwaMapping );
 
 #############################################################################
 ##
