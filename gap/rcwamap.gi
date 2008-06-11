@@ -3567,13 +3567,15 @@ InstallMethod( LargestSourcesOfAffineMappings,
 
   function ( f )
 
-    local  P, R, m, c, clm, affs;
+    local  R, m, c, r;
 
-    R := Source(f); m := Modulus(f); c := Coefficients(f);
-    affs := Set(c); clm  := AllResidueClassesModulo(R,m);
-    P := List(affs,aff->Union(List(Filtered([1..Length(c)],i->c[i]=aff),
-                                   j->clm[j]))); 
-    return AsSortedList(P);
+    R := Source(f);
+    m := Modulus(f);
+    c := Coefficients(f);
+    r := AllResidues(R,m);
+
+    return Set(EquivalenceClasses([1..NumberOfResidues(R,m)],i->c[i]),
+               cl->ResidueClassUnion(R,m,r{cl}));
   end );
 
 #############################################################################
