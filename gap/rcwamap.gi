@@ -4568,6 +4568,9 @@ InstallMethod( CompositionMapping2,
 
     local  fg, c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
 
+    if   ValueOption( "sparse" ) = true and Multiplier( f ) <> 0
+    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
+
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
     m3 := Gcd( Lcm( m1, m2 ) * Divisor( f ), m1 * m2 );
@@ -4618,6 +4621,9 @@ InstallMethod( CompositionMapping2,
 
     local  R, fg, c1, c2, c, m1, m2, m,
            res1, res2, res, r1, r2, r, i1, i2, i;
+
+    if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
+    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
 
     R := Source(f);
 
@@ -4675,6 +4681,9 @@ InstallMethod( CompositionMapping2,
 
     local  fg, c, m, d, R, q, x, res, r, n1, n2;
 
+    if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
+    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
+
     c := [f!.coeffs, g!.coeffs, []];
     m := [f!.modulus, g!.modulus];
     m[3] := Minimum( Lcm( m[1], m[2] ) * Divisor( f ), m[1] * m[2] );
@@ -4694,6 +4703,94 @@ InstallMethod( CompositionMapping2,
     od;
 
     fg := RcwaMappingNC( q, m[3], c[3] );
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingProductByPartitionMethod( <g>, <f> )
+##
+InstallGlobalFunction( RcwaMappingProductByPartitionMethod,
+
+  function ( g, f )
+
+    local  fg, R, mf, mg, m, resf, resg, res,
+           cf, cg, c, affs_f, affs_g, affs, Pf, Pg, Pf_img, P,
+           cl, cl1, cl2, aff, pre, img, rj, mj, pos, i, j, k;
+
+    R := Source(f);
+
+    mf   := Modulus(f);        mg   := Modulus(g);
+    resf := AllResidues(R,mf); resg := AllResidues(R,mg);
+    cf   := Coefficients(f);   cg   := Coefficients(g);
+
+    Pf := LargestSourcesOfAffineMappings(f);
+    Pg := LargestSourcesOfAffineMappings(g);
+
+    affs_f := List(Pf,S->cf[First([1..Length(resf)],i->resf[i] in S)]);
+    affs_g := List(Pg,S->cg[First([1..Length(resg)],i->resg[i] in S)]);
+
+    Pf := List(Pf,AsUnionOfFewClasses); Pg := List(Pg,AsUnionOfFewClasses); 
+
+    Pf_img := [];
+    for i in [1..Length(Pf)] do
+      Pf_img[i] := [];
+      for cl in Pf[i] do
+        rj := Residue(cl); mj := Modulus(cl);
+        img := ResidueClass(R,affs_f[i][1]*mj/affs_f[i][3],
+                            (rj*affs_f[i][1]+affs_f[i][2])/affs_f[i][3]);
+        Add(Pf_img[i],img);
+      od;
+    od;
+
+    P := []; affs := [];
+    for i in [1..Length(Pf_img)] do
+      for cl1 in Pf_img[i] do
+        for j in [1..Length(Pg)] do
+          for cl2 in Pg[j] do
+            cl  := Intersection(cl1,cl2);
+            if cl = [] then continue; fi;
+            aff := [affs_f[i][1]*affs_g[j][1],
+                    affs_f[i][2]*affs_g[j][1]+affs_f[i][3]*affs_g[j][2],
+                    affs_f[i][3]*affs_g[j][3]];
+            pos := Position(affs,aff);
+            if pos = fail then
+              Add(affs,aff); Add(P,[]);
+              pos := Length(affs);
+            fi;
+            rj := Residue(cl); mj := Modulus(cl);
+            pre := ResidueClass(R,affs_f[i][3]*mj/affs_f[i][1],
+                                (rj*affs_f[i][3]-affs_f[i][2])/affs_f[i][1]);
+            Add(P[pos],pre);
+          od;
+        od;
+      od;
+    od;
+
+    m   := Lcm(List(Flat(P),Modulus));
+    res := AllResidues(R,m);
+    c   := ListWithIdenticalEntries(Length(res),[1,0,1]*One(R));
+
+    for i in [1..Length(P)] do
+      aff := affs[i];
+      for cl in P[i] do
+        rj := Residue(cl); mj := Modulus(cl);
+        for k in [1..Length(res)] do
+          if res[k] mod mj = rj then c[k] := aff; fi;
+        od;
+      od;
+    od;
+
+    fg := RcwaMappingNC(R,m,c);
 
     if    HasIsInjective(f) and IsInjective(f)
       and HasIsInjective(g) and IsInjective(g)

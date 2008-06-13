@@ -304,6 +304,20 @@ DeclareGlobalVariable( "IdentityRcwaMappingOfZxZ" );
 
 #############################################################################
 ##
+#F  RcwaMappingProductByPartitionMethod( <g>, <f> )
+##
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first. The multiplier of <f> must not be zero.
+##
+##  This function performs better than the standard methods given above
+##  if <f> and <g> have only few different affine partial mappings.
+##  It is used in place of the standard multiplication methods if the
+##  option "sparse" is set.
+##
+DeclareGlobalFunction( "RcwaMappingProductByPartitionMethod" );
+
+#############################################################################
+##
 #S  Special types of rcwa permutations. /////////////////////////////////////
 ##
 #############################################################################
