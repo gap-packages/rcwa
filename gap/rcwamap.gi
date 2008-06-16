@@ -4569,7 +4569,7 @@ InstallMethod( CompositionMapping2,
     local  fg, c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
 
     if   ValueOption( "sparse" ) = true and Multiplier( f ) <> 0
-    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
+    then TryNextMethod(); fi;
 
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
@@ -4623,7 +4623,7 @@ InstallMethod( CompositionMapping2,
            res1, res2, res, r1, r2, r, i1, i2, i;
 
     if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
-    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
+    then TryNextMethod(); fi;
 
     R := Source(f);
 
@@ -4682,7 +4682,7 @@ InstallMethod( CompositionMapping2,
     local  fg, c, m, d, R, q, x, res, r, n1, n2;
 
     if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
-    then return RcwaMappingProductByPartitionMethod( g, f ); fi;
+    then TryNextMethod(); fi;
 
     c := [f!.coeffs, g!.coeffs, []];
     m := [f!.modulus, g!.modulus];
@@ -4717,15 +4717,27 @@ InstallMethod( CompositionMapping2,
 
 #############################################################################
 ##
-#F  RcwaMappingProductByPartitionMethod( <g>, <f> )
+#M  CompositionMapping2( <g>, <f> ) . . . . . . . . . . for two rcwa mappings
 ##
-InstallGlobalFunction( RcwaMappingProductByPartitionMethod,
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first. The multiplier of <f> must not be zero.
+##
+##  This method performs better than the standard methods above if <f> and
+##  <g> have only few different affine partial mappings. It is used in place
+##  of the standard methods if the option "sparse" is set.
+##
+InstallMethod( CompositionMapping2,
+               "for two rcwa mappings (sparse case method) (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingInStandardRep,
+                                 IsRcwaMappingInStandardRep ], 0,
 
   function ( g, f )
 
-    local  fg, R, mf, mg, m, resf, resg, res,
-           cf, cg, c, affs_f, affs_g, affs, Pf, Pg, Pf_img, P,
-           cl, cl1, cl2, aff, pre, img, rj, mj, pos, i, j, k;
+    local  fg, R, mf, mg, m, resf, resg, res, cf, cg, c,
+           affs_f, affs_g, affs, Pf, Pg, Pf_img, P, cl, cl1, cl2,
+           aff, pre, img, rj, mj, rjpre, mjpre, rjimg, mjimg, pos, i, j, k;
+
+    if IsZero(Multiplier(f)) then TryNextMethod(); fi;
 
     R := Source(f);
 
@@ -4746,8 +4758,9 @@ InstallGlobalFunction( RcwaMappingProductByPartitionMethod,
       Pf_img[i] := [];
       for cl in Pf[i] do
         rj := Residue(cl); mj := Modulus(cl);
-        img := ResidueClass(R,affs_f[i][1]*mj/affs_f[i][3],
-                            (rj*affs_f[i][1]+affs_f[i][2])/affs_f[i][3]);
+        rjimg := (rj*affs_f[i][1]+affs_f[i][2])/affs_f[i][3];
+        mjimg := affs_f[i][1]*mj/affs_f[i][3];
+        img   := ResidueClass(R,mjimg,rjimg);
         Add(Pf_img[i],img);
       od;
     od;
@@ -4768,8 +4781,10 @@ InstallGlobalFunction( RcwaMappingProductByPartitionMethod,
               pos := Length(affs);
             fi;
             rj := Residue(cl); mj := Modulus(cl);
-            pre := ResidueClass(R,affs_f[i][3]*mj/affs_f[i][1],
-                                (rj*affs_f[i][3]-affs_f[i][2])/affs_f[i][1]);
+            rjpre := (rj*affs_f[i][3]-affs_f[i][2])/affs_f[i][1];
+            mjpre := affs_f[i][3]*mj/affs_f[i][1];
+# if not rjpre in R then Error(); fi;
+            pre   := ResidueClass(R,mjpre,rjpre);
             Add(P[pos],pre);
           od;
         od;
