@@ -4622,8 +4622,8 @@ InstallMethod( CompositionMapping2,
     local  R, fg, c1, c2, c, m1, m2, m,
            res1, res2, res, r1, r2, r, i1, i2, i;
 
-    if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
-    then TryNextMethod(); fi;
+    # if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
+    # then TryNextMethod(); fi;
 
     R := Source(f);
 
@@ -4726,6 +4726,8 @@ InstallMethod( CompositionMapping2,
 ##  <g> have only few different affine partial mappings. It is used in place
 ##  of the standard methods if the option "sparse" is set.
 ##
+##  --- Presently, this method does not work for rcwa mappings of Z^2!!! ---
+##
 InstallMethod( CompositionMapping2,
                "for two rcwa mappings (sparse case method) (RCWA)",
                IsIdenticalObj, [ IsRcwaMappingInStandardRep,
@@ -4783,7 +4785,6 @@ InstallMethod( CompositionMapping2,
             rj := Residue(cl); mj := Modulus(cl);
             rjpre := (rj*affs_f[i][3]-affs_f[i][2])/affs_f[i][1];
             mjpre := affs_f[i][3]*mj/affs_f[i][1];
-# if not rjpre in R then Error(); fi;
             pre   := ResidueClass(R,mjpre,rjpre);
             Add(P[pos],pre);
           od;
