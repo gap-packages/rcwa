@@ -4622,8 +4622,8 @@ InstallMethod( CompositionMapping2,
     local  R, fg, c1, c2, c, m1, m2, m,
            res1, res2, res, r1, r2, r, i1, i2, i;
 
-    # if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
-    # then TryNextMethod(); fi;
+    if   ValueOption( "sparse" ) = true and not IsZero( Multiplier( f ) )
+    then TryNextMethod(); fi;
 
     R := Source(f);
 
@@ -4717,7 +4717,7 @@ InstallMethod( CompositionMapping2,
 
 #############################################################################
 ##
-#M  CompositionMapping2( <g>, <f> ) . . . . . . . . . . for two rcwa mappings
+#M  CompositionMapping2( <g>, <f> ) . . . . . for two rcwa mappings of a ring
 ##
 ##  Returns the product (composition) of the rcwa mappings <f> and <g>.
 ##  The mapping <f> is applied first. The multiplier of <f> must not be zero.
@@ -4726,10 +4726,11 @@ InstallMethod( CompositionMapping2,
 ##  <g> have only few different affine partial mappings. It is used in place
 ##  of the standard methods if the option "sparse" is set.
 ##
-##  --- Presently, this method does not work for rcwa mappings of Z^2!!! ---
+##  This method presently does not work for Z^2, thus for this case there is
+##  a separate "sparse" method (see below).
 ##
 InstallMethod( CompositionMapping2,
-               "for two rcwa mappings (sparse case method) (RCWA)",
+               "for two rcwa mappings of a ring (sparse case method) (RCWA)",
                IsIdenticalObj, [ IsRcwaMappingInStandardRep,
                                  IsRcwaMappingInStandardRep ], 0,
 
@@ -4742,6 +4743,7 @@ InstallMethod( CompositionMapping2,
     if IsZero(Multiplier(f)) then TryNextMethod(); fi;
 
     R := Source(f);
+    if not IsRing(R) then TryNextMethod(); fi;
 
     mf   := Modulus(f);        mg   := Modulus(g);
     resf := AllResidues(R,mf); resg := AllResidues(R,mg);
@@ -4802,6 +4804,89 @@ InstallMethod( CompositionMapping2,
         rj := Residue(cl); mj := Modulus(cl);
         for k in [1..Length(res)] do
           if res[k] mod mj = rj then c[k] := aff; fi;
+        od;
+      od;
+    od;
+
+    fg := RcwaMappingNC(R,m,c);
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
+  end );
+
+#############################################################################
+##
+#M  CompositionMapping2( <g>, <f> ) . . . . . .  for two rcwa mappings of Z^2
+##
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first. The multiplier of <f> must not be zero.
+##
+##  This is the equivalent for rcwa mappings of Z^2 of the "sparse" method
+##  above.
+##
+InstallMethod( CompositionMapping2,
+               "for two rcwa mappings of a ring (sparse case method) (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZxZInStandardRep,
+                                 IsRcwaMappingOfZxZInStandardRep ], 0,
+
+  function ( g, f )
+
+    local  fg, R, mf, mg, m, resf, resg, res, cf, cg, c,
+           affs_f, affs_g, affs, Pf, Pg, Pf_img, P, S1, S2, I,
+           aff, pre, ri, mi, pos, i, j;
+
+    if IsZero(Multiplier(f)) then TryNextMethod(); fi;
+
+    R := Source(f);
+
+    mf   := Modulus(f);        mg   := Modulus(g);
+    resf := AllResidues(R,mf); resg := AllResidues(R,mg);
+    cf   := Coefficients(f);   cg   := Coefficients(g);
+
+    Pf := LargestSourcesOfAffineMappings(f);
+    Pg := LargestSourcesOfAffineMappings(g);
+
+    affs_f := List(Pf,S->cf[First([1..Length(resf)],i->resf[i] in S)]);
+    affs_g := List(Pg,S->cg[First([1..Length(resg)],i->resg[i] in S)]);
+
+    Pf_img := List(Pf,S->S^f);
+
+    P := []; affs := [];
+    for i in [1..Length(Pf_img)] do
+      S1 := Pf_img[i];
+      for j in [1..Length(Pg)] do
+        S2 := Pg[j];
+        I := Intersection(S1,S2);
+        if IsEmpty(I) then continue; fi;
+        aff := [affs_f[i][1]*affs_g[j][1],
+                affs_f[i][2]*affs_g[j][1]+affs_f[i][3]*affs_g[j][2],
+                affs_f[i][3]*affs_g[j][3]];
+        pos := Position(affs,aff);
+        if pos = fail then
+          Add(affs,aff); Add(P,[]);
+          pos := Length(affs);
+        fi;
+        pre := (I*affs_f[i][3]-affs_f[i][2])*affs_f[i][1]^-1;
+        P[pos] := Union(P[pos],pre);
+      od;
+    od;
+
+    m   := Lcm(List(P,Modulus));
+    res := AllResidues(R,m);
+    c   := ListWithIdenticalEntries(Length(res),Zero(R));
+
+    for i in [1..Length(P)] do
+      aff := affs[i]; mi := Modulus(P[i]);
+      for ri in Residues(P[i]) do
+        for j in [1..Length(res)] do
+          if res[j] mod mi = ri then c[j] := aff; fi;
         od;
       od;
     od;
