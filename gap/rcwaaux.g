@@ -83,6 +83,15 @@ BindGlobal( "RCWAReadExamples", function ( )
                                   ReadPackage("rcwa","examples/examples.g");
                                 end );
 
+#############################################################################
+##
+#F  RCWAReadCTProductClassification( ) . . . . .  read examples/ctprodclass.g
+##
+BindGlobal( "RCWAReadCTProductClassification",
+            function ( )
+              ReadPackage("rcwa","examples/ctprodclass.g");
+            end );
+
 ResidueClassUnionViewingFormat( "short" );
 
 #############################################################################
