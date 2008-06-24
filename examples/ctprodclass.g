@@ -42,16 +42,14 @@
 ##
 ##    - The first entry is the order <ord> of the product.
 ##
-##      The subsequent entries are lists, one for each possible cycle type
+##    - The subsequent entries are lists, one for each possible cycle type
 ##      of the product, provided that it has order <ord>:
 ##
 ##      The first entry of such a list is the cycle type. The cycle type
-##      is a list of two lists. The first list contains the cycle lengths
-##      which occur only finitely often, respectively which do not corres-
-##      pond to infinite series of cycles. The second list is the set of
-##      cycle lengths which occur infinitely often, respectively which
-##      correspond to infinite series of cycles. Certain values of the
-##      latter list have special meanings:
+##      is a list of two lists. The first of these lists contains a 1 for
+##      each fixed point of a non-identity affine partial mapping. The
+##      second list is the set of cycle lengths which occur infinitely often.
+##      Certain values of the latter list have special meanings:
 ##
 ##      - [ 2, 4, 6, 8 ] stands for all even positive integers,
 ##      - [ 1, 2, 4, 6, 8 ] stands for 1 and all even positive integers,
@@ -64,7 +62,7 @@
 CTProductClassification :=
 [ [ [ 0, 3, 3, 1 ], 
     [ infinity,
-          [ [ [ 1, 1 ], [ 1, infinity ] ],
+          [ [ [ 1, 1 ], [ infinity ] ],
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,2,3,4) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,6) ], 
@@ -72,7 +70,8 @@ CTProductClassification :=
               [ ClassTransposition(0,2,1,2), ClassTransposition(1,2,0,4) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(1,2,2,4) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(1,2,0,6) ], 
-              [ ClassTransposition(0,2,1,2), ClassTransposition(1,2,4,6) ], 
+              [ ClassTransposition(0,2,1,2), ClassTransposition(1,2,4,6) ] ],
+          [ [ [ 1, 1 ], [ 1, infinity ] ],
               [ ClassTransposition(0,2,1,4), ClassTransposition(0,4,1,4) ], 
               [ ClassTransposition(0,2,1,4), ClassTransposition(1,4,2,4) ], 
               [ ClassTransposition(0,2,1,4), ClassTransposition(1,4,0,6) ], 
@@ -638,7 +637,7 @@ CTProductClassification :=
               [ ClassTransposition(1,3,2,3), ClassTransposition(1,6,5,6) ], 
               [ ClassTransposition(1,3,2,3), ClassTransposition(2,6,4,6) ] ] ], 
     [ infinity,
-          [ [ [ 1, 1 ], [ 1, 2, 4, 6, 8 ] ],
+          [ [ [ 1, 1 ], [ 2, 4, 6, 8 ] ],
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,4,1,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,4,3,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,4,5,6) ], 
@@ -653,7 +652,7 @@ CTProductClassification :=
               [ ClassTransposition(0,2,1,2), ClassTransposition(3,4,4,6) ] ] ] ], 
   [ [ 1, 3, 3, 2 ],
     [ infinity,
-          [ [ [ 1, 1 ], [ 1, infinity ] ],
+          [ [ [ 1, 1 ], [ infinity ] ],
               [ ClassTransposition(0,2,1,4), ClassTransposition(1,2,0,4) ], 
               [ ClassTransposition(0,2,1,4), ClassTransposition(1,2,0,6) ], 
               [ ClassTransposition(0,2,3,4), ClassTransposition(1,2,2,4) ], 
@@ -661,7 +660,8 @@ CTProductClassification :=
               [ ClassTransposition(0,2,1,6), ClassTransposition(1,2,0,4) ], 
               [ ClassTransposition(0,2,1,6), ClassTransposition(1,2,0,6) ], 
               [ ClassTransposition(0,2,5,6), ClassTransposition(1,2,2,4) ], 
-              [ ClassTransposition(0,2,5,6), ClassTransposition(1,2,4,6) ], 
+              [ ClassTransposition(0,2,5,6), ClassTransposition(1,2,4,6) ] ],
+          [ [ [ 1, 1 ], [ 1, infinity ] ],
               [ ClassTransposition(0,3,1,6), ClassTransposition(1,3,0,6) ], 
               [ ClassTransposition(0,3,2,6), ClassTransposition(2,3,0,6) ], 
               [ ClassTransposition(0,3,4,6), ClassTransposition(1,3,3,6) ], 
@@ -1173,13 +1173,14 @@ CTProductClassification :=
               [ ClassTransposition(2,3,3,6), ClassTransposition(1,4,2,6) ], 
               [ ClassTransposition(2,3,4,6), ClassTransposition(0,4,5,6) ] ] ], 
     [ infinity,
-          [ [ [ 1, 1 ], [ 1, 2, infinity ] ],
+          [ [ [ 1, 1 ], [ 2, infinity ] ],
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(0,3,2,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(1,3,0,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(1,3,5,6) ], 
               [ ClassTransposition(0,2,1,2), ClassTransposition(2,3,3,6) ], 
-              [ ClassTransposition(0,2,1,2), ClassTransposition(2,3,4,6) ], 
+              [ ClassTransposition(0,2,1,2), ClassTransposition(2,3,4,6) ] ], 
+          [ [ [ 1, 1 ], [ 1, 2, infinity ] ],
               [ ClassTransposition(0,2,1,4), ClassTransposition(0,3,4,6) ], 
               [ ClassTransposition(0,2,1,4), ClassTransposition(1,3,0,6) ], 
               [ ClassTransposition(0,2,3,4), ClassTransposition(2,3,4,6) ], 
