@@ -340,6 +340,32 @@ then FindGroupRelations := ReturnFail; fi;
 
 #############################################################################
 ##
+#F  ReducedWordByOrdersOfGenerators( <w>, <orders> )
+##
+##  Reduce exponents of powers in a word modulo the orders of the
+##  corresponding generators.
+##
+DeclareGlobalFunction( "ReducedWordByOrdersOfGenerators" );
+InstallGlobalFunction(  ReducedWordByOrdersOfGenerators,
+
+  function ( w, orders )
+
+    local  ext, fam, i;
+
+    fam := FamilyObj(w);
+    ext := ShallowCopy(ExtRepOfObj(w));
+    for i in [1,3..Length(ext)-1] do
+      if orders[ext[i]] < infinity then
+        ext[i+1] := ext[i+1] mod orders[ext[i]];
+        if   ext[i+1] > orders[ext[i]]/2
+        then ext[i+1] := ext[i+1] - orders[ext[i]]; fi;
+      fi;
+    od;
+    return ObjByExtRep(fam,ext);
+  end );
+
+#############################################################################
+##
 #S  The code for loading and saving bitmap images. //////////////////////////
 ##
 #############################################################################

@@ -4269,7 +4269,7 @@ InstallMethod( RepresentativesActionPreImage,
 
     local  SetOfRepresentatives, Extended, R, gensG, gensF, 
            orbsrc, orbdest, g, extstep, oldorbsizes,
-           inter, intersrc, interdest, compatible;
+           inter, intersrc, interdest, compatible, quots;
 
     SetOfRepresentatives := function ( S, rel, less, pref )
 
@@ -4330,7 +4330,12 @@ InstallMethod( RepresentativesActionPreImage,
     interdest  := Filtered(orbdest,t->t[1] in inter);
     compatible := Filtered(Cartesian(intersrc,interdest),t->t[1][1]=t[2][1]);
     Info(InfoRCWA,2,"|Candidates| = ",Length(compatible));
-    return Set(List(compatible,t->t[1][2]*t[2][2]^-1));
+    quots := Set(compatible,t->t[1][2]*t[2][2]^-1);
+    if IsRcwaGroupOverZ(G) then
+      quots := List(quots,quot->ReducedWordByOrdersOfGenerators(quot,
+                                  List(GeneratorsOfGroup(G),Order)));
+    fi;
+    return quots;
   end );
 
 #############################################################################
