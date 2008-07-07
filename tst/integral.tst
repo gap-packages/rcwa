@@ -1658,6 +1658,8 @@ gap> g := RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5,6])");
 gap> g = (ClassTransposition(3,4,4,6)*ClassShift(4,6))^3/
 >        (ClassShift(2,3)^-1*ClassReflection(5,6));
 true
+gap> g = RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5(6)])");
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
