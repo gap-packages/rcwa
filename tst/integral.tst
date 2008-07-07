@@ -1653,6 +1653,11 @@ gap> IsClassWiseTranslating(ClassShift(4,10));
 true
 gap> IsClassWiseTranslating(ClassReflection(2,7));
 false
+gap> g := RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5,6])");
+<bijective rcwa mapping of Z with modulus 36>
+gap> g = (ClassTransposition(3,4,4,6)*ClassShift(4,6))^3/
+>        (ClassShift(2,3)^-1*ClassReflection(5,6));
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
