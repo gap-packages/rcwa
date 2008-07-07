@@ -981,6 +981,102 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
+#M  RcwaMapping( <expression> ) . . . . . . . . . .  method (j) in the manual
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z by expression, given as a string (RCWA)",
+               true, [ IsString ], 0,
+
+  function ( expression )
+    if   IsSubset( "0123456789-,()[]^*/", expression )
+    then return RcwaMappingNC( expression );
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <expression> ) . . . . . . . . NC-method (j) in the manual
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z by expression, given as a string (RCWA)",
+               true, [ IsString ], 0,
+
+  function ( expression )
+
+    local  ValueExpression, ValueElementaryExpression;
+
+    ValueElementaryExpression := function ( exp )
+
+      local  ints;
+
+      if IsSubset("0123456789-",exp) then return Int(exp); fi;
+      ints := List(Filtered(SplitString(exp,"()[],"),s->s<>""),Int);
+      if   Length(ints) = 2 then
+        if   not '[' in exp
+        then return ClassShift(ints);
+        else return ClassReflection(ints); fi;
+      elif Length(ints) = 4 then
+        return ClassTransposition(ints);
+      else Error("unknown type of rcwa permutation\n"); fi;
+    end;
+
+    ValueExpression := function ( exp )
+
+      local  brackets, parts, part, operators,
+             values, valuesexp, value, i, j;
+
+      if   IsSubset("0123456789-,()[]",exp)
+      then return ValueElementaryExpression(exp); fi;
+
+      brackets := 0; parts := []; operators := []; part := "";
+      for i in [1..Length(exp)] do
+        Add(part,exp[i]);
+        if   exp[i] = '(' then
+          brackets := brackets + 1;
+        elif exp[i] = ')' then
+          brackets := brackets - 1;
+          if brackets = 0 then
+            Add(parts,part); part := "";
+          fi;
+        elif brackets = 0 and exp[i] in "*/^" then
+          Add(operators,exp[i]);
+          Add(parts,part{[1..Length(part)-1]}); part := "";
+        fi;
+      od;
+      Add(parts,part);
+      parts     := Filtered(parts,part->part<>"");
+      for i in [1..Length(parts)] do
+        if   parts[i][1] = '('
+        then parts[i] := parts[i]{[2..Length(parts[i])-1]}; fi;
+      od;
+      values    := List(parts,ValueExpression);
+      valuesexp := ShallowCopy(values);
+      for i in [1..Length(operators)] do
+        if operators[i] = '^' then
+          valuesexp[i] := valuesexp[i]^valuesexp[i+1];
+          valuesexp[i+1] := fail;
+        fi;
+      od;
+      valuesexp := Filtered(valuesexp,val->val<>fail);
+
+      operators := Filtered(operators,op->op<>'^');
+      value     := valuesexp[1];
+      for i in [1..Length(operators)] do
+        if   operators[i] = '*'
+        then value := value * valuesexp[i+1];
+        elif operators[i] = '/'
+        then value := value / valuesexp[i+1];
+        else Error("RcwaMapping: unknown operator: ",operators[i],"\n"); fi; 
+      od;
+
+      return value;
+    end;
+
+    return ValueExpression( BlankFreeString( expression ) );
+  end );
+
+#############################################################################
+##
 #M  RcwaMapping( <R>, <f>, <g> ) . rcwa mapping of Z^2 by two rcwa map's of Z
 #M  RcwaMapping( <f>, <g> )
 ##
