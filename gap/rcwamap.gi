@@ -1044,7 +1044,7 @@ InstallMethod( RcwaMappingNC,
         fi;
       od;
       Add(parts,part);
-      parts     := Filtered(parts,part->part<>"");
+      parts := Filtered(parts,part->Intersection(part,"0123456789")<>"");
       for i in [1..Length(parts)] do
         if   parts[i][1] = '('
         then parts[i] := parts[i]{[2..Length(parts[i])-1]}; fi;
