@@ -59,6 +59,135 @@
 ##      The subsequent entries are the corresponding pairs of class
 ##      transpositions.
 ##
+##  The function `IntersectionTypes' has been used to determine the 18
+##  possible intersection types. These are the 17 which occur in the list
+##  `CTProductClassification' and [0,3,3,0], which stands for two equal
+##  class transpositions. The list returned by this function is
+##
+##  [ [ 0, 3, 3, 0 ], [ 0, 3, 3, 1 ], [ 0, 3, 3, 3 ], [ 0, 3, 3, 4 ], 
+##    [ 1, 1, 3, 3 ], [ 1, 3, 3, 1 ], [ 1, 3, 3, 2 ], [ 1, 3, 3, 3 ], 
+##    [ 1, 3, 3, 4 ], [ 1, 4, 3, 2 ], [ 1, 4, 3, 3 ], [ 1, 4, 3, 4 ], 
+##    [ 3, 3, 3, 3 ], [ 3, 3, 3, 4 ], [ 3, 3, 4, 4 ], [ 3, 4, 4, 3 ], 
+##    [ 3, 4, 4, 4 ], [ 4, 4, 4, 4 ] ]
+##
+##  Given a 4-tuple of residue classes where the first and the second
+##  respectively the third and the fourth are disjoint, the function
+##  `IntersectionType' returns the corresponding intersection type,
+##  as described above.
+##
+##  Given either a 4-tuple of residue classes as described in the last
+##  sentence or a pair of class transpositions, the function `CTProductType'
+##  returns a list [ <intersection type>, <order>, <cycle type> ], where the
+##  entries have the meanings described above.
+##
+IntersectionTypes := function ()
+
+  local  types, modV4, subsetnormal;
+
+  modV4 := type->Set([type,Permuted(type,(1,2)(3,4)),
+                           Permuted(type,(1,3)(2,4)),
+                           Permuted(type,(1,4)(2,3))])[1];
+
+  subsetnormal := function ( type )
+
+    local  i;
+
+    if 2 in type and not 1 in type then
+      for i in [1..4] do if type[i] = 2 then type[i] := 1; fi; od;
+    fi;
+    return type;
+  end;
+
+  types := Tuples([0..4],4);
+  types := Set(types,modV4);
+  types := Filtered(types,type->Intersection([type{[1,2]},type{[3,4]},
+                                              type{[1,3]},type{[2,4]}],
+                                             [[0,0],[1,2],[2,1]]) = []);
+  types := Set(types,subsetnormal);
+  types := Filtered(types,type->Number(type,n->n=1)<3
+                           and (Number(type,n->n=1)<2
+                             or Intersection(type,[0,4])=[]));
+  types := Filtered(types,type->type{[1,2]} in [[0,3],[1,1],[1,3],
+                                                [1,4],[3,3],[3,4],[4,4]]);
+  types := Filtered(types,type->not type{[1,3]} in [[0,1],[1,1],[1,4]]);
+  types := Filtered(types,type->type[1]<>0 or not 4 in type{[2,3]});
+  types := Difference(types,[[3,4,3,4]]);
+
+  return types;
+end;
+
+IntersectionType := function ( cls )
+
+  local  type, indices, pair, equivalentsV4, equivalentslist, i;
+
+  type := [];
+  for indices in [[1,3],[1,4],[2,3],[2,4]] do
+    pair := cls{indices};
+    if   pair[1] = pair[2]                  then Add(type,0);
+    elif IsSubset(pair[1],pair[2])          then Add(type,1);
+    elif IsSubset(pair[2],pair[1])          then Add(type,2);
+    elif Intersection(pair[1],pair[2]) = [] then Add(type,3);
+    else                                         Add(type,4); fi;
+  od;
+
+  equivalentsV4 := Set([type,Permuted(type,(1,2)(3,4)),
+                             Permuted(type,(1,3)(2,4)),
+                             Permuted(type,(1,4)(2,3))]);
+  type := equivalentsV4[1];
+
+  equivalentslist := [[[0,3,3,2],[0,3,3,1]],
+                      [[2,3,2,3],[1,1,3,3]],
+                      [[2,3,3,2],[1,3,3,1]],
+                      [[2,3,3,3],[1,3,3,3]],
+                      [[2,3,3,4],[1,3,3,4]],
+                      [[2,3,4,3],[1,4,3,3]],
+                      [[2,3,4,4],[1,4,3,4]],
+                      [[3,4,3,4],[3,3,4,4]]];
+
+  for i in [1..8] do
+    if   type  = equivalentslist[i][1]
+    then type := equivalentslist[i][2]; fi;
+  od;
+
+  return type;
+end;
+
+CTProductType := function ( arg )
+
+  local  result, cls, cts, g, intertype, order, cycletype;
+
+  if Length(arg) = 1 then arg := arg[1]; fi;
+
+  if   Length(arg) = 2 and ForAll(arg,IsClassTransposition) then
+    cts := arg;
+    cls := Concatenation(List(cts,TransposedClasses));
+  elif Length(arg) = 4 and ForAll(arg,IsResidueClassOfZ) then
+    cls := arg;
+    cts := List([cls{[1,2]},cls{[3,4]}],ClassTransposition);
+  else Error("usage: CTProductType(<2 class transpositions>|",
+                                  "<4 residue classes>)\n");
+  fi;
+
+  intertype := IntersectionType(cls);
+  g         := Product(cts);
+  order     := Order(g);
+  cycletype := Set(ShortCycles(g,[-1000..1000],20),Length);
+
+  if   IsSubset(cycletype,[1,2,3,4,5,6,7])
+  then cycletype := [1,2,3,4,5,6,7,8,9];
+  elif IsSubset(cycletype,[1,3,5,7])
+  then cycletype := [1,3,5,7,9];
+  elif  IsSubset(cycletype,[2,4,6,8]) and Density(Support(g)) = 1
+  then cycletype := [2,4,6,8];
+  elif IsSubset(cycletype,[2,4,6,8]) and Density(Support(g)) < 1
+  then cycletype := [1,2,4,6,8];
+  elif order = infinity then Add(cycletype,infinity); fi;
+
+  cycletype := [List(ExcludedElements(Support(g)),i->1),cycletype];
+
+  return [ intertype, order, cycletype ];
+end;
+
 CTProductClassification :=
 [ [ [ 0, 3, 3, 1 ], 
     [ infinity,
