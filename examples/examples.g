@@ -27,6 +27,43 @@ Tm := RcwaMapping([[1,0,2],[3,-1,2]]); SetName(Tm,"T-");
 
 #############################################################################
 ##
+##  The Higman-Thompson group
+##
+##  As John P. McDermott has observed, the group CT_2 = HigmanThompson
+##  in this example is isomorphic to the (first) Higman-Thompson group.
+##
+##  For details on the Higman-Thompson group, see
+##
+##  Graham Higman. Finitely Presented Infinite Simple Groups.
+##  Notes on Pure Mathematics, 1974, Department of Pure Mathematics,
+##  Australian National University, Canberra, ISBN 0 7081 0300 6.
+##
+CT_2 := Group(List([[0,2,1,4],[0,4,1,4],[1,4,2,4],[2,4,3,4]],
+                  ClassTransposition));
+
+k := ClassTransposition(0,2,1,2); # kappa in Higman's book.
+l := ClassTransposition(1,2,2,4); # lambda    "
+m := ClassTransposition(0,2,1,4); # mu        "
+n := ClassTransposition(1,4,2,4); # nu        "
+
+HigmanThompson := Group(k,l,m,n); # HigmanThompson = CT_2
+
+HigmanThompsonRels :=     # List of identity mappings, for checking purposes.
+[ k^2, l^2, m^2, n^2,                           # (1) in Higman's book, p.50.
+  l*k*m*k*l*n*k*n*m*k*l*k*m,                    # (2)           "
+  k*n*l*k*m*n*k*l*n*m*n*l*n*m,                  # (3)           "
+  (l*k*m*k*l*n)^3, (m*k*l*k*m*n)^3,             # (4)           "
+  (l*n*m)^2*k*(m*n*l)^2*k,                      # (5)           "
+  (l*n*m*n)^5,                                  # (6)           "
+  (l*k*n*k*l*n)^3*k*n*k*(m*k*n*k*m*n)^3*k*n*k*n,# (7)           "
+  ((l*k*m*n)^2*(m*k*l*n)^2)^3,                  # (8)           "
+  (l*n*l*k*m*k*m*n*l*n*m*k*m*k)^4,              # (9)           "
+  (m*n*m*k*l*k*l*n*m*n*l*k*l*k)^4,              #(10)           "
+  (l*m*k*l*k*m*l*k*n*k)^2,                      #(11)           "
+  (m*l*k*m*k*l*m*k*n*k)^2 ];                    #(12)           "
+
+#############################################################################
+##
 ##  Section 4.1: Factoring Collatz' permutation of the integers
 ##
 Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);
