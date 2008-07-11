@@ -80,7 +80,14 @@
 ##  returns a list [ <intersection type>, <order>, <cycle type> ], where the
 ##  entries have the meanings described above.
 ##
-IntersectionTypes := function ()
+if not IsBound( RCWAExamples ) then RCWAExamples := rec( ); fi;
+
+if   not IsBound( RCWAExamples.ClassTranspositionProducts )
+then RCWAExamples.ClassTranspositionProducts := rec( ); fi;
+
+RCWAExamples.ClassTranspositionProducts.IntersectionTypes :=
+
+function ()
 
   local  types, modV4, subsetnormal;
 
@@ -116,7 +123,9 @@ IntersectionTypes := function ()
   return types;
 end;
 
-IntersectionType := function ( cls )
+RCWAExamples.ClassTranspositionProducts.IntersectionType :=
+
+function ( cls )
 
   local  type, indices, pair, equivalentsV4, equivalentslist, i;
 
@@ -152,7 +161,9 @@ IntersectionType := function ( cls )
   return type;
 end;
 
-CTProductType := function ( arg )
+RCWAExamples.ClassTranspositionProducts.CTProductType :=
+
+function ( arg )
 
   local  result, cls, cts, g, intertype, order, cycletype;
 
@@ -168,7 +179,7 @@ CTProductType := function ( arg )
                                   "<4 residue classes>)\n");
   fi;
 
-  intertype := IntersectionType(cls);
+  intertype := RCWAExamples.ClassTranspositionProducts.IntersectionType(cls);
   g         := Product(cts);
   order     := Order(g);
   cycletype := Set(ShortCycles(g,[-1000..1000],20),Length);
@@ -188,7 +199,7 @@ CTProductType := function ( arg )
   return [ intertype, order, cycletype ];
 end;
 
-CTProductClassification :=
+RCWAExamples.ClassTranspositionProducts.CTProductClassification :=
 [ [ [ 0, 3, 3, 1 ], 
     [ infinity,
           [ [ [ 1, 1 ], [ infinity ] ],
