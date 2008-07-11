@@ -136,6 +136,66 @@ CallFuncList(UnhideGlobalVariables,List("klmn",ch->[ch]));
 
 #############################################################################
 ##
+##  Examples of rcwa mappings of Z^2.
+##
+RCWAExamples.ZxZ := rec(
+
+  R := Integers^2,
+
+  twice        := RcwaMapping(~.R,[[1,0],[0,1]],[[[[2,0],[0,2]],[0,0],1]]),
+  twice1       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[2,0],[0,1]],[0,0],1]]),
+  twice2       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,0],[0,2]],[0,0],1]]),
+  switch       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[0,1],[1,0]],[0,0],1]]),
+  reflection   := RcwaMapping(~.R,[[1,0],[0,1]],[[[[-1,0],[0,-1]],[0,0],1]]),
+  reflection1  := RcwaMapping(~.R,[[1,0],[0,1]],[[[[-1,0],[0,1]],[0,0],1]]),
+  reflection2  := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,0],[0,-1]],[0,0],1]]),
+  transvection := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]),
+
+  hyperbolic := RcwaMapping(~.R,[[1,0],[0,2]],[[[[4,0],[0,1]],[0, 0],2],
+                                               [[[4,0],[0,1]],[2,-1],2]]),
+
+  Sigma_T := RcwaMapping( ~.R, [[1,0],[0,6]],
+                               [[[[2,0],[0,1]],[0,0],2],
+                                [[[4,0],[0,3]],[2,1],2],
+                                [[[2,0],[0,1]],[0,0],2],
+                                [[[4,0],[0,3]],[2,1],2],
+                                [[[4,0],[0,1]],[0,0],2],
+                                [[[4,0],[0,3]],[2,1],2]] ),
+
+  SigmaT := RcwaMapping( ~.R, [[1,0],[0,6]],
+                              [[[0,0],[[[2,0],[0,1]],[0,0],2]],
+                               [[0,1],[[[4,0],[0,3]],[0,1],2]],
+                               [[0,2],[[[2,0],[0,1]],[0,0],2]],
+                               [[0,3],[[[4,0],[0,3]],[0,1],2]],
+                               [[0,4],[[[4,0],[0,1]],[2,0],2]],
+                               [[0,5],[[[4,0],[0,3]],[0,1],2]]] ),
+
+  SigmaTm := RcwaMapping( ~.R, [[1,0],[0,6]],
+                               [[[0,0],[[[2,0],[0,1]],[0,0],2]],
+                                [[0,1],[[[4,0],[0,3]],[0,-1],2]],
+                                [[0,2],[[[4,0],[0,1]],[2,0],2]],
+                                [[0,3],[[[4,0],[0,3]],[0,-1],2]],
+                                [[0,4],[[[2,0],[0,1]],[0,0],2]],
+                                [[0,5],[[[4,0],[0,3]],[0,-1],2]]] ),
+
+  commT_Tm := RcwaMapping( ~.R, [[4,0],[0,9]],
+  [[[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[3,0],[0,1]],[3,1],3],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,1]],[0,-1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[2,0],[0,1]],[2,-1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,3]],[-1,1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,3]],[-1,1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,3]],[-1,1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,2]],[-2,-2],2],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,1]],[0,-1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[2,0],[0,1]],[2,-1],1],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,4]],[-3,0],4],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,4]],[-3,0],4],
+   [[[1,0],[0,1]],[0,0],1],[[[4,0],[0,1]],[3,0],1],[[[1,0],[0,4]],[-3,0],4]])
+
+);
+
+#############################################################################
+##
 ##  Rcwa mappings which seem to be contracting, but very slow.
 ##
 RCWAExamples.SlowlyContractingMappings := rec(
@@ -224,187 +284,6 @@ SetName(RCWAExamples.CollatzlikePerms.Mod5Mult16,"Mod5Mult16");
 
 #############################################################################
 ##
-##  Some wild rcwa mappings which have only finite cycles, or which have
-##  cycles with positive densities as sets. 
-##
-RCWAExamples.FiniteVsDenseCycles := rec(
-
-  kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
-                        [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
-                        [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]),
-
-  kappaZ := RcwaMapping([[2, 8,1],[1,-1,1],[3,2,2],[1, 2,1],
-                         [1,-3,1],[1,-3,1],[3,2,2],[1, 2,1],
-                         [1, 1,3],[1,-3,1],[3,2,2],[2,-2,1]]),
-
-  # An example of a mapping with an infinite cycle traversing the residue
-  # classes (mod 12) acyclically, but having positive density as a subset
-  # of Z (apparently 3/8).
-
-  kappatilde := RcwaMapping([[2,-4,1],[3, 33,1],[3,2,2],[1,-1,1],
-                             [2, 0,1],[3,-39,1],[3,2,2],[1,-1,1],
-                             [1, 1,3],[3, 33,1],[3,2,2],[1, 4,3]]),
-
-  # Slight modifications which also have only finite cycles.
-
-  kappa12_fincyc := RcwaMapping([[2,-4,1],[3,-3,1],[3,2,2],[1,-1,1],
-                                 [2, 0,1],[3,-3,1],[3,2,2],[1,-1,1],
-                                 [1, 1,3],[3,-3,1],[3,2,2],[1, 4,3]]),
-
-  kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
-                                 [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
-                                 [2, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
-                                 [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
-                                 [1,-1,3],[1, 0,1],[1,0,1],[1, 0,1],
-                                 [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]),
-
-  # A mapping which has finite cycles of unbounded length and, like the
-  # mapping `kappatilde' above, apparently one ``chaotically behaving''
-  # infinite cycle which has positive density (apparently 11/48) as
-  # a subset of Z.
-
-  kappa24_densecyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
-                                   [3, 4,2],[1,-1,1],[6,4,1],[1, 23,1],
-                                   [2, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
-                                   [3, 4,2],[1,-1,1],[6,4,1],[1,-25,1],
-                                   [1,-1,3],[1, 0,1],[1,0,1],[1,  0,1],
-                                   [3, 4,2],[1, 0,3],[6,4,1],[1, 23,1]]),
-
-  # As above, but the density now seems to be 1/6.
-
-  kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
-                                      [3, 4,2],[1,-1,1],[1,0,1],[6, 142,1],
-                                      [2, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
-                                      [3, 4,2],[1,-1,1],[1,0,1],[6,-146,1],
-                                      [1,-1,3],[1, 0,1],[1,0,1],[1,   0,1],
-                                      [3, 4,2],[1, 0,3],[1,0,1],[6, 142,1]]),
-
-  # Apart from fixed points and three 2-cycles, the following permutation
-  # apparently has only one cycle, traversing the set (0(4) U 1(6) U 5(12)
-  # U 6(12) U 22(36) U 26(36) U 27(36)) \ {-45, -17, 4, 6, 8, 13, 17, 36, 48}
-  # in some sense `chaotically':
-
-  kappa36 := RcwaMapping(
-               [[1, 3,3],[2, 10,1],[1, 0,1],[1, 0,1],[3,-4,2],[1,11,1],
-                [3,-6,2],[1, 13,1],[3,-8,2],[1, 0,1],[1, 0,1],[1, 0,1],
-                [1, 3,3],[2, 10,1],[1, 0,1],[1, 0,1],[3,-4,2],[2,14,1],
-                [3,-6,2],[2,-11,1],[3,-8,2],[1, 0,1],[1,-4,1],[1, 0,1],
-                [2,24,1],[2, 13,1],[1, 4,1],[1,-6,3],[3,-4,2],[1,-1,1],
-                [3,-6,2],[1,  1,1],[3,-8,2],[1, 0,1],[1, 0,1],[1, 0,1]]),
-
-  # Even better: apart from the fixed points 4, 6 and 8 and the transposi-
-  # tions (-17,-45), (13,36) and (17,48), the following permutation seems
-  # to have only one single cycle on the integers:
-
-  omega := RcwaMapping(
-             [[1,  3,3],[1,  9,1],[1, 14,1],[1, -7,1],[3, -4,2],[1,-14,3],
-              [3, -6,2],[1, 13,1],[3, -8,2],[3, 11,1],[2, -8,1],[3,  6,1],
-              [1,  3,3],[2, 10,1],[1,  4,1],[1, 15,1],[3, -4,2],[2, 14,1],
-              [3, -6,2],[2,-11,1],[3, -8,2],[3, 11,1],[1, -8,1],[3,  6,1],
-              [2, 24,1],[1,  9,1],[1,-11,1],[1, -6,3],[3, -4,2],[1, -1,1],
-              [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]),
-
-  # Similar, but with smaller modulus and with only one fixed point and only
-  # one transposition:
-
-  kappaOneCycle := RcwaMapping([[2, 8,1],[1,-1,1],[3,2,2],[1, 2,1],
-                                [1, 9,1],[1,-3,1],[3,2,2],[1, 2,1],
-                                [1, 1,3],[1,-3,1],[3,2,2],[2,-2,1]]),
-
-  # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group
-  # all of whose orbits on Z seem to be finite.
-
-  sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]),
-  sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
-                         [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
-                         [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]),
-
-  theta := RcwaMapping([[3, 32,16],[3,-1,2],[9,-6,4],[9,-15,2],
-                        [3, 20, 8],[3,-1,2],[9,-6,4],[9,-15,2],
-                        [9,-72,16],[3,-1,2],[9,-6,4],[9,-15,2],
-                        [9, 12, 8],[3,-1,2],[9,-6,4],[9,-15,2]]),
-
-  sigma := ~.sigma1 * ~.sigma2,
-
-  # A `simplification' of <sigma>.
-
-  sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
-                          [1, 0,1], [1, 1,3], [3, 6,2], [1, 0,1],
-                          [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1],
-                          [2, 0,1], [1, 0,1], [1, 1,1], [3,-3,2],
-                          [1, 0,1], [1, 1,1], [3, 6,2], [1, 0,1],
-                          [1, 0,1], [2, 0,1], [1, 0,1], [1, 0,1],
-                          [1,-9,3], [1, 0,1], [1, 1,1], [3,-3,2],
-                          [1, 0,1], [2, 2,1], [3, 6,2], [1, 0,1],
-                          [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1]]),
-
-  # The mapping <comm> is another `only finite cycles' example.
-
-  sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
-                          [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]),
-  sigmas := ~.sigma1 * ~.sigmas2,
-  comm := Comm(~.sigmas,~.sigma1)
-
-);
-
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa,"kappa");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappaZ,"kappaZ");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappatilde,"kappatilde");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa12_fincyc,"kappa12_fincyc");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_fincyc,"kappa24_fincyc");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_densecyc,
-        "kappa24_densecyc");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_densecyc,
-        "kappa24_densecyc");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_onesixthcyc,
-        "kappa24_onesixthcyc");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappa36,"kappa36");
-SetName(RCWAExamples.FiniteVsDenseCycles.omega,"omega");
-SetName(RCWAExamples.FiniteVsDenseCycles.kappaOneCycle,"kappaOneCycle");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigma1,"sigma1");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigma2,"sigma2");
-SetName(RCWAExamples.FiniteVsDenseCycles.theta,"theta");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigma,"sigma");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigma_r,"sigma_r");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigmas2,"sigmas2");
-SetName(RCWAExamples.FiniteVsDenseCycles.sigmas,"sigmas");
-SetName(RCWAExamples.FiniteVsDenseCycles.comm,"comm");
-
-#############################################################################
-##
-##  An abelian rcwa group over a polynomial ring
-##
-##  As the mappings <g> and <h> are modified within the example, we denote
-##  the unmodified versions by <gu> and <hu> and the modified ones by
-##  <gm> and <hm>, respectively.
-##
-RCWAExamples.AbelianGroupOverPolynomialRing := rec(
-
-  x := Indeterminate(GF(4),1),
-  R := PolynomialRing(GF(4),1),
-  e := One(GF(4)),
-  p := ~.x^2 + ~.x + ~.e,
-  q := ~.x^2 + ~.e,
-  r := ~.x^2 + ~.x + Z(4),
-  s := ~.x^2 + ~.x + Z(4)^2,
-  cg := List( AllResidues(~.R,~.x^2), pol -> [~.p,~.p*pol mod ~.q,~.q] ),
-  ch := List( AllResidues(~.R,~.x^2), pol -> [~.r,~.r*pol mod ~.s,~.s] ),
-  gu := RcwaMapping( ~.R, ~.q, ~.cg ),
-  hu := RcwaMapping( ~.R, ~.s, ~.ch )
-
-);
-
-HideGlobalVariables( "r" );
-  r := RCWAExamples.AbelianGroupOverPolynomialRing;
-  SetName(r.x,"x");
-  r.cg[1][2] := r.cg[1][2] + (r.x^2 + r.e) * r.p * r.q;
-  r.ch[7][2] := r.ch[7][2] + r.x * r.r * r.s;
-  r.gm := RcwaMapping( r.R, r.q, r.cg );
-  r.hm := RcwaMapping( r.R, r.s, r.ch );
-UnhideGlobalVariables( "r" );
-
-#############################################################################
-##
 ##  An rcwa mapping of GF(2)[x] of infinite order which has only finite
 ##  cycles.
 ##
@@ -429,146 +308,6 @@ RCWAExamples.GF2xFiniteCycles := rec(
 UnhideGlobalVariables( "x", "e" );
 
 SetName(RCWAExamples.GF2xFiniteCycles.r_2mod,"r_2mod");
-
-#############################################################################
-##
-##  A tame group generated by commutators of wild permutations
-##
-##  This was one of the first examples, and it is still here only in order
-##  to stick to not removing anything from this file.
-##
-RCWAExamples.TameGroupByCommsOfWildPerms := rec(
-
-  a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
-  b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]),
-  c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]),
-
-  ab := Comm(~.a,~.b),
-  ac := Comm(~.a,~.c),
-  bc := Comm(~.b,~.c),
-
-  # A factorization of `a' (see above) into two balanced mappings,
-  # where one of them is an involution.
-
-  a_2 := RcwaMapping([List([[1,2],[36,72]],ResidueClass)]),
-  a_1 := ~.a/~.a_2,
-
-  # Two rcwa mappings of orders 7 and 12, respectively, which have isomorphic
-  # transition graphs for modulus 6 and generate an infinite tame group.
-
-  g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]),
-  h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]),
-
-);
-
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a,"a");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.b,"b");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.c,"c");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.ab,"[a,b]");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.ac,"[a,c]");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.bc,"[b,c]");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_1,"a_1");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_2,"a_2");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.g,"g");
-SetName(RCWAExamples.TameGroupByCommsOfWildPerms.h,"h");
-
-#############################################################################
-##
-##  Some examples over (semi)localizations of the integers
-##
-RCWAExamples.Semilocals := rec(
-
-  a2  := RcwaMapping(Z_pi(2),[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]),
-
-  a23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
-  b23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]),
-  c23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]),
-
-  ab23 := Comm(~.a23,~.b23),
-  ac23 := Comm(~.a23,~.c23),
-
-  v := RcwaMapping([[6,0,1],[1,-7,2],[6,0,1],[1,-1,1],
-                    [6,0,1],[1, 1,2],[6,0,1],[1,-1,1]]),
-
-  v2 := RcwaMapping(Z_pi(2),ShallowCopy(Coefficients(~.v))),
-  w2 := RcwaMapping(Z_pi(2),[[1,0,2],[2,-1,1],[1,1,1],[2,-1,1]]),
-
-  v2w2 := Comm(~.v2,~.w2)
-
-);
-
-SetName(RCWAExamples.Semilocals.a2,"a2");
-
-SetName(RCWAExamples.Semilocals.a23,"a23");
-SetName(RCWAExamples.Semilocals.b23,"b23");
-SetName(RCWAExamples.Semilocals.c23,"c23");
-
-SetName(RCWAExamples.Semilocals.ab23,"[a23,b23]");
-SetName(RCWAExamples.Semilocals.ac23,"[a23,c23]");
-
-SetName(RCWAExamples.Semilocals.v,"v");
-
-SetName(RCWAExamples.Semilocals.v2,"v2");
-SetName(RCWAExamples.Semilocals.w2,"w2");
-
-SetName(RCWAExamples.Semilocals.v2w2,"[v2,w2]");
-
-#############################################################################
-##
-##  Twisting 257-cycles into an rcwa mapping with modulus 32
-##
-RCWAExamples.LongCyclesOfPrimeLength := rec(
-
-  x_257 := RcwaMapping(
-            [[ 16,  2,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1, 16,  1], [ 16, 18,  1],
-             [  1,  0, 16], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [ 16, 18,  1],
-             [  1,-14,  1], [  1,-31,  1]])
-
-);
-
-SetName(RCWAExamples.LongCyclesOfPrimeLength.x_257,"x_257");
-
-#############################################################################
-##
-##  The behaviour of the moduli of powers
-##
-##  Here we list only those mappings which are used in this example exclu-
-##  sively.
-##
-RCWAExamples.ModuliOfPowers := rec(
-
-  v6 := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]),
-  w8 := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]),
-
-  z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
-                    [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
-                    [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
-                    [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]),
-
-  e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]),
-  e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
-                     [1,4,1],[2,0,1],[1,0,1],[1,0,1]])
-
-);
-
-SetName(RCWAExamples.ModuliOfPowers.v6,"v6");
-SetName(RCWAExamples.ModuliOfPowers.w8,"w8");
-SetName(RCWAExamples.ModuliOfPowers.z,"z");
-SetName(RCWAExamples.ModuliOfPowers.e1,"e1");
-SetName(RCWAExamples.ModuliOfPowers.e2,"e2");
 
 #############################################################################
 ##
@@ -1311,25 +1050,308 @@ SetName(RCWAExamples.SymmetrizingCollatzTree.D5,"D5");
 
 #############################################################################
 ##
-##  An rcwa representation of Syl_3(S_9)
+##  Some wild rcwa mappings which have only finite cycles, or which have
+##  cycles with positive densities as sets. 
 ##
-##  This was one of the first examples, and it is still here only in order
-##  to stick to not removing anything from this file.
-##
-RCWAExamples.Syl3_S9 := rec(
+RCWAExamples.FiniteVsDenseCycles := rec(
 
-  r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
-                    [1,0,3],[1,1,1],[3, -3,1],
-                    [1,0,1],[1,1,1],[3, -3,1]]),
+  kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                        [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
+                        [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]),
 
-  s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
-                    [1,0,3],[1,1,1],[3,  6,1],
-                    [1,0,1],[1,1,1],[3,-21,1]])
+  kappaZ := RcwaMapping([[2, 8,1],[1,-1,1],[3,2,2],[1, 2,1],
+                         [1,-3,1],[1,-3,1],[3,2,2],[1, 2,1],
+                         [1, 1,3],[1,-3,1],[3,2,2],[2,-2,1]]),
+
+  # An example of a mapping with an infinite cycle traversing the residue
+  # classes (mod 12) acyclically, but having positive density as a subset
+  # of Z (apparently 3/8).
+
+  kappatilde := RcwaMapping([[2,-4,1],[3, 33,1],[3,2,2],[1,-1,1],
+                             [2, 0,1],[3,-39,1],[3,2,2],[1,-1,1],
+                             [1, 1,3],[3, 33,1],[3,2,2],[1, 4,3]]),
+
+  # Slight modifications which also have only finite cycles.
+
+  kappa12_fincyc := RcwaMapping([[2,-4,1],[3,-3,1],[3,2,2],[1,-1,1],
+                                 [2, 0,1],[3,-3,1],[3,2,2],[1,-1,1],
+                                 [1, 1,3],[3,-3,1],[3,2,2],[1, 4,3]]),
+
+  kappa24_fincyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                                 [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                                 [2, 0,1],[1, 0,1],[1,0,1],[1, 0,1],
+                                 [3, 4,2],[1,-1,1],[1,0,1],[6,-2,1],
+                                 [1,-1,3],[1, 0,1],[1,0,1],[1, 0,1],
+                                 [3, 4,2],[1, 0,3],[1,0,1],[6,-2,1]]),
+
+  # A mapping which has finite cycles of unbounded length and, like the
+  # mapping `kappatilde' above, apparently one ``chaotically behaving''
+  # infinite cycle which has positive density (apparently 11/48) as
+  # a subset of Z.
+
+  kappa24_densecyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
+                                   [3, 4,2],[1,-1,1],[6,4,1],[1, 23,1],
+                                   [2, 0,1],[1, 0,1],[1,0,1],[1,  0,1],
+                                   [3, 4,2],[1,-1,1],[6,4,1],[1,-25,1],
+                                   [1,-1,3],[1, 0,1],[1,0,1],[1,  0,1],
+                                   [3, 4,2],[1, 0,3],[6,4,1],[1, 23,1]]),
+
+  # As above, but the density now seems to be 1/6.
+
+  kappa24_onesixthcyc := RcwaMapping([[1, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
+                                      [3, 4,2],[1,-1,1],[1,0,1],[6, 142,1],
+                                      [2, 0,1],[1, 0,1],[1,0,1],[1,   0,1],
+                                      [3, 4,2],[1,-1,1],[1,0,1],[6,-146,1],
+                                      [1,-1,3],[1, 0,1],[1,0,1],[1,   0,1],
+                                      [3, 4,2],[1, 0,3],[1,0,1],[6, 142,1]]),
+
+  # Apart from fixed points and three 2-cycles, the following permutation
+  # apparently has only one cycle, traversing the set (0(4) U 1(6) U 5(12)
+  # U 6(12) U 22(36) U 26(36) U 27(36)) \ {-45, -17, 4, 6, 8, 13, 17, 36, 48}
+  # in some sense `chaotically':
+
+  kappa36 := RcwaMapping(
+               [[1, 3,3],[2, 10,1],[1, 0,1],[1, 0,1],[3,-4,2],[1,11,1],
+                [3,-6,2],[1, 13,1],[3,-8,2],[1, 0,1],[1, 0,1],[1, 0,1],
+                [1, 3,3],[2, 10,1],[1, 0,1],[1, 0,1],[3,-4,2],[2,14,1],
+                [3,-6,2],[2,-11,1],[3,-8,2],[1, 0,1],[1,-4,1],[1, 0,1],
+                [2,24,1],[2, 13,1],[1, 4,1],[1,-6,3],[3,-4,2],[1,-1,1],
+                [3,-6,2],[1,  1,1],[3,-8,2],[1, 0,1],[1, 0,1],[1, 0,1]]),
+
+  # Even better: apart from the fixed points 4, 6 and 8 and the transposi-
+  # tions (-17,-45), (13,36) and (17,48), the following permutation seems
+  # to have only one single cycle on the integers:
+
+  omega := RcwaMapping(
+             [[1,  3,3],[1,  9,1],[1, 14,1],[1, -7,1],[3, -4,2],[1,-14,3],
+              [3, -6,2],[1, 13,1],[3, -8,2],[3, 11,1],[2, -8,1],[3,  6,1],
+              [1,  3,3],[2, 10,1],[1,  4,1],[1, 15,1],[3, -4,2],[2, 14,1],
+              [3, -6,2],[2,-11,1],[3, -8,2],[3, 11,1],[1, -8,1],[3,  6,1],
+              [2, 24,1],[1,  9,1],[1,-11,1],[1, -6,3],[3, -4,2],[1, -1,1],
+              [3, -6,2],[1,  2,3],[3, -8,2],[3, 11,1],[2, -5,1],[3,  6,1]]),
+
+  # Similar, but with smaller modulus and with only one fixed point and only
+  # one transposition:
+
+  kappaOneCycle := RcwaMapping([[2, 8,1],[1,-1,1],[3,2,2],[1, 2,1],
+                                [1, 9,1],[1,-3,1],[3,2,2],[1, 2,1],
+                                [1, 1,3],[1,-3,1],[3,2,2],[2,-2,1]]),
+
+  # The mappings <sigma1> and <sigma2> generate a non-cyclic wild group
+  # all of whose orbits on Z seem to be finite.
+
+  sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]),
+  sigma2 := RcwaMapping([[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
+                         [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+                         [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]),
+
+  theta := RcwaMapping([[3, 32,16],[3,-1,2],[9,-6,4],[9,-15,2],
+                        [3, 20, 8],[3,-1,2],[9,-6,4],[9,-15,2],
+                        [9,-72,16],[3,-1,2],[9,-6,4],[9,-15,2],
+                        [9, 12, 8],[3,-1,2],[9,-6,4],[9,-15,2]]),
+
+  sigma := ~.sigma1 * ~.sigma2,
+
+  # A `simplification' of <sigma>.
+
+  sigma_r := RcwaMapping([[1, 0,1], [1, 0,1], [2, 2,1], [3,-3,2],
+                          [1, 0,1], [1, 1,3], [3, 6,2], [1, 0,1],
+                          [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1],
+                          [2, 0,1], [1, 0,1], [1, 1,1], [3,-3,2],
+                          [1, 0,1], [1, 1,1], [3, 6,2], [1, 0,1],
+                          [1, 0,1], [2, 0,1], [1, 0,1], [1, 0,1],
+                          [1,-9,3], [1, 0,1], [1, 1,1], [3,-3,2],
+                          [1, 0,1], [2, 2,1], [3, 6,2], [1, 0,1],
+                          [1, 0,1], [1, 0,1], [1, 0,1], [1, 0,1]]),
+
+  # The mapping <comm> is another `only finite cycles' example.
+
+  sigmas2 := RcwaMapping([[1,0,1],[1, 0,1],[3,0,2],[2,1,1],[1,0,1],[1,0,1],
+                          [3,0,2],[1,-1,3],[1,0,1],[2,1,1],[3,0,2],[1,0,1]]),
+  sigmas := ~.sigma1 * ~.sigmas2,
+  comm := Comm(~.sigmas,~.sigma1)
 
 );
 
-SetName(RCWAExamples.Syl3_S9.r,"r");
-SetName(RCWAExamples.Syl3_S9.s,"s");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa,"kappa");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappaZ,"kappaZ");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappatilde,"kappatilde");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa12_fincyc,"kappa12_fincyc");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_fincyc,"kappa24_fincyc");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_densecyc,
+        "kappa24_densecyc");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_densecyc,
+        "kappa24_densecyc");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa24_onesixthcyc,
+        "kappa24_onesixthcyc");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappa36,"kappa36");
+SetName(RCWAExamples.FiniteVsDenseCycles.omega,"omega");
+SetName(RCWAExamples.FiniteVsDenseCycles.kappaOneCycle,"kappaOneCycle");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigma1,"sigma1");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigma2,"sigma2");
+SetName(RCWAExamples.FiniteVsDenseCycles.theta,"theta");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigma,"sigma");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigma_r,"sigma_r");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigmas2,"sigmas2");
+SetName(RCWAExamples.FiniteVsDenseCycles.sigmas,"sigmas");
+SetName(RCWAExamples.FiniteVsDenseCycles.comm,"comm");
+
+#############################################################################
+##
+##  An abelian rcwa group over a polynomial ring
+##
+##  As the mappings <g> and <h> are modified within the example, we denote
+##  the unmodified versions by <gu> and <hu> and the modified ones by
+##  <gm> and <hm>, respectively.
+##
+RCWAExamples.AbelianGroupOverPolynomialRing := rec(
+
+  x := Indeterminate(GF(4),1),
+  R := PolynomialRing(GF(4),1),
+  e := One(GF(4)),
+  p := ~.x^2 + ~.x + ~.e,
+  q := ~.x^2 + ~.e,
+  r := ~.x^2 + ~.x + Z(4),
+  s := ~.x^2 + ~.x + Z(4)^2,
+  cg := List( AllResidues(~.R,~.x^2), pol -> [~.p,~.p*pol mod ~.q,~.q] ),
+  ch := List( AllResidues(~.R,~.x^2), pol -> [~.r,~.r*pol mod ~.s,~.s] ),
+  gu := RcwaMapping( ~.R, ~.q, ~.cg ),
+  hu := RcwaMapping( ~.R, ~.s, ~.ch )
+
+);
+
+HideGlobalVariables( "r" );
+  r := RCWAExamples.AbelianGroupOverPolynomialRing;
+  SetName(r.x,"x");
+  r.cg[1][2] := r.cg[1][2] + (r.x^2 + r.e) * r.p * r.q;
+  r.ch[7][2] := r.ch[7][2] + r.x * r.r * r.s;
+  r.gm := RcwaMapping( r.R, r.q, r.cg );
+  r.hm := RcwaMapping( r.R, r.s, r.ch );
+UnhideGlobalVariables( "r" );
+
+#############################################################################
+##
+##  Some examples over (semi)localizations of the integers
+##
+RCWAExamples.Semilocals := rec(
+
+  a2  := RcwaMapping(Z_pi(2),[[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]),
+
+  a23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
+  b23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]),
+  c23 := RcwaMapping(Z_pi([2,3]),[[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]),
+
+  ab23 := Comm(~.a23,~.b23),
+  ac23 := Comm(~.a23,~.c23),
+
+  v := RcwaMapping([[6,0,1],[1,-7,2],[6,0,1],[1,-1,1],
+                    [6,0,1],[1, 1,2],[6,0,1],[1,-1,1]]),
+
+  v2 := RcwaMapping(Z_pi(2),ShallowCopy(Coefficients(~.v))),
+  w2 := RcwaMapping(Z_pi(2),[[1,0,2],[2,-1,1],[1,1,1],[2,-1,1]]),
+
+  v2w2 := Comm(~.v2,~.w2)
+
+);
+
+SetName(RCWAExamples.Semilocals.a2,"a2");
+
+SetName(RCWAExamples.Semilocals.a23,"a23");
+SetName(RCWAExamples.Semilocals.b23,"b23");
+SetName(RCWAExamples.Semilocals.c23,"c23");
+
+SetName(RCWAExamples.Semilocals.ab23,"[a23,b23]");
+SetName(RCWAExamples.Semilocals.ac23,"[a23,c23]");
+
+SetName(RCWAExamples.Semilocals.v,"v");
+
+SetName(RCWAExamples.Semilocals.v2,"v2");
+SetName(RCWAExamples.Semilocals.w2,"w2");
+
+SetName(RCWAExamples.Semilocals.v2w2,"[v2,w2]");
+
+#############################################################################
+##
+##  Twisting 257-cycles into an rcwa mapping with modulus 32
+##
+RCWAExamples.LongCyclesOfPrimeLength := rec(
+
+  x_257 := RcwaMapping(
+            [[ 16,  2,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1, 16,  1], [ 16, 18,  1],
+             [  1,  0, 16], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [ 16, 18,  1],
+             [  1,-14,  1], [  1,-31,  1]])
+
+);
+
+SetName(RCWAExamples.LongCyclesOfPrimeLength.x_257,"x_257");
+
+#############################################################################
+##
+##  The behaviour of the moduli of powers
+##
+##  Here we list only those mappings which are used in this example exclu-
+##  sively.
+##
+RCWAExamples.ModuliOfPowers := rec(
+
+  v6 := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]),
+  w8 := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]),
+
+  z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
+                    [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
+                    [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
+                    [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]),
+
+  e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]),
+  e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
+                     [1,4,1],[2,0,1],[1,0,1],[1,0,1]])
+
+);
+
+SetName(RCWAExamples.ModuliOfPowers.v6,"v6");
+SetName(RCWAExamples.ModuliOfPowers.w8,"w8");
+SetName(RCWAExamples.ModuliOfPowers.z,"z");
+SetName(RCWAExamples.ModuliOfPowers.e1,"e1");
+SetName(RCWAExamples.ModuliOfPowers.e2,"e2");
+
+#############################################################################
+##
+##  Class transpositions can be written as commutators:
+##
+##  The class transposition interchanging <r1>(<m1>) and <r2>(<m2>) is the
+##  commutator of `ct1'(<r1>,<m1>,<r2>,<m2>) and `ct2'(<r1>,<m1>,<r2>,<m2>).
+##
+RCWAExamples.ClassTranspositionsAsCommutators := rec(
+
+  tau1 := ClassTransposition(0,4,1,4) * ClassTransposition(0,4,2,4),
+  tau2 := ClassTransposition(0,4,1,4) * ClassTransposition(0,4,3,4),
+
+  ct1 := function(r1,m1,r2,m2)
+           return Restriction(RCWAExamples.
+                              ClassTranspositionsAsCommutators.tau1,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end,
+
+  ct2 := function(r1,m1,r2,m2)
+           return Restriction(RCWAExamples.
+                              ClassTranspositionsAsCommutators.tau2,
+                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
+         end
+
+);
 
 #############################################################################
 ##
@@ -1388,6 +1410,111 @@ SetName(RCWAExamples.CoprimeMultDiv.g2,"g2");
 
 SetName(RCWAExamples.CoprimeMultDiv.c1,"c1");
 SetName(RCWAExamples.CoprimeMultDiv.c2,"c2");
+
+#############################################################################
+##
+##  A tame group generated by commutators of wild permutations
+##
+##  This was one of the first examples, and it is still here only in order
+##  to stick to not removing anything from this file.
+##
+RCWAExamples.TameGroupByCommsOfWildPerms := rec(
+
+  a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
+  b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]),
+  c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]),
+
+  ab := Comm(~.a,~.b),
+  ac := Comm(~.a,~.c),
+  bc := Comm(~.b,~.c),
+
+  # A factorization of `a' (see above) into two balanced mappings,
+  # where one of them is an involution.
+
+  a_2 := RcwaMapping([List([[1,2],[36,72]],ResidueClass)]),
+  a_1 := ~.a/~.a_2,
+
+  # Two rcwa mappings of orders 7 and 12, respectively, which have isomorphic
+  # transition graphs for modulus 6 and generate an infinite tame group.
+
+  g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]),
+  h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]),
+
+);
+
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a,"a");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.b,"b");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.c,"c");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.ab,"[a,b]");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.ac,"[a,c]");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.bc,"[b,c]");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_1,"a_1");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_2,"a_2");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.g,"g");
+SetName(RCWAExamples.TameGroupByCommsOfWildPerms.h,"h");
+
+#############################################################################
+##
+##  An rcwa representation of Syl_3(S_9)
+##
+##  This was one of the first examples, and it is still here only in order
+##  to stick to not removing anything from this file.
+##
+RCWAExamples.Syl3_S9 := rec(
+
+  r := RcwaMapping([[1,0,1],[1,1,1],[3, -3,1],
+                    [1,0,3],[1,1,1],[3, -3,1],
+                    [1,0,1],[1,1,1],[3, -3,1]]),
+
+  s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
+                    [1,0,3],[1,1,1],[3,  6,1],
+                    [1,0,1],[1,1,1],[3,-21,1]])
+
+);
+
+SetName(RCWAExamples.Syl3_S9.r,"r");
+SetName(RCWAExamples.Syl3_S9.s,"s");
+
+#############################################################################
+##
+##  "Class switches": Involutions which interchange two residue classes
+##  which are not necessarily disjoint (of course there must not be a proper
+##  subset relation between them!):
+##
+RCWAExamples.ClassSwitches := rec(
+
+  ClassSwitch := function( r1, m1, r2, m2 )
+
+    local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
+
+    cl  := List([[r1,m1],[r2,m2]],ResidueClass);
+    int := Intersection(cl);
+    if int = [] then return ClassTransposition(r1,m1,r2,m2); fi;
+    diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
+    if [] in diff then return fail; fi; # Subset rel. --> no class switch!
+    diff := List(diff,AsUnionOfFewClasses); lng := List(diff,Length);
+    if lng[1] <> lng[2] then
+      if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
+      for i in [1..AbsInt(lng[1]-lng[2])] do
+        clsp := diff[pos][1];
+        sp := [ResidueClass(Residues(clsp)[1],
+                            2*Modulus(clsp)),
+               ResidueClass(Residues(clsp)[1]+Modulus(clsp),
+                            2*Modulus(clsp))];
+        diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
+      od;
+    fi;
+    lng := Maximum(lng); m := 2*lng; c := [];
+    for r in [0..m-1] do
+      rti := Residues(diff[r mod 2 + 1][Int(r/2)+1])[1];
+      mti := Modulus (diff[r mod 2 + 1][Int(r/2)+1]);
+      c[r+1] := [mti,m*rti-mti*r,m];
+    od;
+    rest := RcwaMapping(c);
+    return Restriction(tau,rest);
+  end
+
+);
 
 #############################################################################
 ##
@@ -1471,157 +1598,6 @@ RCWAExamples.CollatzFactorizationOld := rec(
       RcwaMapping([[-1,1,1]]), t, RcwaMapping([[-1,1,1]]), t,
       RcwaMapping([[-1,1,1]]), ~.f1, ~.f2, ~.f3, ~.f1, ~.f2, ~.f3,
       ~.f1, ~.f2, ~.f3, ~.f1, ~.f2, ~.f3 ] )
-
-);
-
-#############################################################################
-##
-##  Class transpositions can be written as commutators:
-##
-##  The class transposition interchanging <r1>(<m1>) and <r2>(<m2>) is the
-##  commutator of `ct1'(<r1>,<m1>,<r2>,<m2>) and `ct2'(<r1>,<m1>,<r2>,<m2>).
-##
-RCWAExamples.ClassTranspositionsAsCommutators := rec(
-
-  tau1 := ClassTransposition(0,4,1,4) * ClassTransposition(0,4,2,4),
-  tau2 := ClassTransposition(0,4,1,4) * ClassTransposition(0,4,3,4),
-
-  ct1 := function(r1,m1,r2,m2)
-           return Restriction(RCWAExamples.
-                              ClassTranspositionsAsCommutators.tau1,
-                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-         end,
-
-  ct2 := function(r1,m1,r2,m2)
-           return Restriction(RCWAExamples.
-                              ClassTranspositionsAsCommutators.tau2,
-                              RcwaMapping([[m1,2*r1,2],[m2,2*r2-m2,2]]));
-         end
-
-);
-
-#############################################################################
-##
-##  "Class switches": Involutions which interchange two residue classes
-##  which are not necessarily disjoint (of course there must not be a proper
-##  subset relation between them!):
-##
-RCWAExamples.ClassSwitches := rec(
-
-  ClassSwitch := function( r1, m1, r2, m2 )
-
-    local  cl, int, diff, lng, pos, clsp, sp, c, r, m, rti, mti, rest, i;
-
-    cl  := List([[r1,m1],[r2,m2]],ResidueClass);
-    int := Intersection(cl);
-    if int = [] then return ClassTransposition(r1,m1,r2,m2); fi;
-    diff := [Difference(cl[1],cl[2]),Difference(cl[2],cl[1])];
-    if [] in diff then return fail; fi; # Subset rel. --> no class switch!
-    diff := List(diff,AsUnionOfFewClasses); lng := List(diff,Length);
-    if lng[1] <> lng[2] then
-      if lng[1] < lng[2] then pos := 1; else pos := 2; fi;
-      for i in [1..AbsInt(lng[1]-lng[2])] do
-        clsp := diff[pos][1];
-        sp := [ResidueClass(Residues(clsp)[1],
-                            2*Modulus(clsp)),
-               ResidueClass(Residues(clsp)[1]+Modulus(clsp),
-                            2*Modulus(clsp))];
-        diff[pos] := Union(Difference(diff[pos],[clsp]),sp);
-      od;
-    fi;
-    lng := Maximum(lng); m := 2*lng; c := [];
-    for r in [0..m-1] do
-      rti := Residues(diff[r mod 2 + 1][Int(r/2)+1])[1];
-      mti := Modulus (diff[r mod 2 + 1][Int(r/2)+1]);
-      c[r+1] := [mti,m*rti-mti*r,m];
-    od;
-    rest := RcwaMapping(c);
-    return Restriction(tau,rest);
-  end
-
-);
-
-#############################################################################
-##
-##  Examples of rcwa mappings of Z^2.
-##
-RCWAExamples.ZxZ := rec(
-
-  R := Integers^2,
-
-  twice        := RcwaMapping(~.R,[[1,0],[0,1]],[[[[2,0],[0,2]],[0,0],1]]),
-  twice1       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[2,0],[0,1]],[0,0],1]]),
-  twice2       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,0],[0,2]],[0,0],1]]),
-  switch       := RcwaMapping(~.R,[[1,0],[0,1]],[[[[0,1],[1,0]],[0,0],1]]),
-  reflection   := RcwaMapping(~.R,[[1,0],[0,1]],[[[[-1,0],[0,-1]],[0,0],1]]),
-  reflection1  := RcwaMapping(~.R,[[1,0],[0,1]],[[[[-1,0],[0,1]],[0,0],1]]),
-  reflection2  := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,0],[0,-1]],[0,0],1]]),
-  transvection := RcwaMapping(~.R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]),
-
-  hyperbolic := RcwaMapping(~.R,[[1,0],[0,2]],[[[[4,0],[0,1]],[0, 0],2],
-                                               [[[4,0],[0,1]],[2,-1],2]]),
-
-  Sigma_T := RcwaMapping( ~.R, [[1,0],[0,6]],
-                               [[[[2,0],[0,1]],[0,0],2],
-                                [[[4,0],[0,3]],[2,1],2],
-                                [[[2,0],[0,1]],[0,0],2],
-                                [[[4,0],[0,3]],[2,1],2],
-                                [[[4,0],[0,1]],[0,0],2],
-                                [[[4,0],[0,3]],[2,1],2]] ),
-
-  SigmaT := RcwaMapping( ~.R, [[1,0],[0,6]],
-                              [[[0,0],[[[2,0],[0,1]],[0,0],2]],
-                               [[0,1],[[[4,0],[0,3]],[0,1],2]],
-                               [[0,2],[[[2,0],[0,1]],[0,0],2]],
-                               [[0,3],[[[4,0],[0,3]],[0,1],2]],
-                               [[0,4],[[[4,0],[0,1]],[2,0],2]],
-                               [[0,5],[[[4,0],[0,3]],[0,1],2]]] ),
-
-  SigmaTm := RcwaMapping( ~.R, [[1,0],[0,6]],
-                               [[[0,0],[[[2,0],[0,1]],[0,0],2]],
-                                [[0,1],[[[4,0],[0,3]],[0,-1],2]],
-                                [[0,2],[[[4,0],[0,1]],[2,0],2]],
-                                [[0,3],[[[4,0],[0,3]],[0,-1],2]],
-                                [[0,4],[[[2,0],[0,1]],[0,0],2]],
-                                [[0,5],[[[4,0],[0,3]],[0,-1],2]]] ),
-
-  commT_Tm := RcwaMapping( ~.R, [[4,0],[0,9]],
-                                [[[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[3,0],[0,1]],[3,1],3],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,1]],[0,-1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[2,0],[0,1]],[2,-1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,3]],[-1,1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,3]],[-1,1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,3]],[-1,1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,2]],[-2,-2],2],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,1]],[0,-1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[2,0],[0,1]],[2,-1],1],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,4]],[-3,0],4],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,4]],[-3,0],4],
-                                 [[[1,0],[0,1]],[0,0],1],
-                                 [[[4,0],[0,1]],[3,0],1],
-                                 [[[1,0],[0,4]],[-3,0],4]] )
 
 );
 
