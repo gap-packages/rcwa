@@ -9,7 +9,6 @@
 ##
 gap> START_TEST("$Id$");
 gap> RCWADoThingsToBeDoneBeforeTest();
-gap> RCWAReadExamples();
 gap> IdentityRcwaMappingOfZ;
 IdentityMapping( Integers )
 gap> ZeroRcwaMappingOfZ;
@@ -199,6 +198,9 @@ false
 gap> if not IsBound(rc) then
 >      rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;
 >    fi;
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
+gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
+gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
 gap> a = RcwaMapping([rc(0,2),rc(1,4),rc(3,4)],[rc(0,3),rc(1,3),rc(2,3)]);
 true
 gap> MovedPoints(a);
@@ -719,6 +721,11 @@ gap> Display(TransitionMatrix(ab,20)*One(GF(7)));
  1 . . . . . 2 . . 4 4 . . . . . 2 2 . .
  2 1 . . . . . . . . 2 4 4 . . . . . 2 .
  . . 1 . . . . 2 . . . . . 4 4 . . 2 . 2
+gap> sigma1 := RcwaMapping([[1,0,1],[1,1,1],[1,1,1],[1,-2,1]]);;
+gap> sigma2 := RcwaMapping(
+>                [[1, 0,1],[3,3,2],[1,0,1],[2,0,1],[1,0,1],[1,0,1],
+>                 [1,-3,3],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1],
+>                 [2, 0,1],[3,3,2],[1,0,1],[1,0,1],[1,0,1],[1,0,1]]);;
 gap> sigma1 = StandardConjugate(sigma2);
 true
 gap> sigma := sigma1*sigma2;;
@@ -913,6 +920,12 @@ gap> RestrictedPerm(f,ResidueClass(Integers,2,1));
 <rcwa mapping of Z with modulus 12>
 gap> Order(last);
 12
+gap> kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
+>                          [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
+>                          [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);;
+gap> kappatilde := RcwaMapping([[2,-4,1],[3, 33,1],[3,2,2],[1,-1,1],
+>                               [2, 0,1],[3,-39,1],[3,2,2],[1,-1,1],
+>                               [1, 1,3],[3, 33,1],[3,2,2],[1, 4,3]]);;
 gap> kappa^2 in Group(a,b);
 false
 gap> List([-2..2],k->Determinant(a^k));
