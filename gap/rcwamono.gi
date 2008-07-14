@@ -392,22 +392,34 @@ InstallMethod( Support,
 ## 
 InstallMethod( ShortOrbits,
                "for rcwa monoids (RCWA)", ReturnTrue,
-               [ IsRcwaMonoid, IsList, IsPosInt ], 0,
+               [ IsRcwaMonoid, IsList, IsInt ], 0,
 
   function ( M, S, maxlng )
 
-    local  gens, f, orbs, orb, oldorb, remaining, n;
+    local  gens, finite, orbs, orb, oldlength, remaining, f;
+
+    # Option "finite": Assume finiteness of all orbits.
+    # If "finite" is set and <maxlng> is <= 0, a list of all orbits
+    # which have nontrivial intersection with <S> is returned.
+
+    finite := ValueOption("finite") = true;
+    if maxlng <= 0 and not finite then TryNextMethod(); fi;
 
     if IsRcwaGroup(M) then gens := GeneratorsOfGroup(M);
                       else gens := GeneratorsOfMonoid(M); fi;
+
     orbs := []; remaining := ShallowCopy(Set(S));
     while remaining <> [] do
-      orb := [remaining[1]];
-      repeat
-        oldorb := ShallowCopy(orb);
-        for f in gens do orb := Union(orb,orb^f); od;
-      until Length(orb) > maxlng or Length(orb) = Length(oldorb);
-      if Length(orb) <= maxlng then Add(orbs,Set(orb)); fi;
+      if finite then
+        orb := Orbit(M,remaining[1]);
+      else
+        orb := [remaining[1]];
+        repeat
+          oldlength := Length(orb);
+          for f in gens do orb := Union(orb,orb^f); od;
+        until Length(orb) > maxlng or Length(orb) = oldlength;
+      fi;
+      if maxlng <= 0 or Length(orb) <= maxlng then Add(orbs,Set(orb)); fi;
       remaining := Difference(remaining,orb);
     od;
     return orbs;

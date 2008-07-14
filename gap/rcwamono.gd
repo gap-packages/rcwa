@@ -78,8 +78,7 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 ##  In the second case, it returns a list of all finite forward orbits with
 ##  starting point within the set <S>.
 ##
-DeclareOperation( "ShortOrbits",
-                  [ IsMonoid, IsListOrCollection, IsPosInt ] );
+DeclareOperation( "ShortOrbits", [ IsMonoid, IsListOrCollection, IsInt ] );
 
 #############################################################################
 ##
