@@ -427,6 +427,8 @@ necessary for understanding this manual or for using this package.
         Label="by two partitions of a ring into residue classes"/>
   <Meth Name="RcwaMapping" Arg="cycles"
         Label="by residue class cycles"/>
+  <Meth Name="RcwaMapping" Arg="expression"
+        Label="by arithmetical expression"/>
   <Returns> An rcwa mapping. </Returns>
   <Description>
     In all cases the argument&nbsp;<A>R</A> is the underlying ring,
@@ -491,13 +493,22 @@ necessary for understanding this manual or for using this package.
       <Item>
         a bijective rcwa mapping which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of&nbsp;<A>R</A> into residue
-        classes and which is affine on the elements of <A>P1</A>, or
+        classes and which is affine on the elements of <A>P1</A>,
       </Item>
       <Mark>(i)</Mark>
       <Item>
         a bijective rcwa mapping with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes,
-        each of which it permutes cyclically,
+        each of which it permutes cyclically, or
+      </Item>
+      <Mark>(j)</Mark>
+      <Item>
+        the bijective rcwa mapping of&nbsp;&ZZ; given by the
+        arithmetical expression <A>expression</A> -- a string consisting of
+        class transpositions (e.g. <C>"(0(2),1(4))"</C>), class shifts
+        (e.g. <C>"(4(6))"</C>, class reflections (e.g. <C>"[3(4)]"</C>),
+        arithmetical operators (<C>"*"</C>, <C>"/"</C> and <C>"&circum;"</C>)
+        and brackets (<C>"("</C>, <C>")"</C>),
       </Item>
     </List>
     respectively.
@@ -528,6 +539,11 @@ gap> RcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)
 <bijective rcwa mapping of Z with modulus 16, of order 4>
 gap> Cycle(last,ResidueClass(0,2));
 [ 0(2), 1(4), 3(8), 7(16) ]
+gap> g := RcwaMapping("((0(4),1(6))*(0(6))^-4*[2(4)])^2/(2(8))");   # (j)
+<bijective rcwa mapping of Z with modulus 72>
+gap> g = (   ClassTransposition(0,4,1,6) * ClassShift(0,6)^-4
+>          * ClassReflection(2,4) )^2 / ClassShift(2,8);
+true
 ]]>
 </Example>
   </Description>
@@ -1776,8 +1792,6 @@ gap> GuessedDivergence(T);
 </ManSection>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
