@@ -19,16 +19,21 @@ gap> SizeScreen([75,24]);;
 This chapter discusses a number of <Q>nice</Q> examples of rcwa mappings
 and -groups in detail. All of them show different aspects of the package,
 and the order in which they appear is entirely arbitrary. In particular
-they are not ordered by degree of interestingness or difficulty. <P/>
+they are not ordered by degree of difficulty or interest. <P/>
 
-Please note that now since quite a while no further examples have been
-added to this chapter, and that the capabilities of this package have been
-extended considerably in the meantime. <P/>
+<Index Key="RCWAReadExamples"><C>RCWAReadExamples</C></Index>
+<Index Key="RCWAExamples"><C>RCWAExamples</C></Index>
+<Index Key="UnwrapExample"><C>UnwrapExample</C></Index>
 
-The rcwa mappings defined in this chapter (and in fact many more) can be
-found in the file <F>pkg/rcwa/examples/examples.g</F>, so there is no need
-to extract them from the manual files. This file can be read into the current
-&GAP; session by issueing <C>RCWAReadExamples( );</C>. <P/>
+The rcwa mappings, rcwa groups and other objects defined in this chapter can
+be found in the file <F>pkg/rcwa/examples/examples.g</F>. This file can be
+read into the current &GAP; session by issueing <C>RCWAReadExamples( );</C>.
+Afterwards, the examples are stored in a record <C>RCWAExamples</C> of
+records. The global variable assignments made in a section of this chapter
+can be performed by issueing <C>UnwrapExample(<A>name</A>)</C>, where
+<A>name</A> is given in the corresponding section. Note that if the
+respective global variables are already bound, then they are overwritten.
+If that happens, a warning is given. <P/>
 
 The examples are typically far from discussing the respective aspects
 exhaustively. It is quite likely that in many instances by just a few
@@ -192,8 +197,6 @@ gap> Maximum(List([1..1000],n->Maximum(Trajectory(T,n,S0))));
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 The following mapping seems to be contracting as well, but its trajectories
 are much longer:
 
@@ -255,8 +258,6 @@ decreases its absolute value.
 
 </Section>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <!-- #################################################################### -->
 
 <Section Label="sec:AndaloroResult">
@@ -304,8 +305,6 @@ Further similar computations are shown in
 Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>.
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -363,8 +362,6 @@ gap> traj2 := Trajectory(ML2,(x^3+x+1)*One(R),16);
   x^12+x^10+x^9+x^7+x^6+x^4+x^3+x+Z(2)^0 ]
 ]]>
 </Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 The pattern which Matthews and Leigh used to show the divergence of the
 above trajectories can be recognized easily by looking at the corresponding
@@ -429,20 +426,18 @@ sheds a light on the idea behind it.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:StructureOfWildGroup">
-<Heading>Exploring the structure of a wild rcwa group</Heading>
+<Section Label="sec:OrdersOfCommutators">
+<Heading>Orders of commutators</Heading>
 
-In this example, a simple attempt to should be made to investigate the
-structure of a given wild group by finding orders of torsion elements.
-In general, determining the structure of a given wild group seems to be
-a very hard task.
+We enter some wild rcwa permutation:
 
 <Example>
 <![CDATA[
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
+gap> IsTame(u);;
 gap> Display(u);
 
-Rcwa mapping of Z with modulus 5
+Wild bijective rcwa mapping of Z with modulus 5
 
               n mod 5               |            Image of n
 ------------------------------------+------------------------------------
@@ -452,20 +447,15 @@ Rcwa mapping of Z with modulus 5
   3                                 | (9n - 2)/5
   4                                 | (9n + 4)/5
 
-gap> nu := ClassShift(0,1);;
-gap> G := Group(u,nu);
-<rcwa group over Z with 2 generators>
-gap> IsTame(G);
-false
 ]]>
 </Example>
 
-We would like to know which orders torsion elements of&nbsp;<C>G</C>
-can have -- taking a look at the above generators it seems to make sense
-to try commutators:
+We would like to compute the order of <M>[u,n \mapsto n + k]</M>
+and <M>[u^2,n \mapsto n + k]</M> for different values of&nbsp;<M>k</M>:
 
 <Example>
 <![CDATA[
+gap> nu := ClassShift(0,1);; # n -> n + 1
 gap> l := Filtered([0..100],k->IsTame(Comm(u,nu^k)));
 [ 0, 2, 3, 5, 6, 9, 10, 12, 13, 15, 17, 18, 20, 21, 24, 25, 27, 28, 30, 
   32, 33, 35, 36, 39, 40, 42, 43, 45, 47, 48, 50, 51, 54, 55, 57, 58, 
@@ -477,26 +467,6 @@ gap> List(l,k->Order(Comm(u,nu^k)));
   infinity, infinity, 5, 3, 5, 5, 3, infinity, 7, infinity, 7, 5, 3, 
   infinity, infinity, 3, 5, 7, infinity, 7, infinity, 3, 5, 5, 3, 5, 
   infinity, infinity, infinity, 5, 3, 5, 5, 3 ]
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
-gap> Display(Comm(u,nu^13));
-
-Bijective rcwa mapping of Z with modulus 9
-
-              n mod 9               |            Image of n
-------------------------------------+------------------------------------
-  0 3 6                             | n + 5
-  1 4 7                             | 3n - 9
-  2 8                               | n - 11
-  5                                 | (n + 16)/3
-
-gap> Order(Comm(u,nu^13));
-7
 gap> u2 := u^2;
 <wild bijective rcwa mapping of Z with modulus 25>
 gap> Filtered([1..16],k->IsTame(Comm(u2,nu^k))); # k < 15 -> commutator wild!
@@ -523,18 +493,13 @@ gap> Lcm(last);
 462
 gap> u2nu18^462; # This is an element of order 2*3*7*11 = 462.
 IdentityMapping( Integers )
-gap> Order(Comm(u2,nu^20));
-29
-gap> Order(Comm(u2,nu^25));
-9
-gap> Order(Comm(u2,nu^30));
-15
+gap> List([Comm(u2,nu^20),Comm(u2,nu^25),Comm(u2,nu^30)],Order);
+[ 29, 9, 15 ]
 ]]>
 </Example>
 
-Thus even this rather simple-minded approach reveals various different
-orders of torsion elements, and the involved primes are also not all
-very <Q>small</Q>.
+We observe that our commutators have various different orders, and
+that the prime factors of these orders are not all <Q>very small</Q>.
 
 </Section>
 
@@ -596,8 +561,6 @@ gap> lengthstats := Collected(List(ShortCycles(kappa,[1..12^4],100),
   [ 34, 2 ], [ 37, 1 ], [ 40, 1 ] ]
 ]]>
 </Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 We would like to determine a partition of&nbsp;<M>&ZZ;</M> into unions
 of cycles of equal length:
@@ -702,8 +665,6 @@ gap> fact1 := ClassTransposition(4,6,8,12);;
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <Example>
 <![CDATA[
 gap> elm2 := elm1/fact1;
@@ -749,17 +710,12 @@ true
 
 </Section>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <!-- #################################################################### -->
 
-<Section Label="sec:AbelianModularGroup">
+<Section Label="sec:AbelianGroupOverPolynomialRing">
 <Heading>An abelian rcwa group over a polynomial ring</Heading>
 
-In this section, a wild rcwa group over GF(4)[<M>x</M>] should be
-invstigated, which happens to be abelian. Of course in general, rcwa groups
-also over this ring are usually far from being abelian (see below).
-We start by defining this group:
+We give a 2-generated abelian wild rcwa group over GF(4)[<M>x</M>]:
 
 <Example>
 <![CDATA[
@@ -810,8 +766,6 @@ gap> Collected(List(ShortOrbits(G,AllResidues(R,x^4),100),Length));
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 Changing the generators a little causes the group structure to change a lot:
 
 <Example>
@@ -853,154 +807,15 @@ subgroup thereof acting transitively, but not primitively on 512 points.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:TameByCommsOfWildPerms">
-<Heading>
-  A tame group generated by commutators of wild permutations
-</Heading>
-
-In this section, we have a look at 3 wild rcwa mappings whose commutators
-generate tame groups:
-
-<Example>
-<![CDATA[
-gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
-gap> b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]);;
-gap> c := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,11,4]]);;
-gap> List([a,b,c],IsTame);
-[ false, false, false ]
-gap> ab := Comm(a,b);; ac := Comm(a,c);; bc := Comm(b,c);;
-gap> List([ab,ac,bc],Order);
-[ 6, 6, 12 ]
-]]>
-</Example>
-
-Now we would like to have a look at [<A>a</A>,<A>b</A>] ...
-
-<Example>
-<![CDATA[
-gap> Display(ab);
-
-Bijective rcwa mapping of Z with modulus 18, of order 6
-
-              n mod 18              |            Image of n
-------------------------------------+------------------------------------
-   0  2  3  8  9 11 12 17           | n
-   1 10                             | 2n - 5
-   4  7 13 16                       | n + 3
-   5 14                             | 2n - 4
-   6                                | (n + 2)/2
-  15                                | (n - 5)/2
-
-]]>
-</Example>
-
-... form the group generated by [<A>a</A>,<A>b</A>]
-and [<A>a</A>,<A>c</A>] and compute its action on one of its orbits:
-
-<Example>
-<![CDATA[
-gap> G := Group(ab,ac);
-<rcwa group over Z with 2 generators>
-gap> orb := Orbit(G,1);
-[ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
-gap> H := Action(G,orb);
-Group([ (2,5,8,10,7,6), (1,3,6,9,4,5) ])
-gap> Size(H);
-3628800
-gap> Size(G); # G acts faithfully on orb.
-3628800
-]]>
-</Example>
-
-Hence the group <A>G</A> is isomorphic to the symmetric group on
-10&nbsp;points and acts faithfully on the orbit containing&nbsp;1.
-
-Another question is which groups arise if we take as generators
-either <A>ab</A>, <A>ac</A> or <A>bc</A> and the involution
-which maps any integer to its additive inverse:
-
-<Example>
-<![CDATA[
-gap> t := ClassReflection(0,1);;
-gap> Display(t);
-Bijective rcwa mapping of Z: n -> -n
-gap> SetName(ab,"[a,b]");
-gap> G := Group(ab,t);
-<rcwa group over Z with 2 generators>
-gap> Size(G);
-7257600
-gap> phi := IsomorphismPermGroup(G);
-[ [a,b], ClassReflection(0,1) ] ->
-[ (1,36,12,27,9,15)(2,34,10,25,7,13)(3,35,11,26,8,14), 
-  (1,18)(2,17)(3,16)(4,15)(5,14)(6,13)(7,12)(8,11)(9,10)(20,21)(22,
-    36)(23,35)(24,34)(25,33)(26,32)(27,31)(28,30) ]
-gap> StructureDescription(Image(phi));
-"C2 x S10"
-]]>
-</Example>
-
-Thus the group generated by <A>ab</A> and <A>t</A> is isomorphic to 
-<Alt Only="LaTeX"><M>{\rm C}_2 \times {\rm S}_{10}</M></Alt>
-<Alt Not="LaTeX"><M>C_2 x S_10</M></Alt>.
-The next group is an extension of a perfect group of order&nbsp;960:
-
-<Example>
-<![CDATA[
-gap> G := Group(ac,t);;
-gap> Size(G);
-3840
-gap> H := Image(IsomorphismPermGroup(G));;
-gap> P := DerivedSubgroup(H);;
-gap> Size(P);
-960
-gap> IsPerfect(P);
-true
-gap> PerfectGroup(PerfectIdentification(P));
-A5 2^4'
-]]>
-</Example>
-
-The last group is infinite:
-
-<Example>
-<![CDATA[
-gap> G := Group(bc,t);;
-gap> Size(G);
-infinity
-gap> Order(bc*t);
-infinity
-gap> Modulus(G);
-18
-gap> RespectedPartition(G);
-[ 1(9), 2(9), 4(9), 5(9), 7(9), 8(9), 0(18), 3(18), 6(18), 9(18), 
-  12(18), 15(18) ]
-gap> ActionOnRespectedPartition(G);
-Group([ (1,5,8,2,4,12)(3,9,6,11), (1,6)(2,5)(3,4)(8,12)(9,11) ])
-gap> StructureDescription(last);
-"S10"
-gap> RankOfKernelOfActionOnRespectedPartition(G);
-9
-]]>
-</Example>
-
-</Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<!-- #################################################################### -->
-
 <Section Label="sec:CheckingForSolvability">
 <Heading>Checking for solvability</Heading>
 
-Is the group generated by the permutations <A>a</A> and <A>b</A> from the
-last paragraph solvable? <P/>
-
-This group is wild. Presently there is no general method available for
-testing wild rcwa groups for solvability. But nevertheless, for the given
-group we can obtain a negative answer to this question. The idea is to
-find a subgroup&nbsp;<A>U</A> which acts on a finite set&nbsp;<A>S</A> of
-integers, and which induces on&nbsp;<A>S</A> a non-solvable finite
-permutation group:
+Presently there is no general method available for testing wild rcwa groups
+for solvability. However, sometimes the question for solvability can be
+answered anyway.
+In the example below, the idea is to find a subgroup&nbsp;<A>U</A> which acts
+on a finite set&nbsp;<A>S</A> of integers, and which induces on&nbsp;<A>S</A>
+a non-solvable finite permutation group:
 
 <Example>
 <![CDATA[
@@ -1028,7 +843,7 @@ true
 </Example>
 
 Thus the subgroup <A>U</A> induces on <A>S</A> a natural symmetric group of
-degree&nbsp;6. Therefore the group&nbsp;<A>G</A> is not solvable, as claimed.
+degree&nbsp;6. Therefore the group&nbsp;<A>G</A> is not solvable.
 We conclude this example by factoring the group element <A>elm</A> into
 generators:
 
@@ -1044,8 +859,6 @@ true
 </Example>
 
 </Section>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <!-- #################################################################### -->
 
@@ -1106,8 +919,6 @@ gap> List(last,Length);
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 But the group structure remains invariant under the <Q>transfer</Q> of
 a group with prime set <M>\{2,3\}</M> from &ZZ; to&nbsp;<M>&ZZ;_{(2,3)}</M>:
 
@@ -1153,13 +964,6 @@ Rcwa mapping of Z with modulus 8
   3 7                               | n - 1
   5                                 | (n + 1)/2
 
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> IsInjective(v);
 true
 gap> IsSurjective(v);
@@ -1209,8 +1013,6 @@ the end of the example would not be surjective.
 
 </Section>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <!-- #################################################################### -->
 
 <Section Label="sec:Twisting257CyclesToModulus32">
@@ -1224,16 +1026,16 @@ graph and then to assign suitable affine mappings to its vertices.
 
 <Example>
 <![CDATA[
-gap> x := RcwaMapping(
->           [[ 16,  2,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
->            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
->            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
->            [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
->            [  1,  0, 16], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
->            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
->            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
->            [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [  1,-31,  1]]);;
-gap> Order(x);; Display(x);
+gap> x_257 := RcwaMapping(
+>      [[ 16,  2,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>       [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>       [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>       [  1, 16,  1], [ 16, 18,  1], [  1, 16,  1], [ 16, 18,  1],
+>       [  1,  0, 16], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>       [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>       [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [ 16, 18,  1],
+>       [  1,-14,  1], [ 16, 18,  1], [  1,-14,  1], [  1,-31,  1]]);;
+gap> Order(x_257);; Display(x_257);
 
 Bijective rcwa mapping of Z with modulus 32, of order 257
 
@@ -1247,49 +1049,48 @@ Bijective rcwa mapping of Z with modulus 32, of order 257
   18 20 22 24 26 28 30              | n - 14
   31                                | n - 31
 
-gap> Cycle(x,[1],0);
-[ 0, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30, 16, 1, 34, 50, 
-  36, 52, 38, 54, 40, 56, 42, 58, 44, 60, 46, 62, 48, 3, 66, 82, 68, 84, 
-  70, 86, 72, 88, 74, 90, 76, 92, 78, 94, 80, 5, 98, 114, 100, 116, 102, 
-  118, 104, 120, 106, 122, 108, 124, 110, 126, 112, 7, 130, 146, 132, 
-  148, 134, 150, 136, 152, 138, 154, 140, 156, 142, 158, 144, 9, 162, 
-  178, 164, 180, 166, 182, 168, 184, 170, 186, 172, 188, 174, 190, 176, 
-  11, 194, 210, 196, 212, 198, 214, 200, 216, 202, 218, 204, 220, 206, 
-  222, 208, 13, 226, 242, 228, 244, 230, 246, 232, 248, 234, 250, 236, 
-  252, 238, 254, 240, 15, 258, 274, 260, 276, 262, 278, 264, 280, 266, 
-  282, 268, 284, 270, 286, 272, 17, 290, 306, 292, 308, 294, 310, 296, 
-  312, 298, 314, 300, 316, 302, 318, 304, 19, 322, 338, 324, 340, 326, 
-  342, 328, 344, 330, 346, 332, 348, 334, 350, 336, 21, 354, 370, 356, 
-  372, 358, 374, 360, 376, 362, 378, 364, 380, 366, 382, 368, 23, 386, 
-  402, 388, 404, 390, 406, 392, 408, 394, 410, 396, 412, 398, 414, 400, 
-  25, 418, 434, 420, 436, 422, 438, 424, 440, 426, 442, 428, 444, 430, 
-  446, 432, 27, 450, 466, 452, 468, 454, 470, 456, 472, 458, 474, 460, 
-  476, 462, 478, 464, 29, 482, 498, 484, 500, 486, 502, 488, 504, 490, 
-  506, 492, 508, 494, 510, 496, 31 ]
-gap> Length(last);
+gap> Length(Cycle(x_257,0));
 257
 ]]>
 </Example>
 
 </Section>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <!-- #################################################################### -->
 
 <Section Label="sec:ModuliOfPowers">
 <Heading> The behaviour of the moduli of powers </Heading>
 
-In this section some examples are given, which illustrate how different the
-series of the moduli of powers of a given rcwa mapping of the integers
-can look like.
+We give some examples of how the series of the moduli of powers of a given
+rcwa mapping of the integers can look like.
 
 <Example>
 <![CDATA[
+gap> a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]);;
 gap> List([0..4],i->Modulus(a^i));
 [ 1, 4, 16, 64, 256 ]
-gap> List([0..6],i->Modulus(ab^i));
-[ 1, 18, 18, 18, 18, 18, 1 ]
+gap> e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]);;
+gap> e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
+>                       [1,4,1],[2,0,1],[1,0,1],[1,0,1]]);;
+gap> List([e1,e2],Order);
+[ infinity, infinity ]
+gap> List([1..20],i->Modulus(e1^i));
+[ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
+gap> List([1..20],i->Modulus(e2^i));
+[ 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4 ]
+gap> Display(e2);
+
+Bijective rcwa mapping of Z with modulus 8, of order infinity
+
+              n mod 8               |            Image of n
+------------------------------------+------------------------------------
+  0 4                               | n + 4
+  1 5                               | 2n
+  2                                 | n/2
+  3 6 7                             | n
+
+gap> e2^2 = Restriction(RcwaMapping([[1,2,1]]),RcwaMapping([[4,0,1]]));
+true
 gap> g:=RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h:=RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> List([0..7],i->Modulus(g^i));
@@ -1305,10 +1106,10 @@ gap> List([0..6],i->Modulus(v6^i));
 gap> w8 := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]);;
 gap> List([0..8],i->Modulus(w8^i));
 [ 1, 4, 4, 4, 4, 4, 4, 4, 1 ]
-gap> z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
->                      [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
->                      [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
->                      [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]);;
+gap> z := RcwaMapping([[2,1,1],[1, 1,1],[2,-1,1],[2, -2,1],
+>                      [1,6,2],[1, 1,1],[1,-6,2],[2,  5,1],
+>                      [1,6,2],[1, 1,1],[1, 1,1],[2, -5,1],
+>                      [1,0,1],[1,-4,1],[1, 0,1],[2,-10,1]]);;
 gap> IsBijective(z);
 true
 gap> Display(z);
@@ -1337,28 +1138,6 @@ Bijective rcwa mapping of Z with modulus 16
 gap> List([0..25],i->Modulus(z^i));
 [ 1, 16, 32, 64, 64, 128, 128, 128, 128, 128, 128, 256, 256, 256, 256, 
   256, 256, 512, 512, 512, 512, 512, 512, 1024, 1024, 1024 ]
-gap> e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]);;
-gap> e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
->                       [1,4,1],[2,0,1],[1,0,1],[1,0,1]]);;
-gap> List([e1,e2],Order);
-[ infinity, infinity ]
-gap> List([1..20],i->Modulus(e1^i));
-[ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
-gap> List([1..20],i->Modulus(e2^i));
-[ 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4 ]
-gap> Display(e2);
-
-Bijective rcwa mapping of Z with modulus 8, of order infinity
-
-              n mod 8               |            Image of n
-------------------------------------+------------------------------------
-  0 4                               | n + 4
-  1 5                               | 2n
-  2                                 | n/2
-  3 6 7                             | n
-
-gap> e2^2 = Restriction(RcwaMapping([[1,2,1]]),RcwaMapping([[4,0,1]]));
-true
 ]]>
 </Example>
 
@@ -1452,13 +1231,6 @@ We can obtain the corresponding result for multiples of&nbsp;5 as follows:
 gap> S := [ResidueClass(Integers,5,0)];
 [ 0(5) ]
 gap> for i in [1..12] do Add(S,S[i]^T); od;
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> for s in S do View(s); Print("\n"); od;
 0(5)
 0(5) U 8(15)
@@ -1522,8 +1294,6 @@ Z \ 4(30) U 16(30) U 28(30)
 We see that we cannot always choose such a group element from the set of
 generators and their inverses -- otherwise the union would be
 <C>Integers</C>.
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -1590,8 +1360,6 @@ We start by determining all products of at most 5 generators and their
 inverses, which stabilize&nbsp;1 (taking at most 4-generator products would
 not suffice!):
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <Example>
 <![CDATA[
 gap> gens := [a,u,a^-1,u^-1];;
@@ -1640,8 +1408,6 @@ gap> Collected(Factors(last));
 Similar as before, we determine for any of the above mappings the
 residue classes whose elements larger than the largest <M>b_{r(m)}</M>
 - coefficient of the respective mapping are mapped to smaller integers:
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <Example>
 <![CDATA[
@@ -1758,13 +1524,6 @@ gap> for tup in tups do
 >    od;
 gap> Length(stab);
 212
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> stabelm := List(stab,tup->Product(List(tup,i->gens[i])));;
 gap> decs := List(stabelm,DecreasingOn);;
 gap> SortParallel(decs,stabelm,function(S1,S2)
@@ -1813,13 +1572,6 @@ Z \ 1(8) U 7(8)
 13414(129600) U 2164(259200) U 66964(259200) U 228964(259200)
 2164(259200) U 66964(259200) U 228964(259200)
 [  ]
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> Maximum(List(stabelm,f->Maximum(List(Coefficients(f),c->c[2]))));
 515816
 gap> smallnum := [4..515816];;
@@ -1863,13 +1615,6 @@ gap> SortParallel(decs,stabelm,
 >        return First([1..100],k->Factorial(k) mod Modulus(S1) = 0)
 >             < First([1..100],k->Factorial(k) mod Modulus(S2) = 0);
 >      end);
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> S := Integers;;
 gap> for i in [1..Length(decs)] do
 >      S_old := S; S := Difference(S,decs[i]);
@@ -1970,8 +1715,6 @@ gap> List([5..20],
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 </Section>
 
 <!-- #################################################################### -->
@@ -2036,13 +1779,6 @@ gap> for tup in tups do
 gap> stabelm := List(stab,tup->Product(List(tup,i->gens[i+2])));;
 gap> Collected(List(stabelm,Modulus));
 [ [ 4, 6 ], [ 8, 4 ], [ 16, 3 ] ]
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> decs := List(stabelm,DecreasingOn);
 [ 0(4), 3(4), 0(4), 3(4), 2(4), 0(4), 4(8), 2(4), 2(4), 0(4), 1(4), 
   0(8), 3(8) ]
@@ -2096,13 +1832,6 @@ gap> Maximum(List(stabelm,Modulus));
 gap> Maximum(List(stabelm,
 >                 f->Maximum(List(Coefficients(f),c->AbsInt(c[2])))));
 8
-]]>
-</Example>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-<Example>
-<![CDATA[
 gap> decsp := List(stabelm,elm->Filtered([9..16],n->n^elm<n));
 [ [ 9, 13 ], [ 10, 12, 14, 16 ], [ 12, 16 ], [ 9, 13 ], [ 12, 16 ], 
   [ 9, 11, 13, 15 ], [ 9, 11, 13, 15 ], [ 12, 16 ], [ 12, 16 ], 
@@ -2194,7 +1923,7 @@ for proving, but only for disproving <M>k</M>-transitivity.
 
 <Section Label="sec:GrigorchukGroups">
 <Heading>
-  Grigorchuk groups
+  Finite quotients of Grigorchuk groups
 </Heading>
 
 In this section, we show how to construct finite quotients of the two
@@ -2221,8 +1950,6 @@ SequenceElement := function ( r, level )
 end;
 ]]>
 </Listing>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 The actual constructors for the generators are modified as follows:
 
