@@ -37,12 +37,22 @@ if not IsBound( AssignGlobals ) then
       names := RecNames(record);
       for name in names do
         if IsBoundGlobal(name) then
-          if IsReadOnlyGlobal(name) then MakeReadWriteGlobal(name); fi;
+          if IsReadOnlyGlobal(name)
+          then
+            MakeReadWriteGlobal(name);
+            Info(InfoWarning,1,"The read-only global variable ",name,
+                               " has been overwritten.");
+          else
+            Info(InfoWarning,1,"The global variable ",name,
+                               " has been overwritten.");
+          fi;
           UnbindGlobal(name);
         fi;
         BindGlobal(name,record.(name));
         MakeReadWriteGlobal(name);
       od;
+      Print("The following global variables have been assigned:\n",
+            names,"\n");
     end );
 fi;
 
