@@ -31,14 +31,91 @@ read into the current &GAP; session by issueing <C>RCWAReadExamples( );</C>.
 Afterwards, the examples are stored in a record <C>RCWAExamples</C> of
 records. The global variable assignments made in a section of this chapter
 can be performed by issueing <C>UnwrapExample(<A>name</A>)</C>, where
-<A>name</A> is given at the end of the corresponding section. Note that if
-the respective global variables are already bound, then they are overwritten.
-If that happens, a warning is given. <P/>
+<A>name</A> is given at the end of the corresponding section. Assignments
+which do not need much typing are omitted. The names of the variables which
+are actually assigned are listed by the function <C>UnwrapExample</C>. <P/>
 
 The examples are typically far from discussing the respective aspects
 exhaustively. It is quite likely that in many instances by just a few
 little modifications or additional easy commands you can find out
 interesting things yourself -- have fun!
+
+<!-- #################################################################### -->
+
+<Section Label="sec:HigmanThompsonGroup">
+<Heading>
+  The Higman-Thompson group
+</Heading>
+
+The Higman-Thompson group is a finitely presented infinite simple group,
+cf.&nbsp;<Cite Key="Higman74"/>. <P/>
+
+We show that the group
+
+<Example>
+<![CDATA[
+gap> G := Group(List([[0,2,1,4],[0,4,1,4],[1,4,2,4],[2,4,3,4]],
+>                    ClassTransposition));
+<rcwa group over Z with 4 generators>
+]]>
+</Example>
+
+is isomorphic to the Higman-Thompson group. 
+This isomorphy has been pointed out by John P. McDermott.
+We take a slightly different set of generators
+
+<Example>
+<![CDATA[
+gap> k := ClassTransposition(0,2,1,2);;
+gap> l := ClassTransposition(1,2,2,4);;
+gap> m := ClassTransposition(0,2,1,4);;
+gap> n := ClassTransposition(1,4,2,4);;
+gap> H := Group(k,l,m,n);
+<rcwa group over Z with 4 generators>
+gap> G = H; # k, l, m and n generate G as well
+true
+]]>
+</Example>
+
+Now we verify that our four generators satisfy the relations given on
+page&nbsp;50 in&nbsp;<Cite Key="Higman74"/>, when we read <C>k</C>
+as&nbsp;<M>\kappa</M>, <C>l</C> as&nbsp;<M>\lambda</M>, <C>m</C>
+as&nbsp;<M>\mu</M> and <C>n</C> as&nbsp;<M>\nu</M>:
+
+<Example>
+<![CDATA[
+gap> HigmanThompsonRels :=
+> [ k^2, l^2, m^2, n^2,                           # (1) in Higman's book
+>   l*k*m*k*l*n*k*n*m*k*l*k*m,                    # (2)        "
+>   k*n*l*k*m*n*k*l*n*m*n*l*n*m,                  # (3)        "
+>   (l*k*m*k*l*n)^3, (m*k*l*k*m*n)^3,             # (4)        "
+>   (l*n*m)^2*k*(m*n*l)^2*k,                      # (5)        "
+>   (l*n*m*n)^5,                                  # (6)        "
+>   (l*k*n*k*l*n)^3*k*n*k*(m*k*n*k*m*n)^3*k*n*k*n,# (7)        "
+>   ((l*k*m*n)^2*(m*k*l*n)^2)^3,                  # (8)        "
+>   (l*n*l*k*m*k*m*n*l*n*m*k*m*k)^4,              # (9)        "
+>   (m*n*m*k*l*k*l*n*m*n*l*k*l*k)^4,              #(10)        "
+>   (l*m*k*l*k*m*l*k*n*k)^2,                      #(11)        "
+>   (m*l*k*m*k*l*m*k*n*k)^2 ];                    #(12)        "
+[ IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ), 
+  IdentityMapping( Integers ), IdentityMapping( Integers ) ]
+]]>
+</Example>
+
+We conclude that our group is an homomorphic image of the Higman-Thompson
+group. But since the Higman-Thompson group is simple and our group is not
+trivial, this means indeed that the two groups are isomorphic. <P/>
+
+Issue <C>UnwrapExample("HigmanThompson");</C>
+in order to assign the global variables defined in this example.
+
+</Section>
 
 <!-- #################################################################### -->
 
@@ -969,6 +1046,9 @@ gap> List([0..25],i->Modulus(z^i));
 ]]>
 </Example>
 
+Issue <C>UnwrapExample("ModuliOfPowers");</C>
+to assign the global variables defined in this example.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -1080,6 +1160,9 @@ gap>  List(S,Si->Float(Density(Si)));
   0.678189, 0.711385, 0.7262, 0.731139, 0.732785, 0.733333 ]
 ]]>
 </Example>
+
+Issue <C>UnwrapExample("CollatzMapping");</C>
+to assign the global variable&nbsp;<C>T</C> defined in this example.
 
 </Section>
 
@@ -1543,6 +1626,9 @@ gap> List([5..20],
 ]]>
 </Example>
 
+Issue <C>UnwrapExample("CollatzlikePerms");</C> to assign the
+global variables&nbsp;<C>a</C> and&nbsp;<C>u</C> defined in this example.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -1837,6 +1923,9 @@ gap> List(H,NilpotencyClassOfGroup);
 ]]>
 </Example>
 
+Issue <C>UnwrapExample("GrigorchukQuotients");</C>
+to assign the global variables defined in this example.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -1944,6 +2033,9 @@ gap> k;
 ]]>
 </Example>
 
+Issue <C>UnwrapExample("CollatzMapping");</C>
+to assign the global variables defined in this example.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -2045,6 +2137,9 @@ gap> Order(r1/r2);
 ]]>
 </Example>
 
+Issue <C>UnwrapExample("F2_PSL2Z");</C>
+to assign the global variables defined in this example.
+
 </Section>
 
 <!-- #################################################################### -->
@@ -2114,6 +2209,9 @@ Bijective rcwa mapping of Z with modulus 2
 
 ]]>
 </Example>
+
+Issue <C>UnwrapExample("F2_PSL2Z");</C>
+to assign the global variable <C>PSL2Z</C> defined in this example.
 
 <Alt Only="HTML">&nbsp;</Alt>
 
