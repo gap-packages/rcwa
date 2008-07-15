@@ -116,7 +116,7 @@ m := ClassTransposition(0,2,1,4); n := ClassTransposition(1,4,2,4);
 
 RCWAExamples.HigmanThompson := rec(
 
-  CT_emptyset := Group(List([[0,2,1,4],[0,4,1,4],[1,4,2,4],[2,4,3,4]],
+  G := Group(List([[0,2,1,4],[0,4,1,4],[1,4,2,4],[2,4,3,4]],
                             ClassTransposition)),
 
   k := ClassTransposition(0,2,1,2), # kappa in Higman's book.
@@ -124,7 +124,7 @@ RCWAExamples.HigmanThompson := rec(
   m := ClassTransposition(0,2,1,4), # mu        "
   n := ClassTransposition(1,4,2,4), # nu        "
 
-  HigmanThompsonGroup := Group(k,l,m,n), # HigmanThompsonGroup = CT_emptyset
+  H := Group(k,l,m,n), # G = H
 
   HigmanThompsonRels := # List of identity mappings, for checking purposes.
   [ k^2, l^2, m^2, n^2,                             # (1) in [1], p.50.
@@ -138,7 +138,65 @@ RCWAExamples.HigmanThompson := rec(
     (l*n*l*k*m*k*m*n*l*n*m*k*m*k)^4,                # (9)           "
     (m*n*m*k*l*k*l*n*m*n*l*k*l*k)^4,                #(10)           "
     (l*m*k*l*k*m*l*k*n*k)^2,                        #(11)           "
-    (m*l*k*m*k*l*m*k*n*k)^2 ]                       #(12)           "
+    (m*l*k*m*k*l*m*k*n*k)^2 ],                      #(12)           "
+
+  g1 := ClassTransposition(0,2,1,4),
+  g2 := ClassTransposition(0,2,3,4),
+  g3 := ClassTransposition(1,2,0,4),
+  g4 := ClassTransposition(1,2,2,4),
+
+  h1 := ClassTransposition(0,4,1,4),
+  h2 := ClassTransposition(1,4,2,4),
+
+  S := Filtered(List(ClassPairs(4),ClassTransposition),
+                     ct->Mod(ct) in [2,4]),
+
+  ReducingConjugator := function ( tau )
+
+    local  w, F, g1, g2, g3, g4, h1, h2, h, cls, cl, r;
+
+    g1 := ClassTransposition(0,2,1,4);
+    g2 := ClassTransposition(0,2,3,4);
+    g3 := ClassTransposition(1,2,0,4);
+    g4 := ClassTransposition(1,2,2,4);
+
+    h1 := ClassTransposition(0,4,1,4);
+    h2 := ClassTransposition(1,4,2,4);
+
+    F := FreeGroup("g1","g2","g3","g4","h1","h2");
+    w := One(F); if Mod(tau) <= 4 then return w; fi;
+
+    cls := TransposedClasses(tau);
+    if Mod(cls[1]) = 2 then
+      if Residue(cls[1]) = 0 then
+        if Residue(cls[2]) mod 4 = 1 then tau := tau^g2; w := w * F.2;
+                                     else tau := tau^g1; w := w * F.1; fi;
+      else
+        if Residue(cls[2]) mod 4 = 0 then tau := tau^g4; w := w * F.4;
+                                     else tau := tau^g3; w := w * F.3; fi;
+      fi;
+    fi;
+
+    while Mod(tau) > 4 do
+      if not ForAny(AllResidueClassesModulo(2),
+                    cl -> IsEmpty(Intersection(cl,Support(tau))))
+      then
+        cls := TransposedClasses(tau);
+        h := Filtered([h1,h2],
+               hi->Length(Filtered(cls,cl->IsSubset(Support(hi),cl)))=1);
+        h := h[1]; tau := tau^h;
+        if h = h1 then w := w * F.5; else w := w * F.6; fi;
+      fi;
+      cl := TransposedClasses(tau)[2]; # class with larger modulus
+      r  := Residue(cl);
+      if   r mod 4 = 1 then tau := tau^g1; w := w * F.1;
+      elif r mod 4 = 3 then tau := tau^g2; w := w * F.2;
+      elif r mod 4 = 0 then tau := tau^g3; w := w * F.3;
+      elif r mod 4 = 2 then tau := tau^g4; w := w * F.4; fi;
+    od;
+
+    return w;
+  end
 
 );
 
