@@ -1317,25 +1317,36 @@ SetName(RCWAExamples.LongCyclesOfPrimeLength.x_257,"x_257");
 ##
 RCWAExamples.ModuliOfPowers := rec(
 
+  a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
+
+  e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]),
+  e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
+                     [1,4,1],[2,0,1],[1,0,1],[1,0,1]]),
+
+  g  := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]),
+  h  := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]),
+
+  u  := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]),
+
   v6 := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]),
   w8 := RcwaMapping([[-1,3,1],[1,-1,1],[1,-1,1],[1,-1,1]]),
 
   z := RcwaMapping([[2,  1, 1],[1,  1,1],[2, -1,1],[2, -2,1],
                     [1,  6, 2],[1,  1,1],[1, -6,2],[2,  5,1],
                     [1,  6, 2],[1,  1,1],[1,  1,1],[2, -5,1],
-                    [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]]),
-
-  e1 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[2,0,1]]),
-  e2 := RcwaMapping([[1,4,1],[2,0,1],[1,0,2],[1,0,1],
-                     [1,4,1],[2,0,1],[1,0,1],[1,0,1]])
+                    [1,  0, 1],[1, -4,1],[1,  0,1],[2,-10,1]])
 
 );
 
+SetName(RCWAExamples.ModuliOfPowers.a,"a");
+SetName(RCWAExamples.ModuliOfPowers.e1,"e1");
+SetName(RCWAExamples.ModuliOfPowers.e2,"e2");
+SetName(RCWAExamples.ModuliOfPowers.g,"g");
+SetName(RCWAExamples.ModuliOfPowers.h,"h");
+SetName(RCWAExamples.ModuliOfPowers.u,"u");
 SetName(RCWAExamples.ModuliOfPowers.v6,"v6");
 SetName(RCWAExamples.ModuliOfPowers.w8,"w8");
 SetName(RCWAExamples.ModuliOfPowers.z,"z");
-SetName(RCWAExamples.ModuliOfPowers.e1,"e1");
-SetName(RCWAExamples.ModuliOfPowers.e2,"e2");
 
 #############################################################################
 ##
@@ -1462,6 +1473,21 @@ SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_1,"a_1");
 SetName(RCWAExamples.TameGroupByCommsOfWildPerms.a_2,"a_2");
 SetName(RCWAExamples.TameGroupByCommsOfWildPerms.g,"g");
 SetName(RCWAExamples.TameGroupByCommsOfWildPerms.h,"h");
+
+#############################################################################
+##
+##  Checking for (in-)solvability
+##
+RCWAExamples.CheckingForSolvability := rec(
+
+  a := RcwaMapping([[3,0,2],[3, 1,4],[3,0,2],[3,-1,4]]),
+  b := RcwaMapping([[3,0,2],[3,13,4],[3,0,2],[3,-1,4]]),
+  G := Group(~.a,~.b)
+
+);
+
+SetName(RCWAExamples.CheckingForSolvability.a,"a");
+SetName(RCWAExamples.CheckingForSolvability.b,"b");
 
 #############################################################################
 ##
