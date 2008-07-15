@@ -31,8 +31,8 @@ read into the current &GAP; session by issueing <C>RCWAReadExamples( );</C>.
 Afterwards, the examples are stored in a record <C>RCWAExamples</C> of
 records. The global variable assignments made in a section of this chapter
 can be performed by issueing <C>UnwrapExample(<A>name</A>)</C>, where
-<A>name</A> is given in the corresponding section. Note that if the
-respective global variables are already bound, then they are overwritten.
+<A>name</A> is given at the end of the corresponding section. Note that if
+the respective global variables are already bound, then they are overwritten.
 If that happens, a warning is given. <P/>
 
 The examples are typically far from discussing the respective aspects
@@ -156,10 +156,10 @@ true
 </Example>
 
 The factors <C>PrimeSwitch(3)</C> are products of 6 class transpositions
-(cf.&nbsp;<Ref Func="PrimeSwitch" Label="p"/>).
-At the end of Section <Ref Label="sec:WildButFiniteCycles"/>, a much
-smaller factorization task is performed <Q>manually</Q> for purposes
-of illustration.
+(cf.&nbsp;<Ref Func="PrimeSwitch" Label="p"/>). <P/>
+
+Issue <C>UnwrapExample("CollatzlikePerms");</C>
+to assign the global variable <C>Collatz</C> defined in this example.
 
 </Section>
 
@@ -254,7 +254,10 @@ even for mappings with much shorter trajectories than&nbsp;<C>T</C>
 the problem seems to be equally hard. A solution can usually only be found
 in trivial cases, i.e. for example when there is some <M>k</M> such that
 applying the <M>k</M>th power of the respective mapping to any integer
-decreases its absolute value.
+decreases its absolute value. <P/>
+
+Issue <C>UnwrapExample("SlowlyContractingMappings");</C>
+to assign the global variables defined in this example.
 
 </Section>
 
@@ -274,6 +277,8 @@ set&nbsp;<M>S</M> with its image under&nbsp;<M>T</M>:
 
 <Example>
 <![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);
+<rcwa mapping of Z with modulus 2>
 gap> S := ResidueClass(Integers,16,1);
 1(16)
 gap> S := Union(S,S^T);
@@ -302,7 +307,10 @@ Integers
 </Example>
 
 Further similar computations are shown in
-Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>.
+Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>. <P/>
+
+Issue <C>UnwrapExample("CollatzMapping");</C>
+to assign the global variable&nbsp;<C>T</C> defined in this example.
 
 </Section>
 
@@ -420,7 +428,10 @@ gap> Diffs(ChangePoints(last)); # Make this a bit more obvious.
 This looks clearly acyclic, thus the trajectories diverge.
 Needless to say however that this computational evidence does not replace
 the proof along these lines given in the article cited above, but just
-sheds a light on the idea behind it.
+sheds a light on the idea behind it. <P/>
+
+Issue <C>UnwrapExample("MatthewsLeigh");</C>
+to assign the global variables defined in this example.
 
 </Section>
 
@@ -499,214 +510,10 @@ gap> List([Comm(u2,nu^20),Comm(u2,nu^25),Comm(u2,nu^30)],Order);
 </Example>
 
 We observe that our commutators have various different orders, and
-that the prime factors of these orders are not all <Q>very small</Q>.
+that the prime factors of these orders are not all <Q>very small</Q>. <P/>
 
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:WildButFiniteCycles">
-<Heading>A wild rcwa mapping which has only finite cycles</Heading>
-
-Some wild rcwa mappings of <M>&ZZ;</M> have only finite cycles. In this
-section, a permutation is examined which can be shown to be such a mapping
-and which is likely to be something like a <Q>minimal</Q> example. <P/>
-
-Over <M>R</M> = GF(<M>q</M>)[<M>x</M>], the degree function gives rise
-to a partition of <M>R</M> into finite sets which is left invariant by
-suitable wild rcwa mappings. Over <M>R = &ZZ;</M> the situation looks
-different -- there is no such <Q>natural</Q> partition into finite sets
-which can be fixed by a wild rcwa mapping.
-
-<Example>
-<![CDATA[
-gap> kappa := RcwaMapping([[1,0,1],[1,0,1],[3,2,2],[1,-1,1],
->                          [2,0,1],[1,0,1],[3,2,2],[1,-1,1],
->                          [1,1,3],[1,0,1],[3,2,2],[2,-2,1]]);;
-gap> List([-5..5],k->Modulus(kappa^k));
-[ 7776, 1296, 432, 72, 24, 1, 12, 72, 144, 864, 1728 ]
-gap> Display(kappa);
-
-Bijective rcwa mapping of Z with modulus 12
-
-              n mod 12              |            Image of n
-------------------------------------+------------------------------------
-   0  1  5  9                       | n
-   2  6 10                          | (3n + 2)/2
-   3  7                             | n - 1
-   4                                | 2n
-   8                                | (n + 1)/3
-  11                                | 2n - 2
-
-gap> List([-32..32],n->Length(Cycle(kappa,n)));
-[ 4, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 7, 1, 10, 10, 4, 1, 7, 7, 1, 1, 
-  7, 7, 4, 1, 4, 4, 2, 1, 1, 2, 1, 1, 4, 4, 4, 1, 7, 7, 4, 1, 7, 7, 1, 
-  1, 10, 10, 7, 1, 4, 4, 7, 1, 10, 10, 1, 1, 4, 4, 4, 1, 13, 13, 7 ]
-gap> List([2..14],k->Maximum(List([1..2^k],n->Length(Cycle(kappa,n)))));
-[ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
-gap> List([2..14],k->Length(Cycle(kappa,2^k-2)));
-[ 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
-gap> Cycle(kappa,2^12-2);
-[ 4094, 6142, 9214, 13822, 20734, 31102, 46654, 69982, 104974, 157462, 
-  236194, 354292, 708584, 236195, 472388, 157463, 314924, 104975, 
-  209948, 69983, 139964, 46655, 93308, 31103, 62204, 20735, 41468, 
-  13823, 27644, 9215, 18428, 6143, 12284, 4095 ]
-gap> last mod 12;
-[ 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 8, 11, 8, 11, 8, 11, 8, 
-  11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 11, 8, 3 ]
-gap> lengthstats := Collected(List(ShortCycles(kappa,[1..12^4],100),
->                                  Length));
-[ [ 1, 6912 ], [ 4, 1728 ], [ 7, 864 ], [ 10, 432 ], [ 13, 216 ], 
-  [ 16, 108 ], [ 19, 54 ], [ 22, 27 ], [ 25, 13 ], [ 28, 7 ], [ 31, 3 ], 
-  [ 34, 2 ], [ 37, 1 ], [ 40, 1 ] ]
-]]>
-</Example>
-
-We would like to determine a partition of&nbsp;<M>&ZZ;</M> into unions
-of cycles of equal length:
-
-<Example>
-<![CDATA[
-gap> C := [Difference(Integers,MovedPoints(kappa))];; pow := [kappa^0];;
-gap> rc := function(r,m) return ResidueClass(r,m); end;;
-gap> for i in [1..3] do
->      Add(pow,kappa^i);
->      C[i+1] := Difference(rc(2,4),
->                  Union(Union(C{[1..i]}),
->                    Union(List([0..i],j->Intersection(
->                                           rc(2,4)^pow[j+1],
->                                           rc(2,4)^(pow[i-j+1]^-1))))));
->    od;
-gap> C;
-[ 1(4) U 0(12) U [ -2 ], 2(24) U 18(24), 6(48) U 38(48) U 10(72) U 58(72)
-    , <union of 38 residue classes (mod 864)> ]
-gap> List(C,S->Length(Cycle(kappa,S)));
-[ 1, 4, 7, 10 ]
-gap> Cycle(kappa,C[1]);
-[ 1(4) U 0(12) U [ -2 ] ]
-gap> Cycle(kappa,C[2]);
-[ 2(24) U 18(24), 4(36) U 28(36), 8(72) U 56(72), 3(24) U 19(24) ]
-gap> cycle7 := Cycle(kappa,C[3]);;
-gap> for S in cycle7 do View(S); Print("\n"); od;
-6(48) U 38(48) U 10(72) U 58(72)
-10(72) U 58(72) U 16(108) U 88(108)
-16(108) U 88(108) U 32(216) U 176(216)
-11(72) U 59(72) U 32(216) U 176(216)
-11(72) U 59(72) U 20(144) U 116(144)
-7(48) U 39(48) U 20(144) U 116(144)
-6(48) U 7(48) U 38(48) U 39(48)
-gap> cycle10 := Cycle(kappa,C[4]);;
-gap> for S in cycle10 do View(S); Print("\n"); od;
-<union of 38 residue classes (mod 864)>
-<union of 38 residue classes (mod 1296)>
-<union of 12 residue classes (mod 648)>
-<union of 12 residue classes (mod 648)>
-<union of 22 residue classes (mod 1296)>
-<union of 12 residue classes (mod 432)>
-<union of 22 residue classes (mod 864)>
-<union of 12 residue classes (mod 288)>
-<union of 14 residue classes (mod 288)>
-<union of 16 residue classes (mod 288)>
-gap> List(cycle10,Density);
-[ 19/432, 19/648, 1/54, 1/54, 11/648, 1/36, 11/432, 1/24, 7/144, 1/18 ]
-gap> List(last,Float);
-[ 0.0439815, 0.029321, 0.0185185, 0.0185185, 0.0169753, 0.0277778, 
-  0.025463, 0.0416667, 0.0486111, 0.0555556 ]
-gap> Sum(last2);
-47/144
-gap> Density(Union(cycle10));
-47/432
-]]>
-</Example>
-
-<Example>
-<![CDATA[
-gap> P := List(C,S->Union(Cycle(kappa,S)));;
-gap> for S in P do View(S); Print("\n"); od;
-1(4) U 0(12) U [ -2 ]
-<union of 18 residue classes (mod 72)>
-<union of 78 residue classes (mod 432)>
-<union of 282 residue classes (mod 2592)>
-gap> P2 := AsUnionOfFewClasses(P[2]);
-[ 2(24), 3(24), 18(24), 19(24), 4(36), 28(36), 8(72), 56(72) ]
-gap> Permutation(kappa,P2);
-(1,5,7,2)(3,6,8,4)
-gap> P3 := AsUnionOfFewClasses(P[3]);
-[ 6(48), 7(48), 38(48), 39(48), 10(72), 11(72), 58(72), 59(72), 16(108), 
-  88(108), 20(144), 116(144), 32(216), 176(216) ]
-gap> Permutation(kappa,P3);
-(1,5,9,13,6,11,2)(3,7,10,14,8,12,4)
-gap> P4 := AsUnionOfFewClasses(P[4]);
-[ 14(96), 15(96), 78(96), 79(96), 22(144), 23(144), 118(144), 119(144), 
-  34(216), 35(216), 178(216), 179(216), 44(288), 236(288), 52(324), 
-  268(324), 68(432), 356(432), 104(648), 536(648) ]
-gap> Permutation(kappa,P4);
-(1,5,9,15,19,10,17,6,13,2)(3,7,11,16,20,12,18,8,14,4)
-gap> List(P,S->Set(List(Intersection([1..12^4],S),n->Length(Cycle(kappa,n)))));
-[ [ 1 ], [ 4 ], [ 7 ], [ 10 ] ]
-gap> Set(List(Intersection([1..12^4],Difference(Integers,Union(P))),
->             n->Length(Cycle(kappa,n))));
-[ 13, 16, 19, 22, 25, 28, 31, 34, 37, 40 ]
-]]>
-</Example>
-
-Finally, the permutation <C>kappa</C> should be factored into involutions
-(this time <Q>by hand</Q>, for purposes of illustration):
-
-<Example>
-<![CDATA[
-gap> elm1 := kappa;
-<bijective rcwa mapping of Z with modulus 12>
-gap> Multpk(elm1,2,1)^elm1;
-8(12)
-gap> Multpk(elm1,2,-1)^elm1;
-4(6)
-gap> fact1 := ClassTransposition(4,6,8,12);;
-]]>
-</Example>
-
-<Example>
-<![CDATA[
-gap> elm2 := elm1/fact1;
-<bijective rcwa mapping of Z with modulus 12>
-gap> Display(elm2);
-
-Bijective rcwa mapping of Z with modulus 12
-
-              n mod 12              |            Image of n
-------------------------------------+------------------------------------
-   0  1  4  5  9                    | n
-   2  6 10                          | 3n + 2
-   3  7 11                          | n - 1
-   8                                | (n + 1)/3
-
-gap> Multpk(elm2,3,1)^elm2;
-8(12)
-gap> Multpk(elm2,3,-1)^elm2;
-3(4)
-gap> fact2 := ClassTransposition(3,4,8,12);;
-gap> elm3 := elm2/fact2;
-<bijective rcwa mapping of Z with modulus 4>
-gap> Display(elm3);
-
-Bijective rcwa mapping of Z with modulus 4
-
-              n mod 4               |            Image of n
-------------------------------------+------------------------------------
-  0 1                               | n
-  2                                 | n + 1
-  3                                 | n - 1
-
-gap> fact3 := ClassTransposition(2,4,3,4);;
-gap> elm4 := elm3/fact3;
-IdentityMapping( Integers )
-gap> kappafacts := [ fact3, fact2, fact1 ];
-[ ClassTransposition(2,4,3,4), ClassTransposition(3,4,8,12), 
-  ClassTransposition(4,6,8,12) ]
-gap> kappa = Product(kappafacts);
-true
-]]>
-</Example>
+Issue <C>UnwrapExample("CollatzlikePerms");</C>
+to assign the global variable&nbsp;<C>u</C> defined in this example.
 
 </Section>
 
@@ -741,6 +548,9 @@ gap> IsTame(G);
 false
 ]]>
 </Example>
+
+It is easy to see that all orbits on GF(4)[<M>x</M>] under the action
+of <C>G</C> are finite. <P/>
 
 Now we compute the action of the group <C>G</C> on one of its orbits, and
 make some statistics of the orbits of <C>G</C> containing polynomials of
@@ -780,14 +590,36 @@ gap> G := Group(g,h);
 <rcwa group over GF(2^2)[x] with 2 generators>
 gap> IsAbelian(G);
 false
+gap> Support(G);
+GF(2^2)[x] \ [ Z(2)^0, Z(2^2), Z(2^2)^2 ]
 gap> orb := Orbit(G,Zero(R));;
 gap> Length(orb);
 87
+gap> StructureDescription(Action(G,orb));
+"A87"
 gap> Collected(List(orb,DegreeOfLaurentPolynomial));
 [ [ 1, 2 ], [ 2, 4 ], [ 3, 16 ], [ 4, 64 ], [ infinity, 1 ] ]
-$$$
+gap> S := AllResidues(R,x^6);;
+gap> orbs := ShortOrbits(G,S,-1:finite);;
+gap> List(orbs,Length);
+[ 87, 1, 1, 1, 2, 2, 2, 2, 2, 4, 4, 4, 20, 4, 12, 4, 20, 4, 4, 12, 8, 8, 
+  48, 48, 16, 8, 8, 56, 8, 88, 8, 8, 8, 400, 16, 48, 16, 16, 16, 80, 16, 
+  16, 16, 96, 32, 192, 32, 16, 16, 416, 16, 48, 16, 16, 880, 16, 16, 16, 
+  16, 16, 16, 16, 16, 16, 848, 16, 16, 32, 16, 16, 16, 16, 16, 16, 16 ]
+gap> Position(last,880);
+55
+gap> Set(orbs[55],DegreeOfLaurentPolynomial); # all elm's have same degree
+[ 5 ]
+gap> H := Action(G,orbs[55]);;
+gap> IsPrimitive(H,MovedPoints(H));
+false
+gap> List(Blocks(H,MovedPoints(H)),Length);
+[ 110, 110, 110, 110, 110, 110, 110, 110 ]
 ]]>
 </Example>
+
+Issue <C>UnwrapExample("AbelianGroupOverPolynomialRing");</C>
+to assign the global variables defined in this example.
 
 </Section>
 
@@ -843,6 +675,10 @@ gap> a^-2*b^-2*a*b*a^-1*b*a*b^-2*a = elm;
 true
 ]]>
 </Example>
+
+Issue <C>UnwrapExample("CheckingForSolvability");</C>
+to assign the global variables <C>a</C>, <C>b</C> and <C>G</C>
+defined in this example.
 
 </Section>
 
@@ -995,7 +831,10 @@ Bijective rcwa mapping of Z_( 2 ) with modulus 8
 </Example>
 
 Again, viewed as an rcwa mapping of the integers the commutator given at
-the end of the example would not be surjective.
+the end of the example would not be surjective. <P/>
+
+Issue <C>UnwrapExample("Semilocals");</C>
+to assign the global variables defined in this example.
 
 </Section>
 
@@ -1039,6 +878,9 @@ gap> Length(Cycle(x_257,0));
 257
 ]]>
 </Example>
+
+Issue <C>UnwrapExample("LongCyclesOfPrimeLength");</C>
+to assign the global variable <C>x&uscore;257</C> defined in this example.
 
 </Section>
 
