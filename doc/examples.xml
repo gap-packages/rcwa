@@ -731,14 +731,14 @@ gap> g := RcwaMapping( R, q, cg );
 <rcwa mapping of GF(2^2)[x] with modulus x^2+Z(2)^0>
 gap> h := RcwaMapping( R, s, ch );
 <rcwa mapping of GF(2^2)[x] with modulus x^2+x+Z(2^2)^2>
-gap> List([g,h],Order);
-[ infinity, infinity ]
 gap> List([g,h],IsTame);
 [ false, false ]
 gap> G := Group(g,h);
 <rcwa group over GF(2^2)[x] with 2 generators>
 gap> IsAbelian(G);
 true
+gap> IsTame(G);
+false
 ]]>
 </Example>
 
@@ -759,6 +759,8 @@ Group([ (1,2,4,7,6,9,12,14)(3,5,8,11,10,13,15,16),
   (1,3,6,10)(2,5,9,13)(4,8,12,15)(7,11,14,16) ])
 gap> IsAbelian(H); # check ...
 true
+gap> IsCyclic(H);  # H, and therefore also G, is not cyclic
+false
 gap> Exponent(H);
 8
 gap> Collected(List(ShortOrbits(G,AllResidues(R,x^4),100),Length));
@@ -766,7 +768,8 @@ gap> Collected(List(ShortOrbits(G,AllResidues(R,x^4),100),Length));
 ]]>
 </Example>
 
-Changing the generators a little causes the group structure to change a lot:
+Changing the generators a little changes the structure of the group
+and its action on the underlying ring a lot:
 
 <Example>
 <![CDATA[
@@ -775,33 +778,16 @@ gap> ch[7][2] := ch[7][2] + x * r * s;;
 gap> g := RcwaMapping( R, q, cg );; h := RcwaMapping( R, s, ch );;
 gap> G := Group(g,h);
 <rcwa group over GF(2^2)[x] with 2 generators>
+gap> IsAbelian(G);
+false
 gap> orb := Orbit(G,Zero(R));;
 gap> Length(orb);
 87
 gap> Collected(List(orb,DegreeOfLaurentPolynomial));
 [ [ 1, 2 ], [ 2, 4 ], [ 3, 16 ], [ 4, 64 ], [ infinity, 1 ] ]
-gap> H := Action(G,orb);
-<permutation group with 2 generators>
-gap> IsNaturalAlternatingGroup(H);
-true
-gap> orb := Orbit(G,x^6);;
-gap> Length(orb);
-512
-gap> H := Action(G,orb);
-<permutation group with 2 generators>
-gap> IsNaturalSymmetricGroup(H) or IsNaturalAlternatingGroup(H);
-false
-gap> blk := Blocks(H,[1..512]);;
-gap> List(blk,Length);
-[ 128, 128, 128, 128 ]
-gap> Action(H,blk,OnSets);
-Group([ (1,2)(3,4), (1,3)(2,4) ])
+$$$
 ]]>
 </Example>
-
-Thus the modified group has a quotient isomorphic to the alternating group
-of degree&nbsp;87, and a quotient isomorphic to some wreath product or a
-subgroup thereof acting transitively, but not primitively on 512 points.
 
 </Section>
 

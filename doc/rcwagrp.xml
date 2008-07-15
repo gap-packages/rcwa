@@ -380,14 +380,15 @@ gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsClassWiseTranslating,
 In the previous section we have seen how to construct rcwa groups.
 The purpose of this section is to describe how to obtain information on
 the structure of an rcwa group and on its action on the underlying ring.
-The easiest way to get some information on the group structure is
-a dedicated method for the operation <C>StructureDescription</C>:
+The easiest way to get a little (but really only <E>a little</E>!)
+information on the group structure is a dedicated method for the operation
+<C>StructureDescription</C>:
 
 <ManSection>
   <Meth Name="StructureDescription" Arg="G" Label="for an rcwa group"/>
   <Returns>
-    A string which describes the structure of the rcwa group&nbsp;<A>G</A>
-    to some extent.
+    A string which sometimes gives a little glimpse of the structure
+    of the rcwa group&nbsp;<A>G</A>.
   </Returns>
   <Description>
     The attribute <C>StructureDescription</C> for finite groups is
@@ -409,8 +410,8 @@ a dedicated method for the operation <C>StructureDescription</C>:
     In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
     can be very complicated and very difficult to exhibit.
     While for isomorphic finite groups always the same structure
-    description is computed, this cannot be guaranteed for isomorphic
-    rcwa groups.
+    description is computed, there is no way to guarantee this for
+    isomorphic rcwa groups.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
@@ -868,6 +869,12 @@ to determine them:
     consisting of residue classes.
   </Returns>
   <Description>
+    The operation <Ref Oper="ShortOrbits"
+    Label="for rcwa group, set of points and bound on length"/> recognizes
+    an option <A>finite</A>. If this option is set, it is assumed that all
+    orbits are finite, in order to speed up the computation. If furthermore
+    <A>maxlng</A> is negative, a list of <E>all</E> orbits which intersect
+    nontrivially with&nbsp;<A>S</A> is returned.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
