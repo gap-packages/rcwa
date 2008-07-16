@@ -134,7 +134,7 @@ true
 ]]>
 </Example>
 
-Then we can give a function which takes a class transposition
+Then we give a function which takes a class transposition
 <M>\tau \in {\rm CT}_\emptyset(&ZZ;)</M>, and which returns
 a factorization of an element <M>\gamma</M> satisfying
 <M>\tau^\gamma \in S</M> into <M>g_1 := (0(2),1(4)) \in S</M>,
@@ -157,6 +157,8 @@ ReducingConjugator := function ( tau )
 
   w := One(F); if Mod(tau) <= 4 then return w; fi;
 
+  # Before we can reduce the moduli of the interchanged residue classes,
+  # we must make sure that both of them have at least modulus 4.
   cls := TransposedClasses(tau);
   if Mod(cls[1]) = 2 then
     if Residue(cls[1]) = 0 then
@@ -168,7 +170,7 @@ ReducingConjugator := function ( tau )
     fi;
   fi;
 
-  while Mod(tau) > 4 do # now, there is no residue class (mod 2) left
+  while Mod(tau) > 4 do # Now we can successively reduce the moduli.
     if not ForAny(AllResidueClassesModulo(2),
                   cl -> IsEmpty(Intersection(cl,Support(tau))))
     then
@@ -191,37 +193,198 @@ end;
 ]]>
 </Listing>
 
-We obtain for example:
+After assigning <C>g1</C>, <C>g2</C>, <C>g3</C>, <C>g4</C>, <C>h1</C>
+and&nbsp;<C>h2</C> appropriately, we obtain for example:
 
-<Example>
+<Log>
 <![CDATA[
 gap> ReducingConjugator(ClassTransposition(3,16,34,256));
 h2*g1*h1*g1*h1*g1*h1*g1*h2*g2*h2*g4*h2*g4*h2*g3
-]]>
-</Example>
-
-This can be checked easily:
-
-<Example>
-<![CDATA[
-gap> g1 := ClassTransposition(0,2,1,4);;
-gap> g2 := ClassTransposition(0,2,3,4);;
-gap> g3 := ClassTransposition(1,2,0,4);;
-gap> g4 := ClassTransposition(1,2,2,4);;
-gap> h1 := ClassTransposition(0,4,1,4);;
-gap> h2 := ClassTransposition(1,4,2,4);;
-gap> gamma := h2*g1*h1*g1*h1*g1*h1*g1*h2*g2*h2*g4*h2*g4*h2*g3; # as above
+gap> gamma := h2*g1*h1*g1*h1*g1*h1*g1*h2*g2*h2*g4*h2*g4*h2*g3;
 <bijective rcwa mapping of Z with modulus 256>
-gap> ct := ClassTransposition(3,16,34,256)^gamma;
-<bijective rcwa mapping of Z with modulus 4, of order 2>
-gap> IsClassTransposition(ct);
-true
+gap> ct := ClassTransposition(3,16,34,256)^gamma;;
+gap> IsClassTransposition(ct);;
 gap> ct;
 ClassTransposition(1,4,2,4)
 ]]>
-</Example>
+</Log>
 
 Issue <C>UnwrapExample("HigmanThompson");</C>
+in order to assign the global variables defined in this example.
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:Sigma_T">
+<Heading>
+  An extension of the Collatz mapping T to a permutation of <M>&ZZ;^2</M>
+</Heading>
+
+The Collatz mapping&nbsp;<M>T</M> is surjective, but not injective:
+
+<Example>
+<![CDATA[
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> Display(T);
+
+Rcwa mapping of Z with modulus 2
+
+              n mod 2               |            Image of n
+------------------------------------+------------------------------------
+  0                                 | n/2
+  1                                 | (3n + 1)/2
+
+gap> IsInjective(T); IsSurjective(T);
+false
+true
+gap> PreImages(T,2);
+[ 1, 4 ]
+]]>
+</Example>
+
+Often, dealing with bijective rcwa mappings is easier.
+Indeed the Collatz mapping&nbsp;<M>T</M> can be extended in natural
+ways to permutations of&nbsp;<M>&ZZ;^2</M>. For example, the following
+permutation acts on the second coordinate just like&nbsp;<M>T</M>:
+
+<Example>
+<![CDATA[
+gap> Sigma_T := RcwaMapping( Integers^2, [[1,0],[0,6]],
+>                            [[[[2,0],[0,1]],[0,0],2],
+>                             [[[4,0],[0,3]],[2,1],2],
+>                             [[[2,0],[0,1]],[0,0],2],
+>                             [[[4,0],[0,3]],[2,1],2],
+>                             [[[4,0],[0,1]],[0,0],2],
+>                             [[[4,0],[0,3]],[2,1],2]] );
+<rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
+gap> IsBijective(Sigma_T);
+true
+gap> Display(Sigma_T);
+
+Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
+
+   [m,n] mod (1,0)Z+(0,6)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,2]                 | [m,n/2]
+ [0,1] [0,3] [0,5]           | [2m+1,(3n+1)/2]
+ [0,4]                       | [2m,n/2]
+
+gap> Display(Sigma_T^-1);
+
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
+
+   [m,n] mod (2,0)Z+(0,3)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,1] [1,0] [1,1]     | [m,2n]
+ [0,2]                       | [m/2,2n]
+ [1,2]                       | [(m-1)/2,(2n-1)/3]
+
+]]>
+</Example>
+
+Now, the <M>3n+1</M> conjecture is equivalent to the assertion that
+the line <M>n=4</M> is a set of representatives for the cycles of
+<C>Sigma&uscore;T</C> on the half plane <M>n > 0</M>. <P/>
+
+Let's have a look at a part of a cycle of <C>Sigma&uscore;T</C>:
+
+<Example>
+<![CDATA[
+gap> Trajectory(Sigma_T,[0,27],75);
+[ [ 0, 27 ], [ 1, 41 ], [ 3, 62 ], [ 3, 31 ], [ 7, 47 ], [ 15, 71 ], 
+  [ 31, 107 ], [ 63, 161 ], [ 127, 242 ], [ 127, 121 ], [ 255, 182 ], 
+  [ 255, 91 ], [ 511, 137 ], [ 1023, 206 ], [ 1023, 103 ], 
+  [ 2047, 155 ], [ 4095, 233 ], [ 8191, 350 ], [ 8191, 175 ], 
+  [ 16383, 263 ], [ 32767, 395 ], [ 65535, 593 ], [ 131071, 890 ], 
+  [ 131071, 445 ], [ 262143, 668 ], [ 262143, 334 ], [ 524286, 167 ], 
+  [ 1048573, 251 ], [ 2097147, 377 ], [ 4194295, 566 ], [ 4194295, 283 ], 
+  [ 8388591, 425 ], [ 16777183, 638 ], [ 16777183, 319 ], 
+  [ 33554367, 479 ], [ 67108735, 719 ], [ 134217471, 1079 ], 
+  [ 268434943, 1619 ], [ 536869887, 2429 ], [ 1073739775, 3644 ], 
+  [ 1073739775, 1822 ], [ 2147479550, 911 ], [ 4294959101, 1367 ], 
+  [ 8589918203, 2051 ], [ 17179836407, 3077 ], [ 34359672815, 4616 ], 
+  [ 34359672815, 2308 ], [ 68719345630, 1154 ], [ 68719345630, 577 ], 
+  [ 137438691261, 866 ], [ 137438691261, 433 ], [ 274877382523, 650 ], 
+  [ 274877382523, 325 ], [ 549754765047, 488 ], [ 549754765047, 244 ], 
+  [ 1099509530094, 122 ], [ 1099509530094, 61 ], [ 2199019060189, 92 ], 
+  [ 2199019060189, 46 ], [ 4398038120378, 23 ], [ 8796076240757, 35 ], 
+  [ 17592152481515, 53 ], [ 35184304963031, 80 ], [ 35184304963031, 40 ], 
+  [ 70368609926062, 20 ], [ 70368609926062, 10 ], [ 140737219852124, 5 ], 
+  [ 281474439704249, 8 ], [ 281474439704249, 4 ], [ 562948879408498, 2 ], 
+  [ 562948879408498, 1 ], [ 1125897758816997, 2 ], 
+  [ 1125897758816997, 1 ], [ 2251795517633995, 2 ], 
+  [ 2251795517633995, 1 ] ]
+gap> Trajectory(Sigma_T^-1,[0,27],20);
+[ [ 0, 27 ], [ 0, 54 ], [ 0, 108 ], [ 0, 216 ], [ 0, 432 ], [ 0, 864 ], 
+  [ 0, 1728 ], [ 0, 3456 ], [ 0, 6912 ], [ 0, 13824 ], [ 0, 27648 ], 
+  [ 0, 55296 ], [ 0, 110592 ], [ 0, 221184 ], [ 0, 442368 ], 
+  [ 0, 884736 ], [ 0, 1769472 ], [ 0, 3538944 ], [ 0, 7077888 ], 
+  [ 0, 14155776 ] ]
+]]>
+</Example>
+
+While it seems easy to make conjectures regarding the behaviour of cycles
+of <C>Sigma&uscore;T</C>, obtaining results on it is apparently hard.
+We observe however that <C>Sigma&uscore;T</C> can be written as a product
+of two permutations of&nbsp;<M>&ZZ;^2</M> whose cycles can be described
+easily:
+
+<Example>
+<![CDATA[
+gap> a := RcwaMapping(Integers^2,[[1,0],[0,2]],[[[[4,0],[0,1]],[0, 0],2],
+>                                               [[[4,0],[0,1]],[2,-1],2]]);
+<rcwa mapping of Z^2 with modulus (1,0)Z+(0,2)Z>
+gap> b := a^-1*Sigma_T;
+<bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z>
+gap> Display(a);
+
+Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,2)Z
+
+   [m,n] mod (1,0)Z+(0,2)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0]                       | [2m,n/2]
+ [0,1]                       | [2m+1,(n-1)/2]
+
+gap> Display(b);
+
+Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
+
+   [m,n] mod (2,0)Z+(0,3)Z   |              Image of [m,n]
+-----------------------------+-------------------------------------------
+ [0,0] [0,1]                 | [m/2,n]
+ [0,2]                       | [m,n]
+ [1,0] [1,1] [1,2]           | [m,3n+2]
+
+]]>
+</Example>
+
+It is easy to see that both <C>a</C> and&nbsp;<C>b</C> have infinite order.
+The cycles of&nbsp;<C>a</C> have roughly hyperbolic shape and run, so to
+speak, from <M>(0,\pm \infty)</M> to <M>(\pm \infty,0)</M>.
+A given cycle contains only finitely many points both of whose coordinates
+are nonzero. The fixed points of&nbsp;<C>a</C> are (0,0) and (-1,-1).
+We have a look at an example of a cycle of&nbsp;<C>a</C>:
+
+<Example>
+<![CDATA[
+gap> Trajectory(a,[1000,1000],15);
+[ [ 1000, 1000 ], [ 2000, 500 ], [ 4000, 250 ], [ 8000, 125 ], 
+  [ 16001, 62 ], [ 32002, 31 ], [ 64005, 15 ], [ 128011, 7 ], 
+  [ 256023, 3 ], [ 512047, 1 ], [ 1024095, 0 ], [ 2048190, 0 ], 
+  [ 4096380, 0 ], [ 8192760, 0 ], [ 16385520, 0 ] ]
+gap> Trajectory(a^-1,[1000,1000],15);
+[ [ 1000, 1000 ], [ 500, 2000 ], [ 250, 4000 ], [ 125, 8000 ], 
+  [ 62, 16001 ], [ 31, 32002 ], [ 15, 64005 ], [ 7, 128011 ], 
+  [ 3, 256023 ], [ 1, 512047 ], [ 0, 1024095 ], [ 0, 2048190 ], 
+  [ 0, 4096380 ], [ 0, 8192760 ], [ 0, 16385520 ] ]
+]]>
+</Example>
+
+It is left as an easy exercise to the reader to find out how the cycles
+of&nbsp;<C>b</C> look like. <P/>
+
+Issue <C>UnwrapExample("ZxZ");</C>
 in order to assign the global variables defined in this example.
 
 </Section>
