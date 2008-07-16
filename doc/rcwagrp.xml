@@ -654,11 +654,10 @@ gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
 gap> c := ClassTransposition(3,4,4,6);;  SetName(c,"c");
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
-gap> phi := EpimorphismFromFpGroup(G,6);
+gap> phi := EpimorphismFromFpGroup(G,2);
 [ a, b, c ] -> [ a, b, c ]
 gap> RelatorsOfFpGroup(Source(phi));
-[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, 
-  a*b*a*b*a*b*a*b*a*b*a*b ]
+[ a^2, b^2, c^2, c*b*c*b*c*b, b*a*b*a*b*a*b*a*b*a*b*a ]
 ]]>
 </Example>
   </Description>
@@ -711,8 +710,8 @@ gap> g := Comm(a*b,Comm(a,b^3));
 <bijective rcwa mapping of Z with modulus 8>
 gap> pre := PreImagesRepresentatives(phi,g);
 [ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
-gap> rel := CyclicallyReducedWord(pre[1]/pre[2]); # -> a nontriv. relation
-b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1
+gap> rel := pre[1]/pre[2]; # -> a nontrivial relation
+b^-1*a^-1*b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1*a*b
 gap> rel^phi;
 IdentityMapping( Integers )
 ]]>
