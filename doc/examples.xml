@@ -196,7 +196,7 @@ end;
 After assigning <C>g1</C>, <C>g2</C>, <C>g3</C>, <C>g4</C>, <C>h1</C>
 and&nbsp;<C>h2</C> appropriately, we obtain for example:
 
-<Log>
+<Listing Type="Example">
 <![CDATA[
 gap> ReducingConjugator(ClassTransposition(3,16,34,256));
 h2*g1*h1*g1*h1*g1*h1*g1*h2*g2*h2*g4*h2*g4*h2*g3
@@ -207,7 +207,7 @@ gap> IsClassTransposition(ct);;
 gap> ct;
 ClassTransposition(1,4,2,4)
 ]]>
-</Log>
+</Listing>
 
 Issue <C>UnwrapExample("HigmanThompson");</C>
 in order to assign the global variables defined in this example.
@@ -1041,6 +1041,9 @@ rcwa mapping from the ring of integers to one of its localizations:
 
 <Example>
 <![CDATA[
+gap> a := RcwaMapping([[3,0,2],[3,1,4],[3,0,2],[3,-1,4]]);;
+gap> IsBijective(a);
+true
 gap> a2 := LocalizedRcwaMapping(a,2);
 <rcwa mapping of Z_( 2 ) with modulus 4>
 gap> IsSurjective(a2); # As expected
@@ -1090,32 +1093,9 @@ gap> List(last,Length);
 ]]>
 </Example>
 
-But the group structure remains invariant under the <Q>transfer</Q> of
-a group with prime set <M>\{2,3\}</M> from &ZZ; to&nbsp;<M>&ZZ;_{(2,3)}</M>:
-
-<Example>
-<![CDATA[
-gap> b23 := SemilocalizedRcwaMapping(b,[2,3]);;
-gap> c23 := SemilocalizedRcwaMapping(c,[2,3]);;
-gap> ab23 := Comm(a23,b23);
-<rcwa mapping of Z_( 2, 3 ) with modulus 18>
-gap> ac23 := Comm(a23,c23);
-<rcwa mapping of Z_( 2, 3 ) with modulus 18>
-gap> G := Group(ab23,ac23);
-<rcwa group over Z_( 2, 3 ) with 2 generators>
-gap> S := Intersection(Enumerator(Rationals){[1..128]},Z_pi([2,3]));
-[ -10, -9, -8, -7, -6, -5, -4, -3, -2, -9/5, -8/5, -10/7, -7/5, -9/7, 
-  -6/5, -8/7, -1, -6/7, -4/5, -5/7, -3/5, -4/7, -3/7, -2/5, -2/7, -1/5, 
-  -1/7, 0, 1/11, 1/7, 1/5, 2/7, 2/5, 3/7, 4/7, 3/5, 5/7, 4/5, 6/7, 1, 
-  8/7, 6/5, 9/7, 7/5, 10/7, 8/5, 9/5, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-gap> orbs := ShortOrbits(G,S,50);;
-gap> List(orbs,Length);
-[ 10, 1, 10, 1, 10, 10, 10, 1, 10, 10, 10, 10, 10, 10, 10, 1, 10, 10, 
-  10, 1, 1, 10, 1 ]
-gap> ForAll(orbs,orb->IsNaturalSymmetricGroup(Action(G,orb)));
-true
-]]>
-</Example>
+However the structure of a group with prime set <M>\mathbb{P}</M>
+remains invariant under the <Q>transfer</Q> from &ZZ;
+to&nbsp;<M>&ZZ;_{(\mathbb{P})}</M>. <P/>
 
 <Q>Transferring</Q> a non-invertible rcwa mapping from the ring of integers
 to some of its (semi)localizations can also turn it into an invertible one:
