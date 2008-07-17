@@ -204,6 +204,24 @@ CallFuncList(UnhideGlobalVariables,List("klmn",ch->[ch]));
 
 #############################################################################
 ##
+##  A wild subgroup of CT(GF(2)[x]) with many torsion elements
+##
+RCWAExamples.WildSubgroupOfCTGF2x := rec(
+
+  x := Indeterminate(GF(2)),
+  R := PolynomialRing(GF(2),1),
+  a := ClassTransposition(0,~.x,1,~.x),
+  b := ClassTransposition(0,~.x^2+1,1,~.x^2+1),
+  c := ClassTransposition(1,~.x,0,~.x^2+~.x),
+  G := Group(~.a,~.b,~.c),
+  H := Subgroup(~.G,[~.a*~.b,~.a*~.c])
+
+);
+
+SetName(RCWAExamples.WildSubgroupOfCTGF2x.x,"x");
+
+#############################################################################
+##
 ##  Examples of rcwa mappings of Z^2.
 ##
 RCWAExamples.ZxZ := rec(
