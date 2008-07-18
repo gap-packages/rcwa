@@ -209,6 +209,25 @@ ClassTransposition(1,4,2,4)
 ]]>
 </Listing>
 
+The Higman-Thompson group can also be embedded in a natural way
+into CT(GF(2)[x]):
+
+<Example>
+<![CDATA[
+gap> x := Indeterminate(GF(2));; SetName(x,"x");
+gap> R := PolynomialRing(GF(2),1);;
+gap> k := ClassTransposition(0,x,1,x);;
+gap> l := ClassTransposition(1,x,x,x^2);;
+gap> m := ClassTransposition(0,x,1,x^2);;
+gap> n := ClassTransposition(1,x^2,x,x^2);;
+gap> G := Group(k,l,m,n);
+<rcwa group over Z with 4 generators>
+]]>
+</Example>
+
+The correctness of this representation can likewise be verified by simply
+checking the defining relations given above. <P/>
+
 Issue <C>UnwrapExample("HigmanThompson");</C>
 in order to assign the global variables defined in this example.
 
