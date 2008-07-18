@@ -109,10 +109,12 @@ SetName(RCWAExamples.CollatzMapping.T5p,"T5+");
 ##      Notes on Pure Mathematics, 1974, Department of Pure Mathematics,
 ##      Australian National University, Canberra, ISBN 0 7081 0300 6.
 ##
-CallFuncList(HideGlobalVariables,List("klmn",ch->[ch]));
+CallFuncList(HideGlobalVariables,List("klmnx",ch->[ch]));
 
 k := ClassTransposition(0,2,1,2); l := ClassTransposition(1,2,2,4);
 m := ClassTransposition(0,2,1,4); n := ClassTransposition(1,4,2,4);
+
+x := Indeterminate(GF(2)); SetName(x,"x");
 
 RCWAExamples.HigmanThompson := rec(
 
@@ -196,11 +198,24 @@ RCWAExamples.HigmanThompson := rec(
     od;
 
     return w;
-  end
+  end,
+
+  # The Higman-Thompson group over GF(2)[x].
+
+  x := x,
+  R := PolynomialRing(GF(2),1),
+
+  kp := ClassTransposition(0,x,1,x),     # kappa in Higman's book.
+  lp := ClassTransposition(1,x,x,x^2),   # lambda    "
+  mp := ClassTransposition(0,x,1,x^2),   # mu        "
+  np := ClassTransposition(1,x^2,x,x^2), # nu        "
+
+  Hp := Group(~.kp,~.lp,~.mp,~.np)
 
 );
 
-CallFuncList(UnhideGlobalVariables,List("klmn",ch->[ch]));
+Unbind(k); Unbind(l); Unbind(m); Unbind(n); Unbind(x);
+CallFuncList(UnhideGlobalVariables,List("klmnx",ch->[ch]));
 
 #############################################################################
 ##
