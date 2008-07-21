@@ -932,9 +932,28 @@ Bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 2
 ]]>
 </Example>
 
-It seems that products of odd numbers of generators have always finite order,
-while products of even numbers of generators may have infinite order.
-For example, we have
+We can easily find 2 normal subgroups of&nbsp;<C>G</C>:
+
+<Example>
+<![CDATA[
+gap> N1 := Subgroup(G,[a*b,a*c]);
+<rcwa group over GF(2)[x] with 2 generators>
+gap> IsNormal(G,N1);
+true
+gap> Index(G,N1);
+2
+gap> G/N1;
+Group([ (1,2), (1,2), (1,2) ])
+gap> N2 := Subgroup(G,[a*b*c,a*c]);;
+gap> IsNormal(G,N2);
+true
+gap> IsSubgroup(N1,N2);
+false
+]]>
+</Example>
+
+Products of even numbers of generators of&nbsp;<C>G</C> may have
+infinite order. For example, we have
 
 <Example>
 <![CDATA[
@@ -944,67 +963,82 @@ gap> Order(a*c);
 infinity
 gap> Order(b*c);
 infinity
-gap> Order(a*b*c);
-20
+]]>
+</Example>
+
+We would like to have a look at orders of products of odd numbers of
+generators. In order to restrict our considerations to <Q>essentially
+different</Q> products (as far as we can easily do this), we use
+the following auxiliary function:
+
+<Listing Type="GAP code">
+<![CDATA[
+NormedWords := function ( F, lng )
+
+  local  words, gens, tuples, w;
+
+  gens   := GeneratorsOfGroup(F);
+  tuples := EnumeratorOfTuples([1..3],lng);
+  words  := [];
+
+  for w in tuples do
+    if    (w[1] = 1 or not 1 in w)
+      and PositionSublist(w,[1,1]) = fail
+      and PositionSublist(w,[2,2]) = fail
+      and PositionSublist(w,[3,3]) = fail
+      and PositionSublist(w,[2,1]) = fail
+      and w[1] < w[lng]
+      and w{[1,lng]} <> [1,2]
+      and (w{[1..3]} = [1,2,3] or PositionSublist(w,[1,2,3]) = fail)
+    then Add(words,w); fi;
+  od;
+
+  words := List(words,word->Product(List(word,i->gens[i])));
+  return words;
+end;
+]]>
+</Listing>
+
+Now let's compute the possible orders of products of 3, 5, 7 or 9 generators:
+
+<Log>
+<![CDATA[
 gap> F := FreeGroup("a","b","c");;
-gap> Q := F/[F.1^2,F.2^2,F.3^2];
-<fp group on the generators [ a, b, c ]>
-gap> phi := EpimorphismByGenerators(Q,G);
+gap> phi := EpimorphismByGenerators(F,G);
 [ a, b, c ] -> [ ClassTransposition(0*Z(2),x,Z(2)^0,x), 
   ClassTransposition(0*Z(2),x^2+Z(2)^0,Z(2)^0,x^2+Z(2)^0), 
   ClassTransposition(Z(2)^0,x,0*Z(2),x^2+x) ]
-gap> B5 := Filtered(Ball(Q,One(Q),5),w->Length(w) mod 2 = 1);
-[ a*c^2, b, c*a^2, a*b*a*b^2, a*b*c, a*c*b^2*a, a*c*b*a^2, b*a*b, 
-  b*a*c*a^2, b*c*a^3, b*c*a^2*b, c*a*b, c*a*c, c*b*a*c^2, c*b*c*a^2, 
-  a*b*a*b*a, a*b*a*b*c, a*b*a*c*a, a*b*a*c*b, a*b*c*a*b, a*b*c*a*c, 
-  a*b*c*b*a, a*b*c*b*c, a*c*a*b*a, a*c*a*b*c, a*c*a*c*a, a*c*a*c*b, 
-  a*c*b*a*b, a*c*b*a*c, a*c*b*c*a, a*c*b*c*b, b*a*b*a*b, b*a*b*a*c, 
-  b*a*b*c*a, b*a*b*c*b, b*a*c*a*b, b*a*c*a*c, b*a*c*b*a, b*a*c*b*c, 
-  b*c*a*b*a, b*c*a*b*c, b*c*a*c*a, b*c*a*c*b, b*c*b*a*b, b*c*b*a*c, 
-  b*c*b*c*a, b*c*b*c*b, c*a*b*a*b, c*a*b*a*c, c*a*b*c*a, c*a*b*c*b, 
-  c*a*c*a*b, c*a*c*a*c, c*a*c*b*a, c*a*c*b*c, c*b*a*b*a, c*b*a*b*c, 
-  c*b*a*c*a, c*b*a*c*b, c*b*c*a*b, c*b*c*a*c, c*b*c*b*a, c*b*c*b*c ]
-gap> List(B5,w->Order(w^phi));
-[ 2, 2, 2, 2, 20, 2, 20, 2, 20, 20, 2, 20, 2, 20, 2, 2, 2, 20, 2, 2, 12, 
-  2, 12, 20, 12, 2, 12, 2, 12, 2, 12, 2, 2, 2, 20, 2, 12, 2, 12, 2, 12, 
-  12, 2, 20, 12, 12, 2, 2, 2, 12, 12, 12, 2, 12, 20, 2, 2, 12, 12, 12, 
-  20, 12, 2 ]
+gap> B3 := NormedWords(F,3);
+[ a*b*c ]
+gap> B3 := List(B3,g->g^phi);
+[ <bijective rcwa mapping of GF(2)[x] with modulus x^3+x> ]
+gap> List(B3,Order);
+[ 20 ]
+gap> B5 := NormedWords(F,5);
+[ a*b*c*a*c, a*b*c*b*c ]
+gap> B5 := List(B5,g->g^phi);
+[ <bijective rcwa mapping of GF(2)[x] with modulus x^3+x>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2+x> ]
+gap> List(B5,Order);
+[ 12, 12 ]
+gap> B7 := NormedWords(F,7);
+[ a*b*c*a*c*a*c, a*b*c*a*c*b*c, a*b*c*b*c*a*c, a*b*c*b*c*b*c ]
+gap> B7 := List(B7,g->g^phi);
+[ <bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2+x>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^5+x>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2+x>, 
+  <bijective rcwa mapping of GF(2)[x] with modulus x^5+x> ]
+gap> List(B7,Order);
+[ 12, 12, 12, 30 ]
+gap> B9 := NormedWords(F,9);
+[ a*b*c*a*b*c*a*b*c, a*b*c*a*c*a*c*a*c, a*b*c*a*c*a*c*b*c, a*b*c*a*c*b*c*a*c, 
+  a*b*c*a*c*b*c*b*c, a*b*c*b*c*a*c*a*c, a*b*c*b*c*a*c*b*c, a*b*c*b*c*b*c*a*c, 
+  a*b*c*b*c*b*c*b*c ]
+gap> B9 := List(B9,g->g^phi);;
+gap> List(B9,Order);
+[ 20, 4, 30, 12, 42, 30, 4, 42, 12 ]
 ]]>
-</Example>
-
-We have a look at some subgroups of our group <C>G</C>:
-
-<Example>
-<![CDATA[
-gap> H := Subgroup(G,[a*b,a*c]);
-<rcwa group over GF(2)[x] with 2 generators>
-gap> IsNormal(G,H);
-true
-gap> Index(G,H);
-2
-gap> G/H;
-Group([ (1,2), (1,2), (1,2) ])
-gap> H2 := Subgroup(G,[a*b*c,a*c]);;
-gap> IsNormal(G,H2);
-true
-gap> elm := First(G,g->not IsTame(g));
-<wild bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
-gap> elm in H;
-true
-gap> elm in H2;
-true
-gap> IsSubgroup(H,H2);
-false
-gap> phi := EpimorphismFromFreeGroup(G);
-[ f1, f2, f3 ] -> [ ClassTransposition(0*Z(2),x,Z(2)^0,x),
-  ClassTransposition(0*Z(2),x^2+Z(2)^0,Z(2)^0,x^2+Z(2)^0),
-  ClassTransposition(Z(2)^0,x,0*Z(2),x^2+x) ]
-gap> F := Source(phi);
-<free group on the generators [ f1, f2, f3 ]>
-gap> PreImagesRepresentative(phi,elm);
-f3*f1^-1
-]]>
-</Example>
+</Log>
 
 Issue <C>UnwrapExample("WildSubgroupOfCTGF2x");</C>
 in order to assign the global variables defined in this example.
