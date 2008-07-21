@@ -887,7 +887,7 @@ to assign the global variable&nbsp;<C>u</C> defined in this example.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:WildSubgroupOfCTGF2x">
+<Section Label="sec:OddNumberOfGens_FiniteOrder">
 <Heading>
   An infinite subgroup of CT(GF(2)[x]) with many torsion elements
 </Heading>
