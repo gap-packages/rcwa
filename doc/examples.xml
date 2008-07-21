@@ -889,7 +889,7 @@ to assign the global variable&nbsp;<C>u</C> defined in this example.
 
 <Section Label="sec:WildSubgroupOfCTGF2x">
 <Heading>
-  A wild subgroup of CT(GF(2)[x]) with many torsion elements
+  An infinite subgroup of CT(GF(2)[x]) with many torsion elements
 </Heading>
 
 In this section, we have a look at the following subgroup of CT(GF(2)[x]):
@@ -1040,7 +1040,7 @@ gap> List(B9,Order);
 ]]>
 </Log>
 
-Issue <C>UnwrapExample("WildSubgroupOfCTGF2x");</C>
+Issue <C>UnwrapExample("OddNumberOfGens_FiniteOrder");</C>
 in order to assign the global variables defined in this example.
 
 </Section>
