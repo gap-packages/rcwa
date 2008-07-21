@@ -219,9 +219,9 @@ CallFuncList(UnhideGlobalVariables,List("klmnx",ch->[ch]));
 
 #############################################################################
 ##
-##  A wild subgroup of CT(GF(2)[x]) with many torsion elements
+##  An infinite subgroup of CT(GF(2)[x]) with many torsion elements
 ##
-RCWAExamples.WildSubgroupOfCTGF2x := rec(
+RCWAExamples.OddNumberOfGens_FiniteOrder := rec(
 
   x := Indeterminate(GF(2)),
   R := PolynomialRing(GF(2),1),
@@ -233,7 +233,7 @@ RCWAExamples.WildSubgroupOfCTGF2x := rec(
 
 );
 
-SetName(RCWAExamples.WildSubgroupOfCTGF2x.x,"x");
+SetName(RCWAExamples.OddNumberOfGens_FiniteOrder.x,"x");
 
 #############################################################################
 ##
