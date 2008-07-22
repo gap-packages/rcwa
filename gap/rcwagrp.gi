@@ -2218,6 +2218,18 @@ InstallMethod( Embedding,
 
 #############################################################################
 ##
+#S  Constructing rcwa groups: Other. ////////////////////////////////////////
+##
+#############################################################################
+
+InstallGlobalFunction( GroupByResidueClasses,
+
+  classes -> Group( List( Filtered( Combinations( classes, 2 ),
+                                    cls -> IsEmpty( Intersection( cls ) ) ),
+                          ClassTransposition ) ) );
+
+#############################################################################
+##
 #S  Iterators for rcwa groups. //////////////////////////////////////////////
 ##
 #############################################################################

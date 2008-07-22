@@ -1673,6 +1673,14 @@ gap> g = (ClassTransposition(3,4,4,6)*ClassShift(4,6))^3/
 true
 gap> g = RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5(6)])");
 true
+gap> G := GroupByResidueClasses(List([[0,2],[0,4],[1,4],[2,4],[3,4]],
+>                                    ResidueClass));
+<rcwa group over Z with 8 generators>
+gap> H := Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
+>                    ClassTransposition)); # (first) Higman-Thompson group
+<rcwa group over Z with 4 generators>
+gap> G = H;
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
