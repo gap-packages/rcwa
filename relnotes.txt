@@ -568,14 +568,43 @@ Changes between version 2.5.3 and version 2.5.4:
 
 Changes between version 2.5.4 and version 3.0.0 (??? ??, 200?):
 
-The main change is that now RCWA can deal with rcwa groups over Z^2.
+The main changes are:
+
+ - Now, RCWA provides basic functionality for computing in
+   rcwa groups over Z^2.
+
+ - Many examples have been added -- to the manual as well as
+   to the files in the examples/ subdirectory.
 
 Further changes are:
+
+ - A function `GroupByResidueClasses' has been added.
+
+ - A method for `ResidueClass' has been added which accepts an expression
+   involving class transpositions, class shifts, class reflections,
+   operators like *, /, ^ and brackets. The expression is to be provided
+   as a string.
 
  - A function `DrawGrid' to draw pictures of residue class unions of Z^2
    has been added.
 
- - Now, RCWA needs GAP 4.4.10, ResClasses 3.0.0, GAPDoc 1.1
-   and Polycyclic 2.2.
+ - A property `IsClassWiseTranslating' and an attribute `MaximalShift'
+   have been introduced.
+
+ - `Trajectory' now recognizes the option "Action"; default is `OnPoints'.
+
+ - The amount of memory needed to store rcwa mappings with only few different
+   coefficient triples has been reduced by making equal triples identical.
+
+ - A `sparse' multiplication method for rcwa mappings has been added.
+
+ - `LargestSourcesOfAffineMappings' has been made more efficient.
+
+ - Now, class transpositions, class shifts, class rotations and
+   class reflections have no longer predefined names, and the nice
+   `View'ing is cared for by separate methods.
+
+ - Now, RCWA needs GAP 4.4.10, ResClasses 3.0.0 (which now supports
+   unions of residue classes of Z^2), GAPDoc 1.1 and Polycyclic 2.2.
 
 
