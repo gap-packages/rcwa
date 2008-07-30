@@ -356,6 +356,27 @@ SetName(RCWAExamples.MatthewsLeigh.ML2,"ML2");
 
 #############################################################################
 ##
+##  The Hicks - Mullen - Yucas - Zavislak example.
+##
+##  In the article
+##
+##  Kenneth Hicks, Gary L. Mullen, Joseph L. Yucas, and Ryan Zavislak:
+##  A Polynomial Analogue of the 3N + 1 Problem?
+##  Amer. Math. Monthly 115 (2008), no. 7
+##
+##  it is shown that the mapping C given below is contracting.
+##
+RCWAExamples.HicksMullenYucasZavislak := rec(
+
+  x := Indeterminate(GF(2),1),
+  R := PolynomialRing(GF(2),1),
+
+  C := RcwaMapping(~.R,~.x,[[1,0,~.x],[~.x+1,1,1]]*One(~.R))
+
+);
+
+#############################################################################
+##
 ##  Some 'Collatz-like' permutations.
 ##
 RCWAExamples.CollatzlikePerms := rec(
