@@ -3678,7 +3678,7 @@ InstallMethod( IsTransitive,
   function ( G, S )
 
     local  ShortOrbitsFound, ShiftedClass, ShiftedClassPowers,
-           R, x, gen, comm, el, WordLng, cl, ranges, range;
+           R, H, x, gen, comm, el, WordLng, cl, ranges, range;
 
     ShortOrbitsFound := function ( range, maxlng )
       
@@ -3733,63 +3733,83 @@ InstallMethod( IsTransitive,
     end;
 
     R := Source(One(G));
+
     if not IsSubset(R,S) then TryNextMethod(); fi;
-    if   not ForAll(GeneratorsOfGroup(G),g->S^g=S)
-    then Error("IsTransitive: <G> must act on <S>.\n"); fi;
-    Info(InfoRCWA,1,"IsTransitive: ",
-                    "testing for finiteness and searching short orbits ...");
-    if   HasIsFinite(G) and IsFinite(G)
-    then Info(InfoRCWA,1,"The group is finite."); return false; fi;
-    if   (IsRcwaGroupOverGFqx(G) or IsZ_pi(R))
-      and IsFinitelyGeneratedGroup(G) and HasIsTame(G) and IsTame(G)
-    then return false; fi;
-    if   IsIntegers(R) or IsZ_pi(R) then
-      ranges := [[-10..10],[-30..30],[-100..100]];
-    elif IsZxZ(R) then
-      ranges := List([[[2,0],[0,2]],[[4,0],[0,4]],
-                      [[8,0],[0,8]],[[16,0],[0,16]]],m->AllResidues(R,m));
-    elif IsPolynomialRing(R) then
-      x := IndeterminatesOfPolynomialRing(R)[1];
-      ranges := [AllResidues(R,x^2),AllResidues(R,x^3),
-                 AllResidues(R,x^4),AllResidues(R,x^6)];
-    fi;
-    ranges := List(ranges,range->Intersection(range,S));
-    for range in ranges do
-      if ShortOrbitsFound(range,4*Length(range)) then return false; fi;
-    od;
-    if   IsFinite(G)
-    then Info(InfoRCWA,1,"The group is finite."); return false; fi;
-    if   (IsRcwaGroupOverGFqx(G) or IsZ_pi(R))
-      and IsFinitelyGeneratedGroup(G) and IsTame(G)
-    then return false; fi;
-    if IsIntegers(R) then 
-      Info(InfoRCWA,1,"Searching for class shifts ...");
-      Info(InfoRCWA,2,"... in generators");
-      gen := GeneratorsOfGroup(G); cl := ShiftedClass(gen);
-      if cl <> fail then return OrbitUnion(G,cl) = S; fi;
-      Info(InfoRCWA,2,"... in commutators of the generators");
-      comm := List(Combinations(gen,2),g->Comm(g[1],g[2]));
-      cl := ShiftedClass(comm);
-      if cl <> fail then return OrbitUnion(G,cl) = S; fi;
-      Info(InfoRCWA,2,"... in powers of the generators");
-      cl := ShiftedClassPowers(gen);
-      if cl <> fail then return OrbitUnion(G,cl) = S; fi;
-      Info(InfoRCWA,2,"... in powers of the commutators of the generators");
-      cl := ShiftedClassPowers(comm);
-      if cl <> fail then return OrbitUnion(G,cl) = S; fi;
-      gen := Union(gen,List(gen,Inverse)); el := gen; WordLng := 1;
-      repeat
-        WordLng := WordLng + 1;
-        Info(InfoRCWA,2,"... in powers of words of length ",WordLng,
-                        " in the generators");
-        el := Union(el,Flat(List(el,g->g*gen)));
-        cl := ShiftedClassPowers(el);
-        if cl <> fail then return OrbitUnion(G,cl) = S; fi;
-      until false;
+    if not ForAll(GeneratorsOfGroup(G),g->S^g=S) then return false; fi;
+
+    if IsFinite(S) then
+
+      H := Action(G,AsList(S));
+      return DegreeAction(H) = Size(S) and IsTransitive(H,MovedPoints(H));
+
     else
-      Info(InfoRCWA,1,"... this method gives up ...");
-      TryNextMethod();
+
+      Info(InfoRCWA,1,"IsTransitive: ",
+                      "finiteness test and search for short orbits ...");
+
+      if   HasIsFinite(G) and IsFinite(G)
+      then Info(InfoRCWA,1,"The group is finite."); return false; fi;
+      if   (IsRcwaGroupOverGFqx(G) or IsZ_pi(R))
+        and IsFinitelyGeneratedGroup(G) and HasIsTame(G) and IsTame(G)
+      then return false; fi;
+
+      if   IsIntegers(R) or IsZ_pi(R) then
+        ranges := [[-10..10],[-30..30],[-100..100]];
+      elif IsZxZ(R) then
+        ranges := List([[[2,0],[0,2]],[[4,0],[0,4]],
+                        [[8,0],[0,8]],[[16,0],[0,16]]],m->AllResidues(R,m));
+      elif IsPolynomialRing(R) then
+        x := IndeterminatesOfPolynomialRing(R)[1];
+        ranges := [AllResidues(R,x^2),AllResidues(R,x^3),
+                   AllResidues(R,x^4),AllResidues(R,x^6)];
+      fi;
+      ranges := List(ranges,range->Intersection(range,S));
+      for range in ranges do
+        if ShortOrbitsFound(range,4*Length(range)) then return false; fi;
+      od;
+
+      if   IsFinite(G)
+      then Info(InfoRCWA,1,"The group is finite."); return false; fi;
+
+      if   (IsRcwaGroupOverGFqx(G) or IsZ_pi(R))
+        and IsFinitelyGeneratedGroup(G) and IsTame(G)
+      then return false; fi;
+
+      if IsIntegers(R) then 
+
+        Info(InfoRCWA,1,"Searching for class shifts ...");
+        Info(InfoRCWA,2,"... in generators");
+        gen := GeneratorsOfGroup(G); cl := ShiftedClass(gen);
+        if cl <> fail then return OrbitUnion(G,cl) = S; fi;
+        Info(InfoRCWA,2,"... in commutators of the generators");
+        comm := List(Combinations(gen,2),g->Comm(g[1],g[2]));
+        cl := ShiftedClass(comm);
+        if cl <> fail then return OrbitUnion(G,cl) = S; fi;
+        Info(InfoRCWA,2,"... in powers of the generators");
+        cl := ShiftedClassPowers(gen);
+        if cl <> fail then return OrbitUnion(G,cl) = S; fi;
+        Info(InfoRCWA,2,"... in powers of commutators of the generators");
+        cl := ShiftedClassPowers(comm);
+        if cl <> fail then return OrbitUnion(G,cl) = S; fi;
+        gen := Union(gen,List(gen,Inverse)); el := gen; WordLng := 1;
+        repeat
+          WordLng := WordLng + 1;
+          Info(InfoRCWA,2,"... in powers of words of length ",WordLng,
+                          " in the generators");
+          el := Union(el,Flat(List(el,g->g*gen)));
+          cl := ShiftedClassPowers(el);
+          if cl <> fail then return OrbitUnion(G,cl) = S; fi;
+        until false;
+
+      else
+
+        Info(InfoRCWA,1,"... this method gives up ...");
+        TryNextMethod();
+
+      fi;
+
     fi;
+
   end );
 
 #############################################################################
