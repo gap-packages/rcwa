@@ -526,6 +526,17 @@ DeclareOperation( "PreImagesRepresentatives",
 ##
 #O  Factorization( [ <G>, ], <g> ) . . . . . .  factorization into generators
 ##
+if not IsOperation( Factorization ) then # for GAP 4.4.12
+  SmallGroupFactorization := Factorization;
+  MakeReadWriteGlobal( "Factorization" );
+  Unbind( Factorization );
+  DeclareOperation( "Factorization",
+                    [ IsGroup, IsMultiplicativeElementWithInverse ] );
+  InstallMethod( Factorization, "Library method", IsCollsElms,
+                 [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
+                 SmallGroupFactorization );
+fi;
+
 DeclareOperation( "Factorization", [ IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
