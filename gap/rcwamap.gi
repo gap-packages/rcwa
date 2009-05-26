@@ -2175,7 +2175,7 @@ InstallGlobalFunction( NumberClassPairs,
     if not IsPosInt( m ) then Error("usage: NrClassPairs( <m> )\n"); fi;
 
     coprimes := Union([[1,1]],Filtered(Combinations([1..Int(m/2)],2),
-                                    t->Gcd(t) = 1));
+                                       t->Gcd(t) = 1));
     nr := 0;
     for d in [2..m] do
       modlist := Filtered(d*coprimes,mods->Maximum(mods)<=m);
