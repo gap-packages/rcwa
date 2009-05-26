@@ -2163,6 +2163,35 @@ InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
 
 #############################################################################
 ##
+#F  NumberClassPairs( <m> ) . . compute Length( ClassPairs( m ) ) efficiently
+#F  NrClassPairs( <m> )
+##
+InstallGlobalFunction( NumberClassPairs,
+
+  function ( m )
+
+    local  nr, coprimes, m1, m2, modlist, mods, d;
+
+    if not IsPosInt( m ) then Error("usage: NrClassPairs( <m> )\n"); fi;
+
+    coprimes := Union([[1,1]],Filtered(Combinations([1..Int(m/2)],2),
+                                    t->Gcd(t) = 1));
+    nr := 0;
+    for d in [2..m] do
+      modlist := Filtered(d*coprimes,mods->Maximum(mods)<=m);
+      for mods in modlist do
+        m1 := mods[1]; m2 := mods[2];
+        if m1 = m2 then nr := nr + m1 * (m1 - 1)/2;
+                   else nr := nr + (d - 1)/d * m1 * m2;
+        fi;
+      od;
+    od;
+
+    return nr;  
+  end );
+
+#############################################################################
+##
 #F  PrimeSwitch( <p> ) . an rcwa mapping of Z with multiplier p and divisor 2
 #F  PrimeSwitch( <p>, <k> )
 ##

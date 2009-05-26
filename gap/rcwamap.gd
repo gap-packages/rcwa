@@ -436,6 +436,8 @@ DeclareOperation( "SplittedClassTransposition",
 ##
 #F  ClassPairs( <m> )
 #F  ClassPairs( <R>, <m> )
+#F  NumberClassPairs( <m> )
+#F  NrClassPairs( <m> )
 #V  CLASS_PAIRS
 #V  CLASS_PAIRS_LARGE
 ##
@@ -444,11 +446,19 @@ DeclareOperation( "SplittedClassTransposition",
 ##  of disjoint residue classes r1(m1) and r2(m2) with m1, m2 <= <m>.
 ##  In its two-argument form, it does basically "the same" for the ring <R>.
 ##
+##  The function `NumberClassPairs' returns the number of unordered pairs of
+##  disjoint residue classes r1(m1) and r2(m2) with m1, m2 <= <m>.
+##  While this is just Length(ClassPairs(m)), `NumberClassPairs' computes
+##  this number much faster, and without generating a list of all tuples.
+##  `NrClassPairs' is a synonym for `NumberClassPairs'.
+##
 ##  The variables `CLASS_PAIRS' and `CLASS_PAIRS_LARGE' are used to cache
 ##  lists computed by `ClassPairs'. These caches are mainly used to generate
 ##  random class transpositions.
 ##
 DeclareGlobalFunction( "ClassPairs" );
+DeclareGlobalFunction( "NumberClassPairs" );
+DeclareSynonym( "NrClassPairs", NumberClassPairs );
 DeclareGlobalVariable( "CLASS_PAIRS" );
 DeclareGlobalVariable( "CLASS_PAIRS_LARGE" );
 
