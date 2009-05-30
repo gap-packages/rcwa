@@ -1367,6 +1367,10 @@ In its one-argument form, this function returns a list of 4-tuples
 pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
 with <M>m_1, m_2 \leq m</M>. In its two-argument form, it does
 <Q>the equivalent</Q> for the ring&nbsp;<A>R</A>.
+<Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
+The function <C>NrClassPairs(<A>m</A>)</C> returns the length of the
+list <C>ClassPairs(<A>m</A>)</C>, where the result is computed much
+faster and without actually generating the list of tuples.
 
 <Example>
 <![CDATA[
