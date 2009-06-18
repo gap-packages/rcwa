@@ -1829,8 +1829,6 @@ InstallGlobalFunction( ClassTransposition,
 
     latex := ValueOption("LaTeXString");
     if latex = fail then
-      if is_usual_ct then type := "ClassTransposition(";
-                     else type := "GeneralizedClassTransposition("; fi;
       SetLaTeXString(result,Concatenation("\\tau_{",
                                           String(r1),"(",String(m1),"),",
                                           String(r2),"(",String(m2),")}"));
@@ -2026,8 +2024,10 @@ InstallMethod( String, "for class transpositions (RCWA)", true,
 
     local  type, cls, str;
 
-    type := "GeneralizedClassTransposition("; cls := TransposedClasses(ct);
-    if IsClassTransposition(ct) then type := "ClassTransposition("; fi;
+    cls := TransposedClasses(ct);
+    if   ForAll(cls,IsResidueClass)
+    then type := "ClassTransposition(";
+    else type := "GeneralizedClassTransposition("; fi;
     str := Concatenation(List([type,Source(ct),",",
                                Residue(cls[1]),",",Modulus(cls[1]),",",
                                Residue(cls[2]),",",Modulus(cls[2]),")"],
@@ -2043,8 +2043,10 @@ InstallMethod( ViewString, "for class transpositions (RCWA)", true,
 
     local  type, cls;
 
-    type := "GeneralizedClassTransposition("; cls := TransposedClasses(ct);
-    if IsClassTransposition(ct) then type := "ClassTransposition("; fi;
+    cls := TransposedClasses(ct);
+    if   ForAll(cls,IsResidueClass)
+    then type := "ClassTransposition(";
+    else type := "GeneralizedClassTransposition("; fi;
     if   IsRing(Source(ct)) then
       return Concatenation(List([type,
                                  Residue(cls[1]),",",Modulus(cls[1]),",",
@@ -3778,6 +3780,23 @@ InstallMethod( Multpk, "for rcwa mappings of Z^2 (RCWA)", true,
     r := Filtered([1..NumberOfResidues(R,m)],
                   i->PadicValuation(DeterminantMat(c[i][1])/c[i][3]^2,p)=k);
     return ResidueClassUnion(R,m,AllResidues(R,m){r});
+  end );
+
+#############################################################################
+##
+#M  MappedPartitions( <g> ) . . . . . . . . . . . . . . . . for rcwa mappings
+##
+InstallMethod( MappedPartitions, "for rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+
+
+  function ( g )
+
+    local  P;
+
+    P := AllResidueClassesModulo( Source(g), Mod(g) );
+
+    return [ List(P,Density), List(P^g,Density) ];
   end );
 
 #############################################################################
@@ -6663,6 +6682,7 @@ InstallMethod( FactorizationIntoCSCRCT,
       Info(InfoRCWA,1,"Modulus(<g>) = ",Modulus(g),
                       ", Multiplier(<g>) = ",Multiplier(g),
                       ", Divisor(<g>) = ",Divisor(g));
+      Info(InfoRCWA,2,"MappedPartitions(<g>) = ",MappedPartitions(g));
     end;
 
     SaveState := function ( )
