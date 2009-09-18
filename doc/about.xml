@@ -58,7 +58,7 @@ the author feels that this is a gap which is worth to be filled.
 <Section Label="sec:Purpose">
 <Heading>Purpose of this package</Heading>
 
-The present scope of computational group theory essentially comprises finite
+So far, research in computational group theory focussed mainly on finite
 permutation groups, matrix groups, finitely presented groups, polycyclically
 presented groups and automata groups.
 For details, we refer to&nbsp;<Cite Key="HoltEickOBrien05"/>. <P/>
@@ -67,9 +67,9 @@ The purpose of this package is twofold:
 <List>
 
   <Item>
-    On the one hand, it introduces a new class of groups which are
+    On the one hand, it deals with another large class of groups which are
     accessible to computational methods, and it therefore extends the
-    current scope of computational group theory as outlined above.
+    range of groups which can be dealt with by means of computation.
   </Item>
 
   <Item>
@@ -137,11 +137,10 @@ classes, see <Ref Func="ClassTransposition" Label="r1, m1, r2, m2"/>
 It is countable, but it has an uncountable series of simple subgroups
 which is parametrized by the sets of odd primes. <P/>
 
-Proofs of most of the results mentioned here have not yet appeared in print.
-However they can be found in the preprint&nbsp;<Cite Key="Kohl06b"/>, which
-is available on the author's homepage. Descriptions of many of the
-algorithms and methods which are implemented in this package can be found
-in&nbsp;<Cite Key="Kohl07a"/>.
+Proofs of most of the results mentioned here can be found
+in&nbsp;<Cite Key="Kohl09"/>. Descriptions of many of the algorithms
+and methods which are implemented in this package can be found
+in&nbsp;<Cite Key="Kohl08b"/>.
 
 </Section>
 
