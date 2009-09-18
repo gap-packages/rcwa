@@ -19,7 +19,7 @@ is used. Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
 as <E>mathematically</E> trivial respectively straightforward, and that the
 code of a function or method attributed in this way can still be reasonably
 long and complicated. Longer and better descriptions of many of the
-algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
+algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
 
 <List>
 
@@ -110,7 +110,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
   </Mark>
   <Item>
     Attributes and properties are set according
-    to&nbsp;<Cite Key="Kohl06b"/>.
+    to&nbsp;<Cite Key="Kohl09"/>.
   </Item>
 
   <Mark>
@@ -737,7 +737,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl07a"/>.
 
     The criterion <Q>surjective, but not injective means wild</Q>
     (Theorem&nbsp;A.8 in&nbsp;<Cite Key="Kohl05"/>) is the subject
-    of&nbsp;<Cite Key="Kohl06a"/>.
+    of&nbsp;<Cite Key="Kohl07a"/>.
 
     The package <Package>GRAPE</Package> is needed for the application
     of the criterion which says that an rcwa permutation is wild if
