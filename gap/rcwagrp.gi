@@ -2531,8 +2531,7 @@ InstallMethod( Modulus,
       CheckModulus(G,m);                           # check
       return m;
     fi;
-    els := Union(gens,List(Tuples(gens,2),t->t[1]*t[2]),
-                      List(Tuples(gens,2),t->Comm(t[1],t[2])));
+    els := Ball(G,One(G),3);
     if not ForAll(els,IsTame) then
       Info(InfoRCWA,3,"Modulus: <G> has a wild 2-generator product ",
                       "or 2-generator commutator.");
@@ -4632,10 +4631,18 @@ InstallMethod( IsSimpleGroup,
 
   function ( G )
 
-    if   ShortOrbits(G,AllResidues(Source(One(G)),
-                                   Lcm(List(GeneratorsOfGroup(G),
-                                            Modulus))),64) <> []
-      or not IsPerfect(G)
+    local  interval;
+
+    if   IsRcwaGroupOverZ(G) then
+      interval := [-Lcm(List(GeneratorsOfGroup(G),Modulus))..
+                       Lcm(List(GeneratorsOfGroup(G),Modulus))];
+    else
+      interval := AllResidues(Source(One(G)),
+                              Lcm(List(GeneratorsOfGroup(G),
+                                       Modulus)));
+    fi;
+
+    if   ShortOrbits(G,interval,64) <> [] or not IsPerfect(G)
     then return false; fi;
 
     if IsTame(G) then
