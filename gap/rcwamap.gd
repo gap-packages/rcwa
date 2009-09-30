@@ -505,11 +505,17 @@ DeclareGlobalFunction( "ClassUnionShift" );
 #############################################################################
 ##
 #A  FactorizationIntoCSCRCT( <g> )
+#A  FactorizationIntoElementaryCSCRCT( <g> )
 ##
 ##  A factorization of an rcwa permutation into class shifts,
-##  class reflections and class transpositions.
+##  class reflections and class transpositions. The latter operation
+##  decomposes into factors with particularly small moduli -- for
+##  elements of CT_P(Z), where P is some finite set of odd primes,
+##  the factors are taken from a finite set of generators.
 ##
 DeclareAttribute( "FactorizationIntoCSCRCT", IsMultiplicativeElement );
+DeclareAttribute( "FactorizationIntoElementaryCSCRCT",
+                  IsMultiplicativeElement );
 DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 
 #############################################################################
@@ -676,6 +682,12 @@ DeclareAttribute( "LargestSourcesOfAffineMappings", IsRcwaMapping );
 ##  The image density of any bijective rcwa mapping is 1.
 ##
 DeclareAttribute( "ImageDensity", IsRcwaMapping );
+
+#############################################################################
+##
+#A  MappedPartitions( <g> )
+##
+DeclareAttribute( "MappedPartitions", IsRcwaMapping );
 
 #############################################################################
 ##

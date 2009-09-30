@@ -7005,4 +7005,113 @@ InstallMethod( Factorization,
 
 #############################################################################
 ##
+#F  ReducingConjugatorCT3Z( <tau> )
+##
+BindGlobal( "ReducingConjugatorCT3Z",
+
+  function ( tau )
+
+    local  w, ct, cls, cls4, cls6, cl, cl1, cl2, cl3, cl4;
+
+    w    := [];
+    cls  := Union(List([2,3,4,6,8,9,12,18],AllResidueClassesModulo));
+    cls4 := AllResidueClassesModulo(4);
+    cls6 := AllResidueClassesModulo(6);
+
+    repeat
+
+      repeat
+
+        cl := First(cls4,cl->IsSubset(cl,Support(tau)));
+        if cl = fail then break; fi;
+
+        ct := ClassTransposition((Residue(cl)+1) mod 2,2,Residue(cl),4);
+        tau := tau^ct;
+        Add(w,ct); 
+
+      until cl = fail;
+
+      repeat
+
+        cl := First(cls6,cl->IsSubset(cl,Support(tau)));
+        if cl = fail then break; fi;
+
+        ct := ClassTransposition((Residue(cl)+1) mod 2,2,Residue(cl),6);
+        tau := tau^ct;
+        Add(w,ct); 
+
+      until cl = fail;
+
+      cl1 := TransposedClasses(tau)[1]; cl2 := TransposedClasses(tau)[2];
+
+      cl3 := First(cls,cl->Intersection(cl,Support(tau)) = []);
+
+      if cl3 = fail then break; fi;
+
+      cl4 := First(cls,cl->Intersection(cl,cl1) = []
+                       and Intersection(cl,cl3) = []
+                       and IsSubset(cl,cl2) and Modulus(cl) > Modulus(cl3));
+
+      if cl4 = fail then break; fi;
+
+      ct  := ClassTransposition(cl3,cl4);
+      tau := tau^ct;
+      Add(w,ct);
+    
+    until cl4 = fail;
+
+    return [ tau, w ];
+  end );
+
+#############################################################################
+##
+#M  FactorizationIntoElementaryCSCRCT( <g> )
+##
+InstallMethod( FactorizationIntoElementaryCSCRCT,
+               "for elements of CT_{3}(Z) (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( g )
+
+    local  CT3Zgens, facts, elementaryfacts, ct, ct1,
+           elems, elemsold, t;
+
+    if not IsBijective(g) then
+      Error("usage: FactorizationIntoElementaryCSCRCT( <g> ), ",
+            "where <g> is an rcwa permutation\n");
+    fi;
+
+    if   not IsSubset([2,3],PrimeSet(g)) or not IsSignPreserving(g)
+    then TryNextMethod(); fi;
+
+    CT3Zgens := List([ [0,2,1,2], [1,2,2,4], [0,2,1,4], [1,4,2,4],
+                       [0,3,1,3], [1,3,2,3], [0,3,1,9], [0,3,4,9],
+                       [0,3,7,9], [0,2,1,6], [0,3,1,6] ],
+                     ClassTransposition);
+
+    facts           := Flat(List(Factorization(g),Factorization));
+    elementaryfacts := [];
+
+    for ct in facts do
+      elems := [ct];
+      while not ForAll(elems,
+                       ct->IsSubset([2,3,4,6,8,9],
+                                    List(TransposedClasses(ct),Modulus))) do
+        elemsold := ShallowCopy(elems);
+        elems    := [];
+        for ct1 in elemsold do
+          t := ReducingConjugatorCT3Z(ct1);
+          Append(elems,Concatenation(t[2],[t[1]],Reversed(t[2])));
+        od;
+      od;
+      if   Product(elems) <> ct
+      then Error("ElementaryFactorization: internal error!\n"); fi;
+      Append(elementaryfacts,elems);
+    od;
+
+    return elementaryfacts;
+  end );
+
+#############################################################################
+##
 #E  rcwamap.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
