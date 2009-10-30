@@ -77,7 +77,7 @@
 ##  described in the author's article
 ##
 ##  Algorithms for a Class of Infinite Permutation Groups.
-##  J. Symb. Comput. 2008+, 43+, 37 pages. DOI: 10.1016/j.jsc.2007.12.001. 
+##  J. Symb. Comput. 43(2008), no. 8, 545-581, DOI: 10.1016/j.jsc.2007.12.001
 ##
 Revision.rcwamap_gd :=
   "@(#)$Id$";
