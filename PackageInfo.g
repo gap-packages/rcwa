@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
 Version          := "3.dev",
-Date             := "15/02/2009",
+Date             := "16/01/2010",
 ArchiveURL       := "http://univlora.edu.al/personel/kohl/rcwa/rcwa-3.0.0",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
@@ -20,9 +20,9 @@ Persons          := [
                            IsMaintainer  := true,
                            Email         := "kohl@univlora.edu.al",
                            WWWHome       := "http://univlora.edu.al/personel/kohl/",
-                           PostalAddress := Concatenation("Departamenti i Matematikes\n",
-                                                          "Universiteti \"Ismail Qemali\" ",
-                                                          "Vlore\nLagja: Pavaresia\n",
+                           PostalAddress := Concatenation("Department of Mathematics\n",
+                                                          "University of Vlora\n",
+                                                          "Lagjja: Pavaresia\n",
                                                           "Vlore / Albania"),
                            Place         := "Vlore / Albania",
                            Institution   := "University of Vlora"
