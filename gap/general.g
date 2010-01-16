@@ -16,11 +16,16 @@ Revision.general_g :=
 #S  Take care of the change of the interface for floats. ////////////////////
 ##
 if   VERSION = "4.dev" or not IsBound( Float ) then
-  if IsReadOnlyGlobal("Float") then MakeReadWriteGlobal("Float"); fi;
+  if   IsReadOnlyGlobal("Float")
+  then MakeReadWriteGlobal("Float"); Unbind(Float); fi;
   BindGlobal( "Float",
     function ( a )
-      if not IsString(a) then a := String(a); fi;
-      return MACFLOAT_STRING(a);
+      if   IsString(a) then return MACFLOAT_STRING(a);
+      elif IsInt(a)    then return MACFLOAT_INT(a);
+      elif IsRat(a)    then return MACFLOAT_INT(NumeratorRat(a))/
+                                   MACFLOAT_INT(DenominatorRat(a));
+      else return fail;
+      fi; 
     end );
 fi;
 
