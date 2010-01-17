@@ -5,19 +5,19 @@
 #H  @(#)$Id$
 ##
 ##  This file contains a collection of examples of rcwa mappings and -groups.
+##  It can be read in a GAP session by issueing RCWAReadExamples();.
+##
+##  Selected examples are discussed in some detail in the manual chapter
+##  "Examples". The global variables defined there can be assigned by
+##  applying the function `UnwrapExample' to the name of the respective
+##  component of the record `RCWAExamples'. The component names are given
+##  in the corresponding sections of the manual.
+##
 ##  Note that since the beginnings of RCWA, examples have only been added to
 ##  this file, but never been removed. For this reason, there are 'older' and
 ##  'newer' examples, where the latter are often considerably 'better' than
-##  the former. Selected examples are discussed in some detail in the manual
-##  chapter "Examples".
+##  the former. 
 ##
-##  This file is read by RCWAReadExamples();. The global variables defined in
-##  the discussions of the examples in the manual can be assigned by applying
-##  the function `UnwrapExample' to the name of the respective component of
-##  the record `RCWAExamples'. These component names are given in the corres-
-##  ponding sections of the manual chapter "Examples".
-##
-
 if not IsBound( RCWAExamples ) then RCWAExamples := rec( ); fi;
 
 #############################################################################
