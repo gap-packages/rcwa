@@ -506,6 +506,45 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
+#M  RestrictedBall( <M>, <f>, <r> ) . . . . . . . . . for rcwa monoids over Z
+##
+##  As element tests can be expensive, this method does not check whether <f>
+##  is indeed an element of <M>.
+##
+InstallMethod( RestrictedBall,
+               "for an rcwa monoid over Z and an element thereof (RCWA)",
+               ReturnTrue, [ IsRcwaMonoidOverZ, IsRcwaMappingOfZ, IsInt ], 0,
+
+  function ( G, g, r )
+
+    local  gens, ball, new, h1, h2, h, k, spheres;
+
+    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or r < 0
+    then TryNextMethod(); fi;
+    spheres := true in List(["spheres","Spheres"],ValueOption);
+    if spheres then ball := [[g]]; else ball := [g]; fi;
+    if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
+                  else gens := Set(GeneratorsOfMonoid(G)); fi;
+    for k in [1..r] do
+      new := [];
+      for h1 in ball do
+        for h2 in gens do
+          h := h1 * h2;
+          if   Mod(h) <= Maximum(Mod(h1),Mod(h2))
+          then Add(new,h); fi;
+        od;
+      od;
+      if spheres then
+        Add(ball,Difference(new,Union(ball[Maximum(1,k-1)],ball[k])));
+      else
+        ball := Union(ball,new);
+      fi;
+    od;
+    return ball; 
+  end );
+
+#############################################################################
+##
 #S  The modulus of an rcwa monoid, and tame rcwa monoids. ///////////////////
 ##
 #############################################################################
