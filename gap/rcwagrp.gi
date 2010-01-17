@@ -750,6 +750,55 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#S  Counting / enumerating certain elements of RCWA(R) and CT(R). ///////////
+##
+#############################################################################
+
+#############################################################################
+##
+##  The numbers of elements of CT(Z) of given order m <= 24, subject to the
+##  conjecture that CT(Z) is the setwise stabilizer of N_0 in RCWA(Z).
+##
+BindGlobal( "NrOfElementsOfCTZWithGivenModulus",
+[ 1, 1, 17, 238, 4679, 115181, 3482639, 124225680, 5114793582, 238618996919, 
+  12441866975999, 716985401817362, 45251629386163199, 3104281120750130159, 
+  229987931693135611303, 18301127616460012222080, 1556718246822087917567999, 
+  140958365897067252175843218, 13537012873511994353270783999, 
+  1374314160482820530097944198162, 147065220260069766956421116517343, 
+  16544413778663040175990602280223999, 1951982126641242370890486633922559999, 
+  241014406219744996673035312579811441520 ] );
+
+#############################################################################
+## 
+#F  AllElementsOfCTZWithGivenModulus( m ) .  elements of CT(Z) with modulus m
+##
+##  Assumes the conjecture that CT(Z) is the setwise stabilizer of the
+##  nonnegative integers in RCWA(Z).
+##
+InstallGlobalFunction( AllElementsOfCTZWithGivenModulus,
+
+  function ( m )
+
+    local  elems, P, Pm, k, source, range, perms, g;
+
+    elems := [];
+    for k in [1..m] do
+      P  := PartitionsIntoResidueClasses(Integers,k);
+      Pm := Filtered(P,Pi->Lcm(List(Pi,Mod))=m);
+      perms := AsList(SymmetricGroup(k));
+      for source in Pm do
+        for range in P do
+          for g in perms do
+            Add(elems,RcwaMapping(source,Permuted(range,g)));
+          od;
+        od;
+      od;
+    od;
+    return Filtered(Set(elems),elm->Mod(elm)=m);
+  end );
+
+#############################################################################
+##
 #S  Factoring elm's of RCWA(R) into class shifts/reflections/transpositions.
 ##
 #############################################################################
@@ -2214,6 +2263,58 @@ InstallMethod( Embedding,
   function ( W, i )
     if not i in [1,2] then TryNextMethod(); fi;
     return WreathProductInfo(W).embeddings[i];
+  end );
+
+#############################################################################
+##
+#S  Constructing rcwa groups: ///////////////////////////////////////////////
+#S  Getting smaller or otherwise nicer sets of generators. //////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  SmallGeneratingSet( <G> ) . . . . . . . . . . . .  for rcwa groups over Z
+##
+InstallMethod( SmallGeneratingSet,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  gens, gensred, H, r, i, shrinked;
+
+    gens := Set(GeneratorsOfGroup(G));
+
+    if ForAll(gens,IsClassTransposition) then
+      SortParallel(List(gens,ct->[Modulus(ct),TransposedClasses(ct)]),gens);
+    fi;
+
+    Info(InfoRCWA,1,"SmallGeneratingSet: #initial generators = ",
+                    Length(gens));
+    Info(InfoRCWA,2,"Initial generators = ",gens);
+
+    shrinked := false; r := 1;
+    repeat
+      gensred := gens{[1]};
+      for i in [2..Length(gens)] do
+        Info(InfoRCWA,3,"i = ",i);
+        H := Group(gens{[1..i-1]});
+        if   IsEmpty(Intersection(RestrictedBall(H,One(H),r),
+                                  RestrictedBall(H,gens[i],r)))
+        then Add(gensred,gens[i]);
+        else shrinked := true;
+        fi;
+      od;
+      Info(InfoRCWA,1,"SmallGeneratingSet: #generators after reduction ",
+                      "with r = ",r,": ",Length(gensred));
+      Info(InfoRCWA,2,"Remaining generators = ",gensred);
+
+      gens := gensred;
+      r    := r + 1;
+    until not shrinked;    
+
+    return gens;
   end );
 
 #############################################################################

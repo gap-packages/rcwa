@@ -137,6 +137,16 @@ DeclareProperty( "IsNaturalCT_Z_pi", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );
 
 #############################################################################
+## 
+#F  AllElementsOfCTZWithGivenModulus( m ) .  elements of CT(Z) with modulus m
+##
+##  Returns a list of all elements of CT(Z) with modulus m, under the
+##  assumption of the conjecture that CT(Z) is the setwise stabilizer of the
+##  nonnegative integers in RCWA(Z).
+##
+DeclareGlobalFunction( "AllElementsOfCTZWithGivenModulus" );
+
+#############################################################################
 ##
 #P  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . RCWA( R ) or CT( R )
 ##
@@ -286,22 +296,6 @@ DeclareOperation( "RepresentativeActionPreImage",
                   [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ] );
 DeclareOperation( "RepresentativesActionPreImage",
                   [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ] );
-
-#############################################################################
-##
-#O  Ball( <G>, <g>, <d> )  ball of diameter <d> around the element <g> of <G>
-#O  Ball( <G>, <p>, <d>, <act> )   "    the point <p> under the action of <G>
-##
-##  Returns the ball of diameter <d> around the element <g> of <G>, or the
-##  ball of diameter <d> around the point <p> under the action of <G>,
-##  respectively.
-##
-##  All balls are understood w.r.t. the stored generators of the group <G>.
-##  An option `Spheres' is recognized. If set, the returned ball is splitted
-##  into a list of spheres.
-##
-DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
-DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
 
 #############################################################################
 ##
