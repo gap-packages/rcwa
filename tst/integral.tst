@@ -1681,6 +1681,20 @@ gap> H := Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
 <rcwa group over Z with 4 generators>
 gap> G = H;
 true
+gap> cts := Filtered(List(ClassPairs(4),ClassTransposition),
+>                    ct->Mod(ct) in [2,4]);;
+gap> G := Group(cts);
+<rcwa group over Z with 11 generators>
+gap> gens := SmallGeneratingSet(G);
+[ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4), 
+  ClassTransposition(0,2,3,4), ClassTransposition(0,4,1,4) ]
+gap> G := Group(gens);
+<rcwa group over Z with 4 generators>
+gap> Br := List([1..10],r->RestrictedBall(G,One(G),r));;
+gap> List(Br,Length);
+[ 5, 14, 27, 39, 51, 71, 99, 118, 120, 120 ]
+gap> List([1..4],m->Length(AllElementsOfCTZWithGivenModulus(m)));
+[ 1, 1, 17, 238 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
