@@ -2294,7 +2294,7 @@ InstallMethod( SmallGeneratingSet,
                     Length(gens));
     Info(InfoRCWA,2,"Initial generators = ",gens);
 
-    shrinked := false; r := 1;
+    r := 1;
     repeat
       gensred := gens{[1]};
       for i in [2..Length(gens)] do
@@ -2302,16 +2302,15 @@ InstallMethod( SmallGeneratingSet,
         H := Group(gens{[1..i-1]});
         if   IsEmpty(Intersection(RestrictedBall(H,One(H),r),
                                   RestrictedBall(H,gens[i],r)))
-        then Add(gensred,gens[i]);
-        else shrinked := true;
-        fi;
+        then Add(gensred,gens[i]); fi;
       od;
       Info(InfoRCWA,1,"SmallGeneratingSet: #generators after reduction ",
                       "with r = ",r,": ",Length(gensred));
       Info(InfoRCWA,2,"Remaining generators = ",gensred);
 
-      gens := gensred;
-      r    := r + 1;
+      shrinked := Length(gensred) < Length(gens);
+      gens     := gensred;
+      r        := r + 1;
     until not shrinked;    
 
     return gens;
