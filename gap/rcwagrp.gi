@@ -779,19 +779,20 @@ InstallGlobalFunction( AllElementsOfCTZWithGivenModulus,
 
   function ( m )
 
-    local  elems, P, Pm, k, source, range, perms, g;
+    local  elems, source, ranges, range, perms, g;
 
-    elems := [];
-    for k in [1..m] do
-      P  := PartitionsIntoResidueClasses(Integers,k);
-      Pm := Filtered(P,Pi->Lcm(List(Pi,Mod))=m);
-      perms := AsList(SymmetricGroup(k));
-      for source in Pm do
-        for range in P do
-          for g in perms do
-            Add(elems,RcwaMapping(source,Permuted(range,g)));
-          od;
-        od;
+    if not IsPosInt(m) then
+      Error("usage: AllElementsOfCTZWithGivenModulus( <m> ) ",
+            "for a positive integer m\n");
+    fi;
+    if m = 1 then return [ IdentityRcwaMappingOfZ ]; fi;
+    source := AllResidueClassesModulo(Integers,m);
+    ranges := PartitionsIntoResidueClasses(Integers,m);
+    perms  := AsList(SymmetricGroup(m));
+    elems  := [];
+    for range in ranges do
+      for g in perms do
+        Add(elems,RcwaMapping(source,Permuted(range,g)));
       od;
     od;
     return Filtered(Set(elems),elm->Mod(elm)=m);
