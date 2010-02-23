@@ -98,11 +98,13 @@ DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 #############################################################################
 ##
 #F  NrConjugacyClassesOfRCWAZOfOrder( <ord> ) . #Ccl of RCWA(Z) / order <ord>
+#F  NrConjugacyClassesOfCTZOfOrder( <ord> ) . . . #Ccl of CT(Z) / order <ord>
 ##
-##  Returns the number of conjugacy classes of the whole group RCWA(Z) of
-##  elements of order <ord>.
+##  Returns the number of conjugacy classes of the whole group RCWA(Z),
+##  respectively CT(Z), of elements of order <ord>.
 ##
 DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
+DeclareGlobalFunction( "NrConjugacyClassesOfCTZOfOrder" );
 
 #############################################################################
 ##

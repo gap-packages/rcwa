@@ -1567,6 +1567,20 @@ InstallGlobalFunction( NrConjugacyClassesOfRCWAZOfOrder,
 
 #############################################################################
 ##
+#F  NrConjugacyClassesOfCTZOfOrder( <ord> ) . . . #Ccl of CT(Z) / order <ord>
+##
+InstallGlobalFunction( NrConjugacyClassesOfCTZOfOrder,
+
+  function ( ord )
+    if   not IsPosInt(ord) then return 0;
+    elif ord = 1 then return 1;
+    else return Length(Filtered(Combinations(DivisorsInt(ord)),
+                                l -> l <> [] and Lcm(l) = ord));
+    fi;
+  end );
+
+#############################################################################
+##
 #S  Constructing rcwa groups: ///////////////////////////////////////////////
 #S  The general things. /////////////////////////////////////////////////////
 ##
