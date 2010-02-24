@@ -14,7 +14,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-The &RCWA; package needs at least &GAP;&nbsp;4.4.10, &ResClasses;&nbsp;3.0.0,
+The &RCWA; package needs at least &GAP;&nbsp;4.4.12, &ResClasses;&nbsp;3.0.0,
 <Package>GRAPE</Package>&nbsp;4.0&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.2&nbsp;<Cite Key="Polycyclic"/> and
 &GAPDoc;&nbsp;1.1&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
@@ -167,6 +167,28 @@ of other features of &GAP;. It is intended for being used in talks.
     The demonstration can be stopped by pressing&nbsp;<C>q</C>.
     The function is adapted from the function <C>Demonstration</C> in the
     file <File>lib/demo.g</File> of the main &GAP; distribution. 
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:ConvertingLogfilesToHTML">
+<Heading>Converting GAP logfiles to HTML</Heading>
+
+&RCWA; provides a routine to convert &GAP; logfiles to HTML.
+
+<ManSection>
+  <Func Name="Log2HTML" Arg="logfilename" Label="logfilename"/>
+  <Returns> Nothing. </Returns>
+  <Description>
+    This function converts the &GAP; logfile <A>logfilename</A> to HTML.
+    The extension of the input file must be <C>*.log</C>. The name of the
+    output file is the same as the one of the input file except that the
+    extension <C>*.log</C> is replaced by <C>*.html</C>.
+    There is a sample CSS file in <File>rcwa/doc/gaplog.css</File>,
+    which you can adjust to your taste.
   </Description>
 </ManSection>
 
