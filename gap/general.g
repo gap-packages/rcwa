@@ -723,7 +723,7 @@ function ( logfilename )
   then outputname := ReplacedString(logfilename,".txt",".html");
   else outputname := Concatenation(logfilename,".html"); fi;
   FileString(outputname,s2);
-end;
+end );
 
 #############################################################################
 ##
