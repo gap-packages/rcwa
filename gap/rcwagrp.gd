@@ -101,7 +101,8 @@ DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 #F  NrConjugacyClassesOfCTZOfOrder( <ord> ) . . . #Ccl of CT(Z) / order <ord>
 ##
 ##  Returns the number of conjugacy classes of the whole group RCWA(Z),
-##  respectively CT(Z), of elements of order <ord>.
+##  respectively CT(Z), of elements of order <ord>. The latter assumes the
+##  conjecture that CT(Z) is the setwise stabilizer of N_0 in RCWA(Z).
 ##
 DeclareGlobalFunction( "NrConjugacyClassesOfRCWAZOfOrder" );
 DeclareGlobalFunction( "NrConjugacyClassesOfCTZOfOrder" );

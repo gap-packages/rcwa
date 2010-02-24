@@ -1574,7 +1574,11 @@ InstallGlobalFunction( NrConjugacyClassesOfCTZOfOrder,
   function ( ord )
     if   not IsPosInt(ord) then return 0;
     elif ord = 1 then return 1;
-    else return Length(Filtered(Combinations(DivisorsInt(ord)),
+    else Info(InfoWarning,1,"Function `NrConjugacyClassesOfCTZOfOrder' ",
+                            "assumes the conjecture ");
+         Info(InfoWarning,1,"that CT(Z) is the setwise ",
+                            "stabilizer of N_0 in RCWA(Z).");
+         return Length(Filtered(Combinations(DivisorsInt(ord)),
                                 l -> l <> [] and Lcm(l) = ord));
     fi;
   end );
