@@ -756,10 +756,12 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#V  NrElementsOfCTZWithGivenModulus
+##
 ##  The numbers of elements of CT(Z) of given order m <= 24, subject to the
 ##  conjecture that CT(Z) is the setwise stabilizer of N_0 in RCWA(Z).
 ##
-BindGlobal( "NrOfElementsOfCTZWithGivenModulus",
+BindGlobal( "NrElementsOfCTZWithGivenModulus",
 [ 1, 1, 17, 238, 4679, 115181, 3482639, 124225680, 5114793582, 238618996919, 
   12441866975999, 716985401817362, 45251629386163199, 3104281120750130159, 
   229987931693135611303, 18301127616460012222080, 1556718246822087917567999, 
