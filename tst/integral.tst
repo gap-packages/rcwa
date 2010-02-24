@@ -1168,10 +1168,8 @@ gap> IsomorphismRcwaGroup(Group(()));
 [ () ] -> [ IdentityMapping( Integers ) ]
 gap> IsomorphismRcwaGroup(SmallGroup(1,1));
 [ <identity> of ... ] -> [ IdentityMapping( Integers ) ]
-gap> IsomorphismRcwaGroup(SmallGroup(6,1),Integers);
-[ f1, f2 ] -> [ <bijective rcwa mapping of Z with modulus 6>, 
-  <bijective rcwa mapping of Z with modulus 3> ]
-gap> StructureDescription(Image(last));
+gap> phi := IsomorphismRcwaGroup(SmallGroup(6,1),Integers);;
+gap> StructureDescription(Image(phi));
 "S3"
 gap> M11 := MathieuGroup(11);;
 gap> Action(Image(IsomorphismRcwaGroup(M11))^ClassShift(0,1),
