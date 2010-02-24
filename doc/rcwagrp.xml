@@ -159,8 +159,8 @@ false
 <Index Key="AllElementsOfCTZWithGivenModulus">
   <C>AllElementsOfCTZWithGivenModulus</C>
 </Index>
-<Index Key="NrOfElementsOfCTZWithGivenModulus">
-  <C>NrOfElementsOfCTZWithGivenModulus</C>
+<Index Key="NrElementsOfCTZWithGivenModulus">
+  <C>NrElementsOfCTZWithGivenModulus</C>
 </Index>
 
 Under the hypothesis that CT(&ZZ;) is the setwise
@@ -170,11 +170,11 @@ the ordered partitions of &ZZ; into <M>m</M> residue classes.
 The list of these elements for given <M>m</M> can be obtained by
 the function <C>AllElementsOfCTZWithGivenModulus</C>, and the numbers
 of such elements for <M>m \leq 24</M> are stored in the list
-<C>NrOfElementsOfCTZWithGivenModulus</C>.
+<C>NrElementsOfCTZWithGivenModulus</C>.
 
 <Example>
 <![CDATA[
-gap> NrOfElementsOfCTZWithGivenModulus{[1..8]};
+gap> NrElementsOfCTZWithGivenModulus{[1..8]};
 [ 1, 1, 17, 238, 4679, 115181, 3482639, 124225680 ]
 ]]>
 </Example>
