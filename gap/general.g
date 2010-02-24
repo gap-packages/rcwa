@@ -663,12 +663,9 @@ InstallGlobalFunction( RunDemonstration,
 ##
 ##  Usage:
 ##
-##  - Load this file into GAP.
-##
-##  - Issue Log2HTML( <logfilename> ), where the path must be relative to
-##    your home directory. The extension of the input file must be .log.
-##    The name of the output file is the same as the one of the input file
-##    except that the extension .log is replaced by .html.
+##  - Issue Log2HTML( <logfilename> ). The extension of the input file must
+##    be *.log. The name of the output file is the same as the one of the
+##    input file except that the extension *.log is replaced by *.html.
 ##
 ##  - Adapt the style file rcwa/doc/gaplog.css to your taste.
 ##
