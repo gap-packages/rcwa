@@ -4653,13 +4653,17 @@ InstallMethod( \+,
     local  R;
 
     R := Source(f);
-    if not n in R then TryNextMethod(); fi;
+    if not IsRing(R) or not n in R then TryNextMethod(); fi;
     return f + RcwaMapping(R,One(R),[[0,n,1]]*One(R));
   end );
 
 InstallMethod( \+, "for a ring element and an rcwa mapping (RCWA)",
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
-               function ( n, f ) return f + n; end );
+
+   function ( n, f )
+     if not n in Source(f) then TryNextMethod(); fi;
+     return f + n;
+   end );
 
 #############################################################################
 ##
@@ -5073,14 +5077,18 @@ InstallMethod( \*,
                ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
 
   function ( n, f )
-    if not n in Source(f) then TryNextMethod(); fi;
+    if not IsRing(Source(f)) or not n in Source(f) then TryNextMethod(); fi;
     return RcwaMapping(Source(f),Modulus(f),
                        List(Coefficients(f),c->[n*c[1],n*c[2],c[3]]));
   end );
 
 InstallMethod( \*, "for rcwa mappings, multiplication by a constant (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsRingElement ], 0,
-               function ( f, n ) return n * f; end );
+
+  function ( f, n )
+    if not n in Source(f) then TryNextMethod(); fi;
+    return n * f;
+  end );
 
 #############################################################################
 ##
@@ -5632,9 +5640,7 @@ InstallMethod( IsTame,
 
   function ( f )
 
-    local  gamma, delta, C, r,
-           m, coeffs, cl, img, c, d,
-           pow, exp, e;
+    local  P;
 
     Info(InfoRCWA,3,"`IsTame' for an rcwa mapping <f> of ",
                     RingToString(Source(f)),".");
@@ -5668,98 +5674,140 @@ InstallMethod( IsTame,
       return false;
     fi;
 
-    if IsRcwaMappingOfZOrZ_pi(f) and IsBijective(f) then
-      Info(InfoRCWA,3,"IsTame: Sources-and-Sinks Criterion.");
-      gamma := TransitionGraph(f,Modulus(f));
-      for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
-      delta := UnderlyingGraph(gamma);
-      C := ConnectedComponents(delta);
-      if Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
-      then
-        Info(InfoRCWA,3,"IsTame: <f> is wild, ",
-                        "by Sources-and-Sinks Criterion.");
-        SetOrder(f,infinity); return false;
-      fi;
-    fi;
-
     if IsBijective(f) then
-      Info(InfoRCWA,3,"IsTame: Loop Criterion.");
-      m := Modulus(f);
-      if IsRcwaMappingOfZ(f) then
-        coeffs := Coefficients(f);
-        for r in [0..m-1] do
-          c := coeffs[r+1];
-          if AbsInt(c[1]) <> 1 or c[3] <> 1 then
-            d := Gcd(m,c[1]*m/c[3]);
-            if (r - (c[1]*r+c[2])/c[3]) mod d = 0 then
-              Info(InfoRCWA,3,"IsTame: <f> is wild, by Loop Criterion.");
-              SetOrder(f,infinity); return false;
-            fi;
-          fi;
-        od;
+      P := RespectedPartition(f);
+      if P <> fail then
+        Info(InfoRCWA,3,"IsTame: <f> is tame, since there is a ",
+                        "respected partition.");
       else
-        for cl in AllResidueClassesModulo(Source(f),m) do
-          img := cl^f;
-          if img <> cl and Intersection(cl,img) <> [] then
-            Info(InfoRCWA,3,"IsTame: <f> is wild, by loop criterion.");
-            SetOrder(f,infinity); return false;
-          fi;
-        od;
+        Info(InfoRCWA,3,"IsTame: <f> is wild, since there is no ",
+                        "respected partition.");
       fi;
+      return P <> fail;
     fi;
 
-    Info(InfoRCWA,3,"IsTame: `finite order or integral power' criterion.");
-    pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
-    for e in exp do
-      pow := pow^e;
-      if IsIntegral(pow) then
-        Info(InfoRCWA,3,"IsTame: <f> has a power which is integral, ",
-                        "hence is tame.");
-        return true;
+    TryNextMethod(); # only possible if <f> is not surjective   
+  end );
+
+#############################################################################
+##
+#M  RespectedPartition( <sigma> ) . . . . .  for tame bijective rcwa mappings
+##
+InstallMethod( RespectedPartition,
+               "for tame bijective rcwa mappings (RCWA)", true,
+               [ IsRcwaMapping ], 0,
+
+  function ( sigma )
+
+    local  R, m, P, clsmodm, affsrc, classes, cycles, cycle, cycleunions,
+           subsetpos, clstart, cl, cl_last, bound, d, S, S_img;
+
+    if not IsBijective(sigma) then return fail; fi;
+    if HasIsTame(sigma) and not IsTame(sigma) then return fail; fi;
+    if IsOne(sigma) then return [Source(sigma)]; fi;
+
+    R := Source(sigma); m := Modulus(sigma);
+
+    if   HasIsClassTransposition(sigma) and IsClassTransposition(sigma)
+    then return Union(TransposedClasses(sigma),
+                      AsUnionOfFewClasses(Difference(R,Support(sigma))));
+    elif HasIsClassShift(sigma) and IsClassShift(sigma)
+    then return Union([Support(sigma)],
+                      AsUnionOfFewClasses(Difference(R,Support(sigma))));
+    elif HasIsClassReflection(sigma) and IsClassReflection(sigma)
+    then return Union(AsUnionOfFewClasses(Support(sigma)),
+                      AsUnionOfFewClasses(Difference(R,Support(sigma))));
+    fi;
+
+    clsmodm := Filtered(AllResidueClassesModulo(R,m),
+                        cl-> not IsEmpty(Intersection(cl,Support(sigma))));
+    bound := Density(clsmodm[1])^2; # only used for efficiency purposes
+    affsrc := LargestSourcesOfAffineMappings(sigma);
+
+    classes := []; cycles := [];
+    for clstart in clsmodm do
+      if clstart in classes then continue; fi;
+      cycle := []; cl := clstart;
+      repeat
+        cl_last := cl; cl := cl^sigma;
+        if   not IsResidueClass(cl)
+          or not ForAny(affsrc,src->IsSubset(src,cl))
+        then break; fi;
+        if cl <> cl_last and Residue(cl) mod m = Residue(cl_last) mod m
+        then return fail; fi; # sigma is wild, by 'loops' criterion
+        if Density(cl) < bound then # check for 'sinks' criterion
+          S := Set([0..Length(cycle)-1],
+                   i->ResidueClassUnion(R,m,
+                        List(cycle{[Length(cycle)-i..Length(cycle)]},
+                             c->Residue(c) mod m)));
+          S_img := S^sigma;
+          if ForAny([1..Length(S)],
+                    i->S_img[i]<>S[i] and IsSubset(S[i],S_img[i]))
+          then return fail; fi;
+          if IsSubset(Union(cycle),cl) then return fail; fi;
+        fi;
+        Add(cycle,cl);
+      until cl = clstart;
+      if cl = clstart then
+        Add(cycles,cycle);
+        classes := Union(classes,cycle);
       fi;
-      if   IsRcwaMappingOfZOrZ_pi(f) and Modulus(pow) > 6 * Modulus(f)
-        or IsRcwaMappingOfGFqx(f)
-           and   DegreeOfLaurentPolynomial(Modulus(pow))
-               > DegreeOfLaurentPolynomial(Modulus(f)) + 2
-      then break; fi;
     od;
 
-    if IsBijective(f) and Order(f) <> infinity then
-      Info(InfoRCWA,3,"IsTame: <f> has finite order, hence is tame.");
-      return true;
-    fi;
+    SortParallel(List(cycles,cycle->1/Maximum(List(cycle,Density))),cycles);
+    cycleunions := List(cycles,Union);
+    subsetpos := Filtered([2..Length(cycles)],
+                          i->ForAny([1..i-1],
+                                    j->IsSubset(cycleunions[j],
+                                                cycleunions[i])));
+    cycles := cycles{Difference([1..Length(cycles)],subsetpos)};
 
-    if HasIsTame(f) then return IsTame(f); fi;
+    P := AsUnionOfFewClasses(Difference(R,Support(sigma)));
+    d := 1 - Density(Support(sigma));
+    for cycle in cycles do
+      P := Union(P,cycle);
+      d := Sum(List(P,Density));
+      if d > 1 then Error("RespectedPartition: internal error #1!\n"); fi; 
+      if d = 1 then break; fi;
+    od;
 
-    Info(InfoRCWA,3,"IsTame: Giving up.");
-    TryNextMethod();
-
+    if d = 1 then
+      if   RespectsPartition(sigma,P)
+      then return P;
+      else Error("RespectedPartition: internal error #2!\n"); fi; 
+    else return fail; fi; # no respected partition -> sigma is wild
   end );
 
 #############################################################################
 ##
-#M  RespectedPartitionShort( <sigma> ) . . . for tame bijective rcwa mappings
+#M  RespectsPartition( <sigma>, <P> ) . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( RespectedPartitionShort,
-               "for tame bijective rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+InstallMethod( RespectsPartition,
+               "for rcwa mappings (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsList ], 0,
 
-  function ( sigma )
-    if not IsBijective(sigma) then return fail; fi;
-    return RespectedPartitionShort( Group( sigma ) );
-  end );
+  function ( sigma, P )
 
-#############################################################################
-##
-#M  RespectedPartitionLong( <sigma> ) . . .  for tame bijective rcwa mappings
-##
-InstallMethod( RespectedPartitionLong,
-               "for tame bijective rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+    local  R, cl, c, c_rest, pos, res, r, m;
 
-  function ( sigma )
-    if not IsBijective(sigma) then return fail; fi;
-    return RespectedPartitionLong( Group( sigma ) );
+    R := Source(sigma);
+    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(R,cl))
+      or Union(P) <> R or Sum(List(P,Density)) <> 1
+    then TryNextMethod(); fi;
+
+    if Permutation(sigma,P) = fail then return false; fi;
+
+    c   := Coefficients(sigma);
+    res := AllResidues(R,Modulus(sigma));
+    for cl in P do
+      r      := Residue(cl);
+      m      := Modulus(cl);
+      pos    := Filtered([1..Length(res)],i->res[i] mod m = r);
+      c_rest := c{pos};
+      if Length(Set(c_rest)) > 1 then return false; fi;
+    od;
+
+    return true;
   end );
 
 #############################################################################
@@ -5867,8 +5915,7 @@ InstallMethod( Order,
 
   function ( g )
 
-    local  P, k, p, gtilde, e, e_old, e_max, l, l_max, stabiter,
-           n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
+    local  P, k, e, p, gtilde;
 
     if   not IsBijective(g) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
@@ -5878,8 +5925,8 @@ InstallMethod( Order,
 
     if IsOne(g) then return 1; fi;
 
-    if HasIsTame(g) and not IsTame(g) then
-      Info(InfoRCWA,3,"Order: <g> is wild, hence has infinite order.");
+    if not IsTame(g) then
+      Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
       return infinity;
     fi;
 
@@ -5892,84 +5939,16 @@ InstallMethod( Order,
       fi;
     fi;
 
-    if not IsBalanced(g) then
-      Info(InfoRCWA,3,"Order: <g> has infinite order ",
-                      "by the balancedness criterion.");
-      SetIsTame(g,false); return infinity;
-    fi;
-
-    if IsRcwaMappingOfZOrZ_piInStandardRep(g) then
-
-      m1 := Mod(g); pow := g;
-      exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2];
-      for e in exp do
-        c := Coefficients(pow); m2 := Modulus(pow);
-        if m2 > 6 * m1 then break; fi;
-        r := First([1..m2],i -> c[i] <> [1,0,1] and c[i]{[1,3]} = [1,1]
-                            and c[i][2] mod m2 = 0);
-        if r <> fail then
-          Info(InfoRCWA,3,"Order: <g> has infinite order ",
-                          "by the arithmetic progression criterion.");
-          return infinity;
-        fi;
-        pow := pow^e; if IsOne(pow) then break; fi;
-      od;
-
-      Info(InfoRCWA,3,"Order: Looking for finite cycles ... ");
-
-      e := 1; l_max := 2 * Mod(g)^2; e_max := 2^Mod(g); stabiter := 0;
-      b1 := 2^64-1; b2 := b1^2;
-      repeat
-        n0 := Random(-b1,b1); n := n0; l := 0;
-        repeat
-          n := n^g;
-          l := l + 1;
-        until n = n0 or AbsInt(n) > b2 or l > l_max;
-        if n = n0 then
-          e_old := e; e := Lcm(e,l);
-          if e > e_old then stabiter := 0; else stabiter := stabiter + 1; fi;
-        else break; fi;
-      until stabiter = 64 or e > e_max;
-    
-      if e <= e_max and stabiter = 64 then
-        c := Reversed(CoefficientsQadic(e,2)); pow := g;
-        for i in [2..Length(c)] do
-          pow := pow^2;
-          if Mod(pow) > Mod(g)^2 then break; fi;
-          if c[i] = 1 then pow := pow * g; fi;
-          if Mod(pow) > Mod(g)^2 then break; fi;
-        od;
-        if IsOne(pow) then return e; fi;
-      fi;
-
-    else # for rcwa permutations of rings other than Z or Z_(pi)
-
-      cycs := ShortCycles(g,AllResidues(Source(g),Modulus(g)),
-                            NumberOfResidues(Source(g),Modulus(g)));
-      if cycs <> [] then
-        e := Lcm(List(cycs,Length));
-        pow := g^e;
-        if IsIntegral(pow) then SetIsTame(g,true); fi;
-        if IsOne(pow) then return e; fi;
-      fi;
-
-    fi;
-
-    if IsRcwaMappingOfZxZ(g) then TryNextMethod(); fi;
-
-    if not IsTame(g) then
-      Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
-      return infinity;
-    fi;
-
-    Info(InfoRCWA,3,"Order: Attempt to determine a respected partition <P>");
-    Info(InfoRCWA,3,"       of <g>, and compute the order <k> of the per-");
-    Info(InfoRCWA,3,"       mutation induced by <g> on <P> as well as the");
-    Info(InfoRCWA,3,"       order of <g>^<k>.");
+    Info(InfoRCWA,3,"Order: determine a respected partition <P> of <g>,");
+    Info(InfoRCWA,3,"       and compute the order <k> of the permutation");
+    Info(InfoRCWA,3,"       induced by <g> on <P> as well as the order");
+    Info(InfoRCWA,3,"       of <g>^<k>.");
 
     P := RespectedPartition(g);
+    k := Order(Permutation(g,P));
 
-    k      := Order(Permutation(g,P));
+    if IsRcwaMappingOfZ(g) and IsSignPreserving(g) then return k; fi;
+
     gtilde := g^k;
 
     if IsOne(gtilde) then return k; fi;
@@ -5988,9 +5967,17 @@ InstallMethod( Order,
       if IsOne(gtilde) then return k * e * p; fi;
     fi;
 
-    Info(InfoRCWA,3,"Order: Giving up.");
-    TryNextMethod();
+    if IsRcwaMappingOfZxZ(g) then
+      if ForAny(Coefficients(gtilde),c->Order(c[1])=infinity) then
+        return infinity;
+      else
+        e := Lcm(List(Coefficients(gtilde),c->Order(c[1])));
+        gtilde := gtilde^e;
+        if IsOne(gtilde) then return k * e; else return infinity; fi;
+      fi;
+    fi;
 
+    Error("Order: Algorithm failed -- internal error!\n");
   end );
 
 #############################################################################
