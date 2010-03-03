@@ -356,13 +356,8 @@ Bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 2
 
 gap> prod1 := ct*cs1;
 <bijective rcwa mapping of GF(2)[x] with modulus x^2+x>
-gap> RCWAInfo(3);
 gap> IsTame(prod1);
-#I  `IsTame' for an rcwa mapping <f> of GF(2)[x].
-#I  IsTame: Loop Criterion.
-#I  IsTame: <f> is wild, by loop criterion.
 false
-gap> RCWAInfo(0);
 gap> prod1^2;
 <wild bijective rcwa mapping of GF(2)[x] with modulus x^3+x>
 gap> prod1^3;
