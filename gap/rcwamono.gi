@@ -513,13 +513,15 @@ InstallMethod( Ball,
 ##
 InstallMethod( RestrictedBall,
                "for an rcwa monoid over Z and an element thereof (RCWA)",
-               ReturnTrue, [ IsRcwaMonoidOverZ, IsRcwaMappingOfZ, IsInt ], 0,
+               ReturnTrue, [ IsRcwaMonoid, IsRcwaMapping, IsInt ], 0,
 
   function ( G, g, r )
 
-    local  gens, ball, new, h1, h2, h, k, spheres;
+    local  R, gens, ball, new, h1, h2, h, k, spheres;
 
-    if   not IsCollsElms(FamilyObj(G),FamilyObj(g)) or r < 0
+    R := Source(g);
+    if   not IsCollsElms(FamilyObj(G),FamilyObj(g))
+      or not IsRing(R) or r < 0
     then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
     if spheres then ball := [[g]]; else ball := [g]; fi;
@@ -530,7 +532,9 @@ InstallMethod( RestrictedBall,
       for h1 in ball do
         for h2 in gens do
           h := h1 * h2;
-          if   Mod(h) <= Maximum(Mod(h1),Mod(h2))
+          if   NumberOfResidues(R,Mod(h))
+            <= Maximum(NumberOfResidues(R,Mod(h1)),
+                       NumberOfResidues(R,Mod(h2)))
           then Add(new,h); fi;
         od;
       od;
@@ -589,7 +593,8 @@ InstallMethod( IsTame,
                "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
 
   function ( M )
-    if   Modulus( M ) <> Zero( Source( One( M ) ) ) then return true;
+    if   not IsZero( Modulus( M ) )
+    then return true;
     else SetSize( M, infinity ); return false; fi;
   end );
 
