@@ -5757,9 +5757,9 @@ InstallMethod( RespectedPartition,
     SortParallel(List(cycles,cycle->1/Maximum(List(cycle,Density))),cycles);
     cycleunions := List(cycles,Union);
     subsetpos := Filtered([2..Length(cycles)],
-                          i->ForAny([1..i-1],
-                                    j->IsSubset(cycleunions[j],
-                                                cycleunions[i])));
+                          i->IsSubset(Union(cycleunions{[1..i-1]}),
+                                      cycleunions[i]));
+
     cycles := cycles{Difference([1..Length(cycles)],subsetpos)};
 
     P := AsUnionOfFewClasses(Difference(R,Support(sigma)));
@@ -5947,7 +5947,11 @@ InstallMethod( Order,
     P := RespectedPartition(g);
     k := Order(Permutation(g,P));
 
-    if IsRcwaMappingOfZ(g) and IsSignPreserving(g) then return k; fi;
+    if IsRcwaMappingOfZ(g) and IsSignPreserving(g) then
+      if   ValueOption("NC") = fail and not IsOne(g^k)
+      then Error("Order: g^order(g) <> 1 -- internal error!\n"); fi;
+      return k;
+    fi;
 
     gtilde := g^k;
 
@@ -5977,7 +5981,7 @@ InstallMethod( Order,
       fi;
     fi;
 
-    Error("Order: Algorithm failed -- internal error!\n");
+    Error("Order: algorithm failed -- internal error!\n");
   end );
 
 #############################################################################
