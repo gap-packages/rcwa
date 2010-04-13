@@ -1188,7 +1188,7 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
 #M  Projections( <f> ) . . proj. of an rcwa mapping of Z^2 to the coordinates
 ##
 InstallMethod( Projections,
-               "rcwa mapping of Z^2 by two rcwa mappings of Z (RCWA)", true,
+               "rcwa mapping of Z^2 to two rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZxZ ], 0,
 
   function ( f )
@@ -1209,6 +1209,37 @@ InstallMethod( Projections,
       if t[1][1][2] <> 0 or t[1][2][1] <> 0 then return fail; fi;
     od;
     return [ RcwaMapping(cf), RcwaMapping(cg) ];
+  end );
+
+#############################################################################
+##
+#M  Projection( <f>, <coord> ) .  proj. of an rcwa mapping of Z^2 to 1 coord.
+##
+InstallOtherMethod( Projection,
+                    "for rcwa mappings of Z^2 (RCWA)",
+                    ReturnTrue, [ IsRcwaMappingOfZxZ, IsPosInt ], 0,
+
+  function ( f, coord )
+
+    local  m, c, c_proj, proj;
+
+    if not coord in [1,2] then return fail; fi; # there are only 2 coord's
+
+    proj := Projections(f); # maybe even both projections exist
+    if proj <> fail then return proj[coord]; fi;
+
+    m := Modulus(f); # check whether the choice of the affine partial mapping
+                     # depends only on the specified coordinate:
+    if   m[1][2] <> 0 or m[2][1] <> 0 or m[3-coord][3-coord] <> 1
+    then return fail; fi;
+ 
+    c := Coefficients(f); # check for dependency on other coordinate:
+    if not ForAll(c,t->t[1][3-coord][coord]=0) then return fail; fi;
+
+    # build coefficient list in one dimension:
+    c_proj := List(c,t->[t[1][coord][coord],t[2][coord],t[3]]);
+
+    return RcwaMapping(c_proj);
   end );
 
 #############################################################################
