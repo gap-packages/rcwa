@@ -649,6 +649,12 @@ DeclareOperation( "Multpk", [ IsRcwaMapping, IsInt, IsInt ] );
 
 #############################################################################
 ##
+#A  MultDivType( <f> ) . distribution of coeff's in numerators & denominators
+##
+DeclareAttribute( "MultDivType", IsRcwaMapping );
+
+#############################################################################
+##
 #A  FixedPointsOfAffinePartialMappings( <f> )
 ##
 ##  The fixed points of the affine partial mappings of the rcwa mapping <f>

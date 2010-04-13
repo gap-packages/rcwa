@@ -3815,6 +3815,16 @@ InstallMethod( Multpk, "for rcwa mappings of Z^2 (RCWA)", true,
 
 #############################################################################
 ##
+#M  MultDivType( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( MultDivType,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+               f->List(Collected(List(Coefficients(f),c->c[1]/c[3])),
+                       t->[t[1],t[2]/Mod(f)]) );
+
+#############################################################################
+##
 #M  MappedPartitions( <g> ) . . . . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( MappedPartitions, "for rcwa mappings (RCWA)", true,
