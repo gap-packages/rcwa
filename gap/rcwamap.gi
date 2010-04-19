@@ -6521,6 +6521,44 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
+#M  ShortCycles( <sigma>, <S>, <maxlng>, <maxn> )
+##
+InstallOtherMethod( ShortCycles,
+                    Concatenation("for a bijective rcwa mapping of Z, ",
+                                  "a set and two positive integers (RCWA)"),
+                    ReturnTrue,
+                    [ IsRcwaMappingOfZ, IsListOrCollection,
+                      IsPosInt, IsPosInt ], 0,
+
+  function ( sigma, S, maxlng, maxn )
+
+    local  cycs, cyc, done, min, max, lng, n, m, i, j;
+
+    if   not IsBijective(sigma) or not ForAll(S,IsInt)
+    then TryNextMethod(); fi;
+
+    SortParallel(List(S,n->AbsInt(n)-SignInt(n)/2),S);
+    min := Minimum(S); max := Maximum(S);
+
+    cycs := [];
+    done := List(S,n->false);
+    while false in done do
+      i := Position(done,false); done[i] := true;
+      n := S[i]; m := n; cyc := []; lng := 0;
+      repeat
+        Add(cyc,m); m := m^sigma; lng := lng + 1;
+        if m >= min and m <= max then
+          j := Position(S,m);
+          if j <> fail then done[j] := true; fi;
+        fi;
+      until m = n or lng >= maxlng or AbsInt(m) > maxn;
+      if m = n then Add(cycs,cyc); fi;
+    od;
+    return cycs;
+  end );
+
+#############################################################################
+##
 #M  ShortCycles( <f>, <maxlng> )  for rcwa mapping of Z or Z_(pi) & pos. int.
 ##
 InstallMethod( ShortCycles,
