@@ -6523,12 +6523,11 @@ InstallMethod( ShortCycles,
 ##
 #M  ShortCycles( <sigma>, <S>, <maxlng>, <maxn> )
 ##
-InstallOtherMethod( ShortCycles,
-                    Concatenation("for a bijective rcwa mapping of Z, ",
-                                  "a set and two positive integers (RCWA)"),
-                    ReturnTrue,
-                    [ IsRcwaMappingOfZ, IsListOrCollection,
-                      IsPosInt, IsPosInt ], 0,
+InstallMethod( ShortCycles,
+               Concatenation("for a bijective rcwa mapping of Z, ",
+                             "a set and two positive integers (RCWA)"),
+               ReturnTrue, [ IsRcwaMappingOfZ, IsListOrCollection,
+                             IsPosInt, IsPosInt ], 0,
 
   function ( sigma, S, maxlng, maxn )
 

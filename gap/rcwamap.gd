@@ -757,15 +757,20 @@ DeclareGlobalFunction( "InjectiveAsMappingFrom" );
 #############################################################################
 ##
 #O  ShortCycles( <f>, <S>, <maxlng> ) .  short cycles of the rcwa mapping <f>
+#O  ShortCycles( <f>, <S>, <maxlng>, <maxn> )
 #O  ShortCycles( <f>, <maxlng> )
 ##
 ##  In the 3-argument case, `ShortCycles' returns a list of all finite cycles
 ##  of the rcwa mapping <f> of length <= <maxlng> which intersect nontri-
-##  vially with the set <S>. In the 2-argument case, it returns a list of all
-##  "single" finite cycles of the rcwa mapping <f> of length <= <maxlng>.
+##  vially with the set <S>. In the 4-argument case, it does the same except
+##  that <f> must be an rcwa mapping of Z and that cycles exceeding <maxn>
+##  are dropped. In the 2-argument case, it returns a list of all "single"
+##  finite cycles of the rcwa mapping <f> of length <= <maxlng>.
 ##
-DeclareOperation( "ShortCycles",
-                  [ IsRcwaMapping, IsListOrCollection, IsPosInt ] );
+DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsListOrCollection,
+                                   IsPosInt ] );
+DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsListOrCollection,
+                                   IsPosInt, IsPosInt ] );
 DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
