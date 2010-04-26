@@ -6536,6 +6536,7 @@ InstallMethod( ShortCycles,
     if   not IsBijective(sigma) or not ForAll(S,IsInt)
     then TryNextMethod(); fi;
 
+    S := ShallowCopy(S);
     SortParallel(List(S,n->AbsInt(n)-SignInt(n)/2),S);
     min := Minimum(S); max := Maximum(S);
 
