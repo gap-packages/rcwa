@@ -2361,7 +2361,7 @@ InstallGlobalFunction( GroupByResidueClasses,
 ##
 InstallMethod( Iterator,
                "for rcwa groups (and infinite groups in general) (RCWA)",
-               true, [ IsGroup ], SUM_FLAGS,
+               true, [ IsGroup ], 0,
 
   function ( G )
     if   not IsRcwaGroup(G) and HasIsFinite(G) and IsFinite(G)
