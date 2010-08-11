@@ -2848,16 +2848,16 @@ InstallMethod( Display,
 
 #############################################################################
 ##
-#M  LaTeXObj( <f> ) . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  RcwaMappingToLaTeX( <f> ) . . . . . . . . . . . .  for rcwa mappings of Z
 ##
-InstallMethod( LaTeXObj,
-               "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
+InstallMethod( RcwaMappingToLaTeX,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
 
   function ( f )
 
-    local  LaTeXAffineMappingOfZ, append, german, varname, gens,
-           c, m, res, P, str, affs, affstrings, maxafflng, indent, i, j;
+    local  LaTeXAffineMappingOfZ, append, indent, varname, german,
+           gens, c, m, res, P, str, affs, affstrings, maxafflng, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
@@ -2911,7 +2911,8 @@ InstallMethod( LaTeXObj,
       return str;
     fi;
 
-    german := ValueOption("german") = true;
+    german :=   ValueOption("German") = true
+             or ValueOption("german") = true;
     varname := First(List(["varname","VarName"],ValueOption),
                      name->name<>fail);
     if varname = fail then varname := "n"; fi;
@@ -2952,16 +2953,16 @@ InstallMethod( LaTeXObj,
 
 #############################################################################
 ##
-#M  LaTeXObj( <f> ) . . . . . . . . . . . . . . . .  for rcwa mappings of ZxZ
+#M  RcwaMappingToLaTeX( <f> ) . . . . . . . . . . .  for rcwa mappings of Z^2
 ##
-InstallMethod( LaTeXObj,
-               "for rcwa mappings of ZxZ (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 0,
+InstallMethod( RcwaMappingToLaTeX,
+               "for rcwa mappings of Z^2 (RCWA)",
+               true, [ IsRcwaMappingOfZxZ ], 0,
 
   function ( f )
 
-    local  LaTeXAffineMappingOfZxZ, append, german, varname, gens,
-           c, m, res, P, str, affs, affstrings, maxafflng, indent, i, j;
+    local  LaTeXAffineMappingOfZxZ, append, indent, varname, german,
+           gens, c, m, res, P, str, affs, affstrings, maxafflng, i, j;
 
     append := function ( arg )
       str := CallFuncList(Concatenation,
@@ -3031,7 +3032,8 @@ InstallMethod( LaTeXObj,
       return str;
     fi;
 
-    german  := ValueOption("german") = true;
+    german :=   ValueOption("German") = true
+             or ValueOption("german") = true;
     varname := First(List(["varnames","VarNames"],ValueOption),
                      names->names<>fail);
     if varname = fail then varname := "mn"; fi;
@@ -3114,7 +3116,7 @@ InstallMethod( LaTeXAndXDVI,
              String(Modulus(f)),", multiplier ",String(Multiplier(f)),
              " and divisor ",String(Divisor(f)),", given by\n");
     AppendTo(stream,"\\begin{align*}\n");
-    str := LaTeXObj(f:Indentation:=2);
+    str := RcwaMappingToLaTeX(f:Indentation:=2);
     AppendTo(stream,str,"\\end{align*}");
     if HasIsTame(f) then
       if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
@@ -3122,7 +3124,7 @@ InstallMethod( LaTeXAndXDVI,
     fi;
     if HasOrder(f) then
       AppendTo(stream,"\nThe order of this mapping is \\(",
-               LaTeXObj(Order(f)),"\\).");
+               IntOrInfinityToLaTeX(Order(f)),"\\).");
     fi;
     if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
     if IsBijective(f) then
@@ -3179,7 +3181,7 @@ InstallMethod( LaTeXAndXDVI,
                                                            "\\mathbb{Z}"),
              "\\), given by\n");
     AppendTo(stream,"\\begin{align*}\n");
-    str := LaTeXObj(f:Indentation:=2);
+    str := RcwaMappingToLaTeX(f:Indentation:=2);
     AppendTo(stream,str,"\\end{align*}");
     if HasIsTame(f) then
       if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
@@ -3187,7 +3189,7 @@ InstallMethod( LaTeXAndXDVI,
     fi;
     if HasOrder(f) then
       AppendTo(stream,"\nThe order of this mapping is \\(",
-               LaTeXObj(Order(f)),"\\).");
+               IntOrInfinityToLaTeX(Order(f)),"\\).");
     fi;
     if HasIsTame(f) or HasOrder(f) then AppendTo(stream," \\newline"); fi;
     AppendTo(stream,"\n\n\\end{document}\n");
@@ -3197,13 +3199,6 @@ InstallMethod( LaTeXAndXDVI,
     Process(tmpdir,dvi,InputTextNone( ),OutputTextNone( ), 
             ["-paper","a1r","rcwamap.dvi"]);
   end );
-
-#############################################################################
-##
-#M  LaTeXObj( infinity ) . . . . . . . . . . . . . . . . . . . . for infinity
-##
-InstallMethod( LaTeXObj, "for infinity (RCWA)", true, [ IsInfinity ], 0,
-               inf -> "\\infty" );
 
 #############################################################################
 ##

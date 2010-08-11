@@ -1062,4 +1062,14 @@ DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
 
 #############################################################################
 ##
+#O  RcwaMappingToLaTeX( <f> )
+##
+##  Returns a LaTeX string for an rcwa mapping <f>.
+##  Methods recognize options "Factorization", "Indentation", "German" and
+##  "VarName" / "VarNames".
+##
+DeclareOperation( "RcwaMappingToLaTeX", [ IsRcwaMapping ] );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

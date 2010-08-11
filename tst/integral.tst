@@ -79,7 +79,7 @@ gap> t := RcwaMapping([[-1,0,1]]);
 Rcwa mapping of Z: n -> -n
 gap> Order(t);
 2
-gap> LaTeXObj(t);
+gap> RcwaMappingToLaTeX(t);
 "n \\ \\mapsto \\ -n"
 gap> MovedPoints(t);
 Z \ [ 0 ]
@@ -260,7 +260,7 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
    6                                   | (n + 2)/2
   15                                   | (n - 5)/2
 
-gap> Print(LaTeXObj(ab));
+gap> Print(RcwaMappingToLaTeX(ab));
 n \ \mapsto \
 \begin{cases}
   n       & \text{if} \ n \in 0(9) \cup 2(9) \cup 3(9) \cup 8(9), \\
@@ -270,14 +270,14 @@ n \ \mapsto \
   (n+2)/2 & \text{if} \ n \in 6(18), \\
   (n-5)/2 & \text{if} \ n \in 15(18).
 \end{cases}
-gap> Print(LaTeXObj(a:Indentation:=2));
+gap> Print(RcwaMappingToLaTeX(a:Indentation:=2));
   n \ \mapsto \
   \begin{cases}
     3n/2     & \text{if} \ n \in 0(2), \\
     (3n+1)/4 & \text{if} \ n \in 1(4), \\
     (3n-1)/4 & \text{if} \ n \in 3(4).
   \end{cases}
-gap> Print(LaTeXObj(a:german));
+gap> Print(RcwaMappingToLaTeX(a:german));
 n \ \mapsto \
 \begin{cases}
   3n/2     & \text{falls} \ n \in 0(2), \\
