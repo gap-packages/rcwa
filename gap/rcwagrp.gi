@@ -2012,7 +2012,8 @@ InstallMethod( IsomorphismRcwaGroup,
     embsF    := info.embeddings;
     embnrs   := List(gensF,
                      f->First([1..m],
-                              i->f in GeneratorsOfGroup(Image(embsF[i]))));
+                              i->ForAny(GeneratorsOfGroup(Image(embsF[i])),
+                                        g->IsIdenticalObj(f,g))));
     gens     := List([1..Length(gensF)],
                      i->Image(embs[embnrs[i]],
                               PreImagesRepresentative(embsF[embnrs[i]],
