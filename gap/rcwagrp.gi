@@ -1881,7 +1881,7 @@ InstallMethod( IsomorphismRcwaGroup,
 
   function ( G, R )
 
-    local  H, Hgens, phi1, phi2, Gperm, n, P, p, pos, maxdensity;
+    local  H, Hgens, phi1, phi2, phi, Gperm, n, P, p, pos, maxdensity;
 
     if   IsRcwaGroup(G) and Source(One(G)) = R
     then return IdentityMapping(G); fi;
@@ -1909,9 +1909,11 @@ InstallMethod( IsomorphismRcwaGroup,
     H    := GroupWithGenerators(Hgens);
     SetIsTame(H,true);
     SetRespectedPartition(H,P);
-    if HasSize(G) then SetSize(H,Size(G)); fi;
     phi2 := EpimorphismByGeneratorsNC(Gperm,H);
-    return Immutable(CompositionMapping(phi2,phi1));
+    phi := Immutable(CompositionMapping(phi2,phi1));
+    SetIsInjective(phi,true); SetIsSurjective(phi,true);
+    if HasSize(G) then SetSize(Image(phi),Size(G)); fi;
+    return phi;
   end );
 
 #############################################################################
