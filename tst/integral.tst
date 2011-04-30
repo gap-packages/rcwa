@@ -567,7 +567,7 @@ true
 gap> H := Image(IsomorphismRcwaGroup(Group((1,2),(3,4),(5,6),(7,8),
 >                                          (1,3)(2,4),(1,3,5,7)(2,4,6,8)),
 >                                    Integers));
-<rcwa group over Z with 6 generators>
+<tame rcwa group over Z with 6 generators>
 gap> Size(H);
 384
 gap> IsSolvable(H);
