@@ -14,7 +14,7 @@ ReadPackage( "rcwa", "gap/rcwamono.gi" );
 ReadPackage( "rcwa", "gap/rcwagrp.gi" );
 
 if    IsBound( GAPInfo.PackagesLoaded.fr )
-  and CompareVersionNumbers( GAPInfo.PackagesLoaded.fr[2], "0.857142" )
+  and CompareVersionNumbers( GAPInfo.PackagesLoaded.fr[2], "1.1.3" )
 then ReadPackage( "rcwa", "gap/frdepend.gi" ); fi;
 
 #############################################################################

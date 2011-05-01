@@ -566,11 +566,11 @@ Changes between version 2.5.3 and version 2.5.4:
  - The line length used in the examples has been reduced to 75 in order to
    improve their appearance in the online help with standard settings.
 
-Changes between version 2.5.4 and version 3.0.0 (??? ??, 200?):
+Changes between version 2.5.4 and version 3.0.0 (May 3, 2011):
 
 The main changes are:
 
- - Now, RCWA provides basic functionality for computing in
+ - Now the RCWA package provides basic functionality for computing in
    rcwa groups over Z^2.
 
  - Many examples have been added -- to the manual as well as
@@ -604,7 +604,7 @@ Further changes are:
    class reflections have no longer predefined names, and the nice
    `View'ing is cared for by separate methods.
 
- - Now, RCWA needs GAP 4.4.10, ResClasses 3.0.0 (which now supports
-   unions of residue classes of Z^2), GAPDoc 1.1 and Polycyclic 2.2.
+ - Now, RCWA needs GAP 4.4.12, ResClasses 3.0.0 (which supports
+   unions of residue classes of Z^2), GAPDoc 1.1 and Polycyclic 2.4.
 
 
