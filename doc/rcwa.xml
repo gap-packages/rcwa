@@ -30,9 +30,9 @@
   </Version>
   <Author>
     Stefan Kohl
-    <Email>kohl@univlora.edu.al</Email>
+    <Email>stefan@mcs.st-and.ac.uk</Email>
     <Homepage>
-      http://www.univlora.edu.al/personel/kohl/
+      http://www.gap-system.org/DevelopersPages/StefanKohl/
     </Homepage>
     <Address>
       Department of Mathematics <Br/>
@@ -41,10 +41,23 @@
       Vlore / Albania
     </Address>
   </Author>
-  <Date>January 16, 2010</Date>
+  <Date>May 3, 2011</Date>
   <Copyright>
-    &copyright; 2003 - 2010 by Stefan Kohl.
-    This package is distributed under the GNU General Public License.
+    &copyright; 2003 - 2011 by Stefan Kohl. <P/>
+
+    &RCWA; is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version. <P/>
+
+    &RCWA; is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details. <P/>
+
+    For a copy of the GNU General Public License, see 
+    the file <F>GPL</F> in the <F>etc</F> directory of the &GAP;
+    distribution or see <URL>http://www.gnu.org/licenses/gpl.html</URL>.
     <Alt Only="LaTeX">\vspace{-1cm}</Alt>
   </Copyright>
   <#Include SYSTEM "abstract.xml">
