@@ -13,24 +13,6 @@ Revision.general_g :=
 
 #############################################################################
 ##
-#S  Take care of the change of the interface for floats. ////////////////////
-##
-if   VERSION = "4.dev" or not IsBound( Float ) then
-  if   IsReadOnlyGlobal("Float")
-  then MakeReadWriteGlobal("Float"); Unbind(Float); fi;
-  BindGlobal( "Float",
-    function ( a )
-      if   IsString(a) then return MACFLOAT_STRING(a);
-      elif IsInt(a)    then return MACFLOAT_INT(a);
-      elif IsRat(a)    then return MACFLOAT_INT(NumeratorRat(a))/
-                                   MACFLOAT_INT(DenominatorRat(a));
-      else return fail;
-      fi; 
-    end );
-fi;
-
-#############################################################################
-##
 #S  Some GAP Library bugfixes. //////////////////////////////////////////////
 ##
 #############################################################################
@@ -62,17 +44,6 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 #S  Some utility functions for lists. ///////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  Positions( <list>, <elm> ) . (the Library function, for old GAP versions)
-##
-if not IsBound( Positions ) then
-BindGlobal( "Positions",
-  function ( list, elm )
-    return Filtered( [ 1 .. Length( list ) ], i -> list[ i ] = elm );
-  end );
-fi;
 
 #############################################################################
 ##
