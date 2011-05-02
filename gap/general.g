@@ -322,13 +322,6 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#F  FindGroupRelations( <G>, <r> ) . placebo `ReturnFail' if FR is not loaded
-##
-if   not IsReadOnlyGlobal( "FindGroupRelations" )
-then FindGroupRelations := ReturnFail; fi;
-
-#############################################################################
-##
 #F  ReducedWordByOrdersOfGenerators( <w>, <orders> )
 ##
 ##  Reduce exponents of powers in a word modulo the orders of the

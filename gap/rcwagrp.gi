@@ -4865,9 +4865,9 @@ InstallMethod( EpimorphismFromFpGroup,
     F         := Source(phi);
     gensF     := GeneratorsOfGroup(F);
 
-    if IsReadOnlyGlobal( "FindGroupRelations" ) then # FR package is loaded.
+    if IsReadOnlyGlobal( "ShortGroupRelations" ) then # FR is loaded.
 
-      rels := FindGroupRelations(G,r);
+      rels := ShortGroupRelations(G,r);
       rels := rels{[2..Length(rels)]};
 
     else
