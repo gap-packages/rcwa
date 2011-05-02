@@ -26,9 +26,9 @@ Revision.frdepend_gi :=
 ##  Periodic lists are implemented in the FR package, which therefore needs
 ##  to be loaded in order to use this method.
 ##
-InstallMethod( Permuted,
-               "for a periodic list and an rcwa permutation of Z (RCWA)",
-               ReturnTrue, [ IsPeriodicList, IsRcwaMappingOfZ ], 0,
+InstallOtherMethod( Permuted,
+                   "for a periodic list and an rcwa permutation of Z (RCWA)",
+                    ReturnTrue, [ IsPeriodicList, IsRcwaMappingOfZ ], 0,
 
   function ( perlist, g )
 
@@ -73,9 +73,9 @@ InstallMethod( Permuted,
 ##  Periodic lists are implemented in the FR package, which therefore needs
 ##  to be loaded in order to use this method.
 ##
-InstallMethod( Permuted,
-               "for a periodic list and an rcwa mapping of Z (RCWA)",
-               ReturnTrue, [ IsPeriodicList, IsRcwaMappingOfZ ], 0,
+InstallOtherMethod( Permuted,
+                    "for a periodic list and an rcwa mapping of Z (RCWA)",
+                    ReturnTrue, [ IsPeriodicList, IsRcwaMappingOfZ ], 0,
 
   function ( perlist, f )
 
@@ -161,17 +161,17 @@ InstallMethod( ProductOp,
 ##
 #M  AdditiveInverseOp( <perlist> ) . . . . . . . . . . . . for periodic lists
 ##
-InstallMethod( AdditiveInverseOp,
-               "for periodic lists (RCWA)", true, [ IsPeriodicList ], 0,
-               l -> PeriodicList(-PrePeriod(l),-Period(l)));
+InstallOtherMethod( AdditiveInverseOp,
+                    "for periodic lists (RCWA)", true, [ IsPeriodicList ], 0,
+                    l -> PeriodicList(-PrePeriod(l),-Period(l)));
 
 #############################################################################
 ##
 #M  \+( <l1>, <l2> ) . . . . . . . . . . . . . . . . . . . for periodic lists
 ##
-InstallMethod( \+,
-               "for periodic lists (RCWA)", ReturnTrue,
-               [ IsPeriodicList, IsPeriodicList ], 0,
+InstallOtherMethod( \+,
+                    "for periodic lists (RCWA)", ReturnTrue,
+                    [ IsPeriodicList, IsPeriodicList ], 0,
 
   function ( l1, l2 )
 
@@ -191,11 +191,11 @@ InstallMethod( \+,
 #M  \+( <l>, <n> ) . . . . . . . . . . . . . . for periodic list and constant
 #M  \+( <n>, <l> ) . . . . . . . . . . . . . . for constant and periodic list
 ##
-InstallMethod( \+,"for periodic list and constant (RCWA)", ReturnTrue,
-                  [ IsPeriodicList, IsAdditiveElement ], 0,
+InstallOtherMethod( \+,"for periodic list and constant (RCWA)", ReturnTrue,
+                       [ IsPeriodicList, IsAdditiveElement ], 0,
   function ( l, n ) return PeriodicList(PrePeriod(l)+n,Period(l)+n); end );
-InstallMethod( \+,"for constant and periodic list (RCWA)", ReturnTrue,
-                  [ IsAdditiveElement, IsPeriodicList ], 0,
+InstallOtherMethod( \+,"for constant and periodic list (RCWA)", ReturnTrue,
+                       [ IsAdditiveElement, IsPeriodicList ], 0,
   function ( n, l ) return PeriodicList(n+PrePeriod(l),n+Period(l)); end );
 
 #############################################################################
@@ -203,29 +203,12 @@ InstallMethod( \+,"for constant and periodic list (RCWA)", ReturnTrue,
 #M  \*( <l>, <n> ) . . . . . . . . . . . . . . for periodic list and constant
 #M  \*( <n>, <l> ) . . . . . . . . . . . . . . for constant and periodic list
 ##
-InstallMethod( \*,"for periodic list and constant (RCWA)", ReturnTrue,
-                  [ IsPeriodicList, IsMultiplicativeElement ], 0,
+InstallOtherMethod( \*,"for periodic list and constant (RCWA)", ReturnTrue,
+                       [ IsPeriodicList, IsMultiplicativeElement ], 0,
   function ( l, n ) return PeriodicList(PrePeriod(l)*n,Period(l)*n); end );
-InstallMethod( \*,"for constant and periodic list (RCWA)", ReturnTrue,
-                  [ IsMultiplicativeElement, IsPeriodicList ], 0,
+InstallOtherMethod( \*,"for constant and periodic list (RCWA)", ReturnTrue,
+                       [ IsMultiplicativeElement, IsPeriodicList ], 0,
   function ( n, l ) return PeriodicList(n*PrePeriod(l),n*Period(l)); end );
-
-#############################################################################
-##
-#S  Attributes and properties of certain rcwa groups, ///////////////////////
-#S  which are defined in the FR package. ////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#M  IsBranched( RCWA( <R> ) ) . . . . . . . . . . . . . . . . . . for RCWA(R)
-#M  IsBranched( CT( <R> ) ) . . . . . . . . . . . . . . . . . . . . for CT(R)
-#M  IsBranchingSubgroup( RCWA( <R> ) )  . . . . . . . . . . . . . for RCWA(R)
-#M  IsBranchingSubgroup( CT( <R> ) )  . . . . . . . . . . . . . . . for CT(R)
-##
-InstallTrueMethod( IsBranched, IsNaturalRCWA_OR_CT );
-InstallTrueMethod( IsBranchingSubgroup, IsNaturalRCWA_OR_CT );
 
 #############################################################################
 ##
