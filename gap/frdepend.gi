@@ -177,7 +177,7 @@ InstallOtherMethod( \+,
 
     local  prelng, perlng, sum;
 
-    prelng := Maximum(Length(PrePeriod(l1),PrePeriod(l2)));
+    prelng := Maximum(Length(PrePeriod(l1)),Length(PrePeriod(l2)));
     perlng := Lcm(Length(Period(l1)),Length(Period(l2)));
     sum := PeriodicList(l1{[1..prelng]} + l2{[1..prelng]},
                         l1{[prelng+1..prelng+perlng]}
@@ -209,6 +209,14 @@ InstallOtherMethod( \*,"for periodic list and constant (RCWA)", ReturnTrue,
 InstallOtherMethod( \*,"for constant and periodic list (RCWA)", ReturnTrue,
                        [ IsMultiplicativeElement, IsPeriodicList ], 0,
   function ( n, l ) return PeriodicList(n*PrePeriod(l),n*Period(l)); end );
+
+#############################################################################
+##
+#M  \/( <l>, <n> ) . . . . . . . . . . . . . . for periodic list and constant
+##
+InstallOtherMethod( \/,"for periodic list and constant (RCWA)", ReturnTrue,
+                       [ IsPeriodicList, IsMultiplicativeElement ], 0,
+  function ( l, n ) return PeriodicList(PrePeriod(l)/n,Period(l)/n); end );
 
 #############################################################################
 ##
