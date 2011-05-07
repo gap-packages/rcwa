@@ -604,7 +604,7 @@ Further changes are:
    class reflections have no longer predefined names, and the nice
    `View'ing is cared for by separate methods.
 
- - Now, RCWA needs GAP 4.4.12, ResClasses 3.0.0 (which supports
-   unions of residue classes of Z^2), GAPDoc 1.1 and Polycyclic 2.4.
+ - Now the RCWA package needs GAP 4.4.12, ResClasses 3.0.0 (which supports
+   unions of residue classes of Z^2), GAPDoc 1.3 and Polycyclic 2.6.
 
 

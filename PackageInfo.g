@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
 Version          := "3.0.0",
-Date             := "03/05/2011",
+Date             := "08/05/2011",
 ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.0.0",
 ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
@@ -49,8 +49,8 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4.12",
-                         NeededOtherPackages    := [ ["ResClasses",">=3.0.0"], ["GRAPE",">=4.0"],
-                                                     ["Polycyclic",">=2.4"], ["GAPDoc",">=1.1"] ],
+                         NeededOtherPackages    := [ ["ResClasses",">=3.0.0"], ["GRAPE",">=4.3"],
+                                                     ["Polycyclic",">=2.6"], ["GAPDoc",">=1.3"] ],
                          SuggestedOtherPackages := [ ["FR",">=1.1.3"] ],
                          ExternalConditions     := [ ]
                        ),
