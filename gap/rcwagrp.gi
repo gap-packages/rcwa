@@ -4857,7 +4857,8 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r )
 
-    local  Fp, FpS, phi, phiFp, phiFpS, F, BF, BG, BGset, rels, gensF, g, w;
+    local  Fp, FpS, phi, phiFp, phiFpS, F, BF, BG, BGset, rels, gensF, g, w,
+           ShortGroupRelations;
 
     if IsFpGroup(G) then return IdentityMapping(G); fi;
 
@@ -4866,6 +4867,8 @@ InstallMethod( EpimorphismFromFpGroup,
     gensF     := GeneratorsOfGroup(F);
 
     if IsReadOnlyGlobal( "ShortGroupRelations" ) then # FR is loaded.
+
+      ShortGroupRelations := ValueGlobal( "ShortGroupRelations" );
 
       rels := ShortGroupRelations(G,r);
       rels := rels{[2..Length(rels)]};
