@@ -12,8 +12,7 @@ Revision.frdepend_gi :=
 
 #############################################################################
 ##
-#S  Methods concerning periodic lists, e.g. the action of rcwa mappings /////
-#S  and -groups on them. ////////////////////////////////////////////////////
+#S  Methods dealing with periodic lists. ////////////////////////////////////
 ##
 #############################################################################
 
