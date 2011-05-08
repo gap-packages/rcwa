@@ -613,7 +613,7 @@ value accor\-dingly.
 
 <Example>
 <![CDATA[
-gap> Print(RcwaMappingOfZToLaTeX(T));
+gap> Print(RcwaMappingToLaTeX(T));
 n \ \mapsto \
 \begin{cases}
   n/2      & \text{if} \ n \in 0(2), \\
@@ -628,7 +628,7 @@ n \ \mapsto \
 
 There is an operation <C>LaTeXAndXDVI</C> which displays an rcwa mapping
 in an <Package>xdvi</Package> window.
-This works as follows: The string returned by <C>RcwaMappingOfZToLaTeX</C>
+This works as follows: The string returned by <C>RcwaMappingToLaTeX</C>
 is inserted into a &LaTeX; template file. This file is &LaTeX;'ed, and the
 result is shown with <Package>xdvi</Package>.
 Calling <C>Display</C> with option <A>xdvi</A> has the same effect.
