@@ -105,8 +105,8 @@ gap> Support(M);
 Z \ [ 0 ]
 gap> List([1..10],r->Length(Ball(M,1,r,OnPoints)));
 [ 3, 5, 8, 11, 16, 24, 35, 50, 69, 92 ]
-gap> List([1..12],r->Intersection(Ball(M,1,r,OnPoints),[1..20]));
-[ [ 1, 2, 3 ], [ 1, 2, 3, 7, 8 ], [ 1, 2, 3, 4, 7, 8, 17, 18 ], 
+gap> List([2..12],r->Intersection(Ball(M,1,r,OnPoints),[1..20]));
+[ [ 1, 2, 3, 7, 8 ], [ 1, 2, 3, 4, 7, 8, 17, 18 ], 
   [ 1, 2, 3, 4, 7, 8, 9, 17, 18 ], [ 1, 2, 3, 4, 7, 8, 9, 17, 18 ], 
   [ 1, 2, 3, 4, 7, 8, 9, 11, 17, 18 ], [ 1, 2, 3, 4, 7, 8, 9, 11, 17, 18 ], 
   [ 1, 2, 3, 4, 7, 8, 9, 11, 13, 14, 17, 18 ], 
@@ -188,9 +188,8 @@ gap> Action(Restriction(F,RcwaMapping([[2,0,1]])),ResidueClass(0,2));
 <rcwa monoid over Z with 2 generators>
 gap> Induction(last,RcwaMapping([[2,0,1]])) = F;
 true
-gap> orbs := ShortOrbits(F,[0..10],20);
-[ [ -1, 0, 1, 2, 3, 4 ], [ -3, -2, 1, 2, 5, 6 ], [ -5, -4, 1, 2, 7, 8 ], 
-  [ -7, -6, 1, 2, 9, 10 ] ]
+gap> orbs := ShortOrbits(F,[5..10],20);
+[ [ -3, -2, 1, 2, 5, 6 ], [ -5, -4, 1, 2, 7, 8 ], [ -7, -6, 1, 2, 9, 10 ] ]
 gap> T := Action(F,orbs[1]);
 <monoid with 2 generators>
 gap> IsTransformationMonoid(T);
