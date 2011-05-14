@@ -113,7 +113,7 @@ Print(FormatParagraph(Concatenation(
   "The tests are deliberately very volatile to allow to spot possible ",
   "problems of any kind also in other packages or in the GAP Library. ",
   "For this reason you may see below reports of differences ",
-  "which simply reflect improved methods in other packages or the ",
+  "which simply reflect improved methods in other packages or in the ",
   "GAP Library or which are caused by changes of the way certain ",
   "objects are printed, and which are therefore harmless. However ",
   "if the correct and the actual output look different mathematically ",
