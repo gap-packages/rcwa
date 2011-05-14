@@ -88,7 +88,7 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
     The tests are deliberately very volatile to allow to spot possible
     problems of any kind also in other packages or in the &GAP; Library.
     For this reason you may see reports of differences
-    which simply reflect improved methods in other packages or the
+    which simply reflect improved methods in other packages or in the
     &GAP; Library (for example an object may already know more of its
     attributes or properties than it is expected to, or an object may
     be represented in a better way), or which are caused by changes of
