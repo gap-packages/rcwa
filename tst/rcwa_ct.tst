@@ -485,7 +485,7 @@ gap> List([RCWA(Integers),CT(Integers),
 >          RCWA(R),CT(R)],Exponent);
 [ infinity, infinity, infinity, infinity, infinity, infinity ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "rcwa_ct.tst", 1500000000 );
+gap> STOP_TEST( "rcwa_ct.tst", 1900000000 );
 
 #############################################################################
 ##

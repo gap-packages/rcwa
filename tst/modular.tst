@@ -417,7 +417,7 @@ true
 gap> PreImagesRepresentative(phi,elm);
 ac^-1
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "modular.tst", 1500000000 );
+gap> STOP_TEST( "modular.tst", 2300000000 );
 
 #############################################################################
 ##

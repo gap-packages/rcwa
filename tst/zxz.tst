@@ -380,7 +380,7 @@ true
 gap> IsClassWiseTranslating(ClassShift([0,0],[[2,0],[0,2]],1));
 true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "zxz.tst", 2000000000 );
+gap> STOP_TEST( "zxz.tst", 2300000000 );
 
 #############################################################################
 ##

@@ -65,7 +65,7 @@ gap> ListOfPowers(10,8);
 gap> GeneratorsAndInverses(SymmetricGroup(4));
 [ (1,2,3,4), (1,2), (1,4,3,2), (1,2) ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "other.tst", 10000000 );
+gap> STOP_TEST( "other.tst", 4000000 );
 
 #############################################################################
 ##

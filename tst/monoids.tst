@@ -210,7 +210,7 @@ gap> Ball(Monoid(L,R),1,4,OnPoints:Spheres);
     , [ 2, 7, 50, 60, 133, 188, 369, 401, 492, 805, 1137, 1212, 1516, 2417, 
       7281, 9708 ] ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "monoids.tst", 120000000 );
+gap> STOP_TEST( "monoids.tst", 150000000 );
 
 #############################################################################
 ##
