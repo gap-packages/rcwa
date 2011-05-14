@@ -34,14 +34,32 @@ BindGlobal( "RCWABuildManual",
 
 #############################################################################
 ##
-#F  RCWATest( [ <test1> [, <test2> [, ... ]]] ) . . . . . . . read test files
+#F  RCWATestInstall( ) . . . . .  RCWA test suite
 ##
-##  Performs tests of the RCWA package.
+##  Performs a nontrivial computation to check whether an installation of
+##  RCWA appears to work.
+##
+BindGlobal( "RCWATestInstall",
+
+  function ( )
+
+    local  RCWADir, dir;
+
+    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    dir := Concatenation( RCWADir, "/tst/" );
+    ReadTest( Concatenation( dir, "testinstall.tst" ) );
+  end );
+
+#############################################################################
+##
+#F  RCWATestAll( ) . . . . . . . . . . . . . . . . . . . . .  RCWA test suite
+##
+##  Runs the full test suite of the RCWA package.
 ##
 ##  The function makes use of an adaptation of the test file tst/testall.g
 ##  of the GAP Library to this package. 
 ##
-BindGlobal( "RCWATest",
+BindGlobal( "RCWATestAll",
 
   function ( )
 
