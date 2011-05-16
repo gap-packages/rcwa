@@ -70,7 +70,7 @@ gap> StructureDescription(G);
 "C2 wr Z"
 gap> l := PeriodicList([],[1,2]);
 [/ 1, 2 ]
-gap> Ball(G,l,4,OnPoints);
+gap> Ball(G,l,4,Permuted);
 [ [/ 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
     1, 1, 1, 1, 1, 1, 1, 1 ], [/ 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
     1 ], [/ 1, 2, 1, 1, 1, 1, 1, 1 ], [/ 1, 2, 1, 1 ], [/ 1, 2 ], 
@@ -78,19 +78,19 @@ gap> Ball(G,l,4,OnPoints);
   [/ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ], 
   [/ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
     2, 2, 2, 2, 2, 2, 2, 2 ] ]
-gap> List([1..6],k->Length(Ball(G,l,k,OnPoints)));
+gap> List([1..6],k->Length(Ball(G,l,k,Permuted)));
 [ 3, 5, 7, 9, 11, 13 ]
 gap> l := PeriodicList([],[1,2,3]);
 [/ 1, 2, 3 ]
-gap> List([1..6],k->Length(Ball(G,l,k,OnPoints)));
+gap> List([1..6],k->Length(Ball(G,l,k,Permuted)));
 [ 4, 10, 22, 44, 84, 155 ]
 gap> l := PeriodicList([],[1..8]);
 [/ 1, 2, 3, 4, 5, 6, 7, 8 ]
-gap> List([1..6],k->Length(Ball(G,l,k,OnPoints)));
+gap> List([1..6],k->Length(Ball(G,l,k,Permuted)));
 [ 4, 9, 16, 24, 32, 40 ]
 gap> l := PeriodicList([],[1..16]);
 [/ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
-gap> List([1..8],k->Length(Ball(G,l,k,OnPoints)));
+gap> List([1..8],k->Length(Ball(G,l,k,Permuted)));
 [ 4, 10, 21, 37, 58, 84, 114, 148 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "perlist.tst", 100000000 );
