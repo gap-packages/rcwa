@@ -110,11 +110,13 @@ or the more specialized functions
         Label="of Z x Z, by residue class cycles"/>
   <Meth Name="RcwaMapping" Arg="f, g"
         Label="of Z x Z, by projections to coordinates"/>
-  <Returns>
+  <Returns> An rcwa mapping of <M>&ZZ;^2</M>. </Returns>
+  <Description>
+    The above methods return
     <List>
       <Mark>(a)</Mark>
       <Item>
-        The rcwa mapping of <C><A>R</A> = Integers^2</C>
+        the rcwa mapping of <C><A>R</A> = Integers^2</C>
         with modulus&nbsp;<A>L</A> and coefficients <A>coeffs</A>,
       </Item>
       <Mark>(b)</Mark>
@@ -128,19 +130,16 @@ or the more specialized functions
       <Item>
         a bijective rcwa mapping with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes
-        of&nbsp;<M>&ZZ;^2</M>, each of which it permutes cyclically, or
+        of&nbsp;<M>&ZZ;^2</M> each of which it permutes cyclically, and
       </Item>
       <Mark>(d)</Mark>
       <Item>
         the rcwa mapping of&nbsp;<M>&ZZ;^2</M> whose projections to the
-        coordinates are given by <A>f</A> and&nbsp;<A>g</A> (warning:
-        by far not all -- or better: only very special rcwa mappings
-        of&nbsp;<M>&ZZ;^2</M> -- have projections to coordinates!),
+        coordinates are given by <A>f</A> and&nbsp;<A>g</A>,
       </Item>
     </List>
-    respectively.
-  </Returns>
-  <Description>
+    respectively. <P/>
+
     The modulus of an rcwa mapping of <M>&ZZ;^2</M> is a lattice of full
     rank. It is represented by a matrix <A>L</A> in Hermite normal form,
     whose rows are the spanning vectors. <P/>
@@ -159,7 +158,11 @@ or the more specialized functions
 
     The methods for the operation <C>RcwaMapping</C> perform a number of
     argument checks, which can be skipped by using <C>RcwaMappingNC</C>
-    instead.
+    instead. <P/>
+
+    Last but not least, regarding Method&nbsp;(d) it should be mentioned
+    that only very special rcwa mappings of&nbsp;<M>&ZZ;^2</M> have
+    projections to coordinates.
 <Example>
 <![CDATA[
 gap> R := Integers^2;;
