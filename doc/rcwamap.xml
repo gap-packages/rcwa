@@ -49,10 +49,10 @@ i.e. given&nbsp;by
     n \ \mapsto \ \frac{a_{r(m)} \cdot n + b_{r(m)}}{c_{r(m)}}
   </Display>
 </Alt>
-<Alt Only="HTML"><![CDATA[<center>
+<Alt Only="HTML"><![CDATA[<p class="pcenter">
   <img src = "rcwamap.png" width = "366" height = "49"
        alt = "f|_r(m): n |-> (a_r(m) * n + b_r(m)) / c_r(m)" />
-</center>]]></Alt>
+</p>]]></Alt>
 <Alt Only="Text"><Verb>
                                         a_r(m) * n + b_r(m)
            f|_r(m):  r(m) -> Z,  n |->  -------------------
@@ -1056,11 +1056,11 @@ respectively:
         \sum_{r(m) \in \mathbb{Z}/m\mathbb{Z}} b_{r(m)}/(|a_{r(m)}| \cdot m).
       </Display>
     </Alt>
-    <Alt Only="HTML"><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<p class="pcenter">
       <img src = "det.png" width = "177" height = "58"
            alt = "sum_{r(m) in Z/mZ}
                   b_{r(m)}/(|a_{r(m)}| \cdot m)."/>
-    </center>]]></Alt>
+    </p>]]></Alt>
     <Alt Only="Text"><Verb>
                           -----
                            \           b_r(m)
@@ -1100,11 +1100,11 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
             + \sum_{r(m): \ a_{r(m)} &lt; 0} \frac{m - 2r}{m}}}.
       </Display>
     </Alt>
-    <Alt Only="HTML"><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<p class="pcenter">
       <img src = "sgn.png" width = "284" height = "63"
            alt = "(-1)^(det(sigma)
                       + sum_{r(m): \ a_{r(m)} &lt; 0} (m - 2r)/m)."/>
-    </center>]]></Alt>
+    </p>]]></Alt>
     <Alt Only="Text"><Verb>
                                     -----
                                      \       m - 2r
@@ -1631,10 +1631,10 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
         ]]>
       </Display>
     </Alt>
-    <Alt Only="HTML"><![CDATA[<center>
+    <Alt Only="HTML"><![CDATA[<p class="pcenter">
       <img src = "transmat.png" width = "599" height = "47"
            alt = "(see the PDF version of the manual),"/>
-    </center>]]></Alt>
+    </p>]]></Alt>
     <Alt Only="Text">
       (see the PDF- or HTML version of the manual),
     </Alt>
