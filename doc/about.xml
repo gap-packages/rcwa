@@ -30,10 +30,10 @@ The development of this package has originally been inspired by the famous
   ]]>
   </Display>
 </Alt>
-<Alt Only="HTML"><![CDATA[<p class="pcenter">
+<Alt Only="HTML"><![CDATA[<center>
   <img src = "collatz.png" width = "342" height = "63"
        alt = "T: Z -> Z, n |-> (n/2 if n even, (3n+1)/2 if n odd)"/>
-</p>]]></Alt>
+</center>]]></Alt>
 <Alt Only="Text"><Verb><![CDATA[
                                        /
                                       | n/2 if n even,
