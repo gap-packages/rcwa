@@ -242,7 +242,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>GluckTaylorInvariant(<A>a</A>(</C>
+    <C>GluckTaylorInvariant(<A>a</A>)</C>
   </Mark>
   <Item>
     Evaluation of the given expression.
