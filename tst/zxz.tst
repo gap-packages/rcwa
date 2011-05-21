@@ -234,7 +234,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
  [1,0]                         | [m-1,n+3]
  [1,1] [1,2]                   | [m-1,n]
 
-gap> Projections(g);
+gap> ProjectionsToCoordinates(g);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
