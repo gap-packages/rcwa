@@ -614,4 +614,11 @@ Changes between version 3.0.0 and version 3.0.1:
    went well, and `RCWATestAll' for running the full test suite.
    The function `RCWATestAll' corresponds to the former `RCWATest'.
 
+Changes between version 3.0.1 and version 3.0.2:
+
+ - Renamed operation `Projections' for rcwa mappings of Z^2 to
+   `ProjectionsToCoordinates' and turned it into an attribute.
+ - Renamed operation `Projections' for rcwa group and modulus to
+   `ProjectionsToInvariantUnionsOfResidueClasses'.
+
 
