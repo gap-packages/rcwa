@@ -1095,7 +1095,7 @@ a subset of exactly one of these parts. Further, such a partition often
 gives rise to proper quotients of the group:
 
 <ManSection>
-  <Oper Name ="Projections"
+  <Oper Name ="ProjectionsToInvariantUnionsOfResidueClasses"
         Arg="G, m" Label="for an rcwa group and a modulus"/>
   <Returns>
     The projections of the rcwa group&nbsp;<A>G</A> to the unions of
@@ -1111,7 +1111,7 @@ gives rise to proper quotients of the group:
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
-gap> Projections(G,4);
+gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
 [ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
     [ <bijective rcwa mapping of Z with modulus 4>,
       IdentityMapping( Integers ) ],

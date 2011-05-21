@@ -2565,9 +2565,9 @@ InstallMethod( OrbitsModulo,
 
 #############################################################################
 ##
-#M  Projections( <G>, <m> ) . . . . . . . . . . . . . . . . . for rcwa groups
+#M  ProjectionsToInvariantUnionsOfResidueClasses( <G>, <m> )  for rcwa groups
 ##
-InstallMethod( Projections,
+InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
                "for rcwa groups (RCWA)", ReturnTrue,
                [ IsRcwaGroup, IsRingElement ], 0,
 
@@ -3369,7 +3369,8 @@ InstallMethod( \in,
         fi;
       fi;
       m       := Lcm(List(Concatenation(gens,[g]),Modulus));
-      orbsmod := List(Projections(G,m),proj->Support(Image(proj)));
+      orbsmod := List(ProjectionsToInvariantUnionsOfResidueClasses(G,m),
+                      proj->Support(Image(proj)));
       if ForAny(orbsmod,orb->orb^g<>orb) then
         Info(InfoRCWA,2,"<g> does not leave the partition of Z into unions");
         Info(InfoRCWA,2,"of residue classes (mod ",m,") invariant which is");
@@ -3500,7 +3501,8 @@ InstallMethod( \in,
         fi;
       fi;
       m       := Lcm(List(Concatenation(gens,[g]),Modulus));
-      orbsmod := List(Projections(G,m),proj->Support(Image(proj)));
+      orbsmod := List(ProjectionsToInvariantUnionsOfResidueClasses(G,m),
+                      proj->Support(Image(proj)));
       if ForAny(orbsmod,orb->orb^g<>orb) then
         Info(InfoRCWA,2,"<g> does not leave the partition of ",
                         RingToString(R)," into");

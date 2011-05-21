@@ -488,9 +488,13 @@ DeclareOperation( "EpimorphismFromFpGroup",
 
 #############################################################################
 ##
-#O  Projections( <G>, <m> )  projections to unions of residue classes (mod m)
+#O  ProjectionsToInvariantUnionsOfResidueClasses( <G>, <m> )
 ##
-DeclareOperation( "Projections", [ IsRcwaGroup, IsRingElement ] );
+##  Projections of the rcwa group <G> to unions of residue classes (mod m)
+##  which it fixes setwise.
+##
+DeclareOperation( "ProjectionsToInvariantUnionsOfResidueClasses",
+                  [ IsRcwaGroup, IsRingElement ] );
 
 #############################################################################
 ##
