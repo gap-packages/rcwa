@@ -268,7 +268,7 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 ##
 ##  Projections of an rcwa mapping of Z^2 to the coordinates.
 ##
-DeclareAttribute( "ProjectionsToCoordinates", [ IsRcwaMappingOfZxZ ] );
+DeclareAttribute( "ProjectionsToCoordinates", IsRcwaMappingOfZxZ );
 
 #############################################################################
 ##
