@@ -1415,7 +1415,7 @@ gap> List([1,2,6,12],m->RespectsPartition(ClassReflection(0,m),P));
 gap> List([g,h,g*h,a,ab],elm->RespectsPartition(elm,P));
 [ true, true, true, false, false ]
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
-gap> Projections(G,8);
+gap> ProjectionsToInvariantUnionsOfResidueClasses(G,8);
 [ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
     [ <bijective rcwa mapping of Z with modulus 8>,
       IdentityMapping( Integers ) ],
