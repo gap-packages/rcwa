@@ -266,7 +266,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
 
 gap> g^2;
 IdentityMapping( ( Integers^2 ) )
-gap> List(Projections(g),Factorization);
+gap> List(ProjectionsToCoordinates(g),Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
 ]]>
 </Example>
@@ -609,7 +609,7 @@ or earlier in this mamual. The operations which are special for rcwa mappings
 of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
 
 <ManSection>
-  <Oper Name="Projections" Arg="f"
+  <Oper Name="ProjectionsToCoordinates" Arg="f"
         Label="for an rcwa mapping of Z x Z"/>
   <Returns>
     The projections of the rcwa mapping <A>f</A> of <M>&ZZ;^2</M> to the
@@ -634,7 +634,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
  [1,0]                         | [m-1,-n]
  [1,1]                         | [m-1,n]
 
-gap> List(Projections(f),Factorization);
+gap> List(ProjectionsToCoordinates(f),Factorization);
 [ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
 ]]>
 </Example>

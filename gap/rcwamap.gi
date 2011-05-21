@@ -1185,9 +1185,9 @@ InstallGlobalFunction( SemilocalizedRcwaMapping,
 
 #############################################################################
 ##
-#M  Projections( <f> ) . . proj. of an rcwa mapping of Z^2 to the coordinates
+#M  ProjectionsToCoordinates( <f> ) . . . . . . . .  for rcwa mappings of Z^2
 ##
-InstallMethod( Projections,
+InstallMethod( ProjectionsToCoordinates,
                "rcwa mapping of Z^2 to two rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZxZ ], 0,
 
@@ -1225,7 +1225,7 @@ InstallOtherMethod( Projection,
 
     if not coord in [1,2] then return fail; fi; # there are only 2 coord's
 
-    proj := Projections(f); # maybe even both projections exist
+    proj := ProjectionsToCoordinates(f); # maybe even both projections exist
     if proj <> fail then return proj[coord]; fi;
 
     m := Modulus(f); # check whether the choice of the affine partial mapping

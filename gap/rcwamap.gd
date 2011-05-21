@@ -264,9 +264,11 @@ DeclareGlobalFunction( "SemilocalizedRcwaMapping" );
 
 #############################################################################
 ##
-#O  Projections( <f> ) . . proj. of an rcwa mapping of Z^2 to the coordinates
+#A  ProjectionsToCoordinates( <f> )
 ##
-DeclareOperation( "Projections", [ IsRcwaMappingOfZxZ ] );
+##  Projections of an rcwa mapping of Z^2 to the coordinates.
+##
+DeclareAttribute( "ProjectionsToCoordinates", [ IsRcwaMappingOfZxZ ] );
 
 #############################################################################
 ##
