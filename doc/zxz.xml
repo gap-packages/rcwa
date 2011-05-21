@@ -609,7 +609,7 @@ or earlier in this mamual. The operations which are special for rcwa mappings
 of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
 
 <ManSection>
-  <Oper Name="ProjectionsToCoordinates" Arg="f"
+  <Attr Name="ProjectionsToCoordinates" Arg="f"
         Label="for an rcwa mapping of Z x Z"/>
   <Returns>
     The projections of the rcwa mapping <A>f</A> of <M>&ZZ;^2</M> to the
