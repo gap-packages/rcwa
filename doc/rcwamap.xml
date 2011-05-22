@@ -609,7 +609,7 @@ class reflections, class transpositions and prime switches is printed
           Label="for an rcwa permutation of Z"/>).
 For rcwa mappings with modulus greater than&nbsp;1, an indentation by
 <A>Indentation</A> characters can be obtained by setting this option
-value accor\-dingly.
+value accordingly.
 
 <Example>
 <![CDATA[
