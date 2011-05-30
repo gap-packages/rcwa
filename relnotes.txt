@@ -621,4 +621,8 @@ Changes between version 3.0.1 and version 3.0.2:
  - Renamed operation `Projections' for rcwa group and modulus to
    `ProjectionsToInvariantUnionsOfResidueClasses'.
 
+Changes between version 3.0.2 and version 3.0.3:
+
+ - The CVS revision entries have been removed from the source files.
+
 
