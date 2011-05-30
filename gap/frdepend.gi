@@ -2,13 +2,10 @@
 ##
 #W  frdepend.gi                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains code which depends on the FR package.
 ##  Therefore it is read only when FR is available.
 ##
-Revision.frdepend_gi :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

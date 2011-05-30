@@ -2,12 +2,12 @@
 ##
 #W  zxz.tst                  GAP4 Package `RCWA'                  Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality for
 ##  rcwa mappings of and rcwa groups over Z^2.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "zxz.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> L1 := [ [ 2, 1 ], [ -1, 2 ] ];;
 gap> L2 := [ [ 6, 2 ], [ 0, 6 ] ];;

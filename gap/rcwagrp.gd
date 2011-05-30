@@ -2,15 +2,12 @@
 ##
 #W  rcwagrp.gd                GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa groups.
 ##
 ##  See the definitions given in the file rcwamap.gd.
 ##
-Revision.rcwagrp_gd :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

@@ -2,9 +2,9 @@
 ##
 #W  ngens.tst                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "ngens.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> nu  := ClassShift(0,1);;
 gap> t   := ClassReflection(0,1);;

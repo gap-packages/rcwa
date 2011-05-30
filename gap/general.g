@@ -2,14 +2,11 @@
 ##
 #W  general.g                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains some more general pieces of code which are not direct-
 ##  ly related to RCWA. Some of them might perhaps later be moved into the
 ##  GAP Library or elsewhere.
 ##
-Revision.general_g :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

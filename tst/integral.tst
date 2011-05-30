@@ -2,12 +2,12 @@
 ##
 #W  integral.tst               GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality for
 ##  rcwa mappings of and rcwa groups over the ring of integers.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "integral.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> IdentityRcwaMappingOfZ;
 IdentityMapping( Integers )

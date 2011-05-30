@@ -2,12 +2,12 @@
 ##
 #W  modular.tst                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality for
 ##  rcwa mappings of and rcwa groups over polynomial rings GF(q)[x].
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "modular.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;

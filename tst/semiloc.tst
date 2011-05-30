@@ -2,13 +2,13 @@
 ##
 #W  semiloc.tst                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality for
 ##  rcwa mappings of and rcwa groups over semilocalizations Z_pi of
 ##  the ring of integers.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "semiloc.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> RcwaMapping(Z_pi(2),[[2,0,1]]);
 Rcwa mapping of Z_( 2 ): n -> 2 n

@@ -2,8 +2,6 @@
 ##
 #W  examples.g                GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains a collection of examples of rcwa mappings and -groups.
 ##  It can be read in a GAP session by issueing RCWAReadExamples();.
 ##
@@ -18,6 +16,8 @@
 ##  'newer' examples, where the latter are often considerably 'better' than
 ##  the former. 
 ##
+#############################################################################
+
 if not IsBound( RCWAExamples ) then RCWAExamples := rec( ); fi;
 
 #############################################################################

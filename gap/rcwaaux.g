@@ -2,12 +2,9 @@
 ##
 #W  rcwaaux.g                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains auxiliary functions for the RCWA package.
 ##
-Revision.rcwaaux_g :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

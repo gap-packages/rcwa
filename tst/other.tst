@@ -2,12 +2,12 @@
 ##
 #W  other.tst                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality which is not
 ##  directly related to rcwa groups.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST("other.tst");
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
 gap> x in DefaultRing(x);

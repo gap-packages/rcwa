@@ -1,17 +1,16 @@
 ####################################################################################################
 ##
 ##  PackageInfo.g                         GAP4 Package `RCWA'                            Stefan Kohl
-##  
-#H  @(#)$Id$
 ##
+####################################################################################################
 
 SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "3.0.2",
+Version          := "3.0.3",
 Date             := "21/05/2011",
-ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.0.2",
+ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.0.3",
 ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
                       rec( LastName      := "Kohl",

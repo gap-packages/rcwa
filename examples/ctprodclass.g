@@ -2,8 +2,6 @@
 ##
 #W  ctprodclass.g               GAP4 Package `RCWA'               Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains a classification of all products of two different
 ##  class transpositions which interchange residue classes with moduli <= 6,
 ##  by
@@ -75,6 +73,8 @@
 ##  returns a list [ <intersection type>, <order>, <cycle type> ], where the
 ##  entries have the meanings described above.
 ##
+#############################################################################
+
 if not IsBound( RCWAExamples ) then RCWAExamples := rec( ); fi;
 
 if   not IsBound( RCWAExamples.ClassTranspositionProducts )

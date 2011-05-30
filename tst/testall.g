@@ -3,11 +3,10 @@
 #W  testall.g                GAP4 Package `RCWA'                 Frank Celler
 ##                                                                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This is an adaptation of the test file for the GAP library to the
 ##  RCWA package.
 ##
+#############################################################################
 
 #############################################################################
 ##

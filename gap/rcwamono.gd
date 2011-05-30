@@ -2,15 +2,12 @@
 ##
 #W  rcwamono.gd                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains declarations of functions, operations etc. for
 ##  computing with rcwa monoids.
 ##
 ##  See the definitions given in the file rcwamap.gd.
 ##
-Revision.rcwamono_gd :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

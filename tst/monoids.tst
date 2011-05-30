@@ -2,12 +2,10 @@
 ##
 #W  monoids.tst                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality for computing
 ##  with rcwa monoids.
 ##
-gap> START_TEST("$Id$");
+gap> START_TEST( "monoids.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> T := RcwaMapping([[1,0,2],[3,1,2]]);; SetName(T,"T"); IsTame(T);;
 gap> M := Monoid(T);

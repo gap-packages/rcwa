@@ -2,12 +2,12 @@
 ##
 #W  perlist.tst                GAP4 Package `RCWA'                Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of RCWA's functionality dealing with
 ##  periodic lists.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "perlist.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
 gap> l := PeriodicList([],[1,2]);
 [/ 1, 2 ]
