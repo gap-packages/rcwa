@@ -233,7 +233,7 @@ DeclareGlobalFunction( "GroupByResidueClasses" );
 
 #############################################################################
 ##
-#C  IsOrbit . . . . . . . . . . . . all orbits which are not written as lists
+#C  IsOrbit . . . . . . . . . . all orbits which are not represented as lists
 ##
 if not IsBoundGlobal( "IsOrbit" )
 then DeclareCategory( "IsOrbit", IsListOrCollection ); fi;
