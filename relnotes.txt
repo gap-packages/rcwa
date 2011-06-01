@@ -624,5 +624,7 @@ Changes between version 3.0.1 and version 3.0.2:
 Changes between version 3.0.2 and version 3.0.3:
 
  - The CVS revision entries have been removed from the source files.
-
+ - The PDF version of the manual contains now bookmarks for chapters,
+   sections and subsections. -- This is due to improved functionality
+   of the most recent version of the GAPDoc package.
 
