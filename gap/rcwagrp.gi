@@ -2411,7 +2411,7 @@ InstallMethod( NextIterator,
 
   function ( iter )
 
-    local  G, gens, sphere, g;
+    local  G, P, gens, sphere, g;
 
     G := iter!.G;
     if   not HasParent(G) or not HasElementTestFunction(G)
