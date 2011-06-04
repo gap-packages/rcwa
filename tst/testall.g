@@ -101,7 +101,7 @@ Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 
 #############################################################################
 ##
-#X  read all test files
+#X  Read all test files.
 ##
 oldSizeScreen := SizeScreen();
 SizeScreen([80,]);
