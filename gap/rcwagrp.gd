@@ -233,30 +233,32 @@ DeclareGlobalFunction( "GroupByResidueClasses" );
 
 #############################################################################
 ##
-#C  IsOrbit . . . . . . . . . . all orbits which are not represented as lists
+#C  IsRcwaGroupOrbit . . . category of orbits under the action of rcwa groups
 ##
-if not IsBoundGlobal( "IsOrbit" )
-then DeclareCategory( "IsOrbit", IsListOrCollection ); fi;
+##  The category of all orbits under the action of rcwa groups which are
+##  neither represented as lists nor as residue class unions.
+##
+DeclareCategory( "IsRcwaGroupOrbit", IsListOrCollection );
 
 #############################################################################
 ##
 #A  UnderlyingGroup( <orbit> ) . . . . . . . . . underlying group of an orbit
 ##
-DeclareAttribute( "UnderlyingGroup", IsOrbit );
+DeclareAttribute( "UnderlyingGroup", IsRcwaGroupOrbit );
 
 #############################################################################
 ##
-#R  IsOrbitStandardRep . . . . . . . . .  "standard" representation of orbits
+#R  IsRcwaGroupOrbitStandardRep . . . . . "standard" representation of orbits
 ##
-DeclareRepresentation( "IsOrbitStandardRep",
+DeclareRepresentation( "IsRcwaGroupOrbitStandardRep",
                        IsComponentObjectRep and IsAttributeStoringRep,
                        [ "group", "representative", "action" ] );
 
 #############################################################################
 ##
-#R  IsOrbitsIteratorRep . . . . . . . . . . . . . . . iterator representation
+#R  IsRcwaGroupOrbitsIteratorRep . .  repr. of iterators of rcwa group orbits
 ##
-DeclareRepresentation( "IsOrbitsIteratorRep",
+DeclareRepresentation( "IsRcwaGroupOrbitsIteratorRep",
                        IsComponentObjectRep,
                        [ "orbit", "sphere", "oldsphere", "pos" ] );
 

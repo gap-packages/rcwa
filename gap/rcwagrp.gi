@@ -3951,9 +3951,10 @@ InstallMethod( IsPrimitive,
 
 #############################################################################
 ##
-#V  IsOrbitInStandardRep . . . . . . . . . shorthand to specify orbit objects
+#V  IsRcwaGroupOrbitInStandardRep . .  shorthand for rcwa group orbit objects
 ##
-BindGlobal( "IsOrbitInStandardRep", IsOrbit and IsOrbitStandardRep );
+BindGlobal( "IsRcwaGroupOrbitInStandardRep",
+             IsRcwaGroupOrbit and IsRcwaGroupOrbitStandardRep );
 
 #############################################################################
 ## 
@@ -4048,7 +4049,7 @@ InstallOtherMethod( OrbitOp,
     if ball = oldball then return Set(ball); fi;
     
     orbit := Objectify( NewType( CollectionsFamily( FamilyObj( pnt ) ),
-                                 IsOrbitInStandardRep ),
+                                 IsRcwaGroupOrbitInStandardRep ),
                         rec( group          := G,
                              representative := pnt,
                              action         := act ) );
@@ -4057,18 +4058,18 @@ InstallOtherMethod( OrbitOp,
 
 #############################################################################
 ##
-#M  UnderlyingGroup( <orbit> ) . . . . . . . . . . . . . . . . . . for orbits
+#M  UnderlyingGroup( <orbit> ) . . . . . . . . . .  for orbits of rcwa groups
 ##
-InstallMethod( UnderlyingGroup,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+InstallMethod( UnderlyingGroup, "for orbits of rcwa groups (RCWA)", true,
+               [ IsRcwaGroupOrbitInStandardRep ], 0,
                orbit -> orbit!.group );
 
 #############################################################################
 ##
-#M  Representative( <orbit> ) . . . . . . . . . . . . . . . . . .  for orbits
+#M  Representative( <orbit> ) . . . . . . . . . . . for orbits of rcwa groups
 ##
-InstallMethod( Representative,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+InstallMethod( Representative, "for orbits of rcwa groups (RCWA)", true,
+               [ IsRcwaGroupOrbitInStandardRep ], 0,
                orbit -> orbit!.representative );
 
 #############################################################################
@@ -4077,7 +4078,7 @@ InstallMethod( Representative,
 ##
 InstallMethod( IsSubset,
                "for underlying ring and orbit of an rcwa group (RCWA)",
-               ReturnTrue, [ IsRing, IsOrbitInStandardRep ], 0,
+               ReturnTrue, [ IsRing, IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( R, orbit )
     if   IsRcwaGroup(orbit!.group) and IsSubset(R,Source(One(orbit!.group)))
@@ -4088,10 +4089,11 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  ViewObj( <orbit> ) . . . . . . . . . . . . . . . . . . . . . . for orbits
+#M  ViewObj( <orbit> ) . . . . . . . . . . . . . .  for orbits of rcwa groups
 ##
 InstallMethod( ViewObj,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               "for orbits of rcwa groups (RCWA)", true,
+              [ IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( orbit )
     Print("<orbit of ");
@@ -4103,11 +4105,12 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  \=( <orbit1>, <orbit2> ) . . . . . . . . . . . . . . . . . . . for orbits
+#M  \=( <orbit1>, <orbit2> ) . . . . . . . . . . .  for orbits of rcwa groups
 ##
 InstallMethod( \=,
-               "for orbits (RCWA)", IsIdenticalObj,
-               [ IsOrbitInStandardRep, IsOrbitInStandardRep ], 0,
+               "for orbits of rcwa groups (RCWA)", IsIdenticalObj,
+               [ IsRcwaGroupOrbitInStandardRep,
+                 IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( orbit1, orbit2 )
 
@@ -4151,11 +4154,11 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \=( <orbit>, <list> ) . . . . . . . . . . . . . . for an orbit and a list
+#M  \=( <orbit>, <list> ) . . . . .  for an orbit of an rcwa group and a list
 ##
 InstallMethod( \=,
-               "for an orbit and a list (RCWA)", ReturnTrue,
-               [ IsOrbitInStandardRep, IsList ], 0,
+               "for an orbit of an rcwa group and a list (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOrbitInStandardRep, IsList ], 0,
 
   function ( orbit, list )
 
@@ -4174,19 +4177,20 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \=( <list>, <orbit> ) . . . . . . . . . . . . . . for a list and an orbit
+#M  \=( <list>, <orbit> ) . . . . .  for a list and an orbit of an rcwa group
 ##
 InstallMethod( \=,
-               "for a list and an orbit (RCWA)", ReturnTrue,
-               [ IsList, IsOrbitInStandardRep ], 0,
+               "for a list and an orbit of an rcwa group (RCWA)", ReturnTrue,
+               [ IsList, IsRcwaGroupOrbitInStandardRep ], 0,
                function ( list, orbit ) return orbit = list; end );
 
 #############################################################################
 ##
-#M  AsList( <orbit> ) . . . . . . . . . . . . . . . . . . . . . .  for orbits
+#M  AsList( <orbit> ) . . . . . . . . . . . . . . . for orbits of rcwa groups
 ##
 InstallMethod( AsList,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               "for orbits of rcwa groups (RCWA)", true,
+               [ IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( orbit )
 
@@ -4205,11 +4209,11 @@ InstallMethod( AsList,
 
 #############################################################################
 ##
-#M  \in( <point>, <orbit> ) . . . . . . . . . . . . . for a point in an orbit
+#M  \in( <point>, <orbit> ) . . . . for a point and an orbit of an rcwa group
 ##
 InstallMethod( \in,
-               "for a point in an orbit (RCWA)", ReturnTrue,
-               [ IsObject, IsOrbitInStandardRep ], 0,
+               "for a point and an orbit of an rcwa group (RCWA)",
+               ReturnTrue, [ IsObject, IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( point, orbit )
     return Orbit(orbit!.group,point,orbit!.action) = orbit;
@@ -4217,10 +4221,11 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Size( <orbit> ) . . . . . . . . . . . . . . . . . . . . . . .  for orbits
+#M  Size( <orbit> ) . . . . . . . . . . . . . . . . for orbits of rcwa groups
 ##
 InstallMethod( Size,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               "for orbits of rcwa groups (RCWA)", true,
+               [ IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( orbit )
     if HasIsFinite(orbit) and not IsFinite(orbit) then return infinity; fi;
@@ -4229,15 +4234,17 @@ InstallMethod( Size,
 
 #############################################################################
 ##
-#M  Iterator( <orbit> ) . . . . . . . . . . . . . . . . . . . . .  for orbits
+#M  Iterator( <orbit> ) . . . . . . . . . . . . . . for orbits of rcwa groups
 ##
 InstallMethod( Iterator,
-               "for orbits (RCWA)", true, [ IsOrbitInStandardRep ], 0,
+               "for orbits of rcwa groups (RCWA)", true,
+               [ IsRcwaGroupOrbitInStandardRep ], 0,
 
   function ( orbit )
-    return Objectify( NewType( IteratorsFamily, IsIterator
-                                            and IsMutable
-                                            and IsOrbitsIteratorRep ),
+    return Objectify( NewType( IteratorsFamily,
+                               IsIterator
+                           and IsMutable
+                           and IsRcwaGroupOrbitsIteratorRep ),
                       rec( orbit     := orbit,
                            sphere    := [Representative(orbit)],
                            oldsphere := [],
@@ -4246,11 +4253,12 @@ InstallMethod( Iterator,
 
 #############################################################################
 ##
-#M  NextIterator( <iter> ) . . . . . . . . . . . . .  for iterators of orbits
+#M  NextIterator( <iter> ) . . . . . . for iterators of orbits of rcwa groups
 ##
 InstallMethod( NextIterator,
-               "for iterators of orbits (RCWA)", true,
-               [ IsIterator and IsMutable and IsOrbitsIteratorRep ], 0,
+               "for iterators of orbits of rcwa groups (RCWA)", true,
+               [     IsIterator and IsMutable
+                 and IsRcwaGroupOrbitsIteratorRep ], 0,
 
   function ( iter )
 
@@ -4276,20 +4284,20 @@ InstallMethod( NextIterator,
 
 #############################################################################
 ##
-#M  IsDoneIterator( <iter> ) . . . . . . . . . . . .  for iterators of orbits
+#M  IsDoneIterator( <iter> ) . . . . . for iterators of orbits of rcwa groups
 ##
 InstallMethod( IsDoneIterator,
-               "for iterators of orbits (RCWA)", true,
-               [ IsIterator and IsOrbitsIteratorRep ], 0,
+               "for iterators of orbits of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupOrbitsIteratorRep ], 0,
                iter -> IsEmpty( iter!.sphere ) );
 
 #############################################################################
 ##
-#M  ShallowCopy( <iter> ) . . . . . . . . . . . . . . for iterators of orbits
+#M  ShallowCopy( <iter> ) . . . . . .  for iterators of orbits of rcwa groups
 ##
 InstallMethod( ShallowCopy,
-               "for iterators of orbits (RCWA)", true,
-               [ IsIterator and IsOrbitsIteratorRep ], 0,
+               "for iterators of orbits of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupOrbitsIteratorRep ], 0,
 
   iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
                      rec( orbit     := iter!.orbit,
@@ -4299,11 +4307,11 @@ InstallMethod( ShallowCopy,
 
 #############################################################################
 ##
-#M  ViewObj( <iter> ) . . . . . . . . . . . . . . . . for iterators of orbits
+#M  ViewObj( <iter> ) . . . . . . . .  for iterators of orbits of rcwa groups
 ##
 InstallMethod( ViewObj,
-               "for iterators of orbits (RCWA)", true,
-               [ IsIterator and IsOrbitsIteratorRep ], 0,
+               "for iterators of orbits of rcwa groups (RCWA)", true,
+               [ IsIterator and IsRcwaGroupOrbitsIteratorRep ], 0,
 
   function ( iter )
     Print("Iterator of ");
