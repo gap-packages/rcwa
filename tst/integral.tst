@@ -852,7 +852,7 @@ gap> G := Restriction(Group(a,b),RcwaMapping([[5,3,1]]));
 gap> MovedPoints(G);
 3(5) \ [ -2, 3 ]
 gap> GuessedDivergence(g);
-1
+1.
 gap> GuessedDivergence(a);
 1.06066
 gap> GuessedDivergence(u);
