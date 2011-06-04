@@ -108,6 +108,9 @@ SizeScreen([80,]);
 
 Print("This is the test suite of the RCWA package.\n\n");
 Print(FormatParagraph(Concatenation(
+  "The tests compare the correct and the actual output of a larger ",
+  "number of GAP commands, and show any differences. ")),"\n");
+Print(FormatParagraph(Concatenation(
   "Please note that the test suite is a tool for developing. ",
   "The tests are deliberately very volatile to allow to spot possible ",
   "problems of any kind also in other packages or in the GAP Library. ",
