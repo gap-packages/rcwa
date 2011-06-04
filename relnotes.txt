@@ -630,7 +630,14 @@ Changes between version 3.0.2 and version 3.0.3:
 
 Changes between version 3.0.3 and version 3.0.4:
 
- - Renamed the undocumented variable `IsOrbit' to `IsRcwaGroupOrbit'
-   to avoid potential name collisions.
+ - Renamed undocumented variables:
+     - `IsOrbit' -> `IsRcwaGroupOrbit'
+     - `IsOrbitStandardRep' -> `IsRcwaGroupOrbitStandardRep'
+     - `IsOrbitsIteratorRep' -> `IsRcwaGroupOrbitsIteratorRep'
+     - `IsOrbitInStandardRep' -> `IsRcwaGroupOrbitInStandardRep'.
+   Reason: name collision with orb package, and potential for
+   further name collisions; expected benefit from synergies
+   with other code for dealing with orbits is small.
+
 
 
