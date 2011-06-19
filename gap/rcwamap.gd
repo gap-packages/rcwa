@@ -876,10 +876,16 @@ DeclareAttribute( "Loops", IsRcwaMapping );
 #O  OrbitsModulo( <f>, <m>, <d> )  .  case <M> = Group(<f>) resp. Monoid(<f>)
 #O  OrbitsModulo( <f>, <m> ) . . . . . . . . . . . . . . . dito, case <d> = 1
 ##
-##  Returns a partition of (R/<m>R)^<d> into "orbits" under the action of the
-##  rcwa monoid <M>, in the sense that two tuples (a_1,...,a_<d>) and
-##  (b_1,...,b_<d>) of residues (mod <m>) lie in the same "orbit" if and only
-##  if there is an f in <M> such that one of the following hold:
+##  The definition given below is a generalization of the one given in the
+##  manual, and it should be taken with notable caution: it is not clear yet
+##  whether it makes sense in the given form, and it is likely to be changed
+##  or withdrawn.
+##
+##  The operation `OrbitsModulo' returns a partition of (R/<m>R)^<d> into
+##  "orbits" under the action of the rcwa monoid <M>, in the sense that two
+##  tuples (a_1,...,a_<d>) and (b_1,...,b_<d>) of residues (mod <m>) lie in
+##  the same "orbit" if and only if there is an f in <M> such that one of the
+##  following hold:
 ##
 ##    1.   ((a_1)^f mod <m>,...,(a_<d>)^f mod <m>)
 ##       = ((b_1)^f mod <m>,...,(b_<d>)^f mod <m>).
