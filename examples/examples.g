@@ -307,7 +307,7 @@ RCWAExamples.CT3Z := rec(
                  [0,6,7,8], [3,6,4,8], [0,8,1,8], [6,8,7,8] ],
                ClassTransposition),
 
-  CT3Z := Group(gens)
+  CT3Z := Group(~.gens)
 
 );
 
