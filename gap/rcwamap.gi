@@ -6603,8 +6603,6 @@ InstallMethod( ShortResidueClassCycles,
 
     local  cycles, cycle, cl, affsrc, covered, m, r; 
 
-    if not IsRcwaMappingOfZ(g) or not IsBijective(g) then return fail; fi;
-
     affsrc := LargestSourcesOfAffineMappings(g);
 
     cycles := []; covered := [];
