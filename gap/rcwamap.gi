@@ -6592,6 +6592,49 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
+#M  ShortResidueClassCycles( <g>, <modulusbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassCycles,
+               Concatenation("for an rcwa permutation mapping of Z and ",
+                             "two positive integers (RCWA)"),
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
+
+  function ( g, modulusbound, maxlng )
+
+    local  cycles, cycle, cl, affsrc, covered, m, r; 
+
+    if not IsRcwaMappingOfZ(g) or not IsBijective(g) then return fail; fi;
+
+    affsrc := LargestSourcesOfAffineMappings(g);
+
+    cycles := []; covered := [];
+    for m in DivisorsInt(modulusbound) do
+      Info(InfoRCWA,2,"SearchResidueClassCycles: checking modulus m = ",m);
+      for r in Difference([0..m-1],covered) do
+        if    Position(Trajectory(g,r,maxlng),r,1) <> fail
+          and r = Minimum(Cycle(g,r))
+        then
+          cycle := []; cl := ResidueClass(r,m);
+          if  m mod Mod(g) <> 0
+            and Number(affsrc,src->Intersection(src,cl)<>[]) > 1
+          then continue; fi;
+          repeat
+            Add(cycle,cl);
+            cl := cl^g;
+          until not IsResidueClass(cl) or cl = cycle[1];
+          if cl = cycle[1] then
+            Add(cycles,cycle);
+            covered := Union(covered,Union(cycle));
+          fi;
+        fi;
+      od;
+    od;
+
+    return cycles;
+  end );
+
+#############################################################################
+##
 #S  Restriction monomorphisms and induction epimorphisms. ///////////////////
 ##
 #############################################################################

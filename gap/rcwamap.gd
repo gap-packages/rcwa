@@ -774,6 +774,17 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
+#O  ShortResidueClassCycles( <g>, <modulusbound>, <maxlng> )
+##
+##  Finds all cycles of residue classes of the rcwa permutation <g> which
+##  contain a residue class r(m) such that m divides <modulusbound>, and
+##  which are not longer than <maxlng>.
+##
+DeclareOperation( "ShortResidueClassCycles", [ IsRcwaMapping, IsRingElement,
+                                               IsPosInt ] );
+
+#############################################################################
+##
 #O  RestrictedPerm( <g>, <S> ) . . . . . . . . . .  restriction of <g> to <S>
 #O  PermutationOpNC( <g>, <P>, <act> ) . .  permutation induced by <g> on <P>
 ##
