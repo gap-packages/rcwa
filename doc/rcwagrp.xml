@@ -954,6 +954,33 @@ gap> ShortCycles(mKnot(7),[1..100],20);
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="ShortResidueClassCycles" Arg="g, modulusbound, maxlng"
+        Label="for rcwa permutation and bounds on modulus and length"/>
+  <Returns>
+    A list of all cycles of residue classes of the rcwa
+    permutation&nbsp;<A>g</A> which contain a residue class <M>r(m)</M>
+    such that <M>m</M> divides <A>modulusbound</A>
+    and which are not longer than <A>maxlng</A>.
+  </Returns>
+  <Description>
+    We are only talking about a <E>cycle</E> of residue classes of
+    an rcwa permutation <M>g</M> if the restrictions of <M>g</M> to all
+    contained residue classes are affine.
+<Example>
+<![CDATA[
+gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
+<bijective rcwa mapping of Z with modulus 12>
+gap> ShortResidueClassCycles(g,Mod(g)^2,20);
+[ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
+  [ 20(24), 21(24), 31(36), 30(36) ], 
+  [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 Frequently one needs to compute balls of certain radius around points or
 group elements, be it to estimate the growth of a group, be it to see how
 an orbit looks like, be it to search for a group element with certain
