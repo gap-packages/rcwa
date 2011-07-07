@@ -981,6 +981,30 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="CycleRepresentativesAndLengths" Arg="g, S"
+        Label="for rcwa permutation and set of seed points"/>
+  <Returns>
+    A list of pairs (cycle representative, length of cycle) for all
+    cycles of the rcwa permutation <A>g</A> which have a nontrivial
+    intersection with the set <A>S</A>, where fixed points are omitted.
+  </Returns>
+  <Description>
+    The rcwa permutation <A>g</A> is assumed to have only finite
+    cycles. If <A>g</A> has an infinite cycle which intersects
+    nontrivially with <A>S</A>, this may cause an infinite loop.
+<Example>
+<![CDATA[
+gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);;
+gap> CycleRepresentativesAndLengths(g,[0..50]);
+[ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], [ 20, 4 ], 
+  [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], [ 38, 2 ], 
+  [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 Frequently one needs to compute balls of certain radius around points or
 group elements, be it to estimate the growth of a group, be it to see how
 an orbit looks like, be it to search for a group element with certain
