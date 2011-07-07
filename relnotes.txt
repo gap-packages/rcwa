@@ -641,8 +641,8 @@ Changes between version 3.0.3 and version 3.0.4:
 
 Changes between version 3.0.4 and version 3.0.5:
 
- - An operation `ShortResidueClassCycles' has been added.
-
+ - Operations `ShortResidueClassCycles' and
+   `CycleRepresentativesAndLengths' have been added.
 
 
 
