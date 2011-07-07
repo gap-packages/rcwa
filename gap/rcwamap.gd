@@ -789,6 +789,19 @@ DeclareOperation( "ShortResidueClassCycles", [ IsRcwaMapping, IsRingElement,
 
 #############################################################################
 ##
+#O  CycleRepresentativesAndLengths( <g>, <S> )
+##
+##  Returns a list of pairs (cycle representative, length of cycle) for all
+##  cycles of the rcwa permutation <g> which have a nontrivial intersection
+##  with the set <S>. The rcwa permutation <g> is assumed to have only finite
+##  cycles. If <g> has an infinite cycle which intersects nontrivially with
+##  <S>, this may cause an infinite loop.
+##
+DeclareOperation( "CycleRepresentativesAndLengths",
+                  [ IsRcwaMapping, IsListOrCollection ] );
+
+#############################################################################
+##
 #O  RestrictedPerm( <g>, <S> ) . . . . . . . . . .  restriction of <g> to <S>
 #O  PermutationOpNC( <g>, <P>, <act> ) . .  permutation induced by <g> on <P>
 ##

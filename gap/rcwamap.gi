@@ -6633,6 +6633,29 @@ InstallMethod( ShortResidueClassCycles,
 
 #############################################################################
 ##
+#M  CycleRepresentativesAndLengths( <g>, <S> ) . . . . . . . . default method
+##
+InstallMethod( CycleRepresentativesAndLengths,
+               "default method (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsListOrCollection ], 0,
+
+  function ( g, S )
+
+    local  replng, rem, cyc, rep;
+
+    replng := [];
+    rem    := Intersection(S,Support(g));
+    while rem <> [] do
+      rep := Minimum(rem);
+      cyc := Cycle(g,rep);
+      Add(replng,[rep,Length(cyc)]);
+      rem := Difference(rem,cyc);
+    od;
+    return replng;
+  end );
+
+#############################################################################
+##
 #S  Restriction monomorphisms and induction epimorphisms. ///////////////////
 ##
 #############################################################################
