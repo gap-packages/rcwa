@@ -793,9 +793,9 @@ DeclareOperation( "ShortResidueClassCycles", [ IsRcwaMapping, IsRingElement,
 ##
 ##  Returns a list of pairs (cycle representative, length of cycle) for all
 ##  cycles of the rcwa permutation <g> which have a nontrivial intersection
-##  with the set <S>. The rcwa permutation <g> is assumed to have only finite
-##  cycles. If <g> has an infinite cycle which intersects nontrivially with
-##  <S>, this may cause an infinite loop.
+##  with the set <S>, where fixed points are omitted. The rcwa permutation
+##  <g> is assumed to have only finite cycles. If <g> has an infinite cycle
+##  which intersects nontrivially with <S>, this may cause an infinite loop.
 ##
 DeclareOperation( "CycleRepresentativesAndLengths",
                   [ IsRcwaMapping, IsListOrCollection ] );
