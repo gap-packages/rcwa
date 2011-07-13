@@ -1693,6 +1693,17 @@ gap> List(Br,Length);
 [ 5, 14, 27, 39, 51, 71, 99, 118, 120, 120 ]
 gap> List([1..4],m->Length(AllElementsOfCTZWithGivenModulus(m)));
 [ 1, 1, 17, 238 ]
+gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
+<bijective rcwa mapping of Z with modulus 12>
+gap> ShortResidueClassCycles(g,Mod(g)^2,20);
+[ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
+  [ 20(24), 21(24), 31(36), 30(36) ], 
+  [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+gap> CycleRepresentativesAndLengths(g,[0..50]);
+[ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], [ 20, 4 ], 
+  [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], [ 38, 2 ], 
+  [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
