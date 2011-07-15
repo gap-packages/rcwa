@@ -3849,6 +3849,16 @@ InstallMethod( IsTransitive,
       H := Action(G,AsList(S));
       return DegreeAction(H) = Size(S) and IsTransitive(H,MovedPoints(H));
 
+    elif IsRcwaGroupOverZ(G) and IsSignPreserving(G) then
+
+      if IsIntegers(S) or IsResidueClassUnion(S) then
+        Info(InfoRCWA,1,"IsTransitive: group is sign-preserving, thus is");
+        Info(InfoRCWA,1,"not transitive on Z or a union of residue classes");
+        return false;
+      else
+        TryNextMethod();
+      fi;
+
     else
 
       Info(InfoRCWA,1,"IsTransitive: ",
