@@ -2595,7 +2595,7 @@ InstallMethod( Modulus,
 
   function ( G )
 
-    local  R, gens, B, r, mods, m, P;
+    local  R, gens, B, r, modslist, mods, m, P;
 
     if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
 
@@ -2610,7 +2610,7 @@ InstallMethod( Modulus,
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    r := 0; mods := [];
+    r := 0; modslist := [];
     repeat
       r := r + 1;
       B := Ball(G,One(G),r);
@@ -2619,11 +2619,12 @@ InstallMethod( Modulus,
                         " contains a wild element.");
         SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
       fi;
-      m := Lcm(R,List(B,Modulus)); Add(mods,m);
-      Info(InfoRCWA,2,"Modulus: ball radius = ",r,", lcm of moduli = ",m);
-    until r >= 3 and Set(mods{[r-2..r]}) = [m];
+      mods := Set(List(B,Modulus)); Add(modslist,mods);
+      Info(InfoRCWA,2,"Modulus: ball radius = ",r,
+                      ", set of moduli = ",mods);
+    until r >= 3 and Set(modslist{[r-2..r]}) = [mods];
 
-    m := mods[r];
+    m := Lcm(R,mods);
     SetModulusOfRcwaMonoid(G,m);
     P := RespectedPartition(G);
     if   not RespectsPartition(G,P)
