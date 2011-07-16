@@ -3931,6 +3931,114 @@ InstallMethod( IsTransitive,
 
 #############################################################################
 ##
+#M  IsTransitive( <G>, NonnegativeIntegers ) for an rcwa group over Z and N_0
+##
+##  This method might fail or run into an infinite loop.
+##
+InstallMethod( IsTransitive,
+               "for an rcwa group over Z and N_0 (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsNonnegativeIntegers ], 0,
+
+  function ( G, N_0 )
+
+    if Density(Support(G)) < 1
+      or (    ExcludedElements(Support(G)) <> []
+          and Maximum(ExcludedElements(Support(G))) >= 0)
+    then return false;
+    else return IsTransitiveOnNonnegativeIntegersInSupport(G); fi;
+
+  end );
+
+#############################################################################
+##
+#M  IsTransitiveOnNonnegativeIntegersInSupport( <G> ) . . . .  default method
+##
+InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
+               "for an rcwa group over Z (RCWA)", true,
+               [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  ShortOrbitsFound, gens, S, B, r, B_act, B_act_old, r_act, b, p0,
+           D, range, m, orbmod;
+
+    ShortOrbitsFound := function ( range, maxlng )
+      
+      local  orb;
+
+      orb := ShortOrbits(G,Intersection(range,Support(G)),maxlng);
+      if orb <> [] then
+        Info(InfoRCWA,1,"The group has the finite orbits ",orb);
+        return true;
+      else return false; fi;
+    end;
+
+    if IsTrivial(G) then return true; fi;
+
+    if   HasIsFinite(G) and IsFinite(G)
+    then Info(InfoRCWA,1,"The group is finite."); return false; fi;
+
+    if not IsSignPreserving(G) then
+      Info(InfoRCWA,1,"The group is not sign-preserving.");
+      return false;
+    fi;
+
+    gens := GeneratorsOfGroup(G);
+    S    := Support(G);
+    Info(InfoRCWA,1,"The support of the group is ",Support(G));
+
+    for range in [[0..15],[0..63],
+                  [0..Maximum(255,Lcm(List(gens,Mod)))]]
+    do if ShortOrbitsFound(range,32) then return false; fi; od;
+
+    for m in DivisorsInt(Lcm(List(gens,Mod))) do
+      orbmod := List(ProjectionsToInvariantUnionsOfResidueClasses(G,m),
+                     pi -> Support(Image(pi)));
+      if Number(orbmod,orb->Intersection(S,orb)<>[]) > 1 then
+        Info(InfoRCWA,1,"The group has more than one relevant orbit");
+        Info(InfoRCWA,1,"on its support (modulo ",m,").");
+        return false;
+      fi;
+    od;
+
+    r := 0;
+    repeat
+      r := r + 1;
+      Info(InfoRCWA,1,"Ball radius = ",r);
+      B := Ball(G,One(G),r);
+      D := Union(List(B,g->Union(DecreasingOn(g),ShiftsDownOn(g))));
+      Info(InfoRCWA,1,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
+      if InfoLevel(InfoRCWA) >= 1 then View(D); Print("\n"); fi;
+      if IsSubset(D,S) then
+        b := Maximum(List(B,MaximalShift));
+        p0 := Minimum(Intersection([0..b],Support(G)));
+        Info(InfoRCWA,1,"Checking transitivity on ",
+                        Intersection([0..b],Support(G)));
+        B_act := [p0]; r_act := 1;
+        repeat
+          B_act_old := B_act;
+          B_act := Ball(G,p0,r_act,OnPoints);
+          r_act := r_act + 1;
+          if MemoryUsage(B_act) > 2^24 then # 16MB
+            Info(InfoWarning,1,
+                 "Transitivity on small points cannot be established.");
+            return fail;
+          fi;
+        until IsSubset(B_act,Intersection([0..b],Support(G)))
+           or B_act = B_act_old;
+        if   IsSubset(B_act,Intersection([0..b],Support(G)))
+        then return true;
+        else return false; fi;
+      fi;
+    until MemoryUsage(B) > 2^24; # 16MB
+                
+    Info(InfoWarning,1,"Cannot decide transitivity.");
+    return fail;
+
+  end );
+
+#############################################################################
+##
 #S  Testing for primitivity. ////////////////////////////////////////////////
 ##
 #############################################################################
