@@ -274,6 +274,18 @@ DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#O  IsTransitiveOnNonnegativeIntegersInSupport( <G> )
+##
+##  Returns true or false, depending on whether the action of the rcwa group
+##  G < RCWA(Z) on the set of its nonnegative moved points is transitive.
+##  As such transitivity test is a computationally hard problem, methods may
+##  fail or run into an infinite loop.
+##
+DeclareOperation( "IsTransitiveOnNonnegativeIntegersInSupport",
+                  [ IsRcwaGroupOverZ ] );
+
+#############################################################################
+##
 #O  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
 #O  StabilizerOp( <G>, <S>, <action> ) . . .  set stabilizer in an rcwa group
 #A  StabilizerInfo( <G> ) . .  info. on what is stabilized under which action
