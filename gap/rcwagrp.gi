@@ -2595,83 +2595,40 @@ InstallMethod( Modulus,
 
   function ( G )
 
-    local  CheckModulus,
-           R, S, m, oldmod, maxfinmod, g, gens, pow, els, step, maxstep;
-
-    CheckModulus := function ( G, m )
-
-      local  IsAffine, R, P, gens, errormessage;
-
-      IsAffine := function ( g, cl )
-
-        local  m, c, res, cls;
-
-        m := Modulus(g); c := Coefficients(g); res := AllResidues(R,m);
-        cls := Filtered(List(res,r->ResidueClass(R,m,r)),
-                        clm->Intersection(clm,cl)<>[]);
-        return Length(Set(c{List(cls,clm->Position(res,
-                                                   Residues(clm)[1]))}))=1;
-      end;
-
-      Info(InfoRCWA,2,"Checking modulus ...");
-      errormessage := Concatenation(
-                      "the modulus computation failed --\n",
-                      "please send the generators of the group you tested ",
-                      "to Stefan Kohl, kohl@mathematik.uni-stuttgart.de.\n");
-      R := Source(One(G)); P := RespectedPartition(G);
-      if   not IsZero(Lcm(List(P,Modulus)) mod m)
-        or not IsGroup(ActionOnRespectedPartition(G))
-      then Error(errormessage); fi;
-      gens := GeneratorsOfGroup(G);
-      if   not ForAll(gens,g->ForAll(P,cl->IsAffine(g,cl)))
-      then Error(errormessage); fi;
-    end;
+    local  R, gens, B, r, mods, m, P;
 
     if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
+
     R := Source(One(G));
-    if IsRing(R) then S := R; elif IsZxZ(R) then S := Integers^[2,2]; fi;
+    if IsZxZ(R) then R := Integers^[2,2]; fi;
+
     gens := GeneratorsOfGroup(G);
+
     if IsIntegral(G) then
       Info(InfoRCWA,3,"Modulus: <G> is integral.");
-      m := Lcm(S,List(gens,Modulus));
+      m := Lcm(R,List(gens,Modulus));
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
-    if not ForAll(gens,IsTame) then
-      Info(InfoRCWA,3,"Modulus: <G> has a wild generator.");
-      SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
-    fi;
-    if Length(gens) = 1 then
-      Info(InfoRCWA,3,"Modulus: <G> is cyclic and the generator is tame.");
-      g   := gens[1];
-      m   := Lcm(S,Modulus(g),Modulus(g^-1));      # probabilistic
-      pow := g^2;     m := Lcm(S,m,Modulus(pow));
-      pow := pow * g; m := Lcm(S,m,Modulus(pow));
-      pow := pow * g; m := Lcm(S,m,Modulus(pow));
-      pow := pow^2;   m := Lcm(S,m,Modulus(pow));
-      SetModulusOfRcwaMonoid(G,m);
-      CheckModulus(G,m);                           # check
-      return m;
-    fi;
-    els := Ball(G,One(G),3);
-    if not ForAll(els,IsTame) then
-      Info(InfoRCWA,3,"Modulus: <G> has a wild 2-generator product ",
-                      "or 2-generator commutator.");
-      SetModulusOfRcwaMonoid(G,Zero(S)); return Zero(S);
-    fi;
-    m := Lcm(S,List(els,Modulus));
-    Info(InfoRCWA,1,"Trying probabilistic random walk, initial m = ",m);
-    maxfinmod := Lcm(S,List(gens,Divisor)) * m;
-    step := 1; maxstep := 10 * Length(gens); g := gens[1];
-    repeat # probabilistic
-      g := g * Random(gens); step := step + 1;
-      if not IsZero(m mod Modulus(g)) then
-        m := Lcm(m,Modulus(g)); step := 1;
+
+    r := 0; mods := [];
+    repeat
+      r := r + 1;
+      B := Ball(G,One(G),r);
+      if not ForAll(B,IsTame) then
+        Info(InfoRCWA,3,"Modulus: ball of radius ",r,
+                        " contains a wild element.");
+        SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
       fi;
-      if   Length(AllResidues(R,m)) > Length(AllResidues(R,maxfinmod))
-      then TryNextMethod(); fi; # Here the modulus is likely 0.
-    until step > maxstep;
+      m := Lcm(R,List(B,Modulus)); Add(mods,m);
+      Info(InfoRCWA,2,"Modulus: ball radius = ",r,", lcm of moduli = ",m);
+    until r >= 3 and Set(mods{[r-2..r]}) = [m];
+
+    m := mods[r];
     SetModulusOfRcwaMonoid(G,m);
-    CheckModulus(G,m); # Verification of probabilistic result.
+    P := RespectedPartition(G);
+    if   not RespectsPartition(G,P)
+    then Error("modulus computation failed"); fi;
+
     return m;
   end );
 
@@ -3941,7 +3898,7 @@ InstallMethod( IsTransitive,
 
   function ( G, N_0 )
 
-    if Density(Support(G)) < 1
+    if not IsIntegers(Union(Support(G),ExcludedElements(Support(G))))
       or (    ExcludedElements(Support(G)) <> []
           and Maximum(ExcludedElements(Support(G))) >= 0)
     then return false;
