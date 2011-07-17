@@ -2628,7 +2628,7 @@ InstallMethod( Modulus,
     SetModulusOfRcwaMonoid(G,m);
     P := RespectedPartition(G);
     if   not RespectsPartition(G,P)
-    then Error("modulus computation failed"); fi;
+    then Error("modulus computation failed"); return fail; fi;
 
     return m;
   end );
@@ -2685,7 +2685,7 @@ InstallMethod( RespectedPartition,
     P         := AsUnionOfFewClasses(fixed);
     remaining := moved;
     while not IsEmpty(remaining) do
-      cls := Filtered(cls, cl -> Intersection(cl,remaining) <> []);
+      cls := Filtered(cls,cl->IsSubset(remaining,cl));
       for cl in cls do
         orb := Orbit(G,cl);
         if Maximum(List(orb,Modulus)) <= m then break; fi;
