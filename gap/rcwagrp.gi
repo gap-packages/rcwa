@@ -2683,7 +2683,7 @@ InstallMethod( RespectedPartition,
     moved     := Support(G);
     fixed     := Difference(R,moved);
     P         := AsUnionOfFewClasses(fixed);
-    remaining := moved;
+    remaining := Union(moved,ExcludedElements(moved));
     while not IsEmpty(remaining) do
       cls := Filtered(cls,cl->IsSubset(remaining,cl));
       for cl in cls do
