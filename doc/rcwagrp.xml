@@ -714,10 +714,11 @@ gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
 gap> c := ClassTransposition(3,4,4,6);;  SetName(c,"c");
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
-gap> phi := EpimorphismFromFpGroup(G,2);
+gap> phi := EpimorphismFromFpGroup(G,6);
 [ a, b, c ] -> [ a, b, c ]
 gap> RelatorsOfFpGroup(Source(phi));
-[ a^2, b^2, c^2, c*b*c*b*c*b, b*a*b*a*b*a*b*a*b*a*b*a ]
+[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, 
+  a*b*a*b*a*b*a*b*a*b*a*b ]
 ]]>
 </Example>
   </Description>
@@ -1009,9 +1010,9 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);;
 gap> CycleRepresentativesAndLengths(g,[0..50]);
-[ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], [ 20, 4 ], 
-  [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], [ 38, 2 ], 
-  [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
+[ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], 
+  [ 20, 4 ], [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], 
+  [ 38, 2 ], [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
 ]]>
 </Example>
   </Description>
