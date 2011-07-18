@@ -274,15 +274,15 @@ DeclareOperation( "IsPrimitive",  [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
-#O  IsTransitiveOnNonnegativeIntegersInSupport( <G> )
+#P  IsTransitiveOnNonnegativeIntegersInSupport( <G> )
 ##
 ##  Returns true or false, depending on whether the action of the rcwa group
 ##  G < RCWA(Z) on the set of its nonnegative moved points is transitive.
 ##  As such transitivity test is a computationally hard problem, methods may
 ##  fail or run into an infinite loop.
 ##
-DeclareOperation( "IsTransitiveOnNonnegativeIntegersInSupport",
-                  [ IsRcwaGroupOverZ ] );
+DeclareProperty( "IsTransitiveOnNonnegativeIntegersInSupport",
+                 IsRcwaGroupOverZ );
 
 #############################################################################
 ##
