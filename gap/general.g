@@ -688,4 +688,150 @@ end );
 
 #############################################################################
 ##
+#S  Test utilities. /////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  ReadTestWithTimings( <filename> ) . . . read test file and return timings
+##
+DeclareGlobalFunction( "ReadTestWithTimings" ); TEST_TIMINGS := [];
+InstallGlobalFunction( ReadTestWithTimings,
+
+  function ( filename )
+
+    local  timings, filewithtimings, inputlines, outputlines,
+           isinput, line, nextline, pos, intest, tests, test, lastbuf, i;
+
+    isinput := function ( line )
+      if Length(line) < 1 then return false; fi;
+      if line[1] = '>' then return true; fi;
+      if Length(line) < 4 then return false; fi;
+      if line{[1..4]} = "gap>" then return true; fi;
+      return false;
+    end;
+
+    if   not IsString(filename)
+    then Error("usage: ReadTestWithTimings( <filename> )"); fi;
+
+    inputlines := SplitString(StringFile(filename),"\n");
+    outputlines := []; intest := false; tests := []; test := [];
+    for pos in [1..Length(inputlines)] do
+      line := inputlines[pos];
+      Add(outputlines,line);
+      if PositionSublist(line,"START_TEST") <> fail then intest := true; fi;
+      if PositionSublist(line,"STOP_TEST") <> fail then intest := false; fi;
+      if intest then
+        if isinput(line) then Add(test,line); fi;
+        nextline := inputlines[pos+1];
+        if not isinput(line) and isinput(nextline) then
+          Add(tests,JoinStringsWithSeparator(test,"\n")); test := [];
+          Add(outputlines,"gap> lastbuf := [last,last2,last3];;");
+          Add(outputlines,"gap> runtime := Runtime()-TEST_START_TIME;;");
+          Add(outputlines,"gap> Add(TEST_TIMINGS,runtime);");
+          Add(outputlines,"gap> TEST_START_TIME := Runtime();;");
+          Add(outputlines,"gap> last3 := lastbuf[3];;");
+          Add(outputlines,"gap> last2 := lastbuf[2];;");
+          Add(outputlines,"gap> last1 := lastbuf[1];;");
+        fi;
+      fi;
+    od;
+    outputlines := JoinStringsWithSeparator(outputlines,"\n");
+    filename := SplitString(filename,"/");
+    filename := filename[Length(filename)];
+    filewithtimings := Filename(DirectoryTemporary(),filename);
+    FileString(filewithtimings,outputlines);
+    Unbind(TEST_TIMINGS);
+    BindGlobal("TEST_TIMINGS",[]);
+    MakeReadWriteGlobal("TEST_TIMINGS");
+    BindGlobal("TEST_START_TIME",Runtime());
+    MakeReadWriteGlobal("TEST_START_TIME"); 
+    ReadTest(filewithtimings);
+    timings := TEST_TIMINGS;
+    UnbindGlobal("TEST_TIMINGS");
+    UnbindGlobal("TEST_START_TIME");
+    if   Length(timings) <> Length(tests)
+    then Error("ReadTestWithTimings: #tests <> #timings"); fi;
+    return List([1..Length(tests)],i->[tests[i],timings[i]]);
+  end );
+
+#############################################################################
+##
+#F  ReadTestCompareTimings( <filename>, <createreference> )
+##
+DeclareGlobalFunction( "ReadTestCompareTimings" );
+InstallGlobalFunction( ReadTestCompareTimings,
+
+  function ( arg )
+
+    local  filename, createreference, timingsname,
+           oldtimings, newtimings, n, showtests,
+           muchslower, slower, faster, muchfaster, isfaster, ismuchfaster;
+
+    isfaster := function ( oldtime, newtime )
+      return newtime <= Minimum(oldtime-100,4/5*oldtime);
+    end;
+
+    ismuchfaster := function ( oldtime, newtime )
+      return newtime <= Minimum(oldtime-1000,2/3*oldtime);
+    end;
+
+    showtests := function ( indices, description )
+
+      local  i;
+
+      if indices <> [] then
+        Print("\n\nThe runtime of the following tests has ",
+              description,":\n\n");
+        for i in indices do
+          Print(oldtimings[i][1],"\n");
+          Print(oldtimings[i][2],"ms -> ",newtimings[i][2],"ms\n\n");
+        od;
+      fi;
+    end;
+
+    filename := arg[1];
+    if   Length(arg) >= 2
+    then createreference := arg[2]; else createreference := false; fi;
+    if not IsString(filename) or not IsBool(createreference) then
+      Error("usage: ReadTestCompareTimings( <filename> ",
+            "[, <createreference> ] )");
+    fi;
+    filename := LowercaseString(filename);
+    timingsname := ReplacedString(filename,".tst",".timings");
+    if   not IsExistingFile(timingsname)
+    then createreference := true;
+    else oldtimings := ReadAsFunction(timingsname)(); fi;
+    newtimings := ReadTestWithTimings(filename);
+    if createreference then
+      PrintTo(timingsname,"return ",newtimings,";\n");
+    else
+      n := Length(oldtimings);
+      if TransposedMat(newtimings)[1]{[1..n]} <> TransposedMat(oldtimings)[1]
+      then
+        Info(InfoWarning,1,"Test file ",filename," has changed, thus ",
+                           "performance cannot be compared.");
+        Info(InfoWarning,1,"Please create new reference timings.");
+      else
+        slower := Filtered([1..n],i->isfaster(newtimings[i][2],
+                                              oldtimings[i][2]));
+        faster := Filtered([1..n],i->isfaster(oldtimings[i][2],
+                                              newtimings[i][2]));
+        muchslower := Filtered([1..n],i->ismuchfaster(newtimings[i][2],
+                                                      oldtimings[i][2]));
+        muchfaster := Filtered([1..n],i->ismuchfaster(oldtimings[i][2],
+                                                      newtimings[i][2]));
+        slower := Difference(slower,muchslower);
+        faster := Difference(faster,muchfaster); 
+        showtests(muchslower,"increased notably");
+        showtests(muchfaster,"decreased notably");
+        showtests(slower,"increased a little");
+        showtests(faster,"decreased a little");
+      fi;
+    fi;
+  end );
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
