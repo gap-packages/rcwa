@@ -798,7 +798,6 @@ InstallGlobalFunction( ReadTestCompareTimings,
       Error("usage: ReadTestCompareTimings( <filename> ",
             "[, <createreference> ] )");
     fi;
-    filename := LowercaseString(filename);
     timingsname := ReplacedString(filename,".tst",".timings");
     if   not IsExistingFile(timingsname)
     then createreference := true;
