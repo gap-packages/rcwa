@@ -782,7 +782,7 @@ InstallGlobalFunction( ReadTestCompareTimings,
       local  i;
 
       if indices <> [] then
-        Print("\n\nThe runtime of the following tests has ",
+        Print("\nThe runtime of the following tests has ",
               description,":\n\n");
         for i in indices do
           Print(oldtimings[i][1],"\n");
