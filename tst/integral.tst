@@ -592,6 +592,8 @@ gap> IsTame(Group(nu));
 true
 gap> Size(Group(nu));
 infinity
+gap> tau := ClassTransposition(0,2,1,2);
+ClassTransposition(0,2,1,2)
 gap> x := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);
 <rcwa mapping of Z with modulus 3>
 gap> Order(x);
