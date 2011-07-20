@@ -758,7 +758,7 @@ InstallGlobalFunction( ReadTestWithTimings,
 
 #############################################################################
 ##
-#F  ReadTestCompareTimings( <filename>, <createreference> )
+#F  ReadTestCompareTimings( <filename> [, <createreference> ] )
 ##
 DeclareGlobalFunction( "ReadTestCompareTimings" );
 InstallGlobalFunction( ReadTestCompareTimings,
