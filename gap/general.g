@@ -761,7 +761,6 @@ InstallGlobalFunction( ReadTestWithTimings,
 #F  ReadTestCompareTimings( <filename> [, <createreference> ] )
 ##
 DeclareGlobalFunction( "ReadTestCompareRuntimes" );
-DeclareSynonym( "ReadTestCompareTimings", ReadTestCompareRuntimes );
 InstallGlobalFunction( ReadTestCompareRuntimes,
 
   function ( arg )
