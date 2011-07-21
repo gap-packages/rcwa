@@ -760,8 +760,9 @@ InstallGlobalFunction( ReadTestWithTimings,
 ##
 #F  ReadTestCompareTimings( <filename> [, <createreference> ] )
 ##
-DeclareGlobalFunction( "ReadTestCompareTimings" );
-InstallGlobalFunction( ReadTestCompareTimings,
+DeclareGlobalFunction( "ReadTestCompareRuntimes" );
+DeclareSynonym( "ReadTestCompareTimings", ReadTestCompareRuntimes );
+InstallGlobalFunction( ReadTestCompareRuntimes,
 
   function ( arg )
 
@@ -782,7 +783,7 @@ InstallGlobalFunction( ReadTestCompareTimings,
       local  i;
 
       if indices <> [] then
-        Print("\nThe runtime of the following tests has ",
+        Print("\nThe runtime of the following commands has ",
               description,":\n\n");
         for i in indices do
           Print(oldtimings[i][1],"\n");
