@@ -758,47 +758,35 @@ InstallGlobalFunction( ReadTestWithTimings,
 
 #############################################################################
 ##
-#F  ReadTestCompareTimings( <filename> [, <createreference> ] )
+#F  ReadTestCompareTimings( <filename> [,<timingsdir> [,<createreference> ] )
 ##
 DeclareGlobalFunction( "ReadTestCompareRuntimes" );
 InstallGlobalFunction( ReadTestCompareRuntimes,
 
   function ( arg )
 
-    local  filename, createreference, timingsname,
-           oldtimings, newtimings, n, showtests,
-           muchslower, slower, faster, muchfaster, isfaster, ismuchfaster;
+    local  filename, timingsdir, createreference, testdir,
+           timingsname, slashpos, oldtimings, newtimings, testnrs,
+           changes, changed, runtimechangesignificance, threshold, n, i;
 
-    isfaster := function ( oldtime, newtime )
-      return newtime <= Minimum(oldtime-100,4/5*oldtime);
-    end;
-
-    ismuchfaster := function ( oldtime, newtime )
-      return newtime <= Minimum(oldtime-1000,2/3*oldtime);
-    end;
-
-    showtests := function ( indices, description )
-
-      local  i;
-
-      if indices <> [] then
-        Print("\nThe runtime of the following commands has ",
-              description,":\n\n");
-        for i in indices do
-          Print(oldtimings[i][1],"\n");
-          Print(oldtimings[i][2],"ms -> ",newtimings[i][2],"ms\n\n");
-        od;
-      fi;
+    runtimechangesignificance := function ( oldtime, newtime )
+      return AbsInt(newtime-oldtime)/(10*RootInt(oldtime)+100);
     end;
 
     filename := arg[1];
+    slashpos := Positions(filename,'/');
+    slashpos := slashpos[Length(slashpos)];
+    testdir  := filename{[1..slashpos]};
     if   Length(arg) >= 2
-    then createreference := arg[2]; else createreference := false; fi;
+    then timingsdir := arg[2]; else timingsdir := testdir; fi;
+    if   Length(arg) >= 3
+    then createreference := arg[3]; else createreference := false; fi;
     if not IsString(filename) or not IsBool(createreference) then
       Error("usage: ReadTestCompareTimings( <filename> ",
             "[, <createreference> ] )");
     fi;
-    timingsname := ReplacedString(filename,".tst",".timings");
+    timingsname := ReplacedString(filename,testdir,timingsdir);
+    timingsname := ReplacedString(timingsname,".tst",".timings");
     if   not IsExistingFile(timingsname)
     then createreference := true;
     else oldtimings := ReadAsFunction(timingsname)(); fi;
@@ -813,20 +801,17 @@ InstallGlobalFunction( ReadTestCompareRuntimes,
                            "performance cannot be compared.");
         Info(InfoWarning,1,"Please create new reference timings.");
       else
-        slower := Filtered([1..n],i->isfaster(newtimings[i][2],
-                                              oldtimings[i][2]));
-        faster := Filtered([1..n],i->isfaster(oldtimings[i][2],
-                                              newtimings[i][2]));
-        muchslower := Filtered([1..n],i->ismuchfaster(newtimings[i][2],
-                                                      oldtimings[i][2]));
-        muchfaster := Filtered([1..n],i->ismuchfaster(oldtimings[i][2],
-                                                      newtimings[i][2]));
-        slower := Difference(slower,muchslower);
-        faster := Difference(faster,muchfaster); 
-        showtests(muchslower,"increased notably");
-        showtests(muchfaster,"decreased notably");
-        showtests(slower,"increased a little");
-        showtests(faster,"decreased a little");
+        testnrs := [1..n];
+        changes := List([1..n],
+                        i->runtimechangesignificance(newtimings[i][2],
+                                                     oldtimings[i][2]));
+        SortParallel(-changes,testnrs);
+        threshold := 1; # significance threshold for runtime change
+        changed := Filtered(testnrs,i->changes[i]>threshold);
+        for i in changed do
+          Print(oldtimings[i][1],"\n");
+          Print(oldtimings[i][2],"ms -> ",newtimings[i][2],"ms\n");
+        od;
       fi;
     fi;
   end );
