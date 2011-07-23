@@ -726,7 +726,7 @@ InstallGlobalFunction( ReadTestWithTimings,
         if isinput(line) then Add(command,line); fi;
         nextline := inputlines[pos+1];
         if not isinput(line) and isinput(nextline) then
-          Add(commands,[pos,JoinStringsWithSeparator(command,"\n")]);
+          Add(commands,[pos-1,JoinStringsWithSeparator(command,"\n")]);
           command := [];
           Add(outputlines,"gap> lastbuf := [last,last2,last3];;");
           Add(outputlines,"gap> runtime := Runtime()-TEST_START_TIME;;");
