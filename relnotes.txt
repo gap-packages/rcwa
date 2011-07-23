@@ -644,6 +644,7 @@ Changes between version 3.0.4 and version 3.0.5:
  - Operations `ShortResidueClassCycles',
    `CycleRepresentativesAndLengths' and
    `IsTransitiveOnNonnegativeIntegersInSupport' have been added.
-
+ - A run of the test suite now indicates changed runtimes of
+   individual commands in comparison with a reference run.
 
 
