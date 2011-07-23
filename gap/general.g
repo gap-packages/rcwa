@@ -701,8 +701,8 @@ InstallGlobalFunction( ReadTestWithTimings,
 
   function ( filename )
 
-    local  timings, filewithtimings, inputlines, outputlines,
-           isinput, line, nextline, pos, intest, tests, test, lastbuf, i;
+    local  timings, filewithtimings, inputlines, outputlines, isinput,
+           line, nextline, pos, intest, commands, command, lastbuf, i;
 
     isinput := function ( line )
       if Length(line) < 1 then return false; fi;
@@ -716,17 +716,18 @@ InstallGlobalFunction( ReadTestWithTimings,
     then Error("usage: ReadTestWithTimings( <filename> )"); fi;
 
     inputlines := SplitString(StringFile(filename),"\n");
-    outputlines := []; intest := false; tests := []; test := [];
+    outputlines := []; intest := false; commands := []; command := [];
     for pos in [1..Length(inputlines)] do
       line := inputlines[pos];
       Add(outputlines,line);
       if PositionSublist(line,"START_TEST") <> fail then intest := true; fi;
       if PositionSublist(line,"STOP_TEST") <> fail then intest := false; fi;
       if intest then
-        if isinput(line) then Add(test,line); fi;
+        if isinput(line) then Add(command,line); fi;
         nextline := inputlines[pos+1];
         if not isinput(line) and isinput(nextline) then
-          Add(tests,JoinStringsWithSeparator(test,"\n")); test := [];
+          Add(commands,[pos,JoinStringsWithSeparator(command,"\n")]);
+          command := [];
           Add(outputlines,"gap> lastbuf := [last,last2,last3];;");
           Add(outputlines,"gap> runtime := Runtime()-TEST_START_TIME;;");
           Add(outputlines,"gap> Add(TEST_TIMINGS,runtime);");
@@ -751,9 +752,9 @@ InstallGlobalFunction( ReadTestWithTimings,
     timings := TEST_TIMINGS;
     UnbindGlobal("TEST_TIMINGS");
     UnbindGlobal("TEST_START_TIME");
-    if   Length(timings) <> Length(tests)
-    then Error("ReadTestWithTimings: #tests <> #timings"); fi;
-    return List([1..Length(tests)],i->[tests[i],timings[i]]);
+    if   Length(timings) <> Length(commands)
+    then Error("ReadTestWithTimings: #commands <> #timings"); fi;
+    return List([1..Length(commands)],i->[commands[i],timings[i]]);
   end );
 
 #############################################################################
@@ -795,10 +796,12 @@ InstallGlobalFunction( ReadTestCompareRuntimes,
       PrintTo(timingsname,"return ",newtimings,";\n");
     else
       n := Length(oldtimings);
-      if TransposedMat(newtimings)[1]{[1..n]} <> TransposedMat(oldtimings)[1]
+      if Length(newtimings) < n or TransposedMat(newtimings)[1]{[1..n]}
+                                <> TransposedMat(oldtimings)[1]
       then
-        Info(InfoWarning,1,"Test file ",filename," has changed, thus ",
-                           "performance cannot be compared.");
+        Info(InfoWarning,1,"Test file ",filename);
+        Info(InfoWarning,1,"has changed, thus performance ",
+                           "cannot be compared.");
         Info(InfoWarning,1,"Please create new reference timings.");
       else
         testnrs := [1..n];
@@ -809,8 +812,11 @@ InstallGlobalFunction( ReadTestCompareRuntimes,
         threshold := 1; # significance threshold for runtime change
         changed := Filtered(testnrs,i->changes[i]>threshold);
         for i in changed do
-          Print(oldtimings[i][1],"\n");
+          Print("Line ",oldtimings[i][1][1],": ");
+          if   newtimings[i][2] < oldtimings[i][2]
+          then Print("speedup "); else Print("slowdown "); fi;
           Print(oldtimings[i][2],"ms -> ",newtimings[i][2],"ms\n");
+          Print(oldtimings[i][1][2],"\n");
         od;
       fi;
     fi;
