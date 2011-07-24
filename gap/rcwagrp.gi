@@ -3943,7 +3943,9 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
 
     gens := GeneratorsOfGroup(G);
     S    := Support(G);
-    Info(InfoRCWA,1,"The support of the group is ",Support(G));
+    Info(InfoRCWA,1,"The support of the group is ");
+    if   InfoLevel(InfoRCWA) >= 1
+    then Print("#I  "); View(Support(G)); Print("\n"); fi;
 
     for range in [[0..15],[0..63],
                   [0..Maximum(255,Lcm(List(gens,Mod)))]]
@@ -3966,7 +3968,8 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
       B := Ball(G,One(G),r);
       D := Union(List(B,g->Union(DecreasingOn(g),ShiftsDownOn(g))));
       Info(InfoRCWA,1,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
-      if InfoLevel(InfoRCWA) >= 1 then View(D); Print("\n"); fi;
+      if   InfoLevel(InfoRCWA) >= 1
+      then Print("#I  "); View(D); Print("\n"); fi;
       if IsSubset(D,S) then
         b := Maximum(List(B,MaximalShift));
         p0 := Minimum(Intersection([0..b],Support(G)));
