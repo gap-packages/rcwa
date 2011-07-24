@@ -787,7 +787,7 @@ InstallGlobalFunction( ReadTestCompareRuntimes,
             "[, <createreference> ] )");
     fi;
     timingsname := ReplacedString(filename,testdir,timingsdir);
-    timingsname := ReplacedString(timingsname,".tst",".timings");
+    timingsname := ReplacedString(timingsname,".tst",".runtimes");
     if   not IsExistingFile(timingsname)
     then createreference := true;
     else oldtimings := ReadAsFunction(timingsname)(); fi;
