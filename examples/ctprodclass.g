@@ -179,11 +179,13 @@ function ( arg )
   order     := Order(g);
   cycletype := Set(ShortCycles(g,[-1000..1000],20),Length);
 
+  if Density(Support(g)) = 1 then cycletype := Difference(cycletype,[1]); fi;
+
   if   IsSubset(cycletype,[1,2,3,4,5,6,7])
   then cycletype := [1,2,3,4,5,6,7,8,9];
   elif IsSubset(cycletype,[1,3,5,7])
   then cycletype := [1,3,5,7,9];
-  elif  IsSubset(cycletype,[2,4,6,8]) and Density(Support(g)) = 1
+  elif IsSubset(cycletype,[2,4,6,8]) and Density(Support(g)) = 1
   then cycletype := [2,4,6,8];
   elif IsSubset(cycletype,[2,4,6,8]) and Density(Support(g)) < 1
   then cycletype := [1,2,4,6,8];
