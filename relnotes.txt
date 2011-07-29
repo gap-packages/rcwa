@@ -644,7 +644,8 @@ Changes between version 3.0.4 and version 3.0.5:
  - Operations `ShortResidueClassCycles',
    `CycleRepresentativesAndLengths' and
    `IsTransitiveOnNonnegativeIntegersInSupport' have been added.
+ - The database on products of class transpositions has been extended.
  - A run of the test suite now indicates changed runtimes of
    individual commands in comparison with a reference run.
-
+ - `RCWAReadExamples' has been renamed to `RCWALoadExamples'.
 
