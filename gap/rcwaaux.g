@@ -92,19 +92,22 @@ BindGlobal( "RCWADoThingsToBeDoneAfterTest",
 
 #############################################################################
 ##
-#F  RCWAReadExamples( ) . . . . . . . . . . . . . . . . .  read examples file
+#F  RCWALoadExamples( ) . . . . . . . . . . . . . . . . .  read examples file
 ##
-BindGlobal( "RCWAReadExamples", function ( )
+BindGlobal( "RCWALoadExamples", function ( )
                                   ReadPackage("rcwa","examples/examples.g");
                                 end );
 
 #############################################################################
 ##
-#F  RCWAReadCTProductClassification( ) . . . . .  read examples/ctprodclass.g
+#F  RCWALoadCTProductData( )
 ##
-BindGlobal( "RCWAReadCTProductClassification",
+##  This function loads the data library of products of class transpositions.
+##
+BindGlobal( "RCWALoadCTProductData",
             function ( )
-              ReadPackage("rcwa","examples/ctprodclass.g");
+              ReadPackage("rcwa","data/ctprodclass.g");
+              ReadPackage("rcwa","data/ctprods.g");
             end );
 
 ResidueClassUnionViewingFormat( "short" );
