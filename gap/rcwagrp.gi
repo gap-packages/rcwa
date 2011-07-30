@@ -2595,7 +2595,7 @@ InstallMethod( Modulus,
 
   function ( G )
 
-    local  R, gens, B, r, modslist, mods, m, P;
+    local  R, gens, B, Bold, Bnew, r, modslist, mods, m, P;
 
     if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
 
@@ -2610,14 +2610,23 @@ InstallMethod( Modulus,
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    r := 0; modslist := [];
+    r := 0; modslist := []; B := [One(G)];
     repeat
       r := r + 1;
-      B := Ball(G,One(G),r);
-      if not ForAll(B,IsTame) then
+      Bold := B;
+      B    := Ball(G,One(G),r);
+      Bnew := Difference(B,Bold);
+      if not ForAll(Bnew,IsBalanced) then
         Info(InfoRCWA,3,"Modulus: ball of radius ",r,
-                        " contains a wild element.");
+                        " contains an element which is not balanced.");
         SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
+      fi;
+      if r <= 3 then
+        if not ForAll(Bnew,IsTame) then
+          Info(InfoRCWA,3,"Modulus: ball of radius ",r,
+                          " contains a wild element.");
+          SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
+        fi;
       fi;
       mods := Set(List(B,Modulus)); Add(modslist,mods);
       Info(InfoRCWA,2,"Modulus: ball radius = ",r,
