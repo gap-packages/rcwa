@@ -3927,7 +3927,7 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
   function ( G )
 
     local  ShortOrbitsFound, gens, S, B, r, B_act, B_act_old, r_act, b, p0,
-           D, range, m, orbmod;
+           D, Ds, range, m, orbmod, giveup;
 
     ShortOrbitsFound := function ( range, maxlng )
       
@@ -3950,6 +3950,8 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
       return false;
     fi;
 
+    giveup := ValueOption("giveup");
+
     gens := GeneratorsOfGroup(G);
     S    := Support(G);
     Info(InfoRCWA,1,"The support of the group is ");
@@ -3970,15 +3972,19 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
       fi;
     od;
 
-    r := 0;
+    r := 0; Ds := [];
     repeat
       r := r + 1;
       Info(InfoRCWA,1,"Ball radius = ",r);
       B := Ball(G,One(G),r);
       D := Union(List(B,g->Union(DecreasingOn(g),ShiftsDownOn(g))));
+      Add(Ds,D);
       Info(InfoRCWA,1,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
       if   InfoLevel(InfoRCWA) >= 1
       then Print("#I  "); View(D); Print("\n"); fi;
+      if IsPosInt(giveup) and r >= giveup
+        and Set(Ds{[r-giveup+1..r]}) = [D]
+      then break; fi;
       if IsSubset(D,S) then
         b := Maximum(List(B,MaximalShift));
         p0 := Minimum(Intersection([0..b],Support(G)));
