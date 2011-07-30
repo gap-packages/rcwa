@@ -2622,7 +2622,7 @@ InstallMethod( Modulus,
       mods := Set(List(B,Modulus)); Add(modslist,mods);
       Info(InfoRCWA,2,"Modulus: ball radius = ",r,
                       ", set of moduli = ",mods);
-    until r >= 3 and Set(modslist{[r-2..r]}) = [mods];
+    until r >= 4 and Set(modslist{[r-3..r]}) = [mods];
 
     m := Lcm(R,mods);
     SetModulusOfRcwaMonoid(G,m);
