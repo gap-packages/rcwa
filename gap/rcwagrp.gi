@@ -2710,6 +2710,85 @@ InstallMethod( RespectedPartition,
 
 #############################################################################
 ##
+#M  RespectedPartition( <G> ) . . . for tame, i.e. finite, subgroups of CT(Z)
+##
+InstallMethod( RespectedPartition,
+               "for tame, i.e. finite, subgroups of CT(Z) (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
+           lng, max, B, r, reps, cl, ready;
+
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+
+    gens   := GeneratorsOfGroup(G);
+    m      := Lcm(List(gens,Modulus));
+    primes := PrimeSet(G);
+
+    max := 4*m; lng := 4; r := 0;
+    repeat
+      lng := 2*lng; r := r + 1;
+      orbs := ShortOrbits(G,[0..max],lng);
+      D := Difference([0..max],Union(orbs));
+      if D <> [] then
+        B := Ball(G,One(G),r:Spheres);
+        if not ForAll(B[r+1],IsTame) then
+          SetModulusOfRcwaMonoid(G,0); SetIsTame(G,false);
+          return fail;
+        fi;
+      fi;
+    until D = []; 
+
+    mvals := [m]; ready := false;
+    repeat
+      reps := List(Set(List(orbs,Maximum) mod m),r->ResidueClass(r,m));
+
+      Info(InfoRCWA,2,"RespectedPartition: m = ",m);
+      if   InfoLevel(InfoRCWA) >= 3
+      then Print("#I  Orbit reps = "); View(reps); Print("\n"); fi;
+
+      P := [];
+      for cl in reps do
+        if   ForAny(P,c->(Residue(c)-Residue(cl))
+                          mod Gcd(Modulus(c),Modulus(cl)) = 0)
+        then continue; fi;
+        orb := [cl];
+        repeat
+          orb_old := orb;
+          orb := Union(orb,Union(List(gens,g->orb^g)));
+        until orb = orb_old or not ForAll(orb,IsResidueClass);
+        if not ForAll(orb,IsResidueClass) then break; fi;
+        P := Union(P,orb);
+      od;
+      if Sum(List(P,Density)) = 1 and Union(P) = Integers
+      then
+        ready := true;
+      else
+        if ForAll(orb,IsResidueClass) then
+          max := 2*max;
+          Info(InfoRCWA,2,"RespectedPartition: doubled max to ",max);
+          repeat
+            lng := 2*lng;
+            Info(InfoRCWA,2,"RespectedPartition: doubled lng to ",lng);
+            orbs := ShortOrbits(G,[0..max],lng);
+          until Difference([0..max],Union(orbs)) = [];
+        else
+          m := Minimum(Difference(Flat(List(mvals,n->List(primes,p->n*p))),
+                                  mvals));
+          Add(mvals,m);
+        fi;
+      fi;
+    until ready;
+
+    if   RespectsPartition(G,P)
+    then return P;
+    else Error("RespectedPartition failed"); fi;
+  end );
+
+#############################################################################
+##
 #M  RespectsPartition( <sigma>, <P> ) . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( RespectsPartition,
