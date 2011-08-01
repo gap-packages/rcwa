@@ -2766,7 +2766,7 @@ InstallMethod( RespectedPartition,
           for g in gens do
             for c in orb do
               cr := Residue(c); cm := Modulus(c);
-              ind := [cr,cr+cm..cr+(Int(Mod(g)/cm)-1)*cm];
+              ind := [cr,cr+cm..cr+(Int(Mod(g)/cm)-1)*cm] + 1;
               if   Length(Set(Coefficients(g){ind})) > 1
               then break; fi;
             od;
