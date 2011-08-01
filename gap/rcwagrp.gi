@@ -2719,9 +2719,11 @@ InstallMethod( RespectedPartition,
   function ( G )
 
     local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
-           lng, max, B, r, reps, cl, ready;
+           lng, max, B, r, reps, cl, c, cr, cm, ind, ready, checkaffinity;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
+
+    checkaffinity := ValueOption("checkaffinity") <> fail;
 
     gens   := GeneratorsOfGroup(G);
     m      := Lcm(List(gens,Modulus));
@@ -2760,6 +2762,16 @@ InstallMethod( RespectedPartition,
           orb := Union(orb,Union(List(gens,g->orb^g)));
         until orb = orb_old or not ForAll(orb,IsResidueClass);
         if not ForAll(orb,IsResidueClass) then break; fi;
+        if checkaffinity then
+          for g in gens do
+            for c in orb do
+              cr := Residue(c); cm := Modulus(c);
+              ind := [cr,cr+cm..cr+(Int(Mod(g)/cm)-1)*cm];
+              if   Length(Set(Coefficients(g){ind})) > 1
+              then break; fi;
+            od;
+          od;
+        fi;
         P := Union(P,orb);
       od;
       if Sum(List(P,Density)) = 1 and Union(P) = Integers
@@ -2784,6 +2796,9 @@ InstallMethod( RespectedPartition,
 
     if   RespectsPartition(G,P)
     then return P;
+    elif not checkaffinity then
+         Info(InfoRCWA,1,"RespectedPartition: first attempt failed.");
+         return RespectedPartition(G:checkaffinity);
     else Error("RespectedPartition failed"); fi;
   end );
 
