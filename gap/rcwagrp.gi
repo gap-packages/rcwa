@@ -2719,7 +2719,8 @@ InstallMethod( RespectedPartition,
   function ( G )
 
     local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
-           lng, max, B, r, reps, cl, c, cr, cm, ind, ready, checkaffinity;
+           lng, max, B, r, reps, cl, c, cr, cm, ind, ready,
+           checkaffinity, affinitycheckfailed;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
@@ -2751,7 +2752,7 @@ InstallMethod( RespectedPartition,
       if   InfoLevel(InfoRCWA) >= 3
       then Print("#I  Orbit reps = "); View(reps); Print("\n"); fi;
 
-      P := [];
+      P := []; affinitycheckfailed := false;
       for cl in reps do
         if   ForAny(P,c->(Residue(c)-Residue(cl))
                           mod Gcd(Modulus(c),Modulus(cl)) = 0)
@@ -2768,7 +2769,7 @@ InstallMethod( RespectedPartition,
               cr := Residue(c); cm := Modulus(c);
               ind := [cr,cr+cm..cr+(Int(Mod(g)/cm)-1)*cm] + 1;
               if   Length(Set(Coefficients(g){ind})) > 1
-              then break; fi;
+              then affinitycheckfailed := true; P := []; break; fi;
             od;
           od;
         fi;
@@ -2778,7 +2779,7 @@ InstallMethod( RespectedPartition,
       then
         ready := true;
       else
-        if ForAll(orb,IsResidueClass) then
+        if ForAll(orb,IsResidueClass) and not affinitycheckfailed then
           max := 2*max;
           Info(InfoRCWA,2,"RespectedPartition: doubled max to ",max);
           repeat
