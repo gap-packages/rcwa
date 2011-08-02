@@ -2771,8 +2771,10 @@ InstallMethod( RespectedPartition,
               if   Length(Set(Coefficients(g){ind})) > 1
               then affinitycheckfailed := true; P := []; break; fi;
             od;
+            if affinitycheckfailed then break; fi;
           od;
         fi;
+        if affinitycheckfailed then break; fi;
         P := Union(P,orb);
       od;
       if Sum(List(P,Density)) = 1 and Union(P) = Integers
