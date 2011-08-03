@@ -2719,7 +2719,7 @@ InstallMethod( RespectedPartition,
   function ( G )
 
     local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
-           lng, max, B, r, reps, cl, c, cr, cm, ind, ready,
+           lng, max, doubled_max, B, r, reps, cl, c, cr, cm, ind, ready,
            checkaffinity, affinitycheckfailed;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
@@ -2730,7 +2730,7 @@ InstallMethod( RespectedPartition,
     m      := Lcm(List(gens,Modulus));
     primes := PrimeSet(G);
 
-    max := 4*m; lng := 4; r := 0;
+    max := 4*m; doubled_max := 0; lng := 4; r := 0;
     repeat
       lng := 2*lng; r := r + 1;
       orbs := ShortOrbits(G,[0..max],lng);
@@ -2762,6 +2762,8 @@ InstallMethod( RespectedPartition,
           orb_old := orb;
           orb := Union(orb,Union(List(gens,g->orb^g)));
         until orb = orb_old or not ForAll(orb,IsResidueClass);
+        P := Union(P,orb);
+
         if not ForAll(orb,IsResidueClass) then break; fi;
         if checkaffinity then
           for g in gens do
@@ -2775,14 +2777,16 @@ InstallMethod( RespectedPartition,
           od;
         fi;
         if affinitycheckfailed then break; fi;
-        P := Union(P,orb);
       od;
-      if Sum(List(P,Density)) = 1 and Union(P) = Integers
+      if    ForAll(P,IsResidueClass) and Sum(List(P,Density)) = 1
+        and Union(P) = Integers
       then
         ready := true;
       else
-        if ForAll(orb,IsResidueClass) and not affinitycheckfailed then
-          max := 2*max;
+        if   ForAll(P,IsResidueClass) and not affinitycheckfailed
+          and doubled_max <= 3
+        then
+          max := 2*max; doubled_max := doubled_max + 1;
           Info(InfoRCWA,2,"RespectedPartition: doubled max to ",max);
           repeat
             lng := 2*lng;
@@ -2793,6 +2797,7 @@ InstallMethod( RespectedPartition,
           m := Minimum(Difference(Flat(List(mvals,n->List(primes,p->n*p))),
                                   mvals));
           Add(mvals,m);
+          doubled_max := 0;
         fi;
       fi;
     until ready;
