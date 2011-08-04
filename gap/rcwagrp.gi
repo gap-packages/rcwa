@@ -2621,7 +2621,7 @@ InstallMethod( Modulus,
                         " contains an element which is not balanced.");
         SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
       fi;
-      if r <= 3 then
+      if r <= 3 and not (HasIsTame(G) and IsTame(G)) then
         if not ForAll(Bnew,IsTame) then
           Info(InfoRCWA,3,"Modulus: ball of radius ",r,
                           " contains a wild element.");
