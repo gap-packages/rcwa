@@ -2719,12 +2719,9 @@ InstallMethod( RespectedPartition,
   function ( G )
 
     local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
-           lng, max, doubled_max, B, r, reps, cl, c, cr, cm, ind, ready,
-           checkaffinity, affinitycheckfailed;
+           lng, max, doubled_max, B, r, reps, cl, c, cr, cm, ind, ready;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
-
-    checkaffinity := ValueOption("checkaffinity") <> fail;
 
     gens   := GeneratorsOfGroup(G);
     m      := Lcm(List(gens,Modulus));
@@ -2752,7 +2749,7 @@ InstallMethod( RespectedPartition,
       if   InfoLevel(InfoRCWA) >= 3
       then Print("#I  Orbit reps = "); View(reps); Print("\n"); fi;
 
-      P := []; affinitycheckfailed := false;
+      P := [];
       for cl in reps do
         if   ForAny(P,c->(Residue(c)-Residue(cl))
                           mod Gcd(Modulus(c),Modulus(cl)) = 0)
@@ -2765,27 +2762,16 @@ InstallMethod( RespectedPartition,
         P := Union(P,orb);
 
         if not ForAll(orb,IsResidueClass) then break; fi;
-        if checkaffinity then
-          for g in gens do
-            for c in orb do
-              cr := Residue(c); cm := Modulus(c);
-              ind := [cr,cr+cm..cr+(Int(Mod(g)/cm)-1)*cm] + 1;
-              if   Length(Set(Coefficients(g){ind})) > 1
-              then affinitycheckfailed := true; P := []; break; fi;
-            od;
-            if affinitycheckfailed then break; fi;
-          od;
-        fi;
-        if affinitycheckfailed then break; fi;
+        if   Sum(List(P,Density)) = 1 and not RespectsPartition(G,P)
+        then break; fi;
       od;
+
       if    ForAll(P,IsResidueClass) and Sum(List(P,Density)) = 1
-        and Union(P) = Integers
+        and Union(P) = Integers and RespectsPartition(G,P)
       then
-        ready := true;
+        return P;
       else
-        if   ForAll(P,IsResidueClass) and not affinitycheckfailed
-          and doubled_max <= 3
-        then
+        if ForAll(P,IsResidueClass) and doubled_max <= 3 then
           max := 2*max; doubled_max := doubled_max + 1;
           Info(InfoRCWA,2,"RespectedPartition: doubled max to ",max);
           repeat
@@ -2800,14 +2786,8 @@ InstallMethod( RespectedPartition,
           doubled_max := 0;
         fi;
       fi;
-    until ready;
+    until false;
 
-    if   RespectsPartition(G,P)
-    then return P;
-    elif not checkaffinity then
-         Info(InfoRCWA,1,"RespectedPartition: first attempt failed.");
-         return RespectedPartition(G:checkaffinity);
-    else Error("RespectedPartition failed"); fi;
   end );
 
 #############################################################################
