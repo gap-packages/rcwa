@@ -2629,11 +2629,13 @@ InstallMethod( Modulus,
         fi;
       fi;
       mods := Set(List(B,Modulus)); Add(modslist,mods);
+      m := Lcm(R,mods);
       Info(InfoRCWA,2,"Modulus: ball radius = ",r,
                       ", set of moduli = ",mods);
-    until r >= 4 and Set(modslist{[r-3..r]}) = [mods];
+    until (HasRespectedPartition(G) and
+           m = Lcm(R,List(RespectedPartition(G),Modulus)))
+       or (r >= 4 and Set(modslist{[r-3..r]}) = [mods]);
 
-    m := Lcm(R,mods);
     SetModulusOfRcwaMonoid(G,m);
     P := RespectedPartition(G);
     if   not RespectsPartition(G,P)
@@ -2718,8 +2720,9 @@ InstallMethod( RespectedPartition,
 
   function ( G )
 
-    local  P, gens, g, m, mvals, primes, p, orbs, orb, orb_old, D,
-           lng, max, doubled_max, B, r, reps, cl, c, cr, cm, ind, ready;
+    local  P, Pshort, gens, src, g, m, mvals, primes, p,
+           orbs, orb, orb_old, D, lng, max, doubled_max,
+           B, r, reps, cl, c, cr, cm, ind, ready;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
@@ -2769,7 +2772,11 @@ InstallMethod( RespectedPartition,
       if    ForAll(P,IsResidueClass) and Sum(List(P,Density)) = 1
         and Union(P) = Integers and RespectsPartition(G,P)
       then
-        return P;
+        Pshort := EquivalenceClasses(Orbits(G,P,OnPoints),Length);
+        Pshort := Union(List(Pshort,
+                             cl->AsUnionOfFewClasses(Union(Flat(cl)))));
+        if   RespectsPartition(G,Pshort)
+        then return Pshort; else return P; fi;
       else
         if ForAll(P,IsResidueClass) and doubled_max <= 3 then
           max := 2*max; doubled_max := doubled_max + 1;
