@@ -5685,13 +5685,13 @@ InstallMethod( IsTame,
     if IsRing(Source(f))
       and not IsSubset(Factors(Multiplier(f)),Factors(Divisor(f)))
     then
-      Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
+      Info(InfoRCWA,3,"IsTame: <f> is wild, by balancedness criterion.");
       if IsBijective(f) then SetOrder(f,infinity); fi;
       return false;
     fi;
 
     if IsBijective(f) and not IsBalanced(f) then
-      Info(InfoRCWA,3,"IsTame: <f> is wild, by Balancedness Criterion.");
+      Info(InfoRCWA,3,"IsTame: <f> is wild, by balancedness criterion.");
       SetOrder(f,infinity); return false;
     fi;
 
@@ -5702,7 +5702,7 @@ InstallMethod( IsTame,
     fi;
 
     if IsRcwaMappingOfZOrZ_pi(f) and IsBijective(f) then
-      Info(InfoRCWA,3,"IsTame: Sources-and-Sinks Criterion.");
+      Info(InfoRCWA,3,"IsTame: sources-and-sinks criterion.");
       gamma := TransitionGraph(f,Modulus(f));
       for r in [1..Modulus(f)] do RemoveSet(gamma.adjacencies[r],r); od;
       delta := UnderlyingGraph(gamma);
@@ -5710,13 +5710,13 @@ InstallMethod( IsTame,
       if Position(List(C,V->Diameter(InducedSubgraph(gamma,V))),-1) <> fail
       then
         Info(InfoRCWA,3,"IsTame: <f> is wild, ",
-                        "by Sources-and-Sinks Criterion.");
+                        "by sources-and-sinks criterion.");
         SetOrder(f,infinity); return false;
       fi;
     fi;
 
     if IsBijective(f) then
-      Info(InfoRCWA,3,"IsTame: Loop Criterion.");
+      Info(InfoRCWA,3,"IsTame: loop criterion.");
       m := Modulus(f);
       if IsRcwaMappingOfZ(f) then
         coeffs := Coefficients(f);
@@ -5725,7 +5725,7 @@ InstallMethod( IsTame,
           if AbsInt(c[1]) <> 1 or c[3] <> 1 then
             d := Gcd(m,c[1]*m/c[3]);
             if (r - (c[1]*r+c[2])/c[3]) mod d = 0 then
-              Info(InfoRCWA,3,"IsTame: <f> is wild, by Loop Criterion.");
+              Info(InfoRCWA,3,"IsTame: <f> is wild, by loop criterion.");
               SetOrder(f,infinity); return false;
             fi;
           fi;
