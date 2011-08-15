@@ -1307,7 +1307,7 @@ true
 gap> Size(G);
 infinity
 gap> P := RespectedPartition(G);
-[ 3(6), 5(6), 0(8), 2(8), 4(8), 6(8), 1(12), 7(12) ]
+[ 0(4), 2(4), 1(6), 3(6), 5(6) ]
 ]]>
 </Example>
   </Description>
@@ -1337,19 +1337,19 @@ gap> P := RespectedPartition(G);
 <![CDATA[
 gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
 gap> H := ActionOnRespectedPartition(G);
-Group([ (3,7)(5,8), (3,4,5,6) ])
+Group([ (1,3), (1,2) ])
 gap> H = Action(G,P);
 true
 gap> Size(H);
-48
+6
 gap> K := KernelOfActionOnRespectedPartition(G);
 <rcwa group over Z with 3 generators>
 gap> RankOfKernelOfActionOnRespectedPartition(G);
 3
 gap> Index(G,K);
-48
+6
 gap> List(GeneratorsOfGroup(K),Factorization);
-[ [ ClassShift(0,4)^2 ], [ ClassShift(2,4)^2 ], [ ClassShift(1,6)^2 ] ]
+[ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
 gap> Image(IsomorphismPcpGroup(K));
 Pcp-group with orders [ 0, 0, 0 ]
 ]]>
@@ -1390,9 +1390,9 @@ gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
 gap> G^IntegralizingConjugator(G) = IntegralConjugate(G);
 true
 gap> RespectedPartition(G);
-[ 3(6), 5(6), 0(8), 2(8), 4(8), 6(8), 1(12), 7(12) ]
+[ 0(4), 2(4), 1(6), 3(6), 5(6) ]
 gap> RespectedPartition(G)^IntegralizingConjugator(G);
-[ 0(8), 1(8), 2(8), 3(8), 4(8), 5(8), 6(8), 7(8) ]
+[ 0(5), 1(5), 2(5), 3(5), 4(5) ]
 gap> last = RespectedPartition(IntegralConjugate(G));
 true
 ]]>
