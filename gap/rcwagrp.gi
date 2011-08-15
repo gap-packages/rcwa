@@ -2588,60 +2588,126 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
 
 #############################################################################
 ##
+#M  CheckForWildness( <G>, <max_r> ) . . . . for rcwa group and search radius
+##
+InstallMethod( CheckForWildness,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup, IsPosInt ], 0,
+
+  function ( G, max_r )
+
+    local  B, r, g;
+
+    for r in [1..max_r] do
+      B := Ball(G,One(G),r);
+      if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
+      then SetIsTame(G,false); break; fi;
+    od;
+  end );
+
+#############################################################################
+##
+#F  CommonRefinementOfPartitionsOfR_NC( <partitions> ) . . . . . general case
+##
+InstallGlobalFunction( CommonRefinementOfPartitionsOfR_NC,
+
+  function ( partitions )
+
+    local  table, partition, R, mods, res, m, reps, inds, numreps,
+           pow, mj, rj, i, j, k;
+
+    R := partitions[1][1];
+    if   not IsRing(R) and not IsZxZ(R)
+    then R := UnderlyingRing(FamilyObj(R)); fi;
+
+    mods    := List(partitions,P->List(P,Mod));
+    res     := List(partitions,P->List(P,Residues));
+    m       := Lcm(R,Concatenation(mods));
+    numreps := NumberOfResidues(R,m);
+    reps    := AllResidues(R,m);
+    table   := List([1..numreps],i->0);
+    pow     := 1;
+    for i in [1..Length(partitions)] do
+      for j in [1..Length(partitions[i])] do
+        mj := mods[i][j]; rj := res[i][j];
+        for k in [1..numreps] do
+          if   reps[k] mod mj in rj
+          then table[k] := table[k] + pow; fi;
+        od;
+        pow := pow + pow;
+      od;
+    od;
+
+    partition := EquivalenceClasses([1..numreps],k->table[k]);
+    return Set(List(partition,inds->ResidueClassUnion(R,m,reps{inds})));
+  end );
+
+#############################################################################
+##
+#F  CommonRefinementOfPartitionsOfZ_NC( <partitions> ) . . special case R = Z
+##
+InstallGlobalFunction( CommonRefinementOfPartitionsOfZ_NC,
+
+  function ( partitions )
+
+    local  table, partition, mods, res, m,
+           pow, mj, r, i, j, k;
+
+    mods  := List(partitions,P->List(P,Mod));
+    res   := List(partitions,P->List(P,Residues));
+    m     := Lcm(Concatenation(mods));
+    table := List([1..m],i->0);
+    pow   := 1;
+    for i in [1..Length(partitions)] do
+      for j in [1..Length(partitions[i])] do
+        mj := mods[i][j];
+        for r in res[i][j] do
+          for k in [r,r+mj..r+(Int(m/mj)-1)*mj] do
+            table[k+1] := table[k+1] + pow;
+          od;
+        od;
+        pow := pow + pow;
+      od;
+    od;
+    partition := EquivalenceClasses([1..m],r->table[r]);
+    return Set(List(partition,r->ResidueClassUnion(Integers,m,r-1)));
+  end );
+
+#############################################################################
+##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
-InstallMethod( Modulus,
+InstallMethod( Modulus, 
                "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
 
   function ( G )
 
-    local  R, gens, B, Bold, Bnew, r, modslist, mods, m, P;
+    local  R, P, m;
 
     if HasModulusOfRcwaMonoid(G) then return ModulusOfRcwaMonoid(G); fi;
 
     R := Source(One(G));
     if IsZxZ(R) then R := Integers^[2,2]; fi;
 
-    gens := GeneratorsOfGroup(G);
-
     if IsIntegral(G) then
       Info(InfoRCWA,3,"Modulus: <G> is integral.");
-      m := Lcm(R,List(gens,Modulus));
+      m := Lcm(R,List(GeneratorsOfGroup(G),Modulus));
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    r := 0; modslist := []; B := [One(G)];
-    repeat
-      r := r + 1;
-      Bold := B;
-      B    := Ball(G,One(G),r);
-      Bnew := Difference(B,Bold);
-      if not ForAll(Bnew,IsBalanced) then
-        Info(InfoRCWA,3,"Modulus: ball of radius ",r,
-                        " contains an element which is not balanced.");
-        SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
-      fi;
-      if r <= 3 and not (HasIsTame(G) and IsTame(G)) then
-        if not ForAll(Bnew,IsTame) then
-          Info(InfoRCWA,3,"Modulus: ball of radius ",r,
-                          " contains a wild element.");
-          SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
-        fi;
-      fi;
-      mods := Set(List(B,Modulus)); Add(modslist,mods);
-      m := Lcm(R,mods);
-      Info(InfoRCWA,2,"Modulus: ball radius = ",r,
-                      ", set of moduli = ",mods);
-    until (HasRespectedPartition(G) and
-           m = Lcm(R,List(RespectedPartition(G),Modulus)))
-       or (r >= 4 and Set(modslist{[r-3..r]}) = [mods]);
+    if not HasIsTame(G) then CheckForWildness(G,2); fi;
 
-    SetModulusOfRcwaMonoid(G,m);
+    if   HasIsTame(G) and not IsTame(G)
+    then SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R); fi;
+
     P := RespectedPartition(G);
-    if   not RespectsPartition(G,P)
-    then Error("modulus computation failed"); return fail; fi;
 
-    return m;
+    if   P = fail
+    then SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R);
+    else m := Lcm(R,List(P,Modulus));
+         SetModulusOfRcwaMonoid(G,m);
+         return m;
+    fi;
+
   end );
 
 #############################################################################
@@ -2684,117 +2750,32 @@ InstallMethod( RespectedPartition,
 
   function ( G )
 
-    local  R, P, m, moved, fixed, remaining, allcls, cls, cl, orb;
+    local  P, P_last, CommonRefinementFunction, gens;
 
-    if not IsTame(G) then return fail; fi;
-    R         := Source(One(G));
-    m         := Modulus(G);
-    allcls    := AllResidueClassesModulo(R,m);
-    cls       := allcls;
-    moved     := Support(G);
-    fixed     := Difference(R,moved);
-    P         := AsUnionOfFewClasses(fixed);
-    remaining := Union(moved,ExcludedElements(moved));
-    while not IsEmpty(remaining) do
-      cls := Filtered(cls,cl->IsSubset(remaining,cl));
-      for cl in cls do
-        orb := Orbit(G,cl);
-        if Maximum(List(orb,Modulus)) <= m then break; fi;
-      od;
-      P         := Union(P,orb);
-      remaining := Difference(remaining,Union(orb));
-    od;
-    Assert(1,Union(P)=R);
-    Assert(2,Action(G,P)<>fail);
-    Assert(3,RespectsPartition(G,P));
-    return P;
-  end );
+    if   IsRcwaGroupOverZ(G)
+    then CommonRefinementFunction := CommonRefinementOfPartitionsOfZ_NC;
+    else CommonRefinementFunction := CommonRefinementOfPartitionsOfR_NC; fi;
 
-#############################################################################
-##
-#M  RespectedPartition( <G> ) . . . for tame, i.e. finite, subgroups of CT(Z)
-##
-InstallMethod( RespectedPartition,
-               "for tame, i.e. finite, subgroups of CT(Z) (RCWA)",
-               true, [ IsRcwaGroupOverZ ], 0,
+    gens := GeneratorsOfGroup(G);
+    P    := List(gens,LargestSourcesOfAffineMappings);
+    P    := CommonRefinementFunction(P);
 
-  function ( G )
-
-    local  P, Pshort, gens, src, g, m, mvals, primes, p,
-           orbs, orb, orb_old, D, lng, max, doubled_max,
-           B, r, reps, cl, c, cr, cm, ind, ready;
-
-    if not IsSignPreserving(G) then TryNextMethod(); fi;
-
-    gens   := GeneratorsOfGroup(G);
-    m      := Lcm(List(gens,Modulus));
-    primes := PrimeSet(G);
-
-    max := 4*m; doubled_max := 0; lng := 4; r := 0;
     repeat
-      lng := 2*lng; r := r + 1;
-      orbs := ShortOrbits(G,[0..max],lng);
-      D := Difference([0..max],Union(orbs));
-      if D <> [] then
-        B := Ball(G,One(G),r:Spheres);
-        if not ForAll(B[r+1],IsTame) then
-          SetModulusOfRcwaMonoid(G,0); SetIsTame(G,false);
-          return fail;
-        fi;
+      Info(InfoRCWA,2,"RespectedPartition: |P| = ",Length(P));
+      P_last := P;
+      P      := Concatenation([P],List(gens,g->P^g));
+      P      := CommonRefinementFunction(P);
+      if Length(P) > 256 and Length(P_last) <= 256 then
+        CheckForWildness(G,3);
+        if HasIsTame(G) and not IsTame(G) then return fail; fi;
       fi;
-    until D = []; 
+    until P = P_last;
 
-    mvals := [m]; ready := false;
-    repeat
-      reps := List(Set(List(orbs,Maximum) mod m),r->ResidueClass(r,m));
+    P := Set(Flat(List(P,AsUnionOfFewClasses)));
 
-      Info(InfoRCWA,2,"RespectedPartition: m = ",m);
-      if   InfoLevel(InfoRCWA) >= 3
-      then Print("#I  Orbit reps = "); View(reps); Print("\n"); fi;
-
-      P := [];
-      for cl in reps do
-        if   ForAny(P,c->(Residue(c)-Residue(cl))
-                          mod Gcd(Modulus(c),Modulus(cl)) = 0)
-        then continue; fi;
-        orb := [cl];
-        repeat
-          orb_old := orb;
-          orb := Union(orb,Union(List(gens,g->orb^g)));
-        until orb = orb_old or not ForAll(orb,IsResidueClass);
-        P := Union(P,orb);
-
-        if not ForAll(orb,IsResidueClass) then break; fi;
-        if   Sum(List(P,Density)) = 1 and not RespectsPartition(G,P)
-        then break; fi;
-      od;
-
-      if    ForAll(P,IsResidueClass) and Sum(List(P,Density)) = 1
-        and Union(P) = Integers and RespectsPartition(G,P)
-      then
-        Pshort := EquivalenceClasses(Orbits(G,P,OnPoints),Length);
-        Pshort := Union(List(Pshort,
-                             cl->AsUnionOfFewClasses(Union(Flat(cl)))));
-        if   RespectsPartition(G,Pshort)
-        then return Pshort; else return P; fi;
-      else
-        if ForAll(P,IsResidueClass) and doubled_max <= 3 then
-          max := 2*max; doubled_max := doubled_max + 1;
-          Info(InfoRCWA,2,"RespectedPartition: doubled max to ",max);
-          repeat
-            lng := 2*lng;
-            Info(InfoRCWA,2,"RespectedPartition: doubled lng to ",lng);
-            orbs := ShortOrbits(G,[0..max],lng);
-          until Difference([0..max],Union(orbs)) = [];
-        else
-          m := Minimum(Difference(Flat(List(mvals,n->List(primes,p->n*p))),
-                                  mvals));
-          Add(mvals,m);
-          doubled_max := 0;
-        fi;
-      fi;
-    until false;
-
+    if   RespectsPartition(G,P)
+    then return P;
+    else Error("RespectedPartition failed"); fi; # should never happen
   end );
 
 #############################################################################
@@ -4015,69 +3996,116 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
 
   function ( G )
 
+    local  info;
+
+    info := TryIsTransitiveOnNonnegativeIntegersInSupport(G,2^24,4);
+
+    Info(InfoRCWA,1,"`IsTransitiveOnNonnegativeIntegersInSupport':");
+
+    if   info = "trivial" then Info(InfoRCWA,1,"group is trivial");
+    elif info = "finite"  then Info(InfoRCWA,1,"group is finite");
+    elif info = "not sign-preserving"
+    then Info(InfoRCWA,1,"group is not sign-preserving");
+    elif info = "finite orbits"
+    then Info(InfoRCWA,1,"group has finite orbits");
+    elif info = "> 1 orbit (mod m)"
+    then Info(InfoRCWA,1,"group has >1 orbits (mod m) for some m");
+    elif info = "U DecreasingOn stable for <maxeq> steps"
+    then Info(InfoRCWA,1,"U DecreasingOn stable for 4 steps");
+    elif info = "transitivity on small points unclear"
+    then Info(InfoRCWA,1,"cannot decide transitivity on small points");
+    elif info = "transitive"
+    then Info(InfoRCWA,1,"group acts transitively");
+    elif info = "intransitive on small points"
+    then Info(InfoRCWA,1,"group acts intransitively on small points");
+    elif info = "Mod(U DecreasingOn) exceeded <maxmod>"
+    then Info(InfoRCWA,1,"Mod(U DecreasingOn) exceeded 2^24");
+    elif info = "exceeded memory bound"
+    then Info(InfoRCWA,1,"the memory bound has been exceeded"); fi;
+
+    if   HasIsTransitiveOnNonnegativeIntegersInSupport(G)
+    then return IsTransitiveOnNonnegativeIntegersInSupport(G);
+    else Error("cannot decide transitivity"); return fail; fi;
+
+  end );
+
+#############################################################################
+##
+#M  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <maxmod>, <maxeq> )
+##
+InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
+               "for an rcwa group over Z and bounds on efforts (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, maxmod, maxeq )
+
     local  ShortOrbitsFound, gens, S, B, r, B_act, B_act_old, r_act, b, p0,
-           D, Ds, range, m, orbmod, giveup;
+           D, Ds, range, m, orbmod;
 
     ShortOrbitsFound := function ( range, maxlng )
-      
-      local  orb;
-
-      orb := ShortOrbits(G,Intersection(range,Support(G)),maxlng);
-      if orb <> [] then
-        Info(InfoRCWA,1,"The group has the finite orbits ",orb);
-        return true;
-      else return false; fi;
+      return ShortOrbits(G,Intersection(range,Support(G)),maxlng) <> [];
     end;
 
-    if IsTrivial(G) then return true; fi;
-
-    if   HasIsFinite(G) and IsFinite(G)
-    then Info(InfoRCWA,1,"The group is finite."); return false; fi;
-
-    if not IsSignPreserving(G) then
-      Info(InfoRCWA,1,"The group is not sign-preserving.");
-      return false;
+    if IsTrivial(G) then
+      SetIsTransitiveOnNonnegativeIntegersInSupport(G,true);
+      return "trivial";
     fi;
 
-    giveup := ValueOption("giveup");
+    if HasIsFinite(G) and IsFinite(G) then
+      SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+      return "finite";
+    fi;
+
+    if not IsSignPreserving(G) then
+      SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+      return "not sign-preserving";
+    fi;
 
     gens := GeneratorsOfGroup(G);
     S    := Support(G);
-    Info(InfoRCWA,1,"The support of the group is ");
-    if   InfoLevel(InfoRCWA) >= 1
+
+    Info(InfoRCWA,2,"The support of the group is ");
+    if   InfoLevel(InfoRCWA) >= 2
     then Print("#I  "); View(Support(G)); Print("\n"); fi;
 
     for range in [[0..15],[0..63],
-                  [0..Maximum(255,Lcm(List(gens,Mod)))]]
-    do if ShortOrbitsFound(range,32) then return false; fi; od;
+                  [0..Maximum(255,Lcm(List(gens,Mod)))]] do
+      if ShortOrbitsFound(range,32) then
+        SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+        return "finite orbits";
+      fi;
+    od;
 
     for m in DivisorsInt(Lcm(List(gens,Mod))) do
       orbmod := List(ProjectionsToInvariantUnionsOfResidueClasses(G,m),
                      pi -> Support(Image(pi)));
       if Number(orbmod,orb->Intersection(S,orb)<>[]) > 1 then
-        Info(InfoRCWA,1,"The group has more than one relevant orbit");
-        Info(InfoRCWA,1,"on its support (modulo ",m,").");
-        return false;
+        SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+        return "> 1 orbit (mod m)";
       fi;
     od;
 
     r := 0; Ds := [];
     repeat
       r := r + 1;
-      Info(InfoRCWA,1,"Ball radius = ",r);
+
+      Info(InfoRCWA,2,"Ball radius = ",r);
+
       B := Ball(G,One(G),r);
       D := Union(List(B,g->Union(DecreasingOn(g),ShiftsDownOn(g))));
       Add(Ds,D);
-      Info(InfoRCWA,1,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
-      if   InfoLevel(InfoRCWA) >= 1
+
+      Info(InfoRCWA,2,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
+      if   InfoLevel(InfoRCWA) >= 2
       then Print("#I  "); View(D); Print("\n"); fi;
-      if IsPosInt(giveup) and r >= giveup
-        and Set(Ds{[r-giveup+1..r]}) = [D]
-      then break; fi;
+
+      if   r >= maxeq and Set(Ds{[r-maxeq+1..r]}) = [D]
+      then return "U DecreasingOn stable for <maxeq> steps"; fi;
+
       if IsSubset(D,S) then
         b := Maximum(List(B,MaximalShift));
         p0 := Minimum(Intersection([0..b],Support(G)));
-        Info(InfoRCWA,1,"Checking transitivity on ",
+        Info(InfoRCWA,2,"Checking transitivity on ",
                         Intersection([0..b],Support(G)));
         B_act := [p0]; r_act := 1;
         repeat
@@ -4085,21 +4113,24 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
           B_act := Ball(G,p0,r_act,OnPoints);
           r_act := r_act + 1;
           if MemoryUsage(B_act) > 2^24 then # 16MB
-            Info(InfoWarning,1,
-                 "Transitivity on small points cannot be established.");
-            return fail;
+            return "transitivity on small points unclear";
           fi;
         until IsSubset(B_act,Intersection([0..b],Support(G)))
            or B_act = B_act_old;
         if   IsSubset(B_act,Intersection([0..b],Support(G)))
-        then return true;
-        else return false; fi;
+        then SetIsTransitiveOnNonnegativeIntegersInSupport(G,true);
+             return "transitive";
+        else SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+             return "intransitive on small points";
+        fi;
       fi;
-    until MemoryUsage(B) > 2^24; # 16MB
-                
-    Info(InfoWarning,1,"Cannot decide transitivity.");
-    return fail;
 
+      if   Modulus(D) > maxmod
+      then return "Mod(U DecreasingOn) exceeded <maxmod>"; fi;
+
+    until MemoryUsage(B) > 2^24; # 16MB
+
+    return "exceeded memory bound";         
   end );
 
 #############################################################################
