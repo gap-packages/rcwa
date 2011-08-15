@@ -639,13 +639,20 @@ Changes between version 3.0.3 and version 3.0.4:
    further name collisions; expected benefit from synergies
    with other code for dealing with orbits is small.
 
-Changes between version 3.0.4 and version 3.0.5:
+Changes between version 3.0.4 and version 3.1.0:
 
  - Operations `ShortResidueClassCycles',
-   `CycleRepresentativesAndLengths' and
-   `IsTransitiveOnNonnegativeIntegersInSupport' have been added.
+   `CycleRepresentativesAndLengths',
+   `IsTransitiveOnNonnegativeIntegersInSupport', `CheckForWildness'
+   and `TryIsTransitiveOnNonnegativeIntegersInSupport' have been added.
+ - The methods for `Modulus' and `RespectedPartition' for rcwa groups
+   have been improved, and helper functions
+   `CommonRefinementOfPartitionsOfZ_NC' and
+   `CommonRefinementOfPartitionsOfR_NC' have been added.
  - The database on products of class transpositions has been extended.
  - A run of the test suite now indicates changed runtimes of
    individual commands in comparison with a reference run.
  - `RCWAReadExamples' has been renamed to `RCWALoadExamples'.
+
+
 
