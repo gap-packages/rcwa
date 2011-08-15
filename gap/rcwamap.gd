@@ -715,15 +715,17 @@ DeclareProperty( "IsTame", IsRcwaMonoid );
 
 #############################################################################
 ##
-#O  CheckForWildness( <f> ) .  do some checks whether the mapping <f> is wild
-#O  CheckForWildness( <M> ) .  do some checks whether the monoid  <M> is wild
+#O  CheckForWildness( <f> )
+#O  CheckForWildness( <M>, <max_r> )
 ##
 ##  Performs checks for wildness, and sets `IsTame' to `false' if wildness
 ##  can be established. It is not guaranteed that a wild mapping or monoid
-##  is always recognized as such.
+##  is always recognized as such. In the operation for rcwa monoids, <max_r>
+##  is the search radius, i.e. it is attempted to find a wild element within
+##  the ball of radius <max_r> around 1.
 ##
 DeclareOperation( "CheckForWildness", [ IsRcwaMapping ] );
-DeclareOperation( "CheckForWildness", [ IsRcwaMonoid ] );
+DeclareOperation( "CheckForWildness", [ IsRcwaMonoid, IsPosInt ] );
 
 #############################################################################
 ##
