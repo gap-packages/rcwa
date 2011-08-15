@@ -5,9 +5,9 @@
 
                                   Abstract
 
-This package for GAP 4 introduces a new class of groups  which are accessible
-to computational methods.  In principle, it can deal at least with the follo-
-wing types of groups:
+This package for GAP 4 provides implementations of algorithms and methods for
+computing in certain  infinite permutation groups  acting on the set of inte-
+gers.  In principle it can deal with at least the following  types of groups:
 
  - Finite groups.
  - Free groups of finite rank.
