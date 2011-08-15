@@ -715,6 +715,18 @@ DeclareProperty( "IsTame", IsRcwaMonoid );
 
 #############################################################################
 ##
+#O  CheckForWildness( <f> ) .  do some checks whether the mapping <f> is wild
+#O  CheckForWildness( <M> ) .  do some checks whether the monoid  <M> is wild
+##
+##  Performs checks for wildness, and sets `IsTame' to `false' if wildness
+##  can be established. It is not guaranteed that a wild mapping or monoid
+##  is always recognized as such.
+##
+DeclareOperation( "CheckForWildness", [ IsRcwaMapping ] );
+DeclareOperation( "CheckForWildness", [ IsRcwaMonoid ] );
+
+#############################################################################
+##
 #S  Support, images, preimages and the action of an rcwa mapping on R. //////
 ##
 #############################################################################
