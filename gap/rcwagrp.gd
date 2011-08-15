@@ -286,6 +286,20 @@ DeclareProperty( "IsTransitiveOnNonnegativeIntegersInSupport",
 
 #############################################################################
 ##
+#O  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <maxmod>, <maxeq> )
+##
+##  This operation tries to figure out whether the action of the group
+##  G < RCWA(Z) on the set of its nonnegative moved points is transitive.
+##  It returns a string briefly describing the situation. If the determina-
+##  tion of transitivity is successful, the property `IsTransitiveOnNonnega-
+##  tiveIntegersInSupport' is set accordingly. The arguments <maxmod> and
+##  <maxeq> are bounds on the efforts to be made.
+##  
+DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
+                  [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ] );
+
+#############################################################################
+##
 #O  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
 #O  StabilizerOp( <G>, <S>, <action> ) . . .  set stabilizer in an rcwa group
 #A  StabilizerInfo( <G> ) . .  info. on what is stabilized under which action
@@ -466,6 +480,21 @@ DeclareAttribute( "StandardizingConjugator", IsRcwaGroup );
 ##  <g> and <h>^r is tame. Methods may choose any such mapping.
 ##
 DeclareOperation( "CompatibleConjugate", [ IsRcwaMapping, IsRcwaMapping ] );
+
+#############################################################################
+##
+#F  CommonRefinementOfPartitionsOfR_NC( <partitions> ) . . . . . general case
+#F  CommonRefinementOfPartitionsOfZ_NC( <partitions> ) . . special case R = Z
+##
+##  Returns the coarsest common refinement of the list <partitions> of
+##  partitions of Z, respectively a ring R, into unions of residue classes.
+##  Here the term "common refinement" means that each set in the returned
+##  partition is a subset of exactly one set in each of the partitions in
+##  <partitions>. The ring R may be any base ring supported by RCWA.
+##  For R = Z the last-mentioned function is more efficient.
+##
+DeclareGlobalFunction( "CommonRefinementOfPartitionsOfR_NC" );
+DeclareGlobalFunction( "CommonRefinementOfPartitionsOfZ_NC" );
 
 #############################################################################
 ##
