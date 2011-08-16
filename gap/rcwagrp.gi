@@ -2750,15 +2750,17 @@ InstallMethod( RespectedPartition,
 
   function ( G )
 
-    local  P, P_last, CommonRefinementFunction, gens;
+    local  P, P_last, CommonRefinementFunction, gens, start;
 
     if   IsRcwaGroupOverZ(G)
     then CommonRefinementFunction := CommonRefinementOfPartitionsOfZ_NC;
     else CommonRefinementFunction := CommonRefinementOfPartitionsOfR_NC; fi;
 
-    gens := GeneratorsOfGroup(G);
-    P    := List(gens,LargestSourcesOfAffineMappings);
-    P    := CommonRefinementFunction(P);
+    start := Runtime();
+
+    gens  := GeneratorsOfGroup(G);
+    P     := List(gens,LargestSourcesOfAffineMappings);
+    P     := CommonRefinementFunction(P);
 
     repeat
       Info(InfoRCWA,2,"RespectedPartition: |P| = ",Length(P));
@@ -2772,6 +2774,8 @@ InstallMethod( RespectedPartition,
           CheckForWildness(G,3);
           if HasIsTame(G) and not IsTame(G) then return fail; fi;
         fi;
+      elif Runtime() - start > 30000 # 30s; to be improved:
+      then if Loops(Product(gens)^2) <> [] then return fail; fi;
       fi;
     until P = P_last;
 
