@@ -1349,7 +1349,7 @@ gap> RankOfKernelOfActionOnRespectedPartition(G);
 gap> Index(G,K);
 6
 gap> List(GeneratorsOfGroup(K),Factorization);
-[ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
+[ [ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
 gap> Image(IsomorphismPcpGroup(K));
 Pcp-group with orders [ 0, 0, 0 ]
 ]]>
