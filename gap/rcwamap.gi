@@ -5742,7 +5742,8 @@ InstallMethod( IsTame,
     fi;
 
     Info(InfoRCWA,3,"IsTame: `finite order or integral power' criterion.");
-    pow := f; exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,19,2]; e := 1;
+    pow := f;
+    exp := [2,2,3,5,2,7,3,2,11,13,5,3,17,2,19,2,2,3,5,7,11,2,23]; e := 1;
     for e in exp do
       pow := pow^e;
       if IsIntegral(pow) then
@@ -5750,7 +5751,8 @@ InstallMethod( IsTame,
                         "hence is tame.");
         return true;
       fi;
-      if   IsRcwaMappingOfZOrZ_pi(f) and Modulus(pow) > 6 * Modulus(f)
+      if       IsRcwaMappingOfZOrZ_pi(f)
+           and Modulus(pow) > Minimum(Modulus(f)^2,2^16)
         or IsRcwaMappingOfGFqx(f)
            and   DegreeOfLaurentPolynomial(Modulus(pow))
                > DegreeOfLaurentPolynomial(Modulus(f)) + 2
