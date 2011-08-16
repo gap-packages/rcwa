@@ -6611,7 +6611,7 @@ InstallMethod( ShortResidueClassCycles,
     for m in DivisorsInt(modulusbound) do
       Info(InfoRCWA,2,"SearchResidueClassCycles: checking modulus m = ",m);
       for r in Difference([0..m-1],covered) do
-        if    Position(Trajectory(g,r,maxlng),r,1) <> fail
+        if    Position(Trajectory(g,r,maxlng+1),r,1) <> fail
           and r = Minimum(Cycle(g,r))
         then
           cycle := []; cl := ResidueClass(r,m);
