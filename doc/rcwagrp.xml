@@ -824,8 +824,8 @@ nonnegative integers. There is a property
 <C>IsTransitiveOnNonnegativeIntegersInSupport</C> which indicates whether
 such group acts transitively on its support. Since such transitivity test is
 a computationally hard problem, methods may fail. Failure is indicated by
-a warning and the return value <C>fail</C>. Further, there are methods to
-compute orbits under the action of an rcwa group:
+an error message. Further, there are methods to compute orbits under the
+action of an rcwa group:
 
 <ManSection>
   <Heading> Orbit (for an rcwa group and either a point or a set) </Heading>
