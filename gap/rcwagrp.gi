@@ -2765,11 +2765,13 @@ InstallMethod( RespectedPartition,
       P_last := P;
       P      := Concatenation([P],List(gens,g->P^g));
       P      := CommonRefinementFunction(P);
-      if (Length(P) > 256 and Length(P_last) <= 256)
-        or   (IsRcwaGroupOverZ(G) and Maximum(List(P,Mod)) > 16384
-          and Maximum(List(P_last,Mod)) <= 16384) then
-        CheckForWildness(G,3);
-        if HasIsTame(G) and not IsTame(G) then return fail; fi;
+      if ValueOption("AssumeIsTame") <> true then
+        if (Length(P) > 256 and Length(P_last) <= 256)
+          or   (IsRcwaGroupOverZ(G) and Maximum(List(P,Mod)) > 16384
+            and Maximum(List(P_last,Mod)) <= 16384) then
+          CheckForWildness(G,3);
+          if HasIsTame(G) and not IsTame(G) then return fail; fi;
+        fi;
       fi;
     until P = P_last;
 
