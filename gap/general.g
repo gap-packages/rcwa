@@ -305,6 +305,40 @@ InstallGlobalFunction( EpimorphismByGenerators,
 
 #############################################################################
 ##
+#M  AssignGeneratorVariables( <G> ) . .  for rcwa groups with at most 6 gen's
+##
+##  This method assigns the generators of <G> to global variables a, b, ... .
+##
+InstallMethod( AssignGeneratorVariables,
+               "for rcwa groups with at most 6 generators (RCWA)",
+               true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  gens, names, name, i;
+
+    gens := GeneratorsOfGroup(G);
+    if Length(gens) > 6 then TryNextMethod(); fi;
+    names := "abcdef";
+    for i in [1..Length(gens)] do
+      name := names{[i]};
+      if IsBoundGlobal(name) then
+        if   IsReadOnlyGlobal(name)
+        then Error("variable ",name," is read-only"); fi;
+        UnbindGlobal(name);
+        Info(InfoWarning,1,"The global variable ",name,
+                           " has been overwritten.");
+      fi;
+      BindGlobal(name,gens[i]);
+      MakeReadWriteGlobal(name);
+    od;
+    Print("The following global variables have been assigned: ");
+    for i in [1..Length(gens)] do Print(names{[i]},", "); od;
+    Print("\n");
+  end );
+
+#############################################################################
+##
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a pcp group
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
 ##
