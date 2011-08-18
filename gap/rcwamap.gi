@@ -6211,11 +6211,11 @@ InstallMethod( Loops,
 
 ############################################################################
 ##
-#M  Loops( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Loops( <f> ) . . . . . . . . . . . . .  for bijective rcwa mappings of Z
 ##
 InstallMethod( Loops,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for bijective rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ and IsBijective ], 0,
 
   function ( f )
 
