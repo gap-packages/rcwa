@@ -6225,8 +6225,8 @@ InstallMethod( Loops,
     c     := Coefficients(f);
     loops := [];
     for r in [0..Mod(f)-1] do
-      r_img := (c[r+1][1]*r+c[r+1][2])/c[r+1][3];
-      m_img := (c[r+1][1]/c[r+1][3])*m;
+      m_img := AbsInt(c[r+1][1]/c[r+1][3])*m;
+      r_img := ((c[r+1][1]*r+c[r+1][2])/c[r+1][3]) mod m_img;
       if   [r_img,m_img] <> [r,m] and (r_img - r) mod Gcd(m,m_img) = 0
       then Add(loops,ResidueClass(r,m)); fi;
     od;
