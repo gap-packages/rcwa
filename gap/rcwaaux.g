@@ -123,7 +123,7 @@ BindGlobal( "RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions",
   function ( )
     BindGlobal("DatabaseOfGroupsGeneratedBy3ClassTranspositions",
       ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                                   "data/3ctsgrpdata.g"))());
+                                   "/data/3ctsgrpdata.g"))());
     Print("#I  The data record has been assigned to the variable\n");
     Print("#I  `DatabaseOfGroupsGeneratedBy3ClassTranspositions'\n");
   end );
