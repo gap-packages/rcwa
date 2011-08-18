@@ -6209,6 +6209,30 @@ InstallMethod( Loops,
     return loops;
   end );
 
+############################################################################
+##
+#M  Loops( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+##
+InstallMethod( Loops,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+
+  function ( f )
+
+    local  c, i, r, m, r_img, m_img, loops;
+
+    m     := Mod(f);
+    c     := Coefficients(f);
+    loops := [];
+    for r in [0..Mod(f)-1] do
+      r_img := (c[r+1][1]*r+c[r+1][2])/c[r+1][3];
+      m_img := (c[r+1][1]/c[r+1][3])*m;
+      if   [r_img,m_img] <> [r,m] and (r_img - r) mod Gcd(m,m_img) = 0
+      then Add(loops,ResidueClass(r,m)); fi;
+    od;
+    return loops;
+  end );
+
 #############################################################################
 ##
 #S  Trajectories. ///////////////////////////////////////////////////////////
