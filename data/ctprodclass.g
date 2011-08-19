@@ -80,7 +80,9 @@
 ##
 #############################################################################
 
-CTPairs := Combinations(List(ClassPairs(6),ClassTransposition),2);
+return rec(
+
+CTPairs := Combinations(List(ClassPairs(6),ClassTransposition),2),
 
 CTPairsIntersectionTypes := function ()
 
@@ -116,7 +118,7 @@ CTPairsIntersectionTypes := function ()
   types := Difference(types,[[3,4,3,4]]);
 
   return types;
-end;
+end,
 
 CTPairIntersectionType := function ( arg )
 
@@ -165,7 +167,7 @@ CTPairIntersectionType := function ( arg )
   od;
 
   return type;
-end;
+end,
 
 CTPairProductType := function ( arg )
 
@@ -183,7 +185,7 @@ CTPairProductType := function ( arg )
                                       "<4 residue classes>)\n");
   fi;
 
-  intertype := CTPairIntersectionType(cls);
+  intertype := ~.CTPairIntersectionType(cls);
   g         := Product(cts);
   order     := Order(g);
   cycletype := Set(ShortCycles(g,[-1000..1000],20),Length);
@@ -203,7 +205,7 @@ CTPairProductType := function ( arg )
   cycletype := [cycletype,Length(ExcludedElements(Support(g)))];
 
   return [ intertype, order, cycletype ];
-end;
+end,
 
 CTPairsProductClassification :=
 [ [ [ 0, 3, 3, 1 ], 
@@ -2695,7 +2697,7 @@ CTPairsProductClassification :=
               [ ClassTransposition(3,4,2,6), ClassTransposition(1,5,4,5) ], 
               [ ClassTransposition(3,4,2,6), ClassTransposition(2,5,3,5) ], 
               [ ClassTransposition(3,4,4,6), ClassTransposition(3,5,4,5) ] ] 
-         ] ] ];
+         ] ] ],
 
 CTPairsProductType :=
 [ [ [ 4, 4, 4, 4 ], 4, [ [ 1, 4 ], 0 ] ], 
@@ -5018,7 +5020,9 @@ CTPairsProductType :=
   [ [ 3, 4, 4, 3 ], infinity, [ PositiveIntegers, 0 ] ], 
   [ [ 0, 3, 3, 3 ], 3, [ [ 1, 3 ], 0 ] ], 
   [ [ 0, 3, 3, 3 ], 3, [ [ 1, 3 ], 0 ] ], 
-  [ [ 0, 3, 3, 3 ], 3, [ [ 1, 3 ], 0 ] ] ];
+  [ [ 0, 3, 3, 3 ], 3, [ [ 1, 3 ], 0 ] ] ]
+
+);
 
 #############################################################################
 ##

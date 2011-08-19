@@ -6,6 +6,8 @@
 ##
 #############################################################################
 
+return rec(
+
 PairsOfCTsWhoseProductIsNotBalanced :=
 [ [ ClassTransposition(1,2,2,4), ClassTransposition(2,4,3,6) ], 
   [ ClassTransposition(1,2,2,4), ClassTransposition(2,4,5,6) ], 
@@ -30,7 +32,7 @@ PairsOfCTsWhoseProductIsNotBalanced :=
   [ ClassTransposition(0,2,3,6), ClassTransposition(2,4,3,6) ], 
   [ ClassTransposition(0,2,3,6), ClassTransposition(0,4,3,6) ], 
   [ ClassTransposition(0,2,5,6), ClassTransposition(2,4,5,6) ], 
-  [ ClassTransposition(0,2,5,6), ClassTransposition(0,4,5,6) ] ];
+  [ ClassTransposition(0,2,5,6), ClassTransposition(0,4,5,6) ] ],
 
 TriplesOfCTsWhoseProductHasCoprimeMultiplierAndDivisor :=
 [ [ ClassTransposition(1,2,2,4), ClassTransposition(1,2,2,6), 
@@ -104,7 +106,9 @@ TriplesOfCTsWhoseProductHasCoprimeMultiplierAndDivisor :=
   [ ClassTransposition(0,2,5,6), ClassTransposition(0,2,1,4), 
       ClassTransposition(1,4,2,6) ], 
   [ ClassTransposition(0,2,5,6), ClassTransposition(0,2,3,4), 
-      ClassTransposition(3,4,4,6) ] ];
+      ClassTransposition(3,4,4,6) ] ]
+
+);
 
 #############################################################################
 ##
