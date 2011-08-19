@@ -27,7 +27,7 @@ be found in the file <F>pkg/rcwa/examples/examples.g</F>. This file can be
 read into the current &GAP; session by the function <C>RCWALoadExamples</C>
 which takes no arguments and returns a record containing all examples.
 The global variable assignments made in a section of this chapter can be
-made by applying the function <C>AssignGlobals</C> to the the respective
+made by applying the function <C>AssignGlobals</C> to the respective
 component of the record returned by <C>RCWALoadExamples</C>. The component
 names are given at the end of the corresponding sections. <P/>
 
