@@ -38,7 +38,7 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
-#S  Some utility functions for lists. ///////////////////////////////////////
+#S  Some utility functions for lists and records. ///////////////////////////
 ##
 #############################################################################
 
@@ -139,6 +139,41 @@ InstallOtherMethod( Trajectory,
       Add(l,n);
     od;
     return l;
+  end );
+
+#############################################################################
+##
+#F  AssignGlobals( <record> )
+##
+##  This auxiliary function assigns the record components of <record> to
+##  global variables with the same names.
+##
+DeclareGlobalFunction( "AssignGlobals" );
+InstallGlobalFunction( AssignGlobals,
+
+  function ( record )
+
+    local  names, name;
+
+    names := RecNames(record);
+    for name in names do
+      if IsBoundGlobal(name) then
+        if IsReadOnlyGlobal(name)
+        then
+          MakeReadWriteGlobal(name);
+          Info(InfoWarning,1,"The read-only global variable ",name,
+                             " has been overwritten.");
+        else
+          Info(InfoWarning,1,"The global variable ",name,
+                             " has been overwritten.");
+        fi;
+        UnbindGlobal(name);
+      fi;
+      BindGlobal(name,record.(name));
+      MakeReadWriteGlobal(name);
+    od;
+    Print("The following global variables have been assigned:\n",
+          names,"\n");
   end );
 
 #############################################################################
