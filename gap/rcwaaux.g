@@ -94,9 +94,13 @@ BindGlobal( "RCWADoThingsToBeDoneAfterTest",
 ##
 #F  RCWALoadExamples( ) . . . . . . . . . . . . . . . . .  read examples file
 ##
-BindGlobal( "RCWALoadExamples", function ( )
-                                  ReadPackage("rcwa","examples/examples.g");
-                                end );
+BindGlobal( "RCWALoadExamples",
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/examples/examples.g"))();
+  end );
 
 #############################################################################
 ##
@@ -104,12 +108,32 @@ BindGlobal( "RCWALoadExamples", function ( )
 ##
 ##  This function loads the data library of products of 2 class transposi-
 ##  tions which interchange residue classes with moduli <= 6.
+##  It returns a record containing all data in the library.
 ##
 BindGlobal( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
-            function ( )
-              ReadPackage("rcwa","data/ctprodclass.g");
-              ReadPackage("rcwa","data/ctprods.g");
-            end );
+            
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/ctprodclass.g"))();
+  end );
+
+#############################################################################
+##
+#F  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
+##
+##  This function loads the data library of nonbalanced products of class
+##  transpositions. It returns a record containing all data in the library.
+##  Note that name and contents of this library will likely be changed in
+##  the future.
+##
+BindGlobal( "RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions",
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/ctprods.g"))();
+  end );
 
 #############################################################################
 ##
