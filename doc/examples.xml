@@ -20,23 +20,21 @@ and the order in which they appear is entirely arbitrary. In particular
 they are not ordered by degree of difficulty or interest. <P/>
 
 <Index Key="RCWALoadExamples"><C>RCWALoadExamples</C></Index>
-<Index Key="RCWAExamples"><C>RCWAExamples</C></Index>
-<Index Key="UnwrapExample"><C>UnwrapExample</C></Index>
+<Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
 The rcwa mappings, rcwa groups and other objects defined in this chapter can
 be found in the file <F>pkg/rcwa/examples/examples.g</F>. This file can be
-read into the current &GAP; session by issueing <C>RCWALoadExamples( );</C>.
-Afterwards, the examples are stored in a record <C>RCWAExamples</C> of
-records. The global variable assignments made in a section of this chapter
-can be performed by issueing <C>UnwrapExample(<A>name</A>)</C>, where
-<A>name</A> is given at the end of the corresponding section. Assignments
-which do not need much typing are omitted. The names of the variables which
-are actually assigned are listed by the function <C>UnwrapExample</C>. <P/>
+read into the current &GAP; session by the function <C>RCWALoadExamples</C>
+which takes no arguments and returns a record containing all examples.
+The global variable assignments made in a section of this chapter can be
+made by applying the function <C>AssignGlobals</C> to the the respective
+component of the record returned by <C>RCWALoadExamples</C>. The component
+names are given at the end of the corresponding sections. <P/>
 
-The examples are typically far from discussing the respective aspects
-exhaustively. It is quite likely that in many instances by just a few
-little modifications or additional easy commands you can find out
-interesting things yourself -- have fun!
+The discussions of the examples are typically far from being exhaustive.
+It is quite likely that in many instances by just a few little modifications
+or additional easy commands you can find out interesting things yourself
+-- have fun!
 
 <!-- #################################################################### -->
 
@@ -226,8 +224,7 @@ gap> G := Group(k,l,m,n);
 The correctness of this representation can likewise be verified by simply
 checking the defining relations given above. <P/>
 
-Issue <C>UnwrapExample("HigmanThompson");</C>
-in order to assign the global variables defined in this example.
+The component name corresponding to this example is <C>HigmanThompson</C>.
 
 </Section>
 
@@ -401,8 +398,7 @@ gap> Trajectory(a^-1,[1000,1000],15);
 It is left as an easy exercise to the reader to find out how the cycles
 of&nbsp;<C>b</C> look like. <P/>
 
-Issue <C>UnwrapExample("ZxZ");</C>
-in order to assign the global variables defined in this example.
+The component name corresponding to this example is <C>ZxZ</C>.
 
 </Section>
 
@@ -524,8 +520,7 @@ true
 The factors <C>PrimeSwitch(3)</C> are products of 6 class transpositions
 (cf.&nbsp;<Ref Func="PrimeSwitch" Label="p"/>). <P/>
 
-Issue <C>UnwrapExample("CollatzlikePerms");</C>
-to assign the global variable <C>Collatz</C> defined in this example.
+The component name corresponding to this example is <C>CollatzlikePerms</C>.
 
 </Section>
 
@@ -622,8 +617,8 @@ in trivial cases, i.e. for example when there is some <M>k</M> such that
 applying the <M>k</M>th power of the respective mapping to any integer
 decreases its absolute value. <P/>
 
-Issue <C>UnwrapExample("SlowlyContractingMappings");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is
+<C>SlowlyContractingMappings</C>.
 
 </Section>
 
@@ -675,8 +670,7 @@ Integers
 Further similar computations are shown in
 Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>. <P/>
 
-Issue <C>UnwrapExample("CollatzMapping");</C>
-to assign the global variable&nbsp;<C>T</C> defined in this example.
+The component name corresponding to this example is <C>CollatzMapping</C>.
 
 </Section>
 
@@ -796,8 +790,7 @@ Needless to say however that this computational evidence does not replace
 the proof along these lines given in the article cited above, but just
 sheds a light on the idea behind it. <P/>
 
-Issue <C>UnwrapExample("MatthewsLeigh");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is <C>MatthewsLeigh</C>.
 
 </Section>
 
@@ -878,8 +871,7 @@ gap> List([Comm(u2,nu^20),Comm(u2,nu^25),Comm(u2,nu^30)],Order);
 We observe that our commutators have various different orders, and
 that the prime factors of these orders are not all <Q>very small</Q>. <P/>
 
-Issue <C>UnwrapExample("CollatzlikePerms");</C>
-to assign the global variable&nbsp;<C>u</C> defined in this example.
+The component name corresponding to this example is <C>CollatzlikePerms</C>.
 
 </Section>
 
@@ -1038,8 +1030,8 @@ gap> List(B9,Order);
 ]]>
 </Log>
 
-Issue <C>UnwrapExample("OddNumberOfGens_FiniteOrder");</C>
-in order to assign the global variables defined in this example.
+The component name corresponding to this example is
+<C>OddNumberOfGens_FiniteOrder</C>.
 
 </Section>
 
@@ -1144,8 +1136,8 @@ gap> List(Blocks(H,MovedPoints(H)),Length);
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("AbelianGroupOverPolynomialRing");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is
+<C>AbelianGroupOverPolynomialRing</C>.
 
 </Section>
 
@@ -1202,9 +1194,8 @@ true
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("CheckingForSolvability");</C>
-to assign the global variables <C>a</C>, <C>b</C> and <C>G</C>
-defined in this example.
+The component name corresponding to this example is
+<C>CheckingForSolvability</C>.
 
 </Section>
 
@@ -1339,8 +1330,7 @@ Bijective rcwa mapping of Z_( 2 ) with modulus 8
 Again, viewed as an rcwa mapping of the integers the commutator given at
 the end of the example would not be surjective. <P/>
 
-Issue <C>UnwrapExample("Semilocals");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is <C>Semilocals</C>.
 
 </Section>
 
@@ -1385,8 +1375,8 @@ gap> Length(Cycle(x_257,0));
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("LongCyclesOfPrimeLength");</C>
-to assign the global variable <C>x&uscore;257</C> defined in this example.
+The component name corresponding to this example is
+<C>LongCyclesOfPrimeLength</C>.
 
 </Section>
 
@@ -1452,8 +1442,7 @@ gap> List([0..25],i->Modulus(z^i));
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("ModuliOfPowers");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is <C>ModuliOfPowers</C>.
 
 </Section>
 
@@ -1567,8 +1556,7 @@ gap>  List(S,Si->Float(Density(Si)));
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("CollatzMapping");</C>
-to assign the global variable&nbsp;<C>T</C> defined in this example.
+The component name corresponding to this example is <C>CollatzMapping</C>.
 
 </Section>
 
@@ -2032,8 +2020,7 @@ gap> List([5..20],
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("CollatzlikePerms");</C> to assign the
-global variables&nbsp;<C>a</C> and&nbsp;<C>u</C> defined in this example.
+The component name corresponding to this example is <C>CollatzlikePerms</C>.
 
 </Section>
 
@@ -2329,8 +2316,8 @@ gap> List(H,NilpotencyClassOfGroup);
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("GrigorchukQuotients");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is
+<C>GrigorchukQuotients</C>.
 
 </Section>
 
@@ -2439,8 +2426,7 @@ gap> k;
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("CollatzMapping");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is <C>CollatzMapping</C>.
 
 </Section>
 
@@ -2580,8 +2566,7 @@ gap> List(GeneratorsOfGroup(G),Factorization);
 ]]>
 </Example>
 
-Issue <C>UnwrapExample("F2_PSL2Z");</C>
-to assign the global variables defined in this example.
+The component name corresponding to this example is <C>F2_PSL2Z</C>.
 
 <Alt Only="HTML">&nbsp;</Alt>
 
