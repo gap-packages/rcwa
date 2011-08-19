@@ -242,6 +242,7 @@ of other features of &GAP;. It is intended for being used in talks.
        Subkey="for a list and a function describing an equivalence relation">
   <C>EquivalenceClasses</C>
 </Index>
+<Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
 &RCWA; introduces a couple of small utility functions which can be used in
 a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
@@ -268,7 +269,11 @@ relation. The equivalence relation is given either as a function <A>inv</A>
 computing a class invariant of a given list entry or as a function <A>rel</A>
 which takes as arguments two list entries and returns either <C>true</C>
 or <C>false</C> depending on whether the arguments belong to the same
-equivalence class or not.
+equivalence class or not. <P/>
+
+Yet another utility function is <C>AssignGlobals</C> which takes as
+argument a record and assigns its components to global variables of
+the same (i.e. the component's) names.
 
 </Section>
 
