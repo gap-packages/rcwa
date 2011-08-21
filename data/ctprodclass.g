@@ -171,7 +171,8 @@ end,
 
 CTPairProductType := function ( arg )
 
-  local  result, cls, cts, g, intertype, order, cycletype;
+  local  result, cls, cts, g, intertype, order, cycletype,
+         CTPairIntersectionType;
 
   if Length(arg) = 1 then arg := arg[1]; fi;
 
@@ -185,7 +186,13 @@ CTPairProductType := function ( arg )
                                       "<4 residue classes>)\n");
   fi;
 
-  intertype := ~.CTPairIntersectionType(cls);
+  if   IsBoundGlobal("CTPairIntersectionType")
+  then CTPairIntersectionType := ValueGlobal("CTPairIntersectionType");
+  else CTPairIntersectionType :=
+  RCWALoadDatabaseOfProductsOf2ClassTranspositions().CTPairIntersectionType;
+  fi;
+
+  intertype := CTPairIntersectionType(cls);
   g         := Product(cts);
   order     := Order(g);
   cycletype := Set(ShortCycles(g,[-1000..1000],20),Length);
