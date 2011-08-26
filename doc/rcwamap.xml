@@ -431,8 +431,8 @@ necessary for understanding this manual or for using this package.
   <Description>
     In all cases the argument&nbsp;<A>R</A> is the underlying ring,
     <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list.
-    A coefficient list for an rcwa mapping with modulus <M>m</M> consists of
-    <M>|R/mR|</M> coefficient triples
+    A <E>coefficient list</E> for an rcwa mapping with modulus <M>m</M>
+    consists of <M>|R/mR|</M> coefficient triples
     <C>[</C><M>a_{r(m)}</M>, <M>b_{r(m)}</M>, <M>c_{r(m)}</M><C>]</C>.
     Their ordering is determined by the ordering of the representatives of
     the residue classes (mod&nbsp;<M>m</M>) in the sorted list returned by
@@ -441,11 +441,11 @@ necessary for understanding this manual or for using this package.
     comes first and is followed by the one for <M>1(m)</M>, the one for
     <M>2(m)</M> and so on. <P/>
 
-    In case one or several of the arguments <A>R</A>, <A>m</A> and
+    If one or several of the arguments <A>R</A>, <A>m</A> and
     <A>coeffs</A> are omitted or replaced by other arguments, the former
-    are either derived from the latter or default values are taken.
+    are either derived from the latter or default values are chosen.
     The meaning of the other arguments is defined in the detailed
-    description of the particular methods given in the sequel:
+    description of the particular methods given in the sequel.
 
     The above methods return the rcwa mapping
     <List>
