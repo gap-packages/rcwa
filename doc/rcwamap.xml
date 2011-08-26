@@ -400,8 +400,8 @@ rcwa mapping belongs to the corresponding series. <P/>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
-In the sequel, a description of the general-purpose constructor for rcwa
-mappings is given. This might look a bit technical on a first glance,
+In the sequel we describe the general-purpose constructor for rcwa
+mappings. The constructor may look a bit technical on a first glance,
 but knowing all possible ways of entering an rcwa mapping is by no means
 necessary for understanding this manual or for using this package.
 
