@@ -414,6 +414,37 @@ InstallGlobalFunction(  ReducedWordByOrdersOfGenerators,
 
 #############################################################################
 ##
+#S  Some utilities related to output or conversion to strings. //////////////
+##
+#############################################################################
+
+DeclareGlobalFunction( "LaTeXStringFactorsInt" );
+InstallGlobalFunction( LaTeXStringFactorsInt,
+
+  function ( n )
+
+    local  facts, str, i; 
+
+    if   not IsInt(n)
+    then Error("usage: LaTeXStringFactorsInt( <n> ) for an integer <n>"); fi;
+
+    if n < 0 then str := "-"; n := -n; else str := ""; fi;
+    facts := Collected(Factors(n));
+    for i in [1..Length(facts)] do
+      Append(str,String(facts[i][1]));
+      if facts[i][2] > 1 then
+        Append(str,"^");
+        if facts[i][2] >= 10 then Append(str,"{"); fi;
+        Append(str,String(facts[i][2]));
+        if facts[i][2] >= 10 then Append(str,"}"); fi;
+      fi;
+      if i < Length(facts) then Append(str," \\cdot "); fi;
+    od;
+    return str;
+  end );
+
+#############################################################################
+##
 #S  The code for loading and saving bitmap images. //////////////////////////
 ##
 #############################################################################
