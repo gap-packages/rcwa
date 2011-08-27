@@ -800,7 +800,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>LaTeXObj(<A>f</A>)</C>
+    <C>LaTeXStringRcwaMapping(<A>f</A>)</C>
   </Mark>
   <Item>
     Collects residue classes those corresponding coefficient triples
