@@ -154,12 +154,12 @@ can be processed further with many common graphics programs:
     \cdot green + blue</M> in the range <M>0, \dots, 2^{24}-1</M> specifying
     the RGB values of the colors of the pixels. <P/>
 
-    <Index Key="ReadFromBitmapPicture" Subkey="filename">
-      <C>ReadFromBitmapPicture</C>
+    <Index Key="LoadBitmapPicture" Subkey="filename">
+      <C>LoadBitmapPicture</C>
     </Index>
 
     The picture can be read back into &GAP; by the function
-    <C>ReadFromBitmapPicture(<A>filename</A>)</C>.
+    <C>LoadBitmapPicture(<A>filename</A>)</C>.
 <Log>
 <![CDATA[
 gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
