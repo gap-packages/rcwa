@@ -482,8 +482,8 @@ following general operations:
 <Index Key="String" Subkey="for an rcwa mapping of Z x Z">
   <C>String</C>
 </Index>
-<Index Key="RcwaMappingToLaTeX" Subkey="for an rcwa mapping of Z x Z">
-  <C>RcwaMappingToLaTeX</C>
+<Index Key="LaTeXStringRcwaMapping" Subkey="for an rcwa mapping of Z x Z">
+  <C>LaTeXStringRcwaMapping</C>
 </Index>
 <Index Key="LaTeXAndXDVI" Subkey="for an rcwa mapping of Z x Z">
   <C>LaTeXAndXDVI</C>
@@ -570,7 +570,7 @@ following general operations:
   <Mark> Output </Mark>
   <Item>
     <C>View</C>, <C>Display</C>, <C>Print</C>, <C>String</C>,
-    <C>RcwaMappingToLaTeX</C>, <C>LaTeXAndXDVI</C>.
+    <C>LaTeXStringRcwaMapping</C>, <C>LaTeXAndXDVI</C>.
   </Item> 
   <Mark> Access to components </Mark>
   <Item> <C>Modulus</C>, <C>Coefficients</C>. </Item>

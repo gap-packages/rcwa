@@ -593,11 +593,11 @@ in full. The <C>Print</C>ed representation of an rcwa mapping is &GAP; -
 readable if and only if the <C>Print</C>ed representation of the elements
 of the underlying ring is so. <P/>
 
-<Index Key="RcwaMappingToLaTeX" Subkey="for an rcwa mapping">
-  <C>RcwaMappingToLaTeX</C>
+<Index Key="LaTeXStringRcwaMapping" Subkey="for an rcwa mapping">
+  <C>LaTeXStringRcwaMapping</C>
 </Index>
 
-There is also an operation <C>RcwaMappingToLaTeX</C>, which takes
+There is also an operation <C>LaTeXStringRcwaMapping</C>, which takes
 as argument an rcwa mapping and returns a corresponding
 &LaTeX; string. The output makes use of the &LaTeX; macro package
 <Package>amsmath</Package>. If the option <A>Factorization</A> is set
@@ -611,7 +611,7 @@ value accordingly.
 
 <Example>
 <![CDATA[
-gap> Print(RcwaMappingToLaTeX(T));
+gap> Print(LaTeXStringRcwaMapping(T));
 n \ \mapsto \
 \begin{cases}
   n/2      & \text{if} \ n \in 0(2), \\
@@ -626,7 +626,7 @@ n \ \mapsto \
 
 There is an operation <C>LaTeXAndXDVI</C> which displays an rcwa mapping
 in an <Package>xdvi</Package> window.
-This works as follows: The string returned by <C>RcwaMappingToLaTeX</C>
+This works as follows: The string returned by <C>LaTeXStringRcwaMapping</C>
 is inserted into a &LaTeX; template file. This file is &LaTeX;'ed, and the
 result is shown with <Package>xdvi</Package>.
 Calling <C>Display</C> with option <A>xdvi</A> has the same effect.

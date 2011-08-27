@@ -2845,9 +2845,9 @@ InstallMethod( Display,
 
 #############################################################################
 ##
-#M  RcwaMappingToLaTeX( <f> ) . . . . . . . . . . . .  for rcwa mappings of Z
+#M  LaTeXStringRcwaMapping( <f> ) . . . . . . . . . .  for rcwa mappings of Z
 ##
-InstallMethod( RcwaMappingToLaTeX,
+InstallMethod( LaTeXStringRcwaMapping,
                "for rcwa mappings of Z (RCWA)",
                true, [ IsRcwaMappingOfZ ], 0,
 
@@ -2950,9 +2950,9 @@ InstallMethod( RcwaMappingToLaTeX,
 
 #############################################################################
 ##
-#M  RcwaMappingToLaTeX( <f> ) . . . . . . . . . . .  for rcwa mappings of Z^2
+#M  LaTeXStringRcwaMapping( <f> ) . . . . . . . . .  for rcwa mappings of Z^2
 ##
-InstallMethod( RcwaMappingToLaTeX,
+InstallMethod( LaTeXStringRcwaMapping,
                "for rcwa mappings of Z^2 (RCWA)",
                true, [ IsRcwaMappingOfZxZ ], 0,
 
@@ -3113,7 +3113,7 @@ InstallMethod( LaTeXAndXDVI,
              String(Modulus(f)),", multiplier ",String(Multiplier(f)),
              " and divisor ",String(Divisor(f)),", given by\n");
     AppendTo(stream,"\\begin{align*}\n");
-    str := RcwaMappingToLaTeX(f:Indentation:=2);
+    str := LaTeXStringRcwaMapping(f:Indentation:=2);
     AppendTo(stream,str,"\\end{align*}");
     if HasIsTame(f) then
       if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
@@ -3178,7 +3178,7 @@ InstallMethod( LaTeXAndXDVI,
                                                            "\\mathbb{Z}"),
              "\\), given by\n");
     AppendTo(stream,"\\begin{align*}\n");
-    str := RcwaMappingToLaTeX(f:Indentation:=2);
+    str := LaTeXStringRcwaMapping(f:Indentation:=2);
     AppendTo(stream,str,"\\end{align*}");
     if HasIsTame(f) then
       if IsTame(f) then AppendTo(stream,"\nThis mapping is tame.");
