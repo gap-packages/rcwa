@@ -654,7 +654,14 @@ Changes between version 3.0.4 and version 3.1.0:
  - The database on products of class transpositions has been extended.
  - A run of the test suite now indicates changed runtimes of
    individual commands in comparison with a reference run.
- - `RCWAReadExamples' has been renamed to `RCWALoadExamples'.
+ - The file gap/general.g has been splitted into gap/general.gd and
+   gap/general.gi, in order to allow other packages to use the
+   declarations before RCWA's implementation part is loaded.
+ - A utility function `LaTeXStringFactorsInt' has been added.
+ - The following functions have been renamed:
+   `RCWAReadExamples'      -> `RCWALoadExamples'
+   `RcwaMappingToLaTeX'    -> `LaTeXStringRcwaMapping'
+   `ReadFromBitmapPicture' -> 'LoadBitmapPicture'
 
 
 
