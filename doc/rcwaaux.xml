@@ -234,15 +234,6 @@ of other features of &GAP;. It is intended for being used in talks.
 <Index Key="DifferencesList"><C>DifferencesList</C></Index>
 <Index Key="QuotientsList"><C>QuotientsList</C></Index>
 <Index Key="FloatQuotientsList"><C>FloatQuotientsList</C></Index>
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function computing a class invariant">
-  <C>EquivalenceClasses</C>
-</Index>
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function describing an equivalence relation">
-  <C>EquivalenceClasses</C>
-</Index>
-<Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
 &RCWA; introduces a couple of small utility functions which can be used in
 a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
@@ -262,7 +253,16 @@ quotients of consecutive entries of the list&nbsp;<A>l</A>, and
 the function <C>FloatQuotientsList(<A>l</A>)</C> returns the list of
 floating point approximations of the latter. <P/>
 
-There are also methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function computing a class invariant">
+  <C>EquivalenceClasses</C>
+</Index>
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function describing an equivalence relation">
+  <C>EquivalenceClasses</C>
+</Index>
+
+There are methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
 and  <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C>, which decompose
 a list&nbsp;<A>l</A> into equivalence classes under an equivalence
 relation. The equivalence relation is given either as a function <A>inv</A>
@@ -271,9 +271,16 @@ which takes as arguments two list entries and returns either <C>true</C>
 or <C>false</C> depending on whether the arguments belong to the same
 equivalence class or not. <P/>
 
+<Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
+
 Yet another utility function is <C>AssignGlobals</C> which takes as
 argument a record and assigns its components to global variables of
-the same (i.e. the component's) names.
+the same (i.e. the component's) names. <P/>
+
+<Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
+
+Finally, the function <C>LaTeXStringFactorsInt</C> returns the prime
+factorization of an integer as a string in &LaTeX; format.
 
 </Section>
 
