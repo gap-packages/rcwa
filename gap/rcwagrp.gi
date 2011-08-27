@@ -5300,4 +5300,60 @@ InstallMethod( StructureDescription,
 
 #############################################################################
 ##
+#S  Loading data libraries. /////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  RCWALoadExamples( ) . . . . . . . . . . . . . . .  load examples database
+##
+InstallGlobalFunction( RCWALoadExamples,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/examples/examples.g"))();
+  end );
+
+#############################################################################
+##
+#F  RCWALoadDatabaseOfProductsOf2ClassTranspositions( )
+##
+InstallGlobalFunction( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
+            
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/ctprodclass.g"))();
+  end );
+
+#############################################################################
+##
+#F  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
+##
+InstallGlobalFunction(
+  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/ctprods.g"))();
+  end );
+
+#############################################################################
+##
+#F  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
+##
+InstallGlobalFunction(
+  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/3ctsgrpdata.g"))();
+  end );
+
+#############################################################################
+##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
