@@ -489,9 +489,6 @@ information on the group structure is a dedicated method for the operation
     group with unknown structure are denoted by <C>&lt;unknown&gt;</C>.
     In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
     can be very complicated and very difficult to exhibit.
-    While for isomorphic finite groups always the same structure
-    description is computed, there is no way to guarantee this for
-    isomorphic rcwa groups.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
