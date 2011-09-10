@@ -49,5 +49,8 @@ ter `Auxiliary functions' in the manual.
 If you have problems with this package, wish to make comments or suggestions,
 or if you find bugs, please send e-mail to
 
-Stefan Kohl, stefan@mcs.st-and.ac.uk
+                    Stefan Kohl, stefan@mcs.st-and.ac.uk
+
+Last but not least,  please also let me know  if you use RCWA in some of your
+work.
 
