@@ -4143,6 +4143,81 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
 
 #############################################################################
 ##
+#M  DistanceToNextSmallerPointInOrbit( <G>, <n> ) . .  for rcwa groups over Z
+##
+InstallMethod( DistanceToNextSmallerPointInOrbit,
+               "for an rcwa group over Z and an integer (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsInt ], 0,
+
+  function ( G, n )
+
+    local  gens, B, r;
+
+    if n = 0 then return infinity; fi;
+
+    gens := Set(GeneratorsAndInverses(G));
+
+    B := [n]; r := 0;
+    repeat
+      B := Union(B,Union(List(gens,g->B^g)));
+      r := r + 1;
+    until Minimum(List(B,AbsInt)) < AbsInt(n);
+
+    return r;
+  end );
+
+#############################################################################
+##
+#M  CollatzLikeMappingByOrbitTree( <G>, <root>, <max_r> )
+##
+InstallMethod( CollatzLikeMappingByOrbitTree,
+               "for rcwa group over Z, point and search radius (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsInt, IsPosInt ], 0,
+
+  function ( G, root, max_r )
+
+    local  f, c, g, B, r, P, n, img, m, i, j;
+
+    g := GeneratorsOfGroup(G);
+    P := PrimeSet(G);
+    r := 3;
+    f := fail;
+
+    repeat
+      B := Ball(G,root,r,OnPoints:Spheres);
+      Info(InfoRCWA,2,"r = ",r,": sphere sizes = ",List(B,Length));
+      if [] in B then
+        Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
+                        "the orbit is finite.");
+        return fail;
+      fi;
+      if Maximum(List(B,Length)) >= 4 then 
+        c := [];
+        for i in [3..r+1] do
+          for j in [1..Length(B[i])] do
+            n   := B[i][j];
+            img := Intersection(Set(List(g,h->n^h)),B[i-1]);
+            if Length(img) > 1 then
+              Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
+                              "the orbit is not tree-like.");
+              return fail;
+            fi;
+            Add(c,[n,img[1]]);
+          od;
+        od;
+        for m in Filtered([2..Int(Length(c)/2)],k->IsSubset(P,Factors(k))) do
+          f := RcwaMapping(m,c:BeQuiet);
+          if f <> fail then return f; fi;
+        od;
+      fi;
+      r := r + 1;
+    until r > max_r;
+
+    return f;
+  end );
+
+#############################################################################
+##
 #S  Testing for primitivity. ////////////////////////////////////////////////
 ##
 #############################################################################

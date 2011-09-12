@@ -300,6 +300,16 @@ DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
 
 #############################################################################
 ##
+#O  DistanceToNextSmallerPointInOrbit( <G>, <n> )
+##
+##  The smallest number d such that there is a product g of d generators or
+##  inverses of generators of <G> which maps <n> to an integer with absolute
+##  value less than |<n>|.
+##
+DeclareOperation( "DistanceToNextSmallerPointInOrbit", [ IsGroup, IsInt ] );
+
+#############################################################################
+##
 #O  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
 #O  StabilizerOp( <G>, <S>, <action> ) . . .  set stabilizer in an rcwa group
 #A  StabilizerInfo( <G> ) . .  info. on what is stabilized under which action
@@ -355,6 +365,16 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 ##  <filename>. The filename should include the entire pathname.
 ##
 DeclareGlobalFunction( "DrawOrbitPicture" );
+
+#############################################################################
+##
+#O  CollatzLikeMappingByOrbitTree( <G>, <root>, <max_r> )
+##
+##  This operation is so far undocumented since its meaning has yet to be
+##  settled.
+##
+DeclareOperation( "CollatzLikeMappingByOrbitTree",
+                  [ IsRcwaGroup, IsRingElement, IsPosInt ] );
 
 #############################################################################
 ##
