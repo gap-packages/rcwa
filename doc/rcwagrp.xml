@@ -870,6 +870,17 @@ gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
   </Description>
 </ManSection>
 
+<Index Key="DistanceToNextSmallerPointInOrbit">
+  <C>DistanceToNextSmallerPointInOrbit</C>
+</Index>
+
+Given an rcwa group <A>G</A> over &ZZ; and an integer <A>n</A>, the operation
+<C>DistanceToNextSmallerPointInOrbit(</C><A>G</A><C>,</C><A>n</A><C>)</C>
+computes the smallest number <M>d</M> such that there is a product <M>g</M>
+of <M>d</M> generators or inverses of generators of <A>G</A> which maps
+<A>n</A> to an integer with absolute value less than |<A>n</A>|, provided
+that the orbit of <A>n</A> contains such integer.
+
 &RCWA; permits drawing pictures of orbits of rcwa groups
 on&nbsp;<M>&ZZ;^2</M>. The pictures are written to files in bitmap-
 (bmp-) format. The author has successfully tested this feature both under
