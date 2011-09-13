@@ -34,8 +34,8 @@ PackageWWWHome   := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa.h
 README_URL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/README.rcwa",
 PackageInfoURL   := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/PackageInfo.g",
 AbstractHTML     := Concatenation("This package provides implementations of algorithms and ",
-                                  "methods for computing in certain infinite permutation groups. ",
-                                  "For an abstract, see ",
+                                  "methods for computation in certain infinite permutation groups.",
+                                  " For an abstract, see ",
                                   "<a href = \"",~.PackageWWWHome,"\">here</a>."),
 PackageDoc       := rec(
                          BookName         := "RCWA",
