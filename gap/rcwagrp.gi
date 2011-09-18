@@ -4644,6 +4644,56 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassOrbits,
+               "for an rcwa group over Z and 2 positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, modulusbound, maxlng )
+
+    local  orbits, orbit, sphere, cl, covered, B, B_old,
+           gens, affsrc, m, p, r;
+
+    gens   := GeneratorsOfGroup(G);
+    affsrc := List(gens,LargestSourcesOfAffineMappings);
+
+    orbits := []; covered := [];
+    for m in DivisorsInt(modulusbound) do
+      Info(InfoRCWA,2,"ShortResidueClassOrbits: checking modulus m = ",m);
+      for p in Difference([0..m-1],covered) do
+        r := 0; B := [p];
+        repeat
+          r     := r + 1;
+          B_old := B;
+          B     := Ball(G,p,r,OnPoints);
+        until B = B_old or Length(B) > maxlng;
+        if Length(B) > maxlng then continue; fi;
+        if p = Minimum(B) then
+          orbit := []; cl := ResidueClass(p,m);
+          if ForAny([1..Length(gens)],
+                    i->m mod Mod(gens[i])<>0 and
+                       Number(affsrc[i],src->Intersection(src,cl)<>[]) > 1)
+          then continue; fi;
+          sphere := [cl];
+          orbit  := sphere;
+          repeat 
+            sphere := Difference(Union(List(gens,g->sphere^g)),orbit);
+            orbit := Union(orbit,sphere);
+          until sphere = [] or not ForAll(sphere,IsResidueClass);
+          if sphere = [] then
+            Add(orbits,orbit);
+            covered := Union(covered,Union(orbit));
+          fi;
+        fi;
+      od;
+    od;
+
+    return orbits;
+  end );
+
+#############################################################################
+##
 #F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
 #F                    <palette>, <filename> )
 ##

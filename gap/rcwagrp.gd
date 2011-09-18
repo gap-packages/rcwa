@@ -302,11 +302,22 @@ DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
 ##
 #O  DistanceToNextSmallerPointInOrbit( <G>, <n> )
 ##
-##  The smallest number d such that there is a product g of d generators or
-##  inverses of generators of <G> which maps <n> to an integer with absolute
-##  value less than |<n>|.
+##  Returns the smallest number d such that there is a product g of d genera-
+##  tors or inverses of generators of <G> which maps <n> to an integer with
+##  absolute value less than |<n>|.
 ##
 DeclareOperation( "DistanceToNextSmallerPointInOrbit", [ IsGroup, IsInt ] );
+
+#############################################################################
+##
+#O  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
+##
+##  Returns a list of all orbits of residue classes of the rcwa group <G>
+##  which contain a residue class r(m) such that m divides <modulusbound>,
+##  and which are not longer than <maxlng>.
+##
+DeclareOperation( "ShortResidueClassOrbits", [ IsRcwaGroup, IsRingElement,
+                                               IsPosInt ] );
 
 #############################################################################
 ##
