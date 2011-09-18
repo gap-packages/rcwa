@@ -976,18 +976,33 @@ gap> ShortCycles(mKnot(7),[1..100],20);
 </ManSection>
 
 <ManSection>
+  <Heading>
+    ShortResidueClassOrbits (for rcwa groups) &amp;
+    ShortResidueClassCycles (for rcwa permutations)
+  </Heading>
+  <Oper Name="ShortResidueClassOrbits" Arg="G, modulusbound, maxlng"
+        Label="for rcwa permutation and bounds on modulus and length"/>
   <Oper Name="ShortResidueClassCycles" Arg="g, modulusbound, maxlng"
         Label="for rcwa permutation and bounds on modulus and length"/>
   <Returns>
-    A list of all cycles of residue classes of the rcwa
-    permutation&nbsp;<A>g</A> which contain a residue class <M>r(m)</M>
-    such that <M>m</M> divides <A>modulusbound</A>
-    and which are not longer than <A>maxlng</A>.
+    In the first form a list of all orbits of residue classes under the
+    action of the rcwa group <A>G</A> which contain a residue class
+    <M>r(m)<M> such that <M>m</M> divides <A>modulusbound</A> and which
+    are not longer than <A>maxlng</A>. <P/>
+
+    In the second form a list of all cycles of residue classes of the
+    rcwa permutation&nbsp;<A>g</A> which contain a residue class
+    <M>r(m)</M> such that <M>m</M> divides <A>modulusbound</A> and
+    which are not longer than <A>maxlng</A>.
   </Returns>
   <Description>
     We are only talking about a <E>cycle</E> of residue classes of
     an rcwa permutation <M>g</M> if the restrictions of <M>g</M> to all
     contained residue classes are affine.
+    Similarly we are only talking about an <E>orbit</E> of residue
+    classes under the action of an rcwa group <M>G</M> if the
+    restrictions of all elements of <M>G</M> to all residue classes
+    in the orbit are affine.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
