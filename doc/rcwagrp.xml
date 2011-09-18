@@ -1039,11 +1039,15 @@ properties or be it for other purposes:
         Label="for group, element and radius"/>
   <Meth Name ="Ball" Arg="G, p, r, action"
         Label="for group, point, radius and action"/>
+  <Meth Name ="Ball" Arg="G, p, r"
+        Label="for group, point and radius"/>
   <Returns>
     The ball of radius&nbsp;<A>r</A> around the element&nbsp;<A>g</A> in
     the group&nbsp;<A>G</A>, respectively
     the ball of radius&nbsp;<A>r</A> around the point&nbsp;<A>p</A> under
-    the action&nbsp;<A>action</A> of the group&nbsp;<A>G</A>.
+    the action&nbsp;<A>action</A> of the group&nbsp;<A>G</A>, respectively
+    the ball of radius&nbsp;<A>r</A> around the point&nbsp;<A>p</A> under
+    the action&nbsp;<C>OnPoints</C> of the group&nbsp;<A>G</A>, 
   </Returns>
   <Description>
     All balls are understood with respect to
