@@ -641,7 +641,7 @@ Changes between version 3.0.3 and version 3.0.4:
 
 Changes between version 3.0.4 and version 3.1.0:
 
- - Operations `ShortResidueClassCycles',
+ - Operations `ShortResidueClassCycles', `ShortResidueClassOrbits',
    `CycleRepresentativesAndLengths',
    `IsTransitiveOnNonnegativeIntegersInSupport', `CheckForWildness'
    and `TryIsTransitiveOnNonnegativeIntegersInSupport' have been added.
