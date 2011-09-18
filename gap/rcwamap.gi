@@ -6621,8 +6621,7 @@ InstallMethod( ShortCycles,
 #M  ShortResidueClassCycles( <g>, <modulusbound>, <maxlng> )
 ##
 InstallMethod( ShortResidueClassCycles,
-               Concatenation("for an rcwa permutation mapping of Z and ",
-                             "two positive integers (RCWA)"),
+               "for an rcwa permutation of Z and 2 positive integers (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
 
   function ( g, modulusbound, maxlng )
