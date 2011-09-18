@@ -395,7 +395,7 @@ InstallMethod( ShortOrbits,
 
     local  gens, finite, orbs, orb, oldlength, remaining, f;
 
-    # Option "finite": Assume finiteness of all orbits.
+    # Option "finite": assume finiteness of all orbits.
     # If "finite" is set and <maxlng> is < 0, a list of all orbits
     # which have nontrivial intersection with <S> is returned.
 
