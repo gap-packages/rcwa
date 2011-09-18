@@ -987,8 +987,8 @@ gap> ShortCycles(mKnot(7),[1..100],20);
   <Returns>
     In the first form a list of all orbits of residue classes under the
     action of the rcwa group <A>G</A> which contain a residue class
-    <M>r(m)<M> such that <M>m</M> divides <A>modulusbound</A> and which
-    are not longer than <A>maxlng</A>. <P/>
+    <M>r(m)</M> such that <M>m</M> divides <A>modulusbound</A> and
+    which are not longer than <A>maxlng</A>. <P/>
 
     In the second form a list of all cycles of residue classes of the
     rcwa permutation&nbsp;<A>g</A> which contain a residue class
