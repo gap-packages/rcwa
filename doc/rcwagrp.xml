@@ -938,12 +938,10 @@ to determine them:
   <Returns>
     In the first form a list of all finite orbits of the rcwa
     group&nbsp;<A>G</A> of length at most <A>maxlng</A> which intersect
-    nontrivially with the set&nbsp;<A>S</A>. <P/>
-
+    nontrivially with the set&nbsp;<A>S</A>.
     In the second form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most&nbsp;<A>maxlng</A> which intersect nontrivially with
-    the set&nbsp;<A>S</A>. <P/>
-
+    the set&nbsp;<A>S</A>.
     In the third form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most <A>maxlng</A> which do not correspond to cycles
     consisting of residue classes.
@@ -977,8 +975,7 @@ gap> ShortCycles(mKnot(7),[1..100],20);
 
 <ManSection>
   <Heading>
-    ShortResidueClassOrbits (for rcwa groups) &amp;
-    ShortResidueClassCycles (for rcwa permutations)
+    ShortResidueClassOrbits &amp; ShortResidueClassCycles
   </Heading>
   <Oper Name="ShortResidueClassOrbits" Arg="G, modulusbound, maxlng"
         Label="for rcwa permutation and bounds on modulus and length"/>
@@ -988,8 +985,7 @@ gap> ShortCycles(mKnot(7),[1..100],20);
     In the first form a list of all orbits of residue classes under the
     action of the rcwa group <A>G</A> which contain a residue class
     <M>r(m)</M> such that <M>m</M> divides <A>modulusbound</A> and
-    which are not longer than <A>maxlng</A>. <P/>
-
+    which are not longer than <A>maxlng</A>.
     In the second form a list of all cycles of residue classes of the
     rcwa permutation&nbsp;<A>g</A> which contain a residue class
     <M>r(m)</M> such that <M>m</M> divides <A>modulusbound</A> and
