@@ -4056,7 +4056,7 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
     elif info = "Mod(U DecreasingOn) exceeded <maxmod>"
     then Info(InfoRCWA,1,"Mod(U DecreasingOn) exceeded 2^24");
     elif info = "exceeded memory bound"
-    then Info(InfoRCWA,1,"the memory bound has been exceeded"); fi;
+    then Info(InfoRCWA,1,"exceeded memory bound"); fi;
 
     if   HasIsTransitiveOnNonnegativeIntegersInSupport(G)
     then return IsTransitiveOnNonnegativeIntegersInSupport(G);
