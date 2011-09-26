@@ -56,7 +56,7 @@ Dependencies     := rec(
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
-                                   "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk.",
+                                   "\n  by Stefan Kohl, stefan@mcs.st-and.ac.uk.",
                                    "\nFor information about the package, see ?RCWA:About\n\n" ),
 Autoload         := false,
 TestFile         := "tst/testinstall.tst",
