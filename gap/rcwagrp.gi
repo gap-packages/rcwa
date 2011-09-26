@@ -2809,7 +2809,7 @@ InstallMethod( RespectedPartition,
     P := Set(Flat(List(P,AsUnionOfFewClasses)));
 
     if   RespectsPartition(G,P)
-    then return P;
+    then SetIsTame(G,true); return P;
     else Error("RespectedPartition failed"); fi; # should never happen
   end );
 
