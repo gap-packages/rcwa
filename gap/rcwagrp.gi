@@ -435,6 +435,7 @@ do
                  "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                  ReturnFalse );
 od;
+Unbind( property );
 
 #############################################################################
 ##
@@ -638,6 +639,7 @@ do
                  "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                  ReturnFalse );
 od;
+Unbind( property );
 
 #############################################################################
 ##
