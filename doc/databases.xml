@@ -5,7 +5,9 @@
 <!-- #################################################################### -->
 
 <Chapter Label="ch:Databases">
-<Heading>Databases of rcwa groups and -mappings</Heading>
+<Heading>
+  Databases of Residue-Class-Wise Affine Groups and -Mappings
+</Heading>
 
 &RCWA; contains a number of databases of rcwa groups and rcwa mappings.
 They can be loaded into a &GAP; session by the functions described in this
