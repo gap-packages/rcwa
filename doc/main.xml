@@ -83,6 +83,7 @@
 <#Include SYSTEM "rcwagrp.xml">
 <#Include SYSTEM "rcwamono.xml">
 <#Include SYSTEM "zxz.xml">
+<#Include SYSTEM "databases.xml">
 <#Include SYSTEM "examples.xml">
 <#Include SYSTEM "algs.xml">
 <#Include SYSTEM "rcwaaux.xml">
