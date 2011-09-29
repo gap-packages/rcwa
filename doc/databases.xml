@@ -9,9 +9,9 @@
   Databases of Residue-Class-Wise Affine Groups and -Mappings
 </Heading>
 
-&RCWA; contains a number of databases of rcwa groups and rcwa mappings.
-They can be loaded into a &GAP; session by the functions described in this
-chapter.
+The &RCWA; package contains a number of databases of rcwa groups and rcwa
+mappings. They can be loaded into a &GAP; session by the functions described
+in this chapter.
 
 <!-- #################################################################### -->
 
@@ -153,7 +153,7 @@ gap> Collected(data.mods);
     such class transpositions. Looking at intersection-
     and subset relations between the 4 involved residue classes,
     we can distinguish 17 different <Q>intersection types</Q>
-    (18 together with the trivial case of equal class transpositions).
+    (or 18, together with the trivial case of equal class transpositions).
     The intersection type does not fully determine the cycle
     structure of the product. -- In total, we can distinguish
     88 different cycle types of products of 2 class transpositions
@@ -193,12 +193,11 @@ gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
     which are not balanced.
   </Returns>
   <Description>
-    Presently this database contains a list of the 24 pairs of class
+    This database contains a list of the 24 pairs of class
     transpositions which interchange residue classes with moduli
     <M>\leq 6</M> and whose product is not balanced, as well as a list
     of all 36 essentially distinct triples of such class transpositions
     whose product has coprime multiplier and divisor.
-    Additions are planned.
 <Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions();;
