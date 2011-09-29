@@ -1297,8 +1297,8 @@ these computations.
   <Attr Name="RespectedPartition"
         Arg="g" Label="of a tame rcwa permutation"/>
   <Returns>
-    A respected partition of the rcwa group <A>G</A> /
-    of the rcwa permutation&nbsp;<A>g</A>.
+    a shortest and coarsest possible respected partition
+    of the rcwa group <A>G</A> / of the rcwa permutation&nbsp;<A>g</A>.
   </Returns>
   <Description>
     A tame element <M>g</M>&nbsp;<M>\in</M>&nbsp;RCWA(<M>R</M>) permutes a
