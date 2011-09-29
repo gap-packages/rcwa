@@ -187,7 +187,7 @@ particularly simple structure
 <ManSection>
   <Func Name="ClassShift" Arg="r, m" Label="r, m"/>
   <Func Name="ClassShift" Arg="cl" Label="cl"/>
-  <Returns> The class shift <M>\nu_{r(m)}</M>. </Returns>
+  <Returns> the class shift <M>\nu_{r(m)}</M>. </Returns>
   <Description>
     The <E>class shift</E> <M>\nu_{r(m)}</M> is the rcwa mapping
     of&nbsp;&ZZ; which maps <M>n \in r(m)</M> to <M>n + m</M>
@@ -215,7 +215,7 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 <ManSection>
   <Func Name="ClassReflection" Arg="r, m" Label="r, m"/>
   <Func Name="ClassReflection" Arg="cl" Label="cl"/>
-  <Returns> The class reflection <M>\varsigma_{r(m)}</M>. </Returns>
+  <Returns> the class reflection <M>\varsigma_{r(m)}</M>. </Returns>
   <Description>
     The <E>class reflection</E> <M>\varsigma_{r(m)}</M> is the rcwa mapping
     of&nbsp;&ZZ; which maps <M>n \in r(m)</M> to <M>-n + 2r</M> and which
@@ -249,7 +249,7 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
   <Func Name="ClassTransposition" Arg="cl1, cl2"
                                   Label="cl1, cl2"/>
   <Returns>
-    The class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
+    the class transposition <M>\tau_{r_1(m_1),r_2(m_2)}</M>.
   </Returns>
   <Description>
     Given two disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
@@ -330,7 +330,7 @@ of rcwa permutations which generalizes class reflections:
 <ManSection>
   <Func Name="ClassRotation" Arg="r, m, u" Label="r, m, u"/>
   <Func Name="ClassRotation" Arg="cl, u" Label="cl, u"/>
-  <Returns> The class rotation <M>\rho_{r(m),u}</M>. </Returns>
+  <Returns> the class rotation <M>\rho_{r(m),u}</M>. </Returns>
   <Description>
     Given a residue class <M>r(m)</M> and a unit&nbsp;<M>u</M> of a suitable
     ring&nbsp;<M>R</M>, the <E>class rotation</E> <M>\rho_{r(m),u}</M>
@@ -427,7 +427,7 @@ necessary for understanding this manual or for using this package.
         Label="by residue class cycles"/>
   <Meth Name="RcwaMapping" Arg="expression"
         Label="by arithmetical expression"/>
-  <Returns> An rcwa mapping. </Returns>
+  <Returns> an rcwa mapping. </Returns>
   <Description>
     In all cases the argument&nbsp;<A>R</A> is the underlying ring,
     <A>m</A> is the modulus and <A>coeffs</A> is the coefficient list.
@@ -556,7 +556,7 @@ of some semilocalization <M>&ZZ;_{(\pi)}</M> of&nbsp;&ZZ;:
   <Func Name="SemilocalizedRcwaMapping"
         Arg="f, pi" Label="for an rcwa mapping of Z and a set of primes"/>
   <Returns>
-    The rcwa mapping of <M>&ZZ;_{(p)}</M> respectively
+    the rcwa mapping of <M>&ZZ;_{(p)}</M> respectively
     <M>&ZZ;_{(\pi)}</M> with the same coefficients as the rcwa mapping
     <A>f</A> of&nbsp;&ZZ;.
   </Returns>
@@ -928,7 +928,7 @@ affine partial mappings of an rcwa mapping:
   <Attr Name="LargestSourcesOfAffineMappings"
         Arg="f" Label="for an rcwa mapping"/>
   <Returns>
-    The coarsest partition of <C>Source(<A>f</A>)</C> on whose
+    the coarsest partition of <C>Source(<A>f</A>)</C> on whose
     elements the rcwa mapping&nbsp;<A>f</A> is affine.
   </Returns>
   <Description>
@@ -955,7 +955,7 @@ gap> LargestSourcesOfAffineMappings(kappa);
   <Attr Name="FixedPointsOfAffinePartialMappings"
         Arg="f" Label="for an rcwa mapping"/>
   <Returns>
-    A list of the sets of fixed points of the affine partial mappings of
+    a list of the sets of fixed points of the affine partial mappings of
     the rcwa mapping&nbsp;<A>f</A> in the quotient field of its source.
   </Returns>
   <Description>
@@ -981,7 +981,7 @@ gap> List([1..3],k->FixedPointsOfAffinePartialMappings(T^k));
   <Oper Name="Multpk" Arg="f, p, k"
         Label="for an rcwa mapping, a prime and an exponent"/>
   <Returns>
-    The union of the residue classes <M>r(m)</M> such that
+    the union of the residue classes <M>r(m)</M> such that
     <M>p^k||a_{r(m)}</M> if <M>k \geq 0</M>, and the union of the residue
     classes <M>r(m)</M> such that <M>p^k||c_{r(m)}</M> if <M>k \leq 0</M>.
     In this context, <M>m</M> denotes the modulus of&nbsp;<A>f</A>, and
@@ -1036,7 +1036,7 @@ respectively:
 <ManSection>
   <Meth Name="Determinant" Arg="f" Label="of an rcwa mapping of Z"/>
   <Returns>
-    The determinant of the rcwa mapping&nbsp;<A>f</A> of&nbsp;&ZZ;.
+    the determinant of the rcwa mapping&nbsp;<A>f</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     The <E>determinant</E> of an affine mapping <M>n \mapsto (an+b)/c</M>
@@ -1084,7 +1084,7 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
 <ManSection>
   <Attr Name="Sign" Arg="g" Label="of an rcwa permutation of Z"/>
   <Returns>
-    The sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;.
+    the sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     Let <M>\sigma</M> be an rcwa permutation of the integers, and let
@@ -1146,7 +1146,7 @@ Label="for an epi. from a free group to an rcwa group"/>.
         Arg="g" Label="for an rcwa permutation of Z"/>
   <Meth Name="Factorization" Arg="g" Label="for an rcwa permutation of Z"/>
   <Returns>
-    A factorization of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;
+    a factorization of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;
     into class shifts, class reflections and class transpositions, provided
     that such a factorization exists and the method finds it.
   </Returns>
@@ -1202,7 +1202,7 @@ class reflections and class transpositions:
   <Func Name="PrimeSwitch" Arg="p" Label="p"/>
   <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
   <Returns>
-    In the one-argument form the <E>prime switch</E>
+    in the one-argument form the <E>prime switch</E>
     <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
     \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
     \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
@@ -1252,7 +1252,7 @@ in&nbsp;<Cite Key="Keller99"/>:
 <ManSection>
   <Func Name="mKnot" Arg="m" Label="for an odd integer"/>
   <Returns>
-    The permutation <M>g_m</M> as introduced in&nbsp;<Cite Key="Keller99"/>.
+    the permutation <M>g_m</M> as introduced in&nbsp;<Cite Key="Keller99"/>.
   </Returns>
   <Description>
     The argument <A>m</A> must be an odd integer greater than&nbsp;1.
@@ -1292,7 +1292,7 @@ cannot have infinitely many cycles of any given finite length.
   <Meth Name="Root"
         Arg="f, k" Label="k-th root of an rcwa mapping"/>
   <Returns>
-    An rcwa mapping <C>g</C> such that <C>g&circum;<A>k</A>=<A>f</A></C>,
+    an rcwa mapping <C>g</C> such that <C>g&circum;<A>k</A>=<A>f</A></C>,
     provided that such a mapping exists and that there is a method available
     which can determine it.
   </Returns>
@@ -1332,7 +1332,7 @@ true
 <ManSection>
   <Attr Name="RightInverse" Arg="f" Label="of an injective rcwa mapping"/>
   <Returns>
-    A right inverse of the injective rcwa mapping&nbsp;<A>f</A>,
+    a right inverse of the injective rcwa mapping&nbsp;<A>f</A>,
     i.e. a mapping <M>g</M> such that <A>f</A><M>g</M>&nbsp;=&nbsp;1.
   </Returns>
   <Description>
@@ -1351,7 +1351,7 @@ IdentityMapping( Integers )
   <Oper Name="CommonRightInverse" Arg="l, r"
         Label="of two injective rcwa mappings"/>
   <Returns>
-    A mapping <M>d</M> such that <A>l</A><M>d</M> = <A>r</A><M>d</M> = 1.
+    a mapping <M>d</M> such that <A>l</A><M>d</M> = <A>r</A><M>d</M> = 1.
   </Returns>
   <Description>
     The mappings <A>l</A> and <A>r</A> must be injective, and their images
@@ -1378,7 +1378,7 @@ Rcwa mapping of Z with modulus 2
 <ManSection>
   <Attr Name="ImageDensity" Arg="f" Label="of an rcwa mapping"/>
   <Returns>
-    The <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
+    the <E>image density</E> of the rcwa mapping&nbsp;<A>f</A>.
   </Returns>
   <Description>
     In the notation introduced in the definition of an rcwa mapping,
@@ -1437,7 +1437,7 @@ gap> InjectiveAsMappingFrom(T);
   <Meth Name="Trajectory" Arg="f, n, terminal, m"
         Label="for rcwa mapping, starting point, set of end points, modulus"/>
   <Returns>
-    The first <A>length</A> iterates in the trajectory of the
+    the first <A>length</A> iterates in the trajectory of the
     rcwa mapping&nbsp;<A>f</A> starting at&nbsp;<A>n</A>, respectively the
     initial part of the trajectory of the rcwa mapping&nbsp;<A>f</A>
     starting at&nbsp;<A>n</A> which ends at the first occurence of an
@@ -1477,7 +1477,7 @@ gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
   <Meth Name="Trajectory" Arg="f, n, terminal, whichcoeffs"
         Label="for rcwa mapping, starting point, set of end points, coeff.-spec."/>
   <Returns>
-    Either the list <C>c</C> of triples of coprime coefficients such that
+    either the list <C>c</C> of triples of coprime coefficients such that
     for any&nbsp;<C>k</C> it holds that
     <C><A>n</A>&circum;(<A>f</A>&circum;(k-1)) =
     (c[k][1]*<A>n</A> + c[k][2])/c[k][3]</C> or the last entry of that list,
@@ -1511,7 +1511,7 @@ whose elements get larger or smaller when applying a given rcwa mapping:
   <Attr Name="IncreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Attr Name="DecreasingOn" Arg="f" Label="for an rcwa mapping"/>
   <Returns>
-    The union of all residue classes <M>r(m)</M> such that
+    the union of all residue classes <M>r(m)</M> such that
     <M>|R/a_{r(m)}R| &gt; |R/c_{r(m)}R|</M> or
     <M>|R/a_{r(m)}R| &lt; |R/c_{r(m)}R|</M>, respectively, where <M>R</M>
     denotes the source, <M>m</M> denotes the modulus and <M>a_{r(m)}</M>,
@@ -1541,7 +1541,7 @@ in which trajectories may traverse the residue classes modulo some modulus:
   <Oper Name="TransitionGraph"
         Arg="f, m" Label="for an rcwa mapping and a modulus"/>
   <Returns>
-    The transition graph of the rcwa mapping&nbsp;<A>f</A>
+    the transition graph of the rcwa mapping&nbsp;<A>f</A>
     for modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
@@ -1574,7 +1574,7 @@ on these graphs:
   <Oper Name="OrbitsModulo"
         Arg="f, m" Label="for an rcwa mapping and a modulus"/>
   <Returns>
-    The partition of <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>
+    the partition of <C>AllResidues(Source(<A>f</A>),<A>m</A>)</C>
     corresponding to the weakly connected components of the transition
     graph of the rcwa mapping&nbsp;<A>f</A> for modulus&nbsp;<A>m</A>.
   </Returns>
@@ -1592,7 +1592,7 @@ gap> OrbitsModulo(ClassTransposition(0,2,1,4),8);
   <Oper Name ="FactorizationOnConnectedComponents"
         Arg = "f, m" Label="for an rcwa mapping and a modulus"/>
   <Returns>
-    The set of restrictions of the rcwa mapping&nbsp;<A>f</A> to the
+    the set of restrictions of the rcwa mapping&nbsp;<A>f</A> to the
     weakly connected components of its transition graph <M>\Gamma_{f,m}</M>.
   </Returns>
   <Description>
@@ -1614,7 +1614,7 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
   <Oper Name="TransitionMatrix"
         Arg="f, m" Label="for an rcwa mapping and a modulus"/>
   <Returns>
-    The transition matrix of the rcwa mapping&nbsp;<A>f</A> for
+    the transition matrix of the rcwa mapping&nbsp;<A>f</A> for
     modulus&nbsp;<A>m</A>.
   </Returns>
   <Description>
@@ -1662,7 +1662,7 @@ gap> Display(TransitionMatrix(T^3,3));
   <Attr Name="Sources" Arg="f" Label="of an rcwa mapping"/>
   <Attr Name="Sinks" Arg="f" Label="of an rcwa mapping"/>
   <Returns>
-    A list of unions of residue classes modulo the modulus&nbsp;<M>m</M>
+    a list of unions of residue classes modulo the modulus&nbsp;<M>m</M>
     of the rcwa mapping&nbsp;<A>f</A>, as described below.
   </Returns>
   <Description>
@@ -1686,7 +1686,7 @@ gap> Sources(g); Sinks(g);
 <ManSection>
   <Attr Name="Loops" Arg="f" Label="of an rcwa mapping"/>
   <Returns>
-    If <A>f</A> is bijective, the list of non-isolated vertices of the
+    if <A>f</A> is bijective, the list of non-isolated vertices of the
     transition graph of&nbsp;<A>f</A> for modulus <C>Mod(<A>f</A>)</C>
     which carry a loop. In general, the list of vertices of that transition
     graph which carry a loop, but which <A>f</A> does not fix setwise.
@@ -1706,7 +1706,7 @@ There is a nice invariant of trajectories of the Collatz mapping:
 <ManSection>
   <Func Name="GluckTaylorInvariant" Arg="a" Label="of a trajectory"/>
   <Returns>
-    The invariant introduced in&nbsp;<Cite Key="GluckTaylor02"/>. This is
+    the invariant introduced in&nbsp;<Cite Key="GluckTaylor02"/>. This is
     <M>(\sum_{i=1}^l a_i \cdot a_{i \mod l + 1})/(\sum_{i=1}^l a_i^2)</M>,
     where <M>l</M> denotes the length of&nbsp;<A>a</A>.
   </Returns>
@@ -1743,7 +1743,7 @@ used to prove anything. Nevertheless they can sometimes be useful:
 <ManSection>
   <Oper Name="LikelyContractionCentre"
         Arg="f, maxn, bound" Label="of an rcwa mapping"/>
-  <Returns> A list of ring elements (see below). </Returns>
+  <Returns> a list of ring elements (see below). </Returns>
   <Description>
     This operation tries to compute the <E>contraction centre</E> of the
     rcwa mapping <A>f</A>. Assuming its existence this is the unique finite
@@ -1775,7 +1775,7 @@ See ?LikelyContractionCentre for more information.
 <ManSection>
   <Oper Name="GuessedDivergence" Arg="f" Label="of an rcwa mapping"/>
   <Returns>
-    A floating point value which is intended to be a rough guess on how fast
+    a floating point value which is intended to be a rough guess on how fast
     the trajectories of the rcwa mapping&nbsp;<A>f</A> diverge (return value
     greater than&nbsp;1) or converge (return value smaller than&nbsp;1).
   </Returns>
@@ -1833,7 +1833,7 @@ gap> GuessedDivergence(T);
 <ManSection>
   <Func Name="RcwaMappingsFamily" Arg="R" Label="of a ring"/>
   <Returns>
-    The family of rcwa mappings of the ring&nbsp;<A>R</A>.
+    the family of rcwa mappings of the ring&nbsp;<A>R</A>.
   </Returns>
 </ManSection>
 

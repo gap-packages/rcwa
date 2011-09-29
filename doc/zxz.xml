@@ -108,7 +108,7 @@ or the more specialized functions
         Label="of Z x Z, by residue class cycles"/>
   <Meth Name="RcwaMapping" Arg="f, g"
         Label="of Z x Z, by projections to coordinates"/>
-  <Returns> An rcwa mapping of <M>&ZZ;^2</M>. </Returns>
+  <Returns> an rcwa mapping of <M>&ZZ;^2</M>. </Returns>
   <Description>
     The above methods return
     <List>
@@ -278,7 +278,7 @@ gap> List(ProjectionsToCoordinates(g),Factorization);
   <Func Name="ClassTransposition" Arg="cl1, cl2"
                                   Label="cl1, cl2 (for Z x Z)"/>
   <Returns>
-    The class transposition <M>\tau_{r_1+&ZZ;^2L_1,r_2+&ZZ;^2L_2}</M>.
+    the class transposition <M>\tau_{r_1+&ZZ;^2L_1,r_2+&ZZ;^2L_2}</M>.
   </Returns>
   <Description>
     Let <M>d \in &NN;</M>, and let <M>L_1, L_2 \in &ZZ;^{d \times d}</M> be
@@ -363,7 +363,7 @@ false
   <Heading> ClassRotation (for <M>&ZZ;^2</M>) </Heading>
   <Func Name="ClassRotation" Arg="r, L, u" Label="r, L, u; for Z x Z"/>
   <Func Name="ClassRotation" Arg="cl, u" Label="cl, u; for Z x Z"/>
-  <Returns> The class rotation <M>\rho_{r(m),u}</M>. </Returns>
+  <Returns> the class rotation <M>\rho_{r(m),u}</M>. </Returns>
   <Description>
     Let <M>d \in &NN;</M>. Given a residue class <M>r+&ZZ;^dL</M>
     and a matrix <M>u \in {\rm GL}(d,&ZZ;)</M>, the <E>class rotation</E>
@@ -409,7 +409,7 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
   <Heading> ClassShift (for <M>&ZZ;^2</M>) </Heading>
   <Func Name="ClassShift" Arg="r, L, k" Label="r, L, k; for Z x Z"/>
   <Func Name="ClassShift" Arg="cl, k" Label="cl, k; for Z x Z"/>
-  <Returns> The class shift <M>\nu_{r+&ZZ;^dL,k}</M>. </Returns>
+  <Returns> the class shift <M>\nu_{r+&ZZ;^dL,k}</M>. </Returns>
   <Description>
     Let <M>d \in &NN;</M>. Given a residue class <M>r+&ZZ;^dL</M> and
     an integer <M>k \in \{1, \dots, d\}</M>, the <E>class shift</E>
@@ -610,7 +610,7 @@ of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
   <Attr Name="ProjectionsToCoordinates" Arg="f"
         Label="for an rcwa mapping of Z x Z"/>
   <Returns>
-    The projections of the rcwa mapping <A>f</A> of <M>&ZZ;^2</M> to the
+    the projections of the rcwa mapping <A>f</A> of <M>&ZZ;^2</M> to the
     coordinates if such projections exist, and <C>fail</C> otherwise.
   </Returns>
   <Description>
@@ -709,7 +709,7 @@ of the image is a specified residue class:
   <Attr Name="IsomorphismRcwaGroup"
         Arg="gl2z, cl" Label="for GL(2,Z) and a residue class"/>
   <Returns>
-    A monomorphism from <A>sl2z</A> respectively <A>gl2z</A>
+    a monomorphism from <A>sl2z</A> respectively <A>gl2z</A>
     to&nbsp;RCWA(<M>&ZZ;^2</M>), such that the support of the image
     is the residue class&nbsp;<A>cl</A> and the generators
     are affine on&nbsp;<A>cl</A>.
@@ -770,7 +770,7 @@ of&nbsp;<M>&ZZ;^2</M> into such:
         Arg="P, yrange, xrange, filename"
         Label="P, yrange, xrange, filename"/>
   <Returns>
-    Nothing.
+    nothing.
   </Returns>
   <Description>
     This function depicts the residue class union <A>U</A>

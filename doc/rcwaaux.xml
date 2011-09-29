@@ -65,7 +65,7 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
 
 <ManSection>
   <Func Name="RCWATestInstall" Arg=""/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     Performs a nontrivial computation to check whether an installation of
     &RCWA; appears to work. Errors, i.e. differences to the correct results
@@ -76,7 +76,7 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
 
 <ManSection>
   <Func Name="RCWATestAll" Arg=""/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     Runs the full test suite of the &RCWA; package.
     Any differences to the supposed results of the test computations
@@ -113,7 +113,7 @@ are included in the distribution file anyway, users will not need it.
 
 <ManSection>
   <Func Name="RCWABuildManual" Arg=""/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     This function builds the manual of the &RCWA; package in the file
     formats &LaTeX;, PDF, HTML and ASCII text.
@@ -138,7 +138,7 @@ can be processed further with many common graphics programs:
 <ManSection>
   <Func Name="SaveAsBitmapPicture"
         Arg="picture, filename" Label="picture, filename"/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-)
     picture file named <A>filename</A>. The filename should include
@@ -182,7 +182,7 @@ of other features of &GAP;. It is intended for being used in talks.
 
 <ManSection>
   <Func Name="RunDemonstration" Arg="filename" Label="filename"/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     This function executes the commands in the file named <A>filename</A>.
     It shows a command and the corresponding output, waits for a keystroke,
@@ -205,7 +205,7 @@ of other features of &GAP;. It is intended for being used in talks.
 
 <ManSection>
   <Func Name="Log2HTML" Arg="logfilename" Label="logfilename"/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     This function converts the &GAP; logfile <A>logfilename</A> to HTML.
     The extension of the input file must be <C>*.log</C>. The name of the
