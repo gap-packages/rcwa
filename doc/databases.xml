@@ -27,8 +27,7 @@ chapter.
     which contain the individual groups and mappings.
     A detailed description of some of the examples can be found in
     Chapter&nbsp;<Ref Label="=ch:Examples"/>.
-  </Description>
-  <Example>
+<Example>
 <![CDATA[
 gap> examples := RCWALoadExamples();;                                 
 gap> RecNames(examples);
@@ -63,6 +62,7 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
 ]]>
 </Example>
+  </Description>
 </ManSection>
 
 </Section>
@@ -96,8 +96,7 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     groups. For the future it is planned to include information on which
     groups are equal and which are isomorphic, but in particular for the
     infinite groups this task seems to be algorithmically hard.
-  </Description>
-  <Example>
+<Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
 gap> Length(Set(data.sizes));
@@ -127,6 +126,7 @@ gap> Collected(data.mods);
   [ 30720, 2 ], [ 38880, 12 ], [ 51840, 8 ], [ 77760, 32 ] ]
 ]]>
 </Example>
+  </Description>
 </ManSection>
 
 </Section>
@@ -165,8 +165,7 @@ gap> Collected(data.mods);
     as well as data lists <C>CTPairsProductClassification</C> and
     <C>CTPairsProductType</C>. -- For a precise description see
     the file <F>pkg/rcwa/data/ctprodclass.g</F>.
-  </Description>
-  <Example>
+<Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfProductsOf2ClassTranspositions();;
 gap> RecNames(data);
@@ -180,7 +179,8 @@ gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
   [ 12, 345 ], [ 15, 4 ], [ 20, 10 ], [ 30, 120 ], [ 60, 44 ], 
   [ infinity, 535 ] ]
 ]]>
-  </Example>
+</Example>
+  </Description>
 </ManSection>
 
 <ManSection>
@@ -197,8 +197,7 @@ gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
     of all 36 essentially distinct triples of such class transpositions
     whose product has coprime multiplier and divisor.
     Additions are planned.
-  </Description>
-  <Example>
+<Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions();;
 gap> RecNames(data);
@@ -219,7 +218,8 @@ gap> List(data.PairsOfCTsWhoseProductIsNotBalanced,
   [ [ 0(2), 3(6) ], [ 2(4), 3(6) ] ], [ [ 0(2), 3(6) ], [ 0(4), 3(6) ] ],
   [ [ 0(2), 5(6) ], [ 2(4), 5(6) ] ], [ [ 0(2), 5(6) ], [ 0(4), 5(6) ] ] ]
 ]]>
-  </Example>
+</Example>
+  </Description>
 </ManSection>
 
 </Section>
