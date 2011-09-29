@@ -26,7 +26,7 @@ chapter.
     The components of the record returned by this function are records
     which contain the individual groups and mappings.
     A detailed description of some of the examples can be found in
-    Chapter&nbsp;<Ref Label="=ch:Examples"/>.
+    Chapter&nbsp;<Ref Label="ch:Examples"/>.
 <Example>
 <![CDATA[
 gap> examples := RCWALoadExamples();;                                 
