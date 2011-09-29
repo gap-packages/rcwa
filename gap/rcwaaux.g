@@ -22,9 +22,11 @@ BindGlobal( "RCWABuildManual",
     local  RCWADir;
 
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-    MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "rcwa.xml",
-                   [ "../gap/rcwaaux.g",
+    MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "main.xml",
+                   [ "../gap/rcwaaux.g", "../gap/frdepend.gi",
+                     "../gap/general.gd", "../gap/general.gi",
                      "../gap/rcwamap.gd", "../gap/rcwamap.gi",
+                     "../gap/rcwamono.gd", "../gap/rcwamono.gi",
                      "../gap/rcwagrp.gd", "../gap/rcwagrp.gi" ],
                      "RCWA", "../../../" );
   end );
