@@ -89,8 +89,9 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     moduli of the groups), <C>cts</C> (the list of all 69 class
     transpositions which interchange residue classes with moduli
     <M>\leq 6</M>), and possibly further which are not described here.
-    For all integers <C>i</C> from 1 to 52394 it is
-    <C>Size(grps[i]) = sizes[i]</C> and <C>Modulus(grps[i]) = mods[i]</C>.
+    For all integers <C>i</C> from 1 to 52394 it holds that
+    <C>Size(grps[i]) = sizes[i]</C> and that
+    <C>Modulus(grps[i]) = mods[i]</C>.
     Note that the contents of this database are not <Q>set in stone</Q>,
     and likely to change in coming releases. Also note that the database
     presently contains an entry for every triple of class transpositions
