@@ -2728,7 +2728,7 @@ InstallMethod( Modulus,
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    if not HasIsTame(G) then CheckForWildness(G,2); fi;
+    if not HasIsTame(G) then CheckForWildness(G,2,false); fi;
 
     if   HasIsTame(G) and not IsTame(G)
     then SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R); fi;
@@ -2805,7 +2805,7 @@ InstallMethod( RespectedPartition,
         if (Length(P) > 256 and Length(P_last) <= 256)
           or   (IsRcwaGroupOverZ(G) and Maximum(List(P,Mod)) > 16384
             and Maximum(List(P_last,Mod)) <= 16384) then
-          CheckForWildness(G,3);
+          CheckForWildness(G,3,true);
           if HasIsTame(G) and not IsTame(G) then return fail; fi;
         fi;
       elif Runtime() - start > 30000 # 30s; to be improved:
