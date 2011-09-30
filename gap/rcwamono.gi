@@ -528,7 +528,7 @@ InstallMethod( RestrictedBall,
 
   function ( G, f, r, modulusbound )
 
-    local  R, gens, ball, new, h1, h2, h, k, spheres;
+    local  R, gens, ball, old, new, h1, h2, h, k, spheres;
 
     R := Source(f);
     if   not IsCollsElms(FamilyObj(G),FamilyObj(f))
@@ -539,8 +539,10 @@ InstallMethod( RestrictedBall,
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
     for k in [1..r] do
+      if spheres then old := ball[Length(ball)];
+                 else old := ball; fi;
       new := [];
-      for h1 in ball do
+      for h1 in old do
         for h2 in gens do
           h := h1 * h2;
           if   NumberOfResidues(R,Mod(h)) <= modulusbound
