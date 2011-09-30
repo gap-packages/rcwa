@@ -1690,7 +1690,7 @@ gap> gens := SmallGeneratingSet(G);
   ClassTransposition(0,2,3,4), ClassTransposition(0,4,1,4) ]
 gap> G := Group(gens);
 <rcwa group over Z with 4 generators>
-gap> Br := List([1..10],r->RestrictedBall(G,One(G),r));;
+gap> Br := List([1..10],r->RestrictedBall(G,One(G),r,4));;
 gap> List(Br,Length);
 [ 5, 14, 27, 39, 51, 71, 99, 118, 120, 120 ]
 gap> List([1..4],m->Length(AllElementsOfCTZWithGivenModulus(m)));

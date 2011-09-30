@@ -435,7 +435,6 @@ do
                  "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                  ReturnFalse );
 od;
-Unbind( property );
 
 #############################################################################
 ##
@@ -639,7 +638,6 @@ do
                  "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
                  ReturnFalse );
 od;
-Unbind( property );
 
 #############################################################################
 ##
@@ -2332,9 +2330,10 @@ InstallMethod( SmallGeneratingSet,
 
   function ( G )
 
-    local  gens, gensred, H, r, i, shrinked;
+    local  gens, gensred, H, r, modulusbound, i, shrinked;
 
-    gens := Set(GeneratorsOfGroup(G));
+    gens         := Set(GeneratorsOfGroup(G));
+    modulusbound := Lcm(List(gens,Modulus));
 
     if ForAll(gens,IsClassTransposition) then
       SortParallel(List(gens,ct->[Modulus(ct),TransposedClasses(ct)]),gens);
@@ -2350,8 +2349,8 @@ InstallMethod( SmallGeneratingSet,
       for i in [2..Length(gens)] do
         Info(InfoRCWA,3,"i = ",i);
         H := Group(gens{[1..i-1]});
-        if   IsEmpty(Intersection(RestrictedBall(H,One(H),r),
-                                  RestrictedBall(H,gens[i],r)))
+        if   IsEmpty(Intersection(RestrictedBall(H,One(H),r,modulusbound),
+                                  RestrictedBall(H,gens[i],r,modulusbound)))
         then Add(gensred,gens[i]); fi;
       od;
       Info(InfoRCWA,1,"SmallGeneratingSet: #generators after reduction ",
@@ -2617,25 +2616,19 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
 
 #############################################################################
 ##
-#M  CheckForWildness( <G>, <max_r>, <cheap> ). for rcwa group & search radius
+#M  CheckForWildness( <G>, <max_r> ) . . . . for rcwa group and search radius
 ##
 InstallMethod( CheckForWildness,
-               "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsPosInt, IsBool ], 0,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup, IsPosInt ], 0,
 
-  function ( G, max_r, cheap )
+  function ( G, max_r )
 
     local  B, r, g;
 
     for r in [1..max_r] do
       B := Ball(G,One(G),r);
-      if cheap then
-        if   not ForAll(B,IsBalanced) or ForAny(B,g->Loops(g)<>[])
-        then SetIsTame(G,false); break; fi;
-      else
-        if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
-        then SetIsTame(G,false); break; fi;
-      fi;
+      if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
+      then SetIsTame(G,false); break; fi;
     od;
   end );
 
@@ -2729,7 +2722,7 @@ InstallMethod( Modulus,
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    if not HasIsTame(G) then CheckForWildness(G,2,false); fi;
+    if not HasIsTame(G) then CheckForWildness(G,2); fi;
 
     if   HasIsTame(G) and not IsTame(G)
     then SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R); fi;
@@ -2806,7 +2799,7 @@ InstallMethod( RespectedPartition,
         if (Length(P) > 256 and Length(P_last) <= 256)
           or   (IsRcwaGroupOverZ(G) and Maximum(List(P,Mod)) > 16384
             and Maximum(List(P_last,Mod)) <= 16384) then
-          CheckForWildness(G,3,true);
+          CheckForWildness(G,3);
           if HasIsTame(G) and not IsTame(G) then return fail; fi;
         fi;
       elif Runtime() - start > 30000 # 30s; to be improved:

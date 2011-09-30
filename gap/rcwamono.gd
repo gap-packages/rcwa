@@ -69,7 +69,7 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 #O  Ball( <M>, <f>, <r> )    ball of radius <r> around the element <f> of <M>
 #O  Ball( <M>, <p>, <r>, <act> )   "    the point <p> under the action of <M>
 #O  Ball( <M>, <p>, <r> ) . . .  as above, where <act> defaults to `OnPoints'
-#O  RestrictedBall( <M>, <f>, <r> )'restricted' ball of radius <r> around <f>
+#O  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . . . . "restricted" ball
 ##
 ##  The first operation returns the ball of radius <r> around the element <f>
 ##  of <M>.
@@ -81,8 +81,8 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 ##  <act> defaults to `OnPoints'.
 ##
 ##  The fourth operation does the same as the first except that it stops
-##  where extending the ball would increase the moduli of the elements
-##  encountered.
+##  where extending the ball would yield elements whose moduli exceed the
+##  bound <modulusbound>.
 ##
 ##  All balls are understood w.r.t. the stored generators of the monoid <M>,
 ##  respectively w.r.t. the stored generators and their inverses if <M> is
@@ -93,7 +93,8 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 ##
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
-DeclareOperation( "RestrictedBall", [ IsMonoid, IsObject, IsInt ] );
+DeclareOperation( "RestrictedBall",
+                  [ IsMonoid, IsObject, IsInt, IsPosInt ] );
 
 #############################################################################
 ##

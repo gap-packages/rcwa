@@ -516,16 +516,17 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
-#M  RestrictedBall( <M>, <f>, <r> ) . . . . . . . . . for rcwa monoids over Z
+#M  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . for rcwa monoids over Z
 ##
 ##  As element tests can be expensive, this method does not check whether <f>
 ##  is indeed an element of <M>.
 ##
 InstallMethod( RestrictedBall,
                "for an rcwa monoid over Z and an element thereof (RCWA)",
-               ReturnTrue, [ IsRcwaMonoid, IsRcwaMapping, IsInt ], 0,
+               ReturnTrue, [ IsRcwaMonoid, IsRcwaMapping,
+                             IsInt, IsPosInt ], 0,
 
-  function ( G, f, r )
+  function ( G, f, r, modulusbound )
 
     local  R, gens, ball, new, h1, h2, h, k, spheres;
 
@@ -542,9 +543,7 @@ InstallMethod( RestrictedBall,
       for h1 in ball do
         for h2 in gens do
           h := h1 * h2;
-          if   NumberOfResidues(R,Mod(h))
-            <= Maximum(NumberOfResidues(R,Mod(h1)),
-                       NumberOfResidues(R,Mod(h2)))
+          if   NumberOfResidues(R,Mod(h)) <= modulusbound
           then Add(new,h); fi;
         od;
       od;
