@@ -1076,10 +1076,13 @@ properties or be it for other purposes:
     They are not only applicable to rcwa groups.
     If the option <A>Spheres</A> is set, the ball is splitted up and
     returned as a list of spheres. There is a related operation
-    <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>)</C>, which determines
-    only those elements of the ball which are cheap to compute.
+    <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>maxmod</A>)</C>
+    which computes only those elements of the ball whose moduli
+    do not exceed <A>maxmod</A>, and which can be reached from <A>g</A>
+    without computing intermediate elements whose moduli do exceed
+    <A>maxmod</A>.
 
-    <Index Key="RestrictedBall" Subkey="G, g, r">
+    <Index Key="RestrictedBall" Subkey="G, g, r, maxmod">
       <C>RestrictedBall</C>
     </Index>
 
