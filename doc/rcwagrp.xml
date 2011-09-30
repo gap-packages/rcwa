@@ -1077,10 +1077,10 @@ properties or be it for other purposes:
     If the option <A>Spheres</A> is set, the ball is splitted up and
     returned as a list of spheres. There is a related operation
     <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>modulusbound</A>)</C>
-    which computes only those elements of the ball whose moduli
-    do not exceed <A>modulusbound</A>, and which can be reached from
-    <A>g</A> without computing intermediate elements whose moduli do exceed
-    <A>modulusbound</A>.
+    specifically for rcwa groups which computes only those elements of the
+    ball whose moduli do not exceed <A>modulusbound</A>, and which can be
+    reached from <A>g</A> without computing intermediate elements whose
+    moduli do exceed <A>modulusbound</A>.
 
     <Index Key="RestrictedBall" Subkey="G, g, r, modulusbound">
       <C>RestrictedBall</C>
@@ -1095,6 +1095,11 @@ gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnTuples)));
 gap> Ball(Group((1,2),(2,3),(3,4)),(),2:Spheres);
 [ [ () ], [ (3,4), (2,3), (1,2) ],
   [ (2,3,4), (2,4,3), (1,2)(3,4), (1,2,3), (1,3,2) ] ]
+gap> G := Group(List([[1,2,4,6],[1,3,2,6],[2,3,4,6]],ClassTransposition));;
+gap> B := RestrictedBall(G,One(G),20,36:Spheres);; # try replacing 36 by 72
+gap> List(B,Length);
+[ 1, 3, 6, 12, 4, 6, 6, 4, 4, 4, 6, 6, 3, 3, 2, 0, 0, 0, 0, 0, 0 ]
+g
 ]]>
 </Example>
   </Description>
