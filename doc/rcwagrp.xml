@@ -1078,8 +1078,8 @@ properties or be it for other purposes:
     returned as a list of spheres. There is a related operation
     <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>modulusbound</A>)</C>
     which computes only those elements of the ball whose moduli
-    do not exceed <A>maxmod</A>, and which can be reached from <A>g</A>
-    without computing intermediate elements whose moduli do exceed
+    do not exceed <A>modulusbound</A>, and which can be reached from
+    <A>g</A> without computing intermediate elements whose moduli do exceed
     <A>modulusbound</A>.
 
     <Index Key="RestrictedBall" Subkey="G, g, r, modulusbound">

@@ -1089,7 +1089,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>RestrictedPerm(<A>g</A>,<A>S</A></C>
+    <C>RestrictedPerm(<A>g</A>,<A>S</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
