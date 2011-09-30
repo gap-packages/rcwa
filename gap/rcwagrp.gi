@@ -2616,19 +2616,25 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
 
 #############################################################################
 ##
-#M  CheckForWildness( <G>, <max_r> ) . . . . for rcwa group and search radius
+#M  CheckForWildness( <G>, <max_r>, <cheap> ). for rcwa group & search radius
 ##
 InstallMethod( CheckForWildness,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup, IsPosInt ], 0,
+               "for rcwa groups (RCWA)", true,
+               [ IsRcwaGroup, IsPosInt, IsBool ], 0,
 
-  function ( G, max_r )
+  function ( G, max_r, cheap )
 
     local  B, r, g;
 
     for r in [1..max_r] do
       B := Ball(G,One(G),r);
-      if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
-      then SetIsTame(G,false); break; fi;
+      if cheap then
+        if   not ForAll(B,IsBalanced) or ForAny(B,g->Loops(g)<>[])
+        then SetIsTame(G,false); break; fi;
+      else
+        if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
+        then SetIsTame(G,false); break; fi;
+      fi;
     od;
   end );
 
