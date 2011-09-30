@@ -18,6 +18,10 @@ as <E>mathematically</E> trivial respectively straightforward, and that the
 code of a function or method attributed in this way can still be reasonably
 long and complicated. Longer and better descriptions of many of the
 algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
+Finally please note that the descriptions given here represent the
+functionality of &RCWA; in May 2007. Since then, a lot of code has been
+added to this package, and much of the older code has been improved
+and uses now better algorithms than in 2007.
 
 <List>
 
