@@ -86,19 +86,22 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     The record presently has the components <C>grps</C>
     (the list of the 52394 groups -- 21948 finite and 30446 infinite ones),
     <C>sizes</C> (the list of group orders), <C>mods</C> (the list of
-    moduli of the groups), <C>cts</C> (the list of all 69 class
-    transpositions which interchange residue classes with moduli
-    <M>\leq 6</M>), and possibly further which are not described here.
+    moduli of the groups), <C>trsstatus</C> (lists what is known about
+    whether the groups are transitive on the nonnegative integers in their
+    support), <C>cts</C> (the list of all 69 class transpositions which
+    interchange residue classes with moduli <M>\leq 6</M>), and possibly
+    further which are not described here.
     For all integers <C>i</C> from 1 to 52394 it holds that
     <C>Size(grps[i]) = sizes[i]</C> and that
     <C>Modulus(grps[i]) = mods[i]</C>.
     Note that the contents of this database are not <Q>set in stone</Q>,
     and likely to change in coming releases. Also note that the database
-    presently contains an entry for every triple of class transpositions
-    in <C>cts</C>, which means that it contains multiple copies of equal
-    groups. For the future it is planned to include information on which
-    groups are equal and which are isomorphic, but in particular for the
-    infinite groups this task seems to be algorithmically hard.
+    presently contains an entry for every unordered triple of distinct
+    class transpositions in <C>cts</C>, which means that it contains
+    multiple copies of equal groups. For the future it is planned to
+    include information on which groups are equal and which are isomorphic,
+    but in particular for the infinite groups this task seems to be
+    algorithmically hard.
 <Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
