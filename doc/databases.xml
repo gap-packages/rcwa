@@ -185,13 +185,13 @@ gap> Collected(data.trsstatus);
     which interchange residue classes with moduli <M>\leq 6</M>. <P/>
 
     The components of the returned record are a list <C>CTPairs</C> 
-    of all <M>(69 \cdot 68)/2 = 2346</M> pairs of distinct class
-    transpositions which interchange residue classes with moduli
-    <M>\leq 6</M>, functions <C>CTPairsIntersectionTypes</C>,
-    <C>CTPairIntersectionType</C> and <C>CTPairProductType</C>
-    as well as data lists <C>CTPairsProductClassification</C> and
-    <C>CTPairsProductType</C>. -- For a precise description see
-    the file <F>pkg/rcwa/data/ctprodclass.g</F>.
+    of all 2346 pairs of distinct class transpositions which interchange
+    residue classes with moduli <M>\leq 6</M>, functions
+    <C>CTPairsIntersectionTypes</C>, <C>CTPairIntersectionType</C> and
+    <C>CTPairProductType</C> as well as data lists
+    <C>CTPairsProductClassification</C> and <C>CTPairsProductType</C>.
+    -- For a precise description see the file
+    <F>pkg/rcwa/data/ctprodclass.g</F>.
 <Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfProductsOf2ClassTranspositions();;
