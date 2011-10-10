@@ -28,11 +28,14 @@ their principal ideals have infinite index. Therefore as moduli of
 residue-class-wise affine mappings we can only use lattices of full rank,
 for these are precisely the ideals of <M>&ZZ;^d</M> of finite index.
 However, on the other hand we can also be more permissive and look at
-<M>&ZZ;^d</M> not only as a ring, but also as a free &ZZ;-module.
+<M>&ZZ;^d</M> not as a ring, but rather as a free &ZZ;-module.
 The consequence of this is that then an affine mapping of <M>&ZZ;^d</M>
 is not just given by <M>v \mapsto (av+b)/c</M> for some
 <M>a, b, c \in &ZZ;^d</M>, but rather by <M>v \mapsto (vA+b)/c</M>,
-where <M>A \in &ZZ;^{d \times d}</M>.
+where <M>A \in &ZZ;^{d \times d}</M>. Also for technical reasons concerning
+the implementation in &GAP;, regarding <M>&ZZ;^d</M> as a free &ZZ;-module
+is preferable -- in &GAP;, <C>Integers^2</C> is not a ring, and
+multiplying of pairs of integers means forming their scalar product.
 
 <!-- #################################################################### -->
 
