@@ -33,9 +33,9 @@ The consequence of this is that then an affine mapping of <M>&ZZ;^d</M>
 is not just given by <M>v \mapsto (av+b)/c</M> for some
 <M>a, b, c \in &ZZ;^d</M>, but rather by <M>v \mapsto (vA+b)/c</M>,
 where <M>A \in &ZZ;^{d \times d}</M>. Also for technical reasons concerning
-the implementation in &GAP;, regarding <M>&ZZ;^d</M> as a free &ZZ;-module
-is preferable -- in &GAP;, <C>Integers^2</C> is not a ring, and
-multiplying of pairs of integers means forming their scalar product.
+the implementation in &GAP;, looking at <M>&ZZ;^d</M> as a free &ZZ;-module
+is preferable -- in &GAP;, <C>Integers^d</C> is not a ring, and
+multiplying lists of integers means forming their scalar product.
 
 <!-- #################################################################### -->
 

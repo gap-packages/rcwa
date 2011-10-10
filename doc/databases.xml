@@ -100,7 +100,7 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     failed. <P/>
 
     The group <C>grps[44132]</C> could be called the <Q>Collatz group</Q>
-    or the <Q><M>3n+1</M>group</Q> -- its action on the set of positive
+    or the <Q><M>3n+1</M> - group</Q> -- its action on the set of positive
     integers which are not divisible by 6 is transitive if and only if
     the <M>3n+1</M> conjecture is true. <P/>
 
