@@ -68,8 +68,8 @@
     Concerning mathematical contributions, I am grateful to
     John P. McDermott for the discovery that the group discussed in
     Section&nbsp;<Ref Label="sec:HigmanThompsonGroup"/> is isomorphic to
-    the Higman-Thompson group, a finitely presented infinite simple group,
-    and to Laurent Bartholdi for his hint on how to construct wreath
+    the Higman-Thompson group which is a finitely presented infinite simple
+    group, and to Laurent Bartholdi for his hint on how to construct wreath
     products of residue-class-wise affine groups with&nbsp;(&ZZ;,+).
   </Acknowledgements>
 </TitlePage>
