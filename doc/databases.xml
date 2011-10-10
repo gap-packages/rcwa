@@ -93,9 +93,19 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     further which are not described here.
     For all integers <C>i</C> from 1 to 52394 it holds that
     <C>Size(grps[i]) = sizes[i]</C> and that
-    <C>Modulus(grps[i]) = mods[i]</C>.
+    <C>Modulus(grps[i]) = mods[i]</C>. Similarly, <C>trsstatus[i]</C>
+    describes what is known about whether the group <C>grps[i]</C> acts
+    transitively on the set of nonnegative integers in its support --
+    for many of the groups this is a description of how the computation
+    failed. <P/>
+
+    The group <C>grps[44132]</C> could be called the <E>Collatz group</E>
+    or <M>3n+1</M><E>group</E> -- its action on the set of positive
+    integers which are not divisible by 6 is transitive if and only if
+    the <M>3n+1</M> conjecture is true. <P/>
+
     Note that the contents of this database are not <Q>set in stone</Q>,
-    and likely to change in coming releases. Also note that the database
+    and are likely to change in coming releases. Also note that the database
     presently contains an entry for every unordered triple of distinct
     class transpositions in <C>cts</C>, which means that it contains
     multiple copies of equal groups. For the future it is planned to
@@ -105,6 +115,10 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 <Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
+gap> ViewString(data.grps[44132]);
+"<(2(3),4(6)),(1(3),2(6)),(1(2),4(6))>"
+gap> data.trsstatus[44132]; # deciding this would solve the 3n+1 problem
+"exceeded memory bound"
 gap> Length(Set(data.sizes));
 1066
 gap> Maximum(Filtered(data.sizes,IsInt));
@@ -130,6 +144,13 @@ gap> Collected(data.mods);
   [ 4320, 218 ], [ 4860, 16 ], [ 6480, 282 ], [ 7680, 10 ], 
   [ 8640, 16 ], [ 12960, 120 ], [ 14580, 2 ], [ 25920, 34 ], 
   [ 30720, 2 ], [ 38880, 12 ], [ 51840, 8 ], [ 77760, 32 ] ]
+gap> Collected(data.trsstatus);
+[ [ "> 1 orbit (mod m)", 593 ], 
+  [ "Mod(U DecreasingOn) exceeded <maxmod>", 17 ], 
+  [ "U DecreasingOn stable for <maxeq> steps", 5937 ], 
+  [ "exceeded memory bound", 625 ], [ "finite", 21948 ], 
+  [ "finite orbits", 22999 ], [ "transitive", 264 ], 
+  [ "transitivity on small points unclear", 11 ] ]
 ]]>
 </Example>
   </Description>
