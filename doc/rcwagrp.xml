@@ -1195,7 +1195,7 @@ gives rise to proper quotients of the group:
 
 <ManSection>
   <Oper Name ="ProjectionsToInvariantUnionsOfResidueClasses"
-        Arg="G, m" Label="for an rcwa group and a modulus"/>
+        Arg="G, m" Label="for rcwa group and modulus"/>
   <Returns>
     the projections of the rcwa group&nbsp;<A>G</A> to the unions of
     residue classes (mod&nbsp;<A>m</A>) which it fixes setwise.
