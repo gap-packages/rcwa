@@ -99,8 +99,8 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     for many of the groups this is a description of how the computation
     failed. <P/>
 
-    The group <C>grps[44132]</C> could be called the <E>Collatz group</E>
-    or <M>3n+1</M><E>group</E> -- its action on the set of positive
+    The group <C>grps[44132]</C> could be called the <Q>Collatz group</Q>
+    or the <Q><M>3n+1</M>group</Q> -- its action on the set of positive
     integers which are not divisible by 6 is transitive if and only if
     the <M>3n+1</M> conjecture is true. <P/>
 
@@ -115,7 +115,7 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 <Example>
 <![CDATA[
 gap> data := RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
-gap> ViewString(data.grps[44132]);
+gap> ViewString(data.grps[44132]); # the "3n+1 group"
 "<(2(3),4(6)),(1(3),2(6)),(1(2),4(6))>"
 gap> data.trsstatus[44132]; # deciding this would solve the 3n+1 problem
 "exceeded memory bound"
