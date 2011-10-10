@@ -50,11 +50,11 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>ClassPairs</C>
+    <C>ClassPairs(<A>m</A>)</C>
   </Mark>
   <Item>
-    Run over all 4-tuples, and filter by divisibility criteria,
-    size comparisons, ordering of the entries etc.
+    Runs over all 4-tuples of nonnegative integers less than <A>m</A>,
+    and filters by congruence criteria and ordering of the entries.
   </Item>
 
   <Mark>
@@ -955,7 +955,7 @@ and uses now better algorithms than in 2007.
     <C>PreImagesRepresentatives(<A>phi</A>,<A>g</A>)</C>
   </Mark>
   <Item>
-    As indicated in the documentation of these methods.
+    As described in the documentation of these methods.
     The underlying idea to successively compute two balls around&nbsp;1
     and&nbsp;<A>g</A> until they intersect nontrivially is standard
     in computational group theory. For rcwa groups it would mean wasting
@@ -1051,7 +1051,7 @@ and uses now better algorithms than in 2007.
     <C>RepresentativeActionPreImage</C>
   </Mark>
   <Item>
-    As indicated in the documentation of these methods.
+    As described in the documentation of these methods.
     The underlying idea to successively compute two balls around
     <A>src</A> and <A>dest</A> until they intersect nontrivially
     is standard in computational group theory. Words standing for
