@@ -2556,7 +2556,7 @@ InstallMethod( Display,
            StringAffineMappingOfZxZ, StringAffineMappingOfZ_pi,
            StringAffineMappingOfGFqx, IdChars,
 
-           R, m, c, res,
+           R, F, F_el, F_elints, m, c, res,
            P, affs, affstrings, maxafflng, lines, line, maxlinelng,
            cl, str, ustr, ringname, varname, prefix, i, j;
 
@@ -2798,27 +2798,46 @@ InstallMethod( Display,
         P    := List(P,AsUnionOfFewClasses);
 
         affstrings := List(affs,StringAffineMapping);
+
+        if IsRcwaMappingOfGFqx(f) and IsPrimeField(LeftActingDomain(R)) then
+          F        := LeftActingDomain(R);
+          F_el     := List(AsList(F),String);
+          F_elints := List(List(AsList(F),Int),String);
+          for i in [1..Length(affstrings)] do
+            for j in [1..Length(F_el)] do
+              affstrings[i] := ReplacedString(affstrings[i],
+                                              F_el[j],F_elints[j]);
+            od;
+          od;
+        fi;
+
         maxafflng  := Maximum(List(affstrings,Length));
 
-        maxlinelng := SizeScreen()[1] - Length(varname) - 10;
+        maxlinelng := SizeScreen()[1] - Length(varname) - 11;
         lines      := [String("/",Length(varname)+8)];
 
         for i in [1..Length(affs)] do
           line := String(affstrings[i],-maxafflng);
-          Append(line," if ");
-          Append(line,varname);
-          Append(line," in ");
-          for j in [1..Length(P[i])] do
-            str := ViewString(P[i][j]);
-            if j = Length(P[i]) then ustr := ""; else ustr := " U "; fi;
-            if Length(line) + Length(str) + Length(ustr) > maxlinelng then
-              Add(lines,line);
-              line := String(" ",maxafflng+Length(" if ")+Length(varname)
-                                          +Length(" in "));
-            fi;
-            Append(line,str);
-            Append(line,ustr);
-          od;
+          if i < Length(affs) or Length(P[i]) <= 4 then
+            Append(line," if ");
+            Append(line,varname);
+            Append(line," in ");
+            for j in [1..Length(P[i])] do
+              str := ViewString(P[i][j]);
+              if j = Length(P[i]) then ustr := ""; else ustr := " U "; fi;
+              if Length(line) + Length(str) + Length(ustr) > maxlinelng
+                and j > 1
+              then
+                Add(lines,line);
+                line := String(" ",maxafflng+Length(" if ")+Length(varname)
+                                            +Length(" in "));
+              fi;
+              Append(line,str);
+              Append(line,ustr);
+            od;
+          else
+            Append(line," otherwise");
+          fi;
           Add(lines,line);
         od;
         if   Length(lines) mod 2 = 1
@@ -2833,6 +2852,14 @@ InstallMethod( Display,
                                       lines[i]);
           fi;
         od;
+
+        if IsRcwaMappingOfGFqx(f) and IsPrimeField(LeftActingDomain(R)) then
+          for i in [1..Length(lines)] do
+            for j in [1..Length(F_el)] do
+              lines[i] := ReplacedString(lines[i],F_el[j],F_elints[j]);
+            od;
+          od;
+        fi;
 
         for i in [1..Length(lines)] do
           Print(lines[i],"\n");
