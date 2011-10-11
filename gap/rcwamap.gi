@@ -2557,7 +2557,7 @@ InstallMethod( Display,
            StringAffineMappingOfGFqx, IdChars,
 
            R, F, F_el, F_elints, m, c, res,
-           P, affs, affstrings, maxafflng, lines, line, maxlinelng,
+           P, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
            cl, str, ustr, ringname, varname, prefix, i, j;
 
     IdChars := function ( n, ch )
@@ -2787,11 +2787,12 @@ InstallMethod( Display,
         then Print(", of order ",Order(f)); fi;
         Print("\n\n");
 
-        P := ShallowCopy(LargestSourcesOfAffineMappings(f));
-        Sort(P,function(Pi,Pj)
-                 return Density(Pi)>Density(Pj)
-                        and not IsOne(RestrictedMapping(f,Pi));
-               end);
+        P    := ShallowCopy(LargestSourcesOfAffineMappings(f));
+        D    := List(P,cl->1/Density(cl));
+        i    := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
+        D[i] := infinity;
+
+        SortParallel(D,P);
 
         affs := List(P,preimg->c[First([1..Length(res)],
                                        i->res[i] in preimg)]);
