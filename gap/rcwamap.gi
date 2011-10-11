@@ -2545,8 +2545,313 @@ InstallMethod( ViewObj,
 ##
 #M  Display( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-##  Displays the rcwa mapping <f> as a nice, human-readable table.
+##  Displays the rcwa mapping <f> in nice human-readable form.
 ##
+InstallMethod( Display,
+               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 10,
+
+  function ( f )
+
+    local  StringAffineMapping, StringAffineMappingOfZ, 
+           StringAffineMappingOfZxZ, StringAffineMappingOfZ_pi,
+           StringAffineMappingOfGFqx, IdChars,
+
+           R, m, c, res,
+           P, affs, affstrings, maxafflng, lines, line, maxlinelng,
+           cl, str, ustr, ringname, varname, prefix, i, j;
+
+    IdChars := function ( n, ch )
+      return Concatenation( ListWithIdenticalEntries( n, ch ) );
+    end;
+
+    StringAffineMappingOfZ := function ( t )
+
+      local  append, str, a, b, c, n;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      a := t[1]; b := t[2]; c := t[3];
+      str := ""; n := varname;
+
+      if c > 1 and Number([a,b],n->n<>0) > 1 then append("("); fi;
+      if a <> 0 then
+        if a = -1 then append("-"); elif a <> 1 then append(a); fi;
+        append(n);
+        if b > 0 then append("+"); fi;
+      fi;
+      if a = 0 or b <> 0 then append(b); fi;
+      if c > 1 and Number([a,b],n->n<>0) > 1 then append(")"); fi;
+      if c > 1 then append("/",c); fi;
+
+      return str;
+    end;
+
+    StringAffineMappingOfZxZ := function ( t )
+
+      local  Stringaff, append, str,
+             a, b, c, d, e, f, g, d1, d2, g1, g2, m, n;
+
+      Stringaff := function ( a, b, c, d )
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then append("("); fi;
+        if a <> 0 then
+          if a = -1 then append("-"); elif a <> 1 then append(a); fi;
+          append(m);
+          if b > 0 or (b = 0 and c > 0) then append("+"); fi;
+        fi;
+        if b <> 0 then
+          if b = -1 then append("-"); elif b <> 1 then append(b); fi;
+          append(n);
+          if c > 0 then append("+"); fi;
+        fi;
+        if (a = 0 and b = 0) or c <> 0 then append(c); fi;
+        if d > 1 and Number([a,b,c],n->n<>0) > 1 then append(")"); fi;
+        if d > 1 then append("/",d); fi;
+      end;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      str := "";
+      m := varname{[2]}; n := varname{[4]};
+      a := t[1][1][1]; b := t[1][1][2];
+      c := t[1][2][1]; d := t[1][2][2];
+      e := t[2][1];    f := t[2][2];
+      g := t[3];
+      d1 := Gcd(a,c,e,g); d2 := Gcd(b,d,f,g);
+      a := a/d1; c := c/d1; e := e/d1; g1 := g/d1;
+      b := b/d2; d := d/d2; f := f/d2; g2 := g/d2;
+      append("(");
+      Stringaff(a,c,e,g1); append(","); Stringaff(b,d,f,g2);
+      append(")");
+
+      return str;
+    end;
+
+    StringAffineMappingOfZ_pi := function ( t )
+
+      local  append, str, a, b, c, n;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      a := t[1]; b := t[2]; c := t[3];
+      str := ""; n := varname;
+
+      if   c = 1
+      then if   a = 0
+           then append(b);
+           else if   AbsInt(a) <> 1 then append(a," ");
+                elif a = -1         then append("-");
+                fi;
+                append(n);
+                if   b > 0 then append(" + ", b);
+                elif b < 0 then append(" - ",-b);
+                fi;
+           fi;
+      elif b = 0 then if   AbsInt(a) <> 1 then append(a," ");
+                      elif a = -1         then append("-");
+                      fi;
+                      append(n," / ",c);
+      else append("(");
+           if   AbsInt(a) <> 1 then append(a," ");
+           elif a = -1         then append("-");
+           fi;
+           append(n);
+           if   b > 0 then append(" + ", b);
+           elif b < 0 then append(" - ",-b);
+           fi;
+           append(") / ",c);
+      fi;
+
+      return str;
+    end;
+
+    StringAffineMappingOfGFqx := function ( t )
+
+      local  append, factorstr, str, a, b, c, P, one, zero, x;
+
+      append := function ( arg )
+        str := CallFuncList(Concatenation,
+                            Concatenation([str],List(arg,String)));
+      end;
+
+      factorstr := function ( p )
+        if   Length(CoefficientsOfLaurentPolynomial(p)[1]) <= 1
+        then return String(p);
+        else return Concatenation("(",String(p),")"); fi;
+      end;
+
+      a := t[1]; b := t[2]; c := t[3];
+      str := ""; P := varname;
+
+      one := One(a); zero := Zero(a);
+      x := IndeterminateOfLaurentPolynomial(a);
+ 
+      if   c = one
+      then if   a = zero
+           then append(b);
+           else if   not a in [-one,one] then append(factorstr(a),"*",P);
+                elif a = one then append(P); else append("-",P); fi;
+                if b <> zero then append(" + ",b); fi;
+           fi;
+      elif b = zero then if   not a in [-one,one]
+                         then append(factorstr(a),"*",P);
+                         elif a = one then append(P);
+                         else append("-",P); fi;
+                         append("/",factorstr(c));
+      else append("(");
+           if   not a in [-one,one]
+           then append(factorstr(a),"*",P," + ",b,")/",factorstr(c));
+           elif a <> one and a = -one
+           then append("-",P," + ",b,")/",factorstr(c));
+           else append(P," + ",b,")/",factorstr(c));
+           fi;
+      fi;
+
+      return str;
+    end;
+
+    R := Source(f);
+
+    if   ValueOption("xdvi") = true and IsIntegers(R)
+    then LaTeXAndXDVI(f); return; fi;
+
+    # If option "table" is set, use old-style format:
+    if ValueOption("table") = true then TryNextMethod(); fi;
+
+    if   IsRcwaMappingOfZ(f)
+    then StringAffineMapping := StringAffineMappingOfZ;
+    elif IsRcwaMappingOfZxZ(f)
+    then StringAffineMapping := StringAffineMappingOfZxZ;
+    elif IsRcwaMappingOfZ_pi(f)
+    then StringAffineMapping := StringAffineMappingOfZ_pi;
+    elif IsRcwaMappingOfGFqx(f)
+    then StringAffineMapping := StringAffineMappingOfGFqx; fi;
+
+    m := Modulus(f); c := Coefficients(f); res := AllResidues(R,m);
+
+    prefix := false; ringname := RingToString(Source(f));
+
+    if   IsRcwaMappingOfGFqx(f) then varname := "P";
+    elif IsRcwaMappingOfZxZ(f)  then
+      varname := First(List(["varnames","VarNames"],ValueOption),
+                       names->names<>fail);
+      if varname = fail then varname := "mn"; fi;
+      if Length(varname) = 2 then
+        varname := Concatenation("[",varname{[1]},",",varname{[2]},"]");
+      fi;
+    else varname := "n"; fi;
+
+    if   IsOne(f)  then Print("Identity rcwa mapping of ",ringname);
+    elif IsZero(f) then Print("Zero rcwa mapping of ",ringname);
+    elif IsOne(m) and IsZero(c[1][1])
+    then Print("Constant rcwa mapping of ",ringname," with value ",c[1][2]);
+    else
+      if not IsOne(m) then Print("\n"); fi;
+
+      if HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f))) then
+        if IsTame(f) then Print("Tame "); else Print("Wild "); fi;
+        prefix := true;
+      fi;
+      if   HasIsBijective(f) and IsBijective(f)
+      then if prefix then Print("bijective ");
+                     else Print("Bijective "); fi;
+           prefix := true;
+      elif HasIsInjective(f) and IsInjective(f)
+      then if prefix then Print("injective ");
+                     else Print("Injective "); fi;
+           prefix := true;
+      elif HasIsSurjective(f) and IsSurjective(f)
+      then if prefix then Print("surjective ");
+                     else Print("Surjective "); fi;
+           prefix := true;
+      fi;
+      if prefix then Print("rcwa"); else Print("Rcwa"); fi;
+      Print(" mapping of ",ringname);
+
+      if IsOne(m) then
+
+        Print(": ",varname," -> ",StringAffineMapping(c[1]));
+
+      else
+
+        Print(" with modulus ",ModulusAsFormattedString(m));
+        if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
+        then Print(", of order ",Order(f)); fi;
+        Print("\n\n");
+
+        P := ShallowCopy(LargestSourcesOfAffineMappings(f));
+        Sort(P,function(Pi,Pj)
+                 return Density(Pi)>Density(Pj)
+                        and not IsOne(RestrictedMapping(f,Pi));
+               end);
+
+        affs := List(P,preimg->c[First([1..Length(res)],
+                                       i->res[i] in preimg)]);
+        P    := List(P,AsUnionOfFewClasses);
+
+        affstrings := List(affs,StringAffineMapping);
+        maxafflng  := Maximum(List(affstrings,Length));
+
+        maxlinelng := SizeScreen()[1] - Length(varname) - 10;
+        lines      := [String("/",Length(varname)+8)];
+
+        for i in [1..Length(affs)] do
+          line := String(affstrings[i],-maxafflng);
+          Append(line," if ");
+          Append(line,varname);
+          Append(line," in ");
+          for j in [1..Length(P[i])] do
+            str := ViewString(P[i][j]);
+            if j = Length(P[i]) then ustr := ""; else ustr := " U "; fi;
+            if Length(line) + Length(str) + Length(ustr) > maxlinelng then
+              Add(lines,line);
+              line := String(" ",maxafflng+Length(" if ")+Length(varname)
+                                          +Length(" in "));
+            fi;
+            Append(line,str);
+            Append(line,ustr);
+          od;
+          Add(lines,line);
+        od;
+        if   Length(lines) mod 2 = 1
+        then Add(lines,String("|",Length(varname)+8)); fi;
+        Add(lines,String("\\",Length(varname)+8));
+
+        for i in [2..Length(lines)-1] do
+          if i = (Length(lines)+1)/2 then
+            lines[i] := Concatenation(" ",varname," |-> <  ",lines[i]);
+          elif not '|' in lines[i] then
+            lines[i] := Concatenation(String("|",Length(varname)+8)," ",
+                                      lines[i]);
+          fi;
+        od;
+
+        for i in [1..Length(lines)] do
+          Print(lines[i],"\n");
+        od;
+
+      fi;
+
+    fi;
+
+    if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
+  end );
+
+#############################################################################
+##
+#M  Display( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+##
+##  Displays the rcwa mapping <f> as a table, in the "old-style" format used
+##  by RCWA since its first release in 2005.
+##  
 InstallMethod( Display,
                "for rcwa mappings (RCWA)",
                true, [ IsRcwaMappingInStandardRep ], 0,
