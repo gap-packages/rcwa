@@ -2787,10 +2787,10 @@ InstallMethod( Display,
         then Print(", of order ",Order(f)); fi;
         Print("\n\n");
 
-        P    := ShallowCopy(LargestSourcesOfAffineMappings(f));
-        D    := List(P,cl->1/Density(cl));
-        i    := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
-        D[i] := infinity;
+        P := ShallowCopy(LargestSourcesOfAffineMappings(f));
+        D := List(P,cl->1/Density(cl));
+        i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
+        if i <> fail then D[i] := infinity; fi;
 
         SortParallel(D,P);
 
