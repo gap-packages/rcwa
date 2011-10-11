@@ -2745,7 +2745,7 @@ InstallMethod( Display,
                        names->names<>fail);
       if varname = fail then varname := "mn"; fi;
       if Length(varname) = 2 then
-        varname := Concatenation("[",varname{[1]},",",varname{[2]},"]");
+        varname := Concatenation("(",varname{[1]},",",varname{[2]},")");
       fi;
     else varname := "n"; fi;
 
