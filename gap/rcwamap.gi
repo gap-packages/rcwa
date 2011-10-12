@@ -2580,9 +2580,16 @@ InstallMethod( Display,
       if a <> 0 then
         if a = -1 then append("-"); elif a <> 1 then append(a); fi;
         append(n);
-        if b > 0 then append("+"); fi;
+        if b > 0 then
+          if m = 1 then append(" + "); else append("+"); fi;
+        fi;
       fi;
-      if a = 0 or b <> 0 then append(b); fi;
+      if a = 0 or b <> 0 then
+        if a = 0 or b > 0 then append(b); else
+          if m = 1 then append(" - ",-b);
+                   else append(b); fi;
+        fi;
+      fi;
       if c > 1 and Number([a,b],n->n<>0) > 1 then append(")"); fi;
       if c > 1 then append("/",c); fi;
 
