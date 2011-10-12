@@ -321,7 +321,7 @@ Bijective rcwa mapping of Z with modulus 18, of order 6
         \
 
 
-Bijective rcwa mapping of Z with modulus 18
+Bijective rcwa mapping of Z with modulus 18 of order 6
 
         /
         | n+3     if n in 2(9) U 5(9)

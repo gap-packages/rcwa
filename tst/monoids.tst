@@ -14,7 +14,7 @@ gap> Size(M);
 infinity
 gap> IsTame(M);
 false
-gap> PriSint(M,"\n");
+gap> Print(M,"\n");
 Monoid( [ RcwaMapping( [ [ 1, 0, 2 ], [ 3, 1, 2 ] ] ) ] )
 gap> Display(M);
 

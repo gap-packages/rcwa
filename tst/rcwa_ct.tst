@@ -41,7 +41,7 @@ gap> Set(KnownAttributesOfObject(M));
   "OneImmutable", "Representative", "Size", "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( ( Integers^2 ) ), infinity, "Rcwa(Z^2)", 
-  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: [m,n] -> [2m,2n], 
+  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: (m,n) -> (2m,2n), 
   infinity, "Rcwa(Z^2)" ]
 gap> M := Rcwa(Z_pi(2));
 Rcwa(Z_( 2 ))
@@ -160,7 +160,7 @@ gap> Set(KnownAttributesOfObject(G));
 gap> List(last,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
   IdentityMapping( ( Integers^2 ) ), infinity, "RCWA(Z^2)", 
-  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: [m,n] -> [-m,-n], 
+  IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: (m,n) -> (-m,-n), 
   infinity, "RCWA(Z^2)" ]
 gap> R := Integers^2;
 ( Integers^2 )
@@ -180,10 +180,11 @@ gap> Display(g);
 
 Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z
 
-    [m,n] mod (2,0)Z+(0,1)Z    |               Image of [m,n]
--------------------------------+----------------------------------------------
- [0,0]                         | [m,(m+2n)/2]
- [1,0]                         | [m,(m+2n-1)/2]
+            /
+            | (m,(m+2n)/2)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z
+ (m,n) |-> <  (m,(m+2n-1)/2) if (m,n) in (1,0)+(2,0)Z+(0,1)Z
+            |
+            \
 
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
@@ -360,13 +361,13 @@ gap> Display(g);
 
 Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z
 
-    [m,n] mod (4,0)Z+(0,4)Z    |               Image of [m,n]
--------------------------------+----------------------------------------------
- [0,0] [0,2] [2,0] [2,2]       | [m,n]
- [0,1] [2,1]                   | [m+1,(m+2n-2)/2]
- [0,3] [2,3]                   | [m,(n-1)/2]
- [1,0] [1,2] [3,1] [3,3]       | [m,n+1]
- [1,1] [1,3] [3,0] [3,2]       | [m,(-m+4n+1)/2]
+            /
+            | (m,n+1)          if (m,n) in (1,0)+(2,1)Z+(0,2)Z
+            | (m,(-m+4n+1)/2)  if (m,n) in (1,1)+(2,1)Z+(0,2)Z
+ (m,n) |-> <  (m+1,(m+2n-2)/2) if (m,n) in (0,1)+(2,0)Z+(0,4)Z
+            | (m,(n-1)/2)      if (m,n) in (0,3)+(2,0)Z+(0,4)Z
+            | (m,n)            if (m,n) in (0,0)+(2,0)Z+(0,2)Z
+            \
 
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))

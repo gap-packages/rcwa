@@ -215,7 +215,7 @@ gap> List(imgs,AsUnionOfFewClasses);
   [ (0,7)+(1,9)Z+(0,15)Z, (0,12)+(1,9)Z+(0,15)Z, (0,14)+(2,12)Z+(0,15)Z,
       (1,2)+(2,9)Z+(0,15)Z ] ]
 gap> twice := RcwaMapping(R,[[1,0],[0,1]],[[[0,0],[[[2,0],[0,2]],[0,0],1]]]);
-Rcwa mapping of Z^2: [m,n] -> [2m,2n]
+Rcwa mapping of Z^2: (m,n) -> (2m,2n)
 gap> IsSurjective(twice);
 false
 gap> IsInjective(twice);
@@ -225,7 +225,7 @@ gap> Image(twice);
 gap> ImageDensity(twice);
 1/4
 gap> twice;
-Injective rcwa mapping of Z^2: [m,n] -> [2m,2n]
+Injective rcwa mapping of Z^2: (m,n) -> (2m,2n)
 gap> Support(twice);
 Z^2 \ [ [ 0, 0 ] ]
 gap> g := RcwaMapping(ClassTransposition(0,2,1,2),ClassShift(0,3));
