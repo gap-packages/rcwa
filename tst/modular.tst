@@ -210,7 +210,7 @@ Bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2
         | x*P + x if P in x+1(x^3+x^2+x) U x^2+1(x^3+x^2+x)
         | P + x   if P in x^2(x^4+x^3+x^2) U x^3(x^4+x^3+x^2)
  P |-> <  P/x     if P in x^2+x(x^4+x^3+x^2) U x^3+x(x^4+x^3+x^2)
-        | P       if P in 0(x^2+x+1) U 1(x^3+x^2+x) U x(x^3+x^2+x)
+        | P       otherwise
         |
         \
 

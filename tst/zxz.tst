@@ -353,12 +353,8 @@ Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
 
             /
             | (2m,3n+1)     if (m,n) in (0,0)+(2,0)Z+(0,2)Z
-            | (m/2,(n-1)/3) if (m,n) in (0,1)+(4,0)Z+(0,6)Z
-            | (m,n)         if (m,n) in (1,0)+(2,0)Z+(0,1)Z U 
- (m,n) |-> <                            (2,1)+(4,0)Z+(0,2)Z U 
-            |                           (0,3)+(4,0)Z+(0,6)Z U 
-            |                           (0,5)+(4,0)Z+(0,6)Z
-            |
+ (m,n) |-> <  (m/2,(n-1)/3) if (m,n) in (0,1)+(4,0)Z+(0,6)Z
+            | (m,n)         otherwise
             \
 
 gap> ct*ct;
@@ -384,10 +380,8 @@ ty
 
             /
             | (9m+n-2,53m+6n-10) if (m,n) in (0,2)+(1,3)Z+(0,5)Z
-            | (m,n)              if (m,n) in (0,0)+(1,3)Z+(0,5)Z U 
- (m,n) |-> <                                 (0,1)+(1,3)Z+(0,5)Z U 
-            |                                (0,3)+(1,3)Z+(0,5)Z U 
-            |                                (0,4)+(1,3)Z+(0,5)Z
+ (m,n) |-> <  (m,n)              otherwise
+            |
             \
 
 gap> Display(cr:table);

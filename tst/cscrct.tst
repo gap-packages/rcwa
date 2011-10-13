@@ -75,7 +75,7 @@ Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
 
         /
         | P + x if P in 0*Z(2)(x)
- P |-> <  P     if P in Z(2)^0(x) U Z(2^2)(x) U Z(2^2)^2(x)
+ P |-> <  P     otherwise
         |
         \
 
@@ -179,7 +179,7 @@ Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
 
         /
         | Z(2^2)*P if P in 0*Z(2)(x)
- P |-> <  P        if P in Z(2)^0(x) U Z(2^2)(x) U Z(2^2)^2(x)
+ P |-> <  P        otherwise
         |
         \
 
@@ -435,8 +435,8 @@ Bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order 2
 
             /
             | (-m,-n) if (m,n) in (0,0)+(1,3)Z+(0,5)Z
- (m,n) |-> <  (m,n)   if (m,n) in (0,1)+(1,3)Z+(0,5)Z U (0,2)+(1,3)Z+(0,5)Z U 
-            |                     (0,3)+(1,3)Z+(0,5)Z U (0,4)+(1,3)Z+(0,5)Z
+ (m,n) |-> <  (m,n)   otherwise
+            |
             \
 
 gap> String(cr);
