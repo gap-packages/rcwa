@@ -2826,7 +2826,9 @@ InstallMethod( Display,
 
         for i in [1..Length(affs)] do
           line := String(affstrings[i],-maxafflng);
-          if i < Length(affs) or Length(P[i]) <= 4 then
+          if i < Length(affs) or Length(P[i]) <= 2
+            or (IsRcwaMappingOfZOrZ_pi(f) and Length(P[i]) <= 4)
+          then
             Append(line," if ");
             Append(line,varname);
             Append(line," in ");
