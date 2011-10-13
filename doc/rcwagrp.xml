@@ -1149,12 +1149,13 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |            Image of n
-------------------------------------+------------------------------------
-   0  2  3  6  8 11                 | n
-   1  7 10                          | n - 3
-   4                                | n + 1
-   5  9                             | n + 4
+        /
+        | n-3 if n in 1(6) U 10(12)
+        | n+4 if n in 5(12) U 9(12)
+ n |-> <  n+1 if n in 4(12)
+        | n   if n in 0(6) U 2(6) U 3(12) U 11(12)
+        |
+        \
 
 gap> List([7,4,9],n->n^elm);
 [ 4, 5, 13 ]
@@ -1163,14 +1164,15 @@ gap> Display(elm);
 
 Bijective rcwa mapping of Z with modulus 12
 
-              n mod 12              |            Image of n
-------------------------------------+------------------------------------
-   0  3  6                          | 2n/3
-   1                                | (2n - 8)/3
-   2  8 11                          | (4n + 1)/3
-   4  7 10                          | (4n - 1)/3
-   5                                | (4n - 17)/3
-   9                                | (4n - 15)/3
+        /
+        | 2n/3      if n in 0(6) U 3(12)
+        | (4n+1)/3  if n in 2(6) U 11(12)
+        | (4n-1)/3  if n in 4(6) U 7(12)
+ n |-> <  (2n-8)/3  if n in 1(12)
+        | (4n-17)/3 if n in 5(12)
+        | (4n-15)/3 if n in 9(12)
+        |
+        \
 
 gap> [6,-3,8]^elm; List([6,-3,8],n->n^elm); # `OnPoints' allows reordering
 [ -9, 4, 11 ]
@@ -1453,14 +1455,25 @@ interesting examples. No particular distribution is guaranteed.
 gap> elm := Random(RCWA(Integers));;
 gap> Display(elm);
 
-Bijective rcwa mapping of Z with modulus 12
+Bijective rcwa mapping of Z with modulus 180
 
-              n mod 12              |            Image of n
-------------------------------------+------------------------------------
-   0  2  4  6  8 10                 | 3n + 2
-   1  5  9                          | -n + 2
-   3  7                             | (n - 7)/2
-  11                                | (-n + 20)/3
+        /
+        | 6n+12     if n in 2(10) U 4(10) U 6(10) U 8(10)
+        | 3n+3      if n in 1(20) U 5(20) U 9(20) U 17(20)
+        | 6n+10     if n in 0(10)
+        | (n+1)/2   if n in 15(60) U 27(60) U 39(60) U 51(60)
+        | (n+7)/2   if n in 19(60) U 31(60) U 43(60) U 55(60)
+        | 3n+1      if n in 13(20)
+        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 95(180) U 
+ n |-> <                    131(180) U 143(180) U 179(180)
+        | (-n-1)/6  if n in 11(180) U 47(180) U 83(180) U 155(180)
+        | (-n+7)/2  if n in 3(60)
+        | (n+3)/2   if n in 7(60)
+        | (n-17)/6  if n in 107(180)
+        | (-n+11)/6 if n in 119(180)
+        | (-n+29)/6 if n in 167(180)
+        |
+        \
 
 ]]>
 </Log>
@@ -1475,8 +1488,9 @@ These factors can be retrieved by factoring:
 <Log>
 <![CDATA[
 gap> Factorization(elm);
-[ ClassTransposition(0,2,3,4), ClassTransposition(3,4,4,6),
-  ClassShift(0,2)^-1, ClassReflection(3,4), ClassReflection(1,4) ]
+[ ClassTransposition(0,2,3,4), ClassTransposition(1,2,4,6), ClassShift(0,2), 
+  ClassShift(1,3), ClassReflection(2,5), ClassReflection(1,3), 
+  ClassReflection(1,2) ]
 ]]>
 </Log>
 

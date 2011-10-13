@@ -246,10 +246,11 @@ gap> Display(T);
 
 Rcwa mapping of Z with modulus 2
 
-              n mod 2               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | n/2
-  1                                 | (3n + 1)/2
+        /
+        | n/2      if n in 0(2)
+ n |-> <  (3n+1)/2 if n in 1(2)
+        |
+        \
 
 gap> IsInjective(T); IsSurjective(T);
 false
@@ -280,21 +281,25 @@ gap> Display(Sigma_T);
 
 Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
-   [m,n] mod (1,0)Z+(0,6)Z   |              Image of [m,n]
------------------------------+-------------------------------------------
- [0,0] [0,2]                 | [m,n/2]
- [0,1] [0,3] [0,5]           | [2m+1,(3n+1)/2]
- [0,4]                       | [2m,n/2]
+            /
+            | (2m+1,(3n+1)/2) if (m,n) in (0,1)+(1,0)Z+(0,2)Z
+            | (m,n/2)         if (m,n) in (0,0)+(1,0)Z+(0,6)Z U 
+ (m,n) |-> <                              (0,2)+(1,0)Z+(0,6)Z
+            | (2m,n/2)        if (m,n) in (0,4)+(1,0)Z+(0,6)Z
+            |
+            \
 
 gap> Display(Sigma_T^-1);
 
 Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
-   [m,n] mod (2,0)Z+(0,3)Z   |              Image of [m,n]
------------------------------+-------------------------------------------
- [0,0] [0,1] [1,0] [1,1]     | [m,2n]
- [0,2]                       | [m/2,2n]
- [1,2]                       | [(m-1)/2,(2n-1)/3]
+            /
+            | (m,2n)             if (m,n) in (0,0)+(1,0)Z+(0,3)Z U 
+            |                                (0,1)+(1,0)Z+(0,3)Z
+ (m,n) |-> <  (m/2,2n)           if (m,n) in (0,2)+(2,0)Z+(0,3)Z
+            | ((m-1)/2,(2n-1)/3) if (m,n) in (1,2)+(2,0)Z+(0,3)Z
+            |
+            \
 
 ]]>
 </Example>
@@ -357,20 +362,23 @@ gap> Display(a);
 
 Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,2)Z
 
-   [m,n] mod (1,0)Z+(0,2)Z   |              Image of [m,n]
------------------------------+-------------------------------------------
- [0,0]                       | [2m,n/2]
- [0,1]                       | [2m+1,(n-1)/2]
+            /
+            | (2m,n/2)       if (m,n) in (0,0)+(1,0)Z+(0,2)Z
+ (m,n) |-> <  (2m+1,(n-1)/2) if (m,n) in (0,1)+(1,0)Z+(0,2)Z
+            |
+            \
 
 gap> Display(b);
 
 Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
-   [m,n] mod (2,0)Z+(0,3)Z   |              Image of [m,n]
------------------------------+-------------------------------------------
- [0,0] [0,1]                 | [m/2,n]
- [0,2]                       | [m,n]
- [1,0] [1,1] [1,2]           | [m,3n+2]
+            /
+            | (m,3n+2) if (m,n) in (1,0)+(2,0)Z+(0,1)Z
+            | (m/2,n)  if (m,n) in (0,0)+(2,0)Z+(0,3)Z U 
+ (m,n) |-> <                       (0,1)+(2,0)Z+(0,3)Z
+            | (m,n)    if (m,n) in (0,2)+(2,0)Z+(0,3)Z
+            |
+            \
 
 ]]>
 </Example>
@@ -422,11 +430,11 @@ gap> Display(Collatz);
 
 Rcwa mapping of Z with modulus 3
 
-              n mod 3               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | 2n/3
-  1                                 | (4n - 1)/3
-  2                                 | (4n + 1)/3
+        /
+        | 2n/3     if n in 0(3)
+ n |-> <  (4n-1)/3 if n in 1(3)
+        | (4n+1)/3 if n in 2(3)
+        \
 
 gap> ShortCycles(Collatz,[-50..50],50); # There are some finite cycles:
 [ [ -111, -74, -99, -66, -44, -59, -79, -105, -70, -93, -62, -83 ], 
@@ -573,14 +581,15 @@ gap> Display(f6);
 
 Rcwa mapping of Z with modulus 6
 
-              n mod 6               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | n/6
-  1                                 | (5n + 1)/6
-  2                                 | (7n - 2)/6
-  3                                 | (11n + 3)/6
-  4                                 | (11n - 2)/6
-  5                                 | (11n - 1)/6
+        /
+        | n/6       if n in 0(6)
+        | (5n+1)/6  if n in 1(6)
+        | (7n-2)/6  if n in 2(6)
+ n |-> <  (11n+3)/6 if n in 3(6)
+        | (11n-2)/6 if n in 4(6)
+        | (11n-1)/6 if n in 5(6)
+        |
+        \
 
 gap> S0 := LikelyContractionCentre(f6,1000,100000);;
 #I  Warning: `LikelyContractionCentre' is highly probabilistic.
@@ -700,19 +709,21 @@ gap> Display(ML1);
 
 Rcwa mapping of GF(2)[x] with modulus x
 
-        P mod x         |                  Image of P
-------------------------+------------------------------------------------
- 0*Z(2)                 | P/x
- Z(2)^0                 | ((x^3+x^2+x+Z(2)^0)*P + Z(2)^0)/x
+        /
+        | P/x                     if P in 0(x)
+ P |-> <  ((x^3+x^2+x+1)*P + 1)/x if P in 1(x)
+        |
+        \
 
 gap> Display(ML2);
 
 Rcwa mapping of GF(2)[x] with modulus x
 
-        P mod x         |                  Image of P
-------------------------+------------------------------------------------
- 0*Z(2)                 | P/x
- Z(2)^0                 | ((x^2+Z(2)^0)*P + Z(2)^0)/x
+        /
+        | P/x               if P in 0(x)
+ P |-> <  ((x^2+1)*P + 1)/x if P in 1(x)
+        |
+        \
 
 gap> List([ML1,ML2],IsSurjective);
 [ true, true ]
@@ -815,13 +826,13 @@ gap> Display(u);
 
 Wild bijective rcwa mapping of Z with modulus 5
 
-              n mod 5               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | 3n/5
-  1                                 | (9n + 1)/5
-  2                                 | (3n - 1)/5
-  3                                 | (9n - 2)/5
-  4                                 | (9n + 4)/5
+        /
+        | 3n/5     if n in 0(5)
+        | (9n+1)/5 if n in 1(5)
+ n |-> <  (3n-1)/5 if n in 2(5)
+        | (9n-2)/5 if n in 3(5)
+        | (9n+4)/5 if n in 4(5)
+        \
 
 ]]>
 </Example>
@@ -910,19 +921,20 @@ Bijective rcwa mapping of GF(2)[x]: P -> P + Z(2)^0
 
 Bijective rcwa mapping of GF(2)[x] with modulus x^2+Z(2)^0, of order 2
 
-    P mod x^2+Z(2)^0    |                  Image of P
-------------------------+------------------------------------------------
- 0*Z(2)   Z(2)^0        | P + Z(2)^0
- x        x+Z(2)^0      | P
+        /
+        | P + 1 if P in 0(x^2+1) U 1(x^2+1)
+ P |-> <  P     if P in x(x^2+1) U x+1(x^2+1)
+        |
+        \
 
 
 Bijective rcwa mapping of GF(2)[x] with modulus x^2+x, of order 2
 
-      P mod x^2+x       |                  Image of P
-------------------------+------------------------------------------------
- 0*Z(2)                 | (P + x+Z(2)^0)/(x+Z(2)^0)
- Z(2)^0   x+Z(2)^0      | (x+Z(2)^0)*P + x+Z(2)^0
- x                      | P
+        /
+        | (x+1)*P + x+1   if P in 1(x)
+ P |-> <  (P + x+1)/(x+1) if P in 0(x^2+x)
+        | P               if P in x(x^2+x)
+        \
 
 ]
 
@@ -1283,12 +1295,13 @@ gap> Display(v);
 
 Rcwa mapping of Z with modulus 8
 
-              n mod 8               |            Image of n
-------------------------------------+------------------------------------
-  0 2 4 6                           | 6n
-  1                                 | (n - 7)/2
-  3 7                               | n - 1
-  5                                 | (n + 1)/2
+        /
+        | 6n      if n in 0(2)
+        | n-1     if n in 3(4)
+ n |-> <  (n-7)/2 if n in 1(8)
+        | (n+1)/2 if n in 5(8)
+        |
+        \
 
 gap> IsInjective(v);
 true
@@ -1306,12 +1319,13 @@ gap> Display(v2^-1);
 
 Bijective rcwa mapping of Z_( 2 ) with modulus 4
 
-              n mod 4               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | 1/3 n / 2
-  1                                 | 2 n + 7
-  2                                 | n + 1
-  3                                 | 2 n - 1
+        /
+        | 1/3 n / 2 if n in 0(4)
+        | 2 n + 7   if n in 1(4)
+ n |-> <  n + 1     if n in 2(4)
+        | 2 n - 1   if n in 3(4)
+        |
+        \
 
 gap> S := ResidueClass(Z_pi(2),2,0);; l := [S];;
 gap> for i in [1..10] do Add(l,l[Length(l)]^v2); od;
@@ -1324,12 +1338,13 @@ gap> Display(v2w2);
 
 Bijective rcwa mapping of Z_( 2 ) with modulus 8
 
-              n mod 8               |            Image of n
-------------------------------------+------------------------------------
-  0 3 4 7                           | n
-  1                                 | n + 4
-  2 6                               | 3 n
-  5                                 | n - 4
+        /
+        | 3 n   if n in 2(4)
+        | n + 4 if n in 1(8)
+ n |-> <  n - 4 if n in 5(8)
+        | n     if n in 0(4) U 3(4)
+        |
+        \
 
 ]]>
 </Example>
@@ -1368,15 +1383,17 @@ gap> Order(x_257);; Display(x_257);
 
 Bijective rcwa mapping of Z with modulus 32, of order 257
 
-              n mod 32              |             Image of n
-------------------------------------+------------------------------------
-   0                                | 16n + 2
-   1  3  5  7  9 11 13 15 17 19 21  |
-  23 25 27 29                       | 16n + 18
-   2  4  6  8 10 12 14              | n + 16
-  16                                | n/16
-  18 20 22 24 26 28 30              | n - 14
-  31                                | n - 31
+        /
+        | 16n+18 if n in 1(4) U 3(8) U 7(16) U 15(32)
+        | n+16   if n in 2(32) U 4(32) U 6(32) U 8(32) U 10(32) U 
+        |                12(32) U 14(32)
+        | n-14   if n in 18(32) U 20(32) U 22(32) U 24(32) U 26(32) U 
+ n |-> <                 28(32) U 30(32)
+        | 16n+2  if n in 0(32)
+        | n/16   if n in 16(32)
+        | n-31   if n in 31(32)
+        |
+        \
 
 gap> Length(Cycle(x_257,0));
 257
@@ -1414,12 +1431,13 @@ gap> Display(e2);
 
 Bijective rcwa mapping of Z with modulus 8, of order infinity
 
-              n mod 8               |            Image of n
-------------------------------------+------------------------------------
-  0 4                               | n + 4
-  1 5                               | 2n
-  2                                 | n/2
-  3 6 7                             | n
+        /
+        | n+4 if n in 0(4)
+        | 2n  if n in 1(4)
+ n |-> <  n/2 if n in 2(8)
+        | n   if n in 3(4) U 6(8)
+        |
+        \
 
 gap> e2^2 = Restriction(RcwaMapping([[1,2,1]]),RcwaMapping([[4,0,1]]));
 true
@@ -2063,11 +2081,11 @@ Tame bijective rcwa mapping of Z: n -> n + 1
 
 Bijective rcwa mapping of Z with modulus 4, of order 2
 
-              n mod 4               |            Image of n
-------------------------------------+------------------------------------
-  0                                 | (n + 2)/2
-  1 3                               | 2n - 2
-  2                                 | n
+        /
+        | 2n-2    if n in 1(2)
+ n |-> <  (n+2)/2 if n in 0(4)
+        | n       if n in 2(4)
+        \
 
 ]
 
@@ -2359,11 +2377,11 @@ it seems likely that <Q>most</Q> trajectories of the two mappings
        alt = "T5+/-: Z -> Z, n |-> (n/2 if n even, (5n+/-1)/2 if n odd)" />
 </center>]]></Alt>
 <Alt Only="Text"><Verb><![CDATA[
-                                       /
+                                      /
                                       | n/2          if n even,
           T_5+/-:  Z -> Z,   n  |->  <
                                       | (5n +/- 1)/2 if n odd
-                                       \
+                                      \
 ]]></Verb></Alt>
 diverge.
 However we can show by means of computation that the forward orbit of any
