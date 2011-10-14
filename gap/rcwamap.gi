@@ -1427,8 +1427,10 @@ InstallMethod( ViewString, "for class shifts (RCWA)", true,
 
   function ( cs )
     if   IsRing(Source(cs)) then
-      return Concatenation(List(["ClassShift(",Residue(Support(cs)),",",
-                                 Modulus(Support(cs)),")"],BlankFreeString));
+      return BlankFreeString(Concatenation(List(["ClassShift(",
+                                                 Residue(Support(cs)),",",
+                                                 Modulus(Support(cs)),")"],
+                                                ViewString)));
     elif IsRcwaMappingOfZxZ(cs) then
       return Concatenation(List(["ClassShift(",ViewString(Support(cs)),",",
                                  PositionNonZero(Residue(Support(cs))^cs
@@ -1558,8 +1560,10 @@ InstallMethod( ViewString, "for class reflections (RCWA)", true,
 
   function ( cr )
     if   IsRing(Source(cr)) then
-      return Concatenation(List(["ClassReflection(",Residue(Support(cr)),",",
-                                 Modulus(Support(cr)),")"],BlankFreeString));
+      return BlankFreeString(Concatenation(List(["ClassReflection(",
+                                                 Residue(Support(cr)),",",
+                                                 Modulus(Support(cr)),")"],
+                                                ViewString)));
     elif IsRcwaMappingOfZxZ(cr) then
       return Concatenation(List(["ClassReflection(",ViewString(Support(cr)),
                                  ")"],BlankFreeString));
@@ -1767,9 +1771,11 @@ InstallMethod( ViewString, "for class rotations (RCWA)", true,
 
   function ( cr )
     if   IsRing(Source(cr)) then
-      return Concatenation(List(["ClassRotation(",Residue(Support(cr)),",",
-                                 Modulus(Support(cr)),",",RotationFactor(cr),
-                                 ")"],BlankFreeString));
+      return BlankFreeString(Concatenation(List(["ClassRotation(",
+                                                 Residue(Support(cr)),",",
+                                                 Modulus(Support(cr)),",",
+                                                 RotationFactor(cr),")"],
+                                                ViewString)));
     elif IsRcwaMappingOfZxZ(cr) then
       return Concatenation(List(["ClassRotation(",
                                  ViewString(Support(cr:OnlyClasses)),
@@ -2069,17 +2075,18 @@ InstallMethod( ViewString, "for class transpositions (RCWA)", true,
 
   function ( ct )
 
-    local  type, cls;
+    local  type, cls, str;
 
     cls := TransposedClasses(ct);
     if   ForAll(cls,IsResidueClass)
     then type := "ClassTransposition(";
     else type := "GeneralizedClassTransposition("; fi;
     if   IsRing(Source(ct)) then
-      return Concatenation(List([type,
+      str := Concatenation(List([type,
                                  Residue(cls[1]),",",Modulus(cls[1]),",",
                                  Residue(cls[2]),",",Modulus(cls[2]),")"],
-                                BlankFreeString));
+                                ViewString));
+      return BlankFreeString(str);
     elif IsRcwaMappingOfZxZ(ct) then
       return Concatenation(List([type,ViewString(cls[1]),",",
                                       ViewString(cls[2]),")"],
