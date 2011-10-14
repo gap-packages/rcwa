@@ -240,31 +240,31 @@ gap> Set(KnownAttributesOfObject(G));
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ Trivial rcwa group over GF(2)[x], infinity, 0*Z(2), 
+[ Trivial rcwa group over GF(2)[x], infinity, 0, 
   IdentityMapping( GF(2)[x] ), infinity, "RCWA(GF(2)[x])", 
-  IdentityMapping( GF(2)[x] ), ClassTransposition(0*Z(2),x,Z(2)^0,x), 
+  IdentityMapping( GF(2)[x] ), ClassTransposition(0,x,1,x), 
   infinity, "RCWA(GF(2)[x])" ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
 true
 gap> ct := ClassTransposition(Zero(R),x,One(R),x^2);
-ClassTransposition(0*Z(2),x,Z(2)^0,x^2)
+ClassTransposition(0,x,1,x^2)
 gap> IsSubgroup(RCWA(R),Group(ct));
 true
 gap> P1 := RespectedPartition(ct);
-[ 0*Z(2)(mod x), Z(2)^0(mod x^2), x+Z(2)^0(mod x^2) ]
+[ 0(x), 1(x^2), x+1(x^2) ]
 gap> P2 := Permuted(P1,ct);
-[ Z(2)^0(mod x^2), 0*Z(2)(mod x), x+Z(2)^0(mod x^2) ]
+[ 1(x^2), 0(x), x+1(x^2) ]
 gap> g := RepresentativeAction(RCWA(R),P1,P2);
 <bijective rcwa mapping of GF(2)[x] with modulus x^2>
 gap> P1^g = P2;
 true
 gap> cls := AllResidueClassesModulo(R,x^3);;
 gap> S1 := Union(cls{[1,4,8]});
-x+Z(2)^0(mod x^2) U 0*Z(2)(mod x^3)
+x+1(x^2) U 0(x^3)
 gap> S2 := Union(cls{[1,7]});
-0*Z(2)(mod x^3) U x^2+x(mod x^3)
+0(x^3) U x^2+x(x^3)
 gap> elm := RepresentativeAction(G,S1,S2);
 <bijective rcwa mapping of GF(2)[x] with modulus x^3>
 gap> S1^elm = S2;
@@ -426,9 +426,9 @@ gap> Set(KnownAttributesOfObject(G));
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ Trivial rcwa group over GF(2)[x], infinity, 0*Z(2), 
+[ Trivial rcwa group over GF(2)[x], infinity, 0, 
   IdentityMapping( GF(2)[x] ), infinity, "CT(GF(2)[x])", 
-  IdentityMapping( GF(2)[x] ), ClassTransposition(0*Z(2),x,Z(2)^0,x), 
+  IdentityMapping( GF(2)[x] ), ClassTransposition(0,x,1,x), 
   infinity, "CT(GF(2)[x])", GF(2)[x] ]
 gap> One(G) in G;
 true
@@ -437,19 +437,19 @@ true
 gap> IsSubgroup(G,Group(ClassTransposition(Zero(R),x,One(R),x)));
 true
 gap> ct1 := ClassTransposition(One(R),x,x,x^2+x);
-ClassTransposition(Z(2)^0,x,x,x^2+x)
+ClassTransposition(1,x,x,x^2+x)
 gap> ct2 := ClassTransposition(One(R),x^2,x,x^2+x);
-ClassTransposition(Z(2)^0,x^2,x,x^2+x)
+ClassTransposition(1,x^2,x,x^2+x)
 gap> elm := RepresentativeAction(G,ct1,ct2);
 <bijective rcwa mapping of GF(2)[x] with modulus x^5+x^4>
 gap> ct1^elm = ct2;
 true
 gap> Factorization(elm);
-[ ClassTransposition(Z(2)^0,x,0*Z(2),x^4+x^3),
+[ ClassTransposition(1,x,0,x^4+x^3),
   ClassTransposition(x,x^2+x,x^3+x^2,x^4+x^3),
-  ClassTransposition(x+Z(2)^0,x^2,0*Z(2),x^4+x^3),
+  ClassTransposition(x+1,x^2,0,x^4+x^3),
   ClassTransposition(x^2+x,x^3+x^2,x^3+x^2,x^4+x^3),
-  ClassTransposition(Z(2)^0,x^2,x+Z(2)^0,x^2),
+  ClassTransposition(1,x^2,x+1,x^2),
   ClassTransposition(x,x^2+x,x^2+x,x^3+x^2) ]
 gap> IsSubgroup(RCWA(Integers),CT(Integers));
 true

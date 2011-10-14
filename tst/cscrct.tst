@@ -44,11 +44,11 @@ ClassShift(0,4)
 gap> ClassShift(0,3);
 ClassShift(0,3)
 gap> ClassShift(R1,Zero(R1),x);
-ClassShift(0*Z(2),x)
+ClassShift(0,x)
 gap> Source(last);
 GF(2^2)[x]
 gap> ClassShift(Zero(R1),x);
-ClassShift(0*Z(2),x)
+ClassShift(0,x)
 gap> Display(last);
 
 Bijective rcwa mapping of GF(2)[x] with modulus x, of order 2
@@ -60,7 +60,7 @@ Bijective rcwa mapping of GF(2)[x] with modulus x, of order 2
         \
 
 gap> ClassShift([Zero(R1),x]);
-ClassShift(0*Z(2),x)
+ClassShift(0,x)
 gap> Source(last);
 GF(2)[x]
 gap> ClassShift(Integers,ResidueClass(2,3));
@@ -68,7 +68,7 @@ ClassShift(2,3)
 gap> ClassShift(ResidueClass(2,3));
 ClassShift(2,3)
 gap> ClassShift(R1,ResidueClass(R1,x,Zero(x)));
-ClassShift(0*Z(2),x)
+ClassShift(0,x)
 gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
@@ -80,7 +80,7 @@ Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
         \
 
 gap> ClassShift(ResidueClass(R1,x,Zero(x)));
-ClassShift(0*Z(2),x)
+ClassShift(0,x)
 gap> Source(last);
 GF(2^2)[x]
 gap> ClassShift(Integers);
@@ -90,7 +90,7 @@ ClassShift(0,1)
 gap> ClassShift([Z_pi([2,3])]);
 ClassShift(0,1)
 gap> ClassShift(R1);
-ClassShift(0*Z(2),Z(2)^0)
+ClassShift(0,1)
 gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x]: P -> P + Z(2)^0
 gap> ClassReflection(Integers,1,2);
@@ -106,13 +106,13 @@ IdentityMapping( GF(2^2)[x] )
 gap> IsRcwaMapping(last);
 true
 gap> ClassReflection(R2,Zero(R2),y);
-ClassReflection(0*Z(5),y)
+ClassReflection(0,y)
 gap> last^2;
 IdentityMapping( GF(5^2)[y] )
 gap> ClassReflection(Zero(R2),y);
-ClassReflection(0*Z(5),y)
+ClassReflection(0,y)
 gap> ClassReflection([Zero(R2),y]);
-ClassReflection(0*Z(5),y)
+ClassReflection(0,y)
 gap> Source(last);
 GF(5)[y]
 gap> ClassReflection(Integers,ResidueClass(2,3));
@@ -120,11 +120,11 @@ ClassReflection(2,3)
 gap> ClassReflection(ResidueClass(2,3));
 ClassReflection(2,3)
 gap> ClassReflection(R2,ResidueClass(R2,y,Zero(y)));
-ClassReflection(0*Z(5),y)
+ClassReflection(0,y)
 gap> Source(last);
 GF(5^2)[y]
 gap> ClassReflection(ResidueClass(R2,y,Zero(y)));
-ClassReflection(0*Z(5),y)
+ClassReflection(0,y)
 gap> Source(last);
 GF(5^2)[y]
 gap> ClassReflection(Integers);
@@ -136,7 +136,7 @@ ClassReflection(0,1)
 gap> Display(last);
 Bijective rcwa mapping of Z_( 2, 3 ): n -> -n
 gap> ClassReflection(R2);
-ClassReflection(0*Z(5),Z(5)^0)
+ClassReflection(0,1)
 gap> Display(last);
 Bijective rcwa mapping of GF(5^2)[y]: P -> -P
 gap> ClassRotation(Integers,-1);
@@ -172,7 +172,7 @@ ClassRotation(1,2,3/5)
 gap> ClassRotation([ResidueClass(Z_pi(2),2,1),3/5]);
 ClassRotation(1,2,3/5)
 gap> ClassRotation(R1,ResidueClass(R1,x,Zero(R1)),Z(4)*One(R1));
-ClassRotation(0*Z(2),x,Z(2^2))
+ClassRotation(0,x,Z(2^2))
 gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
@@ -184,21 +184,21 @@ Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
         \
 
 gap> last^-1;
-ClassRotation(0*Z(2),x,Z(2^2))^2
+ClassRotation(0,x,Z(2^2))^2
 gap> ClassRotation(R1,Z(4)*One(R1));
-ClassRotation(0*Z(2),Z(2)^0,Z(2^2))
+ClassRotation(0,1,Z(2^2))
 gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x]: P -> Z(2^2)*P
 gap> last^2;
-ClassRotation(0*Z(2),Z(2)^0,Z(2^2))^2
+ClassRotation(0,1,Z(2^2))^2
 gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x]: P -> Z(2^2)^2*P
 gap> ClassRotation(R2,ResidueClass(R2,y^2,y+1),Z(25)*One(R2));
-ClassRotation(y+Z(5)^0,y^2,Z(5^2))
+ClassRotation(y+1,y^2,Z(5^2))
 gap> last^2;
-ClassRotation(y+Z(5)^0,y^2,Z(5^2))^2
+ClassRotation(y+1,y^2,Z(5^2))^2
 gap> last^5;
-ClassRotation(y+Z(5)^0,y^2,Z(5^2))^10
+ClassRotation(y+1,y^2,Z(5^2))^10
 gap> last^12;
 IdentityMapping( GF(5^2)[y] )
 gap> ClassTransposition(0,2,1,2);
@@ -254,7 +254,7 @@ gap> IsClassTransposition(last2);
 true
 gap> ClassTransposition(R1,ResidueClass(R1,x,Zero(R1)),
 >                          ResidueClass(R1,x^2,x+1));
-ClassTransposition(0*Z(2),x,x+Z(2)^0,x^2)
+ClassTransposition(0,x,x+1,x^2)
 gap> TransposedClasses(last);
 [ 0(x), x+1(x^2) ]
 gap> Support(last2);
@@ -263,7 +263,7 @@ gap> Source(last3);
 GF(2^2)[x]
 gap> ClassTransposition(ResidueClass(R1,x,Zero(R1)),
 >                       ResidueClass(R1,x^2,x+1));
-ClassTransposition(0*Z(2),x,x+Z(2)^0,x^2)
+ClassTransposition(0,x,x+1,x^2)
 gap> Display(last);
 
 Bijective rcwa mapping of GF(2^2)[x] with modulus x^2, of order 2
