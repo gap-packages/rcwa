@@ -13,7 +13,7 @@
 <Heading>Requirements</Heading>
 
 This version of &RCWA; needs at least &GAP;&nbsp;4.4.12,
-&ResClasses;&nbsp;3.0.0,
+&ResClasses;&nbsp;3.0.1,
 <Package>GRAPE</Package>&nbsp;4.3&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/> and
 &GAPDoc;&nbsp;1.3&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
