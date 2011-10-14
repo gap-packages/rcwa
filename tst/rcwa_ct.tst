@@ -240,10 +240,9 @@ gap> Set(KnownAttributesOfObject(G));
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ Trivial rcwa group over GF(2)[x], infinity, 0, 
-  IdentityMapping( GF(2)[x] ), infinity, "RCWA(GF(2)[x])", 
-  IdentityMapping( GF(2)[x] ), ClassTransposition(0,x,1,x), 
-  infinity, "RCWA(GF(2)[x])" ]
+[ Trivial rcwa group over GF(2)[x], infinity, 0, IdentityMapping( GF(2)[x] ), 
+  infinity, "RCWA(GF(2)[x])", IdentityMapping( GF(2)[x] ), 
+  ClassTransposition(0,x,1,x), infinity, "RCWA(GF(2)[x])" ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
@@ -426,10 +425,9 @@ gap> Set(KnownAttributesOfObject(G));
   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
   "StructureDescription", "Support" ]
 gap> List(last,attr->ValueGlobal(attr)(G));
-[ Trivial rcwa group over GF(2)[x], infinity, 0, 
-  IdentityMapping( GF(2)[x] ), infinity, "CT(GF(2)[x])", 
-  IdentityMapping( GF(2)[x] ), ClassTransposition(0,x,1,x), 
-  infinity, "CT(GF(2)[x])", GF(2)[x] ]
+[ Trivial rcwa group over GF(2)[x], infinity, 0, IdentityMapping( GF(2)[x] ), 
+  infinity, "CT(GF(2)[x])", IdentityMapping( GF(2)[x] ), 
+  ClassTransposition(0,x,1,x), infinity, "CT(GF(2)[x])", GF(2)[x] ]
 gap> One(G) in G;
 true
 gap> Random(G) in G;
