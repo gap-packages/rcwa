@@ -74,7 +74,7 @@ gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
 
         /
-        | P + x if P in 0*Z(2)(x)
+        | P + x if P in 0(x)
  P |-> <  P     otherwise
         |
         \
@@ -178,7 +178,7 @@ gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
 
         /
-        | Z(2^2)*P if P in 0*Z(2)(x)
+        | Z(2^2)*P if P in 0(x)
  P |-> <  P        otherwise
         |
         \
@@ -256,9 +256,9 @@ gap> ClassTransposition(R1,ResidueClass(R1,x,Zero(R1)),
 >                          ResidueClass(R1,x^2,x+1));
 ClassTransposition(0*Z(2),x,x+Z(2)^0,x^2)
 gap> TransposedClasses(last);
-[ 0*Z(2)(mod x), x+Z(2)^0(mod x^2) ]
+[ 0(x), x+1(x^2) ]
 gap> Support(last2);
-0*Z(2)(mod x) U x+Z(2)^0(mod x^2)
+0(x) U x+1(x^2)
 gap> Source(last3);
 GF(2^2)[x]
 gap> ClassTransposition(ResidueClass(R1,x,Zero(R1)),
@@ -269,8 +269,8 @@ gap> Display(last);
 Bijective rcwa mapping of GF(2^2)[x] with modulus x^2, of order 2
 
         /
-        | x*P + x+Z(2)^0   if P in 0*Z(2)(x)
- P |-> <  (P + x+Z(2)^0)/x if P in x+Z(2)^0(x^2)
+        | x*P + x+Z(2)^0   if P in 0(x)
+ P |-> <  (P + x+Z(2)^0)/x if P in x+1(x^2)
         | P                otherwise
         \
 
