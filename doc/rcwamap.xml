@@ -369,7 +369,7 @@ gap> Display(ClassRotation(1,x,Z(8)*One(R)));
 Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
 
         /
-        | Z(2^3)*P + Z(2^3)^3 if P in Z(2)^0(x)
+        | Z(2^3)*P + Z(2^3)^3 if P in 1(x)
  P |-> <  P                   otherwise
         |
         \
@@ -519,7 +519,7 @@ necessary for understanding this manual or for using this package.
 <![CDATA[
 gap> R := PolynomialRing(GF(2),1);; x := X(GF(2),1);; SetName(x,"x");
 gap> RcwaMapping(R,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));     # (a)
-<rcwa mapping of GF(2)[x] with modulus x+Z(2)^0>
+<rcwa mapping of GF(2)[x] with modulus x+1>
 gap> RcwaMapping(Z_pi(2),[[1/3,0,1]]);                              # (b)
 Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)
@@ -531,7 +531,7 @@ true
 gap> RcwaMapping([2],[[1/3,0,1]]);                                  # (f)
 Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> RcwaMapping(2,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));     # (g)
-<rcwa mapping of GF(2)[x] with modulus x+Z(2)^0>
+<rcwa mapping of GF(2)[x] with modulus x+1>
 gap> a = RcwaMapping(List([[0,3],[1,3],[2,3]],ResidueClass),
 >                    List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)
 true
