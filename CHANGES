@@ -665,6 +665,6 @@ Changes between version 3.0.4 and version 3.1.0 (October 10, 2011):
    `RCWAReadExamples'      -> `RCWALoadExamples'
    `RcwaMappingToLaTeX'    -> `LaTeXStringRcwaMapping'
    `ReadFromBitmapPicture' -> 'LoadBitmapPicture'
- - Now, RCWA needs GAP 4.5.2 and ResClasses 3.0.1.
+ - Now, RCWA needs GAP 4.5.2, ResClasses 3.0.1 and GAPDoc 1.4.
 
 
