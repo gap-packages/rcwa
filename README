@@ -56,15 +56,17 @@ ter `Installation and Auxiliary Functions' in the manual.
 
                           Distribution and Updates
 
-New releases of this package are announced on the  GAP Forum,  and the manual
-is put online on the package web page
+New releases of this package are announced on the  GAP Forum,  and put online
+on the package web page
 
       http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa.html
 
-If you are interested in RCWA, then please send me an e-mail, and I will send
-you the package archive file.  I will also keep users informed about bugfixes
-and other issues related to the package.  Recent versions of RCWA are not re-
-distributed with GAP.
+                                     ---
+
+If you install RCWA or if you use it in some of your work, then please let me
+know. -- I am interested very much in any applications of this package.  Also
+please let me know  if you have problems with this package,  or if you find a
+bug.
 
 Stefan Kohl,  October 2011
 
