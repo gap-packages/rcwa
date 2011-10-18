@@ -639,7 +639,7 @@ Changes between version 3.0.3 and version 3.0.4:
    further name collisions; expected benefit from synergies
    with other code for dealing with orbits is small.
 
-Changes between version 3.0.4 and version 3.1.0 (October 15, 2011):
+Changes between version 3.0.4 and version 3.1.1 (October 18, 2011):
 
  - Operations `ShortResidueClassCycles', `ShortResidueClassOrbits',
    `CycleRepresentativesAndLengths',
@@ -665,6 +665,6 @@ Changes between version 3.0.4 and version 3.1.0 (October 15, 2011):
    `RCWAReadExamples'      -> `RCWALoadExamples'
    `RcwaMappingToLaTeX'    -> `LaTeXStringRcwaMapping'
    `ReadFromBitmapPicture' -> 'LoadBitmapPicture'
- - Now, RCWA needs GAP 4.5.2, ResClasses 3.0.1 and GAPDoc 1.4.
+ - Now, RCWA needs GAP 4.5.2, ResClasses 3.0.2 and GAPDoc 1.4.
 
 
