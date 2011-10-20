@@ -6582,6 +6582,33 @@ InstallMethod( Loops,
     return loops;
   end );
 
+############################################################################
+##
+#M  Loops( <f> ) . . . . . . . . . . for bijective rcwa mappings of GF(q)[x]
+##
+InstallMethod( Loops,
+               "for bijective rcwa mappings of GF(q)[x] (RCWA)",
+               true, [ IsRcwaMappingOfGFqx and IsBijective ], 0,
+
+  function ( f )
+
+    local  R, m, c, res, r, r_img, m_img, loops, i;
+
+    R     := Source(f);
+    m     := Mod(f);
+    c     := Coefficients(f);
+    res   := AllResidues(R,m);
+    loops := [];
+    for i in [1..Length(res)] do
+      r     := res[i];
+      m_img := (c[i][1]/c[i][3])*m;
+      r_img := ((c[i][1]*r+c[i][2])/c[i][3]) mod m_img;
+      if   [r_img,m_img] <> [r,m] and IsZero((r_img - r) mod Gcd(R,m,m_img))
+      then Add(loops,ResidueClass(R,m,r)); fi;
+    od;
+    return loops;
+  end );
+
 #############################################################################
 ##
 #S  Trajectories. ///////////////////////////////////////////////////////////
