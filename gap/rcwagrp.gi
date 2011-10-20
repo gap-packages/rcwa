@@ -3291,6 +3291,43 @@ InstallMethod( Size,
 
 #############################################################################
 ##
+#M  Size( <G> ) . . . . . . . . . . . . . . . . for rcwa groups over GF(q)[x]
+##
+InstallMethod( Size,
+               "for rcwa groups over GF(q)[x] (RCWA)",
+               true, [ IsRcwaGroupOverGFqx ], 0,
+
+  function ( G )
+
+    local  R, p, B, P, Pp, H, size, r;
+
+    R := Source(One(G));
+    p := Characteristic(R);
+
+    for r in [1..3] do
+      B := Ball(G,One(G),r:Spheres)[r+1];
+      if ForAny(B,g->Loops(g)<>[]) then
+        SetIsTame(G,false);
+        return infinity;
+      fi;
+    od;
+  
+    P := RespectedPartition(G);
+    if P = fail then
+      SetIsTame(G,false);
+      return infinity;
+    else
+      SetIsTame(G,true);
+      Pp   := Flat(List(P,cl->SplittedClass(cl,p)));
+      H    := Action(G,Pp);
+      size := Size(H);
+      return size;
+    fi;
+
+  end );
+
+#############################################################################
+##
 #M  Size( <G> ) . . . . . . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
 ##  This method tests for tameness and looks for elements of infinite order.
