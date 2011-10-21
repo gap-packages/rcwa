@@ -516,13 +516,13 @@ InstallMethod( Ball,
 
 #############################################################################
 ##
-#M  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . for rcwa monoids over Z
+#M  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . . . .  for rcwa monoids
 ##
 ##  As element tests can be expensive, this method does not check whether <f>
 ##  is indeed an element of <M>.
 ##
 InstallMethod( RestrictedBall,
-               "for an rcwa monoid over Z and an element thereof (RCWA)",
+               "for an rcwa monoid and an element thereof (RCWA)",
                ReturnTrue, [ IsRcwaMonoid, IsRcwaMapping,
                              IsInt, IsPosInt ], 0,
 
