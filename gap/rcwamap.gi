@@ -196,10 +196,7 @@ BindGlobal( "RCWAMAPPING_COMPRESS_COEFFICIENT_LIST",
 
     local  cset, i;
 
-    if   Length(coeffs) >= 10 and Length(Set(coeffs{[1..10]})) > 3
-    then return; fi; # Compress only if likely one can save much memory.
     cset := Set(coeffs);
-    if Length(cset) > 64 then return; fi; # Bad complexity for large sets.
     for i in [1..Length(coeffs)] do
       coeffs[i] := cset[PositionSorted(cset,coeffs[i])];
     od;
