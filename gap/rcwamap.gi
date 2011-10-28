@@ -7039,15 +7039,19 @@ InstallMethod( CycleRepresentativesAndLengths,
 
   function ( g, S )
 
-    local  replng, rem, cyc, rep;
+    local  replng, rem, cyc, rep, i, j;
 
     replng := [];
-    rem    := Intersection(S,Support(g));
-    while rem <> [] do
-      rep := Minimum(rem);
+    rem    := List(S,n->n^g<>n);
+    for i in [1..Length(S)] do
+      if rem[i] = false then continue; fi;
+      rep := S[i];
       cyc := Cycle(g,rep);
       Add(replng,[rep,Length(cyc)]);
-      rem := Difference(rem,cyc);
+      for j in [1..Length(cyc)] do
+        if   cyc[j] in S
+        then rem[PositionSorted(S,cyc[j])] := false; fi;
+      od;
     od;
     return replng;
   end );
