@@ -17,43 +17,43 @@ gap> if not IsBound( IsBranch ) then
 >    fi;
 gap> M := Rcwa(Integers);
 Rcwa(Z)
-gap> Set(KnownPropertiesOfObject(M));
-[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
-  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
-gap> List(last,prop->ValueGlobal(prop)(M));
+gap> props :=
+> [ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+>   "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ];;
+gap> List(props,prop->ValueGlobal(prop)(M));
 [ true, false, true, false, false, true, true, false, false, true ]
-gap> Set(KnownAttributesOfObject(M));
-[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
-  "OneImmutable", "Representative", "Size", "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(M));
+gap> attrs :=
+> [ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+>   "OneImmutable", "Representative", "Size", "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( Integers ), infinity, "Rcwa(Z)", 
   IdentityMapping( Integers ), Rcwa mapping of Z: n -> 2n, infinity, 
   "Rcwa(Z)" ]
 gap> M := Rcwa(Integers^2);
 Rcwa(Z^2)
-gap> Set(KnownPropertiesOfObject(M));
-[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
-  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
-gap> List(last,prop->ValueGlobal(prop)(M));
+gap> props :=
+> [ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+>   "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ];;
+gap> List(props,prop->ValueGlobal(prop)(M));
 [ true, false, true, false, false, true, true, false, false, true ]
-gap> Set(KnownAttributesOfObject(M));
-[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
-  "OneImmutable", "Representative", "Size", "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(M));
+gap> attrs :=
+> [ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+>   "OneImmutable", "Representative", "Size", "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( ( Integers^2 ) ), infinity, "Rcwa(Z^2)", 
   IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: (m,n) -> (2m,2n), 
   infinity, "Rcwa(Z^2)" ]
 gap> M := Rcwa(Z_pi(2));
 Rcwa(Z_( 2 ))
-gap> Set(KnownPropertiesOfObject(M));
-[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
-  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
-gap> List(last,prop->ValueGlobal(prop)(M));
+gap> props :=
+> [ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+>   "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ];;
+gap> List(props,prop->ValueGlobal(prop)(M));
 [ true, false, true, false, false, true, true, false, false, true ]
-gap> Set(KnownAttributesOfObject(M));
-[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
-  "OneImmutable", "Representative", "Size", "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(M));
+gap> attrs :=
+> [ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+>   "OneImmutable", "Representative", "Size", "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( Z_( 2 ) ), infinity, "Rcwa(Z_( 2 ))", 
   IdentityMapping( Z_( 2 ) ), Rcwa mapping of Z_( 2 ): n -> 2 n, infinity, 
   "Rcwa(Z_( 2 ))" ]
@@ -62,34 +62,34 @@ gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
 gap> M := Rcwa(R);
 Rcwa(GF(2)[x])
-gap> Set(KnownPropertiesOfObject(M));
-[ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
-  "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ]
-gap> List(last,prop->ValueGlobal(prop)(M));
+gap> props :=
+> [ "IsAssociative", "IsCommutative", "IsDuplicateFree", "IsEmpty", "IsFinite", 
+>   "IsNaturalRcwa", "IsNonTrivial", "IsTame", "IsTrivial", "IsWholeFamily" ];;
+gap> List(props,prop->ValueGlobal(prop)(M));
 [ true, false, true, false, false, true, true, false, false, true ]
-gap> Set(KnownAttributesOfObject(M));
-[ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
-  "OneImmutable", "Representative", "Size", "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(M));
+gap> attrs :=
+> [ "Divisor", "MultiplicativeNeutralElement", "Multiplier", "Name", 
+>   "OneImmutable", "Representative", "Size", "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(M));
 [ infinity, IdentityMapping( GF(2)[x] ), infinity, "Rcwa(GF(2)[x])", 
   IdentityMapping( GF(2)[x] ), Rcwa mapping of GF(2)[x]: P -> x*P, infinity, 
   "Rcwa(GF(2)[x])" ]
 gap> G := RCWA(Integers);
 RCWA(Z)
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_Z", "IsNonTrivial", 
-  "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
-  "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_Z", "IsNonTrivial", 
+>   "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
+>   "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   false, false, true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z, infinity, 0, IdentityMapping( Integers ), 
   infinity, "RCWA(Z)", IdentityMapping( Integers ), 
   Rcwa mapping of Z: n -> -n, infinity, "RCWA(Z)" ]
@@ -145,19 +145,19 @@ gap> Modulus(RepresentativeAction(RCWA(Integers),
 36
 gap> G := RCWA(Integers^2);
 RCWA(Z^2)
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_ZxZ", 
-  "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalRCWA", "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_ZxZ", 
+>   "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
   IdentityMapping( ( Integers^2 ) ), infinity, "RCWA(Z^2)", 
   IdentityMapping( ( Integers^2 ) ), Rcwa mapping of Z^2: (m,n) -> (-m,-n), 
@@ -188,19 +188,19 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z
 
 gap> G := RCWA(Z_pi([2,3]));
 RCWA(Z_( 2, 3 ))
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsNaturalRCWA", 
-  "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_Z_pi", "IsNonTrivial", 
-  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsNaturalRCWA", 
+>   "IsNaturalRCWA_OR_CT", "IsNaturalRCWA_Z_pi", "IsNonTrivial", 
+>   "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, true, true, true, true, true, 
   false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z_( 2, 3 ), infinity, 0, 
   IdentityMapping( Z_( 2, 3 ) ), infinity, "RCWA(Z_( 2, 3 ))", 
   IdentityMapping( Z_( 2, 3 ) ), Rcwa mapping of Z_( 2, 3 ): n -> -n, 
@@ -227,19 +227,19 @@ gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
 gap> G := RCWA(R);
 RCWA(GF(2)[x])
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalRCWA", "IsNaturalRCWA_GFqx", "IsNaturalRCWA_OR_CT", 
-  "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalRCWA", "IsNaturalRCWA_GFqx", "IsNaturalRCWA_OR_CT", 
+>   "IsNonTrivial", "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over GF(2)[x], infinity, 0, IdentityMapping( GF(2)[x] ), 
   infinity, "RCWA(GF(2)[x])", IdentityMapping( GF(2)[x] ), 
   ClassTransposition(0,x,1,x), infinity, "RCWA(GF(2)[x])" ]
@@ -270,20 +270,20 @@ gap> S1^elm = S2;
 true
 gap> G := CT(Integers);
 CT(Z)
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalCT", "IsNaturalCT_Z", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
-  "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
-  "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalCT", "IsNaturalCT_Z", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
+>   "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
+>   "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   true, true, true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription", "Support" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription", "Support" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z, infinity, 0, IdentityMapping( Integers ), 
   infinity, "CT(Z)", IdentityMapping( Integers ), ClassTransposition(0,2,1,2), 
   infinity, "CT(Z)", Integers ]
@@ -320,20 +320,20 @@ gap> ClassShift(1,2) in S;
 false
 gap> G := CT(Integers^2);
 CT(Z^2)
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalCT", "IsNaturalCT_ZxZ", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
-  "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
-  "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalCT", "IsNaturalCT_ZxZ", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
+>   "IsPerfectGroup", "IsSimpleGroup", "IsSimpleSemigroup", "IsSolvableGroup", 
+>   "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   true, true, true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription", "Support" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription", "Support" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z^2, infinity, [ [ 0, 0 ], [ 0, 0 ] ], 
   IdentityMapping( ( Integers^2 ) ), infinity, "CT(Z^2)", 
   IdentityMapping( ( Integers^2 ) ), 
@@ -370,19 +370,19 @@ Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z
 
 gap> G := CT(Z_pi([2,3]));
 CT(Z_( 2, 3 ))
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsNaturalCT", "IsNaturalCT_Z_pi", 
-  "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsSimpleSemigroup", 
-  "IsSolvableGroup", "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsNaturalCT", "IsNaturalCT_Z_pi", 
+>   "IsNaturalRCWA_OR_CT", "IsNonTrivial", "IsSimpleSemigroup", 
+>   "IsSolvableGroup", "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, true, true, true, true, true, 
   false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription", "Support" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription", "Support" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over Z_( 2, 3 ), infinity, 0, 
   IdentityMapping( Z_( 2, 3 ) ), infinity, "CT(Z_( 2, 3 ))", 
   IdentityMapping( Z_( 2, 3 ) ), ClassTransposition(0,2,1,2), infinity, 
@@ -412,19 +412,19 @@ gap> R := PolynomialRing(GF(2),1);
 GF(2)[x]
 gap> G := CT(R);
 CT(GF(2)[x])
-gap> Set(KnownPropertiesOfObject(G));
-[ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
-  "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
-  "IsNaturalCT", "IsNaturalCT_GFqx", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
-  "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ]
-gap> List(last,prop->ValueGlobal(prop)(G));
+gap> props :=
+> [ "IsAssociative", "IsBranch", "IsBranchingSubgroup", "IsCommutative", 
+>   "IsDuplicateFree", "IsEmpty", "IsFinite", "IsFinitelyGeneratedGroup", 
+>   "IsNaturalCT", "IsNaturalCT_GFqx", "IsNaturalRCWA_OR_CT", "IsNonTrivial", 
+>   "IsSimpleSemigroup", "IsSolvableGroup", "IsTrivial" ];;
+gap> List(props,prop->ValueGlobal(prop)(G));
 [ true, true, true, false, true, false, false, false, true, true, true, true, 
   true, false, false ]
-gap> Set(KnownAttributesOfObject(G));
-[ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
-  "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
-  "StructureDescription", "Support" ]
-gap> List(last,attr->ValueGlobal(attr)(G));
+gap> attrs :=
+> [ "Centre", "Divisor", "ModulusOfRcwaMonoid", "MultiplicativeNeutralElement", 
+>   "Multiplier", "Name", "OneImmutable", "Representative", "Size", 
+>   "StructureDescription", "Support" ];;
+gap> List(attrs,attr->ValueGlobal(attr)(G));
 [ Trivial rcwa group over GF(2)[x], infinity, 0, IdentityMapping( GF(2)[x] ), 
   infinity, "CT(GF(2)[x])", IdentityMapping( GF(2)[x] ), 
   ClassTransposition(0,x,1,x), infinity, "CT(GF(2)[x])", GF(2)[x] ]
