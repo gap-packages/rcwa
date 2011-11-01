@@ -667,4 +667,9 @@ Changes between version 3.0.4 and version 3.1.1 (October 18, 2011):
    `ReadFromBitmapPicture' -> 'LoadBitmapPicture'
  - Now, RCWA needs GAP 4.5.2, ResClasses 3.0.2 and GAPDoc 1.4.
 
+Changes between version 3.1.1 and version 3.1.2:
+
+ - Prevent that tst/rcwa_ct.tst shows diff's if due to better
+   methods in other packages the groups RCWA(R) and CT(R) know
+   already more attributes and properties.
 
