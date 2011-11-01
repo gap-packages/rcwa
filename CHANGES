@@ -672,4 +672,5 @@ Changes between version 3.1.1 and version 3.1.2:
  - Prevent that tst/rcwa_ct.tst shows diff's if due to better
    methods in other packages the groups RCWA(R) and CT(R) know
    already more attributes and properties.
+ - Added a README file in the otherwise empty directory tst/timings.
 
