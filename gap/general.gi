@@ -237,9 +237,36 @@ InstallOtherMethod( Trajectory,
 
 #############################################################################
 ##
-#S  Some utilities for combinatorics. ///////////////////////////////////////
+#S  Some utilities for integers and combinatorics. //////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  AllSmoothIntegers( <maxp>, <maxn> )
+##
+InstallGlobalFunction( AllSmoothIntegers,
+
+  function ( maxp, maxn )
+
+    local  extend, nums, primes, p;
+
+    extend := function ( n, mini )
+
+      local  i;
+
+      if n > maxn then return; fi;
+      Add(nums,n);
+      for i in [mini..Length(primes)] do
+        extend(primes[i]*n,i);
+      od;
+    end;
+
+    primes := Filtered([2..maxp],IsPrimeInt);
+    nums := [];
+    extend(1,1);
+    return Set(nums);
+  end );
 
 #############################################################################
 ##

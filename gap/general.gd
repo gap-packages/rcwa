@@ -41,9 +41,18 @@ DeclareGlobalFunction( "AssignGlobals" );
 
 #############################################################################
 ##
-#S  Some utilities for combinatorics. ///////////////////////////////////////
+#S  Some utilities for integers and combinatorics. //////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  AllSmoothIntegers( <maxp>, <maxn> )
+##
+##  Returns the set of all integers in the range [1..<maxn>] which have only
+##  prime divisors in the range [2..<maxp>].
+##
+DeclareGlobalFunction( "AllSmoothIntegers" );
 
 #############################################################################
 ##
