@@ -279,9 +279,9 @@ equivalence class or not. <P/>
 
 <Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
-Yet another utility function is <C>AssignGlobals</C> which takes as
-argument a record and assigns its components to global variables of
-the same (i.e. the component's) names. <P/>
+Yet another utility function is <C>AssignGlobals(<A>rec</A>)</C> which
+takes as argument a record <A>rec</A> and assigns its components to global
+variables of the same (i.e. the component's) names. <P/>
 
 <Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
 <Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
