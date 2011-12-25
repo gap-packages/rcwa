@@ -237,7 +237,7 @@ gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
 <Index Key="QuotientsList"><C>QuotientsList</C></Index>
 <Index Key="FloatQuotientsList"><C>FloatQuotientsList</C></Index>
 
-&RCWA; introduces a couple of small utility functions which can be used in
+&RCWA; provides a couple of small utility functions which can be used in
 a more general context. They are described in this section. <P/>
 
 The utility functions for groups and group elements are
