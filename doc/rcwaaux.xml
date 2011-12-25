@@ -41,18 +41,21 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:TheInfoClass">
-<Heading>The Info class of the package</Heading>
+<Section Label="sec:BuildingTheManual">
+<Heading>Building the manual</Heading>
+
+The following routine is a development tool. As all files it generates
+are included in the distribution file anyway, users will not need it.
 
 <ManSection>
-  <InfoClass Name="InfoRCWA"/>
+  <Func Name="RCWABuildManual" Arg=""/>
+  <Returns> nothing. </Returns>
   <Description>
-    This is the Info class of the <Package>RCWA</Package> package.
-    See section <E>Info Functions</E> in the &GAP;
-    Reference Manual for a description of the Info mechanism.
-    For convenience: <C>RCWAInfo(</C><A>n</A><C>)</C> is a shorthand for
-    <C>SetInfoLevel(InfoRCWA</C>,<A>n</A><C>)</C>.
-    <Index Key="RCWAInfo"><C>RCWAInfo</C></Index>
+    This function builds the manual of the &RCWA; package in the file
+    formats &LaTeX;, PDF, HTML and ASCII text.
+    This is accomplished using the &GAPDoc; package by Frank Lübeck and
+    Max Neunhöffer. Building the manual is possible only on UNIX systems
+    and requires PDF&LaTeX;.
   </Description>
 </ManSection>
 
@@ -107,21 +110,42 @@ load the package as usual via <C>LoadPackage( "rcwa" );</C>.
 
 <!-- #################################################################### -->
 
-<Section Label="sec:BuildingTheManual">
-<Heading>Building the manual</Heading>
-
-The following routine is a development tool. As all files it generates
-are included in the distribution file anyway, users will not need it.
+<Section Label="sec:TheInfoClass">
+<Heading>The Info class of the package</Heading>
 
 <ManSection>
-  <Func Name="RCWABuildManual" Arg=""/>
+  <InfoClass Name="InfoRCWA"/>
+  <Description>
+    This is the Info class of the <Package>RCWA</Package> package.
+    See section <E>Info Functions</E> in the &GAP;
+    Reference Manual for a description of the Info mechanism.
+    For convenience: <C>RCWAInfo(</C><A>n</A><C>)</C> is a shorthand for
+    <C>SetInfoLevel(InfoRCWA</C>,<A>n</A><C>)</C>.
+    <Index Key="RCWAInfo"><C>RCWAInfo</C></Index>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:RunningDemonstrations">
+<Heading>Running demonstrations</Heading>
+
+&RCWA; provides a routine to run demonstrations of its functionality or
+of other features of &GAP;. It is intended for being used in talks.
+
+<ManSection>
+  <Func Name="RunDemonstration" Arg="filename" Label="filename"/>
   <Returns> nothing. </Returns>
   <Description>
-    This function builds the manual of the &RCWA; package in the file
-    formats &LaTeX;, PDF, HTML and ASCII text.
-    This is accomplished using the &GAPDoc; package by Frank Lübeck and
-    Max Neunhöffer. Building the manual is possible only on UNIX systems
-    and requires PDF&LaTeX;.
+    This function executes the commands in the file named <A>filename</A>.
+    It shows a command and the corresponding output, waits for a keystroke,
+    shows the next command and the corresponding output, waits again for
+    a keystroke, and so on until the end of the file.
+    The demonstration can be stopped by pressing&nbsp;<C>q</C>.
+    The function is adapted from the function <C>Demonstration</C> in the
+    file <File>lib/demo.g</File> of the main &GAP; distribution. 
   </Description>
 </ManSection>
 
@@ -176,30 +200,6 @@ gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
 
 <!-- #################################################################### -->
 
-<Section Label="sec:RunningDemonstrations">
-<Heading>Running demonstrations</Heading>
-
-&RCWA; provides a routine to run demonstrations of its functionality or
-of other features of &GAP;. It is intended for being used in talks.
-
-<ManSection>
-  <Func Name="RunDemonstration" Arg="filename" Label="filename"/>
-  <Returns> nothing. </Returns>
-  <Description>
-    This function executes the commands in the file named <A>filename</A>.
-    It shows a command and the corresponding output, waits for a keystroke,
-    shows the next command and the corresponding output, waits again for
-    a keystroke, and so on until the end of the file.
-    The demonstration can be stopped by pressing&nbsp;<C>q</C>.
-    The function is adapted from the function <C>Demonstration</C> in the
-    file <File>lib/demo.g</File> of the main &GAP; distribution. 
-  </Description>
-</ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
 <Section Label="sec:ConvertingLogfilesToHTML">
 <Heading>Converting GAP logfiles to HTML</Heading>
 
@@ -238,21 +238,25 @@ of other features of &GAP;. It is intended for being used in talks.
 <Index Key="FloatQuotientsList"><C>FloatQuotientsList</C></Index>
 
 &RCWA; introduces a couple of small utility functions which can be used in
-a more general context: The function <C>GeneratorsAndInverses(<A>G</A>)</C>
-returns a list of generators of <A>G</A> and their inverses,
-<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> is
+a more general context. They are described in this section. <P/>
+
+The utility functions for groups and group elements are
+<C>GeneratorsAndInverses(<A>G</A>)</C> which returns a list of generators
+of <A>G</A> and their inverses, the function
+<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> which is
 a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
 GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
 (there is also an <C>NC</C> version of this), the function
-<C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> returns the list
+<C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> which returns the list
 <C>[<A>g</A>,<A>g</A>&circum;2,...,<A>g</A>&circum;<A>exp</A>]</C>
-of powers of&nbsp;<A>g</A>, the function
-<C>AllProducts(<A>l</A>,<A>k</A>)</C> returns the list of
-all products of <A>k</A> entries of the list&nbsp;<A>l</A>,
-the functions <C>DifferencesList(<A>l</A>)</C> and
-<C>QuotientsList(<A>l</A>)</C> return the list of differences respectively
-quotients of consecutive entries of the list&nbsp;<A>l</A>, and
-the function <C>FloatQuotientsList(<A>l</A>)</C> returns the list of
+of powers of&nbsp;<A>g</A>, and the function
+<C>AllProducts(<A>l</A>,<A>k</A>)</C> which returns the list of
+all products of <A>k</A> entries of the list&nbsp;<A>l</A>. <P/>
+
+The utility functions for lists are <C>DifferencesList(<A>l</A>)</C> and
+<C>QuotientsList(<A>l</A>)</C>, which return the list of differences
+respectively quotients of consecutive entries of the list&nbsp;<A>l</A>, and
+the function <C>FloatQuotientsList(<A>l</A>)</C>, which returns the list of
 floating point approximations of the latter. <P/>
 
 <Index Key="EquivalenceClasses"
@@ -279,10 +283,14 @@ Yet another utility function is <C>AssignGlobals</C> which takes as
 argument a record and assigns its components to global variables of
 the same (i.e. the component's) names. <P/>
 
+<Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
 <Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
 
-Finally, the function <C>LaTeXStringFactorsInt</C> returns the prime
-factorization of an integer as a string in &LaTeX; format.
+Finally, the function <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
+returns a list of all integers less than or equal to <A>maxn</A> which do
+not have prime divisors exceeding <A>maxp</A>, and the function
+<C>LaTeXStringFactorsInt(<A>n</A>)</C> returns the prime factorization
+of an integer <A>n</A> as a string in &LaTeX; format.
 
 </Section>
 
