@@ -99,7 +99,7 @@ one could call the <Q>trivial cases</Q> or <Q>basic building blocks</Q>,
 while wild rcwa groups are the objects of primary interest. <P/>
 
 The definitions of residue-class-wise affine mappings and -groups
-can be generalized in an obvious way to suitable rings other than&nbsp;&ZZ;.
+can be generalized in the obvious way to suitable rings other than&nbsp;&ZZ;.
 In fact, this package provides also some support for residue-class-wise
 affine groups over <M>&ZZ;^2</M>, over semilocalizations of&nbsp;&ZZ;
 and over univariate polynomial rings over finite fields.
