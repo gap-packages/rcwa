@@ -366,7 +366,7 @@ gap> phi := IsomorphismRcwaGroup(G,cls[2]);
   ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
 gap> G := GL(2,Integers);;
 gap> phi := IsomorphismRcwaGroup(G,cls[3]);
-[ [ [ 0, 1 ], [ 1, 0 ] ], [ [ -1, 0 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ]
+[ [ [ 0, 1 ], [ 1, 0 ] ], [ [ -1, 0 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ] 
  ] -> [ ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[0,1],[1,0]]), 
   ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[-1,0],[0,1]]), 
   ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]

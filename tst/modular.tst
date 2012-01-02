@@ -53,8 +53,8 @@ Rcwa mapping of GF(2)[x] with modulus x^2+1
         \
 
 gap> Print(r,"\n");
-RcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ],
-  [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ],
+RcwaMapping( 2, x^2+Z(2)^0, [ [ x^2+x+Z(2)^0, 0*Z(2), x^2+Z(2)^0 ], 
+  [ x^2+x+Z(2)^0, x, x^2+Z(2)^0 ], [ x^2+x+Z(2)^0, x^2, x^2+Z(2)^0 ], 
   [ x^2+x+Z(2)^0, x^2+x, x^2+Z(2)^0 ] ] )
 gap> IsBijective(r);
 true
