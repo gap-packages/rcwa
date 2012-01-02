@@ -150,7 +150,7 @@ Rcwa mapping of GF(2)[x] with modulus x
  P |-> <  x*P if P in 1(x)
         |
         \
- 
+
 gap> Display(s^2);
 
 Rcwa mapping of GF(2)[x] with modulus x^2
@@ -214,13 +214,13 @@ Bijective rcwa mapping of GF(2)[x] with modulus x^4+x^3+x^2
         \
 
 gap> Order(c);
-3 
+3
 gap> t := RcwaMapping(2,One(R),[[1,x,1]]*One(R));
 Rcwa mapping of GF(2)[x]: P -> P + x
 gap> Order(t);
 2
 gap> Trajectory(r,x^3+x^2,[(x^3+x^2)^(r^-1)],"AllCoeffs");
-[ [ 1, 0, 1 ], [ x^2+x+1, x^2+x, x^2+1 ], [ x^4+x^2+1, x^4+x, x^4+1 ],
+[ [ 1, 0, 1 ], [ x^2+x+1, x^2+x, x^2+1 ], [ x^4+x^2+1, x^4+x, x^4+1 ], 
   [ x^6+x^5+x^3+x+1, x^6+x^4+x^3+x^2, x^6+x^4+x^2+1 ] ]
 gap> rc := function(r,m) return ResidueClass(DefaultRing(m),m,r); end;;
 gap> f := RcwaMapping([[ResidueClass(R,x^2,Zero(R)),
