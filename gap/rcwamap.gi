@@ -5908,6 +5908,26 @@ InstallMethod( \^,
 
 #############################################################################
 ##
+#M  IsCommuting( <g>, <h> ) . . . . . . . . . . . . . . . . for rcwa mappings
+##
+InstallMethod( IsCommuting,
+               "for rcwa mappings (RCWA)", IsIdenticalObj,
+               [ IsRcwaMapping, IsRcwaMapping ], 0,
+
+  function ( g, h )
+
+    local  R, a, b;
+
+    R := Source(g);
+    if   NumberOfResidues(R,Mod(h)) > NumberOfResidues(R,Mod(g))
+    then a := g; b := h; else a := h; b := g; fi;
+    if   not ForAll(AllResidues(R,Mod(a)),r->(r^a)^b=(r^b)^a)
+    then return false; fi;
+    return a*b = b*a;
+  end );
+
+#############################################################################
+##
 #M  \^( <perm>, <g> ) . . . . . .  for a permutation and an rcwa mapping of Z
 ##
 ##  Returns the conjugate of the GAP permutation <perm> under the
