@@ -5918,12 +5918,16 @@ InstallMethod( IsCommuting,
 
     local  R, a, b;
 
+    if g = h then return true; fi;
+    if HasInverse(g) and h = Inverse(g) then return true; fi;
+
     R := Source(g);
     if   NumberOfResidues(R,Mod(h)) > NumberOfResidues(R,Mod(g))
     then a := g; b := h; else a := h; b := g; fi;
     if   not ForAll(AllResidues(R,Mod(a)),r->(r^a)^b=(r^b)^a)
     then return false; fi;
-    return a*b = b*a;
+
+    return g*h = h*g;
   end );
 
 #############################################################################
