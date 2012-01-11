@@ -831,7 +831,7 @@ InstallGlobalFunction( ReadTestWithTimings,
     MakeReadWriteGlobal("TEST_TIMINGS");
     BindGlobal("TEST_START_TIME",Runtime());
     MakeReadWriteGlobal("TEST_START_TIME"); 
-    ReadTest(filewithtimings);
+    Test(filewithtimings);
     timings := TEST_TIMINGS;
     UnbindGlobal("TEST_TIMINGS");
     UnbindGlobal("TEST_START_TIME");
