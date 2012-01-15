@@ -1129,19 +1129,21 @@ DeclareAttribute( "LaTeXString", IsObject );
 
 #############################################################################
 ##
-#O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
+#O  LaTeXStringRcwaMapping( <f> )
+#O  LaTeXStringRcwaGroup( <G> )
 ##
-DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
+##  Returns a LaTeX string for an rcwa mapping <f>, resp. an rcwa group <G>.
+##  Methods for `LaTeXStringRcwaMapping' recognize options "Factorization",
+##  "Indentation", "German" and "VarName" / "VarNames".
+##
+DeclareOperation( "LaTeXStringRcwaMapping", [ IsRcwaMapping ] );
+DeclareOperation( "LaTeXStringRcwaGroup", [ IsRcwaGroup ] );
 
 #############################################################################
 ##
-#O  LaTeXStringRcwaMapping( <f> )
+#O  LaTeXAndXDVI( <obj> ) .  write LaTeX string to file, LaTeX & show by xdvi
 ##
-##  Returns a LaTeX string for an rcwa mapping <f>.
-##  Methods recognize options "Factorization", "Indentation", "German" and
-##  "VarName" / "VarNames".
-##
-DeclareOperation( "LaTeXStringRcwaMapping", [ IsRcwaMapping ] );
+DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
 
 #############################################################################
 ##

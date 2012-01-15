@@ -71,7 +71,7 @@ InstallMethod( IsWholeFamily,
 
 #############################################################################
 ##
-#S  Methods for `View' and `Display'. ///////////////////////////////////////
+#S  Methods for `View', `Print', `Display' etc. /////////////////////////////
 ##
 #############################################################################
 
@@ -211,6 +211,26 @@ InstallMethod( Display,
          for g in GeneratorsOfGroup(G) do Display(g); od;
          Print("]\n\n");
     fi;
+  end );
+
+#############################################################################
+##
+#M  LaTeXStringRcwaGroup( <G> ) . . . . . . . . . . . . . . . for rcwa groups
+##
+InstallMethod( LaTeXStringRcwaGroup,
+               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  s, g;
+
+    s := "\\langle ";
+    for g in GeneratorsOfGroup(G) do
+      if s <> "\\langle " then Append(s,", "); fi;
+      Append(s,LaTeXStringRcwaMapping(g));
+    od;
+    Append(s," \\rangle");
+    return s;
   end );
 
 #############################################################################
