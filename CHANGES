@@ -699,3 +699,5 @@ Changes between version 3.1.2 and version 3.1.3:
  - Now the new function `Test' is used instead of `ReadTest' for the
    test suite.
 
+ - Now, RCWA needs ResClasses 3.0.5.
+
