@@ -16,16 +16,6 @@
 
 #############################################################################
 ##
-#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
-#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
-#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
-##
-DeclareGlobalFunction( "DifferencesList" );
-DeclareGlobalFunction( "QuotientsList" );
-DeclareGlobalFunction( "FloatQuotientsList" );
-
-#############################################################################
-##
 #F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
 DeclareGlobalFunction( "SearchCycle" );

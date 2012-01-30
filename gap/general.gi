@@ -44,21 +44,6 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
-#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
-#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
-#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
-##
-InstallGlobalFunction( DifferencesList,
-                       list -> List( [ 2..Length(list) ],
-                                     pos -> list[ pos ] - list[ pos-1 ] ) );
-InstallGlobalFunction( QuotientsList,
-                       list -> List( [ 2 .. Length( list ) ],
-                                     pos -> list[ pos ] / list[ pos-1 ] ) );
-InstallGlobalFunction( FloatQuotientsList,
-                       list -> List( QuotientsList( list ), Float ) );
-
-#############################################################################
-##
 #F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
 ##
 InstallGlobalFunction( SearchCycle,
@@ -83,8 +68,8 @@ InstallGlobalFunction( SearchCycle,
 ##
 #F  AssignGlobals( <record> )
 ##
-##  This auxiliary function assigns the record components of <record> to
-##  global variables with the same names.
+##  This auxiliary function assigns the record components of <record>
+##  to global variables with the same names.
 ##
 InstallGlobalFunction( AssignGlobals,
 
@@ -775,6 +760,9 @@ InstallGlobalFunction( Log2HTML,
 #S  Test utilities. /////////////////////////////////////////////////////////
 ##
 #############################################################################
+
+# For compatibility with 4.5.2: 
+if not IsBoundGlobal( "Test" ) then BindGlobal( "Test", ReadTest ); fi;
 
 #############################################################################
 ##
