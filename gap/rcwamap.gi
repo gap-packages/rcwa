@@ -2561,7 +2561,7 @@ InstallMethod( Display,
            StringAffineMappingOfGFqx, IdChars,
 
            R, F, F_el, F_elints, m, c, res,
-           P, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
+           P, Pcl, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
            cl, str, ustr, ringname, varname, prefix, i, j;
 
     IdChars := function ( n, ch )
@@ -2807,7 +2807,7 @@ InstallMethod( Display,
 
         affs := List(P,preimg->c[First([1..Length(res)],
                                        i->res[i] in preimg)]);
-        P    := List(P,AsUnionOfFewClasses);
+        Pcl  := List(P,AsUnionOfFewClasses);
 
         affstrings := List(affs,StringAffineMapping);
 
@@ -2830,25 +2830,31 @@ InstallMethod( Display,
 
         for i in [1..Length(affs)] do
           line := String(affstrings[i],-maxafflng);
-          if i < Length(affs) or Length(P[i]) <= 2
-            or (IsRcwaMappingOfZOrZ_pi(f) and Length(P[i]) <= 4)
+          if i < Length(affs) or Length(Pcl[i]) <= 2
+            or (IsRcwaMappingOfZOrZ_pi(f) and Length(Pcl[i]) <= 4)
           then
             Append(line," if ");
             Append(line,varname);
             Append(line," in ");
-            for j in [1..Length(P[i])] do
-              str := ViewString(P[i][j]);
-              if j = Length(P[i]) then ustr := ""; else ustr := " U "; fi;
-              if Length(line) + Length(str) + Length(ustr) > maxlinelng
-                and j > 1
-              then
-                Add(lines,line);
-                line := String(" ",maxafflng+Length(" if ")+Length(varname)
-                                            +Length(" in "));
-              fi;
+            str := DisplayString(P[i]);
+            if Length(line) + Length(str) <= maxlinelng then
               Append(line,str);
-              Append(line,ustr);
-            od;
+            else
+              for j in [1..Length(Pcl[i])] do
+                str := ViewString(Pcl[i][j]);
+                if   j = Length(Pcl[i])
+                then ustr := ""; else ustr := " U "; fi;
+                if Length(line) + Length(str) + Length(ustr) > maxlinelng
+                  and j > 1
+                then
+                  Add(lines,line);
+                  line := String(" ",maxafflng+Length(" if ")+Length(varname)
+                                              +Length(" in "));
+                fi;
+                Append(line,str);
+                Append(line,ustr);
+              od;
+            fi;
           else
             Append(line," otherwise");
           fi;
