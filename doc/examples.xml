@@ -1134,7 +1134,7 @@ gap> Length(orb);
 gap> StructureDescription(Action(G,orb));
 "A87"
 gap> Collected(List(orb,DegreeOfLaurentPolynomial));
-[ [ 1, 2 ], [ 2, 4 ], [ 3, 16 ], [ 4, 64 ], [ infinity, 1 ] ]
+[ [ -infinity, 1 ], [ 1, 2 ], [ 2, 4 ], [ 3, 16 ], [ 4, 64 ] ]
 gap> S := AllResidues(R,x^6);;
 gap> orbs := ShortOrbits(G,S,-1:finite);;
 gap> List(orbs,Length);
@@ -1383,7 +1383,7 @@ gap> Order(x_257);; Display(x_257);
 Bijective rcwa mapping of Z with modulus 32, of order 257
 
         /
-        | 16n+18 if n in 1(4) U 3(8) U 7(16) U 15(32)
+        | 16n+18 if n in 1(2) \ 31(32)
         | n+16   if n in 2(32) U 4(32) U 6(32) U 8(32) U 10(32) U 
         |                12(32) U 14(32)
         | n-14   if n in 18(32) U 20(32) U 22(32) U 24(32) U 26(32) U 
