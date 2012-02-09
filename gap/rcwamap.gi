@@ -851,7 +851,9 @@ InstallMethod( RcwaMapping,
 
     if   not IsList(cycles[1]) or not IsResidueClass(cycles[1][1])
     then TryNextMethod(); fi;
-    R := UnderlyingRing(FamilyObj(cycles[1][1]));
+    R := cycles[1][1];
+    if   not (IsRing(R) or IsZxZ(R))
+    then R := UnderlyingRing(FamilyObj(R)); fi;
     CheckClassCycles(R,cycles);
     return RcwaMappingNC(cycles);
   end );
@@ -905,7 +907,9 @@ InstallMethod( RcwaMappingNC,
       and not IsResidueClassWithFixedRepresentative(cycles[1][1])
     then TryNextMethod(); fi;
 
-    R      := UnderlyingRing(FamilyObj(cycles[1][1]));
+    R := cycles[1][1];
+    if   not (IsRing(R) or IsZxZ(R))
+    then R := UnderlyingRing(FamilyObj(R)); fi;
     m      := Lcm(List(Union(cycles),Modulus));
     res    := AllResidues(R,m);
     coeffs := List(res,r->[1,0,1]*One(R));
