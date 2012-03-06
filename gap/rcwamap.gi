@@ -2527,6 +2527,7 @@ InstallMethod( ViewObj,
     then Print("injective rcwa mapping");
     elif HasIsSurjective(f) and IsSurjective(f)
     then Print("surjective rcwa mapping");
+    else Print("rcwa mapping");
     fi;
     Print(" of ",RingToString(Source(f)));
     Print(" with modulus ",ModulusAsFormattedString(Modulus(f)));
