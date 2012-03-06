@@ -5578,7 +5578,7 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
                            ch->ch in "-0123456789")) * n;
       name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
     fi;
-    if   Position(name,'_') <> fail
+    if   Position(name,'_') <> fail and name[1] <> '{'
     then name := Concatenation("{",name,"}"); fi;
     if order = fail or order = infinity then
       if e in [2..9] then return Concatenation(name,"^",String(e));
