@@ -2792,8 +2792,8 @@ InstallMethod( Display,
         prefix := true;
       fi;
       if   HasIsBijective(f) and IsBijective(f)
-      then if prefix then Print("rcwa permutation ");
-                     else Print("Rcwa permutation "); fi;
+      then if prefix then Print("rcwa permutation");
+                     else Print("Rcwa permutation"); fi;
            prefix := true;
       elif HasIsInjective(f) and IsInjective(f)
       then if prefix then Print("injective rcwa mapping");
@@ -3136,8 +3136,8 @@ InstallMethod( Display,
            prefix := true;
          fi;
          if   HasIsBijective(f) and IsBijective(f)
-         then if prefix then Print("rcwa permutation ");
-                        else Print("Rcwa permutation "); fi;
+         then if prefix then Print("rcwa permutation");
+                        else Print("Rcwa permutation"); fi;
               prefix := true;
          elif HasIsInjective(f) and IsInjective(f)
          then if prefix then Print("injective rcwa mapping");
