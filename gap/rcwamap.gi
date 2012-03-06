@@ -1311,8 +1311,12 @@ InstallGlobalFunction( ClassShift,
 
     latex := ValueOption("LaTeXString");
     if latex = fail then
-      SetLaTeXString(result,Concatenation("\\nu_{",String(r),"(",
-                                                   String(m),")}"));
+      if IsOne(m) then
+        SetLaTeXString(result,"\\nu");
+      else
+        SetLaTeXString(result,Concatenation("\\nu_{",String(r),"(",
+                                                     String(m),")}"));
+      fi;
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     return result;
@@ -1526,8 +1530,12 @@ InstallGlobalFunction( ClassReflection,
 
     latex := ValueOption("LaTeXString");
     if latex = fail then
-      SetLaTeXString(result,Concatenation("\\varsigma_{",String(r),"(",
-                                                         String(m),")}"));
+      if IsOne(m) then
+        SetLaTeXString(result,"\\varsigma");
+      else
+        SetLaTeXString(result,Concatenation("\\varsigma_{",String(r),"(",
+                                                           String(m),")}"));
+      fi;
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     return result;
@@ -1640,8 +1648,12 @@ InstallGlobalFunction( ClassRotation,
 
     latex := ValueOption("LaTeXString");
     if latex = fail then
-      SetLaTeXString(result,Concatenation("\\rho_{",String(r),"(",String(m),
-                                          "),",String(u),"}"));
+      if IsOne(m) then
+        SetLaTeXString(result,Concatenation("\\rho_{",String(u),"}"));
+      else
+        SetLaTeXString(result,Concatenation("\\rho_{",String(r),"(",
+                                            String(m),"),",String(u),"}"));
+      fi;
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     return result;
@@ -1864,9 +1876,13 @@ InstallGlobalFunction( ClassTransposition,
 
     latex := ValueOption("LaTeXString");
     if latex = fail then
-      SetLaTeXString(result,Concatenation("\\tau_{",
-                                          String(r1),"(",String(m1),"),",
-                                          String(r2),"(",String(m2),")}"));
+      if IsIntegers(R) and [m1,m2] = [2,2] then
+        SetLaTeXString(result,"\\tau");
+      else
+        SetLaTeXString(result,Concatenation("\\tau_{",
+                                            String(r1),"(",String(m1),"),",
+                                            String(r2),"(",String(m2),")}"));
+      fi;
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     if is_usual_ct then SetFactorizationIntoCSCRCT(result,[result]); fi;
@@ -5562,14 +5578,19 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
                            ch->ch in "-0123456789")) * n;
       name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
     fi;
+    if   Position(name,'_') <> fail
+    then name := Concatenation("{",name,"}"); fi;
     if order = fail or order = infinity then
-      return Concatenation(name,"^{",String(e),"}");
+      if e in [2..9] then return Concatenation(name,"^",String(e));
+                     else return Concatenation(name,"^{",String(e),"}"); fi;
     elif e mod order = 1 then
       return name;
     elif e mod order = 0 then
       return fail;
     else
-      return Concatenation(name,"^{",String(e mod order),"}");
+      e := e mod order;
+      if e in [2..9] then return Concatenation(name,"^",String(e));
+                     else return Concatenation(name,"^{",String(e),"}"); fi;
     fi;
   end );
 
