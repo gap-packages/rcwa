@@ -618,7 +618,7 @@ and uses now better algorithms than in 2007.
     residue classes into their complements.
     To get into a situation where the Table-Tennis Lemma is applicable,
     the method computes conjugates of the images of the mentioned permutation
-    representations under bijective rcwa mappings <M>\sigma_r</M> which
+    representations under rcwa permutations <M>\sigma_r</M> which
     satisfy <M>0(n_r)^{\sigma_r} = &ZZ; \setminus r(m)</M>. <P/>
 
     The method for free groups uses an adaptation of the construction given

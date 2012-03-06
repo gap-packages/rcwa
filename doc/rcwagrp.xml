@@ -214,14 +214,14 @@ gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
 <fp group on the generators [ f1, f2, f3, f4, f5 ]>
 gap> IsomorphismRcwaGroup(F);
 [ f1, f2, f3, f4, f5 ] ->
-[ <bijective rcwa mapping of Z with modulus 12>,
-  <bijective rcwa mapping of Z with modulus 24>,
-  <bijective rcwa mapping of Z with modulus 12>,
-  <bijective rcwa mapping of Z with modulus 72>,
-  <bijective rcwa mapping of Z with modulus 36> ]
+[ <rcwa permutation of Z with modulus 12>,
+  <rcwa permutation of Z with modulus 24>,
+  <rcwa permutation of Z with modulus 12>,
+  <rcwa permutation of Z with modulus 72>,
+  <rcwa permutation of Z with modulus 36> ]
 gap> IsomorphismRcwaGroup(FreeGroup(2));
-[ f1, f2 ] -> [ <wild bijective rcwa mapping of Z with modulus 8>,
-  <wild bijective rcwa mapping of Z with modulus 8> ]
+[ f1, f2 ] -> [ <wild rcwa permutation of Z with modulus 8>,
+  <wild rcwa permutation of Z with modulus 8> ]
 gap> F2 := Image(last);
 <wild rcwa group over Z with 2 generators>
 ]]>
@@ -294,22 +294,22 @@ true
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
 gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));;
 gap> Embedding(F2wrA5,1);
-[ <wild bijective rcwa mapping of Z with modulus 8>,
-  <wild bijective rcwa mapping of Z with modulus 8> ] ->
-[ <wild bijective rcwa mapping of Z with modulus 40>,
-  <wild bijective rcwa mapping of Z with modulus 40> ]
+[ <wild rcwa permutation of Z with modulus 8>,
+  <wild rcwa permutation of Z with modulus 8> ] ->
+[ <wild rcwa permutation of Z with modulus 40>,
+  <wild rcwa permutation of Z with modulus 40> ]
 gap> Embedding(F2wrA5,2);
 [ (1,2,3,4,5), (3,4,5) ] ->
-[ <bijective rcwa mapping of Z with modulus 5, of order 5>,
-  <bijective rcwa mapping of Z with modulus 5, of order 3> ]
+[ <rcwa permutation of Z with modulus 5, of order 5>,
+  <rcwa permutation of Z with modulus 5, of order 3> ]
 gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
 <wild rcwa group over Z with 2 generators>
 gap> Embedding(ZwrZ,1);
 [ ClassShift(0,1) ] ->
-[ <tame bijective rcwa mapping of Z with modulus 4, of order infinity> ]
+[ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
 gap> Embedding(ZwrZ,2);
 [ ClassShift(0,1) ] ->
-[ <wild bijective rcwa mapping of Z with modulus 4> ]
+[ <wild rcwa permutation of Z with modulus 4> ]
 ]]>
 </Example>
   </Description>
@@ -607,7 +607,7 @@ gap> IsConjugate(CT(Integers),ClassTransposition(0,2,1,6),
 true
 gap> g := RepresentativeAction(CT(Integers),ClassTransposition(0,2,1,6),
 >                                           ClassTransposition(1,4,0,8));
-<bijective rcwa mapping of Z with modulus 48>
+<rcwa permutation of Z with modulus 48>
 gap> ClassTransposition(0,2,1,6)^g = ClassTransposition(1,4,0,8);
 true
 ]]>
@@ -759,13 +759,13 @@ gap> b := ClassShift(0,1);; SetName(b,"b");
 gap> G := Group(a,b);; # G = <<Collatz permutation>, n -> n + 1>
 gap> phi := EpimorphismFromFreeGroup(G);;
 gap> g := Comm(a^2*b^4,a*b^3); # a sample element to be factored
-<bijective rcwa mapping of Z with modulus 8>
+<rcwa permutation of Z with modulus 8>
 gap> PreImagesRepresentative(phi,g); # -> a factorization of g
 b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3
 gap> g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check
 true
 gap> g := Comm(a*b,Comm(a,b^3));
-<bijective rcwa mapping of Z with modulus 8>
+<rcwa permutation of Z with modulus 8>
 gap> pre := PreImagesRepresentatives(phi,g);
 [ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
 gap> rel := pre[1]/pre[2]; # -> a nontrivial relation
@@ -1002,7 +1002,7 @@ gap> ShortCycles(mKnot(7),[1..100],20);
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
-<bijective rcwa mapping of Z with modulus 12>
+<rcwa permutation of Z with modulus 12>
 gap> ShortResidueClassCycles(g,Mod(g)^2,20);
 [ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
   [ 20(24), 21(24), 31(36), 30(36) ], 
@@ -1147,7 +1147,7 @@ gap> b := ClassShift(1,4:Name:="b");; G := Group(a,b);;
 gap> elm := RepresentativeAction(G,[7,4,9],[4,5,13],OnTuples);;
 gap> Display(elm);
 
-Bijective rcwa mapping of Z with modulus 12
+Rcwa permutation of Z with modulus 12
 
         /
         | n-3 if n in 1(6) U 10(12)
@@ -1162,7 +1162,7 @@ gap> List([7,4,9],n->n^elm);
 gap> elm := RepresentativeAction(G,[6,-3,8],[-9,4,11],OnPoints);;
 gap> Display(elm);
 
-Bijective rcwa mapping of Z with modulus 12
+Rcwa permutation of Z with modulus 12
 
         /
         | 2n/3      if n in 0(6) U 3(12)
@@ -1182,7 +1182,7 @@ gap> w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],
 >                                      OnTuples,F);
 a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
 gap> elm := w^phi;
-<bijective rcwa mapping of Z with modulus 324>
+<rcwa permutation of Z with modulus 324>
 gap> List([10,-4,9,5],n->n^elm);
 [ 4, 5, 13, -8 ]
 ]]>
@@ -1214,11 +1214,11 @@ gives rise to proper quotients of the group:
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
 [ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <bijective rcwa mapping of Z with modulus 4>,
+    [ <rcwa permutation of Z with modulus 4>,
       IdentityMapping( Integers ) ],
   [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <bijective rcwa mapping of Z with modulus 4>,
-      <bijective rcwa mapping of Z with modulus 4> ] ]
+    [ <rcwa permutation of Z with modulus 4>,
+      <rcwa permutation of Z with modulus 4> ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(4) U 1(4), 2(4) U 3(4) ]
 ]]>
@@ -1256,13 +1256,13 @@ gap> P1 := AllResidueClassesModulo(3);
 gap> P2 := List([[0,2],[1,4],[3,4]],ResidueClass);
 [ 0(2), 1(4), 3(4) ]
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<bijective rcwa mapping of Z with modulus 3>
+<rcwa permutation of Z with modulus 3>
 gap> P1^elm = P2;
 true
 gap> IsTame(elm);
 false
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame bijective rcwa mapping of Z with modulus 24>
+<tame rcwa permutation of Z with modulus 24>
 gap> P1^elm = P2;
 true
 gap> elm := RepresentativeAction(RCWA(Integers),
@@ -1270,7 +1270,7 @@ gap> elm := RepresentativeAction(RCWA(Integers),
 >              ResidueClassUnion(Integers,3,[0,2])],
 >             [ResidueClassUnion(Integers,5,[2,4]),
 >              ResidueClassUnion(Integers,5,[0,1,3])]);
-<bijective rcwa mapping of Z with modulus 6>
+<rcwa permutation of Z with modulus 6>
 gap> [ResidueClass(1,3),ResidueClassUnion(Integers,3,[0,2])]^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 ]]>
@@ -1455,7 +1455,7 @@ interesting examples. No particular distribution is guaranteed.
 gap> elm := Random(RCWA(Integers));;
 gap> Display(elm);
 
-Bijective rcwa mapping of Z with modulus 180
+Rcwa permutation of Z with modulus 180
 
         /
         | 6n+12     if n in 2(10) U 4(10) U 6(10) U 8(10)

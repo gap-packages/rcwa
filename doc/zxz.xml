@@ -122,14 +122,14 @@ or the more specialized functions
       </Item>
       <Mark>(b)</Mark>
       <Item>
-        a bijective rcwa mapping which induces a bijection between
+        an rcwa permutation which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of&nbsp;<M>&ZZ;^2</M>
         into residue classes and which is affine on the elements
         of <A>P1</A>,
       </Item>
       <Mark>(c)</Mark>
       <Item>
-        a bijective rcwa mapping with <Q>residue class cycles</Q> given
+        an rcwa permutation with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes
         of&nbsp;<M>&ZZ;^2</M> each of which it permutes cyclically, and
       </Item>
@@ -187,7 +187,7 @@ gap> IsBijective(hyperbolic);
 true
 gap> Display(hyperbolic);
 
-Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,2)Z
+Rcwa permutation of Z^2 with modulus (1,0)Z+(0,2)Z
 
             /
             | (2m,n/2)       if (m,n) in (0,0)+(1,0)Z+(0,2)Z
@@ -207,12 +207,12 @@ gap> P2 := AllResidueClassesModulo(R,[[1,0],[0,4]]);
 [ (0,0)+(1,0)Z+(0,4)Z, (0,1)+(1,0)Z+(0,4)Z, (0,2)+(1,0)Z+(0,4)Z,
   (0,3)+(1,0)Z+(0,4)Z ]
 gap> g := RcwaMapping(P1,P2);                                 # method (b)
-<bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z>
+<rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z>
 gap> P1^g = P2;
 true
 gap> Display(g:table);
 
-Bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z
+Rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z
 
    [m,n] mod (2,1)Z+(0,2)Z   |              Image of [m,n]
 -----------------------------+-------------------------------------------
@@ -225,14 +225,14 @@ gap> classes := List([[[0,0],[[2,1],[0,2]]],[[1,0],[[2,1],[0,4]]],
 >                     [[1,1],[[4,2],[0,4]]]],ResidueClass);
 [ (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z, (1,1)+(4,2)Z+(0,4)Z ]
 gap> g := RcwaMapping([classes]);                             # method (c)
-<bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3>
+<rcwa permutation of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3>
 gap> Permutation(g,classes);
 (1,2,3)
 gap> Support(g);
 (0,0)+(2,1)Z+(0,2)Z U (1,0)+(2,1)Z+(0,4)Z U (1,1)+(4,2)Z+(0,4)Z
 gap> Display(g);
 
-Bijective rcwa mapping of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
+Rcwa permutation of Z^2 with modulus (4,2)Z+(0,4)Z, of order 3
 
             /
             | (m+1,(-m+4n)/2)   if (m,n) in (0,0)+(2,1)Z+(0,2)Z
@@ -326,7 +326,7 @@ gap> ct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);
 ClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)
 gap> Display(ct);
 
-Bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
+Rcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
 
             /
             | (m+1,(-m+4n)/2)  if (m,n) in (0,0)+(2,1)Z+(0,2)Z
@@ -378,7 +378,7 @@ false
 gap> interchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);
 ClassRotation((Integers^2),[[0,1],[1,0]])
 gap> Display(interchange);
-Bijective rcwa mapping of Z^2: [m,n] -> [n,m]
+Rcwa permutation of Z^2: [m,n] -> [n,m]
 gap> classes := AllResidueClassesModulo(Integers^2,[[2,1],[0,3]]);
 [ (0,0)+(2,1)Z+(0,3)Z, (0,1)+(2,1)Z+(0,3)Z, (0,2)+(2,1)Z+(0,3)Z, 
   (1,0)+(2,1)Z+(0,3)Z, (1,1)+(2,1)Z+(0,3)Z, (1,2)+(2,1)Z+(0,3)Z ]
@@ -386,7 +386,7 @@ gap> transvection := ClassRotation(classes[5],[[1,1],[0,1]]);
 ClassRotation((1,1)+(2,1)Z+(0,3)Z,[[1,1],[0,1]])
 gap> Display(transvection);
 
-Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
+Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
 
             /
             | (m,(3m+2n-3)/2) if (m,n) in (1,1)+(2,1)Z+(0,3)Z
@@ -420,12 +420,12 @@ Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
 gap> shift1 := ClassShift([0,0],[[1,0],[0,1]],1);
 ClassShift((Integers^2),1)
 gap> Display(shift1);
-Tame bijective rcwa mapping of Z^2: [m,n] -> [m+1,n]
+Tame rcwa permutation of Z^2: [m,n] -> [m+1,n]
 gap> s := ClassShift(ResidueClass([1,1],[[2,1],[0,2]]),2);
 ClassShift((1,1)+(2,1)Z+(0,2)Z,2)
 gap> Display(s);
 
-Tame bijective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
+Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
 
             /
             | (m,n+2) if (m,n) in (1,1)+(2,1)Z+(0,2)Z
@@ -733,7 +733,7 @@ gap> [[-47,-37],[61,48]]^phi;
 ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[-47,-37],[61,48]])
 gap> Display(last:table);
 
-Bijective rcwa mapping of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
+Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
 
    [m,n] mod (2,2)Z+(0,3)Z   |              Image of [m,n]
 -----------------------------+-------------------------------------------

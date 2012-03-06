@@ -160,7 +160,7 @@ gap> IsBijective(a);
 true
 gap> Display(a); # This is Collatz' permutation:
 
-Bijective rcwa mapping of Z with modulus 3
+Rcwa permutation of Z with modulus 3
 
         /
         | 2n/3     if n in 0(3)
@@ -201,7 +201,7 @@ particularly simple structure
 <![CDATA[
 gap> Display(ClassShift(5,12));
 
-Tame bijective rcwa mapping of Z with modulus 12, of order infinity
+Tame rcwa permutation of Z with modulus 12, of order infinity
 
         /
         | n+12 if n in 5(12)
@@ -231,7 +231,7 @@ Tame bijective rcwa mapping of Z with modulus 12, of order infinity
 <![CDATA[
 gap> Display(ClassReflection(5,9));
 
-Bijective rcwa mapping of Z with modulus 9, of order 2
+Rcwa permutation of Z with modulus 9, of order 2
 
         /
         | -n+10 if n in 5(9)
@@ -294,7 +294,7 @@ Bijective rcwa mapping of Z with modulus 9, of order 2
 <![CDATA[
 gap> Display(ClassTransposition(1,2,8,10));
 
-Bijective rcwa mapping of Z with modulus 10, of order 2
+Rcwa permutation of Z with modulus 10, of order 2
 
         /
         | 5n+3    if n in 1(2)
@@ -354,7 +354,7 @@ of rcwa permutations which generalizes class reflections:
 <![CDATA[
 gap> Display(ClassRotation(ResidueClass(Z_pi(2),2,1),1/3));
 
-Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
+Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
 
         /
         | 1/3 n + 2/3 if n in 1(2)
@@ -366,7 +366,7 @@ gap> x := Indeterminate(GF(8),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(8),1);;
 gap> Display(ClassRotation(1,x,Z(8)*One(R)));
 
-Bijective rcwa mapping of GF(2^3)[x] with modulus x, of order 7
+Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
 
         /
         | Z(2^3)*P + Z(2^3)^3 if P in 1(x)
@@ -491,19 +491,19 @@ necessary for understanding this manual or for using this package.
       </Item>
       <Mark>(h)</Mark>
       <Item>
-        a bijective rcwa mapping which induces a bijection between
+        an rcwa permutation which induces a bijection between
         the partitions <A>P1</A> and <A>P2</A> of&nbsp;<A>R</A> into residue
         classes and which is affine on the elements of <A>P1</A>,
       </Item>
       <Mark>(i)</Mark>
       <Item>
-        a bijective rcwa mapping with <Q>residue class cycles</Q> given
+        an rcwa permutation with <Q>residue class cycles</Q> given
         by a list <A>cycles</A> of lists of pairwise disjoint residue classes,
         each of which it permutes cyclically, or
       </Item>
       <Mark>(j)</Mark>
       <Item>
-        the bijective rcwa mapping of&nbsp;&ZZ; given by the
+        the rcwa permutation of&nbsp;&ZZ; given by the
         arithmetical expression <A>expression</A> -- a string consisting of
         class transpositions (e.g. <C>"(0(2),1(4))"</C>), class shifts
         (e.g. <C>"(4(6))"</C>, class reflections (e.g. <C>"[3(4)]"</C>),
@@ -525,7 +525,7 @@ Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)
 <rcwa mapping of Z with modulus 3>
 gap> RcwaMapping((1,2,3),[1..4]);                                   # (d)
-<bijective rcwa mapping of Z with modulus 4, of order 3>
+<rcwa permutation of Z with modulus 4, of order 3>
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);                  # (e)
 true
 gap> RcwaMapping([2],[[1/3,0,1]]);                                  # (f)
@@ -536,11 +536,11 @@ gap> a = RcwaMapping(List([[0,3],[1,3],[2,3]],ResidueClass),
 >                    List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)
 true
 gap> RcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)
-<bijective rcwa mapping of Z with modulus 16, of order 4>
+<rcwa permutation of Z with modulus 16, of order 4>
 gap> Cycle(last,ResidueClass(0,2));
 [ 0(2), 1(4), 3(8), 7(16) ]
 gap> g := RcwaMapping("((0(4),1(6))*(0(6))^-4*[2(4)])^2/(2(8))");   # (j)
-<bijective rcwa mapping of Z with modulus 72>
+<rcwa permutation of Z with modulus 72>
 gap> g = (   ClassTransposition(0,4,1,6) * ClassShift(0,6)^-4
 >          * ClassReflection(2,4) )^2 / ClassShift(2,8);
 true
@@ -649,7 +649,7 @@ and requires suitable installations of &LaTeX; and <Package>xdvi</Package>.
 Testing rcwa mappings for equality requires only comparing their
 coefficient lists, hence is cheap.
 Rcwa mappings can be multiplied, thus there is a method for <C>*</C>.
-Bijective rcwa mappings can also be inverted, thus there is a method for
+Rcwa permutations can also be inverted, thus there is a method for
 <C>Inverse</C>. The latter method is usually accessed by raising a mapping
 to a power with negative exponent. Multiplying, inverting and computing
 powers of tame rcwa mappings is cheap. Computing powers of wild mappings
@@ -674,7 +674,7 @@ true
 gap> T^2*a*T*a^-3;
 <rcwa mapping of Z with modulus 768>
 gap> (ClassShift(1,3)*ClassReflection(2,7))^1000000;
-<bijective rcwa mapping of Z with modulus 21>
+<rcwa permutation of Z with modulus 21>
 ]]>
 </Example>
 
@@ -770,7 +770,7 @@ gap> while Length(M) < 5000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
 There is a method for the operation <C>Support</C> for computing the
 support of an rcwa mapping. A synonym for <C>Support</C> is
 <C>MovedPoints</C>. There is also a method for <C>RestrictedPerm</C>
-for computing the restriction of a bijective rcwa mapping to a union
+for computing the restriction of an rcwa permutation to a union
 of residue classes which it fixes setwise.
 
 <Example>
@@ -900,7 +900,7 @@ sign-preserving.
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
 gap> IsBijective(u);; Display(u);
 
-Bijective rcwa mapping of Z with modulus 5
+Rcwa permutation of Z with modulus 5
 
         /
         | 3n/5     if n in 0(5)
@@ -945,7 +945,7 @@ gap> List( [ u, u^-1 ], LargestSourcesOfAffineMappings );
 [ [ 0(5), 1(5), 2(5), 3(5), 4(5) ], [ 0(3), 1(3), 2(9), 5(9), 8(9) ] ]
 gap> kappa := ClassTransposition(2,4,3,4) * ClassTransposition(4,6,8,12)
 >           * ClassTransposition(3,4,4,6);
-<bijective rcwa mapping of Z with modulus 12>
+<rcwa permutation of Z with modulus 12>
 gap> LargestSourcesOfAffineMappings(kappa);
 [ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ]
 ]]>
@@ -1070,7 +1070,7 @@ respectively:
                       r(m) in Z/mZ                .
     </Verb></Alt> 
     The determinant mapping is an epimorphism from the group of all
-    class-wise order-preserving bijective rcwa mappings of&nbsp;&ZZ;
+    class-wise order-preserving rcwa permutations of&nbsp;&ZZ;
     to (&ZZ;,+), see&nbsp;<Cite Key="Kohl05"/>, Theorem&nbsp;2.11.9.
 <Example>
 <![CDATA[
@@ -1086,7 +1086,7 @@ gap> Determinant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);
 <ManSection>
   <Attr Name="Sign" Arg="g" Label="of an rcwa permutation of Z"/>
   <Returns>
-    the sign of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;.
+    the sign of the rcwa permutation&nbsp;<A>g</A> of&nbsp;&ZZ;.
   </Returns>
   <Description>
     Let <M>\sigma</M> be an rcwa permutation of the integers, and let
@@ -1148,7 +1148,7 @@ Label="for an epi. from a free group to an rcwa group"/>.
         Arg="g" Label="for an rcwa permutation of Z"/>
   <Meth Name="Factorization" Arg="g" Label="for an rcwa permutation of Z"/>
   <Returns>
-    a factorization of the bijective rcwa mapping&nbsp;<A>g</A> of&nbsp;&ZZ;
+    a factorization of the rcwa permutation&nbsp;<A>g</A> of&nbsp;&ZZ;
     into class shifts, class reflections and class transpositions, provided
     that such a factorization exists and the method finds it.
   </Returns>
@@ -1212,7 +1212,7 @@ class reflections and class transpositions:
   </Returns>
   <Description>
     For an odd prime <M>p</M>, the prime switch <M>\sigma_p</M> is
-    a bijective rcwa mapping of&nbsp;&ZZ; with modulus&nbsp;<M>4p</M>,
+    an rcwa permutation of&nbsp;&ZZ; with modulus&nbsp;<M>4p</M>,
     multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
     The key mathematical property of a prime switch is that it is a product
     of class transpositions, but that its multiplier and its divisor are
@@ -1225,7 +1225,7 @@ class reflections and class transpositions:
 <![CDATA[
 gap> Display(PrimeSwitch(3));
 
-Wild bijective rcwa mapping of Z with modulus 12
+Wild rcwa permutation of Z with modulus 12
 
         /
         | (3n+4)/2 if n in 2(4)
@@ -1246,7 +1246,7 @@ gap> Factorization(PrimeSwitch(3));
   </Description>
 </ManSection>
 
-Obtaining a factorization of a bijective rcwa mapping into class shifts,
+Obtaining a factorization of an rcwa permutation into class shifts,
 class reflections and class transpositions is particularly difficult if
 multiplier and divisor are coprime. A prototype of permutations which have
 this property has been introduced in a different context
@@ -1263,7 +1263,7 @@ in&nbsp;<Cite Key="Keller99"/>:
 <![CDATA[
 gap> Display(mKnot(5));
 
-Wild bijective rcwa mapping of Z with modulus 5
+Wild rcwa permutation of Z with modulus 5
 
         /
         | 6n/5     if n in 0(5)
@@ -1305,10 +1305,10 @@ cannot have infinitely many cycles of any given finite length.
 <Example>
 <![CDATA[
 gap> Root(ClassTransposition(0,2,1,2),100);
-<bijective rcwa mapping of Z with modulus 8>
+<rcwa permutation of Z with modulus 8>
 gap> Display(last);
 
-Bijective rcwa mapping of Z with modulus 8
+Rcwa permutation of Z with modulus 8
 
         /
         | n+2 if n in Z \ 6(8) U 7(8)
