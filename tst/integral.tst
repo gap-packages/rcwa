@@ -1347,8 +1347,7 @@ gap> Length(Ball(G,One(G),8));
 106
 gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2));;
 gap> phi := IsomorphismRcwaGroup(F);
-[ f1, f2 ] -> 
-[ ClassReflection(0,1), Rcwa permutation of Z: n -> -n + 1 ]
+[ f1, f2 ] -> [ ClassReflection(0,1), Rcwa permutation of Z: n -> -n + 1 ]
 gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2),CyclicGroup(2));
 <fp group on the generators [ f1, f2, f3 ]>
 gap> phi := IsomorphismRcwaGroup(F);
@@ -1438,14 +1437,12 @@ gap> List([g,h,g*h,a,ab],elm->RespectsPartition(elm,P));
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,8);
 [ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
-    [ <rcwa permutation of Z with modulus 8>, 
-      IdentityMapping( Integers ) ], 
+    [ <rcwa permutation of Z with modulus 8>, IdentityMapping( Integers ) ], 
   [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
     [ <rcwa permutation of Z with modulus 4>, 
       <rcwa permutation of Z with modulus 4> ], 
   [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
-    [ <rcwa permutation of Z with modulus 8>, 
-      IdentityMapping( Integers ) ] ]
+    [ <rcwa permutation of Z with modulus 8>, IdentityMapping( Integers ) ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(8) U 1(8), 2(4) U 3(4), 4(8) U 5(8) ]
 gap> List(last2,phi->Size(Image(phi)));
