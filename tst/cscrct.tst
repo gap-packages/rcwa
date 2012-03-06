@@ -22,19 +22,19 @@ ClassShift(1,2)
 gap> last^2;
 ClassShift(1,2)^2
 gap> LaTeXString(last);
-"\\nu_{1(2)}^{2}"
+"{\\nu_{1(2)}}^2"
 gap> last2^3;
 ClassShift(1,2)^6
 gap> LaTeXString(last);
-"\\nu_{1(2)}^{6}"
+"{\\nu_{1(2)}}^6"
 gap> last2^-1;
 ClassShift(1,2)^-6
 gap> LaTeXString(last);
-"\\nu_{1(2)}^{-6}"
+"{\\nu_{1(2)}}^{-6}"
 gap> last2^-2;
 ClassShift(1,2)^12
 gap> LaTeXString(last);
-"\\nu_{1(2)}^{12}"
+"{\\nu_{1(2)}}^{12}"
 gap> l := [ ClassShift(0,1), ClassReflection(0,1), ClassRotation(0,1,-1),
 >           ClassTransposition(0,2,1,2) ];;
 gap> for g in l do SetName(g,"a"); od; l;
