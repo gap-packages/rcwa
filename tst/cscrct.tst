@@ -51,7 +51,7 @@ gap> ClassShift(Zero(R1),x);
 ClassShift(0,x)
 gap> Display(last);
 
-Bijective rcwa mapping of GF(2)[x] with modulus x, of order 2
+Rcwa permutation of GF(2)[x] with modulus x, of order 2
 
         /
         | P + x if P in 0(x)
@@ -71,7 +71,7 @@ gap> ClassShift(R1,ResidueClass(R1,x,Zero(x)));
 ClassShift(0,x)
 gap> Display(last);
 
-Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 2
+Rcwa permutation of GF(2^2)[x] with modulus x, of order 2
 
         /
         | P + x if P in 0(x)
@@ -92,7 +92,7 @@ ClassShift(0,1)
 gap> ClassShift(R1);
 ClassShift(0,1)
 gap> Display(last);
-Bijective rcwa mapping of GF(2^2)[x]: P -> P + Z(2)^0
+Rcwa permutation of GF(2^2)[x]: P -> P + Z(2)^0
 gap> ClassReflection(Integers,1,2);
 ClassReflection(1,2)
 gap> ClassReflection([Integers,1,2]);
@@ -134,11 +134,11 @@ ClassReflection(0,1)
 gap> ClassReflection([Z_pi([2,3])]);
 ClassReflection(0,1)
 gap> Display(last);
-Bijective rcwa mapping of Z_( 2, 3 ): n -> -n
+Rcwa permutation of Z_( 2, 3 ): n -> -n
 gap> ClassReflection(R2);
 ClassReflection(0,1)
 gap> Display(last);
-Bijective rcwa mapping of GF(5^2)[y]: P -> -P
+Rcwa permutation of GF(5^2)[y]: P -> -P
 gap> ClassRotation(Integers,-1);
 ClassReflection(0,1)
 gap> ClassRotation(Integers,1);
@@ -154,12 +154,12 @@ ClassRotation(0,1,-1/3)
 gap> ClassRotation(Z_pi(2),1/3);
 ClassRotation(0,1,1/3)
 gap> Display(last);
-Tame bijective rcwa mapping of Z_( 2 ): n -> 1/3 n
+Tame rcwa permutation of Z_( 2 ): n -> 1/3 n
 gap> ClassRotation(Z_pi(2),ResidueClass(Z_pi(2),2,1),3/5);
 ClassRotation(1,2,3/5)
 gap> Display(last);
 
-Tame bijective rcwa mapping of Z_( 2 ) with modulus 2, of order infinity
+Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
 
         /
         | 3/5 n + 2/5 if n in 1(2)
@@ -175,7 +175,7 @@ gap> ClassRotation(R1,ResidueClass(R1,x,Zero(R1)),Z(4)*One(R1));
 ClassRotation(0,x,Z(2^2))
 gap> Display(last);
 
-Bijective rcwa mapping of GF(2^2)[x] with modulus x, of order 3
+Rcwa permutation of GF(2^2)[x] with modulus x, of order 3
 
         /
         | Z(2^2)*P if P in 0(x)
@@ -188,11 +188,11 @@ ClassRotation(0,x,Z(2^2))^2
 gap> ClassRotation(R1,Z(4)*One(R1));
 ClassRotation(0,1,Z(2^2))
 gap> Display(last);
-Bijective rcwa mapping of GF(2^2)[x]: P -> Z(2^2)*P
+Rcwa permutation of GF(2^2)[x]: P -> Z(2^2)*P
 gap> last^2;
 ClassRotation(0,1,Z(2^2))^2
 gap> Display(last);
-Bijective rcwa mapping of GF(2^2)[x]: P -> Z(2^2)^2*P
+Rcwa permutation of GF(2^2)[x]: P -> Z(2^2)^2*P
 gap> ClassRotation(R2,ResidueClass(R2,y^2,y+1),Z(25)*One(R2));
 ClassRotation(y+1,y^2,Z(5^2))
 gap> last^2;
@@ -209,7 +209,7 @@ gap> ClassTransposition(Z_pi(2),0,2,1,2);
 ClassTransposition(0,2,1,2)
 gap> Display(last);
 
-Bijective rcwa mapping of Z_( 2 ) with modulus 2, of order 2
+Rcwa permutation of Z_( 2 ) with modulus 2, of order 2
 
         /
         | n + 1 if n in 0(2)
@@ -236,7 +236,7 @@ gap> Support(last);
 Z_( 2, 3 ) \ 2(3)
 gap> Display(last2);
 
-Bijective rcwa mapping of Z_( 2, 3 ) with modulus 3, of order 2
+Rcwa permutation of Z_( 2, 3 ) with modulus 3, of order 2
 
         /
         | n + 1 if n in 0(3)
@@ -266,7 +266,7 @@ gap> ClassTransposition(ResidueClass(R1,x,Zero(R1)),
 ClassTransposition(0,x,x+1,x^2)
 gap> Display(last);
 
-Bijective rcwa mapping of GF(2^2)[x] with modulus x^2, of order 2
+Rcwa permutation of GF(2^2)[x] with modulus x^2, of order 2
 
         /
         | x*P + x+Z(2)^0   if P in 0(x)
@@ -328,7 +328,7 @@ gap> ct*ct;
 IdentityMapping( ( Integers^2 ) )
 gap> Display(ct);
 
-Bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order 2
+Rcwa permutation of Z^2 with modulus (2,6)Z+(0,15)Z, of order 2
 
             /
             | (2m,-3m+3n+6)      if (m,n) in (0,0)+(1,3)Z+(0,5)Z
@@ -369,11 +369,11 @@ true
 gap> cs1 = cs2;
 false
 gap> Display(cs1);
-Tame bijective rcwa mapping of Z^2: (m,n) -> (m+1,n)
+Tame rcwa permutation of Z^2: (m,n) -> (m+1,n)
 gap> Display(cs2);
-Tame bijective rcwa mapping of Z^2: (m,n) -> (m,n+1)
+Tame rcwa permutation of Z^2: (m,n) -> (m,n+1)
 gap> Display(cs1*cs2);
-Bijective rcwa mapping of Z^2: (m,n) -> (m+1,n+1)
+Rcwa permutation of Z^2: (m,n) -> (m+1,n+1)
 gap> Comm(cs1,cs2);
 IdentityMapping( ( Integers^2 ) )
 gap> cs := ClassShift(cls[4],1);
@@ -392,8 +392,7 @@ gap> Support(cs);
 (0,11)+(2,6)Z+(0,15)Z
 gap> Display(cs);
 
-Tame bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order infin\
-ity
+Tame rcwa permutation of Z^2 with modulus (2,6)Z+(0,15)Z, of order infinity
 
             /
             | (m+2,n+6) if (m,n) in (0,11)+(2,6)Z+(0,15)Z
@@ -414,7 +413,7 @@ gap> Order(cr);
 gap> Support(cr);
 Z^2 \ [ [ 0, 0 ] ]
 gap> Display(cr);
-Bijective rcwa mapping of Z^2: (m,n) -> (-m,-n)
+Rcwa permutation of Z^2: (m,n) -> (-m,-n)
 gap> cr*cr;
 IdentityMapping( ( Integers^2 ) )
 gap> cr := ClassReflection(cls[1]);
@@ -431,7 +430,7 @@ gap> Support(cr);
 (0,0)+(1,3)Z+(0,5)Z \ [ [ 0, 0 ] ]
 gap> Display(cr);
 
-Bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order 2
+Rcwa permutation of Z^2 with modulus (1,3)Z+(0,5)Z, of order 2
 
             /
             | (-m,-n) if (m,n) in (0,0)+(1,3)Z+(0,5)Z
@@ -461,8 +460,7 @@ gap> last^cr;
 (1,14)+(2,6)Z+(0,15)Z
 gap> Display(cr);
 
-Tame bijective rcwa mapping of Z^2 with modulus (2,6)Z+(0,15)Z, of order infin\
-ity
+Tame rcwa permutation of Z^2 with modulus (2,6)Z+(0,15)Z, of order infinity
 
             /
             | (m,(15m+2n-15)/2) if (m,n) in (1,14)+(2,6)Z+(0,15)Z

@@ -109,7 +109,7 @@ gap> IsBijective(SigmaT);
 true
 gap> Display(SigmaT);
 
-Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
+Rcwa permutation of Z^2 with modulus (1,0)Z+(0,6)Z
 
             /
             | (2m,(3n+1)/2) if (m,n) in (0,1)+(1,0)Z+(0,2)Z
@@ -121,7 +121,7 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
 gap> Display(SigmaT:table,VarNames:="v");
 
-Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
+Rcwa permutation of Z^2 with modulus (1,0)Z+(0,6)Z
 
       v mod (1,0)Z+(0,6)Z      |                 Image of v
 -------------------------------+----------------------------------------------
@@ -131,7 +131,7 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
 gap> Display(SigmaT^-1);
 
-Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
+Rcwa permutation of Z^2 with modulus (2,0)Z+(0,3)Z
 
             /
             | (m,2n)         if (m,n) in (0,0)+(1,0)Z+(0,3)Z U 
@@ -143,7 +143,7 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
 gap> Display(SigmaT^-1:table);
 
-Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
+Rcwa permutation of Z^2 with modulus (2,0)Z+(0,3)Z
 
     [m,n] mod (2,0)Z+(0,3)Z    |               Image of [m,n]
 -------------------------------+----------------------------------------------
@@ -153,7 +153,7 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 
 gap> Display(SigmaT^2);
 
-Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,12)Z
+Rcwa permutation of Z^2 with modulus (1,0)Z+(0,12)Z
 
             /
             | (2m,(3n+1)/4)   if (m,n) in (0,1)+(1,0)Z+(0,4)Z
@@ -170,7 +170,7 @@ Bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,12)Z
 gap> SigmaT*SigmaT^-1;
 IdentityMapping( ( Integers^2 ) )
 gap> SigmaT^2*SigmaT^-1;
-<bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
+<rcwa permutation of Z^2 with modulus (1,0)Z+(0,6)Z>
 gap> last=SigmaT;
 true
 gap> SigmaT^-1*SigmaT^2 = SigmaT;
@@ -297,7 +297,7 @@ gap> P1 := Flat(P1);
   (2,5)+(4,0)Z+(0,6)Z, (1,0)+(2,0)Z+(0,2)Z, (1,1)+(2,0)Z+(0,2)Z ]
 gap> P2 := Set(P1);;
 gap> g := RcwaMapping(P1,P2);
-<bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z>
+<rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z>
 gap> P1^g;
 [ (0,0)+(2,0)Z+(0,2)Z, (1,0)+(2,0)Z+(0,2)Z, (1,1)+(2,0)Z+(0,2)Z, 
   (0,1)+(4,0)Z+(0,6)Z, (0,3)+(4,0)Z+(0,6)Z, (0,5)+(4,0)Z+(0,6)Z, 
@@ -314,7 +314,7 @@ gap> List(P2,Density);
 [ 1/4, 1/4, 1/4, 1/24, 1/24, 1/24, 1/24, 1/24, 1/24 ]
 gap> Display(g);
 
-Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z
+Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z
 
             /
             | (2m,3n+3)         if (m,n) in (1,0)+(2,0)Z+(0,2)Z
@@ -330,7 +330,7 @@ Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z
 
 gap> Display(g:table);
 
-Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z
+Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z
 
     [m,n] mod (4,0)Z+(0,6)Z    |               Image of [m,n]
 -------------------------------+----------------------------------------------
@@ -349,7 +349,7 @@ gap> ct := ClassTransposition(P1[1],P1[2]);
 ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(0,1)+(4,0)Z+(0,6)Z)
 gap> Display(ct);
 
-Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
+Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
 
             /
             | (2m,3n+1)     if (m,n) in (0,0)+(2,0)Z+(0,2)Z
@@ -375,8 +375,7 @@ gap> cr := mat^phi;
 ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[12,7],[5,3]])
 gap> Display(cr);
 
-Tame bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order infini\
-ty
+Tame rcwa permutation of Z^2 with modulus (1,3)Z+(0,5)Z, of order infinity
 
             /
             | (9m+n-2,53m+6n-10) if (m,n) in (0,2)+(1,3)Z+(0,5)Z
@@ -386,8 +385,7 @@ ty
 
 gap> Display(cr:table);
 
-Tame bijective rcwa mapping of Z^2 with modulus (1,3)Z+(0,5)Z, of order infini\
-ty
+Tame rcwa permutation of Z^2 with modulus (1,3)Z+(0,5)Z, of order infinity
 
     [m,n] mod (1,3)Z+(0,5)Z    |               Image of [m,n]
 -------------------------------+----------------------------------------------
@@ -399,10 +397,10 @@ true
 gap> (mat^-1)^phi = (mat^phi)^-1;
 true
 gap> r := Restriction(SigmaT,IdentityRcwaMappingOfZxZ*[[2,0],[0,1]]+[1,0]);
-<bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z>
+<rcwa permutation of Z^2 with modulus (2,0)Z+(0,6)Z>
 gap> Display(r);
 
-Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z
+Rcwa permutation of Z^2 with modulus (2,0)Z+(0,6)Z
 
             /
             | (2m-1,(3n+1)/2) if (m,n) in (1,1)+(2,0)Z+(0,2)Z
@@ -413,7 +411,7 @@ Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z
             \
 
 gap> Induction(r,IdentityRcwaMappingOfZxZ*[[2,0],[0,1]]+[1,0]);
-<bijective rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z>
+<rcwa permutation of Z^2 with modulus (1,0)Z+(0,6)Z>
 gap> last=SigmaT;
 true
 gap> IsClassWiseTranslating(SigmaT);

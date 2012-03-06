@@ -107,7 +107,7 @@ gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
 ClassShift(0,1)^19
 gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
 >                                OnTuples);
-<bijective rcwa mapping of Z with modulus 15, of order 18>
+<rcwa permutation of Z with modulus 15, of order 18>
 gap> OnTuples([0,-7,1,2],elm);
 [ 7, 1, 3, 0 ]
 gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
@@ -119,22 +119,22 @@ gap> P1 := List([[0,2],[1,4],[3,4]],ResidueClass);
 gap> P2 := AllResidueClassesModulo(3);
 [ 0(3), 1(3), 2(3) ]
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<bijective rcwa mapping of Z with modulus 4>
+<rcwa permutation of Z with modulus 4>
 gap> P1^elm = P2;
 true
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame bijective rcwa mapping of Z with modulus 24>
+<tame rcwa permutation of Z with modulus 24>
 gap> P1^elmt = P2;
 true
 gap> P1 := [ResidueClass(1,3),Union(ResidueClass(0,3),ResidueClass(2,3))];;
 gap> P2 := [Union(List([[2,5],[4,5]],ResidueClass)),
 >           Union(List([[0,5],[1,5],[3,5]],ResidueClass))];;
 gap> elm := RepresentativeAction(RCWA(Integers),P1,P2);
-<bijective rcwa mapping of Z with modulus 6>
+<rcwa permutation of Z with modulus 6>
 gap> P1^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> elmt := RepresentativeAction(RCWA(Integers),P1,P2:IsTame);
-<tame bijective rcwa mapping of Z with modulus 120>
+<tame rcwa permutation of Z with modulus 120>
 gap> P1^elmt;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
 gap> Modulus(RepresentativeAction(RCWA(Integers),
@@ -173,12 +173,12 @@ gap> P2 := AllResidueClassesModulo(R,L2);
 [ (0,0)+(2,1)Z+(0,2)Z, (0,1)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z, 
   (1,1)+(2,1)Z+(0,2)Z ]
 gap> g := RepresentativeAction(G,P1,P2);
-<bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z>
+<rcwa permutation of Z^2 with modulus (2,0)Z+(0,1)Z>
 gap> P1^g = P2;
 true
 gap> Display(g);
 
-Bijective rcwa mapping of Z^2 with modulus (2,0)Z+(0,1)Z
+Rcwa permutation of Z^2 with modulus (2,0)Z+(0,1)Z
 
             /
             | (m,(m+2n)/2)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z
@@ -219,7 +219,7 @@ Z_( 2, 3 ) \ 0(3)
 gap> S2 := ResidueClassUnion(Z_pi([2,3]),8,[3,6,7]);
 3(4) U 6(8)
 gap> elm := RepresentativeAction(G,S1,S2);
-<bijective rcwa mapping of Z_( 2, 3 ) with modulus 12>
+<rcwa permutation of Z_( 2, 3 ) with modulus 12>
 gap> S1^elm = S2;
 true
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
@@ -256,7 +256,7 @@ gap> P1 := RespectedPartition(ct);
 gap> P2 := Permuted(P1,ct);
 [ 1(x^2), 0(x), x+1(x^2) ]
 gap> g := RepresentativeAction(RCWA(R),P1,P2);
-<bijective rcwa mapping of GF(2)[x] with modulus x^2>
+<rcwa permutation of GF(2)[x] with modulus x^2>
 gap> P1^g = P2;
 true
 gap> cls := AllResidueClassesModulo(R,x^3);;
@@ -265,7 +265,7 @@ x+1(x^2) U 0(x^3)
 gap> S2 := Union(cls{[1,7]});
 0(x^3) U x^2+x(x^3)
 gap> elm := RepresentativeAction(G,S1,S2);
-<bijective rcwa mapping of GF(2)[x] with modulus x^3>
+<rcwa permutation of GF(2)[x] with modulus x^3>
 gap> S1^elm = S2;
 true
 gap> G := CT(Integers);
@@ -300,7 +300,7 @@ gap> IsSubgroup(G,H);
 false
 gap> conj := RepresentativeAction(CT(Integers),ClassTransposition(1,4,2,6),
 >                                              ClassTransposition(2,8,3,10));
-<bijective rcwa mapping of Z with modulus 480>
+<rcwa permutation of Z with modulus 480>
 gap> ClassTransposition(1,4,2,6)^conj = ClassTransposition(2,8,3,10);
 true
 gap> Factorization(conj);
@@ -353,12 +353,12 @@ ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(1,0)+(2,1)Z+(0,2)Z)
 gap> ct2 := ClassTransposition(P1[1],P2[4]);
 ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(1,1)+(2,1)Z+(0,2)Z)
 gap> g := RepresentativeAction(G,ct1,ct2);
-<bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z>
+<rcwa permutation of Z^2 with modulus (4,0)Z+(0,4)Z>
 gap> ct1^g = ct2;
 true
 gap> Display(g);
 
-Bijective rcwa mapping of Z^2 with modulus (4,0)Z+(0,4)Z
+Rcwa permutation of Z^2 with modulus (4,0)Z+(0,4)Z
 
             /
             | (m,n+1)          if (m,n) in (1,0)+(2,1)Z+(0,2)Z
@@ -398,7 +398,7 @@ ClassTransposition(0,4,1,6)
 gap> ct2 := ClassTransposition(ResidueClass(Zpi,2,1),ResidueClass(Zpi,4,2));
 ClassTransposition(1,2,2,4)
 gap> elm := RepresentativeAction(G,ct1,ct2);
-<bijective rcwa mapping of Z_( 2, 3 ) with modulus 48>
+<rcwa permutation of Z_( 2, 3 ) with modulus 48>
 gap> ct1^elm = ct2;
 true
 gap> Factorization(elm);
@@ -439,7 +439,7 @@ ClassTransposition(1,x,x,x^2+x)
 gap> ct2 := ClassTransposition(One(R),x^2,x,x^2+x);
 ClassTransposition(1,x^2,x,x^2+x)
 gap> elm := RepresentativeAction(G,ct1,ct2);
-<bijective rcwa mapping of GF(2)[x] with modulus x^5+x^4>
+<rcwa permutation of GF(2)[x] with modulus x^5+x^4>
 gap> ct1^elm = ct2;
 true
 gap> Factorization(elm);
