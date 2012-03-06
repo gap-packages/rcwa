@@ -699,5 +699,8 @@ Changes between version 3.1.2 and version 3.2.0:
  - Now the new function `Test' is used instead of `ReadTest' for the
    test suite.
 
+ - In order to emphasize the permutation aspect, in output the wording
+   "bijective rcwa mapping" has been changed to "rcwa permutation".
+
  - Now, RCWA needs ResClasses 3.1.0.
 
