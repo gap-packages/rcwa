@@ -2522,13 +2522,13 @@ InstallMethod( ViewObj,
     if   HasIsTame(f) and not (HasOrder(f) and IsInt(Order(f)))
     then if IsTame(f) then Print("tame "); else Print("wild "); fi; fi;
     if   HasIsBijective(f) and IsBijective(f)
-    then Print("bijective ");
+    then Print("rcwa permutation");
     elif HasIsInjective(f) and IsInjective(f)
-    then Print("injective ");
+    then Print("injective rcwa mapping");
     elif HasIsSurjective(f) and IsSurjective(f)
-    then Print("surjective ");
+    then Print("surjective rcwa mapping");
     fi;
-    Print("rcwa mapping of ",RingToString(Source(f)));
+    Print(" of ",RingToString(Source(f)));
     Print(" with modulus ",ModulusAsFormattedString(Modulus(f)));
     if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
     then Print(", of order ",Order(f)); fi;
@@ -2792,20 +2792,20 @@ InstallMethod( Display,
         prefix := true;
       fi;
       if   HasIsBijective(f) and IsBijective(f)
-      then if prefix then Print("bijective ");
-                     else Print("Bijective "); fi;
+      then if prefix then Print("rcwa permutation ");
+                     else Print("Rcwa permutation "); fi;
            prefix := true;
       elif HasIsInjective(f) and IsInjective(f)
-      then if prefix then Print("injective ");
-                     else Print("Injective "); fi;
+      then if prefix then Print("injective rcwa mapping");
+                     else Print("Injective rcwa mapping"); fi;
            prefix := true;
       elif HasIsSurjective(f) and IsSurjective(f)
-      then if prefix then Print("surjective ");
-                     else Print("Surjective "); fi;
+      then if prefix then Print("surjective rcwa mapping");
+                     else Print("Surjective rcwa mapping"); fi;
            prefix := true;
       fi;
-      if prefix then Print("rcwa"); else Print("Rcwa"); fi;
-      Print(" mapping of ",ringname);
+      if not prefix then Print("Rcwa mapping"); fi;
+      Print(" of ",ringname);
 
       if IsOne(m) then
 
@@ -3136,20 +3136,20 @@ InstallMethod( Display,
            prefix := true;
          fi;
          if   HasIsBijective(f) and IsBijective(f)
-         then if prefix then Print("bijective ");
-                        else Print("Bijective "); fi;
+         then if prefix then Print("rcwa permutation ");
+                        else Print("Rcwa permutation "); fi;
               prefix := true;
          elif HasIsInjective(f) and IsInjective(f)
-         then if prefix then Print("injective ");
-                        else Print("Injective "); fi;
+         then if prefix then Print("injective rcwa mapping");
+                        else Print("Injective rcwa mapping"); fi;
               prefix := true;
          elif HasIsSurjective(f) and IsSurjective(f)
-         then if prefix then Print("surjective ");
-                        else Print("Surjective "); fi;
+         then if prefix then Print("surjective rcwa mapping");
+                        else Print("Surjective rcwa mapping"); fi;
               prefix := true;
          fi;
-         if prefix then Print("rcwa"); else Print("Rcwa"); fi;
-         Print(" mapping of ",ringname);
+         if not prefix then Print("Rcwa mapping"); fi;
+         Print(" of ",ringname);
          if IsOne(m) then
            Print(": ",varname," -> ");
            if   IsRcwaMappingOfZ(f)
