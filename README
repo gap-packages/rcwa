@@ -40,7 +40,7 @@ Polycyclic 2.6  and GAPDoc 1.4.  All required packages are already present in
 a standard GAP installation. RCWA can be used  under UNIX,  under Windows and
 on  the MacIntosh.  It is completely  written  in the  GAP language  and does
 neither contain nor require  external binaries.  Warnings concerning  missing
-binaries issued by GRAPE or other packages can savely be ignored.
+binaries issued by GRAPE or other packages can safely be ignored.
 
 
                                 Installation
