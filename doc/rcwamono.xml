@@ -264,7 +264,7 @@ forward orbits or subsets of such under the action of an rcwa monoid:
     check whether <A>f</A> is indeed an element of&nbsp;<A>M</A>.
     The methods require that point- / element comparisons are cheap.
     They are not only applicable to rcwa monoids.
-    If the option <A>Spheres</A> is set, the ball is splitted up and
+    If the option <A>Spheres</A> is set, the ball is split up and
     returned as a list of spheres.
 <Example>
 <![CDATA[

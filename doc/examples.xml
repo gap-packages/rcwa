@@ -2426,7 +2426,7 @@ a mapping <M>f</M> such that <M>n^f&lt;n</M>, we still need to check this
 condition for <Q>small</Q>&nbsp;<M>n</M>. Since in case <M>c>a</M> we have
 <M>(an+b)/c \geq n</M> if only if <M>n \leq b/(c-a)</M>, we only need to
 check those <M>n</M> which are not larger than the largest coefficient
-<M>b_{r(m)}</M> occuring in any of the products under consideration:
+<M>b_{r(m)}</M> occurring in any of the products under consideration:
 
 <Example>
 <![CDATA[
