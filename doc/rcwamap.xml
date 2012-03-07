@@ -420,7 +420,7 @@ necessary for understanding this manual or for using this package.
   <Meth Name="RcwaMapping" Arg="m, values"
         Label="by modulus and list of values"/>
   <Meth Name="RcwaMapping" Arg="pi, coeffs"
-        Label="by set of noninvertible primes and list of coefficients"/>
+        Label="by set of non-invertible primes and list of coefficients"/>
   <Meth Name="RcwaMapping" Arg="q, m, coeffs"
         Label="by finite field size, modulus and list of coefficients"/>
   <Meth Name="RcwaMapping" Arg="P1, P2"
@@ -653,7 +653,7 @@ Rcwa permutations can also be inverted, thus there is a method for
 <C>Inverse</C>. The latter method is usually accessed by raising a mapping
 to a power with negative exponent. Multiplying, inverting and computing
 powers of tame rcwa mappings is cheap. Computing powers of wild mappings
-is usually expensive -- runtime and memory requirements normally grow
+is usually expensive -- run time and memory requirements normally grow
 approximately exponentially with the exponent. How expensive multiplying
 a couple of wild mappings is, varies very much. In any case, the amount of
 memory required for storing an rcwa mapping is proportional to its modulus.
@@ -1173,7 +1173,7 @@ Label="for an epi. from a free group to an rcwa group"/>.
     <A>Direction</A> to <C>"from the left"</C>. <P/>
 
     By default, a reasonably coarse respected partition of the integral
-    mapping occuring in the final stage of the algorithm is computed.
+    mapping occurring in the final stage of the algorithm is computed.
     This can be suppressed by setting the option <A>ShortenPartition</A>
     equal to <C>false</C>. <P/>
 
@@ -1444,7 +1444,7 @@ gap> InjectiveAsMappingFrom(T);
     the first <A>length</A> iterates in the trajectory of the
     rcwa mapping&nbsp;<A>f</A> starting at&nbsp;<A>n</A>, respectively the
     initial part of the trajectory of the rcwa mapping&nbsp;<A>f</A>
-    starting at&nbsp;<A>n</A> which ends at the first occurence of an
+    starting at&nbsp;<A>n</A> which ends at the first occurrence of an
     iterate in the set <A>terminal</A>. If the argument <A>m</A> is given,
     the iterates are reduced (mod&nbsp;<A>m</A>).
   </Returns>
@@ -1752,7 +1752,7 @@ used to prove anything. Nevertheless they can sometimes be useful:
     This operation tries to compute the <E>contraction centre</E> of the
     rcwa mapping <A>f</A>. Assuming its existence this is the unique finite
     subset <M>S_0</M> of the source of&nbsp;<A>f</A> on which <A>f</A>
-    induces a permutation and which intersects nontrivially with any
+    induces a permutation and which intersects non-trivially with any
     trajectory of&nbsp;<A>f</A>. The mapping&nbsp;<A>f</A> is assumed
     to be <E>contracting</E>, i.e. to have such a contraction centre.
     As in general contraction centres are likely not computable, the methods
