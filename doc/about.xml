@@ -56,7 +56,7 @@ the author felt that this is a gap which is worth to be filled.
 <Section Label="sec:Purpose">
 <Heading>Purpose of this package</Heading>
 
-Most research in computational group theory focusses mainly on finite
+Most research in computational group theory focuses mainly on finite
 permutation groups, matrix groups, finitely presented groups, polycyclically
 presented groups and automata groups.
 For details, we refer to&nbsp;<Cite Key="HoltEickOBrien05"/>. <P/>
@@ -155,7 +155,7 @@ Of course this package often does not provide an out-of-the-box solution
 for a given problem. Quite often it is possible to find an answer for
 a given question by using an interactive trial-and-error approach. <P/>
 
-With substancial help of this package, the author has found the results
+With substantial help of this package, the author has found the results
 mentioned in Section&nbsp;<Ref Label="sec:GroupsWhichEmbed"/>.
 Interactive sessions with this package have also lead to the development
 of most of the algorithms which are now implemented in it. Just to mention
