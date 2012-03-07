@@ -335,7 +335,7 @@ and uses now better algorithms than in 2007.
     If successful, return <C>false</C>. If not, try to factor <A>g</A> into
     generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
     If successful, return <C>true</C>. If <A>g</A> is in <A>G</A>, this
-    terminates after a finite number of steps. Both runtime and memory
+    terminates after a finite number of steps. Both run time and memory
     requirements are exponential in the word length. If <A>g</A> is not
     in <A>G</A> at this stage, the method runs into an infinite loop.
   </Item>
@@ -393,7 +393,7 @@ and uses now better algorithms than in 2007.
   <Item>
     Uses the equality test for orbits:
     The orbit equality test computes balls of increasing radius around the
-    orbit representatives until they intersect nontrivially. Once they do so,
+    orbit representatives until they intersect non-trivially. Once they do so,
     it returns <C>true</C>. If it finds that one or both of the orbits are
     finite, it makes use of that information, and returns <C>false</C> if
     appropriate. In between, i.e. after having computed balls to a certain
@@ -834,7 +834,7 @@ and uses now better algorithms than in 2007.
   <Item>
     Runs over the residue classes modulo the modulus of&nbsp;<A>f</A>,
     and selects those of them which <A>f</A> does not map to themselves,
-    but which intersect nontrivially with their images under&nbsp;<A>f</A>.
+    but which intersect non-trivially with their images under&nbsp;<A>f</A>.
   </Item>
 
   <Mark>
@@ -957,9 +957,9 @@ and uses now better algorithms than in 2007.
   <Item>
     As described in the documentation of these methods.
     The underlying idea to successively compute two balls around&nbsp;1
-    and&nbsp;<A>g</A> until they intersect nontrivially is standard
+    and&nbsp;<A>g</A> until they intersect non-trivially is standard
     in computational group theory. For rcwa groups it would mean wasting
-    both memory and runtime to actually compute group elements.
+    both memory and run time to actually compute group elements.
     Thus only images of tuples of points are computed and stored.
   </Item>
 
@@ -1053,7 +1053,7 @@ and uses now better algorithms than in 2007.
   <Item>
     As described in the documentation of these methods.
     The underlying idea to successively compute two balls around
-    <A>src</A> and <A>dest</A> until they intersect nontrivially
+    <A>src</A> and <A>dest</A> until they intersect non-trivially
     is standard in computational group theory. Words standing for
     products of generators of <A>G</A> are stored for any image
     of <A>src</A> or <A>dest</A>.    
