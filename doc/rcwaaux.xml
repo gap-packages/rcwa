@@ -23,7 +23,7 @@ The &RCWA; package can be used under UNIX, under Windows and on the
 MacIntosh. It is completely written in the &GAP; language and does neither
 contain nor require external binaries. In particular, warnings concerning
 missing binaries issued by <Package>GRAPE</Package> or other packages
-can savely be ignored.
+can safely be ignored.
 
 </Section>
 
@@ -98,7 +98,7 @@ are included in the distribution file anyway, users will not need it.
     However if the correct and the actual output look different
     mathematically or if you see error messages or if &GAP; crashes,
     then something went wrong. Also, reports about significantly
-    increased runtimes of individual commands as well as runtimes of
+    increased run times of individual commands as well as run times of
     test files which are much longer than the predicted times shown
     may indicate a problem.
   </Description>
