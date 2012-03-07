@@ -58,7 +58,7 @@ A further means of entering rcwa groups is the following:
     If the residue classes in <A>classes</A> are pairwise
     disjoint, then the returned group is the symmetric group on
     <A>classes</A>. If any two residue classes in <A>classes</A>
-    intersect nontrivially, then the returned group is trivial.
+    intersect non-trivially, then the returned group is trivial.
     In many other cases, the returned group is infinite.
 <Example>
 <![CDATA[
@@ -936,9 +936,9 @@ to determine them:
   <Returns>
     in the first form a list of all finite orbits of the rcwa
     group&nbsp;<A>G</A> of length at most <A>maxlng</A> which intersect
-    nontrivially with the set&nbsp;<A>S</A>.
+    non-trivially with the set&nbsp;<A>S</A>.
     In the second form a list of all cycles of the rcwa permutation <A>g</A>
-    of length at most&nbsp;<A>maxlng</A> which intersect nontrivially with
+    of length at most&nbsp;<A>maxlng</A> which intersect non-trivially with
     the set&nbsp;<A>S</A>.
     In the third form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most <A>maxlng</A> which do not correspond to cycles
@@ -950,7 +950,7 @@ to determine them:
     an option <A>finite</A>. If this option is set, it is assumed that all
     orbits are finite, in order to speed up the computation. If furthermore
     <A>maxlng</A> is negative, a list of <E>all</E> orbits which intersect
-    nontrivially with&nbsp;<A>S</A> is returned.
+    non-trivially with&nbsp;<A>S</A> is returned.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
@@ -1029,7 +1029,7 @@ gap> ShortResidueClassOrbits(G,48,10);
   <Description>
     The rcwa permutation <A>g</A> is assumed to have only finite
     cycles. If <A>g</A> has an infinite cycle which intersects
-    nontrivially with <A>S</A>, this may cause an infinite loop.
+    non-trivially with <A>S</A>, this may cause an infinite loop.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);;
@@ -1072,7 +1072,7 @@ properties or be it for other purposes:
     whether <A>g</A> is indeed an element of&nbsp;<A>G</A>.
     The methods require that element- / point comparisons are cheap.
     They are not only applicable to rcwa groups.
-    If the option <A>Spheres</A> is set, the ball is splitted up and
+    If the option <A>Spheres</A> is set, the ball is split up and
     returned as a list of spheres. There is a related operation
     <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>modulusbound</A>)</C>
     specifically for rcwa groups which computes only those elements of the
@@ -1137,7 +1137,7 @@ of the underlying ring to a given other tuple, if such elements exist:
 
     The algorithm is based on computing balls of increasing radius
     around <A>source</A> and <A>destination</A> until they intersect
-    nontrivially.
+    non-trivially.
 <Example>
 <![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
