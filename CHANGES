@@ -68,7 +68,7 @@ Changes between version 1.2.2 and version 1.3.0 (November 22, 2005):
    use of a better bound for the modulus of the product.
 
  - The archive file now includes a copy of the author's thesis
-   "Restklassenweise affine Gruppen" as well as an english translation of it.
+   "Restklassenweise affine Gruppen" as well as an English translation of it.
 
 Changes between version 1.3.0 and version 1.3.1:
 
@@ -79,7 +79,7 @@ Changes between version 1.3.1 and version 1.3.4:
  - The errata known on 29/12/2005 have been corrected in the copy of the
    thesis distributed with this package.
 
- - A bunch of typo's in the english translation of the thesis has been
+ - A bunch of typo's in the English translation of the thesis has been
    corrected.
 
 Changes between version 1.3.4 and version 1.3.5:
@@ -271,7 +271,7 @@ Further changes:
 
  - Methods for `Multiplier' and `Divisor' for rcwa groups have been added.
 
- - Some further minor extentions of the functionality have been made,
+ - Some further minor extensions of the functionality have been made,
    e.g. there is now a method for `ShortCycles' analogous to `ShortOrbits',
    and a function `InjectiveAsMappingFrom' has been added.
 
@@ -663,10 +663,10 @@ Changes between version 3.0.4 and version 3.1.1 (October 18, 2011):
 
  - The documentation has been improved in various places.
 
- - A run of the test suite now indicates changed runtimes of
+ - A run of the test suite now indicates changed run times of
    individual commands in comparison with a reference run.
 
- - The file gap/general.g has been splitted into gap/general.gd and
+ - The file gap/general.g has been split into gap/general.gd and
    gap/general.gi, in order to allow other packages to use the
    declarations before RCWA's implementation part is loaded.
 
