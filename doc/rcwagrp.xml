@@ -931,6 +931,8 @@ to determine them:
         Label="for rcwa group, set of points and bound on length"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng"
         Label="for rcwa permutation, set of points and bound on length"/>
+  <Oper Name="ShortCycles" Arg="g, S, maxlng, maxn"
+        Label="for rcwa permutation, set of points and bounds on length and points"/>
   <Oper Name="ShortCycles" Arg="g, maxlng"
         Label="for rcwa permutation and bound on length"/>
   <Returns>
@@ -941,6 +943,10 @@ to determine them:
     of length at most&nbsp;<A>maxlng</A> which intersect non-trivially with
     the set&nbsp;<A>S</A>.
     In the third form a list of all cycles of the rcwa permutation <A>g</A>
+    of length at most&nbsp;<A>maxlng</A> which intersect non-trivially with
+    the set&nbsp;<A>S</A> and which, in terms of euclidean norm, do not
+    exceed <A>maxn</A>.
+    In the fourth form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most <A>maxlng</A> which do not correspond to cycles
     consisting of residue classes.
   </Returns>
