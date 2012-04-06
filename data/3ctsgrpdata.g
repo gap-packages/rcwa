@@ -5657,7 +5657,8 @@ trsstatusset :=
 [ "> 1 orbit (mod m)","Mod(U DecreasingOn) exceeded <maxmod>",
   "U DecreasingOn stable for <maxeq> steps","exceeded memory bound",
   "finite","finite orbits","transitive",
-  "transitivity on small points unclear" ],
+  "transitivity on small points unclear",
+  "intransitive, but finitely many orbits" ],
 trsstatuspos :=
 [ 5,5,5,5,5,1,5,5,3,5,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,
   5,5,5,6,3,5,5,5,6,5,6,6,3,3,3,5,5,6,5,3,5,6,5,6,6,
