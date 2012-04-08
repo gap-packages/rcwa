@@ -433,6 +433,34 @@ InstallMethod( ShortOrbits,
   end );
 
 #############################################################################
+## 
+#M  ShortOrbits( <G>, <S>, <maxlng>, <maxn> ) . . . . . . . . for rcwa groups
+## 
+InstallMethod( ShortOrbits,
+               Concatenation("for an rcwa group over Z, a set and ",
+                             "two positive integers (RCWA)"),
+               ReturnTrue, [ IsRcwaGroup, IsList, IsPosInt, IsPosInt ], 0,
+
+  function ( G, S, maxlng, maxn )
+
+    local  gens, orbs, orb, oldlength, remaining, f;
+
+    gens := GeneratorsOfGroup(G);
+    orbs := []; remaining := ShallowCopy(Set(S));
+    while remaining <> [] do
+      orb := [remaining[1]];
+      repeat
+        oldlength := Length(orb);
+        for f in gens do orb := Union(orb,orb^f); od;
+      until Length(orb) > maxlng or Length(orb) = oldlength
+            or ForAny(orb,n->n>maxn);
+      if Length(orb) = oldlength then Add(orbs,Set(orb)); fi;
+      remaining := Difference(remaining,orb);
+    od;
+    return orbs;
+  end );
+
+#############################################################################
 ##
 #S  Computing balls of given radius in rcwa monoids and on the //////////////
 #S  underlying rings. ///////////////////////////////////////////////////////

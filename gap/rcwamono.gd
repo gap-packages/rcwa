@@ -98,16 +98,21 @@ DeclareOperation( "RestrictedBall",
 
 #############################################################################
 ##
-#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . . short orbits of rcwa monoid <G>
+#O  ShortOrbits( <G>, <S>, <maxlng> ) . . . .  short orbits of rcwa group <G>
+#O  ShortOrbits( <G>, <S>, <maxlng>, <maxn> ) . dito, with upper bound <maxn>
 #O  ShortOrbits( <M>, <S>, <maxlng> ) short forward orbits of rcwa monoid <M>
 ##
 ##  In the first case, this operation returns a list of all finite orbits of
 ##  the rcwa group <G> of length <= <maxlng>, which intersect nontrivially
 ##  with the set <S>.
-##  In the second case, it returns a list of all finite forward orbits with
-##  starting point within the set <S>.
+##  In the second case, it returns a list of all such orbits which do not
+##  contain a point larger than <maxn>.
+##  In the third case, it returns a list of all finite forward orbits with
+##  starting point within the set <S>, of length <= <maxlng>.
 ##
 DeclareOperation( "ShortOrbits", [ IsMonoid, IsListOrCollection, IsInt ] );
+DeclareOperation( "ShortOrbits", [ IsMonoid, IsListOrCollection, IsInt,
+                                   IsInt ] );
 
 #############################################################################
 ##
