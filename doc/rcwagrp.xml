@@ -929,6 +929,8 @@ to determine them:
   </Heading>
   <Oper Name="ShortOrbits" Arg="G, S, maxlng"
         Label="for rcwa group, set of points and bound on length"/>
+  <Oper Name="ShortOrbits" Arg="G, S, maxlng, maxn"
+        Label="for rcwa group, set of points and bound on length"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng"
         Label="for rcwa permutation, set of points and bound on length"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng, maxn"
@@ -936,17 +938,21 @@ to determine them:
   <Oper Name="ShortCycles" Arg="g, maxlng"
         Label="for rcwa permutation and bound on length"/>
   <Returns>
-    in the first form a list of all finite orbits of the rcwa
-    group&nbsp;<A>G</A> of length at most <A>maxlng</A> which intersect
-    non-trivially with the set&nbsp;<A>S</A>.
-    In the second form a list of all cycles of the rcwa permutation <A>g</A>
+    in the first form a list of all orbits of the rcwa group&nbsp;<A>G</A>
+    of length at most <A>maxlng</A> which intersect non-trivially with the
+    set&nbsp;<A>S</A>.
+    In the second form a list of all orbits of the rcwa group&nbsp;<A>G</A>
+    of length at most <A>maxlng</A> which intersect non-trivially with
+    the set&nbsp;<A>S</A> and which, in terms of euclidean norm, do not
+    exceed <A>maxn</A>.
+    In the third form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most&nbsp;<A>maxlng</A> which intersect non-trivially with
     the set&nbsp;<A>S</A>.
-    In the third form a list of all cycles of the rcwa permutation <A>g</A>
+    In the fourth form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most&nbsp;<A>maxlng</A> which intersect non-trivially with
     the set&nbsp;<A>S</A> and which, in terms of euclidean norm, do not
     exceed <A>maxn</A>.
-    In the fourth form a list of all cycles of the rcwa permutation <A>g</A>
+    In the fifth form a list of all cycles of the rcwa permutation <A>g</A>
     of length at most <A>maxlng</A> which do not correspond to cycles
     consisting of residue classes.
   </Returns>
