@@ -4853,7 +4853,7 @@ InstallMethod( RepresentativesActionPreImage,
   function ( G, src, dest, act, F )
 
     local  SetOfRepresentatives, Extended, R, gensG, gensF, 
-           orbsrc, orbdest, g, extstep, oldorbsizes,
+           orbsrc, orbdest, orbitlengthbound, g, extstep, oldorbsizes,
            inter, intersrc, interdest, compatible, quots;
 
     SetOfRepresentatives := function ( S, rel, less, pref )
@@ -4886,6 +4886,9 @@ InstallMethod( RepresentativesActionPreImage,
       return SetOfRepresentatives(orb,eq,lt,shorter);
     end;
 
+    orbitlengthbound := ValueOption("OrbitLengthBound");
+    if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
+
     if   IsPermGroup(G)
     then R := PositiveIntegers;
     elif IsRcwaGroup(G) then R := Source(One(G));
@@ -4900,6 +4903,10 @@ InstallMethod( RepresentativesActionPreImage,
     orbsrc := [[src,One(F)]]; orbdest := [[dest,One(F)]]; extstep := 0;
     repeat
       oldorbsizes := [Length(orbsrc),Length(orbdest)];
+      if Maximum(oldorbsizes) > orbitlengthbound then
+        Info(InfoRCWA,2,"Orbit lengths exceeded user-specified bound.");
+        return fail;
+      fi;
       orbsrc := Extended(orbsrc,gensG); orbdest := Extended(orbdest,gensG);
       extstep := extstep + 1;
       Info(InfoRCWA,2,"Orbit lengths after extension step ",extstep,": ",
