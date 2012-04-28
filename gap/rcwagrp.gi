@@ -4905,7 +4905,7 @@ InstallMethod( RepresentativesActionPreImage,
       oldorbsizes := [Length(orbsrc),Length(orbdest)];
       if Maximum(oldorbsizes) > orbitlengthbound then
         Info(InfoRCWA,2,"Orbit lengths exceeded user-specified bound.");
-        return fail;
+        return [];
       fi;
       orbsrc := Extended(orbsrc,gensG); orbdest := Extended(orbdest,gensG);
       extstep := extstep + 1;
