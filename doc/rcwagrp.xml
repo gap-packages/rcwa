@@ -571,7 +571,7 @@ membership can always be decided. For wild rcwa groups, membership can
 very often be decided quite quick as well, but -- as said -- not always. 
 Anyway, if <C>g</C> is contained in <C>G</C>, the membership test will
 eventually always return <C>true</C>, provided that there are sufficient
-computing resources (memory etc.). <P/>
+computing resources available (memory etc.). <P/>
 
 On Info level&nbsp;2 of <C>InfoRCWA</C> the membership test provides
 information on reasons why the given rcwa permutation is an element of
