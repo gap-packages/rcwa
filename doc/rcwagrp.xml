@@ -516,8 +516,8 @@ gap> StructureDescription(G:short);
   </Description>
 </ManSection>
 
-However the extent to which the structure of an rcwa group can be exhibited
-automatically is certainly limited. In general, one can find out much more
+The extent to which the structure of an rcwa group can be exhibited
+automatically is severely limited. In general, one can find out much more
 about the structure of a given rcwa group in an interactive session using
 the functionality described in the rest of this section and elsewhere in
 this manual. <P/>
@@ -560,18 +560,22 @@ gap> IsomorphismPermGroup(G);
 </Example>
 
 <Index Key="rcwa group" Subkey="membership test">rcwa group</Index>
+<Index Key="OrbitLengthBound">OrbitLengthBound</Index>
 
 Next we say a few words about the membership test for rcwa groups.
 For tame rcwa groups, membership or non-membership can always be decided.
 For wild groups, membership or non-membership can very often be decided
-quite quick as well, but not always. On Info level&nbsp;2 of <C>InfoRCWA</C>
-the membership test provides information on reasons why the given rcwa
-permutation is an element of the given rcwa group or&nbsp;not. <P/>
-
-The direct product of two free groups of rank&nbsp;2 can faithfully be
-represented as an rcwa group. According to&nbsp;<Cite Key="Mihailova58"/>
-this implies that in general the membership problem for rcwa groups is
-algorithmically undecidable.
+quite quick as well, but not always. In general the membership problem
+for rcwa groups is algorithmically unsolvable, see Corollary&nbsp;4.5
+in&nbsp;<Cite Key="Kohl09"/>. For particular cases where the user has
+established such search bound by means of theory, the membership test
+recognizes an option <C>OrbitLengthBound</C>. Note however that due to 
+the algorithmic unsolvability of the membership problem, &RCWA; has no
+means to check the correctness of such bound. So the correct use of this
+option remains within the full responsibility of the user.
+On Info level&nbsp;2 of <C>InfoRCWA</C> the membership test provides
+information on reasons why the given rcwa permutation is an element of
+the given rcwa group or&nbsp;not.
 
 <Example>
 <![CDATA[
