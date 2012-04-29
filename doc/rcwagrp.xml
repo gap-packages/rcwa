@@ -934,7 +934,7 @@ to determine them:
   <Oper Name="ShortOrbits" Arg="G, S, maxlng"
         Label="for rcwa group, set of points and bound on length"/>
   <Oper Name="ShortOrbits" Arg="G, S, maxlng, maxn"
-        Label="for rcwa group, set of points and bound on length"/>
+        Label="for rcwa group, set of points and bounds on length and points"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng"
         Label="for rcwa permutation, set of points and bound on length"/>
   <Oper Name="ShortCycles" Arg="g, S, maxlng, maxn"
