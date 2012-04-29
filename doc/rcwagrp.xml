@@ -560,22 +560,31 @@ gap> IsomorphismPermGroup(G);
 </Example>
 
 <Index Key="rcwa group" Subkey="membership test">rcwa group</Index>
-<Index Key="OrbitLengthBound">OrbitLengthBound</Index>
+<Index Key="OrbitLengthBound"><C>OrbitLengthBound</C></Index>
 
-Next we say a few words about the membership test for rcwa groups.
+Next we say a few words about the membership test for rcwa groups. --
 For tame rcwa groups, membership or non-membership can always be decided.
 For wild groups, membership or non-membership can very often be decided
 quite quick as well, but not always. In general the membership problem
 for rcwa groups is algorithmically unsolvable, see Corollary&nbsp;4.5
-in&nbsp;<Cite Key="Kohl09"/>. For particular cases where the user has
-established such search bound by means of theory, the membership test
-recognizes an option <C>OrbitLengthBound</C>. Note however that due to 
-the algorithmic unsolvability of the membership problem, &RCWA; has no
-means to check the correctness of such bound. So the correct use of this
-option remains within the full responsibility of the user.
+in&nbsp;<Cite Key="Kohl09"/>. A consequence of this is that a membership
+test <C>g in G</C> may run into an infinite loop if the rcwa permutation
+<C>g</C> is not an element of the rcwa group <C>G</C>. However if
+<C>g</C> is contained in <C>G</C>, the membership test will eventually
+always return <C>true</C>. <P/>
+
 On Info level&nbsp;2 of <C>InfoRCWA</C> the membership test provides
 information on reasons why the given rcwa permutation is an element of
-the given rcwa group or&nbsp;not.
+the given rcwa group or&nbsp;not. <P/>
+
+The membership test <C>g in G</C> recognizes an option
+<C>OrbitLengthBound</C>. If this option is set, it returns <C>false</C>
+once it has computed balls of size exceeding <C>OrbitLengthBound</C>
+about 1 and <C>g</C> in <C>G</C>, and these balls are still disjoint.
+Note however that due to the algorithmic unsolvability of the membership
+problem, &RCWA; has no means to check the correctness of such bound.
+So the correct use of this option remains within the full responsibility
+of the user.
 
 <Example>
 <![CDATA[
