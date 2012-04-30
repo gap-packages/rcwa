@@ -577,14 +577,14 @@ On Info level&nbsp;2 of <C>InfoRCWA</C> the membership test provides
 information on reasons why the given rcwa permutation is an element of
 the given rcwa group or&nbsp;not. <P/>
 
-The membership test <C>g in G</C> recognizes an option
+The membership test <Q><C>g in G</C></Q> recognizes an option
 <C>OrbitLengthBound</C>. If this option is set, it returns <C>false</C>
 once it has computed balls of size exceeding <C>OrbitLengthBound</C>
 about 1 and <C>g</C> in <C>G</C>, and these balls are still disjoint.
 Note however that due to the algorithmic unsolvability of the membership
-problem, &RCWA; has no means to check the correctness of such bound.
-So the correct use of this option remains within the full responsibility
-of the user.
+problem, &RCWA; has no means to check the correctness of such bound
+in a given case. So the correct use of this option has to remain within
+the full responsibility of the user.
 
 <Example>
 <![CDATA[
