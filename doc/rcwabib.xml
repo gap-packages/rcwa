@@ -18,7 +18,7 @@
   <year>2000</year>
   <volume>38</volume>
   <pages>73-78</pages>
-  <mrnumber>MR1738650 (2000m:11024)</mrnumber>
+  <mrnumber>1738650 (2000m:11024)</mrnumber>
 </article></entry>
 
 <entry id="BhattacharjeeMacphersonMoellerNeumann98"><book>
@@ -34,7 +34,7 @@
   <number>1698</number>
   <series>Lecture Notes in Mathematics</series>
   <isbn>3-540-64965-4</isbn>
-  <mrnumber>MR1632579 (99e:20003)</mrnumber>
+  <mrnumber>1632579 (99e:20003)</mrnumber>
 </book></entry>
 
 <entry id="DixonMortimer96"><book>
@@ -48,7 +48,7 @@
   <number>163</number>
   <series>Graduate Texts in Mathematics</series>
   <isbn>0-387-94599-7</isbn>
-  <mrnumber>MR1409812 (98m:20003)</mrnumber>
+  <mrnumber>1409812 (98m:20003)</mrnumber>
 </book></entry>
 
 <entry id="Farkas04"><inproceedings>
@@ -84,7 +84,7 @@
   <year>1955</year>
   <volume>62</volume>
   <pages>353</pages>
-  <mrnumber>MR0068566 (16,904e)</mrnumber>
+  <mrnumber>0068566 (16,904e)</mrnumber>
 </article></entry>
 
 <entry id="GAPDoc"><manual>
@@ -111,7 +111,7 @@
   <volume>130</volume>
   <number>5</number>
   <pages>1293-1301</pages>
-  <mrnumber>MR1879950 (2002k:11031)</mrnumber>
+  <mrnumber>1879950 (2002k:11031)</mrnumber>
 </article></entry>
 
 <entry id="GRAPE"><manual>
@@ -147,7 +147,7 @@
   <year>1980</year>
   <volume>14</volume>
   <pages>41-43</pages>
-  <mrnumber>MR0565099 (81m:20045)</mrnumber>
+  <mrnumber>0565099 (81m:20045)</mrnumber>
 </article></entry>
 
 <entry id="HicksMullenYucasZavislak08"><article>
@@ -175,7 +175,7 @@
   <year>1974</year>
   <series>Notes on Pure Mathematics</series>
   <isbn>0-7081-0300-6</isbn>
-  <mrnumber>MR0376874 (51 #13049)</mrnumber>
+  <mrnumber>0376874 (51 #13049)</mrnumber>
 </book></entry>
 
 <entry id="HoltEickOBrien05"><book>
@@ -189,7 +189,7 @@
   <year>2005</year>
   <series>Discrete Mathematics and its Applications (Boca Raton)</series>
   <isbn>1-58488-372-3</isbn>
-  <mrnumber>MR2129747 (2006f:20001)</mrnumber>
+  <mrnumber>2129747 (2006f:20001)</mrnumber>
   <other type="pages">xvi+514</other>
 </book></entry>
 
@@ -203,7 +203,7 @@
   <volume>11</volume>
   <number>3</number>
   <pages>152-157</pages>
-  <mrnumber>MR1717767</mrnumber>
+  <mrnumber>1717767</mrnumber>
 </article></entry>
 
 <entry id="Kohl05"><phdthesis>
@@ -229,7 +229,7 @@
   <volume>39</volume>
   <number>3</number>
   <pages>322-328</pages>
-  <mrnumber>MR2352043</mrnumber>
+  <mrnumber>2352043</mrnumber>
   <note>DOI:&nbsp;10.1016/j.aam.2006.08.003</note>
 </article></entry>
 
@@ -274,7 +274,7 @@
   <volume>4</volume>
   <number>1</number>
   <pages>117-120</pages>
-  <mrnumber>MR2387919</mrnumber>
+  <mrnumber>2387919</mrnumber>
   <note>DOI:&nbsp;10.1142/S1793042108001237</note>
 </article></entry>
 
@@ -290,7 +290,7 @@
   <volume>43</volume>
   <number>8</number>
   <pages>545-581</pages>
-  <mrnumber>MR2415857</mrnumber>
+  <mrnumber>2415857</mrnumber>
   <note>DOI:&nbsp;10.1016/j.jsc.2007.12.001</note>
 </article></entry>
 
@@ -322,7 +322,7 @@
   <volume>264</volume>
   <number>4</number>
   <pages>927-938</pages>
-  <mrnumber>MR2593301</mrnumber>
+  <mrnumber>2593301</mrnumber>
   <note>DOI:&nbsp;10.1007/s00209-009-0497-8</note>
 </article></entry>
 
@@ -343,7 +343,7 @@
   <publisher>Chicago Lectures in Mathematics</publisher>
   <year>2000</year>
   <isbn>0-226-31721-8</isbn>
-  <mrnumber>MR1786869 (2001i:20081)</mrnumber>
+  <mrnumber>1786869 (2001i:20081)</mrnumber>
 </book></entry>
 
 <entry id="LyndonSchupp77"><book>
@@ -356,7 +356,7 @@
   <year>1977</year>
   <note>Reprinted in the Springer Classics in Mathematics Series, 2000.</note>
   <isbn>3-540-41158-5</isbn>
-  <mrnumber>MR0577064 (58 #28182)</mrnumber>
+  <mrnumber>0577064 (58 #28182)</mrnumber>
 </book></entry>
 
 <entry id="MatthewsLeigh87"><article>
@@ -372,7 +372,7 @@
   <year>1987</year>
   <volume>25</volume>
   <pages>274-278</pages>
-  <mrnumber>MR0880462 (88f:11116)</mrnumber>
+  <mrnumber>0880462 (88f:11116)</mrnumber>
 </article></entry>
 
 <entry id="Mihailova58"><article>
@@ -384,7 +384,7 @@
   <year>1958</year>
   <volume>119</volume>
   <pages>1103-1105</pages>
-  <mrnumber>MR0100018 (20 #6454)</mrnumber>
+  <mrnumber>0100018 (20 #6454)</mrnumber>
 </article></entry>
 
 <entry id="Polycyclic"><manual>
@@ -413,7 +413,7 @@
   <year>1992</year>
   <volume>86</volume>
   <pages>185-218</pages>
-  <mrnumber>MR1150010 (93b:11102)</mrnumber>
+  <mrnumber>1150010 (93b:11102)</mrnumber>
 </article></entry>
 
 <entry id="Wirsching98"><book>
@@ -426,7 +426,7 @@
   <number>1681</number>
   <series>Lecture Notes in Mathematics</series>
   <isbn>3-540-63970-5</isbn>
-  <mrnumber>MR1612686 (99g:11027)</mrnumber>
+  <mrnumber>1612686 (99g:11027)</mrnumber>
 </book></entry>
 
 </file>
