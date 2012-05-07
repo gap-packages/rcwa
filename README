@@ -13,14 +13,15 @@
 
 This package for GAP 4 provides implementations of algorithms and methods for
 computing in certain  infinite permutation groups  acting on the set of inte-
-gers.  In principle it can deal with at least the following  types of groups:
+gers.  It can be used to investigate  the following types  of groups and many
+more:
 
  - Finite groups.
  - Free groups of finite rank.
- - Free products of finitely many finite groups, thus in particular
-   the modular group PSL(2,Z).
+ - Free products of finitely many finite groups.
  - Direct products of such groups.
  - Wreath products of such groups with finite groups and with (Z,+).
+ - Subgroups of any such groups.
 
 Among these groups there are finitely generated groups which are not finitely
 presented, and such with  unsolvable membership problem.  Further, any finite
@@ -35,7 +36,7 @@ a browser, or its PDF version (manual.pdf) with a PDF viewer.
 
                                 Requirements
 
-This version of RCWA needs at least GAP 4.5.2,  ResClasses 3.0.5,  GRAPE 4.3,
+This version of RCWA needs at least GAP 4.5.2,  ResClasses 3.1.0,  GRAPE 4.3,
 Polycyclic 2.6  and GAPDoc 1.4.  All required packages are already present in
 a standard GAP installation. RCWA can be used  under UNIX,  under Windows and
 on  the MacIntosh.  It is completely  written  in the  GAP language  and does
@@ -66,5 +67,5 @@ know. -- I am interested very much in any applications of this package.  Also
 please let me know  if you have problems with this package,  or if you find a
 bug.
 
-Stefan Kohl,  November 2011
+Stefan Kohl,  May 2012
 

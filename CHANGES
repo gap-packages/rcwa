@@ -677,7 +677,7 @@ Changes between version 3.0.4 and version 3.1.1 (October 18, 2011):
    `RcwaMappingToLaTeX'    -> `LaTeXStringRcwaMapping'
    `ReadFromBitmapPicture' -> 'LoadBitmapPicture'
 
- - Now, RCWA needs GAP 4.5.2, ResClasses 3.0.2 and GAPDoc 1.4.
+ - Now RCWA needs GAP 4.5.2, ResClasses 3.0.2 and GAPDoc 1.4.
 
 Changes between version 3.1.1 and version 3.1.2:
 
@@ -687,7 +687,10 @@ Changes between version 3.1.1 and version 3.1.2:
 
  - Added a README file in the otherwise empty directory tst/timings.
 
-Changes between version 3.1.2 and version 3.2.0:
+Changes between version 3.1.2 and version 3.2.0 (May 7, 2012):
+
+ - Further data has been added to the database of groups generated
+   by 3 class transpositions.
 
  - An operation `LaTeXStringRcwaGroup' has been added.
 
@@ -702,5 +705,6 @@ Changes between version 3.1.2 and version 3.2.0:
  - In order to emphasize the permutation aspect, in output the wording
    "bijective rcwa mapping" has been changed to "rcwa permutation".
 
- - Now, RCWA needs ResClasses 3.1.0.
+ - Now RCWA needs ResClasses 3.1.0.
+
 

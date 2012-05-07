@@ -8,8 +8,8 @@
 
 &RCWA; is a package for &GAP;&nbsp;4. It provides implementations of
 algorithms and methods for computing in certain infinite permutation groups
-acting on the set of integers. In principle, this package can deal at least
-with the following types of groups and their subgroups:
+acting on the set of integers. This package can be used to investigate the
+following types of groups and many more:
 
 <List>
 
@@ -34,6 +34,10 @@ with the following types of groups and their subgroups:
   <Item>
     Wreath products of the above groups with finite groups and
     with&nbsp;(&ZZ;,+).
+  </Item>
+
+  <Item>
+    Subgroups of any such groups.
   </Item>
 
 </List>
