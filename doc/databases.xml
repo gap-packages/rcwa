@@ -19,7 +19,7 @@ in this chapter.
 <Heading>The collection of examples</Heading>
 
 <ManSection>
-  <Func Name="RCWALoadExamples" Arg = ""/>
+  <Func Name="LoadRCWAExamples" Arg = ""/>
   <Returns>
     a record containing a collection of examples of rcwa groups and
     -mappings, as stored in the file <F>pkg/rcwa/examples/examples.g</F>. 
@@ -31,7 +31,7 @@ in this chapter.
     Chapter&nbsp;<Ref Label="ch:Examples"/>.
 <Example>
 <![CDATA[
-gap> examples := RCWALoadExamples();;                                 
+gap> examples := LoadRCWAExamples();;                                 
 gap> RecNames(examples);
 [ "Basics", "CollatzMapping", "HigmanThompson", "CTPZ", "CT3Z", 
   "OddNumberOfGens_FiniteOrder", "ZxZ", "SlowlyContractingMappings", 

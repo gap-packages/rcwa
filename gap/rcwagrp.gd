@@ -542,12 +542,13 @@ DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
 
 #############################################################################
 ##
-#F  RCWALoadExamples( ) . . . . . . . . . . . . . . . load examples database 
+#F  LoadRCWAExamples( ) . . . . . . . . . . . . . . .  load examples database 
 ##
 ##  This function loads RCWA's collection of examples.
 ##  It returns a record containing the individual examples as components.
 ##
-DeclareGlobalFunction( "RCWALoadExamples" );
+DeclareGlobalFunction( "LoadRCWAExamples" );
+DeclareSynonym( "RCWALoadExamples", LoadRCWAExamples );
 
 #############################################################################
 ##

@@ -19,17 +19,17 @@ and -groups in detail. All of them show different aspects of the package,
 and the order in which they appear is entirely arbitrary. In particular
 they are not ordered by degree of difficulty or interest. <P/>
 
-<Index Key="RCWALoadExamples"><C>RCWALoadExamples</C></Index>
+<Index Key="LoadRCWAExamples"><C>LoadRCWAExamples</C></Index>
 <Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
 The rcwa mappings, rcwa groups and other objects defined in this chapter can
 be found in the file <F>pkg/rcwa/examples/examples.g</F>. This file can be
 read into the current &GAP; session by the function
-<Ref Func="RCWALoadExamples"/> which takes no arguments and returns
+<Ref Func="LoadRCWAExamples"/> which takes no arguments and returns
 a record containing all examples.
 The global variable assignments made in a section of this chapter can be
 made by applying the function <C>AssignGlobals</C> to the respective
-component of the record returned by <C>RCWALoadExamples</C>. The component
+component of the record returned by <C>LoadRCWAExamples</C>. The component
 names are given at the end of the corresponding sections. <P/>
 
 The discussions of the examples are typically far from being exhaustive.
@@ -225,7 +225,7 @@ gap> G := Group(k,l,m,n);
 The correctness of this representation can likewise be verified by simply
 checking the defining relations given above. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().HigmanThompson);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().HigmanThompson);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -408,7 +408,7 @@ gap> Trajectory(a^-1,[1000,1000],15);
 It is left as an easy exercise to the reader to find out how the cycles
 of&nbsp;<C>b</C> look like. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().ZxZ);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().ZxZ);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -531,7 +531,7 @@ true
 The factors <C>PrimeSwitch(3)</C> are products of 6 class transpositions
 (cf.&nbsp;<Ref Func="PrimeSwitch" Label="p"/>). <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzlikePerms);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -630,7 +630,7 @@ in trivial cases, i.e. for example when there is some <M>k</M> such that
 applying the <M>k</M>th power of the respective mapping to any integer
 decreases its absolute value. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().SlowlyContractingMappings);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().SlowlyContractingMappings);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -683,7 +683,7 @@ Integers
 Further similar computations are shown in
 Section&nbsp;<Ref Label="sec:CollatzImagesAndPreImages"/>. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzMapping);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzMapping);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -805,7 +805,7 @@ Needless to say however that this computational evidence does not replace
 the proof along these lines given in the article cited above, but just
 sheds a light on the idea behind it. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().MatthewsLeigh);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().MatthewsLeigh);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -887,7 +887,7 @@ gap> List([Comm(u2,nu^20),Comm(u2,nu^25),Comm(u2,nu^30)],Order);
 We observe that our commutators have various different orders, and
 that the prime factors of these orders are not all <Q>very small</Q>. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzlikePerms);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1048,7 +1048,7 @@ gap> List(B9,Order);
 ]]>
 </Log>
 
-Enter <C>AssignGlobals(RCWALoadExamples().OddNumberOfGens_FiniteOrder);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().OddNumberOfGens_FiniteOrder);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1154,7 +1154,7 @@ gap> List(Blocks(H,MovedPoints(H)),Length);
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().AbelianGroupOverPolynomialRing);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().AbelianGroupOverPolynomialRing);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1212,7 +1212,7 @@ true
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CheckingForSolvability);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CheckingForSolvability);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1351,7 +1351,7 @@ Rcwa permutation of Z_( 2 ) with modulus 8
 Again, viewed as an rcwa mapping of the integers the commutator given at
 the end of the example would not be surjective. <P/>
 
-Enter <C>AssignGlobals(RCWALoadExamples().Semilocals);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().Semilocals);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1399,7 +1399,7 @@ gap> Length(Cycle(x_257,0));
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().LongCyclesOfPrimeLength);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().LongCyclesOfPrimeLength);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1467,7 +1467,7 @@ gap> List([0..25],i->Modulus(z^i));
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().ModuliOfPowers);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().ModuliOfPowers);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -1582,7 +1582,7 @@ gap>  List(S,Si->Float(Density(Si)));
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzMapping);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzMapping);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -2047,7 +2047,7 @@ gap> List([5..20],
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzlikePerms);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -2344,7 +2344,7 @@ gap> List(H,NilpotencyClassOfGroup);
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().GrigorchukQuotients);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().GrigorchukQuotients);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -2454,7 +2454,7 @@ gap> k;
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().CollatzMapping);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().CollatzMapping);</C>
 in order to assign the global variables defined in this section.
 
 </Section>
@@ -2595,7 +2595,7 @@ gap> List(GeneratorsOfGroup(G),Factorization);
 ]]>
 </Example>
 
-Enter <C>AssignGlobals(RCWALoadExamples().F2_PSL2Z);</C>
+Enter <C>AssignGlobals(LoadRCWAExamples().F2_PSL2Z);</C>
 in order to assign the global variables defined in this section.
 
 <Alt Only="HTML">&nbsp;</Alt>

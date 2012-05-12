@@ -5529,9 +5529,9 @@ InstallMethod( StructureDescription,
 
 #############################################################################
 ##
-#F  RCWALoadExamples( ) . . . . . . . . . . . . . . .  load examples database
+#F  LoadRCWAExamples( ) . . . . . . . . . . . . . . .  load examples database
 ##
-InstallGlobalFunction( RCWALoadExamples,
+InstallGlobalFunction( LoadRCWAExamples,
 
   function ( )
     return ReadAsFunction(
