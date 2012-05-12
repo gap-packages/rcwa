@@ -189,7 +189,7 @@ CTPairProductType := function ( arg )
   if   IsBoundGlobal("CTPairIntersectionType")
   then CTPairIntersectionType := ValueGlobal("CTPairIntersectionType");
   else CTPairIntersectionType :=
-  RCWALoadDatabaseOfProductsOf2ClassTranspositions().CTPairIntersectionType;
+       LoadDatabaseOfProductsOf2ClassTranspositions().CTPairIntersectionType;
   fi;
 
   intertype := CTPairIntersectionType(cls);

@@ -12,7 +12,7 @@
 ##  3. TriangleTypes() = List(grps,G->List([[1,2],[1,3],[2,3]],
 ##           ind->CTPairProductType(GeneratorsOfGroup(G){ind})));
 ##     where CTPairProductType is the component of the record returned by
-##     the function `RCWALoadDatabaseOfProductsOf2ClassTranspositions'.
+##     the function `LoadDatabaseOfProductsOf2ClassTranspositions'.
 ##
 #############################################################################
 
@@ -26,10 +26,10 @@ TriangleTypes := function ( )
   ctpairs   := Combinations(cts,2);
   cttriples := Combinations(cts,3);
 
-  data     := RCWALoadDatabaseOfProductsOf2ClassTranspositions();
+  data     := LoadDatabaseOfProductsOf2ClassTranspositions();
   ctptypes := data.CTPairsProductType;
 
-  data  := RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
+  data  := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
   mods  := data.mods;
   sizes := data.sizes;
 
