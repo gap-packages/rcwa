@@ -5541,9 +5541,9 @@ InstallGlobalFunction( RCWALoadExamples,
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfProductsOf2ClassTranspositions( )
+#F  LoadDatabaseOfProductsOf2ClassTranspositions( )
 ##
-InstallGlobalFunction( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
+InstallGlobalFunction( LoadDatabaseOfProductsOf2ClassTranspositions,
             
   function ( )
     return ReadAsFunction(
@@ -5553,10 +5553,10 @@ InstallGlobalFunction( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
+#F  LoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
 ##
 InstallGlobalFunction(
-  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions,
+  LoadDatabaseOfNonbalancedProductsOfClassTranspositions,
 
   function ( )
     return ReadAsFunction(
@@ -5566,10 +5566,9 @@ InstallGlobalFunction(
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
+#F  LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
 ##
-InstallGlobalFunction(
-  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
+InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
 
   function ( )
     return ReadAsFunction(

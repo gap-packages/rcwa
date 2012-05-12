@@ -707,4 +707,9 @@ Changes between version 3.1.2 and version 3.2.0 (May 7, 2012):
 
  - Now RCWA needs ResClasses 3.1.0.
 
+Changes between version 3.2.0 and version 3.2.1:
+
+ - The 3 functions with names `RCWALoadDatabaseOf ...' have been renamed to
+   `LoadDatabaseOf ...'.
+
 
