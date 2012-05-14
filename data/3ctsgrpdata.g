@@ -72,6 +72,46 @@ TriangleTypes := function ( )
 
   return triangles;
 end,
+3CTsGroupsWithGivenOrbit := function ( orbit, maxmod )
+
+  local  cts, stab, perms, gens, gensp, indcombs,
+         grps, grpsp, trsinds, start;
+
+  start := Runtime();
+  orbit := AsSet(orbit);
+
+  Info(InfoRCWA,2,"Setting up the list of class transpositions ...");
+  cts   := List(ClassPairs(maxmod),ClassTransposition);
+  Info(InfoRCWA,2,"Elapsed time: ",Runtime()-start); start := Runtime();
+
+  Info(InfoRCWA,2,"Determining which class transpositions stabilize ...");
+  stab  := Filtered(cts,ct->orbit^ct=orbit);
+  perms := List(stab,s->Permutation(s,orbit));
+  Info(InfoRCWA,2,"Found ",Length(stab),
+                  " class transpositions which stabilize.");
+  Info(InfoRCWA,2,"Elapsed time: ",Runtime()-start); start := Runtime();
+
+  Info(InfoRCWA,2,"Forming the list of triples of class transpositions ",
+                  "which stabilize ...");
+  indcombs := Combinations([1..Length(stab)],3);
+  gens     := List(indcombs,ind->stab{ind});
+  gensp    := List(indcombs,ind->perms{ind});
+
+  Info(InfoRCWA,2,"Forming the list of groups ...");
+  grpsp    := List(gensp,Group);
+  Info(InfoRCWA,2,"There are ",Length(grpsp)," groups to check in total.");
+  Info(InfoRCWA,2,"Elapsed time: ",Runtime()-start); start := Runtime();
+
+  Info(InfoRCWA,2,"Filtering the groups for transitivity ...");
+  trsinds  := Filtered([1..Length(grpsp)],
+                       i->IsTransitive(grpsp[i],[1..Length(orbit)]));
+  grps     := List(gens{trsinds},Group);
+  Info(InfoRCWA,2,"Found ",Length(grps),
+                  " groups which have the given orbit.");
+  Info(InfoRCWA,2,"Elapsed time: ",Runtime()-start); start := Runtime();
+
+  return grps;
+end,
 cts  := List(ClassPairs(6),ClassTransposition),
 grps := List(Combinations(~.cts,3),Group),
 mods :=
