@@ -3828,8 +3828,9 @@ BindGlobal( "Action",
 ##
 #F  Stabilizer( <arg> ) . . . . . . . . . .  use StabilizerOp for rcwa groups
 ##
-MakeReadWriteGlobal( "Stabilizer" ); Unbind( Stabilizer );
-BindGlobal( "Stabilizer",
+MakeReadWriteGlobal( "Stabilizer" ); Unbind( Stabilizer ); #
+MakeReadWriteGlobal( "Stabiliser" ); Unbind( Stabiliser ); # dirty hack ...
+BindGlobal( "Stabilizer",                                  #
 
   function ( arg )
     if   Length( arg ) = 1   then return StabilizerOfExternalSet( arg[1] );
@@ -3837,6 +3838,7 @@ BindGlobal( "Stabilizer",
     else return CallFuncList( StabilizerFunc, arg ); fi;
     return;
   end );
+BindGlobal( "Stabiliser", Stabilizer );
 
 #############################################################################
 ##
