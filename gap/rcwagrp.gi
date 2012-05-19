@@ -5035,7 +5035,8 @@ InstallMethod( PreImagesRepresentatives,
     then TryNextMethod(); fi;
     lng := 1; add := 1;
     repeat
-      lng := lng + add; if IsPermGroup(G) then add := add + 1; fi;
+      lng := lng + add; add := add + 1; 
+      # formerly: if IsPermGroup(G) then add := add + 1; fi;
       preimage := [1..lng];
       if IsRcwaGroupOverGFqx(G) then
         R        := Source(One(G));
