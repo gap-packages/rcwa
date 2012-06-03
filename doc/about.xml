@@ -56,7 +56,7 @@ the author felt that this is a gap which is worth to be filled.
 <Section Label="sec:Purpose">
 <Heading>Purpose of this package</Heading>
 
-Most research in computational group theory focuses mainly on finite
+Presently, most research in computational group theory focuses on finite
 permutation groups, matrix groups, finitely presented groups, polycyclically
 presented groups and automata groups.
 For details, we refer to&nbsp;<Cite Key="HoltEickOBrien05"/>. <P/>
