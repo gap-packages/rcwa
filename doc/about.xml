@@ -37,7 +37,8 @@ the <E>Collatz mapping</E>
                                        \
 ]]></Verb></Alt>
 to any given positive integer eventually yields&nbsp;1
-(cf.&nbsp;<Cite Key="Lagarias06"/>). <P/>
+(cf.&nbsp;<Cite Key="Lagarias06"/>).
+For definitions, see Section&nbsp;<Ref Label="sec:basicdefinitions"/>. <P/>
 
 Presently, most research in computational group theory focuses on finite
 permutation groups, matrix groups, finitely presented groups, polycyclically
