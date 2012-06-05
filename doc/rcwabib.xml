@@ -330,9 +330,12 @@
   <author>
     <name><first>Jeffrey C.</first><last>Lagarias</last></name>
   </author>
-  <title>3x+1 Problem Annotated Bibliography</title>
-  <year>2006</year>
-  <note><URL>http://arxiv.org/abs/math.NT/0309224</URL></note>
+  <title>The 3x+1 Problem: An Annotated Bibliography</title>
+  <year>2012</year>
+  <note>
+    <URL>http://arxiv.org/abs/math.NT/0309224</URL> (Part I),
+    <URL>http://arxiv.org/abs/math.NT/0608208</URL> (Part II)
+  </note>
 </misc></entry>
 
 <entry id="LaHarpe00"><book>
