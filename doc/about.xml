@@ -8,7 +8,7 @@
 
 <Index Key="Collatz conjecture">Collatz conjecture</Index>
 <Index Key="Collatz conjecture">Collatz mapping</Index>
-This package permits computations in monoids, in particular groups,
+This package permits to compute in monoids, in particular groups,
 whose elements are <E>residue-class-wise affine</E> mappings.
 Probably the widest-known occurrence of such a mapping is in the statement
 of the <M>3n+1</M>-Conjecture, which asserts that iterated application of
