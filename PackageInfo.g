@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "3.2.0",
-Date             := "07/05/2012",
-ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.2.0",
+Version          := "3.2.1",
+Date             := "05/06/2012",
+ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.2.1",
 ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
