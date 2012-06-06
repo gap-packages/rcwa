@@ -1255,7 +1255,7 @@ in&nbsp;<Cite Key="Keller99"/>:
 <ManSection>
   <Func Name="mKnot" Arg="m" Label="for an odd integer"/>
   <Returns>
-    the permutation <M>g_m</M> as introduced in&nbsp;<Cite Key="Keller99"/>.
+    the permutation <M>g_m</M> as defined in&nbsp;<Cite Key="Keller99"/>.
   </Returns>
   <Description>
     The argument <A>m</A> must be an odd integer greater than&nbsp;1.
@@ -1710,7 +1710,7 @@ There is a nice invariant of trajectories of the Collatz mapping:
 <ManSection>
   <Func Name="GluckTaylorInvariant" Arg="a" Label="of a trajectory"/>
   <Returns>
-    the invariant introduced in&nbsp;<Cite Key="GluckTaylor02"/>. This is
+    the invariant defined in&nbsp;<Cite Key="GluckTaylor02"/>. This is
     <M>(\sum_{i=1}^l a_i \cdot a_{i \mod l + 1})/(\sum_{i=1}^l a_i^2)</M>,
     where <M>l</M> denotes the length of&nbsp;<A>a</A>.
   </Returns>
