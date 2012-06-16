@@ -448,13 +448,12 @@ InstallGlobalFunction( RCWA, R -> RCWACons( IsRcwaGroup, R ) );
 ##
 ##  The groups RCWA( <R> ) can only be obtained by the above constructors.
 ##
-for property in [ IsNaturalRCWA,
-                  IsNaturalRCWA_Z, IsNaturalRCWA_Z_pi, IsNaturalRCWA_GFqx ]
-do
-  InstallMethod( property,
-                 "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-                 ReturnFalse );
-od;
+Perform( [ IsNaturalRCWA,
+           IsNaturalRCWA_Z, IsNaturalRCWA_Z_pi, IsNaturalRCWA_GFqx ],
+         function ( property )
+           InstallMethod( property, "for rcwa groups (RCWA)", true,
+                          [ IsRcwaGroup ], 0, ReturnFalse );
+         end );
 
 #############################################################################
 ##
@@ -651,13 +650,12 @@ InstallGlobalFunction( CT, R -> CTCons( IsRcwaGroup, R ) );
 ##
 ##  The groups CT( <R> ) can only be obtained by the above constructors.
 ##
-for property in [ IsNaturalCT,
-                  IsNaturalCT_Z, IsNaturalCT_Z_pi, IsNaturalCT_GFqx ]
-do
-  InstallMethod( property,
-                 "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-                 ReturnFalse );
-od;
+Perform( [ IsNaturalCT,
+           IsNaturalCT_Z, IsNaturalCT_Z_pi, IsNaturalCT_GFqx ],
+         function ( property )
+           InstallMethod( property, "for rcwa groups (RCWA)", true,
+                          [ IsRcwaGroup ], 0, ReturnFalse );
+         end );
 
 #############################################################################
 ##
