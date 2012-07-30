@@ -2,9 +2,18 @@
                        Version history of the RCWA package
                        ===================================
 
-Changes between version 3.3.0 and version 3.3.2: purely cosmetic changes.
+Changes between version 3.3.1 and version 3.4.0:
 
-Changes between version 3.2.0 and version 3.3.0 (June 5, 2012):
+ - The directory rcwa/gap/ has been renamed to rcwa/lib/, in order to
+   follow the same naming convention as for the subdirectories of the
+   GAP root directory.
+
+ - A temporary variable `property' has been removed.
+
+ - The ordering of this list has been changed from chronological to
+   reverse chronological.
+
+Changes between version 3.2.0 and version 3.3.1 (June 8, 2012):
 
  - The chapter "About the RCWA Package" of the manual has been rewritten.
 

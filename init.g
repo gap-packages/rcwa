@@ -6,10 +6,10 @@
 ##
 #############################################################################
 
-ReadPackage( "rcwa", "gap/general.gd" );
-ReadPackage( "rcwa", "gap/rcwamap.gd" );
-ReadPackage( "rcwa", "gap/rcwamono.gd" );
-ReadPackage( "rcwa", "gap/rcwagrp.gd" );
+ReadPackage( "rcwa", "lib/general.gd" );
+ReadPackage( "rcwa", "lib/rcwamap.gd" );
+ReadPackage( "rcwa", "lib/rcwamono.gd" );
+ReadPackage( "rcwa", "lib/rcwagrp.gd" );
 
 #############################################################################
 ##

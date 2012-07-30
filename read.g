@@ -6,14 +6,14 @@
 ##
 #############################################################################
 
-ReadPackage( "rcwa", "gap/rcwaaux.g" );
-ReadPackage( "rcwa", "gap/general.gi" );
-ReadPackage( "rcwa", "gap/rcwamap.gi" );
-ReadPackage( "rcwa", "gap/rcwamono.gi" );
-ReadPackage( "rcwa", "gap/rcwagrp.gi" );
+ReadPackage( "rcwa", "lib/rcwaaux.g" );
+ReadPackage( "rcwa", "lib/general.gi" );
+ReadPackage( "rcwa", "lib/rcwamap.gi" );
+ReadPackage( "rcwa", "lib/rcwamono.gi" );
+ReadPackage( "rcwa", "lib/rcwagrp.gi" );
 
 if   IsPackageMarkedForLoading( "fr", "1.1.3" )
-then ReadPackage( "rcwa", "gap/frdepend.gi" ); fi;
+then ReadPackage( "rcwa", "lib/frdepend.gi" ); fi;
 
 #############################################################################
 ##
