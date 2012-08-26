@@ -4,6 +4,9 @@
 
 Changes between version 3.3.1 and version 3.4.0:
 
+ - The function `ClassPairs' can now compute pairs of disjoint
+   residue classes of Z^2 as well.
+
  - The directory rcwa/gap/ has been renamed to rcwa/lib/, in order to
    follow the same naming convention as for the subdirectories of the
    GAP root directory.
@@ -236,7 +239,7 @@ Changes between version 2.4.3 and version 2.5.0 (May 25, 2007):
    been implemented.
 
  - A method to construct a dihedral group acting on a given residue class
-   has been added.  
+   has been added.
 
  - Methods for `ExtRepOfObj' and `ObjByExtRep' for rcwa mappings have
    been added.
@@ -591,7 +594,7 @@ Changes between version 1.4.1 and version 1.4.2:
 
  - Functions `ConjugatingCTs' and `TreeSortingPerm' have been added to
    the examples file (rcwa/examples/examples.g):
- 
+
    `ConjugatingCTs' is a function which, given two class transpositions
                     ct1 and ct2, returns a 6-tuple of class transpositions
                     ct3 .. ct8 such that ct1^(ct3 * .. * ct8) = ct2.
