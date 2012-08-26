@@ -2167,14 +2167,22 @@ InstallMethod( SplittedClassTransposition,
 ##      returns a list of all unordered pairs of disjoint residue classes
 ##      of <R> whose moduli have degree less than <m>.
 ##
+##    - If <R> is Integers^2, it returns a list of all unordered pairs of
+##      disjoint residue classes whose moduli have determinant at most <m>.
+##
 ##  The purpose of this function is to generate a list of all
 ##  class transpositions whose moduli do not exceed a given bound.
+##  For reasons of saving time or memory, it may return pairs of
+##  residue classes [r1(m1),r2(m2)] in the form of 4-tuples [r1,m1,r2,m2]
+##  of ring elements. Regardless of whether it does so or not, one can
+##  always obtain the corresponding list of class transpositions by
+##  List( ClassPairs( <R>, <m> ), ClassTransposition );
 ##
 InstallGlobalFunction( ClassPairs,
 
   function ( arg )
 
-    local  R, m, tuples, moduli, Degree, m1, r1, m2, r2;
+    local  R, m, tuples, moduli, Degree, classes, m1, r1, m2, r2;
 
     if   Length(arg) = 1 then R := Integers; m := arg[1];
     elif Length(arg) = 2 then R := arg[1];   m := arg[2];
@@ -2205,6 +2213,11 @@ InstallGlobalFunction( ClassPairs,
           od;
         od;
       od;
+    elif IsZxZ(R) then
+      moduli  := All2x2IntegerMatricesInHNFWithDeterminantUpTo(m);
+      classes := Concatenation(List(moduli,m->AllResidueClassesModulo(R,m)));
+      tuples  := Filtered(Combinations(classes,2),
+                          t->Intersection(t[1],t[2])=[]);
     else
       Error("ClassPairs: Sorry, the ring ",R,"\n",String(" ",19),
             "is currently not supported by this function.\n");
