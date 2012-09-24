@@ -534,7 +534,7 @@ InstallMethod( RcwaMapping,
       fi;
     od;
     f := RcwaMappingNC( modulus, values );
-    if not ForAll(values,t -> t[1]^f = t[2])
+    if Mod(f) mod Div(f) <> 0 or not ForAll(values,t -> t[1]^f = t[2])
     then if quiet then return fail; fi;
          Error("the values ",values," do not define a proper ",
                "rcwa mapping of Z.\n"); 
