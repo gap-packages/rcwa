@@ -7086,7 +7086,8 @@ InstallMethod( ShortResidueClassCycles,
           repeat
             Add(cycle,cl);
             cl := cl^g;
-          until not IsResidueClass(cl) or cl = cycle[1];
+          until not IsResidueClass(cl) or cl = cycle[1]
+                or Length(cycle) > maxlng;
           if cl = cycle[1] then
             Add(cycles,cycle);
             covered := Union(covered,Union(cycle));
