@@ -4,6 +4,9 @@
 
 Changes between version 3.3.1 and version 3.4.0:
 
+ - The method for `ShortResidueClassCycles' for rcwa permutations of Z
+   has been made much faster and much less memory-consuming.
+
  - The function `ClassPairs' can now compute pairs of disjoint
    residue classes of Z^2 as well.
 
