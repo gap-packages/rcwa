@@ -7060,39 +7060,49 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
-#M  ShortResidueClassCycles( <g>, <modulusbound>, <maxlng> )
+#M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
 ##
 InstallMethod( ShortResidueClassCycles,
                "for an rcwa permutation of Z and 2 positive integers (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
 
-  function ( g, modulusbound, maxlng )
+  function ( g, modbound, maxlng )
 
-    local  cycles, cycle, cl, affsrc, covered, m, r; 
+    local  cycles, cycle, cycs, lngs, lng, startpts,
+           cl, affsrc, divs, m, r; 
 
     affsrc := LargestSourcesOfAffineMappings(g);
+    divs := Difference(DivisorsInt(modbound),[1]);
 
-    cycles := []; covered := [];
-    for m in DivisorsInt(modulusbound) do
-      Info(InfoRCWA,2,"ShortResidueClassCycles: checking modulus m = ",m);
-      for r in Difference([0..m-1],covered) do
-        if    Position(Trajectory(g,r,maxlng+1),r,1) <> fail
-          and r = Minimum(Cycle(g,r))
-        then
-          cycle := []; cl := ResidueClass(r,m);
-          if  m mod Mod(g) <> 0
-            and Number(affsrc,src->Intersection(src,cl)<>[]) > 1
-          then continue; fi;
-          repeat
-            Add(cycle,cl);
-            cl := cl^g;
-          until not IsResidueClass(cl) or cl = cycle[1]
-                or Length(cycle) > maxlng;
-          if cl = cycle[1] then
-            Add(cycles,cycle);
-            covered := Union(covered,Union(cycle));
+    cycs := ShortCycles(g,Intersection([0..modbound-1],Support(g)),maxlng);
+    lngs := Set(List(cycs,Length));
+
+    cycles := List(AsUnionOfFewClasses(Difference(Integers,Support(g))),
+                   cl->[cl]);
+
+    for lng in lngs do
+      Info(InfoRCWA,2,"ShortResidueClassCycles: checking cycle length ",lng);
+      startpts := List(Filtered(cycs,cyc->Length(cyc)=lng),l->l[1]);
+      for m in divs do
+        for r in Filtered(startpts,s->s<m) do
+          if IsSubset(startpts,[r,r+m..modbound-m+r]) and
+             not ForAny(cycles,
+                        cyc->ForAny(cyc,cl->(r-cl!.r[1]) mod Gcd(m,cl!.m)=0)) 
+          then
+            cycle := []; cl := ResidueClass(r,m);
+            if  m mod Mod(g) <> 0
+              and Number(affsrc,src->Intersection(src,cl)<>[]) > 1
+            then continue; fi;
+            repeat
+              Add(cycle,cl);
+              cl := cl^g;
+            until not IsResidueClass(cl) or cl = cycle[1]
+                  or Length(cycle) > maxlng;
+            if cl = cycle[1] then
+              Add(cycles,cycle);
+            fi;
           fi;
-        fi;
+        od;
       od;
     od;
 
