@@ -7072,7 +7072,7 @@ InstallMethod( ShortResidueClassCycles,
   function ( g, modbound, maxlng )
 
     local  cycles, cycle, cycs, lngs, lng, startpts, cycbound,
-           cl, S, affsrc, divs, m, r; 
+           cl, S, affsrc, divs, c, m, r; 
 
     affsrc := LargestSourcesOfAffineMappings(g);
     divs := Difference(DivisorsInt(modbound),[1]);
@@ -7103,7 +7103,11 @@ InstallMethod( ShortResidueClassCycles,
             then continue; fi;
             repeat
               Add(cycle,cl);
-              cl := cl^g;
+              if cl!.m mod g!.modulus <> 0 then cl := cl^g; else
+                c := g!.coeffs[cl!.r[1] mod g!.modulus + 1];
+                cl := ResidueClassUnionNC(Integers,cl!.m*c[1]/c[3],
+                                          [(cl!.r[1]*c[1]+c[2])/c[3]]);
+              fi;
             until not IsResidueClass(cl) or cl = cycle[1]
                   or Length(cycle) > maxlng;
             if cl = cycle[1] then
