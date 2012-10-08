@@ -6996,8 +6996,6 @@ InstallMethod( ShortCycles,
     if   not IsBijective(sigma) or not ForAll(S,IsInt)
     then TryNextMethod(); fi;
 
-    S := ShallowCopy(S);
-    SortParallel(List(S,n->AbsInt(n)-SignInt(n)/2),S);
     min := Minimum(S); max := Maximum(S);
 
     cycs := [];
@@ -7008,11 +7006,16 @@ InstallMethod( ShortCycles,
       repeat
         Add(cyc,m); m := m^sigma; lng := lng + 1;
         if m >= min and m <= max then
-          j := Position(S,m);
+          j := PositionSorted(S,m);
           if j <> fail then done[j] := true; fi;
         fi;
       until m = n or lng >= maxlng or AbsInt(m) > maxn;
       if m = n then Add(cycs,cyc); fi;
+    od;
+
+    SortParallel(List(cycs,cyc->AbsInt(cyc[1])),cycs);
+    for i in [1..Length(cycs)] do
+      SortParallel(List(cycs[i],n->AbsInt(n)),cycs[i]);
     od;
     return cycs;
   end );
@@ -7068,13 +7071,18 @@ InstallMethod( ShortResidueClassCycles,
 
   function ( g, modbound, maxlng )
 
-    local  cycles, cycle, cycs, lngs, lng, startpts,
-           cl, affsrc, divs, m, r; 
+    local  cycles, cycle, cycs, lngs, lng, startpts, cycbound,
+           cl, S, affsrc, divs, m, r; 
 
     affsrc := LargestSourcesOfAffineMappings(g);
     divs := Difference(DivisorsInt(modbound),[1]);
 
-    cycs := ShortCycles(g,Intersection([0..modbound-1],Support(g)),maxlng);
+    S := Intersection([0..modbound-1],Support(g));
+    cycbound := ValueOption("cycbound");
+    if   cycbound = fail
+    then Info(InfoRCWA,2,"ShortResidueClassCycles: option cycbound not set");
+         cycs := ShortCycles(g,S,maxlng);
+    else cycs := ShortCycles(g,S,maxlng,cycbound); fi;
     lngs := Set(List(cycs,Length));
 
     cycles := List(AsUnionOfFewClasses(Difference(Integers,Support(g))),
