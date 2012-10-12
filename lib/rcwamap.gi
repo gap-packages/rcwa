@@ -6973,10 +6973,25 @@ InstallMethod( ShortCycles,
                [ IsRcwaMapping, IsListOrCollection, IsPosInt ], 0,
 
   function ( sigma, S, maxlng )
+
+    local  cycs, absvals, minpos, i;
+
     if   not IsBijective(sigma) or not IsSubset(Source(sigma),S)
     then TryNextMethod(); fi;
-    return List(ShortOrbits(Group(sigma),S,maxlng),
-                orb->Cycle(sigma,Minimum(orb)));
+    cycs := List(ShortOrbits(Group(sigma),S,maxlng),
+                 orb->Cycle(sigma,Minimum(orb)));
+    if IsRcwaMappingOfZ(sigma) then
+      SortParallel(List(cycs,cyc->AbsInt(cyc[1])),cycs);
+      for i in [1..Length(cycs)] do
+        if not ForAll(cycs[i],IsPosInt) then
+          absvals := List(cycs[i],AbsInt);
+          minpos  := Position(absvals,Minimum(absvals));
+          cycs[i] := Concatenation(cycs[i]{[minpos..Length(cycs[i])]},
+                                   cycs[i]{[1..minpos-1]});
+        fi;
+      od;
+    fi;
+    return cycs;
   end );
 
 #############################################################################
@@ -6991,7 +7006,7 @@ InstallMethod( ShortCycles,
 
   function ( sigma, S, maxlng, maxn )
 
-    local  cycs, cyc, done, min, max, lng, n, m, i, j;
+    local  cycs, cyc, done, min, max, lng, absvals, minpos, n, m, i, j;
 
     if   not IsBijective(sigma) or not ForAll(S,IsInt)
     then TryNextMethod(); fi;
@@ -7014,9 +7029,16 @@ InstallMethod( ShortCycles,
     od;
 
     SortParallel(List(cycs,cyc->AbsInt(cyc[1])),cycs);
-    for i in [1..Length(cycs)] do
-      SortParallel(List(cycs[i],n->AbsInt(n)),cycs[i]);
-    od;
+    if min < 0 then
+      for i in [1..Length(cycs)] do
+        if not ForAll(cycs[i],IsPosInt) then
+          absvals := List(cycs[i],AbsInt);
+          minpos  := Position(absvals,Minimum(absvals));
+          cycs[i] := Concatenation(cycs[i]{[minpos..Length(cycs[i])]},
+                                   cycs[i]{[1..minpos-1]});
+        fi;
+      od;
+    fi;
     return cycs;
   end );
 

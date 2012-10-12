@@ -707,6 +707,24 @@ gap> ShortCycles(a,1);
 [ [ 0 ], [ 1 ], [ -1 ] ]
 gap> ShortCycles(a,2);
 [ [ 0 ], [ 1 ], [ -1 ], [ 2, 3 ], [ -3, -2 ] ]
+gap> collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);
+<rcwa mapping of Z with modulus 3>
+gap> Display(collatz);
+
+Rcwa mapping of Z with modulus 3
+
+        /
+        | 2n/3     if n in 0(3)
+ n |-> <  (4n-1)/3 if n in 1(3)
+        | (4n+1)/3 if n in 2(3)
+        \
+
+gap> cycs := ShortCycles(collatz,[-100..100],100);
+[ [ 0 ], [ -1 ], [ 1 ], [ 2, 3 ], [ -2, -3 ], [ 4, 5, 7, 9, 6 ], 
+  [ -4, -5, -7, -9, -6 ], [ 44, 59, 79, 105, 70, 93, 62, 83, 111, 74, 99, 66 ]
+    , [ -44, -59, -79, -105, -70, -93, -62, -83, -111, -74, -99, -66 ] ]
+gap> cycs = ShortCycles(collatz,[-100..100],100,1000);
+true
 gap> DeterminantMat(TransitionMatrix(T,13));
 -1/256
 gap> TransitionMatrix(T^3,11) = TransitionMatrix(T,11)^3;
