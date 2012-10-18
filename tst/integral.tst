@@ -1740,6 +1740,11 @@ gap> CycleRepresentativesAndLengths(g,[0..50]);
 [ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], [ 20, 4 ], 
   [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], [ 38, 2 ], 
   [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
+gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
+[ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
+gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),
+>                              ClassTransposition(0,3,1,3)),12);
+[ 2(3), 8(9), 11(12) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

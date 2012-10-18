@@ -4756,6 +4756,19 @@ InstallMethod( ShortResidueClassOrbits,
 
 #############################################################################
 ##
+#M  FixedResidueClasses( <G>, <maxmod> )
+##
+InstallMethod( FixedResidueClasses,
+               "for an rcwa group over Z and a positive integer (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
+
+  function ( G, maxmod )
+    return Intersection(List(GeneratorsOfGroup(G),
+                             g->FixedResidueClasses(g,maxmod)));
+  end );
+
+#############################################################################
+##
 #F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
 #F                    <palette>, <filename> )
 ##

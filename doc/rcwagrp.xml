@@ -1067,6 +1067,31 @@ gap> CycleRepresentativesAndLengths(g,[0..50]);
   </Description>
 </ManSection>
 
+Often one also wants to know which residue classes an rcwa mapping
+or an rcwa group fixes setwise:
+
+<ManSection>
+  <Oper Name="FixedResidueClasses" Arg="g, maxmod"
+        Label="for rcwa mapping and bound on modulus"/>
+  <Oper Name="FixedResidueClasses" Arg="G, maxmod"
+        Label="for rcwa group and bound on modulus"/>
+  <Returns>
+    the set of residue classes with modulus greater than 1 and less
+    than or equal to <A>maxmod</A> which the rcwa mapping <A>g</A>,
+    respectively the rcwa group <A>G</A>, fixes setwise. 
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
+[ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
+gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),ClassTransposition(0,3,1,3)),12);
+[ 2(3), 8(9), 11(12) ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 Frequently one needs to compute balls of certain radius around points or
 group elements, be it to estimate the growth of a group, be it to see how
 an orbit looks like, be it to search for a group element with certain

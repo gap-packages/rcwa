@@ -7085,6 +7085,33 @@ InstallMethod( ShortCycles,
 
 #############################################################################
 ##
+#M  CycleRepresentativesAndLengths( <g>, <S> ) . . . . . . . . default method
+##
+InstallMethod( CycleRepresentativesAndLengths,
+               "default method (RCWA)", ReturnTrue,
+               [ IsRcwaMapping, IsListOrCollection ], 0,
+
+  function ( g, S )
+
+    local  replng, rem, cyc, rep, i, j;
+
+    replng := [];
+    rem    := List(S,n->n^g<>n);
+    for i in [1..Length(S)] do
+      if rem[i] = false then continue; fi;
+      rep := S[i];
+      cyc := Cycle(g,rep);
+      Add(replng,[rep,Length(cyc)]);
+      for j in [1..Length(cyc)] do
+        if   cyc[j] in S
+        then rem[PositionSorted(S,cyc[j])] := false; fi;
+      od;
+    od;
+    return replng;
+  end );
+
+#############################################################################
+##
 #M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
 ##
 InstallMethod( ShortResidueClassCycles,
@@ -7145,29 +7172,25 @@ InstallMethod( ShortResidueClassCycles,
 
 #############################################################################
 ##
-#M  CycleRepresentativesAndLengths( <g>, <S> ) . . . . . . . . default method
+#M  FixedResidueClasses( <g>, <maxmod> )
 ##
-InstallMethod( CycleRepresentativesAndLengths,
-               "default method (RCWA)", ReturnTrue,
-               [ IsRcwaMapping, IsListOrCollection ], 0,
+InstallMethod( FixedResidueClasses,
+               "for an rcwa mapping of Z and a positive integer (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt ], 0,
 
-  function ( g, S )
+  function ( g, maxmod )
 
-    local  replng, rem, cyc, rep, i, j;
+    local  cls, fixed, cl, r, m;
 
-    replng := [];
-    rem    := List(S,n->n^g<>n);
-    for i in [1..Length(S)] do
-      if rem[i] = false then continue; fi;
-      rep := S[i];
-      cyc := Cycle(g,rep);
-      Add(replng,[rep,Length(cyc)]);
-      for j in [1..Length(cyc)] do
-        if   cyc[j] in S
-        then rem[PositionSorted(S,cyc[j])] := false; fi;
-      od;
+    cls := Concatenation(List([2..maxmod],
+                              m->AllResidueClassesModulo(Integers,m)));
+    fixed := [];
+    for cl in cls do
+      r := Residue(cl); m := Modulus(cl);
+      if ForAny([r,r+m..r+15*m],n->n^g mod m <> r) then continue; fi;
+      if cl^g = cl then Add(fixed,cl); fi;
     od;
-    return replng;
+    return fixed;
   end );
 
 #############################################################################

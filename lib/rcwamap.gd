@@ -818,6 +818,18 @@ DeclareOperation( "CycleRepresentativesAndLengths",
 
 #############################################################################
 ##
+#O  FixedResidueClasses( <g>, <maxmod> )
+#O  FixedResidueClasses( <G>, <maxmod> )
+##
+##  Returns the set of residue classes with modulus greater than 1 and less
+##  than or equal to <maxmod> which the rcwa mapping <g>, respectively the
+##  rcwa group <G>, fixes setwise. 
+##
+DeclareOperation( "FixedResidueClasses", [ IsRcwaMapping, IsRingElement ] );
+DeclareOperation( "FixedResidueClasses", [ IsRcwaGroup, IsRingElement ] );
+
+#############################################################################
+##
 #O  RestrictedPerm( <g>, <S> ) . . . . . . . . . .  restriction of <g> to <S>
 #O  PermutationOpNC( <g>, <P>, <act> ) . .  permutation induced by <g> on <P>
 ##
