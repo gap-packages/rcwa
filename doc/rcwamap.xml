@@ -175,8 +175,6 @@ gap> Cycle(a,44);
 ]]>
 </Example>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 <Alt Only="LaTeX">\noindent</Alt>
 There is computational evidence for the conjecture that any
 residue-class-wise affine permutation of&nbsp;&ZZ; can be
@@ -352,8 +350,6 @@ the desired ring&nbsp;<M>R</M> to the argument list. Often also a sensible
 <Q>default ring</Q> (<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP;
 Reference Manual) is chosen if that optional first argument is omitted. <P/>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 On rings which have more than two units, there is another basic series
 of rcwa permutations which generalizes class reflections:
 
@@ -429,8 +425,6 @@ There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
 <C>IsClassRotation</C>, <C>IsClassTransposition</C> and
 <C>IsGeneralizedClassTransposition</C>, which indicate whether a given
 rcwa mapping belongs to the corresponding series. <P/>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 In the sequel we describe the general-purpose constructor for rcwa
 mappings. The constructor may look a bit technical on a first glance,
