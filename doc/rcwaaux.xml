@@ -104,8 +104,6 @@ are included in the distribution file anyway, users will not need it.
   </Description>
 </ManSection>
 
-</Section>
-
 <ManSection>
   <Func Name="RCWATestExamples" Arg=""/>
   <Returns> nothing. </Returns>
@@ -116,7 +114,7 @@ are included in the distribution file anyway, users will not need it.
   </Description>
 </ManSection>
 
-</Chapter>
+</Section>
 
 <!-- #################################################################### -->
 
@@ -303,5 +301,7 @@ not have prime divisors exceeding <A>maxp</A>, and the function
 of an integer <A>n</A> as a string in &LaTeX; format.
 
 </Section>
+
+</Chapter>
 
 <!-- #################################################################### -->
