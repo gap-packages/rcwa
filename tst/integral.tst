@@ -1764,6 +1764,11 @@ Rcwa permutation of Z with modulus 24, of order 4
         |
         \
 
+gap> G := Group(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));;
+gap> CyclesOnFiniteOrbit(G,G.1*G.2,0);
+[ [ 0, 1, 4, 9, 8, 5 ], [ 6, 7 ], [ 10, 11, 14, 19, 18, 15 ], [ 12, 13 ] ]
+gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
+[ 3148, 3148 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

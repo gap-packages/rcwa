@@ -4706,6 +4706,37 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#F  CyclesOnFiniteOrbit( <G>, <g>, <n> ) . . . cycles of <g> on orbit <n>^<G>
+##
+InstallMethod( CyclesOnFiniteOrbit,
+               "general method (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsRcwaMapping and IsBijective, IsObject ], 0,
+
+  function ( G, g, n )
+
+    local  orb, r, cycs, cyc, m;
+
+    if   Source(One(G)) <> Source(g) or not n in Source(g)
+    then TryNextMethod(); fi;
+
+    r := 2;
+    repeat
+      r := 2 * r;
+      orb := Ball(G,n,r,OnPoints:Spheres);
+    until orb[Length(orb)] = [];
+    orb := Union(orb);
+    cycs := [];
+    repeat
+      m := orb[1];
+      cyc := Cycle(g,m);
+      Add(cycs,cyc);
+      orb := Difference(orb,cyc);
+    until orb = [];
+    return cycs;
+  end );
+
+#############################################################################
+##
 #M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
 ##
 InstallMethod( ShortResidueClassOrbits,

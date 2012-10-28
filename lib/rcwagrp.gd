@@ -264,6 +264,18 @@ DeclareRepresentation( "IsRcwaGroupOrbitsIteratorRep",
 
 #############################################################################
 ##
+#O  CyclesOnFiniteOrbit( <G>, <g>, <n> ) . . . cycles of <g> on orbit <n>^<G>
+##
+##  Returns a list of all cycles of the rcwa permutation <g> on the orbit
+##  of the point <n> under the action of the rcwa group <G>. It is assumed
+##  that <g> is an element of <G>, and that the orbit of <n> under the action
+##  of <G> is finite. These conditions are not checked.
+##
+DeclareOperation( "CyclesOnFiniteOrbit",
+                  [ IsRcwaGroup, IsRcwaMapping, IsObject ] );
+
+#############################################################################
+##
 #O  IsTransitive( <G>, <S> ) . . . . . . . . . . . . . . . .  for rcwa groups
 #O  Transitivity( <G>, <S> )
 #O  IsPrimitive( <G>, <S> )

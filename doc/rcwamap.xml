@@ -326,8 +326,7 @@ gap> List(ClassPairs(4),ClassTransposition);
 gap> NrClassPairs(100);
 3528138
 gap> SplittedClassTransposition(ClassTransposition(0,2,1,4),3);
-[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ]
-]]>
+[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ]]]>
 </Example>
   </Description>
 </ManSection>
@@ -387,9 +386,8 @@ Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
 
 gap> x := Indeterminate(GF(8),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(8),1);;
-gap> cr := ClassRotation(1,x,Z(8)*One(R));
+gap> cr := ClassRotation(1,x,Z(8)*One(R)); Support(cr);
 ClassRotation( 1(x), Z(2^3) )
-gap> Support(cr);
 1(x) \ [ 1 ]
 gap> Display(cr);
 
