@@ -4,6 +4,17 @@
 
 Changes between version 3.3.1 and version 3.4.0:
 
+ - The output of tame rcwa permutations has been improved.
+   Now sign-preserving tame rcwa permutations of Z are often shown
+   in disjoint cycle notation and residue classes moved by class
+   transpositions etc. are shown as such. Also it is possible now to
+   customize the output by 3 options, which can be either 'true',
+   'false' or not set: CycleNotation, PrintNotation, AbridgedNotation.
+
+ - The method to enter an rcwa mapping of Z by giving a string expression
+   accepts now rcwa permutations given in disjoint residue class cycle
+   notation.
+
  - The method for `ShortResidueClassCycles' for rcwa permutations of Z
    has been made much faster and much less memory-consuming.
 
@@ -13,6 +24,11 @@ Changes between version 3.3.1 and version 3.4.0:
 
  - The function `ClassPairs' can now compute pairs of disjoint
    residue classes of Z^2 as well.
+
+ - A function `RCWATestExamples' has been added. This function tests
+   all examples in the RCWA manual, and reports any differences between
+   the actual output and the output printed in the manual. It replaces
+   the former script-based utility for this purpose.
 
  - The directory rcwa/gap/ has been renamed to rcwa/lib/, in order to
    follow the same naming convention as for the subdirectories of the

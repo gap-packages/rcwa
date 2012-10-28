@@ -20,7 +20,7 @@ Rcwa mapping of Z: n -> 2n
 gap> RcwaMapping(Integers,1,[[2,0,1]]);
 Rcwa mapping of Z: n -> 2n
 gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);
-<rcwa permutation of Z with modulus 17, of order 2>
+( 8(17), 9(17) )
 gap> f * One(f) = f and One(f) * f = f;
 true
 gap> f * Zero(f) = Zero(f) and Zero(f) * f = Zero(f);
@@ -148,10 +148,9 @@ gap> last^f5 = Image(f5);
 true
 gap> perm := RcwaMapping([List([[0,4],[1,6],[2,12],[11,12],[3,6]],
 >                              ResidueClass)]);
-<rcwa permutation of Z with modulus 12, of order 5>
+( 0(4), 1(6), 2(12), 11(12), 3(6) )
 gap> Factorization(perm);
-[ ClassTransposition(1,6,3,6), ClassTransposition(2,12,11,12), 
-  ClassTransposition(3,6,2,12), ClassTransposition(0,4,1,6) ]
+[ ( 1(6), 3(6) ), ( 2(12), 11(12) ), ( 3(6), 2(12) ), ( 0(4), 1(6) ) ]
 gap> Cycle(perm,ResidueClass(0,4));
 [ 0(4), 1(6), 2(12), 11(12), 3(6) ]
 gap> u := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;
@@ -323,15 +322,7 @@ Rcwa permutation of Z with modulus 18, of order 6
 
 Rcwa permutation of Z with modulus 18, of order 6
 
-        /
-        | n+3     if n in 2(9) U 5(9)
-        | 2n-5    if n in 4(9)
-        | 2n-4    if n in 8(9)
- n |-> <  (n+1)/2 if n in 3(18)
-        | (n-4)/2 if n in 12(18)
-        | n       if n in 0(9) U 1(9) U 6(9) U 7(9)
-        |
-        \
+( 2(9), 5(9), 8(9), 12(18), 4(9), 3(18) )
 
 ]
 
@@ -383,13 +374,13 @@ infinity
 gap> h in G;
 false
 gap> std := StandardConjugate(g);
-<rcwa permutation of Z with modulus 7, of order 7>
+( 0(7), 1(7), 2(7), 3(7), 4(7), 5(7), 6(7) )
 gap> tostd := StandardizingConjugator(g);
 <rcwa permutation of Z with modulus 12>
 gap> g^tostd = std;
 true
 gap> std := StandardConjugate(ab);
-<rcwa permutation of Z with modulus 7, of order 6>
+( 1(7), 2(7), 3(7), 4(7), 5(7), 6(7) )
 gap> tostd := StandardizingConjugator(ab);
 <rcwa permutation of Z with modulus 18>
 gap> ab^tostd = std;
@@ -403,7 +394,7 @@ IdentityMapping( Integers )
 gap> k := RcwaMapping([[1,1,1],[1, 4,1],[1,1,1],[2,-2,1],
 >                      [1,0,2],[1,-5,1],[1,1,1],[2,-2,1]]);;
 gap> std := StandardConjugate(k);
-<rcwa permutation of Z with modulus 3, of order 3>
+( 0(3), 1(3), 2(3) )
 gap> tostd := StandardizingConjugator(k);
 <rcwa permutation of Z with modulus 8>
 gap> k^tostd = std;
@@ -578,7 +569,7 @@ gap> G;
 gap> Modulus(G);
 6
 gap> A4 := DerivedSubgroup(G);
-<rcwa group over Z with 3 generators, of size 12>
+<rcwa group over Z with 3 generators, of order 12>
 gap> IsBijective(IsomorphismGroups(AlternatingGroup(4),A4));
 true
 gap> H := Image(IsomorphismRcwaGroup(Group((1,2),(3,4),(5,6),(7,8),
@@ -610,7 +601,7 @@ true
 gap> Size(Group(nu));
 infinity
 gap> tau := ClassTransposition(0,2,1,2);
-ClassTransposition(0,2,1,2)
+( 0(2), 1(2) )
 gap> x := RcwaMapping([[-1,2,1],[1,-1,1],[1,-1,1]]);
 <rcwa mapping of Z with modulus 3>
 gap> Order(x);
@@ -787,7 +778,7 @@ gap> G := Group(g,h);;
 gap> P := RespectedPartition(G);
 [ 0(6), 1(6), 3(6), 4(6), 5(6), 2(12), 8(12) ]
 gap> SymmetricGroup(P);
-<rcwa group over Z with 2 generators, of size 5040>
+<rcwa group over Z with 2 generators, of order 5040>
 gap> phi := IsomorphismMatrixGroup(G);;
 gap> M := Image(phi);
 <matrix group with 2 generators>
@@ -814,7 +805,7 @@ gap> Divisor(G);
 gap> DihedralGroup(ResidueClass(3,4));
 <tame rcwa group over Z with 2 generators>
 gap> GeneratorsOfGroup(last);
-[ ClassShift(3,4), ClassReflection(3,4) ]
+[ ClassShift( 3(4) ), ClassReflection( 3(4) ) ]
 gap> Divisor(Group(ClassTransposition(0,2,1,6)));
 3
 gap> Multiplier(Group(a,b));
@@ -879,7 +870,7 @@ gap> md(Comm(c1,c2));
 gap> Order(RcwaMapping([[rc(1,2),rc(36,72)]]));
 2
 gap> f1 := RcwaMapping([[rc(0,4),rc(1,6)],[rc(2,4),rc(5,6)]]);
-<rcwa permutation of Z with modulus 12, of order 2>
+( 0(4), 1(6) ) ( 2(4), 5(6) )
 gap> Cycle(f1,rc(0,4));
 [ 0(4), 1(6) ]
 gap> Cycle(f1,rc(5,6));
@@ -899,7 +890,7 @@ gap> G := Group(g,h);
 gap> IsTransitive(G,Integers);
 true
 gap> H := Restriction(G,RcwaMapping([[3,2,1]]));
-<tame rcwa group over Z with 2 generators, of size infinity>
+<tame rcwa group over Z with 2 generators, of order infinity>
 gap> MovedPoints(H);
 2(3)
 gap> IsTransitive(H,MovedPoints(H));
@@ -917,7 +908,7 @@ gap> D := DirectProduct(Group(a,b),Group(g,h),Group(nu,t));
 <rcwa group over Z with 6 generators>
 gap> Projection(D,1);;
 gap> Embedding(D,2);
-[ g, h ] -> [ <rcwa permutation of Z with modulus 18, of order 7>, 
+[ g, h ] -> [ ( 1(18), 7(36), 4(18), 16(18), 10(18), 25(36), 13(18) ), 
   <rcwa permutation of Z with modulus 18, of order 12> ]
 gap> G := Group(g,h);;
 gap> IsSolvable(G);
@@ -1092,39 +1083,31 @@ gap> DecreasingOn(a^2);
 gap> DecreasingOn(a^3);
 <union of 8 residue classes (mod 16)>
 gap> FactorizationIntoCSCRCT(ab);
-[ ClassShift(7,9), ClassShift(1,9)^-1, ClassTransposition(1,9,4,9), 
-  ClassTransposition(1,9,7,9), ClassTransposition(6,18,15,18), 
-  ClassTransposition(5,9,15,18), ClassTransposition(4,9,15,18), 
-  ClassTransposition(5,9,6,18), ClassTransposition(4,9,6,18) ]
+[ ClassShift( 7(9) ), ClassShift( 1(9) )^-1, ( 1(9), 4(9) ), ( 1(9), 7(9) ), 
+  ( 6(18), 15(18) ), ( 5(9), 15(18) ), ( 4(9), 15(18) ), ( 5(9), 6(18) ), 
+  ( 4(9), 6(18) ) ]
 gap> Product(last) = ab;
 true
 gap> Factorization(Comm(g,h));
-[ ClassShift(3,6)^2, ClassShift(2,3)^-2, ClassTransposition(0,6,3,6) ]
+[ ClassShift( 3(6) )^2, ClassShift( 2(3) )^-2, ( 0(6), 3(6) ) ]
 gap> Product(last) = Comm(g,h);
 true
 gap> FactorizationIntoGenerators(nu*nu^a);
-[ ClassShift(5,6), ClassShift(4,6), ClassTransposition(0,6,1,6), 
-  ClassTransposition(0,6,5,6), ClassTransposition(0,6,3,6), 
-  ClassTransposition(0,6,4,6), ClassTransposition(0,6,2,6), 
-  ClassTransposition(2,3,3,6), ClassTransposition(1,3,3,6), 
-  ClassTransposition(2,3,0,6), ClassTransposition(1,3,0,6) ]
+[ ClassShift( 5(6) ), ClassShift( 4(6) ), ( 0(6), 1(6) ), ( 0(6), 5(6) ), 
+  ( 0(6), 3(6) ), ( 0(6), 4(6) ), ( 0(6), 2(6) ), ( 2(3), 3(6) ), 
+  ( 1(3), 3(6) ), ( 2(3), 0(6) ), ( 1(3), 0(6) ) ]
 gap> List([t,nu,tau,nu^2,nu^-1,t*nu],Factorization);
-[ [ ClassReflection(0,1) ], [ ClassShift(0,1) ], 
-  [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,1)^2 ], 
-  [ ClassShift(0,1)^-1 ], [ ClassReflection(0,1), ClassShift(0,1) ] ]
+[ [ ClassReflection( Z ) ], [ ClassShift( Z ) ], [ ( 0(2), 1(2) ) ], 
+  [ ClassShift( Z )^2 ], [ ClassShift( Z )^-1 ], 
+  [ ClassReflection( Z ), ClassShift( Z ) ] ]
 gap> Factorization(g^ClassReflection(0,4));
-[ ClassShift(8,12), ClassShift(3,6), ClassTransposition(1,6,5,6), 
-  ClassTransposition(1,6,3,6), ClassTransposition(0,12,10,12), 
-  ClassTransposition(0,12,6,12), ClassTransposition(0,12,8,12), 
-  ClassTransposition(10,12,16,24), ClassTransposition(8,12,16,24), 
-  ClassTransposition(10,12,4,24), ClassTransposition(8,12,4,24), 
-  ClassTransposition(1,6,4,12), ClassTransposition(1,6,2,12), 
-  ClassReflection(4,6), ClassReflection(2,24) ]
+[ ClassShift( 8(12) ), ClassShift( 3(6) ), ( 1(6), 5(6) ), ( 1(6), 3(6) ), 
+  ( 0(12), 10(12) ), ( 0(12), 6(12) ), ( 0(12), 8(12) ), ( 10(12), 16(24) ), 
+  ( 8(12), 16(24) ), ( 10(12), 4(24) ), ( 8(12), 4(24) ), ( 1(6), 4(12) ), 
+  ( 1(6), 2(12) ), ClassReflection( 4(6) ), ClassReflection( 2(24) ) ]
 gap> FactorizationIntoCSCRCT((ClassShift(1,3)*ClassReflection(0,2))^a);
-[ ClassShift(15,18), ClassTransposition(1,9,5,9), 
-  ClassTransposition(5,9,15,18), ClassTransposition(1,9,15,18), 
-  ClassTransposition(5,9,6,18), ClassTransposition(1,9,6,18), 
-  ClassReflection(0,3) ]
+[ ClassShift( 15(18) ), ( 1(9), 5(9) ), ( 5(9), 15(18) ), ( 1(9), 15(18) ), 
+  ( 5(9), 6(18) ), ( 1(9), 6(18) ), ClassReflection( 0(3) ) ]
 gap> 2*a*RightInverse(2*a);
 IdentityMapping( Integers )
 gap> Display(CommonRightInverse(RcwaMapping([[2,0,1]]),
@@ -1225,7 +1208,7 @@ gap> IsTame(G); Size(G);
 true
 infinity
 gap> H := DirectProduct(G,G);
-<tame rcwa group over Z with 4 generators, of size infinity>
+<tame rcwa group over Z with 4 generators, of order infinity>
 gap> H1 := Action(H,ResidueClass(0,2));
 <rcwa group over Z with 4 generators>
 gap> Induction(H1,RcwaMapping([[2,0,1]])) = G;
@@ -1233,20 +1216,19 @@ true
 gap> Action(H1,ResidueClass(1,2));
 Trivial rcwa group over Z
 gap> H := WreathProduct(G,AlternatingGroup(5));
-<tame rcwa group over Z with 4 generators, of size infinity>
+<tame rcwa group over Z with 4 generators, of order infinity>
 gap> Embedding(H,1);
-[ g, h ] -> [ <rcwa permutation of Z with modulus 30, of order 7>, 
+[ g, h ] -> [ ( 0(30), 10(60), 5(30), 25(30), 15(30), 40(60), 20(30) ), 
   <rcwa permutation of Z with modulus 30, of order 12> ]
 gap> Embedding(H,2);
-[ (1,2,3,4,5), (3,4,5) ] -> 
-[ <rcwa permutation of Z with modulus 5, of order 5>, 
-  <rcwa permutation of Z with modulus 5, of order 3> ]
+[ (1,2,3,4,5), (3,4,5) ] -> [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
+  ( 2(5), 3(5), 4(5) ) ]
 gap> H := WreathProduct(G,Group(ClassShift(0,1)));
 <wild rcwa group over Z with 3 generators>
 gap> Support(Image(Embedding(H,1)));
 3(4)
 gap> Embedding(H,2);
-[ ClassShift(0,1) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
+[ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
 gap> TransposedClasses(ClassTransposition(1,2,2,6));
 [ 1(2), 2(6) ]
 gap> TransposedClasses(RcwaMapping([[1,2,1],[1,0,1],[1,-2,1],[1,0,1]]));
@@ -1281,35 +1263,31 @@ true
 gap> CyclicGroup(IsRcwaGroupOverZ,1);
 Trivial rcwa group over Z
 gap> CyclicGroup(IsRcwaGroupOverZ,2);
-<rcwa group over Z with 1 generator, of size 2>
+<rcwa group over Z with 1 generator, of order 2>
 gap> CyclicGroup(IsRcwaGroupOverZ,7);
-<rcwa group over Z with 1 generator, of size 7>
+<rcwa group over Z with 1 generator, of order 7>
 gap> Display(last);
 
-Rcwa group over Z of size 7, generated by
+Rcwa group over Z of order 7, generated by
 
 [
 
 Rcwa permutation of Z with modulus 7, of order 7
 
-        /
-        | n+1 if n in Z \ 6(7)
- n |-> <  n-6 if n in 6(7)
-        |
-        \
+( 0(7), 1(7), 2(7), 3(7), 4(7), 5(7), 6(7) )
 
 ]
 
 gap> CyclicGroup(IsRcwaGroupOverZ,infinity);
-<tame rcwa group over Z with 1 generator, of size infinity>
+<tame rcwa group over Z with 1 generator, of order infinity>
 gap> GeneratorsOfGroup(last);
-[ ClassShift(0,1) ]
+[ ClassShift( Z ) ]
 gap> DihedralGroup(IsRcwaGroupOverZ,infinity);
-<tame rcwa group over Z with 2 generators, of size infinity>
+<tame rcwa group over Z with 2 generators, of order infinity>
 gap> GeneratorsOfGroup(last);
-[ ClassShift(0,1), ClassReflection(0,1) ]
+[ ClassShift( Z ), ClassReflection( Z ) ]
 gap> G := AbelianGroup(IsRcwaGroupOverZ,[2,2,3,7,infinity]);
-<tame rcwa group over Z with 5 generators, of size infinity>
+<tame rcwa group over Z with 5 generators, of order infinity>
 gap> List(GeneratorsOfGroup(G),Order);
 [ 2, 2, 3, 7, infinity ]
 gap> List(GeneratorsOfGroup(G),Support);
@@ -1347,8 +1325,7 @@ gap> Union(Flat(last));
 gap> psl := FreeProduct(Group((1,2,3)),Group((1,2)));
 <fp group on the generators [ f1, f2 ]>
 gap> phi := IsomorphismRcwaGroup(psl);
-[ f1, f2 ] -> [ <rcwa permutation of Z with modulus 4>, 
-  <rcwa permutation of Z with modulus 2> ]
+[ f1, f2 ] -> [ <rcwa permutation of Z with modulus 4>, ( 0(2), 1(2) ) ]
 gap> G := Image(phi);
 <wild rcwa group over Z with 2 generators>
 gap> S := AllResidueClassesModulo(2);
@@ -1365,7 +1342,7 @@ gap> Length(Ball(G,One(G),8));
 106
 gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2));;
 gap> phi := IsomorphismRcwaGroup(F);
-[ f1, f2 ] -> [ ClassReflection(0,1), Rcwa permutation of Z: n -> -n + 1 ]
+[ f1, f2 ] -> [ ClassReflection( Z ), Rcwa permutation of Z: n -> -n + 1 ]
 gap> F := FreeProduct(CyclicGroup(2),CyclicGroup(2),CyclicGroup(2));
 <fp group on the generators [ f1, f2, f3 ]>
 gap> phi := IsomorphismRcwaGroup(F);
@@ -1383,15 +1360,12 @@ gap> List([1..3],
 >                         Difference(Integers,ResidueClass(i-1,3))]));
 [ (1,2), (1,2), (1,2) ]
 gap> List(GeneratorsOfGroup(G),Factorization);
-[ [ ClassTransposition(1,3,2,3), ClassTransposition(0,6,3,6), 
-      ClassTransposition(2,3,3,6), ClassTransposition(1,3,3,6), 
-      ClassTransposition(2,3,0,6), ClassTransposition(1,3,0,6) ], 
-  [ ClassTransposition(0,3,2,3), ClassTransposition(1,6,4,6), 
-      ClassTransposition(2,3,4,6), ClassTransposition(0,3,4,6), 
-      ClassTransposition(2,3,1,6), ClassTransposition(0,3,1,6) ], 
-  [ ClassTransposition(0,3,1,3), ClassTransposition(2,6,5,6), 
-      ClassTransposition(1,3,5,6), ClassTransposition(0,3,5,6), 
-      ClassTransposition(1,3,2,6), ClassTransposition(0,3,2,6) ] ]
+[ [ ( 1(3), 2(3) ), ( 0(6), 3(6) ), ( 2(3), 3(6) ), ( 1(3), 3(6) ), 
+      ( 2(3), 0(6) ), ( 1(3), 0(6) ) ], 
+  [ ( 0(3), 2(3) ), ( 1(6), 4(6) ), ( 2(3), 4(6) ), ( 0(3), 4(6) ), 
+      ( 2(3), 1(6) ), ( 0(3), 1(6) ) ], 
+  [ ( 0(3), 1(3) ), ( 2(6), 5(6) ), ( 1(3), 5(6) ), ( 0(3), 5(6) ), 
+      ( 1(3), 2(6) ), ( 0(3), 2(6) ) ] ]
 gap> List([1..3],k->Length(Ball(G,One(G),k)));
 [ 4, 10, 22 ]
 gap> [ g^2, g^8 ];
@@ -1401,9 +1375,9 @@ g^2
 gap> last^6;
 g^5
 gap> ClassShift(0,1)^3;
-ClassShift(0,1)^3
+ClassShift( Z )^3
 gap> last^17;
-ClassShift(0,1)^51
+ClassShift( Z )^51
 gap> [ Root(g,2), Root(g,8) ];
 [ g^4, g ]
 gap> Root(g,7);
@@ -1415,16 +1389,13 @@ gap> Root(h,10);
 gap> last^10 = h;
 true
 gap> SplittedClassTransposition(ClassTransposition(0,2,1,4),3);
-[ ClassTransposition(0,6,1,12), ClassTransposition(2,6,5,12), 
-  ClassTransposition(4,6,9,12) ]
+[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ]
 gap> SplittedClassTransposition(ClassTransposition(0,2,1,2),3,false);
-[ ClassTransposition(0,6,1,6), ClassTransposition(2,6,3,6), 
-  ClassTransposition(4,6,5,6) ]
+[ ( 0(6), 1(6) ), ( 2(6), 3(6) ), ( 4(6), 5(6) ) ]
 gap> SplittedClassTransposition(ClassTransposition(0,2,1,2),2,true);
-[ ClassTransposition(0,4,1,4), ClassTransposition(0,4,3,4), 
-  ClassTransposition(1,4,2,4), ClassTransposition(2,4,3,4) ]
+[ ( 0(4), 1(4) ), ( 0(4), 3(4) ), ( 1(4), 2(4) ), ( 2(4), 3(4) ) ]
 gap> SplittedClassTransposition(ClassTransposition(1,2,4,6),2,false);
-[ ClassTransposition(1,4,4,12), ClassTransposition(3,4,10,12) ]
+[ ( 1(4), 4(12) ), ( 3(4), 10(12) ) ]
 gap> D := DihedralPcpGroup(0);
 Pcp-group with orders [ 2, 0 ]
 gap> DirectProduct(D,D,D);
@@ -1454,13 +1425,12 @@ gap> List([g,h,g*h,a,ab],elm->RespectsPartition(elm,P));
 [ true, true, true, false, false ]
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,8);
-[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
-    [ <rcwa permutation of Z with modulus 8>, IdentityMapping( Integers ) ], 
-  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
-    [ <rcwa permutation of Z with modulus 4>, 
-      <rcwa permutation of Z with modulus 4> ], 
-  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -> 
-    [ <rcwa permutation of Z with modulus 8>, IdentityMapping( Integers ) ] ]
+[ [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 0(8), 1(8) ), IdentityMapping( Integers ) ], 
+  [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 2(4), 3(4) ), <rcwa permutation of Z with modulus 4> ], 
+  [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 4(8), 5(8) ), IdentityMapping( Integers ) ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(8) U 1(8), 2(4) U 3(4), 4(8) U 5(8) ]
 gap> List(last2,phi->Size(Image(phi)));
@@ -1542,7 +1512,7 @@ gap> elm := First(G,g->Density(Support(g))>0 and Density(Support(g))<1/4);
 gap> Support(elm);
 5(8)
 gap> Factorization(elm);
-[ ClassShift(5,8)^-1 ]
+[ ClassShift( 5(8) )^-1 ]
 gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> SetName(g,"g"); SetName(h,"h");
@@ -1655,14 +1625,14 @@ gap> U := RepresentativeStabilizingRefinement(cl,3);
 gap> l := AsListOfClasses(U);
 [ [15/-12], [19/-12], [23/-12] ]
 gap> cyc3 := RcwaMapping([l]);
-<rcwa permutation of Z with modulus 12, of order 3>
+( 3(12), 7(12), 11(12) )
 gap> Permutation(cyc3,l);
 (1,2,3)
 gap> G := CT(Integers);
 CT(Z)
 gap> S1 := ResidueClass(0,2);; S2 := ResidueClass(1,2);;
 gap> g := RepresentativeAction(G,S1,S2);
-<rcwa permutation of Z with modulus 2>
+( 0(2), 1(2) )
 gap> S1^g;
 1(2)
 gap> RepresentativeAction(G,S1,S1);
@@ -1700,12 +1670,10 @@ gap> IsClassWiseTranslating(ClassShift(4,10));
 true
 gap> IsClassWiseTranslating(ClassReflection(2,7));
 false
-gap> g := RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5,6])");
+gap> g := RcwaMapping("((3(4),4(6))*cs(4(6)))^3/(cs(2(3))^-1*cr(5(6)))");
 <rcwa permutation of Z with modulus 36>
 gap> g = (ClassTransposition(3,4,4,6)*ClassShift(4,6))^3/
 >        (ClassShift(2,3)^-1*ClassReflection(5,6));
-true
-gap> g = RcwaMapping("((3(4),4(6))*(4,6))^3/((2,3)^-1*[5(6)])");
 true
 gap> G := GroupByResidueClasses(List([[0,2],[0,4],[1,4],[2,4],[3,4]],
 >                                    ResidueClass));
@@ -1720,8 +1688,7 @@ gap> cts := Filtered(List(ClassPairs(4),ClassTransposition),
 gap> G := Group(cts);
 <rcwa group over Z with 11 generators>
 gap> gens := SmallGeneratingSet(G);
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4), 
-  ClassTransposition(0,2,3,4), ClassTransposition(0,4,1,4) ]
+[ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(4), 1(4) ) ]
 gap> G := Group(gens);
 <rcwa group over Z with 4 generators>
 gap> Br := List([1..10],r->RestrictedBall(G,One(G),r,4));;
@@ -1745,6 +1712,58 @@ gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
 gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),
 >                              ClassTransposition(0,3,1,3)),12);
 [ 2(3), 8(9), 11(12) ]
+gap> PushOptions(rec(AbridgedNotation:=true));
+gap> ClassShift(0,2);
+cs( 0(2) )
+gap> ClassReflection(0,2);
+cr( 0(2) )
+gap> PrimeSwitch(3);
+ps(3)
+gap> ClassTransposition(0,2,1,2);
+( 0(2), 1(2) )
+gap> PopOptions();
+gap> PushOptions(rec(PrintNotation:=true));
+gap> ClassShift(0,2);
+ClassShift(0,2)
+gap> ClassReflection(0,2);
+ClassReflection(0,2)
+gap> PrimeSwitch(3);
+PrimeSwitch(3)
+gap> ClassTransposition(0,2,1,2);
+ClassTransposition(0,2,1,2)
+gap> PopOptions();
+gap> g := RcwaMapping("(0(6),1(8),3(4),2(12))*(4(12),10(24))");
+<rcwa permutation of Z with modulus 24>
+gap> View(g:CycleNotation); Print("\n");
+( 3(4), 2(12), 0(6), 1(8) ) ( 4(12), 10(24) )
+gap> g^2;
+( 3(4), 0(6) ) ( 1(8), 2(12) )
+gap> g^3;
+( 3(4), 1(8), 0(6), 2(12) ) ( 4(12), 10(24) )
+gap> g^4;
+IdentityMapping( Integers )
+gap> Order(g);
+4
+gap> Display(g);
+
+Rcwa permutation of Z with modulus 24, of order 4
+
+( 3(4), 2(12), 0(6), 1(8) ) ( 4(12), 10(24) )
+
+gap> Display(g:CycleNotation:=false);
+
+Rcwa permutation of Z with modulus 24, of order 4
+
+        /
+        | 3n-7     if n in 3(4)
+        | (4n+3)/3 if n in 0(6)
+        | (n+5)/2  if n in 1(8)
+ n |-> <  (n-2)/2  if n in 2(12) U 10(24)
+        | 2n+2     if n in 4(12)
+        | n        if n in 5(8) U 8(12) U 22(24)
+        |
+        \
+
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

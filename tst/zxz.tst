@@ -256,7 +256,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
 gap> ProjectionsToCoordinates(g);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
-[ [ ClassTransposition(0,2,1,2) ], [ ClassShift(0,3) ] ]
+[ [ ( 0(2), 1(2) ) ], [ ClassShift( 0(3) ) ] ]
 gap> transvection := RcwaMapping(R,[[1,0],[0,1]],[[[[1,1],[1,0]],[0,0],1]]);
 Rcwa mapping of Z^2: (m,n) -> (m+n,m)
 gap> g := transvection*SigmaT;
@@ -276,9 +276,9 @@ Rcwa mapping of Z^2 with modulus (6,0)Z+(0,1)Z
 gap> IsBijective(g);
 true
 gap> ct := ClassTransposition(0,2,1,2);
-ClassTransposition(0,2,1,2)
+( 0(2), 1(2) )
 gap> g := RcwaMapping(ct,One(ct));
-ClassTransposition((0,0)+(2,0)Z+(0,1)Z,(1,0)+(2,0)Z+(0,1)Z)
+( (0,0)+(2,0)Z+(0,1)Z, (1,0)+(2,0)Z+(0,1)Z )
 gap> elm1 := SigmaT*g;
 <rcwa mapping of Z^2 with modulus (2,0)Z+(0,6)Z>
 gap> elm2 := g*SigmaT^-1;
@@ -328,7 +328,7 @@ Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z
             |
             \
 
-gap> Display(g:table);
+gap> Display(g:AsTable);
 
 Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z
 
@@ -346,7 +346,7 @@ Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z
  [2,1] [2,3]                   | [m-2,n+2]
 
 gap> ct := ClassTransposition(P1[1],P1[2]);
-ClassTransposition((0,0)+(2,0)Z+(0,2)Z,(0,1)+(4,0)Z+(0,6)Z)
+( (0,0)+(2,0)Z+(0,2)Z, (0,1)+(4,0)Z+(0,6)Z )
 gap> Display(ct);
 
 Rcwa permutation of Z^2 with modulus (4,0)Z+(0,6)Z, of order 2
@@ -362,17 +362,17 @@ IdentityMapping( ( Integers^2 ) )
 gap> G := SL(2,Integers);;
 gap> phi := IsomorphismRcwaGroup(G,cls[2]);
 [ [ [ 0, 1 ], [ -1, 0 ] ], [ [ 1, 1 ], [ 0, 1 ] ] ] -> 
-[ ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[0,1],[-1,0]]), 
-  ClassRotation((0,1)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
+[ ClassRotation( (0,1)+(1,3)Z+(0,5)Z, [ [ 0, 1 ], [ -1, 0 ] ] ), 
+  ClassRotation( (0,1)+(1,3)Z+(0,5)Z, [ [ 1, 1 ], [ 0, 1 ] ] ) ]
 gap> G := GL(2,Integers);;
 gap> phi := IsomorphismRcwaGroup(G,cls[3]);
 [ [ [ 0, 1 ], [ 1, 0 ] ], [ [ -1, 0 ], [ 0, 1 ] ], [ [ 1, 1 ], [ 0, 1 ] ] 
- ] -> [ ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[0,1],[1,0]]), 
-  ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[-1,0],[0,1]]), 
-  ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[1,1],[0,1]]) ]
+ ] -> [ ClassRotation( (0,2)+(1,3)Z+(0,5)Z, [ [ 0, 1 ], [ 1, 0 ] ] ), 
+  ClassRotation( (0,2)+(1,3)Z+(0,5)Z, [ [ -1, 0 ], [ 0, 1 ] ] ), 
+  ClassRotation( (0,2)+(1,3)Z+(0,5)Z, [ [ 1, 1 ], [ 0, 1 ] ] ) ]
 gap> mat := [[12,7],[5,3]];;
 gap> cr := mat^phi;
-ClassRotation((0,2)+(1,3)Z+(0,5)Z,[[12,7],[5,3]])
+ClassRotation( (0,2)+(1,3)Z+(0,5)Z, [ [ 12, 7 ], [ 5, 3 ] ] )
 gap> Display(cr);
 
 Tame rcwa permutation of Z^2 with modulus (1,3)Z+(0,5)Z, of order infinity
@@ -425,9 +425,9 @@ gap> ClassPairs(Integers^2,2);
   [ (0,0)+(1,1)Z+(0,2)Z, (0,1)+(1,1)Z+(0,2)Z ], 
   [ (0,0)+(2,0)Z+(0,1)Z, (1,0)+(2,0)Z+(0,1)Z ] ]
 gap> List(last,ClassTransposition);
-[ ClassTransposition((0,0)+(1,0)Z+(0,2)Z,(0,1)+(1,0)Z+(0,2)Z), 
-  ClassTransposition((0,0)+(1,1)Z+(0,2)Z,(0,1)+(1,1)Z+(0,2)Z), 
-  ClassTransposition((0,0)+(2,0)Z+(0,1)Z,(1,0)+(2,0)Z+(0,1)Z) ]
+[ ( (0,0)+(1,0)Z+(0,2)Z, (0,1)+(1,0)Z+(0,2)Z ), 
+  ( (0,0)+(1,1)Z+(0,2)Z, (0,1)+(1,1)Z+(0,2)Z ), 
+  ( (0,0)+(2,0)Z+(0,1)Z, (1,0)+(2,0)Z+(0,1)Z ) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 2300000000 );
 

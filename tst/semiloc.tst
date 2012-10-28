@@ -202,7 +202,7 @@ gap> LargestSourcesOfAffineMappings(One(a));
 gap> Display(ClassShift(Z_pi(2)));
 Tame rcwa permutation of Z_( 2 ): n -> n + 1
 gap> cs := ClassShift(ResidueClass(Z_pi(2),2,0));
-ClassShift(0,2)
+ClassShift( 0(2) )
 gap> Display(cs);
 
 Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
@@ -214,7 +214,7 @@ Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
         \
 
 gap> cr := ClassReflection(Z_pi(2));
-ClassReflection(0,1)
+ClassReflection( Z_( 2 ) )
 gap> Display(cr);
 Rcwa permutation of Z_( 2 ): n -> -n
 gap> Order(cr);
@@ -231,7 +231,7 @@ Rcwa permutation of Z_( 2 ) with modulus 2, of order 2
 
 gap> ct := ClassTransposition(ResidueClass(Z_pi([2,3]),2,1),
 >                             ResidueClass(Z_pi([2,3]),6,4));
-ClassTransposition(1,2,4,6)
+( 1(2), 4(6) )
 gap> Display(ct);
 
 Rcwa permutation of Z_( 2, 3 ) with modulus 6, of order 2
@@ -258,7 +258,7 @@ gap> phi := IsomorphismRcwaGroup(SymmetricGroup(5),Z_pi([2,3,5]));
 gap> IsBijective(phi);
 true
 gap> Image(phi);
-<rcwa group over Z_( 2, 3, 5 ) with 2 generators, of size 120>
+<rcwa group over Z_( 2, 3, 5 ) with 2 generators, of order 120>
 gap> Size(Image(phi));
 120
 gap> Size(Group(GeneratorsOfGroup(Image(phi))));

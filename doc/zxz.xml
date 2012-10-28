@@ -169,12 +169,12 @@ or the more specialized functions
 gap> R := Integers^2;;
 gap> twice := RcwaMapping(R,[[1,0],[0,1]],
 >                           [[[[2,0],[0,2]],[0,0],1]]);       # method (a)
-Rcwa mapping of Z^2: [m,n] -> [2m,2n]
+Rcwa mapping of Z^2: (m,n) -> (2m,2n)
 gap> [4,5]^twice;
 [ 8, 10 ]
 gap> twice1 := RcwaMapping(R,[[1,0],[0,1]],
 >                            [[[[2,0],[0,1]],[0,0],1]]);      # method (a)
-Rcwa mapping of Z^2: [m,n] -> [2m,n]
+Rcwa mapping of Z^2: (m,n) -> (2m,n)
 gap> [4,5]^twice1;
 [ 8, 5 ]
 gap> Image(twice1);
@@ -260,7 +260,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
 gap> g^2;
 IdentityMapping( ( Integers^2 ) )
 gap> List(ProjectionsToCoordinates(g),Factorization);
-[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
+[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
 ]]>
 </Example>
   </Description>
@@ -323,7 +323,7 @@ gap> List(ProjectionsToCoordinates(g),Factorization);
 <Example>
 <![CDATA[
 gap> ct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);
-ClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)
+( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z )
 gap> Display(ct);
 
 Rcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
@@ -335,17 +335,17 @@ Rcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
             \
 
 gap> TransposedClasses(ct);
-[ (1,0)+(2,0)Z+(0,4)Z, (0,0)+(2,1)Z+(0,2)Z ]
+[ (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z ]
 gap> ct = ClassTransposition(last);
 true
 gap> SplittedClassTransposition(ct,[1,2]);
-[ ClassTransposition((1,0)+(2,0)Z+(0,8)Z,(0,0)+(2,1)Z+(0,4)Z), 
-  ClassTransposition((1,4)+(2,0)Z+(0,8)Z,(0,2)+(2,1)Z+(0,4)Z) ]
+[ ( (0,0)+(2,1)Z+(0,4)Z, (1,0)+(2,1)Z+(0,8)Z ), 
+  ( (0,2)+(2,1)Z+(0,4)Z, (1,4)+(2,1)Z+(0,8)Z ) ]
 gap> Product(last) = ct;
 true
 gap> SplittedClassTransposition(ct,[2,1]);
-[ ClassTransposition((0,0)+(4,0)Z+(0,2)Z,(1,0)+(4,0)Z+(0,4)Z), 
-  ClassTransposition((2,1)+(4,0)Z+(0,2)Z,(3,0)+(4,0)Z+(0,4)Z) ]
+[ ( (0,0)+(4,0)Z+(0,2)Z, (1,0)+(4,2)Z+(0,4)Z ), 
+  ( (2,1)+(4,0)Z+(0,2)Z, (3,1)+(4,2)Z+(0,4)Z ) ]
 gap> Product(last) = ct;
 false
 ]]>
@@ -376,9 +376,9 @@ false
 <Example>
 <![CDATA[
 gap> interchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);
-ClassRotation((Integers^2),[[0,1],[1,0]])
+ClassRotation( Z^2, [ [ 0, 1 ], [ 1, 0 ] ] )
 gap> Display(interchange);
-Rcwa permutation of Z^2: [m,n] -> [n,m]
+Rcwa permutation of Z^2: (m,n) -> (n,m)
 gap> classes := AllResidueClassesModulo(Integers^2,[[2,1],[0,3]]);
 [ (0,0)+(2,1)Z+(0,3)Z, (0,1)+(2,1)Z+(0,3)Z, (0,2)+(2,1)Z+(0,3)Z, 
   (1,0)+(2,1)Z+(0,3)Z, (1,1)+(2,1)Z+(0,3)Z, (1,2)+(2,1)Z+(0,3)Z ]
@@ -393,7 +393,6 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
  (m,n) |-> <  (m,n)           otherwise
             |
             \
-
 ]]>
 </Example>
   </Description>
@@ -418,9 +417,9 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
 <Example>
 <![CDATA[
 gap> shift1 := ClassShift([0,0],[[1,0],[0,1]],1);
-ClassShift((Integers^2),1)
+ClassShift( Z^2, 1 )
 gap> Display(shift1);
-Tame rcwa permutation of Z^2: [m,n] -> [m+1,n]
+Tame rcwa permutation of Z^2: (m,n) -> (m+1,n)
 gap> s := ClassShift(ResidueClass([1,1],[[2,1],[0,2]]),2);
 ClassShift((1,1)+(2,1)Z+(0,2)Z,2)
 gap> Display(s);
@@ -432,7 +431,6 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
  (m,n) |-> <  (m,n)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z U 
             |                     (1,0)+(2,1)Z+(0,2)Z
             \
-
 ]]>
 </Example>
   </Description>
@@ -629,7 +627,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
             \
 
 gap> List(ProjectionsToCoordinates(f),Factorization);
-[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
+[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
 ]]>
 </Example>
   </Description>
@@ -740,7 +738,6 @@ Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
  [0,0] [0,1] [0,2] [1,1]     |
  [1,2]                       | [m,n]
  [1,0]                       | [(-263m+122n+266)/3,(-1147m+532n+1147)/6]
-
 ]]>
 </Example>
   </Description>

@@ -106,6 +106,16 @@ are included in the distribution file anyway, users will not need it.
 
 </Section>
 
+<ManSection>
+  <Func Name="RCWATestExamples" Arg=""/>
+  <Returns> nothing. </Returns>
+  <Description>
+    Runs all examples in the manual of the &RCWA; package,
+    and reports any differences between the actual output and the
+    output printed in the manual.
+  </Description>
+</ManSection>
+
 </Chapter>
 
 <!-- #################################################################### -->

@@ -298,16 +298,15 @@ gap> Embedding(F2wrA5,1);
 [ <wild rcwa permutation of Z with modulus 40>,
   <wild rcwa permutation of Z with modulus 40> ]
 gap> Embedding(F2wrA5,2);
-[ (1,2,3,4,5), (3,4,5) ] ->
-[ <rcwa permutation of Z with modulus 5, of order 5>,
-  <rcwa permutation of Z with modulus 5, of order 3> ]
+[ (1,2,3,4,5), (3,4,5) ] -> [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
+  ( 2(5), 3(5), 4(5) ) ]
 gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
 <wild rcwa group over Z with 2 generators>
 gap> Embedding(ZwrZ,1);
-[ ClassShift(0,1) ] ->
+[ ClassShift( Z ) ] ->
 [ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
 gap> Embedding(ZwrZ,2);
-[ ClassShift(0,1) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
+[ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
 ]]>
 </Example>
   </Description>
@@ -554,8 +553,7 @@ computed by <C>IsomorphismPermGroup</C>:
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));;
 gap> IsomorphismPermGroup(G);
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ] -> 
-[ (1,2)(3,4)(5,6), (1,2)(4,5) ]
+[ ( 0(2), 1(2) ), ( 0(3), 1(3) ) ] -> [ (1,2)(3,4)(5,6), (1,2)(4,5) ]
 ]]>
 </Example>
 
@@ -1261,12 +1259,10 @@ gives rise to proper quotients of the group:
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
-[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <rcwa permutation of Z with modulus 4>,
-      IdentityMapping( Integers ) ],
-  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <rcwa permutation of Z with modulus 4>,
-      <rcwa permutation of Z with modulus 4> ] ]
+[ [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 0(4), 1(4) ), IdentityMapping( Integers ) ], 
+  [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 2(4), 3(4) ), <rcwa permutation of Z with modulus 4> ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(4) U 1(4), 2(4) U 3(4) ]
 ]]>
@@ -1436,7 +1432,7 @@ gap> RankOfKernelOfActionOnRespectedPartition(G);
 gap> Index(G,K);
 6
 gap> List(GeneratorsOfGroup(K),Factorization);
-[ [ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
+[ [ ClassShift( 0(4) ) ], [ ClassShift( 2(4) ) ], [ ClassShift( 1(6) ) ] ]
 gap> Image(IsomorphismPcpGroup(K));
 Pcp-group with orders [ 0, 0, 0 ]
 ]]>
@@ -1522,7 +1518,6 @@ Rcwa permutation of Z with modulus 180
         | (-n+29)/6 if n in 167(180)
         |
         \
-
 ]]>
 </Log>
 
@@ -1541,40 +1536,6 @@ gap> Factorization(elm);
   ClassReflection(1,2) ]
 ]]>
 </Log>
-
-There is an auxiliary function <C>ClassPairs([<A>R</A>,] <A>m</A>)</C>,
-which is used in this context.
-<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-<Index Key="ClassPairs" Subkey="R, m"><C>ClassPairs</C></Index>
-In its one-argument form, this function returns a list of 4-tuples
-<M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
-pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
-with <M>m_1, m_2 \leq m</M>. In its two-argument form, it does
-<Q>the equivalent</Q> for the ring&nbsp;<A>R</A>.
-<Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
-The function <C>NrClassPairs(<A>m</A>)</C> returns the length of the
-list <C>ClassPairs(<A>m</A>)</C>, where the result is computed much
-faster and without actually generating the list of tuples.
-
-<Example>
-<![CDATA[
-gap> List(ClassPairs(4),ClassTransposition);
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4),
-  ClassTransposition(0,2,3,4), ClassTransposition(0,3,1,3),
-  ClassTransposition(0,3,2,3), ClassTransposition(0,4,1,4),
-  ClassTransposition(0,4,2,4), ClassTransposition(0,4,3,4),
-  ClassTransposition(1,2,0,4), ClassTransposition(1,2,2,4),
-  ClassTransposition(1,3,2,3), ClassTransposition(1,4,2,4),
-  ClassTransposition(1,4,3,4), ClassTransposition(2,4,3,4) ]
-gap> List(last,TransposedClasses);
-[ [ 0(2), 1(2) ], [ 0(2), 1(4) ], [ 0(2), 3(4) ], [ 0(3), 1(3) ],
-  [ 0(3), 2(3) ], [ 0(4), 1(4) ], [ 0(4), 2(4) ], [ 0(4), 3(4) ],
-  [ 1(2), 0(4) ], [ 1(2), 2(4) ], [ 1(3), 2(3) ], [ 1(4), 2(4) ],
-  [ 1(4), 3(4) ], [ 2(4), 3(4) ] ]
-gap> NrClassPairs(100);
-3528138
-]]>
-</Example>
 
 </Section>
 

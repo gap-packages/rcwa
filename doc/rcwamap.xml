@@ -208,7 +208,6 @@ Tame rcwa permutation of Z with modulus 12, of order infinity
  n |-> <  n    if n in Z \ 5(12)
         |
         \
-
 ]]>
 </Example>
   </Description>
@@ -238,7 +237,6 @@ Rcwa permutation of Z with modulus 9, of order 2
  n |-> <  n     if n in Z \ 5(9)
         |
         \
-
 ]]>
 </Example>
   </Description>
@@ -282,6 +280,20 @@ Rcwa permutation of Z with modulus 9, of order 2
     The residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M> are stored
     as an attribute <C>TransposedClasses</C>. <P/>
 
+    <Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
+    <Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
+
+    A list of all class transpositions interchanging residue classes with
+    moduli less than or equal to a given bound <A>m</A> can be obtained
+    by <C>List(ClassPairs(<A>m</A>),ClassTransposition)</C>,
+    where the function <C>ClassPairs</C> returns a list of all 4-tuples
+    <M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
+    pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
+    with <M>m_1</M> and <M>m_2</M> less than or equal to the specified
+    bound. The function <C>NrClassPairs(<A>m</A>)</C> returns the length
+    of the list <C>ClassPairs(<A>m</A>)</C>, where the result is computed
+    much faster and without actually generating the list of tuples. <P/>
+
     <Index Key="SplittedClassTransposition"
            Subkey="for a class transposition and a number of factors">
       <C>SplittedClassTransposition</C>
@@ -296,12 +308,27 @@ gap> Display(ClassTransposition(1,2,8,10));
 
 Rcwa permutation of Z with modulus 10, of order 2
 
+( 1(2), 8(10) )
+
+gap> Display(ClassTransposition(1,2,8,10):CycleNotation:=false);
+
+Rcwa permutation of Z with modulus 10, of order 2
+
         /
         | 5n+3    if n in 1(2)
  n |-> <  (n-3)/5 if n in 8(10)
         | n       if n in 0(2) \ 8(10)
         \
 
+gap> List(ClassPairs(4),ClassTransposition);
+[ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(3), 1(3) ), 
+  ( 0(3), 2(3) ), ( 0(4), 1(4) ), ( 0(4), 2(4) ), ( 0(4), 3(4) ), 
+  ( 1(2), 0(4) ), ( 1(2), 2(4) ), ( 1(3), 2(3) ), ( 1(4), 2(4) ), 
+  ( 1(4), 3(4) ), ( 2(4), 3(4) ) ]
+gap> NrClassPairs(100);
+3528138
+gap> SplittedClassTransposition(ClassTransposition(0,2,1,4),3);
+[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ]
 ]]>
 </Example>
   </Description>
@@ -364,7 +391,11 @@ Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
 
 gap> x := Indeterminate(GF(8),1);; SetName(x,"x");
 gap> R := PolynomialRing(GF(8),1);;
-gap> Display(ClassRotation(1,x,Z(8)*One(R)));
+gap> cr := ClassRotation(1,x,Z(8)*One(R));
+ClassRotation( 1(x), Z(2^3) )
+gap> Support(cr);
+1(x) \ [ 1 ]
+gap> Display(cr);
 
 Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
 
@@ -373,7 +404,6 @@ Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
  P |-> <  P                   otherwise
         |
         \
-
 ]]>
 </Example>
   </Description>
@@ -525,7 +555,7 @@ Rcwa mapping of Z_( 2 ): n -> 1/3 n
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)
 <rcwa mapping of Z with modulus 3>
 gap> RcwaMapping((1,2,3),[1..4]);                                   # (d)
-<rcwa permutation of Z with modulus 4, of order 3>
+( 1(4), 2(4), 3(4) )
 gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);                  # (e)
 true
 gap> RcwaMapping([2],[[1/3,0,1]]);                                  # (f)
@@ -536,13 +566,13 @@ gap> a = RcwaMapping(List([[0,3],[1,3],[2,3]],ResidueClass),
 >                    List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)
 true
 gap> RcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)
-<rcwa permutation of Z with modulus 16, of order 4>
+( 0(2), 1(4), 3(8), 7(16) )
 gap> Cycle(last,ResidueClass(0,2));
 [ 0(2), 1(4), 3(8), 7(16) ]
-gap> g := RcwaMapping("((0(4),1(6))*(0(6))^-4*[2(4)])^2/(2(8))");   # (j)
+gap> g := RcwaMapping("((0(4),1(6))*cr(0(6)))^2/cs(2(8))");         # (j)
 <rcwa permutation of Z with modulus 72>
-gap> g = (   ClassTransposition(0,4,1,6) * ClassShift(0,6)^-4
->          * ClassReflection(2,4) )^2 / ClassShift(2,8);
+gap> g = (ClassTransposition(0,4,1,6) * ClassReflection(0,6))^2/
+>         ClassShift(2,8);
 true
 ]]>
 </Example>
@@ -589,11 +619,20 @@ gap> Cycle(LocalizedRcwaMapping(T,2),131/13);
 Rcwa mappings can be <C>View</C>ed, <C>Display</C>ed, <C>Print</C>ed and
 written to a <C>String</C>. The output of the <C>View</C> method is kept
 reasonably short. In most cases it does not describe an rcwa mapping
-completely. In these cases the output is enclosed in brackets. The output
-of the methods for <C>Display</C> and <C>Print</C> describe an rcwa mapping
-in full. The <C>Print</C>ed representation of an rcwa mapping is &GAP; -
-readable if and only if the <C>Print</C>ed representation of the elements
-of the underlying ring is so. <P/>
+completely. In these cases the output is enclosed in brackets.
+There are options <C>CycleNotation</C>, <C>PrintNotation</C> and
+<C>AbridgedNotation</C> to take influence on how certain rcwa mappings
+are shown. These options can either be not set, set to <C>true</C> or
+set to <C>false</C>. If the option <C>CycleNotation</C> is set, it is
+tried harder to write down an rcwa permutation of &ZZ; of finite order
+as a product of disjoint residue class cycles, if this is possible.
+The option <C>PrintNotation</C> influences the output in favour of
+&GAP; - readability, and the option <C>AbridgedNotation</C> can be used to
+abridge longer names like <C>ClassShift</C>, <C>ClassReflection</C> etc..
+The output of the methods for <C>Display</C> and <C>Print</C> describes
+an rcwa mapping in full. The <C>Print</C>ed representation of an rcwa
+mapping is &GAP; - readable if and only if the <C>Print</C>ed
+representation of the elements of the underlying ring is so. <P/>
 
 <Index Key="LaTeXStringRcwaMapping" Subkey="for an rcwa mapping">
   <C>LaTeXStringRcwaMapping</C>
@@ -1184,8 +1223,8 @@ Label="for an epi. from a free group to an rcwa group"/>.
 <![CDATA[
 gap> Factorization(Comm(ClassShift(0,3)*ClassReflection(1,2),
 >                       ClassShift(0,2)));
-[ ClassReflection(2,3), ClassShift(2,6)^-1, ClassTransposition(0,6,2,6), 
-  ClassTransposition(0,6,5,6) ]
+[ ClassReflection( 2(3) ), ClassShift( 2(6) )^-1, ( 0(6), 2(6) ), 
+  ( 0(6), 5(6) ) ]
 ]]>
 </Example>
   </Description>
@@ -1238,9 +1277,8 @@ Wild rcwa permutation of Z with modulus 12
         \
 
 gap> Factorization(PrimeSwitch(3));
-[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
-  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
-  ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ]
+[ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), 
+  ( 2(6), 1(12) ), ( 4(6), 7(12) ) ]
 ]]>
 </Example>
   </Description>
@@ -1272,7 +1310,6 @@ Wild rcwa permutation of Z with modulus 5
         | (4n+3)/5 if n in 3(5)
         | (6n-4)/5 if n in 4(5)
         \
-
 ]]>
 </Example>
   </Description>
@@ -1305,10 +1342,10 @@ cannot have infinitely many cycles of any given finite length.
 <Example>
 <![CDATA[
 gap> Root(ClassTransposition(0,2,1,2),100);
-<rcwa permutation of Z with modulus 8>
-gap> Display(last);
+( 0(8), 2(8), 4(8), 6(8), 1(8), 3(8), 5(8), 7(8) )
+gap> Display(last:CycleNotation:=false);
 
-Rcwa permutation of Z with modulus 8
+Tame rcwa permutation of Z with modulus 8
 
         /
         | n+2 if n in Z \ 6(8) U 7(8)
@@ -1373,7 +1410,6 @@ Rcwa mapping of Z with modulus 2
  n |-> <  (n-1)/2 if n in 1(2)
         |
         \
-
 ]]>
 </Example>
   </Description>

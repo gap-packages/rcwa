@@ -33,7 +33,7 @@ BindGlobal( "RCWABuildManual",
 
 #############################################################################
 ##
-#F  RCWATestInstall( ) . . . . .  RCWA test suite
+#F  RCWATestInstall( ) . . . . quick test whether RCWA is installed correctly
 ##
 ##  Performs a nontrivial computation to check whether an installation of
 ##  RCWA appears to work.
@@ -67,6 +67,24 @@ BindGlobal( "RCWATestAll",
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
     dir := Concatenation( RCWADir, "/tst/" );
     Read( Concatenation( dir, "testall.g" ) );
+  end );
+
+#############################################################################
+##
+#F  RCWATestExamples( ) . . . . . . . . . .  test examples in the RCWA manual
+##
+##  Tests the examples in the manual of the RCWA package.
+##
+BindGlobal( "RCWATestExamples",
+
+  function ( )
+
+    local  path;
+
+    path := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    RunExamples(ExtractExamples(Concatenation(path,"/doc"),
+                                "main.xml",[],"Chapter"),
+                rec( width := 75, compareFunction := "uptowhitespace" ) );
   end );
 
 #############################################################################

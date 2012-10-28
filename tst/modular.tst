@@ -243,11 +243,11 @@ gap> String(f);
 gap> a := RcwaMapping( 9, One(R), [ [ z9, 0, 1 ] ] * One(R) );
 Rcwa mapping of GF(3^2)[x]: P -> Z(3^2)*P
 gap> ClassReflection(R);
-ClassReflection(0,1)
+ClassReflection( GF(3^2)[x] )
 gap> last^2;
 IdentityMapping( GF(3^2)[x] )
 gap> cr := ClassReflection([R]);
-ClassReflection(0,1)
+ClassReflection( GF(3^2)[x] )
 gap> Order(cr);
 2
 gap> Support(cr);
@@ -255,9 +255,9 @@ GF(3^2)[x] \ [ 0 ]
 gap> Display(cr);
 Rcwa permutation of GF(3^2)[x]: P -> -P
 gap> ClassReflection(x,x^2);
-ClassReflection(x,x^2)
+ClassReflection( x(x^2) )
 gap> cr := ClassReflection([x,x^2]);
-ClassReflection(x,x^2)
+ClassReflection( x(x^2) )
 gap> x^cr;
 x
 gap> (x^2+x)^cr;
@@ -269,7 +269,7 @@ gap> Order(cr);
 gap> LargestSourcesOfAffineMappings(cr);
 [ GF(3)[x] \ x(x^2), x(x^2) ]
 gap> cr := ClassReflection(ResidueClass(R,x^2,x));
-ClassReflection(x,x^2)
+ClassReflection( x(x^2) )
 gap> UnderlyingRing(FamilyObj(cr));
 GF(3^2)[x]
 gap> LargestSourcesOfAffineMappings(cr);
@@ -281,7 +281,7 @@ gap> LargestSourcesOfAffineMappings(One(r));
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> cs1 := ClassShift(R);
-ClassShift(0,1)
+ClassShift( GF(2)[x] )
 gap> Display(cs1);
 Rcwa permutation of GF(2)[x]: P -> P + Z(2)^0
 gap> Order(cs1);
@@ -289,7 +289,7 @@ gap> Order(cs1);
 gap> cs1^2;
 IdentityMapping( GF(2)[x] )
 gap> cs2 := ClassShift(ResidueClass(R,x,Zero(R)));
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Display(cs2);
 
 Rcwa permutation of GF(2)[x] with modulus x, of order 2
@@ -328,7 +328,7 @@ gap> ClassReflection([Zero(R),x]);
 IdentityMapping( GF(2)[x] )
 gap> ct := ClassTransposition(ResidueClass(R,x,One(x)),
 >                             ResidueClass(R,x^2+x,x));
-ClassTransposition(1,x,x,x^2+x)
+( 1(x), x(x^2+x) )
 gap> Order(ct);
 2
 gap> ct^2;
@@ -405,6 +405,10 @@ gap> elm in H2;
 true
 gap> PreImagesRepresentative(phi,elm);
 ac^-1
+gap> ClassPairs(x^2);
+[ [ 0, x, 1, x ], [ 0, x+1, 1, x+1 ] ]
+gap> List(last,ClassTransposition);
+[ ( 0(x), 1(x) ), ( 0(x+1), 1(x+1) ) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "modular.tst", 2300000000 );
 

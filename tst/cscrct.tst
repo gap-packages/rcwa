@@ -16,23 +16,23 @@ gap> y := Indeterminate(GF(25),1);; SetName(y,"y");
 gap> R2 := PolynomialRing(GF(25),1);
 GF(5^2)[y]
 gap> ClassShift(Integers,1,2);
-ClassShift(1,2)
+ClassShift( 1(2) )
 gap> ClassShift([Integers,1,2]);
-ClassShift(1,2)
+ClassShift( 1(2) )
 gap> last^2;
-ClassShift(1,2)^2
+ClassShift( 1(2) )^2
 gap> LaTeXString(last);
 "{\\nu_{1(2)}}^2"
 gap> last2^3;
-ClassShift(1,2)^6
+ClassShift( 1(2) )^6
 gap> LaTeXString(last);
 "{\\nu_{1(2)}}^6"
 gap> last2^-1;
-ClassShift(1,2)^-6
+ClassShift( 1(2) )^-6
 gap> LaTeXString(last);
 "{\\nu_{1(2)}}^{-6}"
 gap> last2^-2;
-ClassShift(1,2)^12
+ClassShift( 1(2) )^12
 gap> LaTeXString(last);
 "{\\nu_{1(2)}}^{12}"
 gap> l := [ ClassShift(0,1), ClassReflection(0,1), ClassRotation(0,1,-1),
@@ -40,15 +40,15 @@ gap> l := [ ClassShift(0,1), ClassReflection(0,1), ClassRotation(0,1,-1),
 gap> for g in l do SetName(g,"a"); od; l;
 [ a, a, a, a ]
 gap> ClassShift(Z_pi(2),0,4);
-ClassShift(0,4)
+ClassShift( 0(4) )
 gap> ClassShift(0,3);
-ClassShift(0,3)
+ClassShift( 0(3) )
 gap> ClassShift(R1,Zero(R1),x);
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Source(last);
 GF(2^2)[x]
 gap> ClassShift(Zero(R1),x);
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Display(last);
 
 Rcwa permutation of GF(2)[x] with modulus x, of order 2
@@ -60,15 +60,15 @@ Rcwa permutation of GF(2)[x] with modulus x, of order 2
         \
 
 gap> ClassShift([Zero(R1),x]);
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Source(last);
 GF(2)[x]
 gap> ClassShift(Integers,ResidueClass(2,3));
-ClassShift(2,3)
+ClassShift( 2(3) )
 gap> ClassShift(ResidueClass(2,3));
-ClassShift(2,3)
+ClassShift( 2(3) )
 gap> ClassShift(R1,ResidueClass(R1,x,Zero(x)));
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Display(last);
 
 Rcwa permutation of GF(2^2)[x] with modulus x, of order 2
@@ -80,83 +80,83 @@ Rcwa permutation of GF(2^2)[x] with modulus x, of order 2
         \
 
 gap> ClassShift(ResidueClass(R1,x,Zero(x)));
-ClassShift(0,x)
+ClassShift( 0(x) )
 gap> Source(last);
 GF(2^2)[x]
 gap> ClassShift(Integers);
-ClassShift(0,1)
+ClassShift( Z )
 gap> ClassShift(Z_pi([2,3]));
-ClassShift(0,1)
+ClassShift( Z_( 2, 3 ) )
 gap> ClassShift([Z_pi([2,3])]);
-ClassShift(0,1)
+ClassShift( Z_( 2, 3 ) )
 gap> ClassShift(R1);
-ClassShift(0,1)
+ClassShift( GF(2^2)[x] )
 gap> Display(last);
 Rcwa permutation of GF(2^2)[x]: P -> P + Z(2)^0
 gap> ClassReflection(Integers,1,2);
-ClassReflection(1,2)
+ClassReflection( 1(2) )
 gap> ClassReflection([Integers,1,2]);
-ClassReflection(1,2)
+ClassReflection( 1(2) )
 gap> ClassReflection(Z_pi(2),0,4);
-ClassReflection(0,4)
+ClassReflection( 0(4) )
 gap> ClassReflection(0,3);
-ClassReflection(0,3)
+ClassReflection( 0(3) )
 gap> ClassReflection(R1,Zero(R1),x);
 IdentityMapping( GF(2^2)[x] )
 gap> IsRcwaMapping(last);
 true
 gap> ClassReflection(R2,Zero(R2),y);
-ClassReflection(0,y)
+ClassReflection( 0(y) )
 gap> last^2;
 IdentityMapping( GF(5^2)[y] )
 gap> ClassReflection(Zero(R2),y);
-ClassReflection(0,y)
+ClassReflection( 0(y) )
 gap> ClassReflection([Zero(R2),y]);
-ClassReflection(0,y)
+ClassReflection( 0(y) )
 gap> Source(last);
 GF(5)[y]
 gap> ClassReflection(Integers,ResidueClass(2,3));
-ClassReflection(2,3)
+ClassReflection( 2(3) )
 gap> ClassReflection(ResidueClass(2,3));
-ClassReflection(2,3)
+ClassReflection( 2(3) )
 gap> ClassReflection(R2,ResidueClass(R2,y,Zero(y)));
-ClassReflection(0,y)
+ClassReflection( 0(y) )
 gap> Source(last);
 GF(5^2)[y]
 gap> ClassReflection(ResidueClass(R2,y,Zero(y)));
-ClassReflection(0,y)
+ClassReflection( 0(y) )
 gap> Source(last);
 GF(5^2)[y]
 gap> ClassReflection(Integers);
-ClassReflection(0,1)
+ClassReflection( Z )
 gap> ClassReflection(Z_pi([2,3]));
-ClassReflection(0,1)
+ClassReflection( Z_( 2, 3 ) )
 gap> ClassReflection([Z_pi([2,3])]);
-ClassReflection(0,1)
+ClassReflection( Z_( 2, 3 ) )
 gap> Display(last);
 Rcwa permutation of Z_( 2, 3 ): n -> -n
 gap> ClassReflection(R2);
-ClassReflection(0,1)
+ClassReflection( GF(5^2)[y] )
 gap> Display(last);
 Rcwa permutation of GF(5^2)[y]: P -> -P
 gap> ClassRotation(Integers,-1);
-ClassReflection(0,1)
+ClassReflection( Z )
 gap> ClassRotation(Integers,1);
 IdentityMapping( Integers )
 gap> ClassRotation(Z_pi(2),-1);
-ClassReflection(0,1)
+ClassReflection( Z_( 2 ) )
 gap> ClassRotation(Z_pi(2),1);
 IdentityMapping( Z_( 2 ) )
 gap> ClassRotation(Z_pi(2),1/3);
-ClassRotation(0,1,1/3)
+ClassRotation( Z_( 2 ), 1/3 )
 gap> ClassRotation(Z_pi(2),-1/3);
-ClassRotation(0,1,-1/3)
+ClassRotation( Z_( 2 ), -1/3 )
 gap> ClassRotation(Z_pi(2),1/3);
-ClassRotation(0,1,1/3)
+ClassRotation( Z_( 2 ), 1/3 )
 gap> Display(last);
 Tame rcwa permutation of Z_( 2 ): n -> 1/3 n
 gap> ClassRotation(Z_pi(2),ResidueClass(Z_pi(2),2,1),3/5);
-ClassRotation(1,2,3/5)
+ClassRotation( 1(2), 3/5 )
 gap> Display(last);
 
 Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
@@ -168,11 +168,11 @@ Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
         \
 
 gap> ClassRotation(ResidueClass(Z_pi(2),2,1),3/5);
-ClassRotation(1,2,3/5)
+ClassRotation( 1(2), 3/5 )
 gap> ClassRotation([ResidueClass(Z_pi(2),2,1),3/5]);
-ClassRotation(1,2,3/5)
+ClassRotation( 1(2), 3/5 )
 gap> ClassRotation(R1,ResidueClass(R1,x,Zero(R1)),Z(4)*One(R1));
-ClassRotation(0,x,Z(2^2))
+ClassRotation( 0(x), Z(2^2) )
 gap> Display(last);
 
 Rcwa permutation of GF(2^2)[x] with modulus x, of order 3
@@ -184,29 +184,29 @@ Rcwa permutation of GF(2^2)[x] with modulus x, of order 3
         \
 
 gap> last^-1;
-ClassRotation(0,x,Z(2^2))^2
+ClassRotation( 0(x), Z(2^2) )^2
 gap> ClassRotation(R1,Z(4)*One(R1));
-ClassRotation(0,1,Z(2^2))
+ClassRotation( GF(2^2)[x], Z(2^2) )
 gap> Display(last);
 Rcwa permutation of GF(2^2)[x]: P -> Z(2^2)*P
 gap> last^2;
-ClassRotation(0,1,Z(2^2))^2
+ClassRotation( GF(2^2)[x], Z(2^2) )^2
 gap> Display(last);
 Rcwa permutation of GF(2^2)[x]: P -> Z(2^2)^2*P
 gap> ClassRotation(R2,ResidueClass(R2,y^2,y+1),Z(25)*One(R2));
-ClassRotation(y+1,y^2,Z(5^2))
+ClassRotation( y+1(y^2), Z(5^2) )
 gap> last^2;
-ClassRotation(y+1,y^2,Z(5^2))^2
+ClassRotation( y+1(y^2), Z(5^2) )^2
 gap> last^5;
-ClassRotation(y+1,y^2,Z(5^2))^10
+ClassRotation( y+1(y^2), Z(5^2) )^10
 gap> last^12;
 IdentityMapping( GF(5^2)[y] )
 gap> ClassTransposition(0,2,1,2);
-ClassTransposition(0,2,1,2)
+( 0(2), 1(2) )
 gap> ClassTransposition(Integers,0,2,1,2);
-ClassTransposition(0,2,1,2)
+( 0(2), 1(2) )
 gap> ClassTransposition(Z_pi(2),0,2,1,2);
-ClassTransposition(0,2,1,2)
+( 0(2), 1(2) )
 gap> Display(last);
 
 Rcwa permutation of Z_( 2 ) with modulus 2, of order 2
@@ -220,18 +220,18 @@ Rcwa permutation of Z_( 2 ) with modulus 2, of order 2
 gap> LaTeXString(last);
 "\\tau_{0(2),1(2)}"
 gap> ClassTransposition(Z_pi(2),0,2,1,4);
-ClassTransposition(0,2,1,4)
+( 0(2), 1(4) )
 gap> Support(last);
 Z_( 2 ) \ 3(4)
 gap> ClassTransposition(ResidueClass(0,3),ResidueClass(1,3));
-ClassTransposition(0,3,1,3)
+( 0(3), 1(3) )
 gap> Support(last);
 Z \ 2(3)
 gap> ClassTransposition(Integers,ResidueClass(0,3),ResidueClass(1,3));
-ClassTransposition(0,3,1,3)
+( 0(3), 1(3) )
 gap> ClassTransposition(ResidueClass(Z_pi([2,3]),3,0),
 >                       ResidueClass(Z_pi([2,3]),3,1));
-ClassTransposition(0,3,1,3)
+( 0(3), 1(3) )
 gap> Support(last);
 Z_( 2, 3 ) \ 2(3)
 gap> Display(last2);
@@ -247,14 +247,14 @@ Rcwa permutation of Z_( 2, 3 ) with modulus 3, of order 2
 gap> ClassTransposition(Z_pi([2,3]),
 >                       ResidueClass(Z_pi([2,3]),3,0),
 >                       ResidueClass(Z_pi([2,3]),3,1));
-ClassTransposition(0,3,1,3)
+( 0(3), 1(3) )
 gap> TransposedClasses(last);
 [ 0(3), 1(3) ]
 gap> IsClassTransposition(last2);
 true
 gap> ClassTransposition(R1,ResidueClass(R1,x,Zero(R1)),
 >                          ResidueClass(R1,x^2,x+1));
-ClassTransposition(0,x,x+1,x^2)
+( 0(x), x+1(x^2) )
 gap> TransposedClasses(last);
 [ 0(x), x+1(x^2) ]
 gap> Support(last2);
@@ -263,7 +263,7 @@ gap> Source(last3);
 GF(2^2)[x]
 gap> ClassTransposition(ResidueClass(R1,x,Zero(R1)),
 >                       ResidueClass(R1,x^2,x+1));
-ClassTransposition(0,x,x+1,x^2)
+( 0(x), x+1(x^2) )
 gap> Display(last);
 
 Rcwa permutation of GF(2^2)[x] with modulus x^2, of order 2
@@ -279,7 +279,7 @@ IdentityMapping( GF(2^2)[x] )
 gap> IsRcwaMapping(last);
 true
 gap> ct := ClassTransposition(-100,2,141,20);
-GeneralizedClassTransposition(-100,2,141,20)
+( [-100/2], [141/20] )
 gap> IsGeneralizedClassTransposition(ct);
 true
 gap> IsClassTransposition(ct);
@@ -287,7 +287,7 @@ false
 gap> Sign(ct);
 1
 gap> Factorization(ct);
-[ ClassShift(1,20)^-57, ClassShift(0,2)^57, ClassTransposition(0,2,1,20) ]
+[ ClassShift( 1(20) )^-57, ClassShift( 0(2) )^57, ( 0(2), 1(20) ) ]
 gap> Product(last)/ct;
 IdentityMapping( Integers )
 gap> TransposedClasses(ct);
@@ -313,7 +313,7 @@ gap> Union(cls);
 gap> Sum(List(cls,Density));
 1
 gap> ct := ClassTransposition(cls[1],cls[3]);
-ClassTransposition((0,0)+(1,3)Z+(0,5)Z,(0,6)+(2,6)Z+(0,15)Z)
+( (0,0)+(1,3)Z+(0,5)Z, (0,6)+(2,6)Z+(0,15)Z )
 gap> ct = ClassTransposition(R,cls[1],cls[3]);
 true
 gap> ct = ClassTransposition([0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]]);
@@ -343,19 +343,19 @@ gap> Support(ct);
 gap> String(ct);
 "ClassTransposition((Integers^2),[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]])"
 gap> ViewString(ct);
-"ClassTransposition((0,0)+(1,3)Z+(0,5)Z,(0,6)+(2,6)Z+(0,15)Z)"
+"( (0,0)+(1,3)Z+(0,5)Z, (0,6)+(2,6)Z+(0,15)Z )"
 gap> Print(ct,"\n");
 ClassTransposition((Integers^2),[0,0],[[1,3],[0,5]],[0,6],[[2,6],[0,15]])
 gap> cs1 := ClassShift(R,1);
-ClassShift((Integers^2),1)
+ClassShift( Z^2, 1 )
 gap> cs2 := ClassShift(R,2);
-ClassShift((Integers^2),2)
+ClassShift( Z^2, 2 )
 gap> Order(cs1);
 infinity
 gap> String(cs1);
 "ClassShift((Integers^2),[0,0],[[1,0],[0,1]],1)"
 gap> ViewString(cs1);
-"ClassShift((Integers^2),1)"
+"ClassShift( Z^2, 1 )"
 gap> Print(cs1,"\n");
 ClassShift((Integers^2),[0,0],[[1,0],[0,1]],1)
 gap> cs1 = ClassShift(R,1);
@@ -377,7 +377,7 @@ Rcwa permutation of Z^2: (m,n) -> (m+1,n+1)
 gap> Comm(cs1,cs2);
 IdentityMapping( ( Integers^2 ) )
 gap> cs := ClassShift(cls[4],1);
-ClassShift((0,11)+(2,6)Z+(0,15)Z,1)
+ClassShift( (0,11)+(2,6)Z+(0,15)Z, 1 )
 gap> cs = ClassShift([0,11],[[2,6],[0,15]],1);
 true
 gap> cs = ClassShift(R,[0,11],[[2,6],[0,15]],1);
@@ -403,11 +403,11 @@ Tame rcwa permutation of Z^2 with modulus (2,6)Z+(0,15)Z, of order infinity
 gap> String(cs);
 "ClassShift((Integers^2),[0,11],[[2,6],[0,15]],1)"
 gap> ViewString(cs);
-"ClassShift((0,11)+(2,6)Z+(0,15)Z,1)"
+"ClassShift( (0,11)+(2,6)Z+(0,15)Z, 1 )"
 gap> Print(cs,"\n");
 ClassShift((Integers^2),[0,11],[[2,6],[0,15]],1)
 gap> cr := ClassReflection(R);
-ClassReflection((0,0)+(1,0)Z+(0,1)Z)
+ClassReflection( Z^2 )
 gap> Order(cr);
 2
 gap> Support(cr);
@@ -417,7 +417,7 @@ Rcwa permutation of Z^2: (m,n) -> (-m,-n)
 gap> cr*cr;
 IdentityMapping( ( Integers^2 ) )
 gap> cr := ClassReflection(cls[1]);
-ClassReflection((0,0)+(1,3)Z+(0,5)Z)
+ClassReflection( (0,0)+(1,3)Z+(0,5)Z )
 gap> cr = ClassReflection(R,cls[1]);
 true
 gap> cr = ClassReflection(R,[0,0],[[1,3],[0,5]]);
@@ -441,11 +441,11 @@ Rcwa permutation of Z^2 with modulus (1,3)Z+(0,5)Z, of order 2
 gap> String(cr);
 "ClassReflection((Integers^2),[0,0],[[1,3],[0,5]])"
 gap> ViewString(cr);
-"ClassReflection((0,0)+(1,3)Z+(0,5)Z)"
+"ClassReflection( (0,0)+(1,3)Z+(0,5)Z )"
 gap> Print(cr,"\n");
 ClassReflection((Integers^2),[0,0],[[1,3],[0,5]])
 gap> cr := ClassRotation(cls[7],[[1,1],[0,1]]);
-ClassRotation((1,14)+(2,6)Z+(0,15)Z,[[1,1],[0,1]])
+ClassRotation( (1,14)+(2,6)Z+(0,15)Z, [ [ 1, 1 ], [ 0, 1 ] ] )
 gap> cr = ClassRotation(R,cls[7],[[1,1],[0,1]]);
 true
 gap> cr = ClassRotation([R,cls[7],[[1,1],[0,1]]]);
@@ -471,7 +471,7 @@ Tame rcwa permutation of Z^2 with modulus (2,6)Z+(0,15)Z, of order infinity
 gap> String(cr);
 "ClassRotation((Integers^2),[1,14],[[2,6],[0,15]],[[1,1],[0,1]])"
 gap> ViewString(cr);
-"ClassRotation((1,14)+(2,6)Z+(0,15)Z,[[1,1],[0,1]])"
+"ClassRotation( (1,14)+(2,6)Z+(0,15)Z, [ [ 1, 1 ], [ 0, 1 ] ] )"
 gap> Print(cr,"\n");
 ClassRotation((Integers^2),[1,14],[[2,6],[0,15]],[[1,1],[0,1]])
 gap> RCWADoThingsToBeDoneAfterTest();
