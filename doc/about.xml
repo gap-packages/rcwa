@@ -11,7 +11,7 @@
 This package permits to compute in monoids, in particular groups,
 whose elements are <E>residue-class-wise affine</E> mappings.
 Probably the widest-known occurrence of such a mapping is in the statement
-of the <M>3n+1</M>-Conjecture, which asserts that iterated application of
+of the <M>3n+1</M> conjecture, which asserts that iterated application of
 the <E>Collatz mapping</E>
 <Alt Only="LaTeX">
   <Display>

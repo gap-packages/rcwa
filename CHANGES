@@ -26,6 +26,10 @@ Changes between version 3.3.1 and version 3.4.0:
    returns a list of all cycles of an element of an rcwa group on
    a finite orbit.
 
+ - Two sections have been added to Chapter 'Examples' of the manual:
+   1. The 3n+1 group.
+   2. A group with huge finite orbits.
+ 
  - The function `ClassPairs' can now compute pairs of disjoint
    residue classes of Z^2 as well.
 

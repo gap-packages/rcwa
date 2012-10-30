@@ -210,7 +210,7 @@ gap> g := RcwaMapping(P1,P2);                                 # method (b)
 <rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z>
 gap> P1^g = P2;
 true
-gap> Display(g:table);
+gap> Display(g:AsTable);
 
 Rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z
 
@@ -729,7 +729,7 @@ gap> phi := IsomorphismRcwaGroup(gl,ResidueClass([1,0],[[2,2],[0,3]]));
   ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[1,1],[0,1]]) ]
 gap> [[-47,-37],[61,48]]^phi;
 ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[-47,-37],[61,48]])
-gap> Display(last:table);
+gap> Display(last:AsTable);
 
 Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
 

@@ -527,8 +527,9 @@ necessary for understanding this manual or for using this package.
       <Item>
         the rcwa permutation of&nbsp;&ZZ; given by the
         arithmetical expression <A>expression</A> -- a string consisting of
-        class transpositions (e.g. <C>"(0(2),1(4))"</C>), class shifts
-        (e.g. <C>"(4(6))"</C>, class reflections (e.g. <C>"[3(4)]"</C>),
+        class transpositions (e.g. <C>"(0(2),1(4))"</C>) or cycles permuting
+        residue classes (e.g. <C>"(0(2),1(8),3(4),5(8))"</C>), class shifts
+        (e.g. <C>"cs(4(6))"</C>, class reflections (e.g. <C>"cr(3(4))"</C>),
         arithmetical operators (<C>"*"</C>, <C>"/"</C> and <C>"&circum;"</C>)
         and brackets (<C>"("</C>, <C>")"</C>),
       </Item>

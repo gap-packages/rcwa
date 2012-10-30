@@ -7,7 +7,7 @@
 <Chapter Label="ch:algorithms">
 <Heading>The Algorithms Implemented in RCWA</Heading>
 
-This chapter lists brief descriptions of many of the algorithms and methods
+This chapter lists brief descriptions of a part of the algorithms and methods
 implemented in this package. These descriptions are kept very informal and
 short, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that

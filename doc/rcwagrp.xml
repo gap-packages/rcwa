@@ -145,7 +145,7 @@ This group is handled as a special case as well:
 <![CDATA[
 gap> CT_Z := CT(Integers);
 CT(Z)
-gap> IsSimple(CT_Z); # One of a longer list of stored attributes/properties.
+gap> IsSimple(CT_Z); # One of a number of stored attributes/properties.
 true
 gap> IsSubgroup(CT_Z,G);
 true
@@ -1097,7 +1097,8 @@ or an rcwa group fixes setwise:
 <![CDATA[
 gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
 [ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
-gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),ClassTransposition(0,3,1,3)),12);
+gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),
+>                              ClassTransposition(0,3,1,3)),12);
 [ 2(3), 8(9), 11(12) ]
 ]]>
 </Example>
@@ -1522,8 +1523,8 @@ Rcwa permutation of Z with modulus 180
         | (n+1)/2   if n in 15(60) U 27(60) U 39(60) U 51(60)
         | (n+7)/2   if n in 19(60) U 31(60) U 43(60) U 55(60)
         | 3n+1      if n in 13(20)
-        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 95(180) U 
- n |-> <                    131(180) U 143(180) U 179(180)
+        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 
+ n |-> <                    95(180) U 131(180) U 143(180) U 179(180)
         | (-n-1)/6  if n in 11(180) U 47(180) U 83(180) U 155(180)
         | (-n+7)/2  if n in 3(60)
         | (n+3)/2   if n in 7(60)
