@@ -875,6 +875,7 @@ nontrivially with the range <C>[0..1000]</C> are as follows:
 
 <Example>
 <![CDATA[
+gap> CycleRepresentativesAndLengths(g,[0..1000]);
 [ [ 1, 15 ], [ 2, 2 ], [ 16, 24 ], [ 22, 2 ], [ 26, 2 ], [ 32, 6296 ], 
   [ 46, 2 ], [ 52, 8 ], [ 56, 296 ], [ 62, 2 ], [ 76, 8 ], [ 82, 2 ], 
   [ 86, 2 ], [ 92, 8 ], [ 106, 2 ], [ 112, 104 ], [ 116, 8 ], 
