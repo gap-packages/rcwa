@@ -945,10 +945,11 @@ cycle of <M>g</M>:
 
 <Example>
 <![CDATA[
-gap> positions1 := List(Cycle(h,32),n->Position(cyc,n));;
+gap> cycle_g := Cycle(g,32);;
+gap> positions1 := List(Cycle(h,32),n->Position(cycle_g,n));;
 gap> Collected(positions1 mod 2);
 [ [ 1, 3148 ] ]
-gap> positions2 := List(Cycle(h,33),n->Position(cyc,n));;
+gap> positions2 := List(Cycle(h,33),n->Position(cycle_g,n));;
 gap> Collected(positions2 mod 2);
 [ [ 0, 3148 ] ]
 ]]>

@@ -86,8 +86,8 @@ InstallGlobalFunction( AssignGlobals,
           Info(InfoWarning,1,"The read-only global variable ",name,
                              " has been overwritten.");
         else
-          Info(InfoWarning,1,"The global variable ",name,
-                             " has been overwritten.");
+          Info(InfoRCWA,1,"The global variable ",name,
+                          " has been overwritten.");
         fi;
         UnbindGlobal(name);
       fi;
