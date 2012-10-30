@@ -356,7 +356,7 @@ gap> c := ClassTransposition(2,3,4,6);;
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
 gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
-gap> Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
+gap> data.Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
 44132
 ]]>
 </Example>
@@ -439,7 +439,8 @@ gap> FloatQuotientsList(last);
   1.26315, 1.26415, 1.26704, 1.26303, 1.26317, 1.26553, 1.26223 ]
 gap> Difference(Filtered([1..100],n->n mod 6 <> 0),Ball(G,1,40,OnPoints));
 [ 27, 31, 41, 47, 55, 62, 63, 71, 73, 82, 83, 91, 94, 95, 97 ]
-gap> List(last,n->Length(Trajectory(T,n,[1])));
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> List(last2,n->Length(Trajectory(T,n,[1])));
 [ 71, 68, 70, 67, 72, 69, 69, 66, 74, 71, 71, 60, 68, 68, 76 ]
 ]]>
 </Example>
@@ -663,7 +664,6 @@ Taking a look at the lengths of the trajectories of the Collatz mapping
 
 <Example>
 <![CDATA[
-gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
 gap> List(Cycle(g,25),n->Length(Trajectory(T,n,[1])));
 [ 17, 21, 25, 29, 33, 31, 35, 34, 32, 33, 37, 41, 45, 44, 42, 39, 43, 
   41, 45, 44, 42, 43, 40, 38, 35, 39, 37, 41, 40, 44, 48, 46, 50, 49, 
@@ -787,7 +787,8 @@ gap> b := ClassTransposition(0,5,4,5);;
 gap> c := ClassTransposition(1,4,0,6);;
 gap> G := Group(a,b,c);
 <rcwa group over Z with 3 generators>
-gap> Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
+gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
+gap> data.Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
 1284
 ]]>
 </Example>
