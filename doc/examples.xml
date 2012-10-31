@@ -390,7 +390,9 @@ conjecture holds, and for every vertex <M>n</M> there is an edge from
 ]]></Verb></Alt>
 (cf. Chapter&nbsp;<Ref Label="ch:AboutRCWA"/>).
 It is easy to check that for every vertex <M>n</M>, either <M>a</M>,
-<M>b</M> or <M>c</M> maps <M>n</M> to <M>T(n)</M>. 
+<M>b</M> or <M>c</M> maps <M>n</M> to <M>T(n)</M>, and that the
+other two generators either fix <M>n</M> or map it to one of its
+preimages under&nbsp;<M>T</M>.
 So the <M>3n+1</M> conjecture is equivalent to the assertion that the
 group <M>G</M> acts transitively on <M>\mathbb{N} \setminus 0(6)</M>.
 First let's have a look at balls of small radius about 1 under the
