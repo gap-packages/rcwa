@@ -2,7 +2,7 @@
                        Version history of the RCWA package
                        ===================================
 
-Changes between version 3.3.1 and version 3.4.0 (October 31, 2012):
+Changes between version 3.3.1 and version 3.4.0 (November 1, 2012):
 
  - The output of tame rcwa permutations has been improved.
    Now sign-preserving tame rcwa permutations of Z are often shown
