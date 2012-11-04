@@ -6184,7 +6184,7 @@ InstallMethod( IsTame,
   function ( f )
 
     local  gamma, delta, C, r, m, coeffs, cl, img,
-           starttime, k, pow, cycs, exp, e;
+           starttime, k, pow, exp, e;
 
     Info(InfoRCWA,3,"`IsTame' for an rcwa mapping <f> of ",
                     RingToString(Source(f)),".");
@@ -6236,26 +6236,25 @@ InstallMethod( IsTame,
       Info(InfoRCWA,3,"IsTame: loop criterion.");
       m := Modulus(f);
       if IsRcwaMappingOfZ(f) then
-        cycs := ShortCycles(f,[-m..m],Minimum(m,50),10^20);
-        if cycs = [] or Sum(List(cycs,Length)) < 2*m-1
-          or Lcm(List(cycs,Length)) > 10*m
-          or Difference([-m..m],Union(cycs)) <> []
-        then 
+        starttime := Runtime();
+        k := 1; pow := f;
+        repeat
+          if Loops(pow) <> [] then
+            Info(InfoRCWA,3,"IsTame: <f>^",k," has loops, thus <f> ",
+                            "is wild by loop criterion.");
+            SetOrder(f,infinity); return false;
+          fi;
+          if IsIntegral(pow) then
+            Info(InfoRCWA,3,"IsTame: <f>^",k," is integral, ",
+                            "thus <f> is tame.");
+            return true;
+          fi;
+          if   Mod(pow) < m or LogInt(Int(Mod(pow)/m),2) < k/6 - 1
+          then break; fi; 
+          if Runtime() - starttime > 10 * m then break; fi;
           starttime := Runtime();
-          k := 1; pow := f;
-          repeat
-            if Loops(pow) <> [] then
-              Info(InfoRCWA,3,"IsTame: <f>^",k," has loops, thus <f> ",
-                              "is wild by loop criterion.");
-              SetOrder(f,infinity); return false;
-            fi;
-            if   IsIntegral(pow) or LogInt(Int(Mod(pow)/m),2) < k/6 - 1
-            then break; fi; 
-            if Runtime() - starttime > 10 * m then break; fi;
-            starttime := Runtime();
-            k := k + 1; pow := pow * f;
-          until false;
-        fi;
+          k := k + 1; pow := pow * f;
+        until false;
       else
         for cl in AllResidueClassesModulo(Source(f),m) do
           img := cl^f;
