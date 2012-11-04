@@ -6183,9 +6183,8 @@ InstallMethod( IsTame,
 
   function ( f )
 
-    local  gamma, delta, C, r,
-           m, coeffs, cl, img, c, d,
-           pow, exp, e;
+    local  gamma, delta, C, r, m, coeffs, cl, img,
+           starttime, k, pow, cycs, exp, e;
 
     Info(InfoRCWA,3,"`IsTame' for an rcwa mapping <f> of ",
                     RingToString(Source(f)),".");
@@ -6237,17 +6236,26 @@ InstallMethod( IsTame,
       Info(InfoRCWA,3,"IsTame: loop criterion.");
       m := Modulus(f);
       if IsRcwaMappingOfZ(f) then
-        coeffs := Coefficients(f);
-        for r in [0..m-1] do
-          c := coeffs[r+1];
-          if AbsInt(c[1]) <> 1 or c[3] <> 1 then
-            d := Gcd(m,c[1]*m/c[3]);
-            if (r - (c[1]*r+c[2])/c[3]) mod d = 0 then
-              Info(InfoRCWA,3,"IsTame: <f> is wild, by loop criterion.");
+        cycs := ShortCycles(f,[-m..m],Minimum(m,50),10^20);
+        if cycs = [] or Sum(List(cycs,Length)) < 2*m-1
+          or Lcm(List(cycs,Length)) > 10*m
+          or Difference([-m..m],Union(cycs)) <> []
+        then 
+          starttime := Runtime();
+          k := 1; pow := f;
+          repeat
+            if Loops(pow) <> [] then
+              Info(InfoRCWA,3,"IsTame: <f>^",k," has loops, thus <f> ",
+                              "is wild by loop criterion.");
               SetOrder(f,infinity); return false;
             fi;
-          fi;
-        od;
+            if   IsIntegral(pow) or LogInt(Int(Mod(pow)/m),2) < k/6 - 1
+            then break; fi; 
+            if Runtime() - starttime > 10 * m then break; fi;
+            starttime := Runtime();
+            k := k + 1; pow := pow * f;
+          until false;
+        fi;
       else
         for cl in AllResidueClassesModulo(Source(f),m) do
           img := cl^f;
