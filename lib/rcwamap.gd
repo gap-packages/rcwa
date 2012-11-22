@@ -186,6 +186,34 @@ DeclareRepresentation( "IsRcwaMappingStandardRep",
 
 #############################################################################
 ##
+#R  IsRcwaMappingSparseRep . . . . . 'sparse' representation of rcwa mappings
+##
+##  This is the representation of rcwa mappings by a list <coeffs> of residue
+##  classes together with the coefficients of the affine partial mappings on
+##  these residue classes. 
+##
+##  The component <coeffs> is a list of 5-tuples
+##
+##                     [ r, m, a_r(m), b_r(m), c_r(m) ].
+##
+##  There is such 5-tuple for every residue class in
+##
+##  Set( Flat( List( LargestSourcesOfAffineMappings( <f> ),
+##                   AsUnionOfFewClasses ) ) ),
+##  in this order.
+##
+##  The representation `IsRcwaMappingSparseRep' is advantageous if and only
+##  if the rcwa mapping in question has relatively few distinct affine
+##  partial mappings, or more precisely, if the above list is short compared
+##  to the modulus of the mapping. Just as with `IsRcwaMappingStandardRep',
+##  the representation of an rcwa mapping in this representation is unique.
+## 
+DeclareRepresentation( "IsRcwaMappingSparseRep",
+                       IsComponentObjectRep and IsAttributeStoringRep,
+                       [ "modulus", "coeffs" ] );
+
+#############################################################################
+##
 ##                                            Construction of an rcwa mapping
 ##
 #M  RcwaMapping  ( <R>, <m>, <coeffs> ) . . by ring, modulus and coefficients
@@ -247,6 +275,27 @@ DeclareOperation( "RcwaMapping", [ IsObject, IsObject, IsObject ] );
 DeclareOperation( "RcwaMappingNC", [ IsObject ] );
 DeclareOperation( "RcwaMappingNC", [ IsObject, IsObject ] );
 DeclareOperation( "RcwaMappingNC", [ IsObject, IsObject, IsObject ] );
+
+#############################################################################
+##
+#F  RcwaMappingsType( <R> )
+##
+DeclareGlobalFunction( "RcwaMappingsType" );
+
+#############################################################################
+##
+#O  SparseRepresentation( <f> )
+#O  SparseRep( <f> )
+#O  StandardRepresentation( <f> )
+#O  StandardRep( <f> )
+##
+##  Conversion between the two representations of rcwa mappings:
+##  `IsRcwaMappingStandardRep' and `IsRcwaMappingSparseRep'.
+##
+DeclareOperation( "SparseRepresentation", [ IsRcwaMapping ] );
+DeclareOperation( "StandardRepresentation", [ IsRcwaMapping ] );
+DeclareSynonym( "SparseRep", SparseRepresentation );
+DeclareSynonym( "StandardRep", StandardRepresentation );
 
 #############################################################################
 ##

@@ -2840,35 +2840,6 @@ InstallMethod( RespectedPartition,
 
 #############################################################################
 ##
-#M  RespectsPartition( <sigma>, <P> ) . . . . . . . . . . . for rcwa mappings
-##
-InstallMethod( RespectsPartition,
-               "for rcwa mappings (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsList ], 0,
-
-  function ( sigma, P )
-
-    local  R, cl, c, c_rest, pos, res, r, m;
-
-    R := Source(sigma);
-    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(R,cl))
-      or Union(P) <> R or Sum(List(P,Density)) <> 1
-    then TryNextMethod(); fi;
-    if Permutation(sigma,P) = fail then return false; fi;
-    c   := Coefficients(sigma);
-    res := AllResidues(R,Modulus(sigma));
-    for cl in P do
-      r      := Residue(cl);
-      m      := Modulus(cl);
-      pos    := Filtered([1..Length(res)],i->res[i] mod m = r);
-      c_rest := c{pos};
-      if Length(Set(c_rest)) > 1 then return false; fi;
-    od;
-    return true;
-  end );
-
-#############################################################################
-##
 #M  RespectsPartition( <G>, <P> ) . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( RespectsPartition,
