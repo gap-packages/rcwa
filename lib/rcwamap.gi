@@ -4155,13 +4155,18 @@ SetImagesSource( ZeroRcwaMappingOfZ, [ 0, 0 ] );
 
 #############################################################################
 ##
-#M  Zero( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Zero( <f> ) . . . . . . . . . . . for rcwa mappings of Z in standard rep.
+#M  Zero( <f> ) . . . . . . . . . . . . for rcwa mappings of Z in sparse rep.
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z^2
 ##
 ##  Zero rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( Zero, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0, f -> ZeroRcwaMappingOfZ );
+InstallMethod( Zero, "for rcwa mappings of Z in standard rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInStandardRep ], 0,
+               f -> ZeroRcwaMappingOfZ );
+InstallMethod( Zero, "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> SparseRep( ZeroRcwaMappingOfZ ) );
 InstallMethod( Zero, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> ZeroRcwaMappingOfZxZ );
@@ -4241,7 +4246,8 @@ SetIsOne( IdentityRcwaMappingOfZxZ, true );
 
 #############################################################################
 ##
-#M  One( <f> ) . . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
+#M  One( <f> ) . . . . . . . . . . .  for rcwa mappings of Z in standard rep.
+#M  One( <f> ) . . . . . . . . . . . .  for rcwa mappings of Z in sparse rep.
 #M  One( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z^2
 ##
 ##  Identity rcwa mapping of Z or Z^2, respectively.
