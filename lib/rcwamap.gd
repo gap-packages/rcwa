@@ -1208,4 +1208,26 @@ DeclareOperation( "LaTeXAndXDVI", [ IsObject ] );
 
 #############################################################################
 ##
+#S  Attributes and properties which do not depend on the representation. ////
+##
+#############################################################################
+
+BindGlobal( "RCWA_REP_INDEPENDENT_ATTRIBUTES",
+            [ "Source", "Range", "Support", "MovedPoints", "Order",
+              "Multiplier", "Divisor", "PrimeSet", "MaximalShift",
+              "IncreasingOn", "DecreasingOn", "ImageDensity",
+              "Sources", "Sinks", "Loops",  "TransposedClasses",
+              "RotationFactor", "LargestSourcesOfAffineMappings" ] );
+
+BindGlobal( "RCWA_REP_INDEPENDENT_PROPERTIES",
+            [ "IsBalanced", "IsIntegral",
+              "IsClassWiseTranslating", "IsClassWiseOrderPreserving",
+              "IsSignPreserving", "IsTame",
+              "IsClassShift", "IsPowerOfClassShift",
+              "IsClassReflection", "IsClassRotation",
+              "IsClassTransposition",
+              "IsGeneralizedClassTransposition", "IsPrimeSwitch" ] );
+
+#############################################################################
+##
 #E  rcwamap.gd . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

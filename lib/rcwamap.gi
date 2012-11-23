@@ -1273,7 +1273,7 @@ InstallMethod( SparseRepresentation,
 
   function ( f )
 
-    local  result, attrs, attrsetters, props, propsetters,
+    local  result, attrs, attrsetters, props, propsetters, attr, prop,
            R, coeffs, src, sparse, cl, r, m, c, i;
 
     R      := Source(f);
@@ -1296,14 +1296,17 @@ InstallMethod( SparseRepresentation,
                                          and IsRcwaMappingSparseRep),
                         rec(modulus := f!.modulus, coeffs := sparse));
 
-    ##  Copy over attributes and properties.
-    ##  -- In case there ever is an attribute or property which depends on
-    ##  the representation, this needs to be excluded from copying here:
+    # Copy over representation-independent attributes and properties.
 
-    attrs := List(KnownAttributesOfObject(f),ValueGlobal);
+    attrs := List( Intersection( RCWA_REP_INDEPENDENT_ATTRIBUTES,
+                                 KnownAttributesOfObject( f ) ),
+                   ValueGlobal );
     attrsetters := List(attrs,Setter);
     for i in [1..Length(attrs)] do attrsetters[i](result,attrs[i](f)); od;
-    props := List(KnownPropertiesOfObject(f),ValueGlobal);
+
+    props := List( Intersection( RCWA_REP_INDEPENDENT_PROPERTIES,
+                                 KnownPropertiesOfObject( f ) ),
+                   ValueGlobal );
     propsetters := List(props,Setter);
     for i in [1..Length(props)] do propsetters[i](result,props[i](f)); od;
 
@@ -1361,14 +1364,17 @@ InstallMethod( StandardRepresentation,
                                          and IsRcwaMappingStandardRep),
                         rec( modulus := modulus, coeffs := coeffs ));
 
-    ##  Copy over attributes and properties.
-    ##  -- In case there ever is an attribute or property which depends on
-    ##  the representation, this needs to be excluded from copying here:
+    # Copy over representation-independent attributes and properties.
 
-    attrs := List(KnownAttributesOfObject(f),ValueGlobal);
+    attrs := List( Intersection( RCWA_REP_INDEPENDENT_ATTRIBUTES,
+                                 KnownAttributesOfObject( f ) ),
+                   ValueGlobal );
     attrsetters := List(attrs,Setter);
     for i in [1..Length(attrs)] do attrsetters[i](result,attrs[i](f)); od;
-    props := List(KnownPropertiesOfObject(f),ValueGlobal);
+
+    props := List( Intersection( RCWA_REP_INDEPENDENT_PROPERTIES,
+                                 KnownPropertiesOfObject( f ) ),
+                   ValueGlobal );
     propsetters := List(props,Setter);
     for i in [1..Length(props)] do propsetters[i](result,props[i](f)); od;
 
