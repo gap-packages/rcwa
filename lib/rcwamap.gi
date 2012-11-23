@@ -1226,7 +1226,8 @@ InstallMethod( RcwaMappingNC,
           if Length(resm) >= 2 then
             for p in Set(Factors(m)) do
               for r in Filtered(resm,res->res<m/p) do
-                range := [r,r+m/p..m-m/p+r];
+                # range := [r,r+m/p..m-m/p+r]; -> range restriction (<2^28)
+                range := List([0..p-1],j->j*(m/p)+r);
                 if IsSubset(resm,range) then
                   cls := Difference(cls,List(range,r->[r,m]));
                   Add(cls,[r,m/p]);
@@ -4039,20 +4040,91 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \<( <f>, <g> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#M  \<( <f>, <g> ) . . . . . . . . . . . . for rcwa mappings in standard rep.
+#M  \<( <f>, <g> ) . . . . . . . . . . . . . for rcwa mappings in sparse rep.
+#M  \<( <f>, <g> ) . . . . . . .  for rcwa mappings: standard vs. sparse rep.
+#M  \<( <f>, <g> ) . . . . . . .  for rcwa mappings: sparse vs. standard rep.
 ##
-##  Total ordering of rcwa maps (for tech. purposes, only).
-##  Separate methods are needed as soon as there are representations of
-##  rcwa mappings not having components <modulus> and <coeffs>.
+##  Total ordering of rcwa maps (for technical purposes, only).
+##  More methods are needed as soon as further representations of
+##  rcwa mappings are implemented.
 ##
 InstallMethod( \<,
-               "for two rcwa mappings (RCWA)", IsIdenticalObj,
-               [ IsRcwaMapping, IsRcwaMapping ], 0,
+               "for rcwa mappings in standard rep. (RCWA)", IsIdenticalObj,
+               [ IsRcwaMappingInStandardRep, IsRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     if   f!.modulus <> g!.modulus
     then return f!.modulus < g!.modulus;
     else return f!.coeffs  < g!.coeffs; fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings in sparse rep. (RCWA)", IsIdenticalObj,
+               [ IsRcwaMappingInSparseRep, IsRcwaMappingInSparseRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := First(f!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        cg := First(g!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings: standard vs. sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInStandardRep, IsRcwaMappingInSparseRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := f!.coeffs[r+1];
+        cg := First(g!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings: sparse vs. standard rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInSparseRep, IsRcwaMappingInStandardRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := First(f!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        cg := g!.coeffs[r+1];
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
   end );
 
 #############################################################################
@@ -4168,8 +4240,12 @@ SetIsOne( IdentityRcwaMappingOfZxZ, true );
 ##
 ##  Identity rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( One, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0, f -> IdentityRcwaMappingOfZ );
+InstallMethod( One, "for rcwa mappings of Z in standard rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInStandardRep ], 0,
+               f -> IdentityRcwaMappingOfZ );
+InstallMethod( One, "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> SparseRep( IdentityRcwaMappingOfZ ) );
 InstallMethod( One, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> IdentityRcwaMappingOfZxZ );
