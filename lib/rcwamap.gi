@@ -1194,8 +1194,8 @@ InstallMethod( RcwaMappingNC,
 
   function ( coeffs )
 
-    local  result, modulus, coeffset, coeffcoll, cls, oldcls,
-           resm, mods, m, r, range, p, i, j;
+    local  result, modulus, coeffset, coeffcoll, cls, redcls, cl,
+           d, d_red, res, res_d, div, m, r, r_red, range, i, j;
 
     if   not ForAll(coeffs,c->IsList(c) and Length(c)=5)
       or not ForAll(coeffs[1],IsInt)
@@ -1207,40 +1207,81 @@ InstallMethod( RcwaMappingNC,
       if coeffs[i][5] < 0 then coeffs[i] := -coeffs[i]; fi;
     od;
 
-    coeffset   := Set(List(coeffs,c->c{[3..5]}));
-    coeffcoll  := List(coeffset,c->[]);
+    coeffset  := Set(List(coeffs,c->c{[3..5]}));
+    coeffcoll := List(coeffset,c->[]);
     for i in [1..Length(coeffs)] do
       j := PositionSorted(coeffset,coeffs[i]{[3..5]});
       Add(coeffcoll[j],coeffs[i]);
     od;
+
     coeffs := [];
     for i in [1..Length(coeffset)] do
-      cls := Set(List(coeffcoll[i],c->c{[1,2]}));
-      repeat
-        oldcls := ShallowCopy(cls);
-        mods   := Set(List(oldcls,cl->cl[2]));
-        for m in mods do
-          resm := List(Set(Filtered(cls,cl->cl[2]=m)),c->c[1]);
-          if Length(resm) >= 2 then
-            for p in Set(Factors(m)) do
-              for r in Filtered(resm,res->res<m/p) do
-                # range := [r,r+m/p..m-m/p+r]; -> range restriction (<2^28)
-                range := List([0..p-1],j->j*(m/p)+r);
-                if IsSubset(resm,range) then
-                  cls := Difference(cls,List(range,r->[r,m]));
-                  Add(cls,[r,m/p]);
-                fi;
-              od;
-            od;
-          fi;
+
+      cls := Set(coeffcoll[i],c->c{[1,2]});
+      if Length(cls) > 1 then
+
+        d_red  := Gcd(DifferencesList(List(cls,cl->cl[1])));
+        d_red  := Gcd(d_red,Gcd(List(cls,cl->cl[2])));
+        r_red  := cls[1][1] mod d_red;
+        redcls := List(cls,cl->[(cl[1]-r_red)/d_red,cl[2]/d_red]);
+        m      := Lcm(List(redcls,cl->cl[2]));
+        res    := [];
+        for cl in redcls do
+          for j in [0..m/cl[2]-1] do Add(res,cl[1]+j*cl[2]); od;
         od;
-        cls := Set(cls);
-      until cls = oldcls;
-      for j in [1..Length(cls)] do
-        Add(coeffs,Concatenation(cls[j],coeffset[i]));
+        res := Set(res);
+
+        redcls := [];
+        div    := DivisorsInt(m);
+        for d in div do
+          res_d := Set(res mod d);
+          for r in res_d do
+            range := List([0..m/d-1],j->r+j*d);
+            if IsSubset(res,range) then
+              Add(redcls,[r,d]);
+              res := Difference(res,range);
+              if res = [] then break; fi;
+              if Length(res) < m/d then break; fi;
+            fi;
+          od;
+          if res = [] then break; fi;
+        od;
+
+        cls := List(redcls,cl->[cl[1]*d_red+r_red,cl[2]*d_red]);
+
+      # Erroneous reduction process: doesn't cope with cases like
+      # 0(3) U 1(6) U 5(6) = 1(2) U 0(6).
+      # 
+      # repeat
+      #   oldcls := ShallowCopy(cls);
+      #   mods   := Set(List(oldcls,cl->cl[2]));
+      #   for m in mods do
+      #     resm := List(Set(Filtered(cls,cl->cl[2]=m)),c->c[1]);
+      #     if Length(resm) >= 2 then
+      #       for p in Set(Factors(m)) do
+      #         for r in Filtered(resm,res->res<m/p) do
+      #           # range := [r,r+m/p..m-m/p+r]; -> range restriction (<2^28)
+      #           range := List([0..p-1],j->j*(m/p)+r);
+      #           if IsSubset(resm,range) then
+      #             cls := Difference(cls,List(range,r->[r,m]));
+      #             Add(cls,[r,m/p]);
+      #           fi;
+      #         od;
+      #       od;
+      #     fi;
+      #   od;
+      #   cls := Set(cls);
+      # until cls = oldcls;
+
+      fi;
+
+      for cl in cls do
+        Add(coeffs,Concatenation(cl,coeffset[i]));
       od;
+
     od;
 
+    # SortParallel(List(coeffs,c->[c[2],c[1]]),coeffs); -> problematic?
     coeffs  := Set(coeffs);
     modulus := Lcm(List(coeffs,c->c[2]));
 
