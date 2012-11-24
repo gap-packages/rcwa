@@ -867,8 +867,10 @@ rings.
 <Index Key="integral" Subkey="definition">integral</Index>
 <Index Key="balanced" Subkey="definition">balanced</Index>
 <Index Key="sign-preserving" Subkey="definition">sign-preserving</Index>
+<Index Key="maximal shift" Subkey="definition">maximal shift</Index>
 
 <Index Key="rcwa mapping" Subkey="prime set">rcwa mapping</Index>
+<Index Key="rcwa mapping" Subkey="maximal shift">rcwa mapping</Index>
 <Index Key="rcwa mapping" Subkey="class-wise translating">
   rcwa mapping
 </Index>
@@ -885,6 +887,9 @@ rings.
 <Index Key="Divisor" Subkey="of an rcwa mapping"><C>Divisor</C></Index>
 <Index Key="Div" Subkey="for an rcwa mapping"><C>Div</C></Index>
 <Index Key="PrimeSet" Subkey="of an rcwa mapping"><C>PrimeSet</C></Index>
+<Index Key="MaximalShift" Subkey="of an rcwa mapping of Z">
+  <C>MaximalShift</C>
+</Index>
 
 <Index Key="IsClassWiseTranslating" Subkey="for an rcwa mapping">
   <C>IsClassWiseTranslating</C>
@@ -909,6 +914,10 @@ as attributes <C>Multiplier</C> and <C>Divisor</C>, or for short <C>Mult</C>
 and <C>Div</C>. The <E>prime set</E> of an rcwa mapping is the set of
 prime divisors of the product of its modulus and its multiplier.
 It is stored as an attribute <C>PrimeSet</C>.
+The <E>maximal shift</E> of an rcwa mapping of &ZZ; is the maximum of
+the absolute values of its coefficients <M>b_{r(m)}</M> in the notation
+introduced in Section&nbsp;<Ref Label="sec:basicdefinitions"/>.
+It is stored as an attribute <C>MaximalShift</C>.
 An rcwa mapping is called <E>class-wise translating</E> if all of its affine
 partial mappings are translations, it is called <E>integral</E> if its
 divisor equals&nbsp;1, and it is called <E>balanced</E> if its multiplier
