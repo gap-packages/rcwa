@@ -1201,8 +1201,6 @@ InstallMethod( RcwaMappingNC,
       or not ForAll(coeffs[1],IsInt)
     then TryNextMethod(); fi;
 
-    modulus := Lcm(List(coeffs,c->c[2])); 
-
     for i in [1..Length(coeffs)] do
       coeffs[i][1] := coeffs[i][1] mod coeffs[i][2];
       coeffs[i]{[3..5]} := coeffs[i]{[3..5]}/Gcd(coeffs[i]{[3..5]});
@@ -1243,9 +1241,10 @@ InstallMethod( RcwaMappingNC,
       od;
     od;
 
-    coeffs := Set(coeffs);
-    MakeImmutable(coeffs);
+    coeffs  := Set(coeffs);
+    modulus := Lcm(List(coeffs,c->c[2]));
 
+    MakeImmutable(coeffs);
     result := Objectify( NewType( RcwaMappingsOfZFamily,
                                   IsRcwaMappingOfZ
                               and IsRcwaMappingSparseRep ),
