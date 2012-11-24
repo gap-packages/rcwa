@@ -4078,8 +4078,8 @@ InstallMethod( \<,
     then return false; else
       m := f!.modulus; r := 0;
       while r < m do
-        cf := First(f!.coeffs,c->c[1] mod c[2] = r){[3..5]};
-        cg := First(g!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        cf := First(f!.coeffs,c->c[1] = r mod c[2]){[3..5]};
+        cg := First(g!.coeffs,c->c[1] = r mod c[2]){[3..5]};
         if cf <> cg then return cf < cg; fi;
         r := r + 1;
       od;
@@ -4102,7 +4102,7 @@ InstallMethod( \<,
       m := f!.modulus; r := 0;
       while r < m do
         cf := f!.coeffs[r+1];
-        cg := First(g!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        cg := First(g!.coeffs,c->c[1] = r mod c[2]){[3..5]};
         if cf <> cg then return cf < cg; fi;
         r := r + 1;
       od;
@@ -4124,7 +4124,7 @@ InstallMethod( \<,
     then return false; else
       m := f!.modulus; r := 0;
       while r < m do
-        cf := First(f!.coeffs,c->c[1] mod c[2] = r){[3..5]};
+        cf := First(f!.coeffs,c->c[1] = r mod c[2]){[3..5]};
         cg := g!.coeffs[r+1];
         if cf <> cg then return cf < cg; fi;
         r := r + 1;
