@@ -1220,7 +1220,7 @@ BindGlobal( "RCWA_REP_INDEPENDENT_ATTRIBUTES",
               "RotationFactor", "LargestSourcesOfAffineMappings" ] );
 
 BindGlobal( "RCWA_REP_INDEPENDENT_PROPERTIES",
-            [ "IsBalanced", "IsIntegral",
+            [ "IsInjective", "IsSurjective", "IsBalanced", "IsIntegral",
               "IsClassWiseTranslating", "IsClassWiseOrderPreserving",
               "IsSignPreserving", "IsTame",
               "IsClassShift", "IsPowerOfClassShift",
