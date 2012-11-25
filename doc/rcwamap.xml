@@ -1837,7 +1837,7 @@ gap> GuessedDivergence(T);
 
 <!-- #################################################################### -->
 
-<Section Label="sec:CategoriesOfRcwaMappings">
+<Section Label="sec:SparseRepresentationOfRcwaMappings">
 <Heading>The sparse representation of rcwa mappings</Heading>
 
 <Index Key="rcwa mapping" Subkey="sparse representation">
