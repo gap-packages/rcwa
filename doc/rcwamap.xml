@@ -1859,6 +1859,8 @@ magnitude. For rcwa mappings with almost as much distinct affine partial
 mappings as there are residue classes modulo the modulus, using sparse
 representation makes computations somewhat slower and more memory-consuming.
 Presently, sparse representation is only available for rcwa mappings of &ZZ;.
+<P/>
+
 The sparse representation of an rcwa mapping consists of the modulus and
 a list of 5-tuples <M>(r,m,a_{r(m)},b_{r(m)},c_{r(m)})</M> of integers.
 Any such 5-tuple specifies the coefficients of the restriction
@@ -1868,7 +1870,16 @@ coarsest possible partition of &ZZ; into residue classes such that the
 restriction of the mapping to any of them is affine. Also the list of
 coefficient triples is sorted, all <M>c_{r(m)}</M> are positive and
 <M>\gcd(c_{r(m)},\gcd(a_{r(m)},b_{r(m)})) = 1</M>. This way the coefficient
-list of an rcwa mapping of &ZZ; is unique.  
+list of an rcwa mapping of &ZZ; is unique. <P/>
+
+Changing the representation of rcwa mappings does not change their
+behaviour with respect to <Q><C>=</C></Q> and <Q><C>&lt;</C></Q> 
+The product of two rcwa mappings in sparse representation is in sparse
+representation again, just like the product of two rcwa mappings in
+standard representation is in standard representation. Also, inverses
+are in the same representation. The product of two rcwa mappings in
+different representation may be in any of the representations of the
+factors.
 
 <ManSection>
   <Oper Name="SparseRepresentation" Arg="f" Label="of an rcwa mapping"/>
@@ -1880,6 +1891,8 @@ list of an rcwa mapping of &ZZ; is unique.
     representation.
   </Returns>
   <Description>
+    Appropriate attribute values and properties are copied over
+    to the rcwa mapping in the <Q>new</Q> representation. 
 <Example>
 <![CDATA[
 gap> a := ClassTransposition(1,2,4,6);
