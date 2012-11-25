@@ -916,8 +916,8 @@ InstallMethod( Sign,
     sgn := 0;
     for c in f!.coeffs do
       r := c[1]; m := c[2]; a := c[3]; b := c[4];
-      sgn := sgn + b/AbsInt(a);
-      if a < 0 then sgn := sgn + (m - 2*r); fi;
+      sgn := sgn + b/(m*AbsInt(a));
+      if a < 0 then sgn := sgn + (m - 2*r)/m; fi;
     od;
     sgn := (-1)^sgn;
     return sgn;
