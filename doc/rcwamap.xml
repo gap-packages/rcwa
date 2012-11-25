@@ -1855,11 +1855,11 @@ residue class modulo the modulus is unsuitable. For this reason there is
 a second representation of rcwa mappings, the <Q>sparse</Q> representation.
 Depending on the rcwa mappings involved, using this representation may
 speed up computations and reduce memory requirements by orders of
-magnitude. For rcwa mappings with almost as much distinct affine partial
+magnitude. For rcwa mappings with almost as many distinct affine partial
 mappings as there are residue classes modulo the modulus, using sparse
 representation makes computations somewhat slower and more memory-consuming.
-Presently, sparse representation is only available for rcwa mappings of &ZZ;.
-<P/>
+Presently, the sparse representation is only available for rcwa mappings
+of &ZZ;. <P/>
 
 The sparse representation of an rcwa mapping consists of the modulus and
 a list of 5-tuples <M>(r,m,a_{r(m)},b_{r(m)},c_{r(m)})</M> of integers.
