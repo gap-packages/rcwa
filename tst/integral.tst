@@ -1769,6 +1769,106 @@ gap> CyclesOnFiniteOrbit(G,G.1*G.2,0);
 [ [ 0, 1, 4, 9, 8, 5 ], [ 6, 7 ], [ 10, 11, 14, 19, 18, 15 ], [ 12, 13 ] ]
 gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
 [ 3148, 3148 ]
+gap> k :=  ClassTransposition(2,4,3,4) * ClassTransposition(3,4,8,12)
+>        * ClassTransposition(4,6,8,12);
+<rcwa permutation of Z with modulus 12>
+gap> k := SparseRep(k);
+<rcwa permutation of Z with modulus 12 and 8 affine parts>
+gap> ks := StandardRep(k);
+<rcwa permutation of Z with modulus 12>
+gap> k=ks;
+true
+gap> ks^4=k^4;
+true
+gap> Support(k);
+2(4) U 3(4) U 4(12) U 8(12) \ [ -2 ]
+gap> Support(k^4);
+<union of 30 residue classes (mod 72)> \ [ -4, -2, -1 ]
+gap> Display(k);
+
+Rcwa permutation of Z with modulus 12 and 8 affine parts
+
+        /
+        | (3n+2)/2 if n in 2(4)
+        | n-1      if n in 3(12) U 7(12)
+        | 2n       if n in 4(12)
+ n |-> <  (n+1)/3  if n in 8(12)
+        | 2n-2     if n in 11(12)
+        | n        if n in 1(4) U 0(12)
+        |
+        \
+
+gap> IsTame(k);
+false
+gap> Order(k);
+infinity
+gap> LargestSourcesOfAffineMappings(k);
+[ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ]
+gap> ImageDensity(k);
+1
+gap> T := RcwaMapping([[0,2,1,0,2],[1,2,3,1,2]]);
+<rcwa mapping of Z with modulus 2 and 2 affine parts>
+gap> Display(T);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | n/2      if n in 0(2)
+ n |-> <  (3n+1)/2 if n in 1(2)
+        |
+        \
+
+gap> T^6 = StandardRep(T)^6;
+true
+gap> T^6 = StandardRep(T^6);
+true
+gap> IsSurjective(T);
+true
+gap> IsInjective(T);
+false
+gap> ImageDensity(T);
+4/3
+gap> a := ClassTransposition(1,2,4,6);
+( 1(2), 4(6) )
+gap> b := ClassTransposition(1,3,2,6);
+( 1(3), 2(6) )
+gap> c := ClassTransposition(2,3,4,6);
+( 2(3), 4(6) )
+gap> G := Group(a,b,c);
+<rcwa group over Z with 3 generators>
+gap> A := SparseRep(a);
+( 1(2), 4(6) )
+gap> B := SparseRep(b);
+( 1(3), 2(6) )
+gap> C := SparseRep(c);
+( 2(3), 4(6) )
+gap> a = StandardRep(A);
+true
+gap> b = StandardRep(B);
+true
+gap> c = StandardRep(C);
+true
+gap> S := [a,b,c,A,B,C];
+[ ( 1(2), 4(6) ), ( 1(3), 2(6) ), ( 2(3), 4(6) ), ( 1(2), 4(6) ), 
+  ( 1(3), 2(6) ), ( 2(3), 4(6) ) ]
+gap> Set(S);
+[ ( 2(3), 4(6) ), ( 1(3), 2(6) ), ( 1(2), 4(6) ) ]
+gap> Set([a,b,c]) = Set([A,B,C]);
+true
+gap> H := Group(A,B,C);
+<rcwa group over Z with 3 generators>
+gap> One(H)!.coeffs;
+[ [ 0, 1, 1, 0, 1 ] ]
+gap> Zero(A)!.coeffs;
+[ [ 0, 1, 0, 0, 1 ] ]
+gap> F := FreeGroup("a","b","c");
+<free group on the generators [ a, b, c ]>
+gap> phi := EpimorphismByGenerators(F,H);
+[ a, b, c ] -> [ ( 1(2), 4(6) ), ( 1(3), 2(6) ), ( 2(3), 4(6) ) ]
+gap> BG := Ball(G,One(G),5);;
+gap> BH := Ball(H,One(H),5);;
+gap> BG=BH;
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
