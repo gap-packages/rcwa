@@ -4973,11 +4973,13 @@ InstallMethod( MovedPoints,
 
     S := []; fixedpoints := [];
     for c in f!.coeffs do
-      if c{[3,5]} <> [1,1] then
+      if c{[3..5]} <> [1,0,1] then
         S := Union(S,ResidueClass(c[1],c[2]));
-        fixedpoint := c[4]/(c[5]-c[3]);
-        if   IsInt(fixedpoint) and fixedpoint mod c[2] = c[1]
-        then Add(fixedpoints,fixedpoint); fi;
+        if c{[3,5]} <> [1,1] then
+          fixedpoint := c[4]/(c[5]-c[3]);
+          if   IsInt(fixedpoint) and fixedpoint mod c[2] = c[1]
+          then Add(fixedpoints,fixedpoint); fi;
+        fi;
       fi;
     od;
     S := Difference(S,fixedpoints);
