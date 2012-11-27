@@ -3259,11 +3259,15 @@ InstallMethod( Display,
         #i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
         if   IsRing(R) then idcoeffs := [1,0,1] * One(R);
         elif IsZxZ(R)  then idcoeffs := [[[1,0],[0,1]],[0,0],1]; fi;
-        if   IsRcwaMappingStandardRep(f) then inds := [1..3];
-        elif IsRcwaMappingInSparseRep(f) then inds := [3..5]; fi;
-        i := First([1..Length(P)],
-                   j->c[First([1..Length(res)],k->res[k] in P[j])]{inds}
-                      =idcoeffs);
+        if IsRcwaMappingStandardRep(f) then 
+          i := First([1..Length(P)],
+                     j -> c[First([1..Length(res)],k->res[k] in P[j])]
+                        = idcoeffs);
+        elif IsRcwaMappingOfZInSparseRep(f) then
+          i := First([1..Length(P)],
+                     j -> c[PositionProperty(c,d->d[1] in P[j])]{[3..5]}
+                        = idcoeffs);
+        fi;
         if i <> fail then D[i] := infinity; fi; # constant mappings -> end
 
         SortParallel(D,P);
