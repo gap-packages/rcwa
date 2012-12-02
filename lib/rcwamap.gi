@@ -7332,9 +7332,9 @@ InstallMethod( RespectsPartition,
 
     if Permutation(sigma,P) = fail then return false; fi;
 
-    return ForAll(P,cl->Number(sigma!.coeffs,
-                               c -> (c[1]-Residue(cl))
-                                mod Gcd(c[2],Modulus(cl)) = 0) = 1);
+    return ForAll(P,cl->Length(Set(Filtered(sigma!.coeffs,
+                  c -> (c[1]-Residue(cl)) mod Gcd(c[2],Modulus(cl)) = 0),
+                  d -> d{[3..5]})) = 1);
   end );
 
 #############################################################################
