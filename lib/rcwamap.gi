@@ -7467,6 +7467,11 @@ InstallMethod( Order,
         Info(InfoRCWA,3,"       Hence <g> has infinite order.");
         return infinity;
       fi;
+      if Loops(g) <> [] then
+        Info(InfoRCWA,3,"Order: <g> has infinite order, by loop criterion.");
+        SetIsTame(g,false);
+        return infinity;
+      fi;
     fi;
 
     if not IsBalanced(g) then
@@ -7490,6 +7495,12 @@ InstallMethod( Order,
           return infinity;
         fi;
         pow := pow^e; if IsOne(pow) then break; fi;
+        if Loops(pow) <> [] then
+          Info(InfoRCWA,3,"Order: <g>^",e," has loops, ",
+                          "thus <g> has infinite order.");
+          SetIsTame(g,false);
+          return infinity;
+        fi;
       od;
 
       Info(InfoRCWA,3,"Order: Looking for finite cycles ... ");
@@ -7795,6 +7806,7 @@ InstallMethod( Loops,
       if   [r_img,m_img] <> [r,m] and (r_img - r) mod Gcd(m,m_img) = 0
       then Add(loops,ResidueClass(r,m)); fi;
     od;
+    if loops <> [] then SetIsTame(f,false); fi;
     return loops;
   end );
 
@@ -7821,6 +7833,7 @@ InstallMethod( Loops,
         and (r_img - r) mod Gcd(m,m_img) = 0
       then Add(loops,ResidueClass(r,modulus)); fi;
     od;
+    if loops <> [] then SetIsTame(f,false); fi;
     return loops;
   end );
 
@@ -7848,6 +7861,7 @@ InstallMethod( Loops,
       if   [r_img,m_img] <> [r,m] and IsZero((r_img - r) mod Gcd(R,m,m_img))
       then Add(loops,ResidueClass(R,m,r)); fi;
     od;
+    if loops <> [] then SetIsTame(f,false); fi;
     return loops;
   end );
 
