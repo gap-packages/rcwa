@@ -940,6 +940,11 @@ InstallMethod( RcwaMappingNC,
     R := cycles[1][1];
     if   not (IsRing(R) or IsZxZ(R))
     then R := UnderlyingRing(FamilyObj(R)); fi;
+    if not IsIntegers(R) and not IsZ_pi(R)
+      and not (     IsUnivariatePolynomialRing(R)
+                and IsFiniteFieldPolynomialRing(R))
+    then TryNextMethod(); fi;
+
     m      := Lcm(List(Union(cycles),Modulus));
     res    := AllResidues(R,m);
     coeffs := List(res,r->[1,0,1]*One(R));
@@ -961,7 +966,7 @@ InstallMethod( RcwaMappingNC,
     elif IsPolynomialRing(R)
     then result := RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs);
     fi;
-    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    Assert(4,Order(result)=Lcm(List(cycles,Length)));
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
     return result;
@@ -1001,7 +1006,7 @@ InstallMethod( RcwaMappingNC,
       od;
     od;
     result := RcwaMapping(R,m,coeffs);
-    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    Assert(4,Order(result)=Lcm(List(cycles,Length)));
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
     return result;
@@ -2376,7 +2381,7 @@ InstallMethod( IsGeneralizedClassTransposition,
       if not IsClassWiseOrderPreserving(sigma) then m2 := -m2; fi;
       cls_fixedrep := [ ResidueClassWithFixedRep(Source(sigma),m1,r1),
                         ResidueClassWithFixedRep(Source(sigma),m2,r2) ];
-      Assert(1,sigma=ClassTransposition(cls_fixedrep));
+      Assert(4,sigma=ClassTransposition(cls_fixedrep));
       SetTransposedClasses(sigma,cls_fixedrep);
       return true;
     else return false; fi;
@@ -8408,7 +8413,7 @@ InstallMethod( Restriction, "for rcwa mappings (RCWA)", IsIdenticalObj,
 
     gf := RestrictedPerm( RightInverse(f) * g * f, Image(f) );
 
-    Assert(1,g*f=f*gf,"Restriction: Diagram does not commute.\n");
+    Assert(4,g*f=f*gf,"Restriction: Diagram does not commute.\n");
 
     if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
     if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
@@ -8434,7 +8439,7 @@ InstallMethod( Induction, "for rcwa mappings (RCWA)", IsIdenticalObj,
 
     gf := f * g * RightInverse(f);
 
-    Assert(1,gf*f=f*g,"Induction: Diagram does not commute.\n");
+    Assert(4,gf*f=f*g,"Induction: Diagram does not commute.\n");
 
     if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
     if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
@@ -8589,7 +8594,7 @@ InstallMethod( FactorizationIntoCSCRCT,
         leftfacts   := Concatenation(leftfacts,l);
       fi;
       StateInfo();
-      Assert(2,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
+      Assert(4,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
     end;
 
     if not IsBijective(g) then return fail; fi;
@@ -8641,7 +8646,7 @@ InstallMethod( FactorizationIntoCSCRCT,
           P := Set(newP);
         until P = oldP;
         P := Set(P,res->ResidueClassUnion(Integers,m,res-1));
-        Assert(2,Union(P)=Integers);
+        Assert(4,Union(P)=Integers);
         if   not ForAll(P,IsResidueClass)
         then P := AllResidueClassesModulo(Modulus(g)); fi;
       else P := AllResidueClassesModulo(Modulus(g)); fi;
