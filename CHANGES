@@ -2,13 +2,15 @@
                        Version history of the RCWA package
                        ===================================
 
-Changes between version 3.4.0 and version 3.5.0:
+Changes between version 3.4.0 and version 3.5.0 (December 12, 2012):
 
  - A sparse representation for rcwa mappings of Z has been implemented.
    This allows much faster, much less memory-consuming computations
    in case the respective rcwa mappings have only few different
    affine partial mappings.
 
+ - There are performance improvements in various places.
+ 
 Changes between version 3.3.1 and version 3.4.0 (November 1, 2012):
 
  - The output of tame rcwa permutations has been improved.

@@ -4,7 +4,7 @@
 
                            -- A GAP 4 Package --
 
-                               Version 3.4.0
+                               Version 3.5.0
 
         Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
 
@@ -36,12 +36,12 @@ a browser, or its PDF version (manual.pdf) with a PDF viewer.
 
                                 Requirements
 
-This version of RCWA needs at least GAP 4.5.2,  ResClasses 3.2.0,  GRAPE 4.3,
+This version of RCWA needs at least GAP 4.5.6,  ResClasses 3.3.0,  GRAPE 4.3,
 Polycyclic 2.6  and GAPDoc 1.4.  All required packages are already present in
-a standard GAP installation. RCWA can be used  under UNIX,  under Windows and
-on  the MacIntosh.  It is completely  written  in the  GAP language  and does
-neither contain nor require  external binaries.  Warnings concerning  missing
-binaries issued by GRAPE or other packages can safely be ignored.
+a standard GAP installation. RCWA can be used on all platforms  for which GAP
+is available. It is completely  written in the  GAP language and does neither
+contain nor require  external binaries. Possible warnings concerning  missing
+binaries issued by other packages when loading RCWA can safely be ignored.
 
 
                                 Installation
@@ -67,5 +67,5 @@ know. -- I am interested very much in any applications of this package.  Also
 please let me know  if you have problems with this package,  or if you find a
 bug.
 
-Stefan Kohl,  November 2012
+Stefan Kohl,  December 2012
 
