@@ -130,7 +130,7 @@ Print(FormatParagraph(Concatenation(
   "is. Since RCWA caches some data, subsequent runs of the test suite ",
   "within the same GAP session will usually be faster than ",
   "the first run.")),"\n");
-Print("Architecture: ", GAP_ARCHITECTURE, "\n");
+Print("Architecture: ", GAPInfo.Architecture, "\n");
 Print("\n");
 Print("test file         GAP4stones     time(msec)\n");
 Print("-------------------------------------------\n");
