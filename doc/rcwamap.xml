@@ -1914,9 +1914,9 @@ gap> h^2;
 gap> h^3;
 <rcwa permutation of Z with modulus 663552 and 201 affine parts>
 gap> MemoryUsage(h^3);
-9978
+10002
 gap> MemoryUsage(StandardRep(h^3));
-23888202
+23888226
 gap> Coefficients(h);
 [ [ 0, 6, 1, 0, 1 ], [ 1, 3, 16, -1, 3 ], [ 2, 96, 9, 14, 16 ], 
   [ 3, 24, 9, 5, 4 ], [ 5, 24, 3, 1, 4 ], [ 8, 36, 2, -7, 9 ], 

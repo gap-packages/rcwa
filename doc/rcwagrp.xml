@@ -723,8 +723,7 @@ gap> G := Group(a,b,c);
 gap> phi := EpimorphismFromFpGroup(G,6);
 [ a, b, c ] -> [ a, b, c ]
 gap> RelatorsOfFpGroup(Source(phi));
-[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, 
-  a*b*a*b*a*b*a*b*a*b*a*b ]
+[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ]
 ]]>
 </Example>
   </Description>
@@ -770,15 +769,15 @@ gap> phi := EpimorphismFromFreeGroup(G);;
 gap> g := Comm(a^2*b^4,a*b^3); # a sample element to be factored
 <rcwa permutation of Z with modulus 8>
 gap> PreImagesRepresentative(phi,g); # -> a factorization of g
-b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3
+b^-3*(b^-1*a^-1)^2*b^3*a*b^-1*a*b^3
 gap> g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check
 true
 gap> g := Comm(a*b,Comm(a,b^3));
 <rcwa permutation of Z with modulus 8>
 gap> pre := PreImagesRepresentatives(phi,g);
-[ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
+[ (b^-1*a^-1)^2*b^2*(b*a)^2*b^-2, b^-1*(a^-1*b)^2*b^2*(a*b^-1)^2*b^-1 ]
 gap> rel := pre[1]/pre[2]; # -> a nontrivial relation
-b^-1*a^-1*b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1*a*b
+(b^-1*a^-1)^2*b^3*a*b^2*a^-1*b^-2*(b^-1*a)^2*b
 gap> rel^phi;
 IdentityMapping( Integers )
 ]]>
@@ -1241,7 +1240,7 @@ gap> [6,-3,8]^elm; List([6,-3,8],n->n^elm); # `OnPoints' allows reordering
 gap> F := FreeGroup("a","b");; phi := EpimorphismByGenerators(F,G);;
 gap> w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],
 >                                      OnTuples,F);
-a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
+a*b^-1*a^-1*(b^-1*a)^2*b*a*b^-2*a*b*a^-1*b
 gap> elm := w^phi;
 <rcwa permutation of Z with modulus 324>
 gap> List([10,-4,9,5],n->n^elm);

@@ -209,7 +209,7 @@ gap> data := LoadDatabaseOfProductsOf2ClassTranspositions();;
 gap> RecNames(data);
 [ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", 
   "CTPairIntersectionType", "CTPairProductType", 
-  "CTPairsProductClassification" ]
+  "CTPairsProductClassification", "OrdersMatrix" ]
 gap> Length(data.CTPairs);
 2346
 gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
