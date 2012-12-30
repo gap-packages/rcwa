@@ -2,6 +2,11 @@
                        Version history of the RCWA package
                        ===================================
 
+Changes between version 3.5.0 and version 3.5.1:
+
+ - The manual examples and the test files have been adjusted to the
+   improved output format for words in GAP 4.6.0.
+
 Changes between version 3.4.0 and version 3.5.0 (December 12, 2012):
 
  - A sparse representation for rcwa mappings of Z has been implemented.
