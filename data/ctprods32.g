@@ -2,17 +2,21 @@
 ##
 #W  ctprods32.g                GAP4 Package `RCWA'                Stefan Kohl
 ##
-##  This file contains a database of pairs of class transpositions
+##  This file contains a database of pairs of class transpositions of Z
 ##  which interchange residue classes with moduli <= 32, whose product has
-##  order distinct from 1,2,3,4,6,10,12,15,20,30,60 and infinity. 
+##  order distinct from 1,2,3,4,6,10,12,15,20,30,60 and infinity.
+##  The orders which occur are 8, 24, 40, 42, 84, 120, 168 and 420.
 ##  The database comes in form of a list orders32 such that orders32[n] is
 ##  the list of pairs of such class transpositions whose product has order n.
+##  Class transpositions are stored as lists of 4 integers, where a list
+##  [ r1, m1, r2, m2 ] stands for the class transposition which interchanges
+##  the residue classes r1(m1) and r2(m2).
 ##  The database is supposed to be either complete or almost complete,
 ##  although it is conceivable that some entries are missing.
 ## 
 #############################################################################
 
-orders32 :=
+return
 [ ,,,,,,, 
     [ [ [ 0, 4, 6, 16 ], [ 0, 3, 4, 6 ] ],
       [ [ 0, 4, 6, 16 ], [ 0, 3, 4, 18 ] ],
