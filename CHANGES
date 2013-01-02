@@ -2,6 +2,12 @@
                        Version history of the RCWA package
                        ===================================
 
+Changes between version 3.5.1 and version 3.6.0:
+
+ - A database of products of 2 class transpositions interchanging
+   residue classes with moduli <= 32 with orders 8, 24, 40, 42, 84,
+   120, 168 and 420 has been added.
+
 Changes between version 3.5.0 and version 3.5.1:
 
  - The manual examples and the test files have been adjusted to the
