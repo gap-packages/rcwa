@@ -125,7 +125,7 @@ Print(FormatParagraph(Concatenation(
   "indicate a problem.")),"\n");
 Print(FormatParagraph(Concatenation(
   "The runtime of the following tests (in general) increases. ",
-  "The `next' time is an approximation of the running time for ",
+  "The `next' time is an approximation of the run time for ",
   "the next test. The more GAP4stones you get, the faster your system ",
   "is. Since RCWA caches some data, subsequent runs of the test suite ",
   "within the same GAP session will usually be faster than ",

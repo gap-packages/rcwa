@@ -29,6 +29,53 @@ InstallTrueMethod( IsRcwaMonoid, IsRcwaMonoidOverGFqx );
 
 #############################################################################
 ##
+#S  Conversion of rcwa monoids between standard and sparse representation. //
+##
+#############################################################################
+
+#############################################################################
+##
+#M  SparseRepresentation( <M> )
+##
+InstallMethod( SparseRepresentation,
+               "for rcwa monoids over Z (RCWA)",
+               true, [ IsRcwaMonoidOverZ ], 0,
+
+  function ( M )
+
+    local  M_sparse;
+
+    M_sparse := MonoidByGenerators(List(GeneratorsOfMonoid(M),SparseRep));
+    if HasIsTame(M) then SetIsTame(M_sparse,IsTame(M)); fi;
+    if   HasModulusOfRcwaMonoid(M)
+    then SetModulusOfRcwaMonoid(M_sparse,ModulusOfRcwaMonoid(M)); fi;
+    if HasSize(M) then SetSize(M_sparse,Size(M)); fi;
+    return M_sparse;
+  end );
+
+#############################################################################
+##
+#M  StandardRepresentation( <M> )
+##
+InstallMethod( StandardRepresentation,
+               "for rcwa monoids over Z (RCWA)",
+               true, [ IsRcwaMonoidOverZ ], 0,
+
+  function ( M )
+
+    local  M_standard;
+
+    M_standard := MonoidByGenerators(List(GeneratorsOfMonoid(M),
+                                          StandardRep));
+    if HasIsTame(M) then SetIsTame(M_standard,IsTame(M)); fi;
+    if   HasModulusOfRcwaMonoid(M)
+    then SetModulusOfRcwaMonoid(M_standard,ModulusOfRcwaMonoid(M)); fi;
+    if HasSize(M) then SetSize(M_standard,Size(M)); fi;
+    return M_standard;
+  end );
+
+#############################################################################
+##
 #S  Methods for `View', `Print' and `Display'. //////////////////////////////
 ##
 #############################################################################
@@ -272,6 +319,30 @@ InstallMethod( Induction,
     if HasSize(M)   then SetSize(Mf,Size(M)); fi;
 
     return Mf;
+  end );
+
+#############################################################################
+##
+#S  The automorphism switching action on negative and nonnegative integers. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Mirrored( <M> ) . . . . . . . . . . . . . . . . . for rcwa monoids over Z
+##
+InstallOtherMethod( Mirrored,
+                    "for rcwa monoids over Z (RCWA)",
+                    true, [ IsRcwaMonoidOverZ ], 0,
+
+  function ( M )
+
+    local  img;
+
+    img := MonoidByGenerators(List(GeneratorsOfMonoid(M),Mirrored));
+    if HasIsTame(M) then SetIsTame(img,IsTame(M)); fi;
+    if HasSize(M)   then SetSize(img,Size(M)); fi;
+    return img;
   end );
 
 #############################################################################

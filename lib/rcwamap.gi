@@ -1207,9 +1207,10 @@ InstallMethod( RcwaMappingNC,
     then TryNextMethod(); fi;
 
     for i in [1..Length(coeffs)] do
+      coeffs[i][2] := AbsInt(coeffs[i][2]);
       coeffs[i][1] := coeffs[i][1] mod coeffs[i][2];
       coeffs[i]{[3..5]} := coeffs[i]{[3..5]}/Gcd(coeffs[i]{[3..5]});
-      if coeffs[i][5] < 0 then coeffs[i] := -coeffs[i]; fi;
+      if coeffs[i][5] < 0 then coeffs[i]{[3..5]} := -coeffs[i]{[3..5]}; fi;
     od;
 
     coeffset  := Set(List(coeffs,c->c{[3..5]}));
@@ -1557,6 +1558,26 @@ InstallOtherMethod( Projection,
 
     return RcwaMapping(c_proj);
   end );
+
+#############################################################################
+##
+#S  The automorphism switching action on negative and nonnegative integers. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Mirrored( <f> ) . . . . . . . . . for rcwa mappings of Z in standard rep.
+#M  Mirrored( <f> ) . . . . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallOtherMethod( Mirrored,
+                    "for rcwa mappings of Z in standard rep. (RCWA)",
+                    true, [ IsRcwaMappingOfZInStandardRep ], 0,
+                    f -> f^RcwaMapping( [ [ -1, -1, 1 ] ] ) );
+InstallOtherMethod( Mirrored,
+                    "for rcwa mappings of Z in sparse rep. (RCWA)",
+                    true, [ IsRcwaMappingOfZInSparseRep ], 0,
+                    f -> f^RcwaMapping( [ [ 0, 1, -1, -1, 1 ] ] ) );
 
 #############################################################################
 ##
@@ -5764,7 +5785,7 @@ InstallMethod( IsSurjective,
 
     coeffs := f!.coeffs;
     if IsInjective(f) then
-      return Sum(List(coeffs,c->c[5]/(c[2]*c[3]))) = 1;
+      return Sum(List(coeffs,c->c[5]/(c[2]*AbsInt(c[3])))) = 1;
     else
       imgs := List(Filtered(coeffs,c->c[3]<>0),
                    c->ResidueClass((c[3]*c[1]+c[4])/c[5],(c[3]*c[2])/c[5]));

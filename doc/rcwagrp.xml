@@ -154,6 +154,29 @@ true
   </Description>
 </ManSection>
 
+<Index Key="Mirrored"> <C>Mirrored</C> </Index>
+
+The group CT(&ZZ;) has an outer automorphism which is given by conjugation
+with <M>n \mapsto -n - 1</M>. This automorphism can be applied to an
+rcwa mapping of &ZZ; or to an rcwa group over &ZZ; by the operation
+<C>Mirrored</C>. The group <C>Mirrored</C><A>G</A><C>)</C> acts on the
+nonnegative integers as <A>G</A> acts on the negative integers, and vice
+versa.
+
+<Example>
+<![CDATA[
+gap> ct := ClassTransposition(0,2,1,6);
+( 0(2), 1(6) )
+gap> Mirrored(ct);
+( 1(2), 4(6) )
+gap> G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;
+gap> ShortOrbits(G,[-100..100],100);
+[ [ 0, 1, 2, 3, 4, 5 ] ]
+gap> ShortOrbits(Mirrored(G),[-100..100],100);
+[ [ -6, -5, -4, -3, -2, -1 ] ]
+]]>
+</Example>
+
 <Index Key="AllElementsOfCTZWithGivenModulus">
   <C>AllElementsOfCTZWithGivenModulus</C>
 </Index>

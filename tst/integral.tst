@@ -1869,6 +1869,25 @@ gap> BG := Ball(G,One(G),5);;
 gap> BH := Ball(H,One(H),5);;
 gap> BG=BH;
 true
+gap> ct := ClassTransposition(0,2,1,6);
+( 0(2), 1(6) )
+gap> Mirrored(ct);
+( 1(2), 4(6) )
+gap> G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;
+gap> ShortOrbits(G,[-100..100],100);
+[ [ 0, 1, 2, 3, 4, 5 ] ]
+gap> ShortOrbits(Mirrored(G),[-100..100],100);
+[ [ -6, -5, -4, -3, -2, -1 ] ]
+gap> f := RcwaMapping([[0,1,-1,-1,1]]);
+Rcwa mapping of Z: n -> -n - 1
+gap> Coefficients(f^-1);
+[ [ 0, 1, -1, -1, 1 ] ]
+gap> f=f^-1;
+true
+gap> f*f^-1;
+IdentityMapping( Integers )
+gap> f^2;
+IdentityMapping( Integers )
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

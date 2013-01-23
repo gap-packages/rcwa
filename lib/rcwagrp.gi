@@ -71,6 +71,52 @@ InstallMethod( IsWholeFamily,
 
 #############################################################################
 ##
+#S  Conversion of rcwa groups between standard and sparse representation. ///
+##
+#############################################################################
+
+#############################################################################
+##
+#M  SparseRepresentation( <G> )
+##
+InstallMethod( SparseRepresentation,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  G_sparse;
+
+    G_sparse := GroupByGenerators(List(GeneratorsOfGroup(G),SparseRep));
+    if HasIsTame(G) then SetIsTame(G_sparse,IsTame(G)); fi;
+    if   HasModulusOfRcwaMonoid(G)
+    then SetModulusOfRcwaMonoid(G_sparse,ModulusOfRcwaMonoid(G)); fi;
+    if HasSize(G) then SetSize(G_sparse,Size(G)); fi;
+    return G_sparse;
+  end );
+
+#############################################################################
+##
+#M  StandardRepresentation( <G> )
+##
+InstallMethod( StandardRepresentation,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  G_standard;
+
+    G_standard := GroupByGenerators(List(GeneratorsOfGroup(G),StandardRep));
+    if HasIsTame(G) then SetIsTame(G_standard,IsTame(G)); fi;
+    if   HasModulusOfRcwaMonoid(G)
+    then SetModulusOfRcwaMonoid(G_standard,ModulusOfRcwaMonoid(G)); fi;
+    if HasSize(G) then SetSize(G_standard,Size(G)); fi;
+    return G_standard;
+  end );
+
+#############################################################################
+##
 #S  Methods for `View', `Print', `Display' etc. /////////////////////////////
 ##
 #############################################################################
@@ -2208,6 +2254,30 @@ InstallMethod( Induction,
 
 #############################################################################
 ##
+#S  The automorphism switching action on negative and nonnegative integers. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Mirrored( <G> ) . . . . . . . . . . . . . . . . .  for rcwa groups over Z
+##
+InstallOtherMethod( Mirrored,
+                    "for rcwa groups over Z (RCWA)",
+                    true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  img;
+
+    img := GroupByGenerators(List(GeneratorsOfGroup(G),Mirrored));
+    if HasIsTame(G) then SetIsTame(img,IsTame(G)); fi;
+    if HasSize(G)   then SetSize(img,Size(G)); fi;
+    return img;
+  end );
+
+#############################################################################
+##
 #S  Constructing rcwa groups: ///////////////////////////////////////////////
 #S  Taking direct products and wreath products. /////////////////////////////
 ##
@@ -4227,8 +4297,8 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
       if IsSubset(D,S) then
         b := Maximum(List(B,MaximalShift));
         p0 := Minimum(Intersection([0..b],Support(G)));
-        Info(InfoRCWA,2,"Checking transitivity on ",
-                        Intersection([0..b],Support(G)));
+        Info(InfoRCWA,2,"Checking transitivity on moved points ",
+                        "0 <= n <= ",b);
         B_act := [p0]; r_act := 1;
         repeat
           B_act_old := B_act;
