@@ -761,9 +761,6 @@ InstallGlobalFunction( Log2HTML,
 ##
 #############################################################################
 
-# For compatibility with 4.5.2: 
-if not IsBoundGlobal( "Test" ) then BindGlobal( "Test", ReadTest ); fi;
-
 #############################################################################
 ##
 #F  ReadTestWithTimings( <filename> ) . . . read test file and return timings
