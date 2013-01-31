@@ -43,6 +43,9 @@
 ##  the nonnegative integers in its support. This "translation" is defined
 ##  by the position of the string in the list trsstatusset.
 ##
+##  For the description of the record 'finiteorbits', see the file
+##  3ctsgrp-finite-orbits.g.
+##
 #############################################################################
 
 return rec(
@@ -21685,9 +21688,13 @@ stabilize_digitsum_base3_mod2 :=
   37303,37308,37311,37318,37322,37389,37392,37399,37403,37577,
   37584,37588,37683,37687,37883,40099,40102,40109,40113,40287,
   40294,40298,40393,40397,40593,41887,41894,41898,41993,41997,
-  42193,45328,45332,45528,47113 ]
+  42193,45328,45332,45528,47113 ],
 
- );
+finiteorbits := ReadAsFunction(
+                  Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                "/data/3ctsgrp-finite-orbits.g"))()
+
+);
 
 #############################################################################
 ##
