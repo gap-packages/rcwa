@@ -2575,7 +2575,7 @@ InstallGlobalFunction( ClassPairs,
       moduli := Filtered(AllResidues(R,m),r->IsPosInt(Degree(r)));
       for m1 in moduli do
         for m2 in moduli do
-          if Degree(m1) > Degree(m2) then continue; fi;
+          if m1 > m2 then continue; fi;
           for r1 in AllResidues(R,m1) do
             for r2 in AllResidues(R,m2) do
               if (m1 <> m2 or r1 < r2) and not IsZero((r1-r2) mod Gcd(m1,m2))
