@@ -409,6 +409,8 @@ gap> ClassPairs(x^2);
 [ [ 0, x, 1, x ], [ 0, x+1, 1, x+1 ] ]
 gap> List(last,ClassTransposition);
 [ ( 0(x), 1(x) ), ( 0(x+1), 1(x+1) ) ]
+gap> Length(ClassPairs(x^3));
+58
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "modular.tst", 2300000000 );
 
