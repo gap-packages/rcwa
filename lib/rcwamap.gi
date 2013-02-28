@@ -7651,7 +7651,7 @@ InstallMethod( TransitionMatrix,
     R := Source(f); Resm := AllResidues(R,m);
     mTest := Modulus(f) * Lcm(m,Divisor(f));
     ResmTest := AllResidues(R,mTest);
-    T := MutableNullMat(Length(Resm),Length(Resm));
+    T := NullMat(Length(Resm),Length(Resm));
     for n in ResmTest do
       i := Position(Resm,n   mod m);
       j := Position(Resm,n^f mod m);

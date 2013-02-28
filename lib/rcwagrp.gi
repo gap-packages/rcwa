@@ -3308,7 +3308,7 @@ InstallMethod( IsomorphismMatrixGroup,
     H := Action(G,P); h := GeneratorsOfGroup(H);
     m := [];
     for i in [1..Length(g)] do
-      m[i] := MutableNullMat(deg,deg,R);
+      m[i] := NullMat(deg,deg,R);
       for j in [1..deg/2] do
         b := [[0,0],[0,1]] * One(R);
         r := Residues(P[j])[1] mod Modulus(g[i]);
