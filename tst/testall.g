@@ -62,9 +62,9 @@ end;
 STONE_ALL := [];
 
 SHOW_STONES := function( next )
-    Print( FormattedString(STONE_FILE,-16), "    ",
-           FormattedString(STONE_STONE,8), "       ",
-           FormattedString(STONE_RTIME,8) );
+    Print( String(STONE_FILE,-16), "    ",
+           String(STONE_STONE,8), "       ",
+           String(STONE_RTIME,8) );
     Add( STONE_ALL, STONE_STONE );
     if 0 < next and STONE_FSUM <> 0  then
         Print( "    (next ~ ", Int(STONE_SUM*next*10/STONE_FSUM),
@@ -157,9 +157,9 @@ Print("-------------------------------------------\n");
 if STONE_COUNT=0 then
   STONE_COUNT:=1;
 fi;
-Print( FormattedString("total",-16), "    ",
-       FormattedString(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
-       FormattedString(STONE_SUM,8), "\n" );
+Print( String("total",-16), "    ",
+       String(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
+       String(STONE_SUM,8), "\n" );
 Print("\n");
 
 SizeScreen(oldSizeScreen);
