@@ -7471,7 +7471,7 @@ InstallMethod( Order,
   function ( g )
 
     local  P, k, p, gtilde, e, e_old, e_max, l, l_max, stabiter,
-           n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
+           maxloopcheck, n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
 
     if   not IsBijective(g) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
@@ -7493,10 +7493,19 @@ InstallMethod( Order,
         Info(InfoRCWA,3,"       Hence <g> has infinite order.");
         return infinity;
       fi;
-      if Loops(g) <> [] then
-        Info(InfoRCWA,3,"Order: <g> has infinite order, by loop criterion.");
-        SetIsTame(g,false);
-        return infinity;
+      if not IsIntegral(g) then
+        maxloopcheck := RootInt(Mod(g),2); # guess on 'reasonable' limit
+        pow := g;
+        for k in [1..maxloopcheck] do
+          if Loops(pow) <> [] then
+            Info(InfoRCWA,3,"Order: <g>^",k," has loops, hence <g> ",
+                            "has infinite order.");
+            SetIsTame(g,false);
+            return infinity;
+          fi;
+          if k < maxloopcheck then pow := pow * g; fi;
+          if IsIntegral(pow) then break; fi;
+        od;
       fi;
     fi;
 

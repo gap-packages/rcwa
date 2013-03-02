@@ -20,6 +20,8 @@ Changes between version 3.5.1 and version 3.6.0:
  - There is now an operation `Mirrored' which applies the automorphism
    conjugating with n |-> -n - 1 to an rcwa mapping of Z or an rcwa group
    over Z. This interchanges the action on negative and nonnegative integers.
+ - The performance of the method for computing the order of an
+   rcwa permutation of Z has been improved.
  - A bug has been fixed which caused error messages when computing with
    rcwa mappings of Z in sparse representation which were not class-wise
    order-preserving.
