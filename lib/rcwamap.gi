@@ -7583,7 +7583,7 @@ InstallMethod( Order,
 
     if IsRcwaMappingOfZxZ(g) then TryNextMethod(); fi;
 
-    if not IsTame(g) then
+    if not IsRcwaMappingOfZ(g) and not IsTame(g) then
       Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
       return infinity;
     fi;
