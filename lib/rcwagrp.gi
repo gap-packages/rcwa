@@ -5499,11 +5499,13 @@ InstallMethod( EpimorphismFromFpGroup,
   function ( G, r )
 
     local  gensG, gensF, F, Q, D, rels, relsnew, abinvs, invs, d,
-           B, W, phi, n, letters, m, onlyperfect, involutions,
-           g, h, v, w, i, j, k, pos;
+           B, W, phi, n, letters, m, onlyperfect, timeout, starttime,
+           involutions, g, h, v, w, i, j, k, pos;
 
-    onlyperfect :=  ValueOption("onlyperfect") = true
-                 or ValueOption("OnlyPerfect") = true;
+    onlyperfect := ValueOption("onlyperfect") = true
+                or ValueOption("OnlyPerfect") = true;
+    timeout     := ValueOption("timeout");
+    starttime   := Runtime();
 
     letters := ["a","b","c","d","e","f","g","h","k","l","m","n"];
     gensG   := GeneratorsOfGroup(G);
@@ -5540,8 +5542,12 @@ InstallMethod( EpimorphismFromFpGroup,
     rels   := [];
     abinvs := [ListWithIdenticalEntries(n,0)];
     for i in [2..r+1] do
+      if IsInt(timeout) and Runtime()-starttime >= timeout
+      then break; fi;
       Info(InfoRCWA,2,"r = ",i-1,"\n");
       for j in [1..Length(B[i])] do
+        if IsInt(timeout) and Runtime()-starttime >= timeout
+        then break; fi;
         Info(InfoRCWA,3,"Element number = ",j,"\n");
         g := B[i][j];
         w := W[i][j];
