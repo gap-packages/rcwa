@@ -5439,7 +5439,7 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 
 #############################################################################
 ##
-#M  EpimorphismFromFpGroup( <G>, <r> )
+#M  EpimorphismFromFpGroup( <G>, <r> ) . . . . default method for f.g. groups
 ##
 InstallMethod( EpimorphismFromFpGroup,
                "default method (RCWA)", ReturnTrue,
@@ -5486,6 +5486,92 @@ InstallMethod( EpimorphismFromFpGroup,
     phiFpS := InverseGeneralMapping(IsomorphismSimplifiedFpGroup(Fp));
 
     return CompositionMapping(phiFp,phiFpS);
+  end );
+
+#############################################################################
+##
+#M  EpimorphismFromFpGroup( <G>, <r> ) . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( EpimorphismFromFpGroup,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroup and IsFinitelyGeneratedGroup, IsPosInt ], 10,
+
+  function ( G, r )
+
+    local  gensG, gensF, F, Q, D, rels, relsnew, abinvs, invs, d,
+           B, W, phi, n, letters, m, onlyperfect, involutions,
+           g, h, v, w, i, j, k, pos;
+
+    onlyperfect :=  ValueOption("onlyperfect") = true
+                 or ValueOption("OnlyPerfect") = true;
+
+    letters := ["a","b","c","d","e","f","g","h","k","l","m","n"];
+    gensG   := GeneratorsOfGroup(G);
+    n       := Length(gensG);
+    if n <= 12 then F := FreeGroup(letters{[1..n]});
+               else F := FreeGroup(n); fi;
+    gensF   := GeneratorsOfGroup(F);
+
+    involutions := Set(gensG,Order) = [2];
+
+    Info(InfoRCWA,2,"EpimorphismFromFpGroup: computing ball of radius ",
+                    r,"\n");
+
+    B := Ball(G,One(G),r:Spheres);
+    W := [[One(F)]];
+    for i in [2..r+1] do
+      W[i] := [];
+      for j in [1..Length(B[i-1])] do
+        g := B[i-1][j];
+        v := W[i-1][j];
+        for k in [1..n] do
+          h := g*gensG[k];
+          w := v*gensF[k];
+          pos := Position(B[i],h);
+          if pos <> fail then
+            W[i][pos] := w;
+          fi;
+        od;
+      od;
+    od;
+
+    Info(InfoRCWA,2,"EpimorphismFromFpGroup: searching for relations");
+
+    rels   := [];
+    abinvs := [ListWithIdenticalEntries(n,0)];
+    for i in [2..r+1] do
+      Info(InfoRCWA,2,"r = ",i-1,"\n");
+      for j in [1..Length(B[i])] do
+        Info(InfoRCWA,3,"Element number = ",j,"\n");
+        g := B[i][j];
+        w := W[i][j];
+        if involutions 
+          and Set(Collected(LetterRepAssocWord(w)),l->l[2]) mod 2 = [0]
+        then continue; fi;
+        m := Order(g);
+        if IsInfinity(m) then continue; fi;
+        if   i > 2 and onlyperfect and involutions and m mod 2 = 0
+        then continue; fi;
+        relsnew := Concatenation(rels,[w^m]);
+        Q := F/relsnew; D := Q; d := 1;
+        repeat
+          invs := AbelianInvariants(D);
+          if not IsBound(abinvs[d]) or invs <> abinvs[d] then
+            abinvs[d] := invs;
+            rels := relsnew;
+            break;
+          elif invs = [] or 0 in invs then break;
+          elif onlyperfect then break;
+          else D := DerivedSubgroup(D);
+               d := d + 1;
+          fi;
+        until invs = [] or 0 in invs;
+      od;
+    od;
+    rels := Set(rels);
+    Q := F/rels;
+    phi := EpimorphismByGenerators(Q,G);
+    return phi;
   end );
 
 #############################################################################
