@@ -1913,7 +1913,7 @@ gap> h^2;
 <rcwa permutation of Z with modulus 13824 and 71 affine parts>
 gap> h^3;
 <rcwa permutation of Z with modulus 663552 and 201 affine parts>
-gap> MemoryUsage(h^3);
+gap> MemoryUsage(h^3); # on a 32-bit machine
 10002
 gap> MemoryUsage(StandardRep(h^3));
 23888226

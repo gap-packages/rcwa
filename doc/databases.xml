@@ -149,8 +149,8 @@ gap> Collected(data.trsstatus);
 [ [ "> 1 orbit (mod m)", 593 ], 
   [ "Mod(U DecreasingOn) exceeded <maxmod>", 23 ], 
   [ "U DecreasingOn stable and exceeded memory bound", 35 ], 
-  [ "U DecreasingOn stable for <maxeq> steps", 5868 ], 
-  [ "exceeded memory bound", 601 ], [ "finite", 21948 ], 
+  [ "U DecreasingOn stable for <maxeq> steps", 5859 ], 
+  [ "exceeded memory bound", 599 ], [ "finite", 21948 ], 
   [ "intransitive, but finitely many orbits", 8 ], 
   [ "seemingly finite and infinite orbits (exponential growth)", 2981 ], 
   [ "seemingly finite and infinite orbits (growth unclear)", 86 ], 
@@ -161,7 +161,7 @@ gap> Collected(data.trsstatus);
   [ "seemingly only finite orbits (very long)", 1510 ], 
   [ "seemingly only finite orbits (very long, very unclear)", 4 ], 
   [ "seemingly only finite orbits (very short)", 765 ], 
-  [ "transitive", 319 ] ]
+  [ "transitive", 330 ] ]
 ]]>
 </Example>
   </Description>
@@ -209,7 +209,8 @@ gap> data := LoadDatabaseOfProductsOf2ClassTranspositions();;
 gap> RecNames(data);
 [ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", 
   "CTPairIntersectionType", "CTPairProductType", 
-  "CTPairsProductClassification", "OrdersMatrix" ]
+  "CTPairsProductClassification", "OrdersMatrix", "CTProds12", 
+  "CTProds32" ]
 gap> Length(data.CTPairs);
 2346
 gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
