@@ -399,27 +399,58 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#F  ReducedWordByOrdersOfGenerators( <w>, <orders> )
-##
-##  Reduce exponents of powers in a word modulo the orders of the
-##  corresponding generators.
+#F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
 ##
 InstallGlobalFunction(  ReducedWordByOrdersOfGenerators,
 
-  function ( w, orders )
+  function ( w, gensords )
 
     local  ext, fam, i;
 
     fam := FamilyObj(w);
     ext := ShallowCopy(ExtRepOfObj(w));
     for i in [1,3..Length(ext)-1] do
-      if orders[ext[i]] < infinity then
-        ext[i+1] := ext[i+1] mod orders[ext[i]];
-        if   ext[i+1] > orders[ext[i]]/2
-        then ext[i+1] := ext[i+1] - orders[ext[i]]; fi;
+      if gensords[ext[i]] < infinity then
+        ext[i+1] := ext[i+1] mod gensords[ext[i]];
+        if   ext[i+1] > gensords[ext[i]]/2
+        then ext[i+1] := ext[i+1] - gensords[ext[i]]; fi;
       fi;
     od;
     return ObjByExtRep(fam,ext);
+  end );
+
+#############################################################################
+##
+#M  NormalizedRelator( <w>, <gensords> )
+##
+InstallMethod( NormalizedRelator,
+               "for a word and a list of orders of generators", ReturnTrue,
+               [ IsAssocWord, IsList ], 0,
+
+  function ( w, gensords )
+
+    local  c, old, twice, words, min, max, start, i, j;
+
+    c := ShallowCopy(ExtRepOfObj(w));
+    repeat
+      old := ShallowCopy(c);
+      for i in [2,4..Length(c)] do
+        if   gensords[c[i-1]] < infinity
+        then c[i] := c[i] mod gensords[c[i-1]]; fi;
+      od;
+      c := ShallowCopy(ExtRepOfObj(ObjByExtRep(FamilyObj(w),c)));
+      min   := Minimum(c{[1,3..Length(c)-1]});
+      start := Filtered([1,3..Length(c)-1],i->c[i]=min);
+      max   := Maximum(c{start+1});
+      start := Filtered(start,i->c[i+1]=max);
+      twice := Concatenation(c,c);
+      words := List(start,i->twice{[i..i+Length(c)-1]});
+      SortParallel(List(words,v->[v{[1,3..Length(v)-1]},
+                                  v{[2,4..Length(v)]}]),words);
+      c := words[1];
+    until c = old;
+    w := ObjByExtRep(FamilyObj(w),c);
+    return w;
   end );
 
 #############################################################################
