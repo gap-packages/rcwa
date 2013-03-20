@@ -5498,9 +5498,9 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r )
 
-    local  gensG, gensF, F, Q, D, rels, relsnew, abinvs, invs, d,
-           B, W, phi, n, letters, m, onlyperfect, timeout, starttime,
-           involutions, g, h, v, w, i, j, k, pos;
+    local  gensG, gensF, F, Q, D, rels, relsnew, relsgenspows, relsmain,
+           abinvs, invs, d, B, W, phi, n, letters, m, onlyperfect,
+           timeout, starttime, involutions, g, h, v, w, i, j, k, pos;
 
     onlyperfect := ValueOption("onlyperfect") = true
                 or ValueOption("OnlyPerfect") = true;
@@ -5574,7 +5574,10 @@ InstallMethod( EpimorphismFromFpGroup,
         until invs = [] or 0 in invs;
       od;
     od;
-    rels := Set(rels);
+    relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
+    relsmain     := Difference(rels,relsgenspows);
+    rels := Union(relsgenspows,
+                  Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
     Q := F/rels;
     phi := EpimorphismByGenerators(Q,G);
     return phi;
