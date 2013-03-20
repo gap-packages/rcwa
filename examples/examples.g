@@ -8,14 +8,14 @@
 ##
 ##  Selected examples are discussed in some detail in the manual chapter
 ##  "Examples". The global variables defined there can be assigned by
-##  applying the function `AssignGlobals' to the the respective component
-##  of the record returned by `RCWALoadExamples'. The component names are
-##  given in the corresponding sections of the manual.
+##  applying the function `AssignGlobals' to the respective component of
+##  the record returned by `RCWALoadExamples'. The component names are
+##  mentioned in the corresponding sections of the manual.
 ##
-##  Note that since the beginnings of RCWA, examples have only been added to
-##  this file, but never been removed. For this reason, there are 'older' and
-##  'newer' examples, where the latter are often considerably 'better' than
-##  the former. 
+##  Since the beginnings of RCWA, examples have been added to this file.
+##  However examples are usually not removed. For this reason, there are
+##  'older' and 'newer' examples, where the latter are often considerably
+##  'better' than the former. 
 ##
 #############################################################################
 
