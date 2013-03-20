@@ -10,7 +10,7 @@
 
 #############################################################################
 ##
-#S  Some GAP Library bugfixes. //////////////////////////////////////////////
+#S  Multiplication with infinity. ///////////////////////////////////////////
 ##
 #############################################################################
 
@@ -19,12 +19,6 @@
 #M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
 #M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
 #M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
-##
-##  In GAP 4.4.7, the GAP Library function `DirectProduct' and the general
-##  method for `DirectProductOp' run into error if one of the factors is
-##  known to be infinite. The methods below are installed as a workaround.
-##  As maybe there are further similar places where finiteness is assumed
-##  implicitly, it may be good if these methods remain available after 4.4.8.
 ##
 InstallMethod( \*, "for positive integer and infinity (RCWA)",
                ReturnTrue, [ IsPosInt, IsInfinity ], 0,
@@ -722,13 +716,13 @@ InstallGlobalFunction( RunDemonstration,
 
 #############################################################################
 ##
-#S  Utility to convert GAP log files to XHTML 1.0 Strict. ///////////////////
+#S  Utility to convert GAP logfiles to XHTML 1.0 Strict. ////////////////////
 ##
 #############################################################################
 
 #############################################################################
 ##
-#F  Log2HTML ( logfilename ) . . . . convert GAP log file to XHTML 1.0 Strict
+#F  Log2HTML ( logfilename ) . . . .  convert GAP logfile to XHTML 1.0 Strict
 ##
 InstallGlobalFunction( Log2HTML,
 
