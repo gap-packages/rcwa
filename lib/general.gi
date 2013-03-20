@@ -10,28 +10,6 @@
 
 #############################################################################
 ##
-#S  Multiplication with infinity. ///////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
-#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
-#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
-##
-InstallMethod( \*, "for positive integer and infinity (RCWA)",
-               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
-               function ( n, infty ) return infinity; end );
-InstallMethod( \*, "for infinity and positive integer (RCWA)",
-               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
-               function ( infty, n ) return infinity; end );
-InstallMethod( \*, "for infinity and infinity (RCWA)",
-               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
-               function ( infty1, infty2 ) return infinity; end );
-
-#############################################################################
-##
 #S  Some utility functions for lists and records. ///////////////////////////
 ##
 #############################################################################
@@ -294,6 +272,28 @@ InstallGlobalFunction( RestrictedPartitionsWithoutRepetitions,
     look([],n,S);
     return comps;
   end );
+
+#############################################################################
+##
+#S  Multiplication with infinity. ///////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
+#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
+#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
+##
+InstallMethod( \*, "for positive integer and infinity (RCWA)",
+               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
+               function ( n, infty ) return infinity; end );
+InstallMethod( \*, "for infinity and positive integer (RCWA)",
+               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
+               function ( infty, n ) return infinity; end );
+InstallMethod( \*, "for infinity and infinity (RCWA)",
+               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
+               function ( infty1, infty2 ) return infinity; end );
 
 #############################################################################
 ##
