@@ -21,13 +21,13 @@
 ##  The list 'equalityclasses' contains lists of indices of equal groups in
 ##  the list grps. Due to the computational difficulty of equality tests for
 ##  the groups in question it is not guaranteed that grps[i] <> grps[j] if i
-##  and j do not lie in the same list in equalityclasses.
+##  and j do not lie in the same list in 'equalityclasses'.
 ##
 ##  The list 'conjugacyclasses' contains lists of indices of conjugate groups
 ##  in the list grps. Here 'conjugate' means 'conjugate in RCWA(Z)'.
 ##  Due to the computational difficulty of conjugacy tests for the groups
 ##  in question it is not guaranteed that grps[i] and grps[j] are not
-##  conjugate if i and j do not lie in the same list in conjugacyclasses.
+##  conjugate if i and j do not lie in the same list in 'conjugacyclasses'.
 ##
 ##  The m-th entry of the list 'intransitivemodulo' is a list of the indices
 ##  of those groups which fix a union of residue classes (mod m) setwise
@@ -41,12 +41,12 @@
 ##  of this to an integer. -- E.g. trsstatuspos[i] = 5 says that grps[i] is
 ##  finite, while trsstatuspos[i] = 7 says that grps[i] acts transitively on
 ##  the nonnegative integers in its support. This "translation" is defined
-##  by the position of the string in the list trsstatusset.
+##  by the position of the string in the list 'trsstatusset'.
 ##
 ##  The list 'freeproductcandidates' is a list of the indices of those groups
 ##  which are possibly isomorphic to the free product of 3 cyclic groups of
 ##  order 2, thus whose generators possibly do not satisfy any further
-##  relations.
+##  relations. Only one index per class in 'conjugacyclasses' is given.
 ##
 ##  For the description of the record 'finiteorbits', see the file
 ##  3ctsgrp-finite-orbits.g.
