@@ -23,6 +23,9 @@ Changes between version 3.5.1 and version 3.6.0:
    over Z. This interchanges the action on negative and nonnegative integers.
  - The performance of the method for computing the order of an
    rcwa permutation of Z has been improved.
+ - A basic method for `RepresentativeAction' has been added which computes
+   an rcwa permutation g such that G^g = H for given conjugate rcwa groups
+   G, H < RCWA(Z). 
  - A bug has been fixed which caused error messages when computing with
    rcwa mappings of Z in sparse representation which were not class-wise
    order-preserving.

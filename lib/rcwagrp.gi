@@ -1467,7 +1467,7 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#S  Conjugacy in RCWA(R) and CT(R). /////////////////////////////////////////
+#S  Conjugacy of elements in RCWA(R) and CT(R). /////////////////////////////
 ##
 #############################################################################
 
@@ -1724,6 +1724,45 @@ InstallGlobalFunction( NrConjugacyClassesOfCTZOfOrder,
                             "stabilizer of N_0 in RCWA(Z).");
          return Length(Filtered(Combinations(DivisorsInt(ord)),
                                 l -> l <> [] and Lcm(l) = ord));
+    fi;
+  end );
+
+#############################################################################
+##
+#S  Conjugacy of subgroups in RCWA(R) and CT(R). ////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  RepresentativeActionOp( RCWA(Integers), <G>, <H>, <act> )
+##
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsNaturalRCWA_Z, IsRcwaGroupOverZ, IsRcwaGroupOverZ,
+                 IsFunction ], 0,
+
+  function ( RCWA_Z, G, H, act )
+
+    local  PG, PH, Gp, Hp, g, perm;
+
+    if act <> OnPoints then TryNextMethod(); fi;   
+    if IsTame(G) <> IsTame(H) or Size(G) <> Size(H) then return fail; fi;
+
+    if IsTame(G) then
+      PG := RespectedPartition(G);
+      PH := RespectedPartition(H);
+      if Length(PG) <> Length(PH) then TryNextMethod(); fi;
+      Gp := Action(G,PG);
+      Hp := Action(H,PH);
+      perm := RepresentativeAction(SymmetricGroup(Length(PG)),
+                                   Gp,Hp,OnPoints);
+      if perm = fail then TryNextMethod(); fi;
+      g := RcwaMapping(PG,Permuted(PH,perm^-1));
+      if IsSignPreserving(G) and IsSignPreserving(H) then return g; fi;
+      if G^g = H then return g; else TryNextMethod(); fi;
+    else
+      TryNextMethod();
     fi;
   end );
 
@@ -4985,7 +5024,8 @@ InstallGlobalFunction( DrawOrbitPicture,
 ##
 InstallMethod( RepresentativesActionPreImage,
                "for rcwa groups and permutation groups (RCWA)", ReturnTrue,
-               [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ], 0,
+               [ IsFinitelyGeneratedGroup, IsObject, IsObject,
+                 IsFunction, IsFreeGroup ], 0,
 
   function ( G, src, dest, act, F )
 
@@ -5094,7 +5134,8 @@ InstallMethod( RepresentativeActionPreImage,
 ##
 InstallMethod( RepresentativeActionOp,
                "for rcwa groups (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsObject, IsObject, IsFunction ], 0,
+               [ IsRcwaGroup and IsFinitelyGeneratedGroup,
+                 IsObject, IsObject, IsFunction ], 0,
 
   function ( G, src, dest, act )
 
