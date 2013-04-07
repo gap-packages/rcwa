@@ -1747,6 +1747,9 @@ InstallMethod( RepresentativeActionOp,
     local  PG, PH, Gp, Hp, g, perm;
 
     if act <> OnPoints then TryNextMethod(); fi;   
+    if   (Density(Support(G))  = 1 and Density(Support(H)) <> 1)
+      or (Density(Support(G)) <> 1 and Density(Support(H))  = 1)
+    then return fail; fi;
     if IsTame(G) <> IsTame(H) or Size(G) <> Size(H) then return fail; fi;
 
     if IsTame(G) then
