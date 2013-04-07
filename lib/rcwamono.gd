@@ -70,6 +70,7 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 #O  Ball( <M>, <p>, <r>, <act> )   "    the point <p> under the action of <M>
 #O  Ball( <M>, <p>, <r> ) . . .  as above, where <act> defaults to `OnPoints'
 #O  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . . . . "restricted" ball
+#O  RestrictedBall( <M>, <f>, <r>, <bounds> ) . . . . . . . . . . . .  (dito)
 ##
 ##  The first operation returns the ball of radius <r> around the element <f>
 ##  of <M>.
@@ -95,6 +96,8 @@ DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
 DeclareOperation( "RestrictedBall",
                   [ IsMonoid, IsObject, IsInt, IsPosInt ] );
+DeclareOperation( "RestrictedBall",
+                  [ IsMonoid, IsObject, IsInt, IsRecord ] );
 
 #############################################################################
 ##
