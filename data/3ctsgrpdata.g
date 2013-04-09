@@ -42,9 +42,10 @@
 ##  order 2, thus whose generators possibly do not satisfy any further
 ##  relations. Only one index per class in 'conjugacyclasses' is given.
 ##
-##  For the description of the lists 'partitionlength', 'degrees'
-##  and 'orbitlengths', see the files 3ctsgrp-partitionlengths.g,
-##  3ctsgrp-degrees.g and 3ctsgrp-orbitlengths.g, respectively.
+##  For the description of the lists 'partitionlength', 'degrees',
+##  'orbitlengths' and 'respectedpartitions', see the files
+##  3ctsgrp-partitionlengths.g, 3ctsgrp-degrees.g, 3ctsgrp-orbitlengths.g
+##  and 3ctsgrp-respectedpartitions.g, respectively.
 ##
 ##  For the description of the record 'finiteorbits', see the file
 ##  3ctsgrp-finite-orbits.g.
@@ -10566,6 +10567,10 @@ degrees :=
 orbitlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgrp-orbitlengths.g"))(),
+
+respectedpartitions :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-respectedpartitions.g"))(),
 
 stabilize_digitsum_base2_mod2 :=
 [ 10796,10798,10816,10822,11032,11050,11056,11161,11167,11986,
