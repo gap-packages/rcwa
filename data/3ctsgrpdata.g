@@ -42,6 +42,10 @@
 ##  order 2, thus whose generators possibly do not satisfy any further
 ##  relations. Only one index per class in 'conjugacyclasses' is given.
 ##
+##  For the description of the lists 'partitionlength', 'degrees'
+##  and 'orbitlengths', see the files 3ctsgrp-partitionlengths.g,
+##  3ctsgrp-degrees.g and 3ctsgrp-orbitlengths.g, respectively.
+##
 ##  For the description of the record 'finiteorbits', see the file
 ##  3ctsgrp-finite-orbits.g.
 ##
@@ -10551,6 +10555,18 @@ conjugacyclasses :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgrp-conjugacyclasses.g"))(),
 
+partitionlengths :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-partitionlengths.g"))(),
+
+degrees :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-degrees.g"))(),
+
+orbitlengths :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-orbitlengths.g"))(),
+
 stabilize_digitsum_base2_mod2 :=
 [ 10796,10798,10816,10822,11032,11050,11056,11161,11167,11986,
   14753,14771,14777,14882,14888,15707,21612,21618,22437,25462 ],
@@ -10589,19 +10605,14 @@ stabilize_digitsum_base3_mod2 :=
   42193,45328,45332,45528,47113 ],
 
 freeproductcandidates :=
-[ 421,437,1565,1585,1601,1845,1861,1916,1922,2604,2631,2647,2648,
-  2651,2977,2992,2993,2996,3002,3796,3811,3812,3815,4104,4105,
-  4412,4415,4423,8873,8888,8889,8892,10017,10018,10037,10052,
-  10297,10312,10313,10316,10368,10371,12489,14892,14908,14912,
-  14946,14961,14962,14965,15431,15446,15447,15450,15848,15869,
-  15870,15986,16019,16041,16147,16164,16306,16327,16330,16341,
-  16352,20096,20334,20352,20362,20388,20396,20406,20408,20497,
-  21289,21371,21381,21383,26897,26912,26913,26916,27157,27172,
-  27173,27176,27228,27231,27477,27513,27516,27527,28923,28958,
-  33582,33592,33874,33916,33925,33960,38457,38472,38473,38476,
-  38717,38733,38788,38791,39686,43904,44191,44206,44207,44210,
-  44261,44262,44265,44547,44550,46553,46554,46911,48377,48663,
-  49073,49371,49392,49457 ],
+[ 421,437,1565,1585,1916,1922,2604,2631,2647,2648,2651,3796,3812,
+  4104,4105,4423,8873,8888,8889,8892,10017,10018,10037,10052,
+  10368,10371,14892,14908,14912,14946,14961,14962,14965,15431,
+  15446,15447,15450,15848,15869,15870,15986,16019,16041,16164,
+  16306,16327,16330,16341,16352,20334,20352,20362,26897,26912,
+  26913,26916,27228,27231,27527,28923,33582,33592,33874,33916,
+  33925,38457,38472,38473,38476,38791,39686,43904,44191,44207,
+  44261,44262,44265,44547,44550,49073,49371,49392,49457 ],
 
 intransitivemodulo :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
