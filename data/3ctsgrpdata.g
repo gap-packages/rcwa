@@ -43,9 +43,9 @@
 ##  relations. Only one index per class in 'conjugacyclasses' is given.
 ##
 ##  For the description of the lists 'partitionlength', 'degrees',
-##  'orbitlengths' and 'respectedpartitions', see the files
-##  3ctsgrp-partitionlengths.g, 3ctsgrp-degrees.g, 3ctsgrp-orbitlengths.g
-##  and 3ctsgrp-respectedpartitions.g, respectively.
+##  'orbitlengths', 'permgroupgens' and 'respectedpartitions', see the files
+##  3ctsgrp-partitionlengths.g, 3ctsgrp-degrees.g, 3ctsgrp-orbitlengths.g,
+##  3ctsgrp-permgroupgens and 3ctsgrp-respectedpartitions.g, respectively.
 ##
 ##  For the description of the record 'finiteorbits', see the file
 ##  3ctsgrp-finite-orbits.g.
@@ -10567,6 +10567,10 @@ degrees :=
 orbitlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgrp-orbitlengths.g"))(),
+
+permgroupgens :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-permgroupgens.g"))(),
 
 respectedpartitions :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
