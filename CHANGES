@@ -8,8 +8,10 @@ Changes between version 3.5.1 and version 3.6.0:
    transpositions have been made -- for example:
    - Information on which groups are conjugate in RCWA(Z).
    - Information about short finite orbits.
-   - Information on lengths of shortest respected partitions as well as degrees
-     of action and orbit lengths on these partitions for finite groups.
+   - Lengths of shortest respected partitions as well as degrees of action and
+     orbit lengths on these partitions for all finite groups in the database.
+   - Shortest respected partitions and generators of permutation groups
+     induced on them, for all finite groups in the database.
    - Information on which groups stabilize a union of residue classes (mod m)
      for m <= 60.
  - A database of pairs of class transpositions interchanging
