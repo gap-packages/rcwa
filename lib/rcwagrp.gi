@@ -1744,7 +1744,7 @@ InstallMethod( RepresentativeActionOp,
 
   function ( RCWA_Z, G, H, act )
 
-    local  PG, PH, Gp, Hp, g, perm;
+    local  PG, PH, Gp, Hp, suppG, suppH, fixG, fixH, d, i, j, m, g, perm;
 
     if act <> OnPoints then TryNextMethod(); fi;   
     if   (Density(Support(G))  = 1 and Density(Support(H)) <> 1)
@@ -1755,7 +1755,31 @@ InstallMethod( RepresentativeActionOp,
     if IsTame(G) then
       PG := RespectedPartition(G);
       PH := RespectedPartition(H);
-      if Length(PG) <> Length(PH) then TryNextMethod(); fi;
+      if   IsIntegers(Support(G)) and Length(PG) <> Length(PH)
+      then TryNextMethod(); fi;
+      suppG := Filtered(PG,cl->IsSubset(Support(G),cl));
+      suppH := Filtered(PH,cl->IsSubset(Support(H),cl));
+      if Length(suppG) <> Length(suppH) then TryNextMethod(); fi;
+      d := Length(PG) - Length(PH);
+      if d < 0 then
+        fixG := Difference(PG,suppG);
+        for i in [1..-d] do
+          m := Minimum(List(fixG,Mod));
+          j := First([1..Length(fixG)],j->Mod(fixG[j])=m);
+          fixG[j] := SplittedClass(fixG[j],2);
+          fixG := Set(Flat(fixG)); 
+        od;
+        PG := Concatenation(suppG,fixG);
+      elif d > 0 then
+        fixH := Difference(PH,suppH);
+        for i in [1..d] do
+          m := Minimum(List(fixH,Mod));
+          j := First([1..Length(fixH)],j->Mod(fixH[j])=m);
+          fixH[j] := SplittedClass(fixH[j],2);
+          fixH := Set(Flat(fixH)); 
+        od;
+        PH := Concatenation(suppH,fixH);
+      fi;
       Gp := Action(G,PG);
       Hp := Action(H,PH);
       perm := RepresentativeAction(SymmetricGroup(Length(PG)),
