@@ -1744,7 +1744,8 @@ InstallMethod( RepresentativeActionOp,
 
   function ( RCWA_Z, G, H, act )
 
-    local  PG, PH, Gp, Hp, suppG, suppH, fixG, fixH, d, i, j, m, g, perm;
+    local  PG, PH, Gp, Hp, suppG, suppH, fixG, fixH, d, i, j, m, g, perm,
+           dontdelegate;
 
     if act <> OnPoints then TryNextMethod(); fi;   
     if   (Density(Support(G))  = 1 and Density(Support(H)) <> 1)
@@ -1752,14 +1753,25 @@ InstallMethod( RepresentativeActionOp,
     then return fail; fi;
     if IsTame(G) <> IsTame(H) or Size(G) <> Size(H) then return fail; fi;
 
+    dontdelegate := ValueOption("dontdelegate") = true;
+
     if IsTame(G) then
       PG := RespectedPartition(G);
       PH := RespectedPartition(H);
-      if   IsIntegers(Support(G)) and Length(PG) <> Length(PH)
-      then TryNextMethod(); fi;
+      if IsIntegers(Support(G)) and Length(PG) <> Length(PH) then
+        if dontdelegate then
+          return "gave up: supp(G) = supp(H) = Z and |P_G| <> |P_H|";
+        fi;
+        TryNextMethod();
+      fi;
       suppG := Filtered(PG,cl->IsSubset(Support(G),cl));
       suppH := Filtered(PH,cl->IsSubset(Support(H),cl));
-      if Length(suppG) <> Length(suppH) then TryNextMethod(); fi;
+      if Length(suppG) <> Length(suppH) then
+        if dontdelegate then
+          return "gave up: #classes in supp(G) and supp(H) are distinct";
+        fi;
+        TryNextMethod();
+      fi;
       d := Length(PG) - Length(PH);
       if d < 0 then
         fixG := Difference(PG,suppG);
@@ -1784,11 +1796,22 @@ InstallMethod( RepresentativeActionOp,
       Hp := Action(H,PH);
       perm := RepresentativeAction(SymmetricGroup(Length(PG)),
                                    Gp,Hp,OnPoints);
-      if perm = fail then TryNextMethod(); fi;
+      if perm = fail then
+        if dontdelegate then
+          return "gave up: actions of G on P_G and H on P_H not conjugate";
+        fi;
+        TryNextMethod();
+      fi;
       g := RcwaMapping(PG,Permuted(PH,perm^-1));
       if IsSignPreserving(G) and IsSignPreserving(H) then return g; fi;
-      if G^g = H then return g; else TryNextMethod(); fi;
+      if G^g = H then return g; else
+        if dontdelegate then
+          return "gave up: conjugation test failed: G^g <> H";
+        fi;
+        TryNextMethod();
+      fi;
     else
+      if dontdelegate then return "gave up: both groups are wild"; fi;
       TryNextMethod();
     fi;
   end );
