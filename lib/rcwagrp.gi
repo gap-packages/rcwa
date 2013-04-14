@@ -4930,7 +4930,7 @@ InstallMethod( ShortResidueClassOrbits,
   function ( G, modulusbound, maxlng )
 
     local  orbits, orbit, sphere, cl, covered, B, B_old,
-           gens, affsrc, m, p, r;
+           gens, affsrc, U, m, p, r, i, j;
 
     gens   := GeneratorsOfGroup(G);
     affsrc := List(gens,LargestSourcesOfAffineMappings);
@@ -4965,6 +4965,25 @@ InstallMethod( ShortResidueClassOrbits,
         fi;
       od;
     od;
+
+    for i in [2..Length(orbits)] do
+      for j in [1..i-1] do
+        if Intersection(orbits[i][1],orbits[j][1]) <> [] then
+          if Mod(orbits[i][1]) > Mod(orbits[j][1]) then
+            U := Union(orbits[i]);
+            orbits[j] := List(orbits[j],cl->Difference(cl,U));
+          else
+            U := Union(orbits[j]);
+            orbits[i] := List(orbits[i],cl->Difference(cl,U));
+          fi;
+        fi;
+      od;
+    od;
+
+    if not ForAll(orbits,orb->ForAll(orb,IsResidueClass)) then
+      orbits := Orbits(G,Flat(List(Concatenation(orbits),
+                                   AsUnionOfFewClasses)));
+    fi;
 
     return orbits;
   end );
