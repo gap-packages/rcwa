@@ -433,6 +433,7 @@ InstallMethod( NormalizedRelator,
         then c[i] := c[i] mod gensords[c[i-1]]; fi;
       od;
       c := ShallowCopy(ExtRepOfObj(ObjByExtRep(FamilyObj(w),c)));
+      if c = [] then return One(w); fi;
       min   := Minimum(c{[1,3..Length(c)-1]});
       start := Filtered([1,3..Length(c)-1],i->c[i]=min);
       max   := Maximum(c{start+1});
