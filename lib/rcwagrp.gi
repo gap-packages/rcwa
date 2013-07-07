@@ -3094,6 +3094,7 @@ InstallMethod( RespectedPartition,
       return Concatenation(B);
     end;
 
+    if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
     abort_at := ValueOption("AbortAt");
     if abort_at = fail then abort_at := infinity; fi;
