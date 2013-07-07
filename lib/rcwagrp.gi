@@ -3053,6 +3053,103 @@ InstallMethod( RespectedPartition,
 
 #############################################################################
 ##
+#M  RespectedPartition( <G> ) . . . . . . . . . for finite subgroups of CT(Z)
+##
+InstallMethod( RespectedPartition,
+               "for finite subgroups of CT(Z) (RCWA)", true,
+               [ IsRcwaGroupOverZ ], 5,
+
+  function ( G )
+
+    local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
+           primes, primes_multdiv, primes_onlymod, powers_impossible,
+           orb, abort_at, m, n, r, i, j, k;
+
+    compute_moduli := function (  )
+      moduli := AllSmoothIntegers(Maximum(primes),modulibound);
+      moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    end;
+
+    orbit := function ( cl0 )
+
+      local  B, r, cl, img, c, i, j;
+
+      B := [[cl0]];
+      r := 0;
+      repeat
+        r := r + 1;
+        Add(B,[]);
+        for i in [1..Length(B[r])] do
+          for j in [1..Length(coeffs)] do
+            cl := B[r][i];
+            c := First(coeffs[j],c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if cl[2] mod c[2] <> 0 then return fail; fi;
+            img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+            img[1] := img[1] mod img[2];
+            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
+            Add(B[r+1],img);
+          od;
+        od;
+      until B[r+1] = [];
+      return Concatenation(B);
+    end;
+
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+    abort_at := ValueOption("AbortAt");
+    if abort_at = fail then abort_at := infinity; fi;
+    G := SparseRep(G);
+    gens := Set(GeneratorsAndInverses(G));
+    coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
+    for i in [1..Length(coeffs)] do
+      Sort(coeffs[i],function(c1,c2)
+                       return c1{[2,1]} < c2{[2,1]};
+                     end);
+    od;
+    primes := PrimeSet(G);
+    primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_onlymod := Difference(primes,primes_multdiv);
+    powers_impossible := List(primes_onlymod,p->p^2);
+    m := Lcm(List(gens,Mod));
+    for i in [1..Length(primes_onlymod)] do
+      while m mod powers_impossible[i] = 0 do
+        powers_impossible[i] := powers_impossible[i] * primes_onlymod[i];
+      od;
+    od;
+    modulibound := 2^16;
+    compute_moduli();
+    P := [];
+    repeat
+      n := -1;
+      repeat
+        n := n + 1;
+      until ForAll(P,cl->n mod cl[2] <> cl[1]);
+      i := 0;
+      repeat
+        i := i + 1;
+        if i > Length(moduli) then
+          if modulibound >= abort_at then
+            Error("exceeded user-specified modulus bound ",abort_at,
+                  ", maybe the group is infinite?\n",
+                  "Enter return; to proceed with new bound ",
+                  16*abort_at,".\n");
+            abort_at := 16 * abort_at;
+          fi;
+          modulibound := modulibound * 16;
+          compute_moduli();
+        fi;
+        m := moduli[i];
+        orb := orbit([n mod m,m]);
+      until orb <> fail;
+      P := Union(P,orb);
+    until Sum(List(P,cl->1/cl[2])) = 1;
+    Sort(P,function(c1,c2)
+             return c1{[2,1]} < c2{[2,1]};
+           end);
+    return List(P,ResidueClass);
+  end );
+
+#############################################################################
+##
 #M  RespectsPartition( <G>, <P> ) . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( RespectsPartition,

@@ -19,6 +19,9 @@ Changes between version 3.5.1 and version 3.6.0:
    has been added.
  - A database similar to the one mentioned before up to modulus 32, but
    restricted to orders 8, 24, 40, 42, 84, 120, 168 and 420 has been added.
+ - There is now a considerably faster method for `RespectedPartition'
+   for finite subgroups of CT(Z), giving a speedup by a factor of 1000
+   or more for large groups. The method also needs much less memory.
  - A better method for `EpimorphismFromFpGroup' for rcwa groups has been added.
  - There is now an operation `Mirrored' which applies the automorphism
    conjugating with n |-> -n - 1 to an rcwa mapping of Z or an rcwa group
