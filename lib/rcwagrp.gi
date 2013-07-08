@@ -3072,7 +3072,7 @@ InstallMethod( RespectedPartition,
 
     orbit := function ( cl0 )
 
-      local  B, r, cl, img, c, i, j;
+      local  B, r, cl, img, inter, c, i, j;
 
       B := [[cl0]];
       r := 0;
@@ -3082,8 +3082,12 @@ InstallMethod( RespectedPartition,
         for i in [1..Length(B[r])] do
           for j in [1..Length(coeffs)] do
             cl := B[r][i];
-            c := First(coeffs[j],c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
-            if cl[2] mod c[2] <> 0 then return fail; fi;
+            inter := Filtered(coeffs[j],
+                              c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if    Length(inter) > 1
+              and Length(Set(List(inter,c->c{[3..5]}))) > 1
+            then return fail; fi;
+            c := inter[1];
             img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
             img[1] := img[1] mod img[2];
             if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
@@ -3107,6 +3111,7 @@ InstallMethod( RespectedPartition,
     od;
     primes := PrimeSet(G);
     primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_multdiv := Difference(primes_multdiv,[1]);
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
@@ -5094,7 +5099,7 @@ InstallMethod( ShortResidueClassOrbits,
 
     orbit := function ( cl0 )
 
-      local  B, r, cl, img, c, i, j;
+      local  B, r, cl, img, inter, c, i, j;
 
       B := [[cl0]];
       r := 0;
@@ -5104,8 +5109,12 @@ InstallMethod( ShortResidueClassOrbits,
         for i in [1..Length(B[r])] do
           for j in [1..Length(coeffs)] do
             cl := B[r][i];
-            c := First(coeffs[j],c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
-            if cl[2] mod c[2] <> 0 then return fail; fi;
+            inter := Filtered(coeffs[j],
+                              c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if    Length(inter) > 1
+              and Length(Set(List(inter,c->c{[3..5]}))) > 1
+            then return fail; fi;
+            c := inter[1];
             img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
             img[1] := img[1] mod img[2];
             if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
