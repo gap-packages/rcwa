@@ -5087,7 +5087,87 @@ InstallMethod( ShortResidueClassOrbits,
     return orbits;
   end );
 
-#############################################################################
+#######################################################################################
+##
+#M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassOrbits,
+              "for an rcwa group over Z and 2 positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 5,
+
+  function ( G, modulusbound, maxlng )
+
+    local  orbit, orbits, gens, coeffs, moduli,
+           primes, primes_multdiv, primes_onlymod,
+           powers_impossible, orb, m, n, r, i, j, k;
+
+    orbit := function ( cl0 )
+
+      local  B, r, cl, img, c, i, j;
+
+      B := [[cl0]];
+      r := 0;
+      repeat
+        r := r + 1;
+        Add(B,[]);
+        for i in [1..Length(B[r])] do
+          for j in [1..Length(coeffs)] do
+            cl := B[r][i];
+            c := First(coeffs[j],c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if cl[2] mod c[2] <> 0 then return fail; fi;
+            img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+            img[1] := img[1] mod img[2];
+            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
+            Add(B[r+1],img);
+          od;
+        od;
+      until B[r+1] = [];
+      return Concatenation(B);
+    end;
+
+    if ValueOption("classic") = true then TryNextMethod(); fi;
+    if IsTrivial(G) then return [ [ Integers ] ]; fi;
+    G := SparseRep(G);
+    gens := Set(GeneratorsAndInverses(G));
+    coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
+    for i in [1..Length(coeffs)] do
+      Sort(coeffs[i],function(c1,c2)
+                       return c1{[2,1]} < c2{[2,1]};
+                     end);
+    od;
+    primes := PrimeSet(G);
+    primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_onlymod := Difference(primes,primes_multdiv);
+    powers_impossible := List(primes_onlymod,p->p^2);
+    m := Lcm(List(gens,Mod));
+    for i in [1..Length(primes_onlymod)] do
+      while m mod powers_impossible[i] = 0 do
+        powers_impossible[i] := powers_impossible[i] * primes_onlymod[i];
+      od;
+    od;
+    moduli := AllSmoothIntegers(primes,modulusbound);
+    moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    orbits := [];
+    n      := -1;
+    repeat
+      repeat
+        n := n + 1;
+      until ForAll(orbits,orb->ForAll(orb,cl->n mod cl[2] <> cl[1]));
+      i := 0;
+      repeat
+        i := i + 1;
+        m := moduli[i];
+        orb := orbit([n mod m,m]);
+      until orb <> fail or i = Length(moduli);
+      if orb <> fail then Add(orbits,orb); fi;
+    until n > modulusbound;
+    Sort(orbits,function(orb1,orb2)
+                  return [Length(orb1),orb1] < [Length(orb2),orb2];
+                end);
+    return List(orbits,orb->List(orb,ResidueClass));
+  end );
+
+###################################################################
 ##
 #M  FixedResidueClasses( <G>, <maxmod> )
 ##
