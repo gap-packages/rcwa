@@ -3101,8 +3101,7 @@ InstallMethod( RespectedPartition,
     if ValueOption("classic") = true then TryNextMethod(); fi;
     if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
-    G := SparseRep(G);
-    gens := Set(GeneratorsAndInverses(G));
+    gens := Set(GeneratorsAndInverses(SparseRep(G)));
     coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
     for i in [1..Length(coeffs)] do
       Sort(coeffs[i],function(c1,c2)
