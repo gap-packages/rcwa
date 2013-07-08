@@ -3063,7 +3063,7 @@ InstallMethod( RespectedPartition,
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
            primes, primes_multdiv, primes_onlymod, powers_impossible,
-           orb, abort_at, m, n, r, i, j, k;
+           orb, m, n, r, i, j, k;
 
     compute_moduli := function (  )
       moduli := AllSmoothIntegers(primes,modulibound);
@@ -3094,10 +3094,9 @@ InstallMethod( RespectedPartition,
       return Concatenation(B);
     end;
 
+    if ValueOption("classic") = true then TryNextMethod(); fi;
     if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
-    abort_at := ValueOption("AbortAt");
-    if abort_at = fail then abort_at := infinity; fi;
     G := SparseRep(G);
     gens := Set(GeneratorsAndInverses(G));
     coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
@@ -3123,13 +3122,10 @@ InstallMethod( RespectedPartition,
       repeat
         i := i + 1;
         if i > Length(moduli) then
-          if modulibound >= abort_at then
-            Error("exceeded user-specified modulus bound ",abort_at,
-                  ", maybe the group is infinite?\n",
-                  "Enter return; to proceed with new bound ",
-                  16*abort_at,".\n");
-            abort_at := 16 * abort_at;
-          fi;
+          Error("exceeded modulus bound ",modulibound,
+                ", maybe the group is infinite?\n",
+                "Enter return; to proceed with new bound ",
+                16 * modulibound,".\n");
           modulibound := modulibound * 16;
           compute_moduli();
         fi;
