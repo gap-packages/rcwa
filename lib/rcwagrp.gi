@@ -3109,13 +3109,8 @@ InstallMethod( RespectedPartition,
     primes := PrimeSet(G);
     primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
     primes_onlymod := Difference(primes,primes_multdiv);
-    powers_impossible := List(primes_onlymod,p->p^2);
     m := Lcm(List(gens,Mod));
-    for i in [1..Length(primes_onlymod)] do
-      while m mod powers_impossible[i] = 0 do
-        powers_impossible[i] := powers_impossible[i] * primes_onlymod[i];
-      od;
-    od;
+    powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
     modulibound := 2^16;
     compute_moduli();
     P := [];
@@ -5087,7 +5082,7 @@ InstallMethod( ShortResidueClassOrbits,
     return orbits;
   end );
 
-#######################################################################################
+#############################################################################
 ##
 #M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
 ##
