@@ -3066,7 +3066,7 @@ InstallMethod( RespectedPartition,
            orb, abort_at, m, n, r, i, j, k;
 
     compute_moduli := function (  )
-      moduli := AllSmoothIntegers(Maximum(primes),modulibound);
+      moduli := AllSmoothIntegers(primes,modulibound);
       moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
     end;
 
@@ -3146,6 +3146,7 @@ InstallMethod( RespectedPartition,
     Sort(P,function(c1,c2)
              return c1{[2,1]} < c2{[2,1]};
            end);
+    SetModulusOfRcwaMonoid(G,Lcm(List(P,cl->cl[2])));
     return List(P,ResidueClass);
   end );
 

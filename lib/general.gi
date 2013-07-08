@@ -201,6 +201,7 @@ InstallOtherMethod( Trajectory,
 #############################################################################
 ##
 #F  AllSmoothIntegers( <maxp>, <maxn> )
+#F  AllSmoothIntegers( <primes>, <maxn> )
 ##
 InstallGlobalFunction( AllSmoothIntegers,
 
@@ -219,10 +220,31 @@ InstallGlobalFunction( AllSmoothIntegers,
       od;
     end;
 
-    primes := Filtered([2..maxp],IsPrimeInt);
+    if   IsInt(maxp)
+    then primes := Filtered([2..maxp],IsPrimeInt);
+    elif IsList(maxp) and ForAll(maxp,p->IsInt(p) and IsPrimeInt(p))
+    then primes := maxp;
+    else return fail; fi;
+    if not IsPosInt(maxn) then return fail; fi;
+
     nums := [];
     extend(1,1);
     return Set(nums);
+  end );
+
+#############################################################################
+##
+#F  ExponentOfPrime( <n>, <p> )
+##
+InstallGlobalFunction( ExponentOfPrime,
+
+  function ( n, p )
+
+    local  k;
+
+    k := 0;
+    while n mod p = 0 do n := n/p; k := k + 1; od;
+    return k;
   end );
 
 #############################################################################

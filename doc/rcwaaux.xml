@@ -292,11 +292,14 @@ takes as argument a record <A>rec</A> and assigns its components to global
 variables of the same (i.e. the component's) names. <P/>
 
 <Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
+<Index Key="ExponentOfPrime"><C>ExponentOfPrime</C></Index>
 <Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
 
 Finally, the function <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
 returns a list of all integers less than or equal to <A>maxn</A> which do
-not have prime divisors exceeding <A>maxp</A>, and the function
+not have prime divisors exceeding <A>maxp</A>, the function
+<C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C> returns the exponent of the
+prime <A>p</A> in the prime factorization of <A>n</A>, and the function
 <C>LaTeXStringFactorsInt(<A>n</A>)</C> returns the prime factorization
 of an integer <A>n</A> as a string in &LaTeX; format.
 

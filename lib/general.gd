@@ -46,6 +46,14 @@ DeclareGlobalFunction( "AllSmoothIntegers" );
 
 #############################################################################
 ##
+#F  ExponentOfPrime( <n>, <p> )
+##
+##  The exponent of the prime <p> in the prime factorization of <n>.
+##
+DeclareGlobalFunction( "ExponentOfPrime" );
+
+#############################################################################
+##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
