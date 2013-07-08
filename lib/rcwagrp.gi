@@ -5137,6 +5137,7 @@ InstallMethod( ShortResidueClassOrbits,
     od;
     primes := PrimeSet(G);
     primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_multdiv := Difference(primes_multdiv,[1]);
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
