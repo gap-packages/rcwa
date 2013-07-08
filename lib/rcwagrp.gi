@@ -5120,6 +5120,7 @@ InstallMethod( ShortResidueClassOrbits,
             Add(B[r+1],img);
           od;
         od;
+        if Sum(List(B,Length)) > maxlng then return fail; fi;
       until B[r+1] = [];
       return Concatenation(B);
     end;
