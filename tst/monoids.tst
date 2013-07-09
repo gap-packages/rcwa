@@ -190,7 +190,7 @@ true
 gap> orbs := ShortOrbits(F,[5..10],20);
 [ [ -3, -2, 1, 2, 5, 6 ], [ -5, -4, 1, 2, 7, 8 ], [ -7, -6, 1, 2, 9, 10 ] ]
 gap> T := Action(F,orbs[1]);
-<monoid with 2 generators>
+<transformation monoid on 6 pts with 2 generators>
 gap> IsTransformationMonoid(T);
 true
 gap> Size(T);
