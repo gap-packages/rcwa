@@ -3090,7 +3090,12 @@ InstallMethod( RespectedPartition,
             c := inter[1];
             img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
             img[1] := img[1] mod img[2];
-            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
+            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi;
+            if img <> cl0 and (img[1]-cl0[1]) mod Gcd(img[2],cl0[2]) = 0 then
+              Info(InfoRCWA,2,"RespectedPartition: loop detected for cl0 = ",
+                              cl0[1],"(",cl0[2],"), at r = ",r);
+              return "loop";
+            fi;
             Add(B[r+1],img);
           od;
         od;
@@ -3136,6 +3141,13 @@ InstallMethod( RespectedPartition,
         m := moduli[i];
         orb := orbit([n mod m,m]);
       until orb <> fail;
+      if orb = "loop" then
+        SetModulusOfRcwaMonoid(G,0);
+        SetSize(G,infinity);
+        return fail; 
+      fi;
+      Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
+                      Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
     until Sum(List(P,cl->1/cl[2])) = 1;
     Sort(P,function(c1,c2)
@@ -6092,6 +6104,18 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                            "/data/3ctsgrpdata.g"))();
+  end );
+
+#############################################################################
+##
+#F  LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions( )
+##
+InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/4ctsgrpdata.g"))();
   end );
 
 #############################################################################
