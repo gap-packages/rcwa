@@ -3063,7 +3063,7 @@ InstallMethod( RespectedPartition,
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
            primes, primes_multdiv, primes_onlymod, powers_impossible,
-           orb, density, m, n, r, i, j, k;
+           orb, orbitlengthbound, density, m, n, r, i, j, k;
 
     compute_moduli := function (  )
       moduli := AllSmoothIntegers(primes,modulibound);
@@ -3072,10 +3072,11 @@ InstallMethod( RespectedPartition,
 
     orbit := function ( cl0 )
 
-      local  B, r, cl, img, inter, c, i, j;
+      local  B, r, cl, img, inter, densitysum, c, i, j;
 
       B := [[cl0]];
       r := 0;
+      densitysum := 1/cl0[2];
       repeat
         r := r + 1;
         Add(B,[]);
@@ -3099,11 +3100,26 @@ InstallMethod( RespectedPartition,
             Add(B[r+1],img);
           od;
         od;
+        B[r+1] := Set(B[r+1]);
+        densitysum := densitysum + Sum(B[r+1],cl->1/cl[2]);
+        if densitysum > 1 then
+          Info(InfoRCWA,2,"RespectedPartition: density sum exceeded 1 ",
+                          "for cl0 = ",cl0[1],"(",cl0[2],"), at r = ",r);
+          return "loop";
+        fi;
+        if B[r+1] <> [] and Sum(List(B,Length)) > orbitlengthbound then
+          Info(InfoRCWA,2,"RespectedPartition: orbit length for ",
+                          "for cl0 = ",cl0[1],"(",cl0[2],") exceeded ",
+                          orbitlengthbound," at r = ",r);
+          return "abort";
+        fi;
       until B[r+1] = [];
       return Concatenation(B);
     end;
 
     if ValueOption("classic") = true then TryNextMethod(); fi;
+    orbitlengthbound := ValueOption("orbitlengthbound");
+    if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
     if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
     gens := Set(GeneratorsAndInverses(SparseRep(G)));
@@ -3146,6 +3162,9 @@ InstallMethod( RespectedPartition,
         SetModulusOfRcwaMonoid(G,0);
         SetSize(G,infinity);
         return fail; 
+      fi;
+      if orb = "abort" then
+        return "computation aborted"; 
       fi;
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
