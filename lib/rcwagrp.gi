@@ -3063,7 +3063,7 @@ InstallMethod( RespectedPartition,
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
            primes, primes_multdiv, primes_onlymod, powers_impossible,
-           orb, m, n, r, i, j, k;
+           orb, density, m, n, r, i, j, k;
 
     compute_moduli := function (  )
       moduli := AllSmoothIntegers(primes,modulibound);
@@ -3121,7 +3121,8 @@ InstallMethod( RespectedPartition,
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
     modulibound := 2^16;
     compute_moduli();
-    P := [];
+    P := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
+              cl->[Residue(cl),Modulus(cl)]);
     repeat
       n := -1;
       repeat
@@ -3149,7 +3150,13 @@ InstallMethod( RespectedPartition,
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
-    until Sum(List(P,cl->1/cl[2])) = 1;
+      density := Sum(List(P,cl->1/cl[2]));
+    until density >= 1;
+    if density <> 1 then
+      Error("RespectedPartition: internal failure!\n",
+            "Enter 'return;' to try a different method.\n");
+      TryNextMethod();
+    fi;
     Sort(P,function(c1,c2)
              return c1{[2,1]} < c2{[2,1]};
            end);
