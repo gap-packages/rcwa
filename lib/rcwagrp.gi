@@ -3063,7 +3063,7 @@ InstallMethod( RespectedPartition,
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
            primes, primes_multdiv, primes_onlymod, powers_impossible,
-           orb, orbitlengthbound, density, m, n, r, i, j, k;
+           orb, orbitlengthbound, modulusbound, density, m, n, r, i, j, k;
 
     compute_moduli := function (  )
       moduli := AllSmoothIntegers(primes,modulibound);
@@ -3120,6 +3120,8 @@ InstallMethod( RespectedPartition,
     if ValueOption("classic") = true then TryNextMethod(); fi;
     orbitlengthbound := ValueOption("orbitlengthbound");
     if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
+    modulusbound := ValueOption("modulusbound");
+    if modulusbound = fail then modulusbound := infinity; fi;
     if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
     gens := Set(GeneratorsAndInverses(SparseRep(G)));
@@ -3148,12 +3150,19 @@ InstallMethod( RespectedPartition,
       repeat
         i := i + 1;
         if i > Length(moduli) then
-          Error("exceeded modulus bound ",modulibound,
-                ", maybe the group is infinite?\n",
-                "Enter return; to proceed with new bound ",
-                16 * modulibound,".\n");
-          modulibound := modulibound * 16;
-          compute_moduli();
+          if modulibound < modulusbound then
+            Error("exceeded modulus bound ",modulibound,
+                  ", maybe the group is infinite?\n",
+                  "Enter return; to proceed with new bound ",
+                  16 * modulibound,".\n");
+            modulibound := modulibound * 16;
+            compute_moduli();
+          else
+            Info(InfoRCWA,2,"RespectedPartition: exceeded bound ",
+                            modulusbound," on the smallest modulus of ",
+                            "a residue class in an orbit.");
+            return "computation aborted"; 
+          fi;
         fi;
         m := moduli[i];
         orb := orbit([n mod m,m]);
