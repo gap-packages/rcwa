@@ -5167,6 +5167,7 @@ InstallMethod( ShortResidueClassOrbits,
             Add(B[r+1],img);
           od;
         od;
+        B[r+1] := Set(B[r+1]);
         if Sum(List(B,Length)) > maxlng then return fail; fi;
       until B[r+1] = [];
       return Concatenation(B);
@@ -5202,7 +5203,7 @@ InstallMethod( ShortResidueClassOrbits,
         m := moduli[i];
         orb := orbit([n mod m,m]);
       until orb <> fail or i = Length(moduli);
-      if orb <> fail then Add(orbits,orb); fi;
+      if orb <> fail then Add(orbits,Set(orb)); fi;
     until n > modulusbound;
     Sort(orbits,function(orb1,orb2)
                   return [Length(orb1),orb1] < [Length(orb2),orb2];
