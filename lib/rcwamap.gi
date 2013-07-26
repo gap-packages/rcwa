@@ -7426,24 +7426,73 @@ InstallMethod( RespectsPartition,
 ##
 #M  PermutationOpNC( <sigma>, <P>, <act> ) . .  for rcwa map. and resp. part.
 ##
+##  This method serves only as a placeholder for something better.
+##
 InstallMethod( PermutationOpNC,
-               "for an rcwa mapping and a respected partition (RCWA)", true,
-               [ IsRcwaMapping, IsList, IsFunction ], 0,
+               "for an rcwa mapping and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsList, IsFunction ], 0,
+
+  function ( sigma, P, act )
+    return PermutationOp(sigma,P,act); 
+  end );
+
+#############################################################################
+##
+#M  PermutationOpNC( <sigma>, <P>, <act> ) for rcwa map. of Z and resp. part.
+##
+InstallMethod( PermutationOpNC,
+               "for an rcwa mapping of Z and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
+                             IsList, IsFunction ], 0,
 
   function ( sigma, P, act )
 
-    local  rep, img, i, j;
+    local  cls, imgs, coeffs, conj, cl, img, c, i;
 
-    if   act <> OnPoints or not ForAll(P,IsResidueClassUnion)
-    then return PermutationOp(sigma,P,act); fi;
-    rep := List(P,cl->Representative(cl)^sigma);
-    img := [];
-    for i in [1..Length(P)] do
-      j := 0;
-      repeat j := j + 1; until rep[i] in P[j];
-      img[i] := j;
+    if Length(P) = 1 then TryNextMethod(); fi;
+    cls    := List(P,cl->[cl!.r[1],cl!.m]);
+    coeffs := sigma!.coeffs;
+    conj   := SortingPerm(cls)^-1;
+    cls    := Set(cls);
+    imgs   := [];
+    for i in [1..Length(cls)] do
+      cl      := cls[i];
+      c       := First(coeffs,c->cl[1] mod c[2] = c[1]);
+      img     := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+      img[1]  := img[1] mod img[2];
+      imgs[i] := PositionSorted(cls,img);
     od;
-    return PermList(img);
+    return PermList(imgs)^conj;
+  end );
+
+#############################################################################
+##
+#M  PermutationOpNC( <sigma>, <P>, <act> ) for rcwa map. of Z and resp. part.
+##
+InstallMethod( PermutationOpNC,
+               "for an rcwa mapping of Z and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInStandardRep,
+                             IsList, IsFunction ], 0,
+
+  function ( sigma, P, act )
+
+    local  cls, imgs, m, coeffs, conj, cl, img, c, i;
+
+    if Length(P) = 1 then TryNextMethod(); fi;
+    cls    := List(P,cl->[cl!.r[1],cl!.m]);
+    m      := sigma!.modulus;
+    coeffs := sigma!.coeffs;
+    conj   := SortingPerm(cls)^-1;
+    cls    := Set(cls);
+    imgs   := [];
+    for i in [1..Length(cls)] do
+      cl      := cls[i];
+      c       := coeffs[cl[1] mod m + 1];
+      img     := [(c[1]*cl[1]+c[2])/c[3],c[1]*cl[2]/c[3]];
+      img[1]  := img[1] mod img[2];
+      imgs[i] := PositionSorted(cls,img);
+    od;
+    return PermList(imgs)^conj;
   end );
 
 #############################################################################

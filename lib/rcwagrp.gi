@@ -3217,7 +3217,15 @@ InstallMethod( RespectsPartition,
 ##
 InstallMethod( ActionOnRespectedPartition,
                "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Action( G, RespectedPartition( G ) ) );
+
+  function ( G )
+
+    local  P;
+
+    P := RespectedPartition(G);
+    return Group(List(GeneratorsOfGroup(G),
+                      g->PermutationOpNC(g,P,OnPoints)));
+  end );
 
 #############################################################################
 ##
@@ -3231,8 +3239,7 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 
     local  P, H, Pq, Hq, indices, bound, primepowers, prod, p, q;
 
-    if   IsTrivial(G) or (IsRcwaGroupOverZ(G) and IsSignPreserving(G))
-    then return 0; fi;
+    if IsTrivial(G) then return 0; fi;
 
     P     := RespectedPartition(G);
     H     := ActionOnRespectedPartition(G);
@@ -3270,8 +3277,6 @@ InstallMethod( KernelOfActionOnRespectedPartition,
 
     local  P, KFullPoly, KPoly, genKFP, genKPoly, rank, K, H, g, h,
            k, kPoly, genG, genH, genK, cgspar, nrgens, crcs, i;
-
-    if IsSignPreserving(G) then return TrivialSubgroup(G); fi;
 
     P         := RespectedPartition(G);
     H         := ActionOnRespectedPartition(G);
