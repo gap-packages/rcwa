@@ -5234,10 +5234,14 @@ InstallMethod( ImagesElm, "for rcwa mapping of Z^2 and row vector (RCWA)",
 ##
 ##  Returns the image of the set <S> under the rcwa mapping <f>.
 ##
+##  The method rank offset SUM_FLAGS is to ensure that this method also gets
+##  called for rcwa zero mappings, instead of a Library method which returns
+##  the zero module.
+##
 InstallMethod( ImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMappingInStandardRep,
-                             IsListOrCollection ], 2 * SUM_FLAGS,
+                             IsCollection ], SUM_FLAGS,
 
   function ( f, S )
 
@@ -5255,16 +5259,71 @@ InstallMethod( ImagesSet,
 ##
 #M  ImagesSet( <f>, <S> )  for an rcwa mapping of Z and a residue class union
 ##
+##  Returns the image of the set <S> under the rcwa mapping <f> of Z which is
+##  assumed to be in "sparse" representation.
+##
+##  For the reason of the method rank offset SUM_FLAGS, see above.
+##
 InstallMethod( ImagesSet,
                "for an rcwa mapping of Z and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
-                             IsListOrCollection ], 2 * SUM_FLAGS,
+                             IsCollection ], SUM_FLAGS,
 
   function ( f, S )
     if not IsSubset(Integers,S) then TryNextMethod(); fi;
     if IsList(S) then return Set(List(S,n->n^f)); fi;
     return Union(List(f!.coeffs,
              c->(Intersection(S,ResidueClass(c[1],c[2]))*c[3]+c[4])/c[5]));
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <cl> ) . . . for an rcwa mapping of Z and a residue class
+##
+##  Returns the image of the residue class <cl> under the rcwa mapping <f>.
+##  It is required that <f> is injective and in standard representation, and
+##  that the modulus of <f> divides the modulus of <cl>.
+##
+##  The rank offset SUM_FLAGS is needed to override the default method.
+##
+InstallMethod( ImagesSet,
+               "for an rcwa mapping of Z and a residue class (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInStandardRep and IsInjective,
+                             IsResidueClassUnionOfZ and IsResidueClass ],
+               SUM_FLAGS,
+
+  function ( f, cl )
+
+    local  c;
+
+    if cl!.m mod f!.modulus <> 0 then TryNextMethod(); fi;
+    c := f!.coeffs[(cl!.r[1]) mod f!.modulus + 1];
+    return ResidueClass(Integers,c[1]*cl!.m/c[3],(c[1]*cl!.r[1]+c[2])/c[3]);
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <cl> ) . . . for an rcwa mapping of Z and a residue class
+##
+##  Returns the image of the residue class <cl> under the rcwa mapping <f>
+##  of Z. It is required that <f> is injective and in sparse representation,
+##  and that <cl> lies in the source of one affine partial mapping of <f>.
+##
+##  The rank offset SUM_FLAGS is needed to override the default method.
+##
+InstallMethod( ImagesSet,
+               "for an rcwa mapping of Z and a residue class (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep and IsInjective,
+                             IsResidueClassUnionOfZ and IsResidueClass ],
+               SUM_FLAGS,
+
+  function ( f, cl )
+
+    local  c;
+
+    c := First(f!.coeffs,c->cl!.r[1] mod c[2] = c[1] and cl!.m mod c[2] = 0);
+    if c = fail then TryNextMethod(); fi;
+    return ResidueClass(Integers,c[3]*cl!.m/c[5],(c[3]*cl!.r[1]+c[4])/c[5]);
   end );
 
 #############################################################################

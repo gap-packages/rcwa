@@ -809,11 +809,9 @@ DeclareAttribute( "MovedPoints", IsRcwaMonoid );
 
 #############################################################################
 ##
-#O  ImagesSet( <f>, <S> ) . . . . . . image of <S> under the rcwa mapping <f>
 #O  \^( <S>, <f> )  . . . . . . . . . image of <S> under the rcwa mapping <f>
 #O  PreImagesSet( <f>, <S> )  . .  preimage of <S> under the rcwa mapping <f>
 ##
-DeclareOperation( "ImagesSet", [ IsRcwaMapping, IsListOrCollection ] );
 DeclareOperation( "\^", [ IsListOrCollection, IsRcwaMapping ] );
 DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
 
