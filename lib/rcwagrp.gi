@@ -5205,10 +5205,11 @@ InstallMethod( ShortResidueClassOrbits,
       until orb <> fail or i = Length(moduli);
       if orb <> fail then Add(orbits,Set(orb)); fi;
     until n > modulusbound;
+    orbits := List(orbits,orb->Set(List(orb,ResidueClass)));
     Sort(orbits,function(orb1,orb2)
                   return [Length(orb1),orb1] < [Length(orb2),orb2];
                 end);
-    return List(orbits,orb->List(orb,ResidueClass));
+    return orbits;
   end );
 
 ###################################################################
