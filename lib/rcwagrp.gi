@@ -3181,8 +3181,10 @@ InstallMethod( RespectedPartition,
       density := Sum(List(P,cl->1/cl[2]));
     until density >= 1;
     if density <> 1 then
-      Error("RespectedPartition: internal failure!\n",
-            "Enter 'return;' to try a different method.\n");
+      # Error("RespectedPartition: internal failure!\n",
+      #       "Enter 'return;' to try a different method.\n");
+      Info(InfoRCWA,1,"RespectedPartition: advanced method failed. ",
+                      " -- Trying standard method ... "); 
       TryNextMethod();
     fi;
     Sort(P,function(c1,c2)
