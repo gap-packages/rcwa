@@ -8452,6 +8452,8 @@ InstallMethod( CycleRepresentativesAndLengths,
 ##
 #M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
 ##
+##  Probably now obsolete; superseded by method below.
+##
 InstallMethod( ShortResidueClassCycles,
                "for an rcwa permutation of Z and 2 positive integers (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
@@ -8507,6 +8509,23 @@ InstallMethod( ShortResidueClassCycles,
       od;
     od;
 
+    return cycles;
+  end );
+
+#############################################################################
+##
+#M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassCycles,
+               "for an rcwa permutation of Z and 2 positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 5,
+
+  function ( g, modbound, maxlng )
+
+    local  cycles, orbits;
+
+    orbits := ShortResidueClassOrbits(Group(g),modbound,maxlng);
+    cycles := Set(List(orbits,orb->Cycle(g,orb[1])));
     return cycles;
   end );
 
