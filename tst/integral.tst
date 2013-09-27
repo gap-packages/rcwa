@@ -1891,6 +1891,28 @@ gap> f*f^-1;
 IdentityMapping( Integers )
 gap> f^2;
 IdentityMapping( Integers )
+gap> D0 := Group(ClassShift(0,1),ClassReflection(0,1));
+<rcwa group over Z with 2 generators>
+gap> H := Group(D0.1^2,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+2
+gap> IsNormal(D0,H);
+true
+gap> H := Group(D0.1^3,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+3
+gap> IsNormal(D0,H);
+false
+gap> H := Group(D0.1^4,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+4
+gap> H := Group(D0.1^5,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+5
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

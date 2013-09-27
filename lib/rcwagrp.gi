@@ -3239,23 +3239,17 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  P, H, Pq, Hq, indices, bound, primepowers, prod, p, q;
+    local  P, H, Pq, Hq, indices, bound, primepowers;
 
     if IsTrivial(G) then return 0; fi;
 
     P     := RespectedPartition(G);
     H     := ActionOnRespectedPartition(G);
-    bound :=   Modulus(G) * Size(H)
-             * Maximum(List(GeneratorsOfGroup(G),
-                            g->Maximum(List(Coefficients(g),
-                                            c->AbsInt(c[2])))));
-    if bound < 5 then bound := 5; fi;
-    primepowers := []; q := 1; prod := 1;
-    while prod <= bound do
-      repeat q := q + 1; until IsPrimePowerInt(q);
-      Add(primepowers,q);
-      prod := prod * q;
-    od;
+    bound := Maximum(List(GeneratorsOfGroup(G),
+                          g->Maximum(List(Coefficients(g),
+                                          c->AbsInt(c[2])))));
+    if bound < 7 then bound := 7; fi;
+    primepowers := Filtered([2..bound],IsPrimePowerInt);
     Pq := List(primepowers,q->Flat(List(P,cl->SplittedClass(cl,q))));
     Hq := List(Pq,P->Group(List(GeneratorsOfGroup(G),
                                 gen->PermutationOpNC(gen,P,OnPoints))));
