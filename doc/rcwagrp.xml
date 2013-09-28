@@ -1050,7 +1050,12 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     Similarly we are only talking about an <E>orbit</E> of residue
     classes under the action of an rcwa group <M>G</M> if the
     restrictions of all elements of <M>G</M> to all residue classes
-    in the orbit are affine.
+    in the orbit are affine. <P/>
+
+    The returned lists may contain additional cycles, resp., orbits,
+    which do not contain a residue class <M>r(m)</M> such that <M>m</M>
+    divides <A>modulusbound</A>, but which happen to be found without
+    additional efforts.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
@@ -1059,7 +1064,11 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
 [ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
   [ 20(24), 21(24), 31(36), 30(36) ], 
   [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
-  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ], 
+  [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) 
+     ], 
+  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
+      120(144) ] ]
 gap> G := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));
 <rcwa group over Z with 3 generators>
 gap> ShortResidueClassOrbits(G,48,10);
