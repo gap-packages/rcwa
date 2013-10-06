@@ -242,8 +242,10 @@ InstallGlobalFunction( ExponentOfPrime,
 
     local  k;
 
+    if IsZero(p) then return fail; fi;
+    if IsZero(n) then return infinity; fi;
     k := 0;
-    while n mod p = 0 do n := n/p; k := k + 1; od;
+    while IsZero(n mod p) do n := n/p; k := k + 1; od;
     return k;
   end );
 
