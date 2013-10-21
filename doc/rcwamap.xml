@@ -1078,7 +1078,7 @@ Also there are attributes <C>ShiftsUpOn</C> and <C>ShiftsDownOn</C>
 which store the union of the residue classes
 (mod&nbsp;<C>Mod(<A>f</A>)</C>) on which an rcwa mapping&nbsp;<A>f</A>
 of&nbsp;&ZZ; induces affine mappings <M>n \mapsto n + c</M> for
-<M>c \gt 0</M>, respectively, <M>c \lt 0</M>. <P/>
+<M>c &gt; 0</M>, respectively, <M>c &lt; 0</M>. <P/>
 
 Finally, there are epimorphisms from the subgroup of RCWA(&ZZ;)
 formed by all class-wise order-preserving elements to (&ZZ;,+)
