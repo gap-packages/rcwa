@@ -159,7 +159,7 @@ true
 The group CT(&ZZ;) has an outer automorphism which is given by conjugation
 with <M>n \mapsto -n - 1</M>. This automorphism can be applied to an
 rcwa mapping of &ZZ; or to an rcwa group over &ZZ; by the operation
-<C>Mirrored</C>. The group <C>Mirrored</C><A>G</A><C>)</C> acts on the
+<C>Mirrored</C>. The group <C>Mirrored(</C><A>G</A><C>)</C> acts on the
 nonnegative integers as <A>G</A> acts on the negative integers, and vice
 versa.
 
