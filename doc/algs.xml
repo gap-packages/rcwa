@@ -11,18 +11,14 @@ This chapter lists brief descriptions of a part of the algorithms and methods
 implemented in this package. These descriptions are kept very informal and
 short, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that
-essentially nothing is done except of storing or recalling one or several
-values, and <Q>straightforward</Q> means that no sophisticated algorithm
-is used. Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
+essentially nothing is done except of performing I/O operations, storing or
+recalling one or several values or doing very basic computations, and
+<Q>straightforward</Q> means that no sophisticated algorithm is used.
+Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
 as <E>mathematically</E> trivial respectively straightforward, and that the
 code of a function or method attributed in this way can still be reasonably
-long and complicated. Longer and better descriptions of many of the
-algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>. <P/>
-
-Finally please note that the descriptions given here represent the
-functionality of &RCWA; in May 2007. Since then, a lot of code has been
-added to this package, and much of the older code has been improved
-and uses now better algorithms than in 2007.
+long and complicated. Longer and better descriptions of some of the
+algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
 
 <List>
 
@@ -33,6 +29,36 @@ and uses now better algorithms than in 2007.
     <Q>Straightforward</Q> after having computed a respected partition
     by <C>RespectedPartition</C>. One only needs to know how to compute
     images of residue classes under affine mappings.
+  </Item>
+
+  <Mark>
+    <C>AllElementsOfCTZWithGivenModulus(<A>m</A>)</C>
+  </Mark>
+  <Item>
+$$$
+  </Item>
+
+  <Mark>
+    <C>AllProducts(<A>l</A>,<A>k</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>. --
+    The taken time is essentially proportional to the size of the
+    resulting list.
+  </Item>
+
+  <Mark>
+    <C>AssignGlobals(<A>record</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -125,6 +151,20 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>CycleRepresentativesAndLengths(<A>g</A>,<A>S</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>CyclesOnFiniteOrbit(<A>G</A>,<A>g</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
     <C>DerivedSubgroup(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -138,6 +178,13 @@ and uses now better algorithms than in 2007.
     Evaluation of the given expression.
     For the mathematical meaning (epimorphism!), see Theorem&nbsp;2.11.9
     in&nbsp;<Cite Key="Kohl05"/>.
+  </Item>
+
+  <Mark>
+    <C>DifferencesList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -157,10 +204,26 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>DistanceToNextSmallerPointInOrbit(<A>G</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q> -- computes balls of radius <M>r</M>
+    about <A>n</A> for <M>r = 1, 2, \dots</M> until a point smaller
+    than <M>n</M> is found.
+  </Item>
+
+  <Mark>
     <C>Divisor(<A>f</A>)</C>
   </Mark>
   <Item>
     Lcm of coefficients, as indicated.
+  </Item>
+
+  <Mark>
+    <C>DrawGrid(<A>U</A>,<A>range_y</A>,<A>range_x</A>,<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -173,6 +236,13 @@ and uses now better algorithms than in 2007.
     (if they don't). Mark points of the ball with black pixels in case of
     a monochrome picture. Choose colors from the given palette depending on
     the distance from the starting points in case of a colored picture.
+  </Item>
+
+  <Mark>
+    <C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -196,6 +266,14 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>EquivalenceClasses(<A>list</A>,<A>relation</A>)</C>,
+    <C>EquivalenceClasses(<A>list</A>,<A>classinvariant</A>)</C>,
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
     <C>Exponent(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -212,7 +290,22 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>FactorizationIntoCSCRCT(<A>g</A>)</C>
+    <C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>ExtRepOfObj(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>FactorizationIntoCSCRCT(<A>g</A>)</C>,
+    <C>Factorization(<A>g</A>)</C>
   </Mark>
   <Item>
     This uses a rather sophisticated method which will likely
@@ -245,10 +338,45 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>FixedResidueClasses(<A>g</A>,<A>maxmod</A>)</C>,
+    <C>FixedResidueClasses(<A>G</A>,<A>maxmod</A>)</C>
+  </Mark>
+  <Item>
+    Runs a loop over all moduli <M>m \leq</M> <A>maxmod</A>
+    and all residues <M>r</M> modulo these moduli,
+    and selects those residue classes <M>r(m)</M> which are
+    mapped to itself by <A>g</A>, respectively, by all generators
+    of <A>G</A>.
+  </Item>
+
+  <Mark>
+    <C>FloatQuotientsList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>GeneratorsAndInverses(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>GluckTaylorInvariant(<A>a</A>)</C>
   </Mark>
   <Item>
     Evaluation of the given expression.
+  </Item>
+
+  <Mark>
+    <C>GroupByResidueClasses(<A>classes</A>)</C>
+  </Mark>
+  <Item>
+    Finds all pairs of residue classes in the list <A>classes</A>
+    which are disjoint, forms the corresponding class transpositions
+    and returns the group generated by them.
   </Item>
 
   <Mark>
@@ -503,6 +631,14 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>IsBijective(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>, respectively, see <C>IsInjective</C> and
+    <C>IsSurjective</C>.
+  </Item>
+
+  <Mark>
     <C>IsClassReflection(<A>g</A>)</C>
   </Mark>
   <Item>
@@ -528,7 +664,8 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IsClassTransposition(<A>g</A>)</C>
+    <C>IsClassTransposition(<A>g</A>),
+       IsGeneralizedClassTransposition(<A>g</A>)</C>
   </Mark>
   <Item>
     Computes the support of&nbsp;<A>g</A>, writes it as a disjoint union of
@@ -537,10 +674,11 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IsClassWiseOrderPreserving(<A>f</A>)</C>
+    <C>IsClassWiseOrderPreserving(<A>f</A>)</C>,
+    <C>IsClassWiseTranslating(<A>f</A>)</C>
   </Mark>
   <Item>
-    Tests whether the first entry of all coefficient triples is positive.
+    <Q>Trivial</C>.
   </Item>
 
   <Mark>
@@ -577,6 +715,13 @@ and uses now better algorithms than in 2007.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>IsNaturalCT(<A>G</A>), IsNaturalRCWA(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Only checks a set flag.
   </Item>
 
   <Mark>
@@ -625,6 +770,13 @@ and uses now better algorithms than in 2007.
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;) to
     RCWA(&ZZ;). As an equivalent for the closed discs used there, the method
     takes the residue classes modulo two times the rank of the free group.
+  </Item>
+
+  <Mark>
+    <C>IsOne(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -776,6 +928,20 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>IsTransitiveOnNonnegativeIntegersInSupport(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    $$$
+  </Item>
+
+  <Mark>
+    <C>IsZero(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>KernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -805,7 +971,14 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>LaTeXStringRcwaMapping(<A>f</A>)</C>
+    <C>LaTeXStringFactorsInt(<A>n</A>)</C>
+  </Mark>
+  <Item>
+    Integer factorization and straightforward string operations.
+  </Item>
+
+  <Mark>
+    <C>LaTeXStringRcwaMapping(<A>f</A>)</C>, <C>LaTeXAndXDVI(<A>f</A>)</C>
   </Mark>
   <Item>
     Collects residue classes those corresponding coefficient triples
@@ -822,10 +995,39 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>ListOfPowers(<A>g</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q> -- but uses only <M>n-1</M> multiplications.
+  </Item>
+
+  <Mark>
     <C>LocalizedRcwaMapping(<A>f</A>,<A>p</A>)</C>
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>LoadBitmapPicture(<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>, interprets the format of bitmap picture files.
+  </Item>
+
+  <Mark>
+    <C>LoadDatabaseOf...()</C>, <C>LoadRCWAExamples()</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>. --
+    These functions do nothing more than reading in certain files.
+  </Item>
+
+  <Mark>
+    <C>Log2HTML(<A>logfilename</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward string operations.
   </Item>
 
   <Mark>
@@ -835,6 +1037,20 @@ and uses now better algorithms than in 2007.
     Runs over the residue classes modulo the modulus of&nbsp;<A>f</A>,
     and selects those of them which <A>f</A> does not map to themselves,
     but which intersect non-trivially with their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>MaximalShift(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>Mirrored(<A>g</A>)</C>, <C>Mirrored(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Conjugates with <M>n \mapsto -n - 1</M>, as indicated in the definition.
   </Item>
 
   <Mark>
@@ -859,6 +1075,27 @@ and uses now better algorithms than in 2007.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>NrClassPairs(<A>m</A>)</C>
+  </Mark>
+  <Item>
+    Relatively straightforward. --
+    Practical for values of <A>m</A> ranging up into the hundreds
+    and corresponding counts of $10^9$ and more.
+  </Item>
+
+  <Mark>
+    <C>NrConjugacyClassesOfCTZOfOrder(<A>ord</A>)</C>,
+    <C>NrConjugacyClassesOfRCWAZOfOrder(<A>ord</A>)</C>
+  </Mark>
+  <Item>
+    The function <C>NrConjugacyClassesOfRCWAZOfOrder</C>
+    returns <C>infinity</C> if <A>ord</A> is even.
+    Otherwise evaluation of expression 
+    <C>Length(Filtered(Combinations(DivisorsInt(ord)),
+       l -> l <> [] and Lcm(l) = ord))</C>.
   </Item>
 
   <Mark>
