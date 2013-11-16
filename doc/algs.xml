@@ -1131,7 +1131,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   <Item>
     Evaluation of expression 
     <C>Length(Filtered(Combinations(DivisorsInt(ord)),
-       l -> l <> [] and Lcm(l) = ord))</C>.
+       l -&gt; l &lt;&gt; [] and Lcm(l) = ord))</C>.
   </Item>
 
   <Mark>
