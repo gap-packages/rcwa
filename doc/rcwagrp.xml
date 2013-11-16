@@ -1445,10 +1445,12 @@ gap> P := RespectedPartition(G);
         Arg="G" Label="for a tame rcwa group"/>
   <Attr Name="KernelOfActionOnRespectedPartition"
         Arg="G" Label="for a tame rcwa group"/>
+  <Attr Name="RankOfKernelOfActionOnRespectedPartition"
+        Arg="G" Label="for a tame rcwa group"/>
   <Returns>
     the action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedPartition(<A>G</A>)</C> or the kernel of
-    this action, respectively.
+    <C>RespectedPartition(<A>G</A>)</C>, the kernel of
+    this action or the rank of the latter, respectively.
   </Returns>
   <Description>
     The method for <C>KernelOfActionOnRespectedPartition</C> uses the
