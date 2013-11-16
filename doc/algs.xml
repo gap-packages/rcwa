@@ -35,7 +35,17 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     <C>AllElementsOfCTZWithGivenModulus(<A>m</A>)</C>
   </Mark>
   <Item>
-$$$
+    This function first determines a list of all unordered partitions
+    <M>\mathcal{P}<M> of &ZZ; into <A>m</A> residue classes.
+    Then for any such partition <M>\mathcal{P}</M> it runs a loop
+    over the elements of the symmetric group of degree <A>m</A>.
+    For any <M>\sigma \in {\rm S}_m</M> and any partition <M>\mathcal{P}</M>
+    it constructs the element of <M>{\rm CT}(\mathbb{Z})</M> with modulus
+    dividing <M>m</M> which maps the ordered partition <M>\{0(m), 1(m),
+    \dots, m-1(m)\}</M> to the ordered partition obtained from
+    <M>\mathcal{P}</M> by permuting the residue classes with <M>\sigma</M>.
+    Finally it discards the elements whose modulus is a proper divisor
+    of <A>m</A>, and returns the <Q>rest</Q>.
   </Item>
 
   <Mark>
@@ -931,7 +941,12 @@ $$$
     <C>IsTransitiveOnNonnegativeIntegersInSupport(<A>G</A>)</C>
   </Mark>
   <Item>
-    $$$
+    Computes balls about 1 with successively increasing radii,
+    and checks whether the union of the sets where the elements
+    of these balls are decreasing or shifting down equals the
+    support of <A>G</A>. If a positive answer is found,
+    transitivity on <Q>small</Q> points (nonnegative integers
+    less than an explicit bound) is verified.
   </Item>
 
   <Mark>
