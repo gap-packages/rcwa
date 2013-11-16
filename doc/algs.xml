@@ -1078,27 +1078,6 @@ $$$
   </Item>
 
   <Mark>
-    <C>NrClassPairs(<A>m</A>)</C>
-  </Mark>
-  <Item>
-    Relatively straightforward. --
-    Practical for values of <A>m</A> ranging up into the hundreds
-    and corresponding counts of $10^9$ and more.
-  </Item>
-
-  <Mark>
-    <C>NrConjugacyClassesOfCTZOfOrder(<A>ord</A>)</C>,
-    <C>NrConjugacyClassesOfRCWAZOfOrder(<A>ord</A>)</C>
-  </Mark>
-  <Item>
-    The function <C>NrConjugacyClassesOfRCWAZOfOrder</C>
-    returns <C>infinity</C> if <A>ord</A> is even.
-    Otherwise evaluation of expression 
-    <C>Length(Filtered(Combinations(DivisorsInt(ord)),
-       l -> l <> [] and Lcm(l) = ord))</C>.
-  </Item>
-
-  <Mark>
     <C>MovedPoints(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -1123,11 +1102,43 @@ $$$
   </Item>
 
   <Mark>
+    <C>NrClassPairs(<A>m</A>)</C>
+  </Mark>
+  <Item>
+    Relatively straightforward. --
+    Practical for values of <A>m</A> ranging up into the hundreds
+    and corresponding counts of $10^9$ and more.
+  </Item>
+
+  <Mark>
+    <C>NrConjugacyClassesOfCTZOfOrder(<A>ord</A>)</C>,
+  </Mark>
+  <Item>
+    Evaluation of expression 
+    <C>Length(Filtered(Combinations(DivisorsInt(ord)),
+       l -> l <> [] and Lcm(l) = ord))</C>.
+  </Item>
+
+  <Mark>
     <C>NrConjugacyClassesOfRCWAZOfOrder(<A>ord</A>)</C>
   </Mark>
   <Item>
     The class numbers are taken from Corollary&nbsp;2.7.1
     in&nbsp;<Cite Key="Kohl05"/>.
+  </Item>
+
+  <Mark>
+    <C>ObjByExtRep(<A>fam</A>,<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>One(<A>f</A>)</C>, <C>One(<A>G</A>)</C>, 
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1181,6 +1192,15 @@ $$$
   </Item>
 
   <Mark>
+    <C>PermutationOpNC(<A>sigma</A>,<A>P</A>,<A>act</A>)</C>
+  </Mark>
+  <Item>
+    Several different methods for different types of arguments,
+    which either provide straightforward optimizations via computing
+    with coefficients directly, or just delegate to <C>PermutationOp</C>.
+  </Item>
+
+  <Mark>
     <C>PreImage(<A>f</A>,<A>S</A>)</C>
   </Mark>
   <Item>
@@ -1231,12 +1251,26 @@ $$$
   </Item>
 
   <Mark>
-    <C>Projections(<A>G</A>,<A>m</A>)</C>
+    <C>ProjectionsToCoordinates(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward coefficient operations.
+  </Item>
+
+  <Mark>
+    <C>ProjectionsToInvariantUnionsOfResidueClasses(<A>G</A>,<A>m</A>)</C>
   </Mark>
   <Item>
     Use <C>OrbitsModulo</C> to determine the supports of the images of the
     epimorphisms to be determined, and use <C>RestrictedPerm</C> to compute
     the images of the generators of&nbsp;<A>G</A> under these epimorphisms.
+  </Item>
+
+  <Mark>
+    <C>QuotientsList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1252,8 +1286,17 @@ $$$
     <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    This performs basically the first part of the computations done by
+    Performs basically the first part of the computations done by
     <C>KernelOfActionOnRespectedPartition</C>.
+  </Item>
+
+  <Mark>
+    <C>Rcwa(<A>R</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>. --
+    Attributes and properties set can be derived easily or hold
+    by definition.
   </Item>
 
   <Mark>
@@ -1266,10 +1309,24 @@ $$$
   </Item>
 
   <Mark>
+    <C>RCWABuildManual()</C>
+  </Mark>
+  <Item>
+    Consists of a call to a function from the &GAPDoc; package.
+  </Item>
+
+  <Mark>
     <C>RcwaGroupByPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
     Uses <C>RcwaMapping</C>, Part&nbsp;(d).
+  </Item>
+
+  <Mark>
+    <C>RCWAInfo(<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1281,6 +1338,20 @@ $$$
     (e): <Q>affine mappings by values at two given points</Q>,
     (f) and (g): <Q>trivial</Q>,
     (h) and (i): correspond to Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>.
+  </Item>
+
+  <Mark>
+    <C>RCWATestAll()</C>, <C>RCWATestInstall()</C>
+  </Mark>
+  <Item>
+    Just read in files running / containing the tests.
+  </Item>
+
+  <Mark>
+    <C>RCWATestExamples()</C>
+  </Mark>
+  <Item>
+    Runs the example tester from the &GAPDoc; package.
   </Item>
 
   <Mark>
@@ -1325,6 +1396,13 @@ $$$
 
   <Mark>
     <C>RespectsPartition(<A>G</A>,<A>P</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>modulusbound</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
@@ -1391,6 +1469,21 @@ $$$
   </Item>
 
   <Mark>
+    <C>RunDemonstration(<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q> -- only I/O operations.
+  </Item>
+
+  <Mark>
+    <C>SaveAsBitmapPicture(<A>picture</A>,<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q> -- only needs to know how to produce
+    a bitmap picture file.
+  </Item>
+
+  <Mark>
     <C>SemilocalizedRcwaMapping(<A>f</A>,<A>pi</A>)</C>
   </Mark>
   <Item>
@@ -1398,15 +1491,31 @@ $$$
   </Item>
 
   <Mark>
-    <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C>
+    <C>ShiftsDownOn(<A>f</A>)</C>, <C>ShiftsUpOn(<A>f</A>)</C>
   </Mark>
   <Item>
-    Looks for fixed points of affine partial mappings of powers
-    of&nbsp;<A>f</A>.
+    Straightforward coefficient- and residue class operations.
   </Item>
 
   <Mark>
-    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>)</C>
+    <C>ShortCycles(<A>g</A>,<A>maxlng</A>)</C>
+  </Mark>
+  <Item>
+    Looks for fixed points of affine partial mappings of powers
+    of&nbsp;<A>g</A>.
+  </Item>
+
+  <Mark>
+    <C>ShortCycles(<A>g</A>,<A>S</A>,<A>maxlng</A>)</C>,
+    <C>ShortCycles(<A>g</A>,<A>S</A>,<A>maxlng</A>,<A>maxn</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>)</C>,
+    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>,<A>maxn</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
@@ -1470,6 +1579,16 @@ $$$
   </Item>
 
   <Mark>
+    <C>SmallGeneratingSet(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Eliminates generators <M>g</M> which can be found to be redundant
+    <E>easily</E>, i.e. by checking whether the balls about 1 and <M>g</M>
+    of some small radius <M>r</M> in the group generated by all generators
+    of <A>G</A> except for <M>g</M> intersect nontrivially.
+  </Item>
+
+  <Mark>
     <C>Sources(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -1478,6 +1597,13 @@ $$$
     <C>STRONGLY&uscore;CONNECTED&uscore;COMPONENTS&uscore;DIGRAPH</C>,
     and selects those which are proper supersets of their preimages and
     proper subsets of their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>SparseRep(<A>f</A>)</C>, <C>StandardRep(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward coefficient operations.
   </Item>
 
   <Mark>
@@ -1502,6 +1628,13 @@ $$$
   </Mark>
   <Item>
     Pointwise addition of affine mappings.
+  </Item>
+
+  <Mark>
+    <C>String(<A>obj</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1565,6 +1698,13 @@ $$$
     generator of&nbsp;<A>Z</A> as <M>\tau_{0(2),1(2)} \cdot
     \tau_{0(2),1(4)}</M>. It is used that the images of&nbsp;3(4) under
     powers of this mapping are pairwise disjoint residue classes.
+  </Item>
+
+  <Mark>
+    <C>Zero(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
 </List>
