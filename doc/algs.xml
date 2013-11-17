@@ -17,7 +17,7 @@ recalling one or several values or doing very basic computations, and
 Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
 as <E>mathematically</E> trivial respectively straightforward, and that the
 code of a function or method attributed in this way can still be reasonably
-long and complicated. Longer and better descriptions of some of the
+long and complicated. Longer and better descriptions of <E>some</E> of the
 algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
 
 <List>
@@ -1119,7 +1119,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     <C>NrConjugacyClassesOfCTZOfOrder(<A>ord</A>)</C>,
   </Mark>
   <Item>
-    Evaluation of expression 
+    Evaluation of the expression 
     <C>Length(Filtered(Combinations(DivisorsInt(ord)),
        l -&gt; l &lt;&gt; [] and Lcm(l) = ord))</C>.
   </Item>
@@ -1342,7 +1342,8 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     (d): <C>n&circum;perm - n</C> for determining the coefficients,
     (e): <Q>affine mappings by values at two given points</Q>,
     (f) and (g): <Q>trivial</Q>,
-    (h) and (i): correspond to Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>.
+    (h) and (i): correspond to Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>,
+    (j): uses a simple parser for the permitted expressions.
   </Item>
 
   <Mark>
@@ -1368,7 +1369,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     The underlying idea to successively compute two balls around
     <A>src</A> and <A>dest</A> until they intersect non-trivially
     is standard in computational group theory. Words standing for
-    products of generators of <A>G</A> are stored for any image
+    products of generators of <A>G</A> are stored for every image
     of <A>src</A> or <A>dest</A>.    
   </Item>
 
@@ -1395,8 +1396,18 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     <C>RespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    Uses the algorithm described in the proof of Theorem&nbsp;2.5.8
-    in&nbsp;<Cite Key="Kohl05"/>.
+    There are presently two sophisticated algorithms implemented
+    for finding respected partitions. One of them has evolved
+    from the algorithm described in the proof of Theorem&nbsp;2.5.8
+    in&nbsp;<Cite Key="Kohl05"/>. The other one starts with the
+    coarsest partition of the base ring such that every generator
+    of <A>G</A> is affine on every part. This partition is then
+    refined successively until a respected partition is obtained.
+    The refinement step is basically as follows: Take the images
+    of the partition under all generators of <A>G</A>. This way one
+    obtains as many further partitions of the base ring as there
+    are generators of&nbsp;<A>G</A>. Then the <Q>new</Q> partition
+    is the coarsest common refinement of all these partitions.    
   </Item>
 
   <Mark>
