@@ -27,7 +27,7 @@ groups and how to compute with them.
 <Index Key="GroupByGenerators"><C>GroupByGenerators</C></Index>
 <Index Key="GroupWithGenerators"><C>GroupWithGenerators</C></Index>
 
-As any other groups in &GAP;, residue-class-wise affine groups
+As any other groups in &GAP;, residue-class-wise affine (rcwa-) groups
 can be constructed by <C>Group</C>, <C>GroupByGenerators</C> or
 <C>GroupWithGenerators</C>.
 
@@ -43,7 +43,185 @@ false
 ]]>
 </Example>
 
-A further means of entering rcwa groups is the following:
+An rcwa group isomorphic to a given group can be obtained by taking
+the image of a faithful rcwa representation:
+
+<ManSection>
+  <Attr Name="IsomorphismRcwaGroup"
+        Arg="G, R" Label="for a group, over a given ring"/>
+  <Attr Name="IsomorphismRcwaGroup"
+        Arg="G" Label="for a group"/>
+  <Returns>
+    a monomorphism from the group <A>G</A> to&nbsp;RCWA(<A>R</A>)
+    or to&nbsp;RCWA(&ZZ;), respectively.
+  </Returns>
+  <Description>
+    The best-supported case is <A>R</A> = &ZZ;.
+    Currently there are methods available for finite groups, for
+    free products of finite groups and for free groups. The method for
+    free products of finite groups uses the Table-Tennis Lemma
+    (cf. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
+    method for free groups uses an adaptation of the construction given
+    on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;)
+    to RCWA(&ZZ;). <P/>
+<Example>
+<![CDATA[
+gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
+>                     SymmetricGroup(3));
+<fp group on the generators [ f1, f2, f3, f4, f5 ]>
+gap> IsomorphismRcwaGroup(F);
+[ f1, f2, f3, f4, f5 ] -> [ <rcwa permutation of Z with modulus 12>,
+  <rcwa permutation of Z with modulus 24>,
+  <rcwa permutation of Z with modulus 12>,
+  <rcwa permutation of Z with modulus 72>,
+  <rcwa permutation of Z with modulus 36> ]
+gap> IsomorphismRcwaGroup(FreeGroup(2));
+[ f1, f2 ] -> [ <wild rcwa permutation of Z with modulus 8>,
+  <wild rcwa permutation of Z with modulus 8> ]
+gap> F2 := Image(last);
+<wild rcwa group over Z with 2 generators>
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Further, rcwa groups can be constructed from given ones by
+taking direct products and by taking wreath products with finite
+groups or with the infinite cyclic group:
+
+<ManSection>
+  <Meth Name="DirectProduct"
+        Arg="G1, G2, ..." Label="for rcwa groups over Z"/>
+  <Returns>
+    an rcwa group isomorphic to the direct product of the rcwa groups
+    over&nbsp;&ZZ; given as arguments.
+  </Returns>
+  <Description>
+    There is certainly no unique or canonical way to embed a direct
+    product of rcwa groups into RCWA(&ZZ;). 
+    This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
+    <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
+    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;...
+    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
+    Label="of an rcwa group, by an injective rcwa mapping"/>),
+    where <M>m</M> denotes the number of groups given as arguments.
+<Example>
+<![CDATA[
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> F2xF2 := DirectProduct(F2,F2);
+<wild rcwa group over Z with 4 generators>
+gap> Image(Projection(F2xF2,1)) = F2;
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Heading>
+    WreathProduct
+    (for an rcwa group over Z, with a permutation group or (&ZZ;,+))
+  </Heading>
+  <Meth Name="WreathProduct" Arg="G, P"
+        Label="for an rcwa group over Z and a permutation group"/>
+  <Meth Name="WreathProduct" Arg="G, Z"
+        Label="for an rcwa group over Z and the infinite cyclic group"/>
+  <Returns>
+    an rcwa group isomorphic to the wreath product of the rcwa
+    group&nbsp;<A>G</A> over&nbsp;&ZZ; with the finite permutation
+    group&nbsp;<A>P</A> or with the infinite cyclic group&nbsp;<A>Z</A>,
+    respectively.
+  </Returns>
+  <Description>
+    The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
+    direct power of&nbsp;<A>G</A> using the method for <C>DirectProduct</C>,
+    and lets the permutation group&nbsp;<A>P</A> act naturally on the set of
+    residue classes modulo <C>DegreeAction(<A>P</A>)</C>.
+    The second-mentioned method restricts
+    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
+    Label="of an rcwa group, by an injective rcwa mapping"/>)
+    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
+    generator of the infinite cyclic group&nbsp;<A>Z</A>
+    to <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
+<Example>
+<![CDATA[
+gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
+gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));;
+gap> Embedding(F2wrA5,1);
+[ <wild rcwa permutation of Z with modulus 8>,
+  <wild rcwa permutation of Z with modulus 8> ] ->
+[ <wild rcwa permutation of Z with modulus 40>,
+  <wild rcwa permutation of Z with modulus 40> ]
+gap> Embedding(F2wrA5,2);
+[ (1,2,3,4,5), (3,4,5) ] -> [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
+  ( 2(5), 3(5), 4(5) ) ]
+gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
+<wild rcwa group over Z with 2 generators>
+gap> Embedding(ZwrZ,1);
+[ ClassShift( Z ) ] ->
+[ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
+gap> Embedding(ZwrZ,2);
+[ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Also, rcwa groups can be obtained as particular extensions of finite
+permutation groups:
+
+<ManSection>
+  <Oper Name="MergerExtension"
+        Arg="G, points, point" Label="for finite permutation groups"/>
+  <Returns>
+     roughly spoken, an extension of <A>G</A> by an involution
+     which <Q>merges</Q> <A>points</A> into <A>point</A>.
+  </Returns>
+  <Description>
+    Thinking of the moved points of the finite permutation group
+    <A>G</A> being infinite sets themselves, this operation returns
+    a group isomorphic to &lt;<A>G</A>,<M>g</M>&gt;, where <M>g</M>
+    is an involution which interchanges the union of the
+    points in <A>points</A> and the point <A>point</A>. <P/>
+
+    The arguments are a finite permutation group <A>G</A>,
+    a set <A>points</A> of points moved by <A>G</A> and a single
+    point <A>point</A> moved by <A>G</A> which is not in
+    <A>points</A>. In case of invalid arguments, the operation
+    returns <C>fail</C>.
+<Example>
+<![CDATA[
+gap> # First example: a group isomorphic to PSL(2,Z):
+gap> G := MergerExtension(Group((1,2,3)),[1,2],3); # PSL(2,Z)
+<rcwa group over Z with 2 generators>
+gap> Size(G); 
+infinity
+gap> GeneratorsOfGroup(G);
+[ ( 0(3), 1(3), 2(3) ), ( 0(3), 2(6) ) ( 1(3), 5(6) ) ]
+gap> B := Ball(G,One(G),6:Spheres);;
+gap> List(B,Length);
+[ 1, 3, 4, 6, 8, 12, 16 ]
+gap> #
+gap> # Second example: a group isomorphic to Thompson's group V:
+gap> G := MergerExtension(Group((1,2,3,4),(1,2)),[1,2],3);
+<rcwa group over Z with 3 generators>
+gap> Size(G);
+infinity
+gap> GeneratorsOfGroup(G);
+[ ( 0(4), 1(4), 2(4), 3(4) ), ( 0(4), 1(4) ),
+  ( 0(4), 2(8) ) ( 1(4), 6(8) ) ]
+gap> B := Ball(G,One(G),6:Spheres);;
+gap> List(B,Length);
+[ 1, 4, 11, 28, 69, 170, 413 ]
+gap> G = Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
+>                   ClassTransposition));
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+One can build an rcwa group also from a list of residue classes:
 
 <ManSection>
   <Func Name="GroupByResidueClasses" Arg="classes"
@@ -75,10 +253,83 @@ true
   </Description>
 </ManSection>
 
+Various ways to construct rcwa groups are based on certain
+monomorphisms from the group RCWA(<M>R</M>) into itself.
+Examples are the constructions of direct products and wreath products
+described above. The support of the image of such a monomorphism is
+the image of a given injective rcwa mapping. For this reason,
+these monomorphisms are called <E>restriction monomorphisms</E>.
+The following operation computes images of rcwa mappings and -groups
+under these embeddings of RCWA(<M>R</M>) into itself:
+
+<ManSection>
+  <Heading>
+    Restriction (of an rcwa mapping or -group, by an injective rcwa mapping)
+  </Heading>
+  <Oper Name="Restriction"
+        Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
+  <Oper Name="Restriction"
+        Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
+  <Returns>
+    the restriction of the rcwa mapping <A>g</A> (respectively the
+    rcwa group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    By definition, the <E>restriction</E> <M>g_f</M> of an rcwa mapping
+    <A>g</A> by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa
+    mapping which satisfies the equation <M>f \cdot g_f = g \cdot f</M>
+    and which fixes the complement of the image of <A>f</A> pointwise.
+    If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
+    is just the conjugate of <A>g</A> under&nbsp;<A>f</A>. <P/>
+
+    The <E>restriction</E> of an rcwa group&nbsp;<A>G</A> by an injective
+    rcwa mapping&nbsp;<A>f</A> is defined as the group whose elements are
+    the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
+    The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
+    image of&nbsp;<A>f</A> and fixes its complement pointwise.
+<Example>
+<![CDATA[
+gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));
+<wild rcwa group over Z with 2 generators>
+gap> Support(F2tilde);
+3(5)
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Heading>
+    Induction (of an rcwa mapping or -group, by an injective rcwa mapping)
+  </Heading>
+  <Oper Name ="Induction"
+        Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
+  <Oper Name ="Induction"
+        Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
+  <Returns>
+    the induction of the rcwa mapping <A>g</A> (respectively the rcwa
+    group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
+  </Returns>
+  <Description>
+    <E>Induction</E> is the right inverse of restriction, i.e. it is
+    <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C> and
+    <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
+    The mapping&nbsp;<A>g</A> respectively the group&nbsp;<A>G</A> must not
+    move points outside the image of&nbsp;<A>f</A>.
+<Example>
+<![CDATA[
+gap> Induction(F2tilde,RcwaMapping([[5,3,1]])) = F2;
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 <Index Key="SmallGeneratingSet"><C>SmallGeneratingSet</C></Index>
 
-Often, a smaller generating set of a given rcwa group can be found by
-the operation <C>SmallGeneratingSet</C>.
+Once having constructed an rcwa group, it is sometimes possible
+to obtain a smaller generating set by the operation
+<C>SmallGeneratingSet</C>. <P/>
 
 <Index Key="View" Subkey="for an rcwa group"><C>View</C></Index>
 <Index Key="Display" Subkey="for an rcwa group"><C>Display</C></Index>
@@ -86,7 +337,71 @@ the operation <C>SmallGeneratingSet</C>.
 <Index Key="String" Subkey="for an rcwa group"><C>String</C></Index>
 
 There are methods for the operations <C>View</C>, <C>Display</C>,
-<C>Print</C> and <C>String</C> which are applicable to rcwa groups.
+<C>Print</C> and <C>String</C> which are applicable to rcwa groups. <P/>
+
+<Index Key="rcwa group" Subkey="modulus">rcwa group</Index>
+<Index Key="rcwa group" Subkey="multiplier">rcwa group</Index>
+<Index Key="rcwa group" Subkey="divisor">rcwa group</Index>
+<Index Key="rcwa group" Subkey="prime set">rcwa group</Index>
+<Index Key="rcwa group" Subkey="class-wise translating">rcwa group</Index>
+<Index Key="rcwa group" Subkey="integral">rcwa group</Index>
+<Index Key="rcwa group" Subkey="class-wise order-preserving">
+  rcwa group
+</Index>
+<Index Key="rcwa group" Subkey="sign-preserving">rcwa group</Index>
+
+<Index Key="Modulus" Subkey="of an rcwa group"><C>Modulus</C></Index>
+<Index Key="Mod" Subkey="for an rcwa group"><C>Mod</C></Index>
+<Index Key="ModulusOfRcwaMonoid" Subkey="for an rcwa group">
+  <C>ModulusOfRcwaMonoid</C>
+</Index>
+<Index Key="Multiplier" Subkey="of an rcwa group"><C>Multiplier</C></Index>
+<Index Key="Mult" Subkey="for an rcwa group"><C>Mult</C></Index>
+<Index Key="Divisor" Subkey="of an rcwa group"><C>Divisor</C></Index>
+<Index Key="Div" Subkey="for an rcwa group"><C>Div</C></Index>
+<Index Key="PrimeSet" Subkey="of an rcwa group"><C>PrimeSet</C></Index>
+<Index Key="IsClassWiseTranslating" Subkey="for an rcwa group">
+  <C>IsClassWiseTranslating</C>
+</Index>
+<Index Key="IsIntegral" Subkey="for an rcwa group"><C>IsIntegral</C></Index>
+<Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa group">
+  <C>IsClassWiseOrderPreserving</C>
+</Index>
+<Index Key="IsSignPreserving" Subkey="for an rcwa group">
+  <C>IsSignPreserving</C>
+</Index>
+
+Basic attributes of an rcwa group which are derived from the coefficients
+of its elements are <C>Modulus</C>, <C>Multiplier</C>, <C>Divisor</C> and
+<C>PrimeSet</C>.
+The <E>modulus</E> of an rcwa group is the lcm of the moduli of its
+elements if such an lcm exists, i.e. if the group is tame, and 0 otherwise.
+The <E>multiplier</E> respectively <E>divisor</E> of an rcwa group is the
+lcm of the multipliers respectively divisors of its elements in case such
+an lcm exists and <M>\infty</M> otherwise.
+The <E>prime set</E> of an rcwa group is the union of the prime sets of
+its elements.
+There are shorthands <C>Mod</C>, <C>Mult</C> and <C>Div</C> defined for
+<C>Modulus</C>, <C>Multiplier</C> and <C>Divisor</C>, respectively.
+An rcwa group is called <E>class-wise translating</E>, <E>integral</E>
+or <E>class-wise order-preserving</E> if all of its elements are so.
+There are corresponding methods available for <C>IsClassWiseTranslating</C>,
+<C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>. There is a property
+<C>IsSignPreserving</C>, which indicates whether a given rcwa group
+over&nbsp;&ZZ; acts on the set of nonnegative integers.
+The latter holds for any subgroup of CT(&ZZ;) (cf. below).
+
+<Example>
+<![CDATA[
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),
+>               ClassReflection(2,4));
+<rcwa group over Z with 3 generators>
+gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsClassWiseTranslating,
+>          IsIntegral,IsClassWiseOrderPreserving,IsSignPreserving],f->f(G));
+[ 24, 2, 2, [ 2, 3 ], false, false, false, false ]
+]]>
+</Example>
+
 All rcwa groups over a ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) itself is not finitely generated, thus cannot
 be constructed as described above. It is handled as a special case:
@@ -208,265 +523,6 @@ The number of conjugacy classes of CT(&ZZ;) of elements of
 given order is also known under the hypothesis that CT(&ZZ;) is the setwise
 stabilizer of <M>&NN;_0</M> in RCWA(&ZZ;). It can be determined by the
 function <C>NrConjugacyClassesOfCTZOfOrder</C>.
-
-Another way of constructing an rcwa group is taking the image of an
-rcwa representation:
-
-<ManSection>
-  <Attr Name="IsomorphismRcwaGroup"
-        Arg="G, R" Label="for a group, over a given ring"/>
-  <Attr Name="IsomorphismRcwaGroup"
-        Arg="G" Label="for a group"/>
-  <Returns>
-    a monomorphism from the group <A>G</A> to&nbsp;RCWA(<A>R</A>)
-    or to&nbsp;RCWA(&ZZ;), respectively.
-  </Returns>
-  <Description>
-    The best-supported case is <A>R</A> = &ZZ;.
-    Currently there are methods available for finite groups, for
-    free products of finite groups and for free groups. The method for
-    free products of finite groups uses the Table-Tennis Lemma
-    (cf. e.g. Section&nbsp;II.B. in&nbsp;<Cite Key="LaHarpe00"/>), and the
-    method for free groups uses an adaptation of the construction given
-    on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;)
-    to RCWA(&ZZ;). <P/>
-<Example>
-<![CDATA[
-gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
->                     SymmetricGroup(3));
-<fp group on the generators [ f1, f2, f3, f4, f5 ]>
-gap> IsomorphismRcwaGroup(F);
-[ f1, f2, f3, f4, f5 ] -> [ <rcwa permutation of Z with modulus 12>,
-  <rcwa permutation of Z with modulus 24>,
-  <rcwa permutation of Z with modulus 12>,
-  <rcwa permutation of Z with modulus 72>,
-  <rcwa permutation of Z with modulus 36> ]
-gap> IsomorphismRcwaGroup(FreeGroup(2));
-[ f1, f2 ] -> [ <wild rcwa permutation of Z with modulus 8>,
-  <wild rcwa permutation of Z with modulus 8> ]
-gap> F2 := Image(last);
-<wild rcwa group over Z with 2 generators>
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-The class of groups which can faithfully be represented as rcwa groups
-over the integers is closed under taking direct products, under taking
-wreath products with finite groups and under taking wreath products with
-the infinite cyclic group (&ZZ;,+). Therefore these operations can be
-used to build rcwa groups as well:
-
-<ManSection>
-  <Meth Name="DirectProduct"
-        Arg="G1, G2, ..." Label="for rcwa groups over Z"/>
-  <Returns>
-    an rcwa group isomorphic to the direct product of the rcwa groups
-    over&nbsp;&ZZ; given as arguments.
-  </Returns>
-  <Description>
-    There is certainly no unique or canonical way to embed a direct
-    product of rcwa groups into RCWA(&ZZ;). 
-    This method chooses to embed the groups <A>G1</A>, <A>G2</A>,
-    <A>G3</A>&nbsp;... via restrictions by <M>n \mapsto mn</M>,
-    <M>n \mapsto mn+1</M>, <M>n \mapsto mn+2</M>&nbsp;...
-    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
-    Label="of an rcwa group, by an injective rcwa mapping"/>),
-    where <M>m</M> denotes the number of groups given as arguments.
-<Example>
-<![CDATA[
-gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
-gap> F2xF2 := DirectProduct(F2,F2);
-<wild rcwa group over Z with 4 generators>
-gap> Image(Projection(F2xF2,1)) = F2;
-true
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Heading>
-    WreathProduct
-    (for an rcwa group over Z, with a permutation group or (&ZZ;,+))
-  </Heading>
-  <Meth Name="WreathProduct" Arg="G, P"
-        Label="for an rcwa group over Z and a permutation group"/>
-  <Meth Name="WreathProduct" Arg="G, Z"
-        Label="for an rcwa group over Z and the infinite cyclic group"/>
-  <Returns>
-    an rcwa group isomorphic to the wreath product of the rcwa
-    group&nbsp;<A>G</A> over&nbsp;&ZZ; with the finite permutation
-    group&nbsp;<A>P</A> or with the infinite cyclic group&nbsp;<A>Z</A>,
-    respectively.
-  </Returns>
-  <Description>
-    The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
-    direct power of&nbsp;<A>G</A> using the method for <C>DirectProduct</C>,
-    and lets the permutation group&nbsp;<A>P</A> act naturally on the set of
-    residue classes modulo <C>DegreeAction(<A>P</A>)</C>.
-    The second-mentioned method restricts
-    (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
-    Label="of an rcwa group, by an injective rcwa mapping"/>)
-    the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
-    generator of the infinite cyclic group&nbsp;<A>Z</A>
-    to <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
-<Example>
-<![CDATA[
-gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
-gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));;
-gap> Embedding(F2wrA5,1);
-[ <wild rcwa permutation of Z with modulus 8>,
-  <wild rcwa permutation of Z with modulus 8> ] ->
-[ <wild rcwa permutation of Z with modulus 40>,
-  <wild rcwa permutation of Z with modulus 40> ]
-gap> Embedding(F2wrA5,2);
-[ (1,2,3,4,5), (3,4,5) ] -> [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
-  ( 2(5), 3(5), 4(5) ) ]
-gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
-<wild rcwa group over Z with 2 generators>
-gap> Embedding(ZwrZ,1);
-[ ClassShift( Z ) ] ->
-[ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
-gap> Embedding(ZwrZ,2);
-[ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-Many of the above group constructions are based on certain monomorphisms
-from the group RCWA(<M>R</M>) into itself. The support of the image of such
-a monomorphism is the image of a given injective rcwa mapping. For this
-reason, these monomorphisms are called <E>restriction monomorphisms</E>.
-The following operation computes images of rcwa mappings and -groups
-under them:
-
-<ManSection>
-  <Heading>
-    Restriction (of an rcwa mapping or -group, by an injective rcwa mapping)
-  </Heading>
-  <Oper Name="Restriction"
-        Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
-  <Oper Name="Restriction"
-        Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
-  <Returns>
-    the restriction of the rcwa mapping <A>g</A> (respectively the
-    rcwa group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    By definition, the <E>restriction</E> <M>g_f</M> of an rcwa mapping
-    <A>g</A> by an injective rcwa mapping&nbsp;<A>f</A> is the unique rcwa
-    mapping which satisfies the equation <M>f \cdot g_f = g \cdot f</M>
-    and which fixes the complement of the image of <A>f</A> pointwise.
-    If <A>f</A> is bijective, the restriction of <A>g</A> by <A>f</A>
-    is just the conjugate of <A>g</A> under&nbsp;<A>f</A>. <P/>
-
-    The <E>restriction</E> of an rcwa group&nbsp;<A>G</A> by an injective
-    rcwa mapping&nbsp;<A>f</A> is defined as the group whose elements are
-    the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
-    The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
-    image of&nbsp;<A>f</A> and fixes its complement pointwise.
-<Example>
-<![CDATA[
-gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));
-<wild rcwa group over Z with 2 generators>
-gap> Support(F2tilde);
-3(5)
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Heading>
-    Induction (of an rcwa mapping or -group, by an injective rcwa mapping)
-  </Heading>
-  <Oper Name ="Induction"
-        Arg="g, f" Label="of an rcwa mapping, by an injective rcwa mapping"/>
-  <Oper Name ="Induction"
-        Arg="G, f" Label="of an rcwa group, by an injective rcwa mapping"/>
-  <Returns>
-    the induction of the rcwa mapping <A>g</A> (respectively the rcwa
-    group <A>G</A>) by the injective rcwa mapping&nbsp;<A>f</A>.
-  </Returns>
-  <Description>
-    <E>Induction</E> is the right inverse of restriction, i.e. it is
-    <C>Induction(Restriction(<A>g</A>,<A>f</A>),<A>f</A>) = <A>g</A></C> and
-    <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
-    The mapping&nbsp;<A>g</A> respectively the group&nbsp;<A>G</A> must not
-    move points outside the image of&nbsp;<A>f</A>.
-<Example>
-<![CDATA[
-gap> Induction(F2tilde,RcwaMapping([[5,3,1]])) = F2;
-true
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<Index Key="rcwa group" Subkey="modulus">rcwa group</Index>
-<Index Key="rcwa group" Subkey="multiplier">rcwa group</Index>
-<Index Key="rcwa group" Subkey="divisor">rcwa group</Index>
-<Index Key="rcwa group" Subkey="prime set">rcwa group</Index>
-<Index Key="rcwa group" Subkey="class-wise translating">rcwa group</Index>
-<Index Key="rcwa group" Subkey="integral">rcwa group</Index>
-<Index Key="rcwa group" Subkey="class-wise order-preserving">
-  rcwa group
-</Index>
-<Index Key="rcwa group" Subkey="sign-preserving">rcwa group</Index>
-
-<Index Key="Modulus" Subkey="of an rcwa group"><C>Modulus</C></Index>
-<Index Key="Mod" Subkey="for an rcwa group"><C>Mod</C></Index>
-<Index Key="ModulusOfRcwaMonoid" Subkey="for an rcwa group">
-  <C>ModulusOfRcwaMonoid</C>
-</Index>
-<Index Key="Multiplier" Subkey="of an rcwa group"><C>Multiplier</C></Index>
-<Index Key="Mult" Subkey="for an rcwa group"><C>Mult</C></Index>
-<Index Key="Divisor" Subkey="of an rcwa group"><C>Divisor</C></Index>
-<Index Key="Div" Subkey="for an rcwa group"><C>Div</C></Index>
-<Index Key="PrimeSet" Subkey="of an rcwa group"><C>PrimeSet</C></Index>
-<Index Key="IsClassWiseTranslating" Subkey="for an rcwa group">
-  <C>IsClassWiseTranslating</C>
-</Index>
-<Index Key="IsIntegral" Subkey="for an rcwa group"><C>IsIntegral</C></Index>
-<Index Key="IsClassWiseOrderPreserving" Subkey="for an rcwa group">
-  <C>IsClassWiseOrderPreserving</C>
-</Index>
-<Index Key="IsSignPreserving" Subkey="for an rcwa group">
-  <C>IsSignPreserving</C>
-</Index>
-
-Basic attributes of an rcwa group which are derived from the coefficients
-of its elements are <C>Modulus</C>, <C>Multiplier</C>, <C>Divisor</C> and
-<C>PrimeSet</C>.
-The <E>modulus</E> of an rcwa group is the lcm of the moduli of its
-elements if such an lcm exists, i.e. if the group is tame, and 0 otherwise.
-The <E>multiplier</E> respectively <E>divisor</E> of an rcwa group is the
-lcm of the multipliers respectively divisors of its elements in case such
-an lcm exists and <M>\infty</M> otherwise.
-The <E>prime set</E> of an rcwa group is the union of the prime sets of
-its elements.
-There are shorthands <C>Mod</C>, <C>Mult</C> and <C>Div</C> defined for
-<C>Modulus</C>, <C>Multiplier</C> and <C>Divisor</C>, respectively.
-An rcwa group is called <E>class-wise translating</E>, <E>integral</E>
-or <E>class-wise order-preserving</E> if all of its elements are so.
-There are corresponding methods available for <C>IsClassWiseTranslating</C>,
-<C>IsIntegral</C> and <C>IsClassWiseOrderPreserving</C>. There is a property
-<C>IsSignPreserving</C>, which indicates whether a given rcwa group
-over&nbsp;&ZZ; acts on the set of nonnegative integers.
-The latter holds for any subgroup of CT(&ZZ;).
-
-<Example>
-<![CDATA[
-gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),
->               ClassReflection(2,4));
-<rcwa group over Z with 3 generators>
-gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsClassWiseTranslating,
->          IsIntegral,IsClassWiseOrderPreserving,IsSignPreserving],f->f(G));
-[ 24, 2, 2, [ 2, 3 ], false, false, false, false ]
-]]>
-</Example>
 
 </Section>
 
