@@ -85,7 +85,7 @@ gap> F2 := Image(last);
   </Description>
 </ManSection>
 
-Further, rcwa groups can be constructed from given ones by
+Further, new rcwa groups can be constructed from given ones by
 taking direct products and by taking wreath products with finite
 groups or with the infinite cyclic group:
 
@@ -187,8 +187,7 @@ permutation groups:
     The arguments are a finite permutation group <A>G</A>,
     a set <A>points</A> of points moved by <A>G</A> and a single
     point <A>point</A> moved by <A>G</A> which is not in
-    <A>points</A>. In case of invalid arguments, the operation
-    returns <C>fail</C>.
+    <A>points</A>.
 <Example>
 <![CDATA[
 gap> # First example: a group isomorphic to PSL(2,Z):
@@ -221,7 +220,7 @@ true
   </Description>
 </ManSection>
 
-One can build an rcwa group also from a list of residue classes:
+It is also possible to build an rcwa group from a list of residue classes:
 
 <ManSection>
   <Func Name="GroupByResidueClasses" Arg="classes"
