@@ -2547,6 +2547,36 @@ InstallMethod( Embedding,
 #############################################################################
 ##
 #S  Constructing rcwa groups: ///////////////////////////////////////////////
+#S  Group extensions. ///////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#O  MergerExtension( <G>, <points>, <point> ) . . . . build rcwa group over Z
+##
+InstallMethod( MergerExtension,
+               "build rcwa group over Z (RCWA)",
+               ReturnTrue, [ IsPermGroup, IsList, IsPosInt ],
+
+  function ( G, points, point )
+
+    local  P, S1, S2, g, n;
+
+    n := LargestMovedPoint(G);
+    if   not IsSubset([1..n],points) or point > n or point in points
+    then return fail; fi;
+
+    P  := AllResidueClassesModulo(Integers,n);
+    S1 := P{points};
+    S2 := SplittedClass(P[point],Length(points));
+    g  := Product([1..Length(points)],i->ClassTransposition(S1[i],S2[i]));
+    return ClosureGroupAddElm(Image(IsomorphismRcwaGroupOverZ(G)),g); 
+  end );
+
+#############################################################################
+##
+#S  Constructing rcwa groups: ///////////////////////////////////////////////
 #S  Getting smaller or otherwise nicer sets of generators. //////////////////
 ##
 #############################################################################

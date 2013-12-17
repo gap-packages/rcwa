@@ -230,12 +230,27 @@ DeclareOperation( "Mirrored", [ IsRcwaMonoidOverZ ] );
 ##
 ##  Examples: If the residue classes in <classes> are pairwise disjoint, then
 ##            the returned group is the symmetric group on <classes>.
-##            If any two residue classes in <classes> intersect nontrivially,
-##            then the returned group is trivial.
+##            If every class in <classes> has nontrivial intersection with
+##            every other class, then the returned group is trivial.
 ##
-##  In many other cases, the returned group is infinite.
+##  In many cases, the returned group is infinite.
 ##
 DeclareGlobalFunction( "GroupByResidueClasses" );
+
+#############################################################################
+##
+#O  MergerExtension( <G>, <points>, <point> )
+##
+##  Thinking of the moved points of the finite permutation group <G> being
+##  infinite sets themselves, this operation returns a group isomorphic
+##  to <G,g>, where g is an involution which interchanges the union of the
+##  points in <points> and the point <point>.
+##
+##  The arguments are a finite permutation group <G>, a set <points> of
+##  points moved by <G> and a single point <point> moved by <G> which is not
+##  in <points>.
+##
+DeclareOperation( "MergerExtension", [ IsPermGroup, IsList, IsPosInt ] );
 
 #############################################################################
 ##

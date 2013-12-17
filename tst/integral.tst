@@ -1913,6 +1913,29 @@ gap> H := Group(D0.1^5,D0.2);
 <rcwa group over Z with 2 generators>
 gap> Index(D0,H);
 5
+gap> G := MergerExtension(Group((1,2,3)),[1,2],1);
+fail
+gap> G := MergerExtension(Group((1,2,3)),[1,4],2);
+fail
+gap> G := MergerExtension(Group((1,2,3)),[1,2],3);
+<rcwa group over Z with 2 generators>
+gap> Size(G);
+infinity
+gap> GeneratorsOfGroup(G);
+[ ( 0(3), 1(3), 2(3) ), ( 0(3), 2(6) ) ( 1(3), 5(6) ) ]
+gap> B := Ball(G,One(G),6:Spheres);;
+gap> List(B,Length);
+[ 1, 3, 4, 6, 8, 12, 16 ]
+gap> G := MergerExtension(Group((1,2,3,4),(1,2)),[1,2],3);
+<rcwa group over Z with 3 generators>
+gap> B := Ball(G,One(G),6:Spheres);;
+gap> List(B,Length);
+[ 1, 4, 11, 28, 69, 170, 413 ]
+gap> G = Group(List([[0,4,1,4],[1,4,2,4],[2,4,3,4],[0,2,1,4]],
+>                   ClassTransposition));
+true
+gap> GeneratorsOfGroup(G);
+[ ( 0(4), 1(4), 2(4), 3(4) ), ( 0(4), 1(4) ), ( 0(4), 2(8) ) ( 1(4), 6(8) ) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
