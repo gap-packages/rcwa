@@ -190,8 +190,8 @@ permutation groups:
     <A>points</A>.
 <Example>
 <![CDATA[
-gap> # First example: a group isomorphic to PSL(2,Z):
-gap> G := MergerExtension(Group((1,2,3)),[1,2],3); # PSL(2,Z)
+gap> # First example -- a group isomorphic to PSL(2,Z):
+gap> G := MergerExtension(Group((1,2,3)),[1,2],3);
 <rcwa group over Z with 2 generators>
 gap> Size(G); 
 infinity
@@ -201,7 +201,7 @@ gap> B := Ball(G,One(G),6:Spheres);;
 gap> List(B,Length);
 [ 1, 3, 4, 6, 8, 12, 16 ]
 gap> #
-gap> # Second example: a group isomorphic to Thompson's group V:
+gap> # Second example -- a group isomorphic to Thompson's group V:
 gap> G := MergerExtension(Group((1,2,3,4),(1,2)),[1,2],3);
 <rcwa group over Z with 3 generators>
 gap> Size(G);
