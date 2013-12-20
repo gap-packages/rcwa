@@ -178,16 +178,24 @@ permutation groups:
      which <Q>merges</Q> <A>points</A> into <A>point</A>.
   </Returns>
   <Description>
-    Thinking of the moved points of the finite permutation group
-    <A>G</A> being infinite sets themselves, this operation returns
-    a group isomorphic to &lt;<A>G</A>,<M>g</M>&gt;, where <M>g</M>
-    is an involution which interchanges the union of the
-    points in <A>points</A> and the point <A>point</A>. <P/>
+    The arguments of this operation are a finite permutation
+    group <A>G</A>, a set <A>points</A> of points moved by <A>G</A>
+    and a single point <A>point</A> moved by <A>G</A> which is not in
+    <A>points</A>. <P/>
 
-    The arguments are a finite permutation group <A>G</A>,
-    a set <A>points</A> of points moved by <A>G</A> and a single
-    point <A>point</A> moved by <A>G</A> which is not in
-    <A>points</A>.
+    Let <M>n</M> be the largest moved point of <A>G</A>, and let
+    <M>H</M> be the tame subgroup of CT(&ZZ;) which respects the
+    partition <M>\mathcal{P}</M> of &ZZ; into the residue classes
+    (mod&nbsp;<M>n</M>), and which acts on <M>\mathcal{P}</M>
+    as <A>G</A> acts on <M>\{1, \dots, n\}</M>.
+    Further assume that <A>points</A> = <M>\{p_1, \dots, p_k\}</M> and
+    <A>point</A> = <M>p</M>, and put <M>r_i := p_i-1, \ i = 1, \dots, k</M>
+    and <M>r := p-1</M>. Now let <M>\sigma</M> be the product of the
+    class transpositions <M>\tau_{r_i(n),r+(i-1)n(kn), \ i = 1, \dots, k</M>.
+    The group returned by this operation is the extension of <M>H</M>
+    by the involution <M>\sigma</M>. --
+    On first reading, this may look a little complicated, but really the
+    code of the method is only about half as long as this description.
 <Example>
 <![CDATA[
 gap> # First example -- a group isomorphic to PSL(2,Z):
