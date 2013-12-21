@@ -191,7 +191,7 @@ permutation groups:
     Further assume that <A>points</A> = <M>\{p_1, \dots, p_k\}</M> and
     <A>point</A> = <M>p</M>, and put <M>r_i := p_i-1, \ i = 1, \dots, k</M>
     and <M>r := p-1</M>. Now let <M>\sigma</M> be the product of the
-    class transpositions <M>\tau_{r_i(n),r+(i-1)n(kn), \ i = 1, \dots, k</M>.
+    class transpositions <M>\tau_{r_i(n),r+(i-1)n(kn)}, \ i = 1, \dots, k</M>.
     The group returned by this operation is the extension of <M>H</M>
     by the involution <M>\sigma</M>. --
     On first reading, this may look a little complicated, but really the
