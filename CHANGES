@@ -12,6 +12,8 @@ Changes between version 3.6.1 and version 3.7.0:
  - The manual section "Constructing residue-class-wise affine groups"
    has been revised.
 
+ - The file rcwa/doc/manual.js has been added.
+
 Changes between version 3.6.0 and version 3.6.1 (November 18, 2013):
 
  - The manual chapter on the algorithms implemented in this package
