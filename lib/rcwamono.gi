@@ -659,6 +659,47 @@ InstallMethod( RestrictedBall,
 
 #############################################################################
 ##
+#M  RestrictedBall( <G>, <p>, <r>, <act>, <bound> ) . for rcwa monoids over Z
+##
+InstallMethod( RestrictedBall,
+               "for rcwa monoids over Z or Z^2 (RCWA)",
+               ReturnTrue, [ IsRcwaMonoid, IsObject,
+                             IsObject, IsFunction, IsPosInt ], 0,
+
+  function ( G, p, r, act, bound )
+
+    local  ball, gens, k, spheres;
+
+    if not IsRcwaMonoidOverZ(G) and not IsRcwaMonoidOverZxZ(G)
+      or not IsInt(p) and not (IsList(p) and ForAll(p,IsInt))
+      or not IsPosInt(r) and not IsInfinity(r) or not IsPosInt(bound)
+    then TryNextMethod(); fi;
+
+    ball := [[p]];
+    if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
+                  else gens := Set(GeneratorsOfMonoid(G)); fi;
+    k := 1;
+    while k <= r do
+      Add(ball,Difference(Union(List(gens,
+                                     gen->List(ball[k],pt->act(pt,gen)))),
+                          Union(ball[Maximum(1,k-1)],ball[k])));
+      if IsInt(p) then
+        ball[k+1] := Filtered(ball[k+1],n->AbsInt(n)<=bound);
+      else
+        ball[k+1] := Filtered(ball[k+1],
+                              l->ForAll(Flat(l),n->AbsInt(n)<=bound));
+      fi;
+      if ball[k+1] = [] then break; fi;
+      k := k + 1;
+    od;
+    
+    spheres := true in List(["spheres","Spheres"],ValueOption);
+    if not spheres then ball := Union(ball); fi;
+    return ball;
+  end );
+
+#############################################################################
+##
 #S  The modulus of an rcwa monoid, and tame rcwa monoids. ///////////////////
 ##
 #############################################################################

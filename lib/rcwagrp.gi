@@ -5262,18 +5262,19 @@ InstallMethod( FixedResidueClasses,
 
 #############################################################################
 ##
-#F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
+#F  DrawOrbitPicture( <G>, <p0>, <bound>, <height>, <width>, <colored>,
 #F                    <palette>, <filename> )
 ##
 InstallGlobalFunction( DrawOrbitPicture,
 
-  function ( G, p0, r, height, width, colored, palette, filename )
+  function ( G, p0, bound, height, width, colored, palette, filename )
 
-    local  grid, orbits, orbit, balls, sphere, action, ps, p, k,
+    local  grid, orbits, orbit, balls, spheres, sphere, action, ps, p, k,
            color, white, z, e, offset, i, j;
 
     if   not (IsRcwaGroupOverZ(G) or IsRcwaGroupOverZxZ(G)) or not IsList(p0)
-      or not ForAll(Flat(p0),IsInt) or not ForAll([r,height,width],IsPosInt)
+      or not ForAll(Flat(p0),IsInt)
+      or not ForAll([bound,height,width],IsPosInt)
       or not IsBool(colored) or (colored = true and (not IsList(palette)
       or not ForAll(palette,IsList) or not Set(List(palette,Length)) = [3]
       or not IsSubset([0..255],Flat(palette)))) or not IsString(filename)
@@ -5287,12 +5288,12 @@ InstallGlobalFunction( DrawOrbitPicture,
       white := 2^24-1;
       grid  := List([1..height],i->List([1..width],j->white));
       if IsInt(p0[1]) then # One orbit, color reflects distance from p0.
-        balls := List([1..r+1],k->Union(Ball(G,p0,k-1,action:Spheres)));
-        if   Minimum(Flat(balls[r+1])) < 0
+        spheres := RestrictedBall(G,p0,infinity,action,bound:Spheres);
+        if   ForAny(spheres,sphere->sphere<>[] and Minimum(sphere)<0)
         then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
-        for k in [2..r+1] do
-          sphere := Difference(balls[k],balls[k-1]);
-          color  := palette[(k-2) mod Length(palette) + 1];
+        for k in [1..Length(spheres)] do
+          sphere := spheres[k];
+          color  := palette[(k-1) mod Length(palette) + 1];
           for p in sphere do
             i := p[1]+offset[1]; j := p[2]+offset[2];
             if   i in [1..height] and j in [1..width]
@@ -5303,7 +5304,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         ps := p0; orbits := [];
         while ps <> [] do
           p0    := ps[1];
-          orbit := Union(Ball(G,p0,r,action:Spheres));
+          orbit := RestrictedBall(G,p0,infinity,action,bound);
           ps    := Difference(ps,orbit);
           Add(orbits,orbit);
         od;
@@ -5324,11 +5325,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       z := Zero(GF(2)); e := One(GF(2));
       grid := List([1..height],i->List([1..width],j->e));
       for i in [1..height] do ConvertToGF2VectorRep(grid[i]); od;
-      if IsInt(p0[1]) then ps := [p0]; else ps := p0; fi; orbit := [];
-      for p0 in ps do
-        if   not p0 in orbit
-        then orbit := Union(orbit,Union(Ball(G,p0,r,action:Spheres))); fi;
-      od;
+      orbit := RestrictedBall(G,p0,infinity,action,bound);
       if   Minimum(Flat(orbit)) < 0
       then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
       for p in orbit do
