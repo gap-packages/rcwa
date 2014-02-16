@@ -712,8 +712,8 @@ InstallGlobalFunction( EncryptIntoBitmapPicture,
 
     Info(InfoRCWA,2,"Initialisations ...");
     hits      := NullMat(height,width);
-    N := List(passphrase,INT_CHAR) * ListOfPowers(256,Length(passphrase));
-    C := List(cleartext, INT_CHAR) * ListOfPowers(256,Length(cleartext));
+    N := List(passphrase,INT_CHAR)*List([0..Length(passphrase)-1],i->256^i);
+    C := List(cleartext, INT_CHAR)*List([0..Length(cleartext )-1],i->256^i);
     p := NextProbablyPrimeInt(Int(1103*N/17));
     a := PowerModInt(N,Int(37*N/3511),p);
     q := NextProbablyPrimeInt(Int(223*a/7));
@@ -773,7 +773,7 @@ InstallGlobalFunction( DecryptFromBitmapPicture,
 
     Info(InfoRCWA,2,"Initialisations ...");
     hits := NullMat(height,width);
-    N := List(passphrase,INT_CHAR) * ListOfPowers(256,Length(passphrase));
+    N := List(passphrase,INT_CHAR)*List([0..Length(passphrase)-1],i->256^i);
     p := NextProbablyPrimeInt(Int(1103*N/17));
     a := PowerModInt(N,Int(37*N/3511),p);
     q := NextProbablyPrimeInt(Int(223*a/7));
