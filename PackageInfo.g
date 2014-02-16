@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "3.6.1",
-Date             := "18/11/2013",
-ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.6.1",
+Version          := "3.7.0",
+Date             := "16/02/2014",
+ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.7.0",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -19,12 +19,6 @@ Persons          := [
                            IsMaintainer  := true,
                            Email         := "stefan@mcs.st-and.ac.uk",
                            WWWHome       := "http://www.gap-system.org/DevelopersPages/StefanKohl/"
-                           # , PostalAddress := Concatenation("Departamenti i Matematikes\n",
-                           #                                "Universiteti \"Ismail Qemali\" Vlore\n",
-                           #                                "Lagjja: Pavaresia\n",
-                           #                                "Vlore / Albania"),
-                           # Place         := "Vlore / Albania",
-                           # Institution   := "University of Vlora"
                          )
                     ],
 Status           := "accepted",
@@ -48,7 +42,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.7.0",
-                         NeededOtherPackages    := [ ["ResClasses",">=3.3.1"], ["GRAPE",">=4.3"],
+                         NeededOtherPackages    := [ ["ResClasses",">=3.4.0"], ["GRAPE",">=4.3"],
                                                      ["Polycyclic",">=2.6"], ["GAPDoc",">=1.4"] ],
                          SuggestedOtherPackages := [ ["FR",">=1.1.3"] ],
                          ExternalConditions     := [ ]
