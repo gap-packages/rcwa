@@ -194,6 +194,39 @@ DeclareGlobalFunction( "DrawGrid" );
 
 #############################################################################
 ##
+#S  Functions for steganography in bitmap images. ///////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  EncryptIntoBitmapPicture( <picturefile>, <cleartextfile>, <passphrase> )
+#F  DecryptFromBitmapPicture( <picturefile>, <cleartextfile>, <passphrase> )
+##
+##  The first function encrypts the contents of the textfile <cleartextfile>
+##  into the image from the file named <picturefile>, using the passphrase
+##  <passphrase>. The modified image is written to a file whose name is
+##  derived from <picturefile> by appending the string "-out".
+##
+##  The second function decrypts an encoded text from the file named
+##  <picturefile> using the passphrase <passphrase>, and writes the obtained
+##  cleartext to a file named <cleartextfile>.
+##
+##  These steganographic utility functions are designed for security rather
+##  than speed, and are intended to be used for texts of the order of
+##  magnitude of what one would normally write into the body of an e-mail
+##  -- encoding about 100kb into a picture of usual size should be still
+##  convenient, while the functions are definitely not suitable for
+##  encoding entire backups or the like.
+##
+##  Info messages on the progress of the encryption / decryption are given
+##  at InfoLevel 2 of InfoRCWA. 
+##
+DeclareGlobalFunction( "EncryptIntoBitmapPicture");
+DeclareGlobalFunction( "DecryptFromBitmapPicture");
+
+#############################################################################
+##
 #S  Utility to run a demonstration in a talk. ///////////////////////////////
 ##
 #############################################################################

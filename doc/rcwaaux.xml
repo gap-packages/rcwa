@@ -162,7 +162,7 @@ of other features of &GAP;. It is intended for being used in talks.
 <!-- #################################################################### -->
 
 <Section Label="sec:BitmapPictures">
-<Heading>Loading and saving bitmap pictures</Heading>
+<Heading>Utility functions for bitmap pictures</Heading>
 
 &RCWA; provides functions to create bitmap picture files from suitable
 pixel matrices and vice versa. The author has successfully tested this
@@ -201,6 +201,39 @@ gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
 gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
 ]]>
 </Log>
+  </Description>
+</ManSection>
+
+&RCWA; also provides functions for steganography in bitmap pictures:
+
+<ManSection>
+  <Func Name="EncryptIntoBitmapPicture"
+        Arg="picturefile, cleartextfile, passphrase"
+        Label="picturefile, cleartextfile, passphrase"/>
+  <Func Name="DecryptFromBitmapPicture"
+        Arg="picturefile, cleartextfile, passphrase"
+        Label="picturefile, cleartextfile, passphrase"/>
+  <Returns> nothing. </Returns>
+  <Description>
+    The first function encrypts the contents of the textfile named
+    <A>cleartextfile</A> into the image from the file named
+    <A>picturefile</A>, using the passphrase <A>passphrase</A>.
+    The modified image is written to a file whose name is derived from
+    <A>picturefile</A> by appending the string <C>-out</C>. <P/>
+  
+    The second function decrypts an encoded text from the file named
+    <A>picturefile</A> using the passphrase <A>passphrase</A>, and writes
+    the obtained cleartext to a file named <A>cleartextfile</A>. <P/>
+  
+    These steganographic utility functions are designed for security rather
+    than speed, and are intended to be used for texts of the order of
+    magnitude of what one would normally write into the body of an e-mail
+    -- encoding about 100kb into a picture of usual size should be still
+    convenient, while the functions are definitely not suitable for
+    encoding entire backups or the like. <P/>
+  
+    <C>Info</C> messages on the progress of the encryption / decryption
+    are given at <C>InfoLevel</C> 2 of <C>InfoRCWA</C>. 
   </Description>
 </ManSection>
 
