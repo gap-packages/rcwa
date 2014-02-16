@@ -748,7 +748,7 @@ Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
 </Index>
 
 The function <Ref Func="DrawOrbitPicture"
-                  Label="G, p0, r, h, w, colored, palette, filename"/>
+                  Label="G, p0, bound, h, w, colored, palette, filename"/>
 can also be used to depict orbits under the action of rcwa groups
 over&nbsp;<M>&ZZ;^2</M>. Further there is a function which depicts
 residue class unions of&nbsp;<M>&ZZ;^2</M> and partitions
