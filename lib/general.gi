@@ -694,7 +694,7 @@ InstallGlobalFunction( EncryptIntoBitmapPicture,
   function ( picturefile, cleartextfile, passphrase )
 
     local  filename, outputfile, cleartext, picture, height, width, hits,
-           N, C, a, b, c, p, q, n, e, i, j, pos, cols,
+           N, digits, C, a, b, c, p, q, n, e, i, j, pos, cols,
            dl, dp, r, rgb, pow2;
 
     if   picturefile{[Length(picturefile)-3..Length(picturefile)]}
@@ -713,7 +713,11 @@ InstallGlobalFunction( EncryptIntoBitmapPicture,
     Info(InfoRCWA,2,"Initialisations ...");
     hits      := NullMat(height,width);
     N := List(passphrase,INT_CHAR)*List([0..Length(passphrase)-1],i->256^i);
-    C := List(cleartext, INT_CHAR)*List([0..Length(cleartext )-1],i->256^i);
+    digits := List(cleartext,INT_CHAR);
+    C := 0;
+    for i in [Length(digits),Length(digits)-1..1] do
+      C := 256*C + digits[i];
+    od;
     p := NextProbablyPrimeInt(Int(1103*N/17));
     a := PowerModInt(N,Int(37*N/3511),p);
     q := NextProbablyPrimeInt(Int(223*a/7));
