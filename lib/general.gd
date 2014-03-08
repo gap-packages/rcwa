@@ -179,9 +179,21 @@ DeclareGlobalFunction( "LoadBitmapPicture" );
 
 #############################################################################
 ##
-#S  Some routines for drawing images. ///////////////////////////////////////
+#S  Routines for drawing or modifying bitmap images. ////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  ShrinkMonochromePictureToGrayscalesPicture( <filename>, <factor> )
+##
+##  Creates a greyscale picture from a monochrome bitmap picture.
+##  The greyscale picture is by a factor of <factor> smaller than the
+##  provided monochrome picture, and the grey values of its pixels are
+##  determined by the numbers of black pixels in the correspoding
+##  <factor> * <factor> squares of the input picture.
+##
+DeclareGlobalFunction( "ShrinkMonochromePictureToGrayscalesPicture" );
 
 #############################################################################
 ##

@@ -620,9 +620,41 @@ InstallGlobalFunction( LoadBitmapPicture,
 
 #############################################################################
 ##
-#S  Some routines for drawing images. ///////////////////////////////////////
+#S  Routines for drawing or modifying bitmap images. ////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  ShrinkMonochromePictureToGrayscalesPicture( <filename>, <factor> )
+##
+InstallGlobalFunction( ShrinkMonochromePictureToGrayscalesPicture,
+
+  function ( filename, factor )
+
+    local  A, B, h, w, M, blackpixels, i, j, m, n, zero, one, start;
+
+    zero := Zero(GF(2)); one := One(GF(2));
+    A := LoadBitmapPicture(Concatenation(filename,".bmp"));
+    h := Length(A); w := Length(A[1]);
+    B := NullMat(Int(h/factor),Int(w/factor));
+    i := 1; m := 1; start := Runtime();
+    while i <= h - factor + 1 do
+      j := 1; n := 1;
+      if Runtime() - start > 1000 then
+        Info(InfoRCWA,2,"m = ",m);
+        start := Runtime();
+      fi;
+      while j <= w - factor + 1 do
+        M := A{[i..i+factor-1]}{[j..j+factor-1]};
+        blackpixels := Number(Concatenation(M),pix->pix=zero);
+        B[m][n] := 65793 * (255 - Int(255 * blackpixels/factor^2));
+        j := j + factor; n := n + 1;
+      od;
+      i := i + factor; m := m + 1;
+    od;
+    SaveAsBitmapPicture(B,Concatenation(filename,"-small.bmp"));
+  end );
 
 #############################################################################
 ##
