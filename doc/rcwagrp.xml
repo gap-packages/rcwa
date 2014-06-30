@@ -1093,7 +1093,7 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     ShortResidueClassOrbits &amp; ShortResidueClassCycles
   </Heading>
   <Oper Name="ShortResidueClassOrbits" Arg="G, modulusbound, maxlng"
-        Label="for rcwa permutation and bounds on modulus and length"/>
+        Label="for rcwa group and bounds on modulus and length"/>
   <Oper Name="ShortResidueClassCycles" Arg="g, modulusbound, maxlng"
         Label="for rcwa permutation and bounds on modulus and length"/>
   <Returns>
