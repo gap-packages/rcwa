@@ -1134,4 +1134,4 @@ InstallGlobalFunction( ReadTestCompareRuntimes,
 
 #############################################################################
 ##
-#E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  general.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
