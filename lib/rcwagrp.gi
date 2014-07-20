@@ -4114,6 +4114,78 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#M  \=( <G>, <H> ) . . . . . . . . . . . . . . . . . . .  for two rcwa groups
+##
+InstallMethod( \=,
+               "for two rcwa groups (RCWA)", true,
+               [ IsRcwaGroup and HasGeneratorsOfGroup,
+                 IsRcwaGroup and HasGeneratorsOfGroup ], 0,
+
+  function ( G, H )
+
+    local  gensG, gensH;
+
+    gensG := Set(GeneratorsOfGroup(G)); gensH := Set(GeneratorsOfGroup(H));
+    if gensG = gensH then return true; fi;
+    if PrimeSet(G) <> PrimeSet(H) then return false; fi;
+    if Support(G) <> Support(H) then return false; fi;
+    if IsTame(G) <> IsTame(H) then return false; fi;
+    if IsTame(G) and IsTame(H) then
+      if Multiplier(G) <> Multiplier(H) then return false; fi;
+      if   RespectedPartition(G) <> RespectedPartition(H)
+      then return false; fi;
+      if   ActionOnRespectedPartition(G) <> ActionOnRespectedPartition(H)
+      then return false; fi;
+      if Size(G) <> Size(H) then return false; fi;
+    fi;
+    return ForAll(gensH,h->h in G) and ForAll(gensG,g->g in H);
+  end );
+
+#############################################################################
+##
+#M  \=( <G>, <H> ) . . . . . . . . . . . . . . . . for two rcwa groups over Z
+##
+InstallMethod( \=,
+               "for two rcwa groups over Z (RCWA)", true,
+               [ IsRcwaGroupOverZ and HasGeneratorsOfGroup,
+                 IsRcwaGroupOverZ and HasGeneratorsOfGroup ], 0,
+
+  function ( G, H )
+
+    local  gensG, gensH, dG, dH;
+
+    gensG := Set(GeneratorsOfGroup(G)); gensH := Set(GeneratorsOfGroup(H));
+    if gensG = gensH then return true; fi;
+    if PrimeSet(G) <> PrimeSet(H) then return false; fi;
+    if Support(G) <> Support(H) then return false; fi;
+    if IsSignPreserving(G) <> IsSignPreserving(H) then return false; fi;
+    if   (ForAll(gensG,g->Sign(g) = 1) and ForAny(gensH,h->Sign(h)=-1))
+      or (ForAll(gensH,h->Sign(h) = 1) and ForAny(gensG,g->Sign(g)=-1))
+    then return false; fi;
+    if   IsClassWiseOrderPreserving(G) <> IsClassWiseOrderPreserving(H)
+    then return false; fi;
+    if   IsClassWiseOrderPreserving(G) then
+      dG := Gcd(List(gensG,Determinant));
+      dH := Gcd(List(gensH,Determinant));
+      if dG <> dH then return false; fi;
+    fi;
+    if IsTame(G) <> IsTame(H) then return false; fi;
+    if IsTame(G) then
+      if Multiplier(G) <> Multiplier(H) then return false; fi;
+      if   RespectedPartition(G) <> RespectedPartition(H)
+      then return false; fi;
+      if   ActionOnRespectedPartition(G) <> ActionOnRespectedPartition(H)
+      then return false; fi;
+      if Size(G) <> Size(H) then return false; fi;
+      if    RankOfKernelOfActionOnRespectedPartition(G)
+         <> RankOfKernelOfActionOnRespectedPartition(H)
+      then return false; fi;
+    fi;
+    return ForAll(gensH,h->h in G) and ForAll(gensG,g->g in H);
+  end );
+
+#############################################################################
+##
 #S  The action of rcwa groups on subsets of the underlying ring. ////////////
 ##
 #############################################################################
@@ -5289,8 +5361,14 @@ InstallGlobalFunction( DrawOrbitPicture,
       grid  := List([1..height],i->List([1..width],j->white));
       if IsInt(p0[1]) then # One orbit, color reflects distance from p0.
         spheres := RestrictedBall(G,p0,infinity,action,bound:Spheres);
-        if   ForAny(spheres,sphere->sphere<>[] and Minimum(sphere)<0)
-        then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
+        if IsRcwaGroupOverZ(G) then
+          if   ForAny(spheres,sphere->sphere<>[] and Minimum(sphere)<0)
+          then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
+        elif IsRcwaGroupOverZxZ(G) then
+          if   ForAny(spheres,sphere->sphere<>[]
+                              and ForAny(sphere,p->Minimum(p)<0))
+          then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
+        fi;
         for k in [1..Length(spheres)] do
           sphere := spheres[k];
           color  := palette[(k-1) mod Length(palette) + 1];

@@ -23,6 +23,8 @@ Changes between version 3.6.1 and version 3.7.0:
    This function is for producing smaller greyscale pictures from large
    monochrome pictures.
 
+ - Custom methods for \= for rcwa groups have been added.
+
  - The file rcwa/doc/manual.js has been added.
 
 Changes between version 3.6.0 and version 3.6.1 (November 18, 2013):
