@@ -470,7 +470,7 @@ CT(Z)
 gap> IsSimple(CT_Z); # One of a number of stored attributes/properties.
 true
 gap> IsSubgroup(CT_Z,G);
-true
+false
 ]]>
 </Example>
   </Description>
