@@ -9,7 +9,7 @@
 
 This chapter lists brief descriptions of the algorithms and methods
 implemented in this package. These descriptions are kept very informal and
-short, and some of them provide only rudimentary information. They are listed
+terse, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that
 essentially nothing is done except of performing I/O operations, storing or
 recalling one or several values or doing very basic computations, and
@@ -152,14 +152,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>DecreasingOn(<A>f</A>)</C>
-  </Mark>
-  <Item>
-    Forms the union of the residue classes which are determined by the
-    coefficients as indicated.
-  </Item>
-
-  <Mark>
     <C>CycleRepresentativesAndLengths(<A>g</A>,<A>S</A>)</C>
   </Mark>
   <Item>
@@ -171,6 +163,14 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>DecreasingOn(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Forms the union of the residue classes which are determined by the
+    coefficients as indicated.
   </Item>
 
   <Mark>
@@ -1007,13 +1007,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>LocalizedRcwaMapping(<A>f</A>,<A>p</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q>.
-  </Item>
-
-  <Mark>
     <C>LoadBitmapPicture(<A>filename</A>)</C>
   </Mark>
   <Item>
@@ -1026,6 +1019,13 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   <Item>
     <Q>Trivial</Q>. --
     These functions do nothing more than reading in certain files.
+  </Item>
+
+  <Mark>
+    <C>LocalizedRcwaMapping(<A>f</A>,<A>p</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1049,6 +1049,14 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>MergerExtension(<A>G</A>,<A>points</A>,<A>point</A>)</C>
+  </Mark>
+  <Item>
+    As described in <Ref Oper="MergerExtension"
+                         Label="for finite permutation groups"/>.
   </Item>
 
   <Mark>
@@ -1535,6 +1543,20 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>ShortResidueClassCycles(<A>g</A>,<A>modulusbound</A>,<A>maxlng</A>)</C>
+  </Mark>
+  <Item>
+    Different methods -- see source code in <F>pkg/rcwa/lib/rcwamap.gi</F>.
+  </Item>
+
+  <Mark>
+    <C>ShortResidueClassOrbits(<A>g</A>,<A>modulusbound</A>,<A>maxlng</A>)</C>
+  </Mark>
+  <Item>
+    Different methods -- see source code in <F>pkg/rcwa/lib/rcwagrp.gi</F>.
   </Item>
 
   <Mark>

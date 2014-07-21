@@ -3,7 +3,7 @@
                        ===================================
 
 
-Changes between version 3.6.1 and version 3.7.0:
+Changes between version 3.6.1 and version 3.7.0 (July 21, 2014):
 
  - An operation `MergerExtension' has been added.
    This operation constructs a certain infinite extension of a given
