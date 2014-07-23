@@ -5241,14 +5241,15 @@ InstallMethod( ShortResidueClassOrbits,
 #M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
 ##
 InstallMethod( ShortResidueClassOrbits,
-              "for an rcwa group over Z and 2 positive integers (RCWA)",
+              "for an rcwa group over Z and 2 positive integers, new (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 5,
 
   function ( G, modulusbound, maxlng )
 
     local  orbit, orbits, gens, coeffs, moduli,
            primes, primes_multdiv, primes_onlymod,
-           powers_impossible, orb, m, n, r, i, j, k;
+           powers_impossible, orb, cl, covered, pointorbs,
+           m, n, r, i, j, k;
 
     orbit := function ( cl0 )
 
@@ -5296,21 +5297,44 @@ InstallMethod( ShortResidueClassOrbits,
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
-    moduli := AllSmoothIntegers(primes,modulusbound);
-    moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
-    orbits := [];
-    n      := -1;
+    moduli    := AllSmoothIntegers(primes,modulusbound);
+    moduli    := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    covered   := ListWithIdenticalEntries(modulusbound,true);
+    pointorbs := ShortOrbits(G,[0..modulusbound-1],maxlng,
+                             modulusbound*Maximum(List(gens,Mult))^maxlng);
+    for orb in pointorbs do
+      for n in orb do
+        if   n < modulusbound and Length(orb) > 1
+        then covered[n+1] := false; fi;
+      od;
+    od;
+    orbits := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
+                   cl->[[Residue(cl),Modulus(cl)]]);
+    n := -1;
     repeat
       repeat
         n := n + 1;
-      until ForAll(orbits,orb->ForAll(orb,cl->n mod cl[2] <> cl[1]));
-      i := 0;
+      until n >= modulusbound or not covered[n+1];
+      i := 0; orb := fail;
       repeat
         i := i + 1;
         m := moduli[i];
+        if m <= n then continue; fi; 
         orb := orbit([n mod m,m]);
       until orb <> fail or i = Length(moduli);
-      if orb <> fail then Add(orbits,Set(orb)); fi;
+      if orb = fail then
+        covered[n+1] := true;
+      else
+        orb := Set(orb);
+        Add(orbits,orb);
+        for cl in orb do
+          if cl[1] >= modulusbound then continue; fi;
+          for i in [0..Int(modulusbound/cl[2])-1] do
+            covered[cl[1]+i*cl[2]+1] := true;
+          od;
+        od;
+      fi;
+      if Length(orbits) > Length(Set(orbits)) then Error(); fi;
     until n > modulusbound;
     orbits := List(orbits,orb->Set(List(orb,ResidueClass)));
     Sort(orbits,function(orb1,orb2)
@@ -5319,7 +5343,7 @@ InstallMethod( ShortResidueClassOrbits,
     return orbits;
   end );
 
-###################################################################
+#############################################################################
 ##
 #M  FixedResidueClasses( <G>, <maxmod> )
 ##

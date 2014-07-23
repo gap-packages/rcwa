@@ -3,6 +3,12 @@
                        ===================================
 
 
+
+Changes between version 3.7.0 and version 3.X.X ():
+
+ - The method for `ShortResidueClassOrbits' for rcwa groups over Z
+   has been made more efficient.
+
 Changes between version 3.6.1 and version 3.7.0 (July 21, 2014):
 
  - An operation `MergerExtension' has been added.
