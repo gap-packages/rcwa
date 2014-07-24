@@ -50,6 +50,9 @@
 ##  For the description of the record 'finiteorbits', see the file
 ##  3ctsgrp-finite-orbits.g.
 ##
+##  For the description of the list 'shortresidueclassorbitlengths',
+##  see the file 3ctsgrp-residueclassorbitlengths.g.
+##
 #############################################################################
 
 return rec(
@@ -10632,7 +10635,11 @@ intransitivemodulo :=
 
 finiteorbits := ReadAsFunction(
                   Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                                "/data/3ctsgrp-finite-orbits.g"))()
+                                "/data/3ctsgrp-finite-orbits.g"))(),
+
+shortresidueclassorbitlengths := 
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-residueclassorbitlengths.g"))()
 
 );
 
