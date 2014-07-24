@@ -5242,14 +5242,14 @@ InstallMethod( ShortResidueClassOrbits,
 ##
 InstallMethod( ShortResidueClassOrbits,
               "for an rcwa group over Z and 2 positive integers, new (RCWA)",
-               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 5,
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 15,
 
   function ( G, modulusbound, maxlng )
 
     local  orbit, orbits, gens, coeffs, moduli,
            primes, primes_multdiv, primes_onlymod,
-           powers_impossible, orb, cl, covered, pointorbs,
-           m, n, r, i, j, k;
+           powers_impossible, orb, cl, covered, pointorbs, pointorb,
+           startmodind, m, n, r, i, j, k, p;
 
     orbit := function ( cl0 )
 
@@ -5310,20 +5310,27 @@ InstallMethod( ShortResidueClassOrbits,
     od;
     orbits := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
                    cl->[[Residue(cl),Modulus(cl)]]);
-    n := -1;
+    n := -1; startmodind := 1;
     repeat
       repeat
         n := n + 1;
       until n >= modulusbound or not covered[n+1];
-      i := 0; orb := fail;
+      if n = modulusbound then break; fi;
+      i := startmodind - 1; orb := fail;
       repeat
         i := i + 1;
         m := moduli[i];
-        if m <= n then continue; fi; 
+        if m <= n then
+          if i > startmodind then startmodind := i; fi;
+          continue;
+        fi; 
         orb := orbit([n mod m,m]);
       until orb <> fail or i = Length(moduli);
       if orb = fail then
-        covered[n+1] := true;
+        pointorb := First(pointorbs,ptorb->n in ptorb);
+        for j in pointorb do
+          if j < modulusbound then covered[j+1] := true; fi;
+        od;
       else
         orb := Set(orb);
         Add(orbits,orb);
@@ -5335,7 +5342,7 @@ InstallMethod( ShortResidueClassOrbits,
         od;
       fi;
       if Length(orbits) > Length(Set(orbits)) then Error(); fi;
-    until n > modulusbound;
+    until n >= modulusbound;
     orbits := List(orbits,orb->Set(List(orb,ResidueClass)));
     Sort(orbits,function(orb1,orb2)
                   return [Length(orb1),orb1] < [Length(orb2),orb2];
