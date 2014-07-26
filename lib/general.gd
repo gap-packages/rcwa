@@ -197,6 +197,16 @@ DeclareGlobalFunction( "ShrinkMonochromePictureToGrayscalesPicture" );
 
 #############################################################################
 ##
+#F  DeMoire( <inputfilename>, <outputfilename> )
+##
+##  Removes Moire patterns in a bitmap picture which appear upon resizing
+##  the picture, and which result from pixel colors depending on the parity
+##  of the coordinates.
+##
+DeclareGlobalFunction( "DeMoire" );
+
+#############################################################################
+##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
 ##  Draws a picture of the residue class union <U> of Z^2 or the partition

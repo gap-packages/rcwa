@@ -658,6 +658,35 @@ InstallGlobalFunction( ShrinkMonochromePictureToGrayscalesPicture,
 
 #############################################################################
 ##
+#F  DeMoire( <inputfilename>, <outputfilename> )
+##
+InstallGlobalFunction( DeMoire,
+
+  function ( inputfilename, outputfilename )
+
+    local  input, inputrgb, output, h, w, i, j;
+
+    input  := LoadBitmapPicture(inputfilename);
+    output := [];
+    h := Length(input); w := Length(input[1]);
+    inputrgb := List(input,line->List(line,n->[Int(n/65536),
+                                               Int(n/256) mod 256,
+                                               n mod 256]));
+    for i in [1..h-1] do
+      output[i] := [];
+      for j in [1..w-1] do
+        output[i][j] := List((inputrgb[i][j  ] + inputrgb[i+1][j  ]
+                            + inputrgb[i][j+1] + inputrgb[i+1][j+1])/4,Int)
+                      * [65536,256,1];
+      od;
+      Add(output[i],input[i][w]);
+    od;
+    Add(output,input[h]);
+    SaveAsBitmapPicture(output,outputfilename);
+  end );
+
+#############################################################################
+##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
 InstallGlobalFunction( DrawGrid,
