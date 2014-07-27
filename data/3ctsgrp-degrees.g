@@ -9,7 +9,7 @@
 ##
 ##  The list 'degrees' below satisfies
 ##
-##      degrees[i] = DegreeAction(ActionOnRespectedPartition(grps[i]))
+##      degrees[i] = NrMovedPoints(ActionOnRespectedPartition(grps[i]))
 ##
 ##  for all i in [1..52394] such that grps[i] is finite.
 ##

@@ -133,10 +133,10 @@ true
     respectively.
   </Returns>
   <Description>
-    The first-mentioned method embeds the <C>DegreeAction(<A>P</A>)</C>th
+    The first-mentioned method embeds the <C>NrMovedPoints(<A>P</A>)</C>th
     direct power of&nbsp;<A>G</A> using the method for <C>DirectProduct</C>,
     and lets the permutation group&nbsp;<A>P</A> act naturally on the set of
-    residue classes modulo <C>DegreeAction(<A>P</A>)</C>.
+    residue classes modulo <C>NrMovedPoints(<A>P</A>)</C>.
     The second-mentioned method restricts
     (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
     Label="of an rcwa group, by an injective rcwa mapping"/>)

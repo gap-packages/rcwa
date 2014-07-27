@@ -2425,7 +2425,7 @@ InstallMethod( WreathProduct,
     local  prod, info, m, orbreps, gensonreps, blocks, base, h, nrgensG;
 
     nrgensG    := Length(GeneratorsOfGroup(G));
-    m          := DegreeAction(P);
+    m          := NrMovedPoints(P);
     orbreps    := List(Orbits(P,MovedPoints(P)),Representative);
     gensonreps := Concatenation(List(orbreps,r->GeneratorsOfGroup(
                                 Restriction(G,RcwaMapping([[m,r-1,1]])))));
@@ -4413,7 +4413,7 @@ InstallMethod( IsTransitive,
     if IsFinite(S) then
 
       H := Action(G,AsList(S));
-      return DegreeAction(H) = Size(S) and IsTransitive(H,MovedPoints(H));
+      return NrMovedPoints(H) = Size(S) and IsTransitive(H,MovedPoints(H));
 
     elif IsRcwaGroupOverZ(G) and IsSignPreserving(G) then
 

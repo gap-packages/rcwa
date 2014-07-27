@@ -1723,7 +1723,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     <C>WreathProduct(<A>G</A>,<A>P</A>)</C>
   </Mark>
   <Item>
-    Uses <C>DirectProduct</C> to embed the <C>DegreeAction(<A>P</A>)</C>th
+    Uses <C>DirectProduct</C> to embed the <C>NrMovedPoints(<A>P</A>)</C>th
     direct power of&nbsp;<A>G</A>, and <C>RcwaMapping</C>, Part&nbsp;(d)
     to embed the finite permutation group&nbsp;<A>P</A>.
   </Item>
