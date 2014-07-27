@@ -687,6 +687,41 @@ InstallGlobalFunction( DeMoire,
 
 #############################################################################
 ##
+#F  DeMoireShrinkAndCrop( <inputfilename>, <outputfilename>,
+##                        <outputheight>, <outputwidth> )
+##
+InstallGlobalFunction( DeMoireShrinkAndCrop,
+
+  function ( inputfilename, outputfilename,
+                                     outputheight, outputwidth )
+
+    local  input, inputrgb, output, h, w, i, j, k;
+
+    input  := LoadBitmapPicture(inputfilename);
+    output := [];
+    h := Length(input); w := Length(input[1]);
+    if h < 2 * outputheight or w < 2 * outputwidth then
+      Error("height and width of input picture must be at least twice ",
+            "as large as height and width of output picture.");
+      return fail;
+    fi;
+    inputrgb := List(input,line->List(line,n->[Int(n/65536),
+                                               Int(n/256) mod 256,
+                                               n mod 256]));
+    for i in [1,3..2*outputheight-1] do
+      Add(output,[]);
+      for j in [1,3..2*outputwidth-1] do
+        Add(output[(i+1)/2],
+            List((inputrgb[i][j  ] + inputrgb[i+1][j  ]
+                + inputrgb[i][j+1] + inputrgb[i+1][j+1])/4,Int)
+          * [65536,256,1]);
+      od;
+    od;
+    SaveAsBitmapPicture(output,outputfilename);
+  end );
+
+#############################################################################
+##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
 InstallGlobalFunction( DrawGrid,

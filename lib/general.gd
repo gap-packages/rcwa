@@ -198,6 +198,8 @@ DeclareGlobalFunction( "ShrinkMonochromePictureToGrayscalesPicture" );
 #############################################################################
 ##
 #F  DeMoire( <inputfilename>, <outputfilename> )
+#F  DeMoireShrinkAndCrop( <inputfilename>, <outputfilename>,
+##                        <outputheight>, <outputwidth> )
 ##
 ##  Removes Moire patterns in a bitmap picture which appear upon resizing
 ##  the picture, and which result from pixel colors depending on the parity
