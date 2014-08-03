@@ -206,6 +206,7 @@ DeclareGlobalFunction( "ShrinkMonochromePictureToGrayscalesPicture" );
 ##  of the coordinates.
 ##
 DeclareGlobalFunction( "DeMoire" );
+DeclareGlobalFunction( "DeMoireShrinkAndCrop" );
 
 #############################################################################
 ##
