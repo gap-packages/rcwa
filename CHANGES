@@ -16,7 +16,7 @@ Changes between version 3.7.0 and version 3.X.X ():
    These functions are for removing a certain type of Moire patterns
    from bitmap pictures.
 
- - A function `WhiteBWPicture' has been added.
+ - An auxilliary function `WhiteBWPicture' has been added.
 
 Changes between version 3.6.1 and version 3.7.0 (July 21, 2014):
 
