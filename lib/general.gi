@@ -626,6 +626,24 @@ InstallGlobalFunction( LoadBitmapPicture,
 
 #############################################################################
 ##
+#F  WhiteBWPicture( <height>, <width> )
+##
+InstallGlobalFunction ( WhiteBWPicture,
+
+  function ( height, width )
+
+    local  pic, one, i, j;
+
+    one := One(GF(2));
+    pic := NullMat(height,width,GF(2));
+    for i in [1..height] do for j in [1..width] do
+      pic[i][j] := one;
+    od; od;
+    return pic;
+  end );
+
+#############################################################################
+##
 #F  ShrinkMonochromePictureToGrayscalesPicture( <filename>, <factor> )
 ##
 InstallGlobalFunction( ShrinkMonochromePictureToGrayscalesPicture,

@@ -185,6 +185,16 @@ DeclareGlobalFunction( "LoadBitmapPicture" );
 
 #############################################################################
 ##
+#F  WhiteBWPicture( <height>, <width> )
+##
+##  Returns a white monochrome bitmap picture of size <height> x <width>
+##  pixels, i.e. a <height> x <width> GF(2) matrix with all entries equal
+##  to 1.
+##
+DeclareGlobalFunction( "WhiteBWPicture" );
+
+#############################################################################
+##
 #F  ShrinkMonochromePictureToGrayscalesPicture( <filename>, <factor> )
 ##
 ##  Creates a greyscale picture from a monochrome bitmap picture.
