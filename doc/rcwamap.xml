@@ -1743,6 +1743,8 @@ gap> Sources(g); Sinks(g);
     graph which carry a loop, but which <A>f</A> does not fix setwise.
   </Returns>
   <Description>
+    The returned list may also include supersets of the named
+    residue classes instead if <A>f</A> is affine even on these.
 <Example>
 <![CDATA[
 gap> Loops(ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4));

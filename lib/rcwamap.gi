@@ -7979,7 +7979,7 @@ InstallMethod( Loops,
       r_img := ((c[3]*r+c[4])/c[5]) mod m_img;
       if    [r_img,m_img] <> [r,m]
         and (r_img - r) mod Gcd(m,m_img) = 0
-      then Add(loops,ResidueClass(r,modulus)); fi;
+      then Add(loops,ResidueClass(r,m)); fi;
     od;
     if loops <> [] then SetIsTame(f,false); fi;
     return loops;
