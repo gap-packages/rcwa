@@ -321,6 +321,62 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 
 #############################################################################
 ##
+#S  Functions to generate small graphs. /////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  AllGraphs( <n> ) . . . .  all graphs with <n> vertices, up to isomorphism
+##
+InstallGlobalFunction( AllGraphs,
+
+  function ( n )
+
+    if not IsPosInt(n) then return fail; fi;
+    return List(Orbits(SymmetricGroup(n),
+                       Combinations(Combinations([1..n],2)),
+                       function(Gamma,g)
+                         return Set(Gamma,k->OnSets(k,g));
+                       end),
+                Representative);
+  end );
+
+#############################################################################
+##
+#F  GraphClasses( <n> )  isomorphism classes of graphs with vertices 1,2,..,n
+##
+InstallGlobalFunction( GraphClasses,
+
+  function ( n )
+
+    if not IsPosInt(n) then return fail; fi;
+    return Orbits(SymmetricGroup(n),
+                  Combinations(Combinations([1..n],2)),
+                  function(Gamma,g)
+                    return Set(Gamma,k->OnSets(k,g));
+                  end);
+  end );
+
+#############################################################################
+##
+#F  IdGraph( <graph>, <classes> ) . identify the isomorphism class of <graph>
+##
+InstallGlobalFunction( IdGraph,
+
+  function ( graph, classes )
+
+    local  vertexnums, i;
+
+    vertexnums := Set(Flat(graph));
+    graph      := Set(graph,edge->List(edge,v->Position(vertexnums,v)));
+    return First([1..Length(classes)],
+                 i ->    Length(graph) = Length(classes[i][1])
+                     and graph in classes[i]);
+  end );
+
+#############################################################################
+##
 #S  Some utilities for groups, group elements and homomorphisms. ////////////
 ##
 #############################################################################

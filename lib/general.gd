@@ -72,6 +72,43 @@ DeclareGlobalFunction( "RestrictedPartitionsWithoutRepetitions" );
 
 #############################################################################
 ##
+#S  Functions to generate and identify small graphs. ////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  AllGraphs( <n> ) . . . .  all graphs with <n> vertices, up to isomorphism
+##
+##  This function returns a list of all graphs with vertices 1, 2, ... , <n>,
+##  up to isomorphism. The graphs are represented as lists of edges.
+##
+DeclareGlobalFunction( "AllGraphs" );
+
+#############################################################################
+##
+#F  GraphClasses( <n> )  isomorphism classes of graphs with vertices 1,2,..,n
+##
+##  This function returns a list of isomorphism classes of graphs with
+##  vertices 1, 2, ... , <n>, where the graphs are represented as lists of
+##  edges.
+##
+DeclareGlobalFunction( "GraphClasses" );
+
+#############################################################################
+##
+#F  IdGraph( <graph>, <classes> ) . identify the isomorphism class of <graph>
+##
+##  Finds the index i such that <graph> lies in the i-th class in the list
+##  <classes>. The graph <graph> needs to be represented as a list of edges,
+##  and <classes> needs to have the same format as the return value of
+##  GraphClasses( n ) for some positive integer n. If the list <classes>
+##  contains no class which contains <graph>, then the function returns fail.
+##
+DeclareGlobalFunction( "IdGraph" );
+
+#############################################################################
+##
 #S  Some utilities for groups, group elements and homomorphisms. ////////////
 ##
 #############################################################################
