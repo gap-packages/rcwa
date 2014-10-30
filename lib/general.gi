@@ -332,14 +332,8 @@ InstallMethod( \*, "for infinity and infinity (RCWA)",
 InstallGlobalFunction( AllGraphs,
 
   function ( n )
-
     if not IsPosInt(n) then return fail; fi;
-    return List(Orbits(SymmetricGroup(n),
-                       Combinations(Combinations([1..n],2)),
-                       function(Gamma,g)
-                         return Set(Gamma,k->OnSets(k,g));
-                       end),
-                Representative);
+    return List(GraphClasses(n),Representative);
   end );
 
 #############################################################################
@@ -350,12 +344,16 @@ InstallGlobalFunction( GraphClasses,
 
   function ( n )
 
+    local  classes;
+
     if not IsPosInt(n) then return fail; fi;
-    return Orbits(SymmetricGroup(n),
-                  Combinations(Combinations([1..n],2)),
-                  function(Gamma,g)
-                    return Set(Gamma,k->OnSets(k,g));
-                  end);
+    classes := ShallowCopy(Orbits(SymmetricGroup(n),
+                                  Combinations(Combinations([1..n],2)),
+                                  function(Gamma,g)
+                                    return Set(Gamma,k->OnSets(k,g));
+                                  end));
+    SortParallel(List(classes,cl->Length(cl[1])),classes);
+    return classes;
   end );
 
 #############################################################################

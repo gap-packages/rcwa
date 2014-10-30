@@ -318,6 +318,19 @@ which takes as arguments two list entries and returns either <C>true</C>
 or <C>false</C> depending on whether the arguments belong to the same
 equivalence class or not. <P/>
 
+<Index Key="GraphClasses"><C>GraphClasses</C></Index>
+<Index Key="AllGraphs"><C>AllGraphs</C></Index>
+<Index Key="IdGraph"><C>IdGraph</C></Index>
+
+There is a function <C>GraphClasses(<A>n</A>)</C>, which computes a list of
+isomorphism classes of graphs with vertices <M>1, 2, \dots, n</M>, and a
+function <C>AllGraphs(<A>n</A>)</C> which computes a list of representatives
+of these classes. The graphs are represented as lists of edges, where
+each edge is a list of the two vertices it connects, and they are ordered
+by ascending number of edges.
+The function <C>IdGraph(<A>graph</A>,<A>classes</A>)</C> returns the
+index <C>i</C> such that <A>graph</A> lies <A>classes</A><C>[i]</C>. <P/>
+
 <Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
 
 Yet another utility function is <C>AssignGlobals(<A>rec</A>)</C> which
