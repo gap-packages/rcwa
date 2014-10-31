@@ -2334,6 +2334,13 @@ InstallMethod( IsClassTransposition,
     local  cls;
 
     if IsOne(sigma) then return false; fi;
+    if not IsBijective(sigma) then return false; fi;
+    if HasOrder(sigma) and Order(sigma) <> 2 then return false; fi;
+    if   IsRcwaMappingStandardRep(sigma) and Length(Set(Coefficients(a))) > 3
+    then return false; fi;
+    if   IsRcwaMappingSparseRep(sigma)
+     and Length(Set(Coefficients(a),c->c{[3..5]})) > 3
+    then return false; fi;
     cls := AsUnionOfFewClasses(Support(sigma));
     if Length(cls) = 1 then cls := SplittedClass(cls[1],2); fi;
     if Length(cls) > 2 then return false; fi;
