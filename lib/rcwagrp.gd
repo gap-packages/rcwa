@@ -635,6 +635,17 @@ DeclareGlobalFunction(
 
 #############################################################################
 ##
+#F  LoadDatabaseOfCTGraphs( )
+##
+##  This function loads the database of realizations of finite graphs as
+##  'class transposition graphs' -- the vertices are class transpositions,
+##  and there is an edge connecting two vertices iff their product has finite
+##  order, or equivalently, iff both vertices respect a common partition.
+##
+DeclareGlobalFunction( "LoadDatabaseOfCTGraphs" );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################

@@ -899,6 +899,10 @@ end;
 ##  check this data. If it detects an error, it raises an error message and
 ##  enters a break loop.
 ##
+##  Embeddings of all 34 graphs with 5 vertices and of all 156 graphs with 6
+##  vertices can be found in a separate database which is loaded with the
+##  function `LoadDatabaseOfCTGraphs'.
+##
 RCWAExamples.ClassTranspositionProducts.Embeddings4 := [
   [ [  ],
     [ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4),

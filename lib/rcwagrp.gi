@@ -6298,4 +6298,16 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
 
 #############################################################################
 ##
+#F  LoadDatabaseOfCTGraphs( )
+##
+InstallGlobalFunction( LoadDatabaseOfCTGraphs,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/ct-graphs.g"))();
+  end );
+
+#############################################################################
+##
 #E  rcwagrp.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
