@@ -1074,8 +1074,12 @@ gap> DecreasingOn(T);
 0(2)
 gap> DecreasingOn(T^2);
 Z \ 3(4)
+gap> DecreasingOn(SparseRep(T)^2:classes);
+[ 0(4), 1(4), 2(4) ]
 gap> DecreasingOn(T^3);
 0(4) U 2(8) U 5(8)
+gap> IncreasingOn(SparseRep(T)^2:classes);
+[ 3(4) ]
 gap> DecreasingOn(a);
 1(2)
 gap> DecreasingOn(a^2);
@@ -1550,6 +1554,10 @@ Integers
 gap> ShiftsUpOn(ClassShift(2,3));
 2(3)
 gap> ShiftsDownOn(ClassShift(2,3));
+[  ]
+gap> ShiftsUpOn(SparseRep(ClassShift(2,3)):classes);
+[ 2(3) ]
+gap> ShiftsDownOn(SparseRep(ClassShift(2,3)):classes);
 [  ]
 gap> ShiftsUpOn(ClassShift(2,3)^-1);
 [  ]

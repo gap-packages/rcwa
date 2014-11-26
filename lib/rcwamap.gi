@@ -4676,8 +4676,16 @@ InstallMethod( IncreasingOn, "for rcwa mappings in standard rep. (RCWA)",
 ##
 InstallMethod( IncreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
-               f -> Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
-                               c->ResidueClass(c[1],c[2]))) );
+
+  function ( f )
+    if ValueOption("classes") = true then
+      return Set(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
+                  c->ResidueClass(c[1],c[2]));
+    else
+      return Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
+                        c->ResidueClass(c[1],c[2])));
+    fi;
+  end );
 
 #############################################################################
 ##
@@ -4708,8 +4716,16 @@ InstallMethod( DecreasingOn, "for rcwa mappings in standard rep. (RCWA)",
 ##
 InstallMethod( DecreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
-               f -> Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
-                               c->ResidueClass(c[1],c[2]))) );
+
+  function ( f )
+    if ValueOption("classes") = true then
+      return Set(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
+                  c->ResidueClass(c[1],c[2]));
+    else
+      return Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
+                        c->ResidueClass(c[1],c[2])));
+    fi;
+  end );
 
 #############################################################################
 ##
@@ -4723,9 +4739,18 @@ InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in standard rep. (RCWA)",
                                  and Coefficients(f)[r+1][2] > 0 ) ) );
 InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
-               f -> Union(List(Filtered(f!.coeffs,
-                                        c->c{[3,5]}=[1,1] and c[4]>0),
-                               c->ResidueClass(c[1],c[2]))) );
+
+  function ( f )
+    if ValueOption("classes") = true then
+      return Set(Filtered(f!.coeffs,
+                           c->c{[3,5]}=[1,1] and c[4]>0),
+                  c->ResidueClass(c[1],c[2]));
+    else
+      return Union(List(Filtered(f!.coeffs,
+                                 c->c{[3,5]}=[1,1] and c[4]>0),
+                        c->ResidueClass(c[1],c[2])));
+    fi;
+  end );
 
 #############################################################################
 ##
@@ -4740,9 +4765,18 @@ InstallMethod( ShiftsDownOn,
                                  and Coefficients(f)[r+1][2] < 0 ) ) );
 InstallMethod( ShiftsDownOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
-               f -> Union(List(Filtered(f!.coeffs,
-                                        c->c{[3,5]}=[1,1] and c[4]<0),
-                               c->ResidueClass(c[1],c[2]))) );
+
+  function ( f )
+    if ValueOption("classes") = true then
+      return Set(Filtered(f!.coeffs,
+                           c->c{[3,5]}=[1,1] and c[4]<0),
+                  c->ResidueClass(c[1],c[2]));
+    else
+      return Union(List(Filtered(f!.coeffs,
+                                 c->c{[3,5]}=[1,1] and c[4]<0),
+                        c->ResidueClass(c[1],c[2])));
+    fi;
+  end );
 
 #############################################################################
 ##
