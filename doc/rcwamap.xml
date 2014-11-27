@@ -1571,6 +1571,11 @@ whose elements get larger or smaller when applying a given rcwa mapping:
     Section&nbsp;<Ref Label="sec:basicdefinitions"/>.
   </Returns>
   <Description>
+    If the argument is an rcwa mapping of &ZZ; in sparse representation,
+    an option <C>classes</C> is interpreted; if set, the step of forming
+    the union of the residue classes in question is omitted, and the
+    list of residue classes is returned instead of their union.
+    This may save time and memory if the modulus is large.
 <Example>
 <![CDATA[
 gap> List([1..3],k->IncreasingOn(T^k));
