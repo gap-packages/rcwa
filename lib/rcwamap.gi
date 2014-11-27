@@ -4879,6 +4879,33 @@ InstallMethod( ImageDensity, "for rcwa mappings of Z in sparse rep. (RCWA)",
 
 #############################################################################
 ##
+#M  DensityOfSetOfFixedPoints( <f> )  for rcwa mappings of Z in standard rep.
+##
+InstallMethod( DensityOfSetOfFixedPoints,
+               "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
+               f->Number(Coefficients(f),c->c=[1,0,1])/Mod(f) );
+
+#############################################################################
+##
+#M  DensityOfSetOfFixedPoints( <f> )  . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( DensityOfSetOfFixedPoints,
+               "for rcwa mappings in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f->Sum(List(Filtered(Coefficients(f),c->c{[3..5]}=[1,0,1]),
+                  c->1/c[2])) );
+
+#############################################################################
+##
+#M  DensityOfSupport( <f> ) . . . . . . . . . . . . .  for rcwa mappings of Z
+##
+InstallMethod( DensityOfSupport, "for rcwa mappings (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+               f -> 1 - DensityOfSetOfFixedPoints( f ) );
+
+#############################################################################
+##
 #M  Multpk( <f>, <p>, <k> ) . . . . . for rcwa mappings of Z in standard rep.
 ##
 InstallMethod( Multpk, "for rcwa mappings of Z in standard rep. (RCWA)",

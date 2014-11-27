@@ -747,6 +747,17 @@ DeclareAttribute( "ImageDensity", IsRcwaMapping );
 
 #############################################################################
 ##
+#A  DensityOfSupport( <f> )
+#A  DensityOfSetOfFixedPoints( <f> )
+##
+##  The natural density of the support / set of fixed points of the rcwa
+##  mapping <f>.
+##
+DeclareAttribute( "DensityOfSupport", IsRcwaMappingOfZ );
+DeclareAttribute( "DensityOfSetOfFixedPoints", IsRcwaMappingOfZ );
+
+#############################################################################
+##
 #A  MappedPartitions( <g> )
 ##
 DeclareAttribute( "MappedPartitions", IsRcwaMapping );

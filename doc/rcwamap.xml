@@ -801,7 +801,12 @@ gap> while Length(M) < 5000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
 
 There is a method for the operation <C>Support</C> for computing the
 support of an rcwa mapping. A synonym for <C>Support</C> is
-<C>MovedPoints</C>. There is also a method for <C>RestrictedPerm</C>
+<C>MovedPoints</C>. The natural density of the support of an rcwa mapping
+of &ZZ; can be computed efficiently with the operation <C>DensityOfSupport</C>.
+Likewise, the natural density of the set of fixed points of an rcwa mapping
+of &ZZ; can be computed efficiently with the operation
+<C>DensityOfSetOfFixedPoints</C>.
+There is also a method for <C>RestrictedPerm</C>
 for computing the restriction of an rcwa permutation to a union
 of residue classes which it fixes setwise.
 

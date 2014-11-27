@@ -14,6 +14,9 @@ Changes between version 3.7.0 and version 3.X.X ():
  - A database of realizations of all (simple) graphs with 4, 5 and 6 vertices
    as class transposition graphs has been added.
  
+ - Operations `DensityOfSetOfFixedPoints' and `DensityOfSupport'
+   have been added.
+
  - Utility functions `AllGraphs', `GraphClasses' and `IdGraph' have been added.
 
  - Functions `DeMoire' and `DeMoireShrinkAndCrop' have been added.
