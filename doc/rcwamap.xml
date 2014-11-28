@@ -798,6 +798,14 @@ gap> while Length(M) < 5000 do M := PreImage(T,M); Add(l,Length(M)); od; l;
        Subkey="for an rcwa permutation and a residue class union">
   <C>RestrictedPerm</C>
 </Index>
+<Index Key="DensityOfSupport"
+       Subkey="of an rcwa mapping">
+  <C>DensityOfSupport</C>
+</Index>
+<Index Key="DensityOfSetOfFixedPoints"
+       Subkey="of an rcwa mapping">
+  <C>DensityOfSetOfFixedPoints</C>
+</Index>
 
 There is a method for the operation <C>Support</C> for computing the
 support of an rcwa mapping. A synonym for <C>Support</C> is
