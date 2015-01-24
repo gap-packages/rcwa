@@ -365,6 +365,7 @@ DeclareOperation( "ShortResidueClassOrbits", [ IsRcwaGroup, IsRingElement,
 #A  StabilizerInfo( <G> ) . .  info. on what is stabilized under which action
 ##
 DeclareOperation( "StabilizerOp", [ IsRcwaGroup, IsRingElement ] );
+DeclareOperation( "StabilizerOp", [ IsRcwaGroup, IsListOrCollection ] );
 DeclareOperation( "StabilizerOp", [ IsRcwaGroup, IsListOrCollection,
                                     IsFunction ] );
 DeclareAttribute( "StabilizerInfo", IsRcwaGroup );

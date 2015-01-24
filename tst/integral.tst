@@ -1521,7 +1521,7 @@ gap> g := RcwaMapping([[2,2,1],[1, 4,1],[1,0,2],[2,2,1],[1,-4,1],[1,-2,1]]);;
 gap> h := RcwaMapping([[2,2,1],[1,-2,1],[1,0,2],[2,2,1],[1,-1,1],[1, 1,1]]);;
 gap> SetName(g,"g"); SetName(h,"h");
 gap> G := Group(g,h);;
-gap> H := Stabilizer(G,0);;
+gap> H := Stabilizer(G,0:maxgens:=10);;
 gap> IsTrivial(H);
 false
 gap> ClassTransposition(1,3,2,3) in H;
@@ -1539,8 +1539,9 @@ gap> for h in H do Add(l,h); if Length(l) = 10 then break; fi; od;
 gap> List(l,h->0^h);
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> List(l,h->PreImagesRepresentative(phi,h));
-[ <identity ...>, h*g^-1, g*h^-1, (h*g^-1)^2, g^-1*h^-1*g^2, g^-2*h*g, 
-  (g*h^-1)^2, h^-3*g^-1, h*g*h^2, h^-4 ]
+[ <identity ...>, h*g^-1, g^-1*h^-1*g^2, g^-2*h*g, g*h^-1, g^-2*h^-1*g^3, 
+  (g^2*h)^2*g^-3*h^-1*g^-2, g^2*h*g^3*(h^-1*g^-2)^2, g^3*h*g*h^-2*g^-3, 
+  g^-3*h*g^2 ]
 gap> l := ExtRepOfObj(Collatz);
 [ 3, [ [ 2, 0, 3 ], [ 4, -1, 3 ], [ 4, 1, 3 ] ] ]
 gap> Collatz2 := ObjByExtRep(FamilyObj(Collatz),l);

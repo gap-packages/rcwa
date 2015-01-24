@@ -4270,44 +4270,143 @@ BindGlobal( "Stabilizer",                                  #
 
 #############################################################################
 ##
-#M  StabilizerOp( <G>, <n> ) . . . . . . .  point stabilizer in an rcwa group
+#M  StabilizerOp( <G>, <point> )  point stabilizer in an rcwa group, symbolic
 ##
 InstallMethod( StabilizerOp,
-               "point stabilizer in an rcwa group (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsRingElement ], 0,
+               "point stabilizer in an rcwa group, symbolic (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsRingElement ], 5,
 
-  function ( G, n )
+  function ( G, point )
 
-    local  R, H;
+    local  S;
 
-    R := Source(One(G));
-    if not n in R then TryNextMethod(); fi;
-    H := SubgroupByProperty(G,g->n^g=n);
-    SetStabilizerInfo(H, rec(set    := [n],
+    if   IsFinitelyGeneratedGroup(G) and ValueOption("symbolic") <> true
+    then TryNextMethod(); fi;
+    if not point in Support(G) then return G; fi;
+
+    S := SubgroupByProperty(G,g->point^g=point);
+    SetStabilizerInfo(S, rec(set    := [point],
                              action := OnPoints));
-    return H;
+    return S;
   end );
 
 #############################################################################
 ##
-#M  StabilizerOp( <G>, <S>, <action> ) . .  point stabilizer in an rcwa group
+#M  StabilizerOp( <G>, <set>, <action> )  set stabilizer in rcwa group, symb.
 ##
 InstallMethod( StabilizerOp,
-               "point stabilizer in an rcwa group (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsListOrCollection, IsFunction ], 0,
+               "set stabilizer in an rcwa group, symbolic (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsListOrCollection,
+                             IsFunction ], 0,
 
-  function ( G, S, action )
+  function ( G, set, action )
 
-    local  R, H;
+    local  S;
 
-    R := Source(One(G));
-    if not IsSubset(R,S) then TryNextMethod(); fi;
-    if   not IsFinite(S) and action = OnTuples
-    then H := SubgroupByProperty(G,g->IsTrivial(Intersection(Support(g),S)));
-    else H := SubgroupByProperty(G,g->action(S,g)=S); fi;
-    SetStabilizerInfo(H, rec(set    := S,
+    set := Intersection(set,Support(G));
+    if set = [] then return G; fi;
+
+    if not IsFinite(set) and action = OnTuples then
+      S := SubgroupByProperty(G,g->Intersection(Support(g),set)=[]);
+    else
+      S := SubgroupByProperty(G,g->action(set,g)=set);
+    fi;
+
+    SetStabilizerInfo(S, rec(set    := set,
                              action := action));
-    return H;
+    return S;
+  end );
+
+#############################################################################
+##
+#M  StabilizerOp( <G>, <point> ) . point stabilizer in an rcwa group, default
+##
+InstallMethod( StabilizerOp,
+               "point stabilizer in an rcwa group, default method (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsRingElement ], 0,
+
+  function ( G, point )
+
+    local  S, gens, orb, t, g, p, img, maxgens;
+
+    if not point in Support(G) then return G; fi;
+
+    if ValueOption("symbolic") = true then TryNextMethod(); fi;
+    if   ValueOption("maxr") = true or ValueOption("maxm") = true
+    then TryNextMethod(); fi;
+    maxgens := ValueOption("maxgens");
+    if maxgens = fail then maxgens := infinity; fi;
+
+    gens := GeneratorsOfGroup(G);
+    orb  := [point];
+    t    := [One(G)];
+    S    := TrivialSubgroup(G);
+    for p in orb do
+      for g in gens do
+        img := p^g;
+        if not img in orb then
+          Add(orb,img);
+          Add(t,t[Position(orb,p)]*g);
+        else
+          S := ClosureGroup(S,t[Position(orb,p)]*g/t[Position(orb,img)]);
+          if Length(GeneratorsOfGroup(S)) >= maxgens then return S; fi;
+        fi;
+      od;
+    od;
+
+    return S;
+  end );
+
+#############################################################################
+##
+#M  StabilizerOp( <G>, <point> ) . (subgp. of) point stabilizer in rcwa group
+##
+InstallMethod( StabilizerOp,
+               "(subgroup of) point stabilizer in an rcwa group (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsRingElement ], 0,
+
+  function ( G, point )
+
+    local  S, B, gens, maxr, maxm;
+
+    if not point in Support(G) then return G; fi;
+
+    maxr := ValueOption("maxr"); maxm := ValueOption("maxm");
+    if maxr = fail or maxm = fail then TryNextMethod(); fi;
+
+    B    := RestrictedBall(G,One(G),maxr,maxm:Spheres);
+    gens := Union(List(B,sphere->Filtered(sphere,
+                                          g->not point in Support(g))));
+    S    := Group(gens);
+
+    return S;
+  end );
+
+#############################################################################
+##
+#M  StabilizerOp( <G>, <set> ) (subgp. of) pointwise stabilizer in rcwa group
+##
+InstallMethod( StabilizerOp,
+               "(subgroup of) pointwise stabilizer in an rcwa group (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsListOrCollection ], 0,
+
+  function ( G, set )
+
+    local  S, gens, B, maxr, maxm;
+
+    set := Intersection(set,Support(G));
+    if set = [] then return G; fi;
+
+    maxr := ValueOption("maxr"); maxm := ValueOption("maxm");
+    if maxr = fail or maxm = fail then TryNextMethod(); fi;
+
+    B    := RestrictedBall(G,One(G),maxr,maxm:Spheres);
+    gens := Union(List(B,sphere->Filtered(sphere,
+                                          g->Intersection(Support(g),set)
+                                            =[])));
+    S    := Group(gens);
+
+    return S;
   end );
 
 #############################################################################
