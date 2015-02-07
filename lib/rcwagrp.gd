@@ -419,13 +419,13 @@ DeclareGlobalFunction( "DrawOrbitPicture" );
 
 #############################################################################
 ##
-#O  CollatzLikeMappingByOrbitTree( <G>, <root>, <max_r> )
+#O  CollatzLikeMappingByOrbitTree( <G>, <root>, <min_r>, <max_r> )
 ##
 ##  This operation is so far undocumented since its meaning has yet to be
 ##  settled.
 ##
 DeclareOperation( "CollatzLikeMappingByOrbitTree",
-                  [ IsRcwaGroup, IsRingElement, IsPosInt ] );
+                  [ IsRcwaGroup, IsRingElement, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##

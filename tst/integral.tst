@@ -1945,6 +1945,23 @@ gap> G = Group(List([[0,4,1,4],[1,4,2,4],[2,4,3,4],[0,2,1,4]],
 true
 gap> GeneratorsOfGroup(G);
 [ ( 0(4), 1(4), 2(4), 3(4) ), ( 0(4), 1(4) ), ( 0(4), 2(8) ) ( 1(4), 6(8) ) ]
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4),
+>               ClassTransposition(1,4,2,6));;
+gap> G := SparseRep(G);;
+gap> f := CollatzLikeMappingByOrbitTree(G,0,4,10);
+<rcwa mapping of Z with modulus 4 and 4 affine parts>
+gap> Display(f);
+
+Rcwa mapping of Z with modulus 4 and 4 affine parts
+
+        /
+        | n+1      if n in 0(4)
+        | (3n+1)/2 if n in 1(4)
+ n |-> <  n/2      if n in 2(4)
+        | n-1      if n in 3(4)
+        |
+        \
+
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

@@ -19,6 +19,8 @@ Changes between version 3.7.0 and version 3.X.X ():
  - Operations `DensityOfSetOfFixedPoints' and `DensityOfSupport'
    have been added.
 
+ - The method for `CollatzLikeMappingByOrbitTree' has been improved.
+
  - Utility functions `AllGraphs', `GraphClasses' and `IdGraph' have been added.
 
  - Functions `DeMoire' and `DeMoireShrinkAndCrop' have been added.

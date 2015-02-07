@@ -4788,52 +4788,59 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
 
 #############################################################################
 ##
-#M  CollatzLikeMappingByOrbitTree( <G>, <root>, <max_r> )
+#M  CollatzLikeMappingByOrbitTree( <G>, <root>, <min_r>, <max_r> )
 ##
 InstallMethod( CollatzLikeMappingByOrbitTree,
                "for rcwa group over Z, point and search radius (RCWA)",
-               ReturnTrue, [ IsRcwaGroupOverZ, IsInt, IsPosInt ], 0,
+               ReturnTrue,
+               [ IsRcwaGroupOverZ, IsInt, IsPosInt, IsPosInt ], 0,
 
-  function ( G, root, max_r )
+  function ( G, root, min_r, max_r )
 
-    local  f, c, g, B, r, P, n, img, m, i, j;
+    local  B, r, f, c, gens, mods, affs, maps, imgs,
+           affsmaps, affsimgs, n, m;
 
-    g := GeneratorsOfGroup(G);
-    P := PrimeSet(G);
-    r := 3;
-    f := fail;
-
-    repeat
-      B := Ball(G,root,r,OnPoints:Spheres);
-      Info(InfoRCWA,2,"r = ",r,": sphere sizes = ",List(B,Length));
-      if [] in B then
-        Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
-                        "the orbit is finite.");
-        return fail;
-      fi;
-      if Maximum(List(B,Length)) >= 4 then 
-        c := [];
-        for i in [3..r+1] do
-          for j in [1..Length(B[i])] do
-            n   := B[i][j];
-            img := Intersection(Set(List(g,h->n^h)),B[i-1]);
-            if Length(img) > 1 then
-              Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
-                              "the orbit is not tree-like.");
-              return fail;
-            fi;
-            Add(c,[n,img[1]]);
-          od;
-        od;
-        for m in Filtered([2..Int(Length(c)/2)],k->IsSubset(P,Factors(k))) do
-          f := RcwaMapping(m,c:BeQuiet);
-          if f <> fail then return f; fi;
-        od;
-      fi;
-      r := r + 1;
-    until r > max_r;
-
-    return f;
+    if min_r > max_r then return fail; fi;
+    gens := List(GeneratorsOfGroup(G),SparseRep);
+    B := Ball(G,root,max_r,OnPoints:Spheres);
+    Info(InfoRCWA,2,"CollatzLikeMappingByOrbitTree: sphere sizes = ",
+                    List(B,Length));
+    if [] in B then
+      Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
+                      "the orbit is finite.");
+      return fail;
+    fi;
+    affs := Filtered(Union(List(gens,Coefficients)),c->c{[3..5]}<>[1,0,1]);
+    affsmaps := []; affsimgs := [];
+    for r in [min_r+1..max_r+1] do
+      Info(InfoRCWA,3,"Computing mappings and images for r = ",r," ...");
+      for n in B[r] do
+        maps := Filtered(affs,c->n mod c[2] = c[1]
+                                 and (c[3]*n+c[4])/c[5] in B[r-1]);
+        imgs := Set(maps,c->(c[3]*n+c[4])/c[5]);
+        if imgs = [] then Error("internal error"); return fail; fi;
+        if Length(imgs) > 1 then
+          Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: ",
+                          "the orbit is not treelike.");
+          return fail;
+        fi;
+        Add(affsmaps,[n,maps]);
+        Add(affsimgs,[n,imgs]);
+      od;
+    od;
+    mods := Filtered(AllSmoothIntegers(PrimeSet(G),Length(affsmaps)),m->m>1);
+    for m in mods do
+      Info(InfoRCWA,3,"Checking modulus m = ",m," ...");
+      c := List([0..m-1],
+                r->Set(Filtered(affsmaps,s->s[1] mod m = r),
+                                     t->t[2][1]{[3..5]}));
+      if [] in c or ForAny(c,alts->Length(alts)>1) then continue; fi;
+      c := List(c,t->t[1]);
+      f := RcwaMapping(c:BeQuiet);
+      if f <> fail then return SparseRep(f); else continue; fi;
+    od;
+    Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: nothing found.");
+    return fail;
   end );
 
 #############################################################################

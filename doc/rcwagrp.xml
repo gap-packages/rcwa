@@ -1426,6 +1426,60 @@ gap> [ResidueClass(1,3),ResidueClassUnion(Integers,3,[0,2])]^elm;
   </Description>
 </ManSection>
 
+<Index Key="CollatzLikeMappingByOrbitTree" Subkey="for an rcwa group">
+  <C>CollatzLikeMappingByOrbitTree</C>
+</Index>
+
+Some rcwa groups over &ZZ; have the property that for some integer <M>n</M>
+there is an rcwa mapping <M>f</M> such that for any sufficiently large
+<M>r</M>, the image of the sphere of radius <M>r</M> about <M>n</M> under
+<M>f</M> is a subset of the sphere of radius <M>r-1</M> about <M>n</M>.
+Of course such mapping <M>f</M> depends on the choice of generators of the
+group; it can be found using the operation
+<C>CollatzLikeMappingByOrbitTree(<A>G</A>,<A>n</A>,<A>min_r</A>,<A>max_r</A></C>,
+which takes as arguments the group <A>G</A>, the root point <A>n</A> and
+a range of search radii specified by <A>min_r</A> and <A>max_r</A>.
+
+<Example>
+<![CDATA[
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4),
+>               ClassTransposition(1,4,2,6));;
+gap> G := SparseRep(G);;
+gap> f := CollatzLikeMappingByOrbitTree(G,0,4,10);
+<rcwa mapping of Z with modulus 4 and 4 affine parts>
+gap> Display(f);
+
+Rcwa mapping of Z with modulus 4 and 4 affine parts
+
+        /
+        | n+1      if n in 0(4)
+        | (3n+1)/2 if n in 1(4)
+ n |-> <  n/2      if n in 2(4)
+        | n-1      if n in 3(4)
+        |
+        \
+
+gap> B := Ball(G,0,15:Spheres);
+[ [ 0 ], [ 1 ], [ 2 ], [ 3 ], [ 6 ], [ 7 ], [ 14 ], [ 9, 15 ], [ 8, 18, 30 ], 
+  [ 5, 19, 31 ], [ 4, 10, 38, 62 ], [ 11, 25, 39, 41, 63 ], 
+  [ 22, 24, 40, 50, 78, 82, 126 ], [ 23, 33, 51, 79, 83, 127 ], 
+  [ 32, 46, 66, 102, 158, 166, 254 ], 
+  [ 21, 47, 67, 103, 105, 159, 167, 169, 255 ] ]
+gap> List([3..15],i->IsSubset(B[i-1],B[i]^f));
+[ true, true, true, true, true, true, true, true, true, true, true, true,
+  true ]
+gap> Trajectory(f,52,[0,1]);
+[ 52, 53, 80, 81, 122, 61, 92, 93, 140, 141, 212, 213, 320, 321, 482, 241, 
+  362, 181, 272, 273, 410, 205, 308, 309, 464, 465, 698, 349, 524, 525, 788, 
+  789, 1184, 1185, 1778, 889, 1334, 667, 666, 333, 500, 501, 752, 753, 1130, 
+  565, 848, 849, 1274, 637, 956, 957, 1436, 1437, 2156, 2157, 3236, 3237, 
+  4856, 4857, 7286, 3643, 3642, 1821, 2732, 2733, 4100, 4101, 6152, 6153, 
+  9230, 4615, 4614, 2307, 2306, 1153, 1730, 865, 1298, 649, 974, 487, 486, 
+  243, 242, 121, 182, 91, 90, 45, 68, 69, 104, 105, 158, 79, 78, 39, 38, 19, 
+  18, 9, 14, 7, 6, 3, 2, 1 ]
+]]>
+</Example>
+
 </Section>
 
 <!-- #################################################################### -->
