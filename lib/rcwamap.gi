@@ -1511,7 +1511,7 @@ InstallMethod( PiecewiseMapping,
       od;
     od;
     map := RcwaMapping(coeffs);
-    return map;
+    return SparseRep(map);
   end );
 
 #############################################################################
