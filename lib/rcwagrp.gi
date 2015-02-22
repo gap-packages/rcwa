@@ -4847,7 +4847,7 @@ InstallMethod( CollatzLikeMappingByOrbitTree,
             fi;
           od;
         od;
-        if IsIntegers(viable) then return f; fi;
+        if IsIntegers(viable) then return SparseRep(f); fi;
         f := PiecewiseMapping([viable,Difference(Integers,viable)],
                               [f,One(f)]);
         return f;
