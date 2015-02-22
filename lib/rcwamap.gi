@@ -1471,7 +1471,52 @@ InstallMethod( ObjByExtRep,
 
 #############################################################################
 ##
-#S  Creating rcwa mappings from rcwa mappings of different rings. ///////////
+#S  Creating new rcwa mappings from rcwa mappings of the same ring. /////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  PiecewiseMapping( <sources>, <maps> ) . . . . . .  for rcwa mappings of Z
+##
+InstallMethod( PiecewiseMapping,
+               "for rcwa mappings of Z (RCWA)",
+               ReturnTrue, [ IsList, IsList ], 0,
+
+  function ( sources, maps )
+
+    local  map, coeffs, f, c, S, t, cls, cl, i;
+
+    if  Length(sources) <> Length(maps)
+      or not ForAll(sources,IsListOrCollection)
+      or not ForAll(maps,IsMapping)
+    then return fail; fi;
+    if   not ForAll(sources,IsResidueClassUnionOfZ)
+      or not ForAll(maps,IsRcwaMappingOfZ)
+      or not IsIntegers(Union(sources))
+      or Sum(List(sources,Density)) <> 1
+    then TryNextMethod(); fi;
+
+    maps := List(maps,SparseRep);
+    coeffs := [];
+    for i in [1..Length(maps)] do
+      S := sources[i];
+      f := maps[i];
+      c := Coefficients(f);
+      for t in c do
+        cls := AsUnionOfFewClasses(Intersection(ResidueClass(t[1],t[2]),S));
+        for cl in cls do
+          Add(coeffs,[Residue(cl),Modulus(cl),t[3],t[4],t[5]]);
+        od;
+      od;
+    od;
+    map := RcwaMapping(coeffs);
+    return map;
+  end );
+
+#############################################################################
+##
+#S  Creating new rcwa mappings from rcwa mappings of different rings. ///////
 ##
 #############################################################################
 

@@ -4798,7 +4798,7 @@ InstallMethod( CollatzLikeMappingByOrbitTree,
   function ( G, root, min_r, max_r )
 
     local  B, r, f, c, gens, mods, affs, maps, imgs,
-           affsmaps, affsimgs, n, m;
+           affsmaps, affsimgs, viable, aff, n, m;
 
     if min_r > max_r then return fail; fi;
     gens := List(GeneratorsOfGroup(G),SparseRep);
@@ -4837,7 +4837,21 @@ InstallMethod( CollatzLikeMappingByOrbitTree,
       if [] in c or ForAny(c,alts->Length(alts)>1) then continue; fi;
       c := List(c,t->t[1]);
       f := RcwaMapping(c:BeQuiet);
-      if f <> fail then return SparseRep(f); else continue; fi;
+      if f <> fail then
+        viable := [];
+        for aff in affs do
+          for r in [0..m-1] do
+            if aff{[3..5]} = c[r+1] then
+              viable := Union(viable,Intersection(ResidueClass(aff[1],aff[2]),
+                                                  ResidueClass(r,m)));
+            fi;
+          od;
+        od;
+        if IsIntegers(viable) then return f; fi;
+        f := PiecewiseMapping([viable,Difference(Integers,viable)],
+                              [f,One(f)]);
+        return f;
+      else continue; fi;
     od;
     Info(InfoRCWA,1,"CollatzLikeMappingByOrbitTree: nothing found.");
     return fail;

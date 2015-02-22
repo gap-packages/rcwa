@@ -72,6 +72,23 @@ DeclareGlobalFunction( "RestrictedPartitionsWithoutRepetitions" );
 
 #############################################################################
 ##
+#S  Operations to construct new mappings from given ones. ///////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#O  PiecewiseMapping( <sources>, <maps> )
+##
+##  Returns the mapping f composed from the mappings <maps> defined on
+##  <sources>. Here, <sources> and and <maps> must be lists of the same
+##  length, and for any i, <maps>[i] must be defined on <sources>[i] or
+##  on a superset thereof.
+##
+DeclareOperation( "PiecewiseMapping", [ IsList, IsList ] )
+
+#############################################################################
+##
 #S  Functions to generate and identify small graphs. ////////////////////////
 ##
 #############################################################################
