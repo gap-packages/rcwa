@@ -85,7 +85,7 @@ DeclareGlobalFunction( "RestrictedPartitionsWithoutRepetitions" );
 ##  length, and for any i, <maps>[i] must be defined on <sources>[i] or
 ##  on a superset thereof.
 ##
-DeclareOperation( "PiecewiseMapping", [ IsList, IsList ] )
+DeclareOperation( "PiecewiseMapping", [ IsList, IsList ] );
 
 #############################################################################
 ##
