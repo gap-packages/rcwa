@@ -292,6 +292,7 @@ DeclareRepresentation( "IsRcwaGroupOrbitsIteratorRep",
 #############################################################################
 ##
 #O  GrowthFunctionOfOrbit( <G>, <n>, <r_max>, <size_max> )
+#O  GrowthFunctionOfOrbit( <orbit>, <r_max>, <size_max> )
 ##
 ##  Returns a list whose (r+1)-th entry is the size of the sphere of radius r
 ##  about <n> under the action of the group <G>.
@@ -299,8 +300,13 @@ DeclareRepresentation( "IsRcwaGroupOrbitsIteratorRep",
 ##  The argument <r_max> is the largest possible radius to be considered,
 ##  and the computation stops once the sphere size exceeds <size_max>.
 ##
+##  In place of the arguments <G> and <n>, one can also supply an orbit
+##  object.
+##
 DeclareOperation( "GrowthFunctionOfOrbit",
                   [ IsGroup, IsObject, IsPosInt, IsPosInt ] );
+DeclareOperation( "GrowthFunctionOfOrbit",
+                  [ IsListOrCollection, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##
