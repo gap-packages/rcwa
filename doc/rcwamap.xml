@@ -1547,9 +1547,9 @@ gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
     iterate is printed.
 <Example>
 <![CDATA[
-gap> h := Product(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));
+gap> g := Product(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));
 <rcwa permutation of Z with modulus 60>
-gap> ComputeCycleLength(h,736:notify:=100000);
+gap> ComputeCycleLength(g,736:notify:=100000);
 After 100000 steps, the iterate has 41 decimal digits.
 After 200000 steps, the iterate has 153 decimal digits.
 After 300000 steps, the iterate has 138 decimal digits.
