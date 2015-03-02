@@ -1962,6 +1962,24 @@ Rcwa mapping of Z with modulus 4 and 4 affine parts
         |
         \
 
+gap> g := Product(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));
+<rcwa permutation of Z with modulus 60>
+gap> ComputeCycleLength(g,736:notify:=100000);
+After 100000 steps, the iterate has 135 binary digits.
+After 200000 steps, the iterate has 507 binary digits.
+After 300000 steps, the iterate has 457 binary digits.
+After 400000 steps, the iterate has 325 binary digits.
+495448
+gap> G := Group(List([[0,4,1,4],[0,3,5,6],[0,4,5,6]],ClassTransposition));
+<rcwa group over Z with 3 generators>
+gap> GrowthFunctionOfOrbit(G,18,100,20);
+[ 1, 1, 2, 3, 4, 3, 4, 4, 4, 4, 3, 3, 3, 4, 3, 4, 4, 5, 5, 6, 8, 6, 5, 
+  5, 4, 3, 3, 4, 4, 4, 3, 3, 5, 4, 5, 6, 5, 2, 3, 3, 2, 3, 3, 4, 5, 4, 
+  4, 4, 6, 5, 5, 3, 4, 2, 3, 4, 4, 2, 3, 4, 4, 2, 3, 3, 4, 3, 5, 3, 5, 
+  4, 5, 6, 5, 3, 4, 5, 6, 5, 4, 3, 5, 4, 5, 5, 4, 4, 5, 5, 3, 4, 5, 3, 
+  3, 4, 5, 4, 2, 3, 4, 4, 4 ]
+gap> last = GrowthFunctionOfOrbit(Orbit(G,18),100,20);
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

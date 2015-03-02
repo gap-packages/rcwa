@@ -291,6 +291,19 @@ DeclareRepresentation( "IsRcwaGroupOrbitsIteratorRep",
 
 #############################################################################
 ##
+#O  GrowthFunctionOfOrbit( <G>, <n>, <r_max>, <size_max> )
+##
+##  Returns a list whose (r+1)-th entry is the size of the sphere of radius r
+##  about <n> under the action of the group <G>.
+##
+##  The argument <r_max> is the largest possible radius to be considered,
+##  and the computation stops once the sphere size exceeds <size_max>.
+##
+DeclareOperation( "GrowthFunctionOfOrbit",
+                  [ IsGroup, IsObject, IsPosInt, IsPosInt ] );
+
+#############################################################################
+##
 #O  CyclesOnFiniteOrbit( <G>, <g>, <n> ) . . . cycles of <g> on orbit <n>^<G>
 ##
 ##  Returns a list of all cycles of the rcwa permutation <g> on the orbit

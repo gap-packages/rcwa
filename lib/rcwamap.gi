@@ -8582,8 +8582,8 @@ InstallGlobalFunction( ComputeCycleLength,
       n := n^g;
       steps := steps + 1;
       if not notify in [0,infinity] and steps mod notify = 0 then
-        Print("After ",steps," steps, the iterate has ",LogInt(n,10)+1,
-              " decimal digits.\n");
+        Print("After ",steps," steps, the iterate has ",LogInt(n,2)+1,
+              " binary digits.\n");
       fi;
     until n = n0;
     return steps;

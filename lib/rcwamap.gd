@@ -863,7 +863,7 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 ##  If the cycle is infinite, the function will run into an infinite loop.
 ##  Iterates are not stored, to save memory.
 ##  The function interprets an option "notify", which defaults to 10000;
-##  every "notify" iterations, the number of decimal digits of the latest
+##  every "notify" iterations, the number of binary digits of the latest
 ##  iterate is printed.
 ##
 DeclareGlobalFunction( "ComputeCycleLength" );

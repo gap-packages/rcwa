@@ -4895,36 +4895,6 @@ BindGlobal( "IsRcwaGroupOrbitInStandardRep",
              IsRcwaGroupOrbit and IsRcwaGroupOrbitStandardRep );
 
 #############################################################################
-## 
-#M  OrbitUnion( <G>, <S> ) . . . . . . . . . . .  for an rcwa group and a set
-##
-##  This method might run into an infinite loop.
-## 
-InstallMethod( OrbitUnion,
-               "for an rcwa group and a set (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsListOrCollection ], 0,
-
-  function ( G, S )
-
-    local  R, gen, image, oldimage, g;
-
-    if InfoLevel(InfoRCWA) >= 1 then
-      Print("#I  OrbitUnion: initial set = "); ViewObj(S); Print("\n");
-    fi;
-    R     := Source(One(G));
-    gen   := GeneratorsAndInverses(G);
-    image := S;
-    repeat
-      oldimage := image;
-      for g in gen do image := Union(image,ImagesSet(g,image)); od;
-      if InfoLevel(InfoRCWA) >= 2 then
-        Print("#I  Image = "); ViewObj(image); Print("\n");
-      fi;
-    until image = R or image = oldimage;
-    return image;
-  end );
-
-#############################################################################
 ##
 #M  OrbitOp( <G>, <pnt>, <gens>, <acts>, <act> )
 ##
@@ -5254,6 +5224,76 @@ InstallMethod( ViewObj,
   function ( iter )
     Print("Iterator of ");
     ViewObj(iter!.orbit);
+  end );
+
+#############################################################################
+##
+#M  GrowthFunctionOfOrbit( <orb>, <r_max>, <size_max> ) . . for orbit objects
+##
+InstallMethod( GrowthFunctionOfOrbit,
+               "for rcwa group orbit objects (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOrbit, IsPosInt, IsPosInt ], 0,
+
+  function ( orb, r_max, size_max )
+    return GrowthFunctionOfOrbit( UnderlyingGroup( orb ),
+                                  Representative( orb ),
+                                  r_max, size_max );
+  end );
+
+#############################################################################
+##
+#M  GrowthFunctionOfOrbit( <G>, <n>, <r_max>, <size_max> ) .  for rcwa groups
+##
+InstallMethod( GrowthFunctionOfOrbit,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsObject, IsPosInt, IsPosInt ], 0,
+
+  function ( G, n, r_max, size_max )
+
+    local  sizes, gens, S_last, S, S_next, r;
+
+    if not n in Source(One(G)) then TryNextMethod(); fi;
+    gens := GeneratorsOfGroup(G);
+    sizes := [1]; S_last := []; S := [n]; r := 0;
+    repeat
+      r      := r + 1;
+      S_next := Union(List(gens,g->S^g));
+      S_next := Difference(S_next,Union(S,S_last));
+      S_last := S;
+      S      := S_next;
+      Add(sizes,Length(S));
+    until r >= r_max or Length(S) > size_max;
+    return sizes;
+  end );
+
+#############################################################################
+## 
+#M  OrbitUnion( <G>, <S> ) . . . . . . . . . . .  for an rcwa group and a set
+##
+##  This method might run into an infinite loop.
+## 
+InstallMethod( OrbitUnion,
+               "for an rcwa group and a set (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsListOrCollection ], 0,
+
+  function ( G, S )
+
+    local  R, gen, image, oldimage, g;
+
+    if InfoLevel(InfoRCWA) >= 1 then
+      Print("#I  OrbitUnion: initial set = "); ViewObj(S); Print("\n");
+    fi;
+    R     := Source(One(G));
+    gen   := GeneratorsAndInverses(G);
+    image := S;
+    repeat
+      oldimage := image;
+      for g in gen do image := Union(image,ImagesSet(g,image)); od;
+      if InfoLevel(InfoRCWA) >= 2 then
+        Print("#I  Image = "); ViewObj(image); Print("\n");
+      fi;
+    until image = R or image = oldimage;
+    return image;
   end );
 
 #############################################################################

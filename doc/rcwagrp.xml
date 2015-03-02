@@ -959,6 +959,38 @@ gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="GrowthFunctionOfOrbit" Arg="G, n, r_max, size_max"
+   Label="for an rcwa group, a point and bounds on radius and sphere size"/>
+  <Meth Name="GrowthFunctionOfOrbit" Arg="orb, r_max, size_max"
+   Label="for an rcwa group orbit and bounds on radius and sphere size"/>
+  <Returns>
+    a list whose (<M>r+1</M>)-th entry is the size of the sphere of
+    radius <M>r</M> about <A>n</A> under the action of the group <A>G</A>,
+    where the argument <A>r_max</A> is the largest possible radius to be
+    considered, and the computation stops once the sphere size exceeds
+    <A>size_max</A>.
+  </Returns>
+  <Description>
+     In place of the group <A>G</A> and the point <A>n</A>, one can pass as
+     first argument also an rcwa group orbit object <A>orb</A>.
+<Example>
+<![CDATA[
+gap> G := Group(List([[0,4,1,4],[0,3,5,6],[0,4,5,6]],ClassTransposition));
+<rcwa group over Z with 3 generators>
+gap> GrowthFunctionOfOrbit(G,18,100,20);
+[ 1, 1, 2, 3, 4, 3, 4, 4, 4, 4, 3, 3, 3, 4, 3, 4, 4, 5, 5, 6, 8, 6, 5, 
+  5, 4, 3, 3, 4, 4, 4, 3, 3, 5, 4, 5, 6, 5, 2, 3, 3, 2, 3, 3, 4, 5, 4, 
+  4, 4, 6, 5, 5, 3, 4, 2, 3, 4, 4, 2, 3, 4, 4, 2, 3, 3, 4, 3, 5, 3, 5, 
+  4, 5, 6, 5, 3, 4, 5, 6, 5, 4, 3, 5, 4, 5, 5, 4, 4, 5, 5, 3, 4, 5, 3, 
+  3, 4, 5, 4, 2, 3, 4, 4, 4 ]
+gap> last = GrowthFunctionOfOrbit(Orbit(G,18),100,20);
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
 <Index Key="DistanceToNextSmallerPointInOrbit">
   <C>DistanceToNextSmallerPointInOrbit</C>
 </Index>
