@@ -26,6 +26,8 @@ Changes between version 3.7.0 and version 3.X.X ():
 
  - Utility functions `AllGraphs', `GraphClasses' and `IdGraph' have been added.
 
+ - A utility function `ComputeCycleLength' has been added.
+
  - Functions `DeMoire' and `DeMoireShrinkAndCrop' have been added.
    These functions are for removing a certain type of Moire patterns
    from bitmap pictures.

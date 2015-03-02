@@ -8412,7 +8412,7 @@ InstallMethod( LikelyContractionCentre,
 
 #############################################################################
 ##
-#S  Finding finite cycles of an rcwa permutation. ///////////////////////////
+#S  Finite cycles of an rcwa permutation. ///////////////////////////////////
 ##
 #############################################################################
 
@@ -8562,6 +8562,31 @@ InstallMethod( CycleRepresentativesAndLengths,
       od;
     od;
     return replng;
+  end );
+
+#############################################################################
+##
+#F  ComputeCycleLength( <g>, <n> )
+##
+InstallGlobalFunction( ComputeCycleLength,
+
+  function ( g, n0 )
+
+    local  n, steps, notify;
+
+    n := n0; steps := 0;
+    notify := ValueOption("notify");
+    if   not IsPosInt(notify) and not notify in [0,infinity]
+    then notify := 10000; fi;
+    repeat
+      n := n^g;
+      steps := steps + 1;
+      if not notify in [0,infinity] and steps mod notify = 0 then
+        Print("After ",steps," steps, the iterate has ",LogInt(n,10)+1,
+              " decimal digits.\n");
+      fi;
+    until n = n0;
+    return steps;
   end );
 
 #############################################################################

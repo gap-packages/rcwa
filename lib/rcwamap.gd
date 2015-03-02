@@ -856,6 +856,20 @@ DeclareOperation( "ShortCycles", [ IsRcwaMapping, IsPosInt ] );
 
 #############################################################################
 ##
+#F  ComputeCycleLength( <g>, <n> )
+##
+##  Returns the length of the cycle of the rcwa permutation <g> which
+##  contains the point <n>, provided that this cycle is finite.
+##  If the cycle is infinite, the function will run into an infinite loop.
+##  Iterates are not stored, to save memory.
+##  The function interprets an option "notify", which defaults to 10000;
+##  every "notify" iterations, the number of decimal digits of the latest
+##  iterate is printed.
+##
+DeclareGlobalFunction( "ComputeCycleLength" );
+
+#############################################################################
+##
 #O  ShortResidueClassCycles( <g>, <modulusbound>, <maxlng> )
 ##
 ##  Returns a list of all cycles of residue classes of the rcwa
