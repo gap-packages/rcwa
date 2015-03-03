@@ -5250,20 +5250,29 @@ InstallMethod( GrowthFunctionOfOrbit,
 
   function ( G, n, r_max, size_max )
 
-    local  sizes, gens, S_last, S, S_next, r;
+    local  spheresizes, gens, S_last, S, S_next, r,
+           smallpoints, small;
 
     if not n in Source(One(G)) then TryNextMethod(); fi;
+    small := ValueOption("small"); smallpoints := [];
+    if IsList(small) and n in small then Add(smallpoints,n); fi;
     gens := GeneratorsOfGroup(G);
-    sizes := [1]; S_last := []; S := [n]; r := 0;
+    spheresizes := [1]; S_last := []; S := [n]; r := 0;
     repeat
       r      := r + 1;
       S_next := Union(List(gens,g->S^g));
       S_next := Difference(S_next,Union(S,S_last));
       S_last := S;
       S      := S_next;
-      Add(sizes,Length(S));
+      Add(spheresizes,Length(S));
+      if IsList(small) then
+        smallpoints := Union(smallpoints,Filtered(S,p->p in small));
+      fi;
     until r >= r_max or Length(S) > size_max;
-    return sizes;
+    if IsList(small) then
+      return rec( spheresizes := spheresizes,
+                  smallpoints := smallpoints );
+    else return spheresizes; fi;
   end );
 
 #############################################################################
