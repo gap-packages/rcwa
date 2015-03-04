@@ -8547,19 +8547,17 @@ InstallMethod( CycleRepresentativesAndLengths,
 
   function ( g, S )
 
-    local  replng, rem, cyc, rep, i, j;
+    local  replng, rem, cyc, rep, n, i, j;
 
     replng := [];
     rem    := List(S,n->n^g<>n);
     for i in [1..Length(S)] do
       if rem[i] = false then continue; fi;
       rep := S[i];
-      cyc := Cycle(g,rep);
-      Add(replng,[rep,Length(cyc)]);
-      for j in [1..Length(cyc)] do
-        if   cyc[j] in S
-        then rem[PositionSorted(S,cyc[j])] := false; fi;
-      od;
+      cyc := ComputeCycleLength(g,rep:small:=S);
+      if not cyc.aborted then Add(replng,[rep,cyc.length]);
+                         else Add(replng,[rep,fail]); fi;
+      for n in cyc.smallpoints do rem[PositionSorted(S,n)] := false; od;
     od;
     return replng;
   end );
@@ -8572,21 +8570,43 @@ InstallGlobalFunction( ComputeCycleLength,
 
   function ( g, n0 )
 
-    local  n, steps, notify;
+    local  n, steps, max, maxpos, smallpoints, result,
+           notify, small, abortat, aborted, quiet;
 
-    n := n0; steps := 0;
-    notify := ValueOption("notify");
+    n := n0; steps := 0; max := n; maxpos := 1; smallpoints := [n0];
+    notify  := ValueOption("notify");
+    small   := ValueOption("small");
+    abortat := ValueOption("abortat");
+    quiet   := ValueOption("quiet") = true;
     if   not IsPosInt(notify) and not notify in [0,infinity]
     then notify := 10000; fi;
+    aborted := false;
     repeat
       n := n^g;
       steps := steps + 1;
-      if not notify in [0,infinity] and steps mod notify = 0 then
-        Print("After ",steps," steps, the iterate has ",LogInt(n,2)+1,
-              " binary digits.\n");
+      if n > max then
+        max    := n;
+        maxpos := steps;
       fi;
+      if IsList(small) and n in small then Add(smallpoints,n); fi;
+      if not quiet and not notify in [0,infinity]
+        and steps mod notify = 0
+      then
+        Print("n = ",n0,": after ",steps," steps, the iterate has ",
+              LogInt(n,2)+1," binary digits.\n");
+      fi;
+      if IsPosInt(abortat) and steps >= abortat then
+        aborted := true; break;
+      fi; 
     until n = n0;
-    return steps;
+    result := rec( g       := g,
+                   n       := n0,
+                   length  := steps,
+                   maximum := max,
+                   maxpos  := maxpos,
+                   aborted := aborted );
+    if IsList(small) then result.smallpoints := Set(smallpoints); fi;
+    return result;
   end );
 
 #############################################################################

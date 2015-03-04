@@ -1533,35 +1533,6 @@ gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 </ManSection>
 
 <ManSection>
-  <Func Name="ComputeCycleLength"
-        Arg="g, n" Label="for an rcwa permutation and a point"/>
-  <Returns>
-    the length of the cycle of the rcwa permutation <A>g</A> which
-    contains the point <A>n</A>, provided that this cycle is finite.
-  </Returns>
-  <Description>
-    If the cycle is infinite, the function will run into an infinite loop.
-    Iterates are not stored, to save memory.
-    The function interprets an option <Q>notify</Q>, which defaults to 10000;
-    every <Q>notify</Q> iterations, the number of binary digits of the latest
-    iterate is printed.
-<Example>
-<![CDATA[
-gap> g := Product(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],
->                      ClassTransposition));
-<rcwa permutation of Z with modulus 60>
-gap> ComputeCycleLength(g,736:notify:=100000);
-After 100000 steps, the iterate has 135 binary digits.
-After 200000 steps, the iterate has 507 binary digits.
-After 300000 steps, the iterate has 457 binary digits.
-After 400000 steps, the iterate has 325 binary digits.
-495448
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
   <Heading>
     Trajectory (methods for rcwa mappings -- <Q>accumulated coefficients</Q>)
   </Heading>

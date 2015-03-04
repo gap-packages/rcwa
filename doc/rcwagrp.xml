@@ -1190,6 +1190,56 @@ gap> ShortResidueClassOrbits(G,48,10);
 </ManSection>
 
 <ManSection>
+  <Func Name="ComputeCycleLength"
+        Arg="g, n" Label="for an rcwa permutation and a point"/>
+  <Returns>
+    a record containing the length, the largest point and the position of the
+    largest point of the cycle of the rcwa permutation <A>g</A> which contains
+    the point <A>n</A>, provided that this cycle is finite.
+  </Returns>
+  <Description>
+    If the cycle is infinite, the function will run into an infinite loop
+    unless the option <C>"abortat"</C> is set to the maximum number of iterates
+    to be tried before aborting. Iterates are not stored, to save memory.
+    The function interprets an option <C>"notify"</C>, which defaults to 10000;
+    every <Q>notify</Q> iterations, the number of binary digits of the latest
+    iterate is printed. This output can be suppressed by the option <C>quiet</C>.
+    The function also interprets an option <C>"small"</C>, which may be set to
+    a range within which small points are recorded and returned in a component
+    <C>smallpoints</C>. 
+<Example>
+<![CDATA[
+gap> g := Product(List([[0,5,3,5],[1,2,0,6],[2,4,3,6]],
+>                      ClassTransposition));
+<rcwa permutation of Z with modulus 180>
+gap> ComputeCycleLength(g,20:small:=[0..1000]);
+n = 20: after 10000 steps, the iterate has 1919 binary digits.
+n = 20: after 20000 steps, the iterate has 2908 binary digits.
+n = 20: after 30000 steps, the iterate has 1531 binary digits.
+n = 20: after 40000 steps, the iterate has 708 binary digits.
+rec( aborted := false, g := <rcwa permutation of Z with modulus 180>, 
+  length := 45961, 
+  maximum := 180479928411509527091314790144929480041473309862957394384783\
+0525935437431021442346166422201250935268553945158085769924448388724679753\
+5271669245363980744610119632280105994423399614803956244808653465492205657\
+8650363041608376587943180444494842094693691286183613056599672737336761093\
+3101035841077322874883200384115281051837032147150147712534199292886436789\
+7520389780289517825203780151058517520194926468391308525704499649905091899\
+9667529835495635671154681958992898010506577172313321500572646883756736685\
+0158653917532084531267455434808219032998691038943070902228427549279555530\
+6429870190316109419051531138721361826083376315737131067799731181096142797\
+4868525347003646887454985757711743327946232372385342293662007684758208408\
+8635715976464060647431260835037213863991037813998261883899050447111540742\
+5857187943077255493709629738212709349458790098815926920248565399938335540\
+8092502449690267365120996852, maxpos := 19825, n := 20, 
+  smallpoints := [ 20, 23, 66, 99, 294, 295, 298, 441, 447, 882, 890, 
+      893 ] )
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Oper Name="CycleRepresentativesAndLengths" Arg="g, S"
         Label="for rcwa permutation and set of seed points"/>
   <Returns>
@@ -1200,7 +1250,9 @@ gap> ShortResidueClassOrbits(G,48,10);
   <Description>
     The rcwa permutation <A>g</A> is assumed to have only finite
     cycles. If <A>g</A> has an infinite cycle which intersects
-    non-trivially with <A>S</A>, this may cause an infinite loop.
+    non-trivially with <A>S</A>, this may cause an infinite loop
+    unless a cycle length limit is set via the option <C>abortat</C>.
+    The output can be suppressed by the option <C>quiet</C>.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);;
@@ -1208,6 +1260,31 @@ gap> CycleRepresentativesAndLengths(g,[0..50]);
 [ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], 
   [ 20, 4 ], [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], 
   [ 38, 2 ], [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
+gap> g := Product(List([[0,5,3,5],[1,2,0,6],[2,4,3,6]],
+>                      ClassTransposition));
+<rcwa permutation of Z with modulus 180>
+gap> CycleRepresentativesAndLengths(g,[0..100]:abortat:=100000);
+n = 20: after 10000 steps, the iterate has 1919 binary digits.
+n = 20: after 20000 steps, the iterate has 2908 binary digits.
+n = 20: after 30000 steps, the iterate has 1531 binary digits.
+n = 20: after 40000 steps, the iterate has 708 binary digits.
+n = 79: after 10000 steps, the iterate has 1679 binary digits.
+n = 100: after 10000 steps, the iterate has 712 binary digits.
+n = 100: after 20000 steps, the iterate has 2507 binary digits.
+n = 100: after 30000 steps, the iterate has 3311 binary digits.
+n = 100: after 40000 steps, the iterate has 3168 binary digits.
+n = 100: after 50000 steps, the iterate has 3947 binary digits.
+n = 100: after 60000 steps, the iterate has 4793 binary digits.
+n = 100: after 70000 steps, the iterate has 5325 binary digits.
+n = 100: after 80000 steps, the iterate has 6408 binary digits.
+n = 100: after 90000 steps, the iterate has 7265 binary digits.
+n = 100: after 100000 steps, the iterate has 7918 binary digits.
+[ [ 0, 7 ], [ 5, 3 ], [ 7, 7159 ], [ 11, 9 ], [ 19, 342 ],
+  [ 20, 45961 ], [ 25, 3 ], [ 26, 21 ], [ 29, 2 ], [ 31, 3941 ],
+  [ 34, 19 ], [ 37, 7 ], [ 40, 5 ], [ 41, 7 ], [ 46, 3 ], [ 49, 2 ],
+  [ 59, 564 ], [ 61, 577 ], [ 65, 3 ], [ 67, 23 ], [ 71, 41 ],
+  [ 79, 16984 ], [ 80, 5 ], [ 85, 3 ], [ 86, 3 ], [ 89, 2 ], [ 91, 9 ],
+  [ 94, 1355 ], [ 97, 7 ], [ 100, fail ] ]
 ]]>
 </Example>
   </Description>

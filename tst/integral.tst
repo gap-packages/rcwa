@@ -1965,11 +1965,16 @@ Rcwa mapping of Z with modulus 4 and 4 affine parts
 gap> g := Product(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));
 <rcwa permutation of Z with modulus 60>
 gap> ComputeCycleLength(g,736:notify:=100000);
-After 100000 steps, the iterate has 135 binary digits.
-After 200000 steps, the iterate has 507 binary digits.
-After 300000 steps, the iterate has 457 binary digits.
-After 400000 steps, the iterate has 325 binary digits.
-495448
+n = 736: after 100000 steps, the iterate has 135 binary digits.
+n = 736: after 200000 steps, the iterate has 507 binary digits.
+n = 736: after 300000 steps, the iterate has 457 binary digits.
+n = 736: after 400000 steps, the iterate has 325 binary digits.
+rec( aborted := false, g := <rcwa permutation of Z with modulus 60>, 
+  length := 495448, 
+  maximum := 24613742765227139490361518119031497856901514673563546528602769571\
+523014650546360696627187194849439881973442451686685024708652634593861146709752\
+378847078493406287854573381920553713155967741550498839, maxpos := 189666, 
+  n := 736 )
 gap> G := Group(List([[0,4,1,4],[0,3,5,6],[0,4,5,6]],ClassTransposition));
 <rcwa group over Z with 3 generators>
 gap> GrowthFunctionOfOrbit(G,18,100,20);
