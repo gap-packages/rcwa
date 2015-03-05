@@ -44,7 +44,8 @@ InstallGlobalFunction( SearchCycle,
       if mainpartdiffs = [] then return fail; fi;
       d := Maximum(mainpartdiffs); 
     until Length(cycle) = d;
-    if list{[Maximum(startpos)+d..n]} <> cycle{[1..n-Maximum(startpos)-d+1]}
+    if    n-Maximum(startpos)-d+1 > d
+       or list{[Maximum(startpos)+d..n]}<>cycle{[1..n-Maximum(startpos)-d+1]}
     then return fail; fi;
     return cycle;
   end );
