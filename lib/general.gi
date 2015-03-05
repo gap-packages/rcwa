@@ -29,7 +29,7 @@ InstallGlobalFunction( SearchCycle,
     mainpart := list{[Int(n/3)..n]};
     elms     := Set(mainpart);
     cycle    := [elms[1]];
-    startpos := Positions(list,elms[1]);
+    startpos := Filtered(Positions(list,elms[1]),i->i>n/3);
     if Length(elms) = 1 then return cycle; fi;
     i := 0;
     repeat
