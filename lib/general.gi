@@ -16,24 +16,37 @@
 
 #############################################################################
 ##
-#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
+#F  SearchCycle( <list> ) .  a utility function for detecting cycles in lists
 ##
 InstallGlobalFunction( SearchCycle,
 
-  function ( l )
+  function ( list )
 
-    local  pos, incr, refine;
+    local  cycle, startpos, mainpart, mainpartdiffs,
+           elms, inds, min, n, d, i, j;
 
-    if Length(l) < 2 then return fail; fi;
-    pos := 1; incr := 1;
-    while Length(Set(List([1..Int((Length(l)-pos+1)/incr)],
-                          i->l{[pos+(i-1)*incr..pos+i*incr-1]}))) > 1 do
-      pos := pos + 1; incr := incr + 1;
-      if pos + 2*incr-1 > Length(l) then return fail; fi;
-    od;
-    refine := SearchCycle(l{[pos..pos+incr-1]});
-    if refine <> fail then return refine;
-                      else return l{[pos..pos+incr-1]}; fi;
+    n        := Length(list);
+    mainpart := list{[Int(n/3)..n]};
+    elms     := Set(mainpart);
+    cycle    := [elms[1]];
+    startpos := Positions(list,elms[1]);
+    if Length(elms) = 1 then return cycle; fi;
+    i := 0;
+    repeat
+      i := i + 1;
+      inds := Intersection(startpos+i,[1..n]);
+      if inds = [] then return fail; fi;
+      min := Minimum(list{inds});
+      Add(cycle,min);
+      startpos := Filtered(startpos,j->j+i<=n and list[j+i]=min);
+      if Length(startpos) <= 1 then return fail; fi;
+      mainpartdiffs := DifferencesList(Intersection(startpos,[Int(n/3)..n]));
+      if mainpartdiffs = [] then return fail; fi;
+      d := Maximum(mainpartdiffs); 
+    until Length(cycle) = d;
+    if list{[Maximum(startpos)+d..n]} <> cycle{[1..n-Maximum(startpos)-d+1]}
+    then return fail; fi;
+    return cycle;
   end );
 
 #############################################################################
