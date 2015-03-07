@@ -57,6 +57,9 @@
 ##  For the description of the list 'shortresidueclassorbitlengths',
 ##  see the file 3ctsgrp-residueclassorbitlengths.g.
 ##
+##  For the description of the list 'cyclist', see the file
+##  3ctsgrp-spheresizecycles.g.
+##
 #############################################################################
 
 return rec(
@@ -12521,7 +12524,11 @@ finiteorbits := ReadAsFunction(
 
 shortresidueclassorbitlengths := 
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                               "/data/3ctsgrp-residueclassorbitlengths.g"))()
+                               "/data/3ctsgrp-residueclassorbitlengths.g"))(),
+
+cyclist := 
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-spheresizecycles.g"))()
 
 );
 
