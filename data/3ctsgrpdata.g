@@ -38,8 +38,15 @@
 ##  the nonnegative integers in its support. This "translation" is defined
 ##  by the position of the string in the list 'trsstatusset'.
 ##
-##  The list 'ststus_new' is a revised and improved version of
-##  'trsstatuspos'.
+##  Given an index i, the entry orbitgrowthtype[i] provides information on
+##  the orbit growth functions of the group grps[i], thus whether they grow
+##  linearly or exponentially, or whether they are bounded, or whether
+##  the orbits are all finite or even the group is finite altogether.
+##  The entry may be an integer, in which case the meaning is given by
+##  trsstatusset[orbitgrowthtype[i]], or it may be a list of integers with
+##  the same meaning if the group has orbits with different growth type.
+##  Note that the data has been obtained by heuristic means, and thus
+##  there may be errors.
 ##
 ##  The list 'freeproductcandidates' is a list of the indices of those groups
 ##  which are possibly isomorphic to the free product of 3 cyclic groups of
@@ -8218,7 +8225,7 @@ trsstatuspos :=
 
 trsstatus := List(~.trsstatuspos,i->~.trsstatusset[i]),
 
-status_new := 
+orbitgrowthtype := 
 [5,5,5,5,5,[16,20],5,5,16,5,16,[16,20],5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,20,20,5,
  5,5,20,5,20,20,20,16,20,5,5,20,5,16,5,20,5,16,16,5,5,16,16,20,11,20,20,11,20,20,11,
  20,20,20,20,11,5,5,5,5,16,5,5,[16,20],5,[16,20],16,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
