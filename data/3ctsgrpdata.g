@@ -43,10 +43,10 @@
 ##  linearly or exponentially, or whether they are bounded, or whether
 ##  the orbits are all finite or even the group is finite altogether.
 ##  The entry may be an integer, in which case the meaning is given by
-##  trsstatusset[orbitgrowthtype[i]], or it may be a list of integers with
-##  the same meaning if the group has orbits with different growth type.
-##  Note that the data has been obtained by heuristic means, and thus
-##  there may be errors.
+##  trsstatusset[orbitgrowthtype[i]], or it may be a list of integers
+##  with the same meaning if the group has infinite orbits with different
+##  growth types. Note that the data has been obtained by heuristic means,
+##  and thus there may be errors.
 ##
 ##  The list 'freeproductcandidates' is a list of the indices of those groups
 ##  which are possibly isomorphic to the free product of 3 cyclic groups of
