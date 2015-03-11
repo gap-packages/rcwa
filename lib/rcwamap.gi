@@ -8593,7 +8593,7 @@ InstallGlobalFunction( ComputeCycleLength,
         and steps mod notify = 0
       then
         Print("n = ",n0,": after ",steps," steps, the iterate has ",
-              LogInt(n,2)+1," binary digits.\n");
+              LogInt(AbsInt(n),2)+1," binary digits.\n");
       fi;
       if IsPosInt(abortat) and steps >= abortat then
         aborted := true; break;
