@@ -5251,13 +5251,14 @@ InstallMethod( GrowthFunctionOfOrbit,
   function ( G, n, r_max, size_max )
 
     local  spheresizes, gens, S_last, S, S_next, r,
-           smallpoints, small;
+           smallpoints, small, maxsize, notify;
 
     if not n in Source(One(G)) then TryNextMethod(); fi;
     small := ValueOption("small"); smallpoints := [];
     if IsList(small) and n in small then Add(smallpoints,n); fi;
+    notify := ValueOption("notify");
     gens := GeneratorsOfGroup(G);
-    spheresizes := [1]; S_last := []; S := [n]; r := 0;
+    spheresizes := [1]; S_last := []; S := [n]; r := 0; maxsize := 1;
     repeat
       r      := r + 1;
       S_next := Union(List(gens,g->S^g));
@@ -5267,6 +5268,18 @@ InstallMethod( GrowthFunctionOfOrbit,
       Add(spheresizes,Length(S));
       if IsList(small) then
         smallpoints := Union(smallpoints,Filtered(S,p->p in small));
+      fi;
+      if IsPosInt(notify) then
+        if notify > 100 and Length(S) > maxsize then
+          maxsize := Length(S);
+          Print("n = ",n,", r = ",r,": new sphere size record |S| = ",
+                maxsize,"\n");
+        fi;
+        if r mod notify = 0 then
+          Print("n = ",n,", r = ",r,", |S| = ",Length(S),
+                ", max(S) has ",LogInt(Maximum(List(S,AbsInt)),2)+1,
+                " binary digits\n");
+        fi;
       fi;
     until r >= r_max or Length(S) > size_max;
     if IsList(small) then
