@@ -22,7 +22,7 @@ InstallGlobalFunction( SearchCycle,
 
   function ( list )
 
-    local  cycle, startpos, mainpart, mainpartdiffs,
+    local  preperiod, cycle, startpos, mainpart, mainpartdiffs,
            elms, inds, min, n, d, i, j;
 
     n        := Length(list);
@@ -48,7 +48,14 @@ InstallGlobalFunction( SearchCycle,
        or n-Maximum(startpos)-d+1 > d
        or list{[Maximum(startpos)+d..n]}<>cycle{[1..n-Maximum(startpos)-d+1]}
     then return fail; fi;
-    return cycle;
+    if ValueOption("alsopreperiod") <> true then return cycle; else
+      i := Minimum(startpos) + Length(cycle);
+      repeat
+        i := i - Length(cycle);
+      until i <= 0 or list{[i..i+Length(cycle)-1]} <> cycle;
+      preperiod := list{[1..i+Length(cycle)-1]};
+      return [preperiod,cycle];
+    fi;
   end );
 
 #############################################################################
