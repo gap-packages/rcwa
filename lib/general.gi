@@ -30,7 +30,14 @@ InstallGlobalFunction( SearchCycle,
     elms     := Set(mainpart);
     cycle    := [elms[1]];
     startpos := Filtered(Positions(list,elms[1]),i->i>n/3);
-    if Length(elms) = 1 then return cycle; fi;
+    if Length(elms) = 1 then
+      if ValueOption("alsopreperiod") <> true then return cycle; else
+        i := Length(list);
+        repeat i := i - 1; until i = 0 or list[i] <> elms[1];
+        preperiod := list{[1..i]};
+        return [preperiod,cycle];
+      fi;
+    fi;
     i := 0;
     repeat
       i := i + 1;
