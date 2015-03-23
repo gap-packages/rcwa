@@ -54,6 +54,15 @@ DeclareGlobalFunction( "ExponentOfPrime" );
 
 #############################################################################
 ##
+#F  PrimeNumbersIterator(  )
+#F  PrimeNumbersIterator( chunksize )
+##
+##  Iterator running through the prime numbers in ascending order.
+##
+DeclareGlobalFunction ( "PrimeNumbersIterator" );
+
+#############################################################################
+##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
