@@ -337,11 +337,19 @@ Yet another utility function is <C>AssignGlobals(<A>rec</A>)</C> which
 takes as argument a record <A>rec</A> and assigns its components to global
 variables of the same (i.e. the component's) names. <P/>
 
+<Index Key="PrimeNumbersIterator"><C>PrimeNumbersIterator</C></Index>
 <Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
 <Index Key="ExponentOfPrime"><C>ExponentOfPrime</C></Index>
 <Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
 
-Finally, the function <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
+The function <C>PrimeNumbersIterator(  )</C> returns an
+iterator which runs over the prime numbers in ascending order; it takes
+an optional argument <A>chunksize</A> which specifies the length of the
+interval which is sieved in one go (the default is 10000000), and which
+can be used to balance runtime vs. memory consumption. It is assumed that
+<A>chunksize</A> is larger than any gap between two consecutive primes
+within the range one intends to run the iterator over.
+The function <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
 returns a list of all integers less than or equal to <A>maxn</A> which do
 not have prime divisors exceeding <A>maxp</A>, the function
 <C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C> returns the exponent of the
