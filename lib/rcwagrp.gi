@@ -131,24 +131,38 @@ InstallMethod( ViewObj,
 
   function ( G )
 
-    local  NrGens, RingString;
+    local  NrGens, RingString, gens, g, cl, i;
 
     RingString := RingToString(Source(One(G)));
-    if   IsTrivial(G)
-    then Display(G:NoLineFeed);
-    else Print("<");
-         if   HasIsTame(G) and not (HasSize(G) and IsInt(Size(G)))
-         then if IsTame(G) then Print("tame "); else Print("wild "); fi; fi;
-         NrGens := Length(GeneratorsOfGroup(G));
-         Print("rcwa group over ",RingString," with ",NrGens," generator");
-         if NrGens > 1 then Print("s"); fi;
-         if not (HasIsTame(G) and not IsTame(G)) then
-           if   HasIdGroup(G)
-           then Print(", of isomorphism type ",IdGroup(G));
-           elif HasSize(G)
-           then Print(", of order ",Size(G)); fi;
-         fi;
-         Print(">");
+    if IsTrivial(G) then
+      Display(G:NoLineFeed);
+    elif     IsRcwaGroupOverZ(G) and Length(GeneratorsOfGroup(G)) <=6
+         and ForAll(GeneratorsOfGroup(G),IsClassTransposition)
+    then
+      gens := GeneratorsOfGroup(G);
+      Print("<");
+      for i in [1..Length(gens)] do
+        g  := gens[i];
+        cl := TransposedClasses(g);
+        Print("(",Residue(cl[1]),"(",Mod(cl[1]),"),",
+                  Residue(cl[2]),"(",Mod(cl[2]),"))");
+        if i < Length(gens) then Print(","); fi;
+      od;
+      Print(">");
+    else
+      Print("<");
+      if   HasIsTame(G) and not (HasSize(G) and IsInt(Size(G)))
+      then if IsTame(G) then Print("tame "); else Print("wild "); fi; fi;
+      NrGens := Length(GeneratorsOfGroup(G));
+      Print("rcwa group over ",RingString," with ",NrGens," generator");
+      if NrGens > 1 then Print("s"); fi;
+      if not (HasIsTame(G) and not IsTame(G)) then
+        if   HasIdGroup(G)
+        then Print(", of isomorphism type ",IdGroup(G));
+        elif HasSize(G)
+        then Print(", of order ",Size(G)); fi;
+      fi;
+      Print(">");
     fi;
   end );
 

@@ -1267,7 +1267,7 @@ true
 gap> CyclicGroup(IsRcwaGroupOverZ,1);
 Trivial rcwa group over Z
 gap> CyclicGroup(IsRcwaGroupOverZ,2);
-<rcwa group over Z with 1 generator, of order 2>
+<(0(2),1(2))>
 gap> CyclicGroup(IsRcwaGroupOverZ,7);
 <rcwa group over Z with 1 generator, of order 7>
 gap> Display(last);
@@ -1497,7 +1497,7 @@ gap> StructureDescription(last);
 gap> Exponent(G);
 infinity
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));
-<rcwa group over Z with 2 generators>
+<(0(2),1(2)),(0(3),1(3))>
 gap> Exponent(G);
 4
 gap> (1,2,3,4,5,6,7,8,9,10,11,12)^Collatz;
@@ -1576,7 +1576,7 @@ gap> a := ClassTransposition(2,4,3,4);; SetName(a,"a");
 gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
 gap> c := ClassTransposition(3,4,4,6);; SetName(c,"c");
 gap> G := Group(a,b,c);
-<rcwa group over Z with 3 generators>
+<(2(4),3(4)),(4(6),8(12)),(3(4),4(6))>
 gap> phi := EpimorphismFromFpGroup(G,3);
 [ a, b, c ] -> [ a, b, c ]
 gap> Length(RelatorsOfFpGroup(Source(phi))) >= 4;
@@ -1689,7 +1689,7 @@ gap> G := GroupByResidueClasses(List([[0,2],[0,4],[1,4],[2,4],[3,4]],
 <rcwa group over Z with 8 generators>
 gap> H := Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
 >                    ClassTransposition)); # (first) Higman-Thompson group
-<rcwa group over Z with 4 generators>
+<(0(2),1(2)),(1(2),2(4)),(0(2),1(4)),(1(4),2(4))>
 gap> G = H;
 true
 gap> cts := Filtered(List(ClassPairs(4),ClassTransposition),
@@ -1699,7 +1699,7 @@ gap> G := Group(cts);
 gap> gens := SmallGeneratingSet(G);
 [ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(4), 1(4) ) ]
 gap> G := Group(gens);
-<rcwa group over Z with 4 generators>
+<(0(2),1(2)),(0(2),1(4)),(0(2),3(4)),(0(4),1(4))>
 gap> Br := List([1..10],r->RestrictedBall(G,One(G),r,4));;
 gap> List(Br,Length);
 [ 5, 14, 27, 39, 51, 71, 99, 118, 120, 120 ]
@@ -1847,7 +1847,7 @@ gap> b := ClassTransposition(1,3,2,6);
 gap> c := ClassTransposition(2,3,4,6);
 ( 2(3), 4(6) )
 gap> G := Group(a,b,c);
-<rcwa group over Z with 3 generators>
+<(1(2),4(6)),(1(3),2(6)),(2(3),4(6))>
 gap> A := SparseRep(a);
 ( 1(2), 4(6) )
 gap> B := SparseRep(b);
@@ -1868,7 +1868,7 @@ gap> Set(S);
 gap> Set([a,b,c]) = Set([A,B,C]);
 true
 gap> H := Group(A,B,C);
-<rcwa group over Z with 3 generators>
+<(1(2),4(6)),(1(3),2(6)),(2(3),4(6))>
 gap> One(H)!.coeffs;
 [ [ 0, 1, 1, 0, 1 ] ]
 gap> Zero(A)!.coeffs;
@@ -1976,7 +1976,7 @@ rec( aborted := false, g := <rcwa permutation of Z with modulus 60>,
 378847078493406287854573381920553713155967741550498839, maxpos := 189666, 
   n := 736 )
 gap> G := Group(List([[0,4,1,4],[0,3,5,6],[0,4,5,6]],ClassTransposition));
-<rcwa group over Z with 3 generators>
+<(0(4),1(4)),(0(3),5(6)),(0(4),5(6))>
 gap> GrowthFunctionOfOrbit(G,18,100,20);
 [ 1, 1, 2, 3, 4, 3, 4, 4, 4, 4, 3, 3, 3, 4, 3, 4, 4, 5, 5, 6, 8, 6, 5, 5, 4, 
   3, 3, 4, 4, 4, 3, 3, 5, 4, 5, 6, 5, 2, 3, 3, 2, 3, 3, 4, 5, 4, 4, 4, 6, 5, 
