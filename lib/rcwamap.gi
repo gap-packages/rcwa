@@ -3335,6 +3335,9 @@ InstallMethod( Display,
           return; # done.
         fi;
 
+        if   IsRcwaMappingOfZ(f) and ValueOption("AsClassMapping") = true
+        then TryNextMethod(); fi;
+
         P := ShallowCopy(LargestSourcesOfAffineMappings(f));
         D := List(P,cl->1/Density(cl));
         #i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
@@ -3444,6 +3447,42 @@ InstallMethod( Display,
 
     if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
   end );
+
+#############################################################################
+##
+#M  Display( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
+##
+##  Displays the rcwa mapping <f> of Z in the form of a table with a line
+##  r(m) -> r(m)^<f> for each affine part.
+##
+InstallMethod( Display,
+               "for rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( f )
+
+    local  coeffs, src, img, maxsrclng, i;
+
+    if   ValueOption("AsClassMapping") <> true
+    then TryNextMethod(); fi;
+
+    if not IsRcwaMappingInSparseRep(f) then f := SparseRep(f); fi;
+
+    coeffs := Coefficients(f);
+    src := [];
+    for i in [1..Length(coeffs)] do
+      Add(src,ResidueClass(coeffs[i][1],coeffs[i][2]));
+    od;
+    img := List(src,cl->cl^f);
+    src := List(src,ViewString);
+    img := List(img,ViewString);
+    maxsrclng := Maximum(List(src,Length));
+    for i in [1..Length(src)] do
+      Print("  ",String(src[i],maxsrclng)," -> ",img[i],"\n");
+    od;
+    if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
+  end );
+
 
 #############################################################################
 ##
@@ -3634,6 +3673,9 @@ InstallMethod( Display,
       if Length(str) > maxlng then str := "< ... >"; fi;
       Print(str);
     end;
+
+    if   ValueOption("AsTable") <> true and ValueOption("table") <> true
+    then TryNextMethod(); fi;
 
     R := Source(f);
     if   ValueOption("xdvi") = true and IsIntegers(R)
