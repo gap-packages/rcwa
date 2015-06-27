@@ -30,9 +30,9 @@ Changes between version 3.7.0 and version 3.X.X ():
  - An operation `GrowthFunctionOfOrbit' has been added, together with methods
    for rcwa groups.
 
- - A method to `Display' an rcwa mapping f of Z in the form of
+ - An option to `Display' an rcwa mapping f of Z in the form of
    a table with a line of the form r(m) -> r(m)^f for each affine part
-   has been added (accessible via an option "AsClassMapping").
+   has been added (option "AsClassMapping").
 
  - Operations `DensityOfSetOfFixedPoints' and `DensityOfSupport'
    have been added.
