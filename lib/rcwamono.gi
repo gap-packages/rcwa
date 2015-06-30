@@ -660,6 +660,7 @@ InstallMethod( RestrictedBall,
 #############################################################################
 ##
 #M  RestrictedBall( <G>, <p>, <r>, <act>, <bound> ) . for rcwa monoids over Z
+#M  RestrictedBall( <G>, <p>, <r>, <bound> )  . . . . for rcwa monoids over Z
 ##
 InstallMethod( RestrictedBall,
                "for rcwa monoids over Z or Z^2 (RCWA)",
@@ -696,6 +697,14 @@ InstallMethod( RestrictedBall,
     spheres := true in List(["spheres","Spheres"],ValueOption);
     if not spheres then ball := Union(ball); fi;
     return ball;
+  end );
+
+InstallMethod( RestrictedBall,
+               "for rcwa monoids over Z or Z^2, delegate (RCWA)",
+               ReturnTrue, [ IsRcwaMonoid, IsObject, IsObject, IsPosInt ], 0,
+
+  function ( G, p, r, bound )
+    return RestrictedBall(G,p,r,OnPoints,bound);
   end );
 
 #############################################################################

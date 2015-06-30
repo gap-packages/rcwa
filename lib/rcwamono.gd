@@ -71,31 +71,34 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 #O  Ball( <M>, <p>, <r> ) . . .  as above, where <act> defaults to `OnPoints'
 #O  RestrictedBall( <M>, <f>, <r>, <modulusbound> ) . . . . "restricted" ball
 #O  RestrictedBall( <M>, <p>, <r>, <act>, <bound> ) . . . . . . . . .  (dito)
+#O  RestrictedBall( <M>, <p>, <r>, <bound> )  . . . . . . . . . . . .  (dito)
 #O  RestrictedBall( <M>, <f>, <r>, <bounds> ) . . . . . . . . . . . .  (dito)
 ##
-##  The first operation returns the ball of radius <r> about the element <f>
+##  The first variant returns the ball of radius <r> about the element <f>
 ##  of <M>.
 ##
-##  The second operation returns the ball of radius <r> about the point <p>
+##  The second variant returns the ball of radius <r> about the point <p>
 ##  under the action of <M>.
 ##
-##  The third operation is the same as the second --
+##  The third variant is the same as the second --
 ##  <act> defaults to `OnPoints'.
 ##
-##  The fourth operation does the same as the first except that it stops
+##  The fourth variant does the same as the first except that it stops
 ##  where extending the ball would yield elements whose moduli exceed the
 ##  bound <modulusbound>.
 ##
-##  The fifth operation does the same as the second except that it stops
+##  The fifth variant does the same as the second except that it stops
 ##  where further extending the ball would yield points which exceed the
 ##  bound <bound> in absolute value. If the points are tuples, then the
 ##  bound applies to all coordinates.
+##
+##  The sixth variant is the fifth -- <act> defaults to `OnPoints'.
 ##
 ##  All balls are understood w.r.t. the stored generators of the monoid <M>,
 ##  respectively w.r.t. the stored generators and their inverses if <M> is
 ##  actually a group.
 ##
-##  An option `Spheres' is recognized. If set, the returned ball is splitted
+##  An option `Spheres' is recognized. If set, the returned ball is split
 ##  into a list of spheres.
 ##
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
@@ -104,6 +107,8 @@ DeclareOperation( "RestrictedBall",
                   [ IsMonoid, IsObject, IsInt, IsPosInt ] );
 DeclareOperation( "RestrictedBall",
                   [ IsMonoid, IsObject, IsObject, IsFunction, IsPosInt ] );
+DeclareOperation( "RestrictedBall",
+                  [ IsMonoid, IsObject, IsObject, IsPosInt ] );
 DeclareOperation( "RestrictedBall",
                   [ IsMonoid, IsObject, IsInt, IsRecord ] );
 
