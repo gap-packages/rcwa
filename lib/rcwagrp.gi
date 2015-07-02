@@ -4777,6 +4777,72 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
 
 #############################################################################
 ##
+#M  TransitivityCertificate( <G> ) . . . . . . . . . for an rcwa group over Z
+##
+InstallMethod( TransitivityCertificate,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  classes, words, gens, D, S, R, F, phi, B, n, m, g, w,
+           downcls, coveredcls, cl, I, c, limit, varnames, i, j;
+
+    Info(InfoRCWA,1,"Invoking `TransitivityCertificate' for G = ",
+         ViewString(G));
+    if not IsSignPreserving(G)
+      or ForAny(ShortResidueClassOrbits(G,60,60),orb->Length(orb)>1)
+    then return fail; fi;
+
+    G := SparseRep(G);
+    gens := GeneratorsOfGroup(G);
+    if Length(gens) <= 26 then
+      varnames := List("abcdefghijklmnopqrstuvwxyz",ch->[ch]);
+      F := FreeGroup(varnames{[1..Length(gens)]});
+    else F := FreeGroup(Length(gens)); fi;
+    phi := EpimorphismByGenerators(F,G);
+    D := []; S := Support(G);
+    R := AsUnionOfFewClasses(S);
+    classes := []; words := [];
+    while R <> [] do
+      Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
+      n := Residue(R[1]);
+      if n = 0 then n := n + Modulus(R[1]); fi;
+      limit := 10000;
+      repeat
+        if   limit > 10000
+        then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
+        B := RestrictedBall(G,n,1000000,limit:Spheres,UntilSmaller);
+        m := Minimum(B[Length(B)]);
+        limit := 2 * limit;
+      until m < n;
+      g := RepresentativeAction(G,n,m,OnPoints);
+      w := RepresentativeActionPreImage(G,n,m,OnPoints,F);
+      downcls := [];
+      for c in Coefficients(g) do
+        if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
+        then Add(downcls,ResidueClass(c[1],c[2])); fi;
+      od;
+      coveredcls := [];
+      for i in [1..Length(R)] do
+        for cl in downcls do
+          I := Intersection(R[i],cl);
+          if I <> [] then
+            Append(coveredcls,AsUnionOfFewClasses(I));
+            R[i] := Difference(R[i],I);
+          fi;
+        od;
+        R[i] := AsUnionOfFewClasses(R[i]);
+      od;
+      R := Filtered(Set(Flat(R)),cl->cl<>[]);
+      coveredcls := Set(coveredcls);
+      Add(classes,coveredcls); Add(words,w);
+    od;
+    return rec( classes := classes, words := words );
+  end );
+
+#############################################################################
+##
 #M  DistanceToNextSmallerPointInOrbit( <G>, <n> ) . .  for rcwa groups over Z
 ##
 InstallMethod( DistanceToNextSmallerPointInOrbit,

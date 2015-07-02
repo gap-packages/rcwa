@@ -358,6 +358,27 @@ DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
 
 #############################################################################
 ##
+#A  TransitivityCertificate( <G> )
+##
+##  Given an rcwa group <G> over Z which acts transitively on the set of
+##  nonnegative integers in its support, this operation returns a record
+##  containing components 'phi', 'words' and 'classes' as follows:
+##
+##  - 'phi' is an epimorphism from a free group to <G> which maps generators
+##    to generators.
+##
+##  - 'words' is a list, where words[i] is a preimage under phi of an element
+##    of <G> which maps all sufficiently large positive integers in the
+##    residue classes classes[i] to smaller integers.
+##
+##  It is not guaranteed that this operation terminates.
+##  In particular if the group <G> does not act transitively on the set of
+##  nonnegative integers in its support, it is undefined what happens.
+##
+DeclareAttribute( "TransitivityCertificate", IsRcwaGroup );
+
+#############################################################################
+##
 #O  DistanceToNextSmallerPointInOrbit( <G>, <n> )
 ##
 ##  Returns the smallest number d such that there is a product g of d genera-

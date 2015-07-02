@@ -24,6 +24,9 @@ Changes between version 3.7.0 and version 3.X.X ():
  - A database of realizations of all (simple) graphs with 4, 5 and 6 vertices
    as class transposition graphs has been added.
  
+ - An attribute `TransitivityCertificate' for subgroups of CT(Z) which act
+   transitively on the set of nonnegative integers in their support has been added.
+
  - An operation `PiecewiseMapping' to compose a mapping from pieces has been
    added, together with a method for rcwa mappings of Z.
 
