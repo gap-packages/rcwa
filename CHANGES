@@ -34,6 +34,8 @@ Changes between version 3.7.0 and version 3.X.X ():
    a table with a line of the form r(m) -> r(m)^f for each affine part
    has been added (option "AsClassMapping").
 
+ - The operation `RestrictedBall' now interprets an option "untilsmaller".
+
  - Operations `DensityOfSetOfFixedPoints' and `DensityOfSupport'
    have been added.
 

@@ -669,13 +669,15 @@ InstallMethod( RestrictedBall,
 
   function ( G, p, r, act, bound )
 
-    local  ball, gens, k, spheres;
+    local  ball, gens, k, spheres, untilsmaller;
 
     if not IsRcwaMonoidOverZ(G) and not IsRcwaMonoidOverZxZ(G)
       or not IsInt(p) and not (IsList(p) and ForAll(p,IsInt))
       or not IsPosInt(r) and not IsInfinity(r) or not IsPosInt(bound)
     then TryNextMethod(); fi;
 
+    untilsmaller := true in List(["untilsmaller","UntilSmaller"],
+                                 ValueOption);
     ball := [[p]];
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
@@ -686,6 +688,7 @@ InstallMethod( RestrictedBall,
                           Union(ball[Maximum(1,k-1)],ball[k])));
       if IsInt(p) then
         ball[k+1] := Filtered(ball[k+1],n->AbsInt(n)<=bound);
+        if untilsmaller and Minimum(ball[k+1]) < p then break; fi;
       else
         ball[k+1] := Filtered(ball[k+1],
                               l->ForAll(Flat(l),n->AbsInt(n)<=bound));
@@ -694,6 +697,7 @@ InstallMethod( RestrictedBall,
       k := k + 1;
     od;
     
+    ball := Filtered(ball,S->S<>[]);
     spheres := true in List(["spheres","Spheres"],ValueOption);
     if not spheres then ball := Union(ball); fi;
     return ball;
