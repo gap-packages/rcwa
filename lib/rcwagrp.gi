@@ -4786,10 +4786,12 @@ InstallMethod( TransitivityCertificate,
   function ( G )
 
     local  classes, words, gens, D, S, R, F, phi, B, n, m, g, w,
-           downcls, coveredcls, cl, I, c, limit, varnames, i, j;
+           downcls, coveredcls, cl, I, c, limit, varnames, abortdensity, i;
 
     Info(InfoRCWA,1,"Invoking `TransitivityCertificate' for G = ",
          ViewString(G));
+    abortdensity := ValueOption("abortdensity");
+    if not IsPosRat(abortdensity) then abortdensity := 0; fi;
     if not IsSignPreserving(G)
       or ForAny(ShortResidueClassOrbits(G,60,60),orb->Length(orb)>1)
     then return fail; fi;
@@ -4804,7 +4806,7 @@ InstallMethod( TransitivityCertificate,
     D := []; S := Support(G);
     R := AsUnionOfFewClasses(S);
     classes := []; words := [];
-    while R <> [] do
+    while R <> [] and Sum(List(R,Density)) > abortdensity do
       Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
       n := Residue(R[1]);
       if n = 0 then n := n + Modulus(R[1]); fi;
@@ -4838,7 +4840,7 @@ InstallMethod( TransitivityCertificate,
       coveredcls := Set(coveredcls);
       Add(classes,coveredcls); Add(words,w);
     od;
-    return rec( classes := classes, words := words );
+    return rec( phi := phi, classes := classes, words := words );
   end );
 
 #############################################################################

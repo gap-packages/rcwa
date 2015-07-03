@@ -104,13 +104,9 @@ DeclareAttribute( "ModulusOfRcwaMonoid", IsRcwaMonoid );
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt ] );
 DeclareOperation( "Ball", [ IsMonoid, IsObject, IsInt, IsFunction ] );
 DeclareOperation( "RestrictedBall",
-                  [ IsMonoid, IsObject, IsInt, IsPosInt ] );
+                  [ IsMonoid, IsObject, IsObject, IsObject ] );
 DeclareOperation( "RestrictedBall",
-                  [ IsMonoid, IsObject, IsObject, IsFunction, IsPosInt ] );
-DeclareOperation( "RestrictedBall",
-                  [ IsMonoid, IsObject, IsObject, IsPosInt ] );
-DeclareOperation( "RestrictedBall",
-                  [ IsMonoid, IsObject, IsInt, IsRecord ] );
+                  [ IsMonoid, IsObject, IsObject, IsObject, IsObject ] );
 
 #############################################################################
 ##

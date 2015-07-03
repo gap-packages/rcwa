@@ -1989,7 +1989,9 @@ gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],ClassTransposition));
 <(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
 gap> cert := TransitivityCertificate(G);
 rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ] 
-     ], words := [ a, b, c, b*c, a*b ] )
+     ], 
+  phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
+  words := [ a, b, c, b*c, a*b ] )
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
