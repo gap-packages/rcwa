@@ -4785,7 +4785,7 @@ InstallMethod( TransitivityCertificate,
 
   function ( G )
 
-    local  classes, words, gens, D, S, R, F, phi, B, n, m, g, w,
+    local  classes, words, gens, D, S, R, F, phi, B, n, m, k, g, w,
            downcls, coveredcls, cl, I, c, limit, varnames, abortdensity, i;
 
     Info(InfoRCWA,1,"Invoking `TransitivityCertificate' for G = ",
@@ -4808,23 +4808,28 @@ InstallMethod( TransitivityCertificate,
     classes := []; words := [];
     while R <> [] and Sum(List(R,Density)) > abortdensity do
       Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
-      n := Residue(R[1]);
-      if n = 0 then n := n + Modulus(R[1]); fi;
-      limit := 10000;
+      k := 0;
       repeat
-        if   limit > 10000
-        then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
-        B := RestrictedBall(G,n,1000000,limit:Spheres,UntilSmaller);
-        m := Minimum(B[Length(B)]);
-        limit := 2 * limit;
-      until m < n;
-      g := RepresentativeAction(G,n,m,OnPoints);
-      w := RepresentativeActionPreImage(G,n,m,OnPoints,F);
-      downcls := [];
-      for c in Coefficients(g) do
-        if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
-        then Add(downcls,ResidueClass(c[1],c[2])); fi;
-      od;
+        n := Residue(R[1]);
+        if n = 0 then n := n + Modulus(R[1]); fi;
+        n := n + k * Modulus(R[1]);
+        limit := 10000;
+        repeat
+          if   limit > 10000
+          then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
+          B := RestrictedBall(G,n,1000000,limit:Spheres,UntilSmaller);
+          m := Minimum(B[Length(B)]);
+          limit := 2 * limit;
+        until m < n;
+        g := RepresentativeAction(G,n,m,OnPoints);
+        w := RepresentativeActionPreImage(G,n,m,OnPoints,F);
+        downcls := [];
+        for c in Coefficients(g) do
+          if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
+          then Add(downcls,ResidueClass(c[1],c[2])); fi;
+        od;
+        k := k + 1;
+      until ForAny(downcls,cl->n in cl);
       coveredcls := [];
       for i in [1..Length(R)] do
         for cl in downcls do
