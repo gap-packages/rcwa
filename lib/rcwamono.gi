@@ -688,6 +688,7 @@ InstallMethod( RestrictedBall,
                           Union(ball[Maximum(1,k-1)],ball[k])));
       if IsInt(p) then
         ball[k+1] := Filtered(ball[k+1],n->AbsInt(n)<=bound);
+        if ball[k+1] = [] then break; fi;
         if untilsmaller and Minimum(ball[k+1]) < p then break; fi;
       else
         ball[k+1] := Filtered(ball[k+1],

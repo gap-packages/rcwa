@@ -4811,7 +4811,7 @@ InstallMethod( TransitivityCertificate,
       k := 0;
       repeat
         n := Residue(R[1]);
-        if n = 0 then n := n + Modulus(R[1]); fi;
+        if n = Residues(S)[1] then n := n + Modulus(R[1]); fi;
         n := n + k * Modulus(R[1]);
         limit := 10000;
         repeat
