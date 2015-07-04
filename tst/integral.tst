@@ -1992,6 +1992,24 @@ rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ]
      ], 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
   words := [ a, b, c, b*c, a*b ] )
+gap> Display(  ClassTransposition(0,3,1,3)
+>            * ClassTransposition(1,2,2,8):AsClassMapping);
+
+Rcwa permutation of Z with modulus 24
+
+    0(6) -> 2(24)
+   1(12) -> 0(12)
+   2(24) -> 1(6)
+   3(12) -> 4(12)
+    4(6) -> 10(24) loop
+    5(6) -> 18(24)
+   7(24) -> 6(24)
+   8(12) -> 8(12)  id
+   9(24) -> 3(6)   loop
+  14(24) -> 14(24) id
+  19(24) -> 5(6)
+  21(24) -> 22(24)
+
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

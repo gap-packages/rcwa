@@ -613,18 +613,22 @@ Rcwa mappings can be <C>View</C>ed, <C>Display</C>ed, <C>Print</C>ed and
 written to a <C>String</C>. The output of the <C>View</C> method is kept
 reasonably short. In most cases it does not describe an rcwa mapping
 completely. In these cases the output is enclosed in brackets.
-There are options <C>CycleNotation</C>, <C>PrintNotation</C> and
-<C>AbridgedNotation</C> to take influence on how certain rcwa mappings
-are shown. These options can either be not set, set to <C>true</C> or
-set to <C>false</C>. If the option <C>CycleNotation</C> is set, it is
-tried harder to write down an rcwa permutation of &ZZ; of finite order
-as a product of disjoint residue class cycles, if this is possible.
+There are options <C>CycleNotation</C>, <C>AsClassMapping</C>,
+<C>PrintNotation</C> and <C>AbridgedNotation</C> to take influence on
+how certain rcwa mappings are shown. These options can either be not set,
+set to <C>true</C> or set to <C>false</C>.
+If the option <C>CycleNotation</C> is set, it is tried harder to write
+down an rcwa permutation of &ZZ; of finite order as a product of disjoint
+residue class cycles, if this is possible.
+If the option <C>AsClassMapping</C> is set, <C>Display</C> shows
+which residue classes are mapped to which by the affine partial mappings,
+and marks any loops.
 The option <C>PrintNotation</C> influences the output in favour of
 &GAP; - readability, and the option <C>AbridgedNotation</C> can be used to
 abridge longer names like <C>ClassShift</C>, <C>ClassReflection</C> etc..
-The output of the methods for <C>Display</C> and <C>Print</C> describes
-an rcwa mapping in full. The <C>Print</C>ed representation of an rcwa
-mapping is &GAP; - readable if and only if the <C>Print</C>ed
+By default, the output of the methods for <C>Display</C> and <C>Print</C>
+describes an rcwa mapping in full. The <C>Print</C>ed representation of
+an rcwa mapping is &GAP; - readable if and only if the <C>Print</C>ed
 representation of the elements of the underlying ring is so. <P/>
 
 <Index Key="LaTeXStringRcwaMapping" Subkey="for an rcwa mapping">
@@ -1299,6 +1303,18 @@ Wild rcwa permutation of Z with modulus 12
         | n        if n in 3(6)
         |
         \
+
+gap> Display(PrimeSwitch(3):AsClassMapping);
+
+Wild rcwa permutation of Z with modulus 12
+
+  0(12) -> 0(6)  loop
+   1(6) -> 2(6)
+   2(4) -> 5(6)
+   3(6) -> 3(6)  id
+  4(12) -> 1(12)
+   5(6) -> 4(6)
+  8(12) -> 7(12)
 
 gap> Factorization(PrimeSwitch(3));
 [ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), 

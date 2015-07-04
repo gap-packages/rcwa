@@ -3059,8 +3059,8 @@ InstallMethod( Display,
 
            R, F, F_el, F_elints, m, c, src, img, res, idcoeffs, inds,
            P, Pcl, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
-           cycles, cl, str, ustr, ringname, varname, maxsrclng, prefix,
-           col, i, j;
+           cycles, cl, str, ustr, ringname, varname, maxsrclng, maximglng,
+           looppos, prefix, col, i, j;
 
     IdChars := function ( n, ch )
       return Concatenation( ListWithIdenticalEntries( n, ch ) );
@@ -3344,11 +3344,21 @@ InstallMethod( Display,
             Add(src,ResidueClass(c[i][1],c[i][2]));
           od;
           img := List(src,cl->cl^f);
+          looppos := Filtered([1..Length(c)],i->img[i]<>src[i]
+                              and Intersection(src[i],img[i])<>[]);
           src := List(src,ViewString);
           img := List(img,ViewString);
           maxsrclng := Maximum(List(src,Length));
+          maximglng := Maximum(List(img,Length));
           for i in [1..Length(src)] do
-            Print("  ",String(src[i],maxsrclng)," -> ",img[i],"\n");
+            Print("  ",String(src[i],maxsrclng)," -> ",img[i]);
+            if i in looppos then
+              Print(String("",maximglng-Length(img[i]))," loop");
+            fi;
+            if c[i]{[3..5]} = [1,0,1] then
+              Print(String("",maximglng-Length(img[i]))," id");
+            fi;
+            Print("\n");
           od;
           if ValueOption("NoLineFeed") <> true then Print("\n"); fi;
           return; # done.
