@@ -4821,8 +4821,8 @@ InstallMethod( TransitivityCertificate,
           m := Minimum(B[Length(B)]);
           limit := 2 * limit;
         until m < n;
-        g := RepresentativeAction(G,n,m,OnPoints);
-        w := RepresentativeActionPreImage(G,n,m,OnPoints,F);
+        w:=RepresentativeActionPreImage(G,n,m,OnPoints,F:pointlimit:=limit);
+        g:=Image(phi,w);
         downcls := [];
         for c in Coefficients(g) do
           if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
@@ -5734,7 +5734,7 @@ InstallMethod( RepresentativesActionPreImage,
 
     local  SetOfRepresentatives, Extended, R, gensG, gensF, 
            orbsrc, orbdest, orbitlengthbound, g, extstep, oldorbsizes,
-           inter, intersrc, interdest, compatible, quots;
+           inter, intersrc, interdest, compatible, quots, pointlimit;
 
     SetOfRepresentatives := function ( S, rel, less, pref )
 
@@ -5755,10 +5755,16 @@ InstallMethod( RepresentativesActionPreImage,
 
     Extended := function ( orb, gens )
 
-      local  eq, lt, shorter, nextlayer, g;
+      local  eq, lt, shorter, nextlayer, g, i;
 
       nextlayer := List(gens,g->List(orb,t->[act(t[1],g),
                                      t[2]*gensF[Position(gensG,g)]]));
+      if IsRcwaGroupOverZ(G) and pointlimit < infinity then
+        for i in [1..Length(nextlayer)] do
+          nextlayer[i] := Filtered(nextlayer[i],
+                                   entry -> Maximum(entry[1]) <= pointlimit);
+        od;
+      fi;
       orb := Union(Concatenation([orb],nextlayer));
       eq := function(t1,t2) return t1[1] = t2[1]; end;
       lt := function(t1,t2) return t1[1] < t2[1]; end;
@@ -5768,6 +5774,8 @@ InstallMethod( RepresentativesActionPreImage,
 
     orbitlengthbound := ValueOption("OrbitLengthBound");
     if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
+    pointlimit := ValueOption("pointlimit");
+    if pointlimit = fail then pointlimit := infinity; fi;
 
     if   IsPermGroup(G)
     then R := PositiveIntegers;
