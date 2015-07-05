@@ -152,16 +152,18 @@ gap> Collected(data.trsstatus);
   [ "U DecreasingOn stable for <maxeq> steps", 5859 ], 
   [ "exceeded memory bound", 599 ], [ "finite", 21948 ], 
   [ "intransitive, but finitely many orbits", 8 ], 
-  [ "seemingly finite and infinite orbits (exponential growth)", 2981 ], 
-  [ "seemingly finite and infinite orbits (growth unclear)", 86 ], 
-  [ "seemingly finite and infinite orbits (linear growth)", 10877 ], 
-  [ "seemingly only finite orbits (long)", 778 ], 
-  [ "seemingly only finite orbits (medium)", 1395 ], 
-  [ "seemingly only finite orbits (short)", 4603 ], 
-  [ "seemingly only finite orbits (very long)", 1510 ], 
-  [ "seemingly only finite orbits (very long, very unclear)", 4 ], 
-  [ "seemingly only finite orbits (very short)", 765 ], 
-  [ "transitive", 330 ] ]
+  [ "seemingly only finite orbits (long)", 1227 ], 
+  [ "seemingly only finite orbits (medium)", 2501 ], 
+  [ "seemingly only finite orbits (short)", 4816 ], 
+  [ "seemingly only finite orbits (very long)", 230 ], 
+  [ "seemingly only finite orbits (very long, very unclear)", 76 ], 
+  [ "seemingly only finite orbits (very short)", 208 ], 
+  [ "there are infinite orbits which have exponential sphere size growth"
+        , 2974 ], 
+  [ "there are infinite orbits which have linear sphere size growth", 
+      10881 ], 
+  [ "there are infinite orbits which have unclear sphere size growth", 
+      86 ], [ "transitive", 330 ] ]
 ]]>
 </Example>
   </Description>
