@@ -116,9 +116,12 @@ DeclareAttribute( "Sign", IsRcwaMapping );
 #############################################################################
 ##
 #O  CTCons( <R> ) . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
+#O  CTCons( <P>, <R> )  . . . . . . . . . . . . . . . . CT( P, R ) for ring R
 #F  CT( <R> )
+#F  CT( <P>, <R> )
 ##
 DeclareConstructor( "CTCons", [ IsRcwaGroup, IsRing ] );
+DeclareConstructor( "CTCons", [ IsRcwaGroup, IsList, IsRing ] );
 DeclareConstructor( "CTCons", [ IsRcwaGroup, IsRowModule ] );
 DeclareGlobalFunction( "CT" );
 
@@ -126,12 +129,14 @@ DeclareGlobalFunction( "CT" );
 ##
 #P  IsNaturalCT( <G> ) . . . . . . . . . . . . . . . . . . . . . . .  CT( R )
 #P  IsNaturalCT_Z( <G> ) . . . . . . . . . . . . . . . . . . . . . .  CT( Z )
+#P  IsNaturalCTP_Z( <G> )  . . . . . . . . . . . . . . . . . . . . CT( P, Z )
 #P  IsNaturalCT_ZxZ( <G> ) . . . . . . . . . . . . . . . . . . . .  CT( Z^2 )
 #P  IsNaturalCT_Z_pi( <G> )  . . . . . . . . . . . . . . . . . . CT( Z_(pi) )
 #P  IsNaturalCT_GFqx( <G> )  . . . . . . . . . . . . . . . . . CT( GF(q)[x] )
 ##
 DeclareProperty( "IsNaturalCT", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_Z", IsRcwaGroup );
+DeclareProperty( "IsNaturalCTP_Z", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_ZxZ", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_Z_pi", IsRcwaGroup );
 DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );

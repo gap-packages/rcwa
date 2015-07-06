@@ -2010,6 +2010,17 @@ Rcwa permutation of Z with modulus 24
   19(24) -> 5(6)
   21(24) -> 22(24)
 
+gap> V := CT([],Integers);
+CT_[ ](Z)
+gap> GeneratorsOfGroup(V);
+[ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 0(2), 1(4) ), ( 1(4), 2(4) ) ]
+gap> G := CT([3],Integers);
+CT_[ 3 ](Z)
+gap> GeneratorsOfGroup(G);
+[ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 0(2), 1(4) ), ( 1(4), 2(4) ), 
+  ( 0(3), 1(3) ), ( 1(3), 2(3) ), ( 0(3), 1(9) ), ( 0(3), 4(9) ), 
+  ( 0(3), 7(9) ), ( 0(2), 1(6) ), ( 0(2), 5(6) ), ( 0(3), 1(6) ), 
+  ( 0(4), 1(6) ), ( 0(6), 1(8) ) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 
