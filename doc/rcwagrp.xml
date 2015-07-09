@@ -918,15 +918,15 @@ true
 
 <Index Key="IsTransitiveOnNonnegativeIntegersInSupport"
        Subkey="for an rcwa group over Z">
-  <C>IsTransitiveOnNonnegativeIntegersIn-</C><Br/><C>Support</C>
+  <C>IsTransitiveOnNonnegativeIntegersInSupport</C>
 </Index>
 <Index Key="TryIsTransitiveOnNonnegativeIntegersInSupport"
        Subkey="for an rcwa group over Z and a search limit">
-  <C>TryIsTransitiveOnNonnegativeIntegersIn-</C><Br/><C>Support</C>
+  <C>TryIsTransitiveOnNonnegativeIntegersInSupport</C>
 </Index>
 <Index Key="TransitivityCertificate"
        Subkey="for an rcwa group over Z and a search limit">
-  <C>TryToComputeTransitivityCertificate</C>
+  <C>TransitivityCertificate</C>
 </Index>
 <Index Key="TryToComputeTransitivityCertificate"
        Subkey="for an rcwa group over Z and a search limit">
