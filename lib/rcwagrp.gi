@@ -4720,7 +4720,6 @@ InstallMethod( IsTransitive,
           and Maximum(ExcludedElements(Support(G))) >= 0)
     then return false;
     else return IsTransitiveOnNonnegativeIntegersInSupport(G); fi;
-
   end );
 
 #############################################################################
@@ -4735,81 +4734,46 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
 
     local  info;
 
-    info := TryIsTransitiveOnNonnegativeIntegersInSupport(G,2^24,4);
-
-    Info(InfoRCWA,1,"`IsTransitiveOnNonnegativeIntegersInSupport':");
-
-    if   info = "trivial" then Info(InfoRCWA,1,"group is trivial");
-    elif info = "finite"  then Info(InfoRCWA,1,"group is finite");
-    elif info = "not sign-preserving"
-    then Info(InfoRCWA,1,"group is not sign-preserving");
-    elif info = "finite orbits"
-    then Info(InfoRCWA,1,"group has finite orbits");
-    elif info = "> 1 orbit (mod m)"
-    then Info(InfoRCWA,1,"group has >1 orbits (mod m) for some m");
-    elif info = "U DecreasingOn stable for <maxeq> steps"
-    then Info(InfoRCWA,1,"U DecreasingOn stable for 4 steps");
-    elif info = "transitivity on small points unclear"
-    then Info(InfoRCWA,1,"cannot decide transitivity on small points");
-    elif info = "transitive"
-    then Info(InfoRCWA,1,"group acts transitively");
-    elif info = "intransitive on small points"
-    then Info(InfoRCWA,1,"group acts intransitively on small points");
-    elif info = "Mod(U DecreasingOn) exceeded <maxmod>"
-    then Info(InfoRCWA,1,"Mod(U DecreasingOn) exceeded 2^24");
-    elif info = "exceeded memory bound"
-    then Info(InfoRCWA,1,"exceeded memory bound"); fi;
-
+    info := TryIsTransitiveOnNonnegativeIntegersInSupport(G,20);
+    Info(InfoRCWA,1,"`IsTransitiveOnNonnegativeIntegersInSupport': ",info);
     if   HasIsTransitiveOnNonnegativeIntegersInSupport(G)
     then return IsTransitiveOnNonnegativeIntegersInSupport(G);
-    else Error("cannot decide transitivity"); return fail; fi;
-
+    else Info(InfoRCWA,1,"cannot decide transitivity"); return fail; fi;
   end );
 
 #############################################################################
 ##
-#M  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <maxmod>, <maxeq> )
+#M  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <searchlimit> )
 ##
 InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
-               "for an rcwa group over Z and bounds on efforts (RCWA)",
-               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+               "for an rcwa group over Z and bound on efforts (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
 
-  function ( G, maxmod, maxeq )
+  function ( G, searchlimit )
 
-    local  ShortOrbitsFound, gens, S, B, r, B_act, B_act_old, r_act, b, p0,
-           D, Ds, range, m, orbmod;
+    local  ShortOrbitsFound, cert, gens, S, range, m, orbmod,
+           elms, B, r, B_act, B_act_old, r_act, b, p0;
 
     ShortOrbitsFound := function ( range, maxlng )
       return ShortOrbits(G,Intersection(range,Support(G)),maxlng) <> [];
     end;
 
-    if IsTrivial(G) then
-      SetIsTransitiveOnNonnegativeIntegersInSupport(G,true);
-      return "trivial";
-    fi;
-
     if HasIsFinite(G) and IsFinite(G) then
       SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
-      return "finite";
-    fi;
-
-    if not IsSignPreserving(G) then
+      return "intransitive (group is finite)";
+    elif not IsSignPreserving(G) then
       SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
-      return "not sign-preserving";
+      return "doesn't act on N_0 (group is not sign-preserving)";
     fi;
 
     gens := GeneratorsOfGroup(G);
     S    := Support(G);
 
-    Info(InfoRCWA,2,"The support of the group is ");
-    if   InfoLevel(InfoRCWA) >= 2
-    then Print("#I  "); View(Support(G)); Print("\n"); fi;
-
     for range in [[0..15],[0..63],
                   [0..Maximum(255,Lcm(List(gens,Mod)))]] do
       if ShortOrbitsFound(range,32) then
         SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
-        return "finite orbits";
+        return "intransitive (group has finite orbits)";
       fi;
     od;
 
@@ -4818,73 +4782,42 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
                      pi -> Support(Image(pi)));
       if Number(orbmod,orb->Intersection(S,orb)<>[]) > 1 then
         SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
-        return "> 1 orbit (mod m)";
+        return Concatenation("intransitive (group has > 1 orbit (mod ",
+                             String(m),"))");
       fi;
     od;
 
-    r := 0; Ds := [];
-    repeat
-      r := r + 1;
+    cert := TryToComputeTransitivityCertificate(G,searchlimit);
 
-      Info(InfoRCWA,2,"Ball radius = ",r);
+    if cert.complete = true then
+      SetTransitivityCertificate(G,cert);
+      SetIsTransitiveOnNonnegativeIntegersInSupport(G,true);
+    elif cert.status = "intransitive, but finitely many orbits" then
+      SetTransitivityCertificate(G,cert);
+      SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
+    elif cert.status = "finitely many orbits" then
+      SetTransitivityCertificate(G,cert);
+    fi;
 
-      B := Ball(G,One(G),r);
-      D := Union(List(B,g->Union(DecreasingOn(g),ShiftsDownOn(g))));
-      Add(Ds,D);
-
-      Info(InfoRCWA,2,"U_(g in G) {DecreasingOn(g),ShiftsDownOn(g)} =");
-      if   InfoLevel(InfoRCWA) >= 2
-      then Print("#I  "); View(D); Print("\n"); fi;
-
-      if   r >= maxeq and Set(Ds{[r-maxeq+1..r]}) = [D]
-      then return "U DecreasingOn stable for <maxeq> steps"; fi;
-
-      if IsSubset(D,S) then
-        b := Maximum(List(B,MaximalShift));
-        p0 := Minimum(Intersection([0..b],Support(G)));
-        Info(InfoRCWA,2,"Checking transitivity on moved points ",
-                        "0 <= n <= ",b);
-        B_act := [p0]; r_act := 1;
-        repeat
-          B_act_old := B_act;
-          B_act := Ball(G,p0,r_act,OnPoints);
-          r_act := r_act + 1;
-          if MemoryUsage(B_act) > 2^24 then # 16MB
-            return "transitivity on small points unclear";
-          fi;
-        until IsSubset(B_act,Intersection([0..b],Support(G)))
-           or B_act = B_act_old;
-        if   IsSubset(B_act,Intersection([0..b],Support(G)))
-        then SetIsTransitiveOnNonnegativeIntegersInSupport(G,true);
-             return "transitive";
-        else SetIsTransitiveOnNonnegativeIntegersInSupport(G,false);
-             return "intransitive on small points";
-        fi;
-      fi;
-
-      if   Modulus(D) > maxmod
-      then return "Mod(U DecreasingOn) exceeded <maxmod>"; fi;
-
-    until MemoryUsage(B) > 2^24; # 16MB
-
-    return "exceeded memory bound";         
+    return cert.status;
   end );
 
 #############################################################################
 ##
-#M  TransitivityCertificate( <G> ) . . . . . . . . . for an rcwa group over Z
+#M  TryToComputeTransitivityCertificate( <G>, <searchlimit> )
 ##
-InstallMethod( TransitivityCertificate,
+InstallMethod( TryToComputeTransitivityCertificate,
                "for rcwa groups over Z (RCWA)",
-               true, [ IsRcwaGroupOverZ ], 0,
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
 
-  function ( G )
+  function ( G, searchlimit )
 
-    local  classes, words, gens, D, S, R, F, phi, B, n, m, k, g, w,
-           downcls, coveredcls, cl, I, c, limit, varnames, abortdensity, i;
+    local  classes, words, imgs, gens, D, S, R, F, phi, B, B_last, r, limit,
+           n, m, k, g, w, downcls, coveredcls, cl, I, c, smallpointbound, p0,
+           abortdensity, check, varnames, i;
 
-    Info(InfoRCWA,1,"Invoking `TransitivityCertificate' for G = ",
-         ViewString(G));
+    Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'",
+                    " for G = ",ViewString(G));
     abortdensity := ValueOption("abortdensity");
     if not IsPosRat(abortdensity) then abortdensity := 0; fi;
     if not IsSignPreserving(G)
@@ -4900,7 +4833,7 @@ InstallMethod( TransitivityCertificate,
     phi := EpimorphismByGenerators(F,G);
     D := []; S := Support(G);
     R := AsUnionOfFewClasses(S);
-    classes := []; words := [];
+    classes := []; words := []; imgs := []; smallpointbound := 0;
     while R <> [] and Sum(List(R,Density)) > abortdensity do
       Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
       k := 0;
@@ -4910,14 +4843,22 @@ InstallMethod( TransitivityCertificate,
         n := n + k * Modulus(R[1]);
         limit := 10000;
         repeat
+          if IsBound(B) then B_last := B; else B_last := []; fi;
           if   limit > 10000
           then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
-          B := RestrictedBall(G,n,1000000,limit:Spheres,UntilSmaller);
+          B := RestrictedBall(G,n,searchlimit,limit:Spheres,UntilSmaller);
           m := Minimum(B[Length(B)]);
           limit := 2 * limit;
-        until m < n;
+        until m < n or B = B_last;
+        if m >= n then
+          return rec( phi   := phi,   classes  := classes,
+                      words := words, complete := false,
+                      smallpointbound := smallpointbound,
+                      status := "unclear" );
+        fi;
         w:=RepresentativeActionPreImage(G,n,m,OnPoints,F:pointlimit:=limit);
-        g:=Image(phi,w);
+        g:=Image(phi,w); Add(imgs,g);
+        smallpointbound := Maximum(smallpointbound,MaximalShift(g));
         downcls := [];
         for c in Coefficients(g) do
           if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
@@ -4940,7 +4881,46 @@ InstallMethod( TransitivityCertificate,
       coveredcls := Set(coveredcls);
       Add(classes,coveredcls); Add(words,w);
     od;
-    return rec( phi := phi, classes := classes, words := words );
+
+    check := [ R = [], Sum(List(Flat(classes),Density)) = 1,
+               IsIntegers(Union(Flat(classes))) ];
+    if not check in [[true,true,true],[false,false,false]]
+    then Error("internal error!"); fi;
+
+    if R <> [] then
+      return rec( phi   := phi,   classes  := classes,
+                  words := words, complete := false,
+                  smallpointbound := smallpointbound,
+                  status := "unclear" );
+    fi;
+
+    Info(InfoRCWA,1,"Checking transitivity on moved points ",
+                    "0 <= n <= ",smallpointbound," ...");
+    p0 := Minimum(Intersection([0..smallpointbound],Support(G)));
+    B := [p0]; r := 1;
+    repeat
+      B_last := B;
+      B := Ball(G,p0,r,OnPoints);
+      r := r + 1;
+      if MemoryUsage(B) > 2^24 then # 16MB; at most finitely many orbits
+        return rec( phi   := phi,   classes  := classes,
+                    words := words, complete := false,
+                    smallpointbound  := smallpointbound,
+                    status := "finitely many orbits" );
+      fi;
+    until IsSubset(B,Intersection([0..smallpointbound],Support(G)))
+       or B = B_last;
+    if IsSubset(B,Intersection([0..smallpointbound],Support(G))) then
+      return rec( phi   := phi,   classes  := classes,
+                  words := words, complete := true,
+                  smallpointbound := smallpointbound,
+                  status := "transitive" );
+    else # p0^G finite 
+      return rec( phi   := phi,   classes  := classes,
+                  words := words, complete := false,
+                  smallpointbound := smallpointbound,
+                  status := "intransitive, but finitely many orbits" );
+    fi;
   end );
 
 #############################################################################

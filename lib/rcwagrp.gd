@@ -349,24 +349,25 @@ DeclareProperty( "IsTransitiveOnNonnegativeIntegersInSupport",
 
 #############################################################################
 ##
-#O  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <maxmod>, <maxeq> )
+#O  TryIsTransitiveOnNonnegativeIntegersInSupport( <G>, <searchlimit> )
 ##
 ##  This operation tries to figure out whether the action of the group
 ##  G < RCWA(Z) on the set of its nonnegative moved points is transitive.
 ##  It returns a string briefly describing the situation. If the determina-
 ##  tion of transitivity is successful, the property `IsTransitiveOnNonnega-
-##  tiveIntegersInSupport' is set accordingly. The arguments <maxmod> and
-##  <maxeq> are bounds on the efforts to be made.
+##  tiveIntegersInSupport' is set accordingly. The argument <searchlimit>
+##  is a bound on the efforts to be made -- more precisely, this is the
+##  maximum search radius for a smaller point in a sphere about a point.
 ##  
 DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
-                  [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ] );
+                  [ IsRcwaGroupOverZ, IsPosInt ] );
 
 #############################################################################
 ##
 #A  TransitivityCertificate( <G> )
 ##
 ##  Given an rcwa group <G> over Z which acts transitively on the set of
-##  nonnegative integers in its support, this operation returns a record
+##  nonnegative integers in its support, this attribute is a record
 ##  containing components 'phi', 'words' and 'classes' as follows:
 ##
 ##  - 'phi' is an epimorphism from a free group to <G> which maps generators
@@ -376,11 +377,28 @@ DeclareOperation( "TryIsTransitiveOnNonnegativeIntegersInSupport",
 ##    of <G> which maps all sufficiently large positive integers in the
 ##    residue classes classes[i] to smaller integers.
 ##
-##  It is not guaranteed that this operation terminates.
-##  In particular if the group <G> does not act transitively on the set of
-##  nonnegative integers in its support, it is undefined what happens.
+##  There are no methods installed for `TransitivityCertificate' -- attribute
+##  values are computed with `TryToComputeTransitivityCertificate'.
 ##
 DeclareAttribute( "TransitivityCertificate", IsRcwaGroup );
+
+#############################################################################
+##
+#O  TryToComputeTransitivityCertificate( <G>, <searchlimit> )
+##
+##  This operation tries to compute a "transitivity certificate" as described
+##  above for the action of the rcwa group <G> over Z on the set of nonnega-
+##  tive integers in its support. Of course this can be successful only if
+##  this action is indeed transitive. The argument <searchlimit> is the
+##  largest radius of a ball about a point within which smaller points are
+##  looked for and taken into consideration. If not for all sufficiently
+##  large positive integers n there is a number smaller than n within the
+##  ball of radius <searchlimit> about n, the operation either returns 'fail'
+##  or -- if the option "partial" is set -- the part of the result computed
+##  so far.
+##
+DeclareOperation( "TryToComputeTransitivityCertificate",
+                  [ IsRcwaGroup, IsPosInt ] );
 
 #############################################################################
 ##

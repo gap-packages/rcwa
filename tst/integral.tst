@@ -1987,10 +1987,13 @@ gap> last = GrowthFunctionOfOrbit(Orbit(G,18),100,20);
 true
 gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],ClassTransposition));
 <(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
-gap> cert := TransitivityCertificate(G);
+gap> IsTransitiveOnNonnegativeIntegersInSupport(G);
+true
+gap> TransitivityCertificate(G);
 rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ] 
-     ], 
+     ], complete := true, 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
+  smallpointbound := 4, status := "transitive", 
   words := [ a, b, c, b*c, a*b ] )
 gap> Display(  ClassTransposition(0,3,1,3)
 >            * ClassTransposition(1,2,2,8):AsClassMapping);
