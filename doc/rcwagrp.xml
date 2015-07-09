@@ -963,7 +963,7 @@ as follows:
   <Item>
     in addition to finding a list of group elements <M>g_i</M> such that
     for any large enough integer <M>n</M> in the support of <A>G</A> there
-    is some <M>g_i</M> such that <M>n^{g_i} \lt n</M>, for verifying
+    is some <M>g_i</M> such that <M>n^{g_i} &lt; n</M>, for verifying
     transitivity it was necessary to check that all integers less than or
     equal to <C>smallpointbound</C> in the support of <A>G</A> lie in the
     same orbit.
