@@ -4882,8 +4882,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
       Add(classes,coveredcls); Add(words,w);
     od;
 
-    check := [ R = [], Sum(List(Flat(classes),Density)) = 1,
-               IsIntegers(Union(Flat(classes))) ];
+    check := [ R = [], Sum(List(Flat(classes),Density)) = Density(S),
+               Union(Flat(classes)) = S ];
     if not check in [[true,true,true],[false,false,false]]
     then Error("internal error!"); fi;
 
