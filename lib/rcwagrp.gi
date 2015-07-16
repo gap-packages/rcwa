@@ -4897,11 +4897,14 @@ InstallMethod( TryToComputeTransitivityCertificate,
     Info(InfoRCWA,1,"Checking transitivity on moved points ",
                     "0 <= n <= ",smallpointbound," ...");
     p0 := Minimum(Intersection([0..smallpointbound],Support(G)));
-    B := [p0]; r := 1;
+    B := [p0]; r := 8; limit := 4 * smallpointbound;
     repeat
+      Info(InfoRCWA,1,"Checking up to radius ",r,
+                      " and up to limit ",limit," ...");
       B_last := B;
-      B := Ball(G,p0,r,OnPoints);
-      r := r + 1;
+      B := RestrictedBall(G,p0,r,limit);
+      r := 2 * r;
+      limit := 2 * limit;
       if MemoryUsage(B) > 2^24 then # 16MB; at most finitely many orbits
         return rec( phi   := phi,   classes  := classes,
                     words := words, complete := false,
