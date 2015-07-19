@@ -4851,8 +4851,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
           limit := 2 * limit;
         until m < n or B = B_last;
         if m >= n then
-          return rec( phi   := phi,   classes  := classes,
-                      words := words, complete := false,
+          return rec( phi := phi, classes := classes,
+                      words := words, complete := false, remaining := R,
                       smallpointbound := smallpointbound,
                       status := "unclear" );
         fi;
@@ -4888,8 +4888,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
     then Error("internal error!"); fi;
 
     if R <> [] then
-      return rec( phi   := phi,   classes  := classes,
-                  words := words, complete := false,
+      return rec( phi := phi, classes := classes,
+                  words := words, complete := false, remaining := R,
                   smallpointbound := smallpointbound,
                   status := "unclear" );
     fi;
@@ -4906,20 +4906,20 @@ InstallMethod( TryToComputeTransitivityCertificate,
       r := 2 * r;
       limit := 2 * limit;
       if MemoryUsage(B) > 2^24 then # 16MB; at most finitely many orbits
-        return rec( phi   := phi,   classes  := classes,
-                    words := words, complete := false,
-                    smallpointbound  := smallpointbound,
+        return rec( phi := phi, classes := classes,
+                    words := words, complete := false, remaining := R,
+                    smallpointbound := smallpointbound,
                     status := "finitely many orbits" );
       fi;
     until IsSubset(B,Intersection([0..smallpointbound],Support(G)))
        or B = B_last;
     if IsSubset(B,Intersection([0..smallpointbound],Support(G))) then
-      return rec( phi   := phi,   classes  := classes,
+      return rec( phi := phi, classes := classes,
                   words := words, complete := true,
                   smallpointbound := smallpointbound,
                   status := "transitive" );
     else # p0^G finite 
-      return rec( phi   := phi,   classes  := classes,
+      return rec( phi := phi, classes := classes,
                   words := words, complete := false,
                   smallpointbound := smallpointbound,
                   status := "intransitive, but finitely many orbits" );
