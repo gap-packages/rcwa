@@ -4813,8 +4813,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
   function ( G, searchlimit )
 
     local  classes, words, imgs, gens, D, S, R, F, phi, B, B_last, r, limit,
-           n, m, k, g, w, downcls, coveredcls, cl, I, c, smallpointbound, p0,
-           abortdensity, check, varnames, i;
+           n, m, k, g, w, downcls, coveredcls, cl, I, c, smallpointbound,
+           rem, p0, abortdensity, check, varnames, i;
 
     Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'",
                     " for G = ",ViewString(G));
@@ -4896,8 +4896,21 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
     Info(InfoRCWA,1,"Checking transitivity on moved points ",
                     "0 <= n <= ",smallpointbound," ...");
-    p0 := Minimum(Intersection([0..smallpointbound],Support(G)));
-    B := [p0]; r := 8; limit := 4 * smallpointbound;
+    rem := Intersection([0..smallpointbound],S);
+    for i in [1..Length(imgs)] do
+      g := imgs[i];
+      rem := Filtered( rem, n -> n^g >= n );
+      if i = 1 then
+        Info(InfoRCWA,1,"Number of points not decreased by the ",
+                        "first element: ",Length(rem));
+      else
+        Info(InfoRCWA,1,"Number of points not decreased by any of the ",
+                        "first ",i," elements: ",Length(rem));
+      fi;
+    od;
+    p0 := Minimum(rem);
+    Info(InfoRCWA,1,"Computing balls about ",p0," ...");
+    B := [p0]; r := 8; limit := 4 * Maximum(rem) + 1;
     repeat
       Info(InfoRCWA,1,"Checking up to radius ",r,
                       " and up to limit ",limit," ...");
@@ -4911,9 +4924,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
                     smallpointbound := smallpointbound,
                     status := "finitely many orbits" );
       fi;
-    until IsSubset(B,Intersection([0..smallpointbound],Support(G)))
-       or B = B_last;
-    if IsSubset(B,Intersection([0..smallpointbound],Support(G))) then
+    until IsSubset(B,rem) or B = B_last;
+    if IsSubset(B,rem) then
       return rec( phi := phi, classes := classes,
                   words := words, complete := true,
                   smallpointbound := smallpointbound,
