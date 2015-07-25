@@ -4842,6 +4842,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
         if n = Residues(S)[1] then n := n + Modulus(R[1]); fi;
         n := n + k * Modulus(R[1]);
         limit := 10000;
+        Info(InfoRCWA,1,"n = ",n);
         repeat
           if IsBound(B) then B_last := B; else B_last := []; fi;
           if   limit > 10000
