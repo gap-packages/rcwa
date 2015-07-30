@@ -1541,7 +1541,7 @@ gap> Trajectory(T,15,[1]); Trajectory(T,15,[1],2);
 [ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
-  <union of 20 residue classes (mod 27)>, 
+  <union of 20 residue classes (mod 27) (6 classes)>, 
   <union of 73 residue classes (mod 81)>, Z \ 10(81) U 37(81), Integers ]
 ]]>
 </Example>

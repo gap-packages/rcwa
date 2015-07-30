@@ -425,20 +425,20 @@ gap> Union(List(cls,cl->Image(u,cl)));
 Integers
 gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);;
 gap> im := Image(a,Image(a,F));
-<union of 18 residue classes (mod 45)> U [ 3, 18 ] \ [ -9, 1 ]
+<union of 18 residue classes (mod 45) (12 classes)> U [ 3, 18 ] \ [ -9, 1 ]
 gap> pre := PreImage(a,PreImage(a,im));
 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ]
 gap> C7 := Group(g);; 
 gap> orb := Orbit(C7,F);
-[ 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ], 
-  <union of 12 residue classes (mod 30)> U [ 4, 8 ] \ [ -2, 5 ], 
+[ 1(5) U 2(5) U [ 3, 8 ] \ [ -4, 1 ], <union of 12 residue classes (mod 30) (
+    9 classes)> U [ 4, 8 ] \ [ -2, 5 ], 
   <union of 24 residue classes (mod 60)> U [ 0, 4 ] \ [ -6, 3 ], 
   <union of 24 residue classes (mod 60)> U [ 0, 2 ] \ [ -10, 8 ], 
   <union of 24 residue classes (mod 60)> U [ 1, 2 ] \ [ -5, 4 ], 
   <union of 24 residue classes (mod 60)> U [ 1, 5 ] \ [ -1, 0 ], 
-  <union of 12 residue classes (mod 30)> U [ 3, 5 ] \ [ -3, 2 ] ]
+  <union of 12 residue classes (mod 30) (9 classes)> U [ 3, 5 ] \ [ -3, 2 ] ]
 gap> Union(orb{[1,2]});
-<union of 19 residue classes (mod 30)> U [ 3, 4, 8 ] \ [ -2, 5 ]
+<union of 19 residue classes (mod 30) (8 classes)> U [ 3, 4, 8 ] \ [ -2, 5 ]
 gap> Union(orb{[1,2,3]});
 <union of 44 residue classes (mod 60)> U [ 0, 4, 8 ] \ [ -6 ]
 gap> Union(orb{[1,2,3,4]});
@@ -765,7 +765,7 @@ gap> Trajectory(T,27,[1],"LastCoeffs");
 [ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ]
 gap> Trajectory(T,ResidueClass(Integers,3,0),Integers);
 [ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), 
-  <union of 20 residue classes (mod 27)>, 
+  <union of 20 residue classes (mod 27) (6 classes)>, 
   <union of 73 residue classes (mod 81)>, Z \ 10(81) U 37(81), Integers ]
 gap> List(Trajectory(sigma,37,37^(sigma^-1),"AllCoeffs"),
 >         c->(c[1]*37+c[2])/c[3]){[1..23]} = Cycle(sigma,37);
@@ -1085,7 +1085,7 @@ gap> DecreasingOn(a);
 gap> DecreasingOn(a^2);
 1(8) U 7(8)
 gap> DecreasingOn(a^3);
-<union of 8 residue classes (mod 16)>
+<union of 8 residue classes (mod 16) (6 classes)>
 gap> FactorizationIntoCSCRCT(ab);
 [ ClassShift( 7(9) ), ClassShift( 1(9) )^-1, ( 1(9), 4(9) ), ( 1(9), 7(9) ), 
   ( 6(18), 15(18) ), ( 5(9), 15(18) ), ( 4(9), 15(18) ), ( 5(9), 6(18) ), 

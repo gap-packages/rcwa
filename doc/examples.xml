@@ -1212,14 +1212,14 @@ gap> for i in [1..Length(decs)] do
 0(2)
 2(6) U 4(6)
 <union of 8 residue classes (mod 30)>
-<union of 19 residue classes (mod 90)>
+<union of 19 residue classes (mod 90) (9 classes)>
 <union of 114 residue classes (mod 720)>
 <union of 99 residue classes (mod 720)>
 <union of 57 residue classes (mod 720)>
 <union of 54 residue classes (mod 720)>
 <union of 41 residue classes (mod 720)>
 <union of 35 residue classes (mod 720)>
-<union of 8 residue classes (mod 720)>
+<union of 8 residue classes (mod 720) (6 classes)>
 4(720) U 94(720) U 148(720) U 238(720)
 <union of 24 residue classes (mod 5760)>
 <union of 72 residue classes (mod 51840)>
@@ -1232,9 +1232,9 @@ gap> for i in [1..Length(decs)] do
 <union of 60 residue classes (mod 259200)>
 <union of 48 residue classes (mod 259200)>
 <union of 24 residue classes (mod 259200)>
-<union of 12 residue classes (mod 259200)>
+<union of 12 residue classes (mod 259200) (6 classes)>
 <union of 24 residue classes (mod 777600)>
-<union of 12 residue classes (mod 777600)>
+<union of 12 residue classes (mod 777600) (6 classes)>
 111604(194400) U 14404(777600) U 208804(777600)
 [  ]
 ]]>
@@ -1307,32 +1307,32 @@ Z \ 1(8) U 7(8)
 <union of 39 residue classes (mod 720)>
 <union of 33 residue classes (mod 720)>
 <union of 23 residue classes (mod 720)>
-<union of 19 residue classes (mod 720)>
-<union of 17 residue classes (mod 720)>
-<union of 16 residue classes (mod 720)>
-<union of 14 residue classes (mod 720)>
-<union of 8 residue classes (mod 720)>
-<union of 7 residue classes (mod 720)>
+<union of 19 residue classes (mod 720) (7 classes)>
+<union of 17 residue classes (mod 720) (6 classes)>
+<union of 16 residue classes (mod 720) (7 classes)>
+<union of 14 residue classes (mod 720) (9 classes)>
+<union of 8 residue classes (mod 720) (6 classes)>
+<union of 7 residue classes (mod 720) (6 classes)>
 238(360) U 4(720) U 148(720) U 454(720)
 <union of 38 residue classes (mod 5760)>
 <union of 37 residue classes (mod 5760)>
 <union of 25 residue classes (mod 5760)>
 <union of 21 residue classes (mod 5760)>
-<union of 17 residue classes (mod 5760)>
-<union of 16 residue classes (mod 5760)>
+<union of 17 residue classes (mod 5760) (13 classes)>
+<union of 16 residue classes (mod 5760) (12 classes)>
 <union of 138 residue classes (mod 51840)>
 <union of 48 residue classes (mod 51840)>
 <union of 32 residue classes (mod 51840)>
-<union of 20 residue classes (mod 51840)>
-<union of 16 residue classes (mod 51840)>
+<union of 20 residue classes (mod 51840) (14 classes)>
+<union of 16 residue classes (mod 51840) (12 classes)>
 <union of 68 residue classes (mod 259200)>
 <union of 42 residue classes (mod 259200)>
 <union of 32 residue classes (mod 259200)>
 <union of 26 residue classes (mod 259200)>
 <union of 25 residue classes (mod 259200)>
-<union of 11 residue classes (mod 259200)>
-<union of 10 residue classes (mod 259200)>
-<union of 7 residue classes (mod 259200)>
+<union of 11 residue classes (mod 259200) (10 classes)>
+<union of 10 residue classes (mod 259200) (9 classes)>
+<union of 7 residue classes (mod 259200) (6 classes)>
 13414(129600) U 2164(259200) U 66964(259200) U 228964(259200)
 2164(259200) U 66964(259200) U 228964(259200)
 [  ]
@@ -1387,14 +1387,14 @@ gap> for i in [1..Length(decs)] do
 >    od;
 Z \ 1(8) U 7(8)
 <union of 46 residue classes (mod 72)>
-<union of 20 residue classes (mod 72)>
+<union of 20 residue classes (mod 72) (8 classes)>
 4(18)
 <union of 28 residue classes (mod 576)>
 <union of 22 residue classes (mod 576)>
 <union of 21 residue classes (mod 576)>
 40(72) U 4(144) U 94(144) U 346(576) U 418(576)
-<union of 16 residue classes (mod 576)>
-<union of 15 residue classes (mod 576)>
+<union of 16 residue classes (mod 576) (6 classes)>
+<union of 15 residue classes (mod 576) (6 classes)>
 4(144) U 94(144) U 346(576) U 418(576)
 <union of 30 residue classes (mod 5184)>
 <union of 26 residue classes (mod 5184)>
@@ -1427,23 +1427,23 @@ Z \ 1(8) U 7(8)
 <union of 31 residue classes (mod 259200)>
 <union of 24 residue classes (mod 259200)>
 <union of 23 residue classes (mod 259200)>
-<union of 13 residue classes (mod 259200)>
+<union of 13 residue classes (mod 259200) (8 classes)>
 57406(129600) U 115006(129600) U 192676(259200) U 250276(259200)
 57406(129600) U 192676(259200) U 250276(259200) U 374206(388800)
 57406(129600) U 192676(259200) U 250276(259200)
 250276(259200) U 57406(388800) U 316606(388800) U 451876(777600)
 316606(388800) U 451876(777600) U 509476(777600) U 768676(777600)
-<union of 18 residue classes (mod 3110400)>
+<union of 18 residue classes (mod 3110400) (6 classes)>
 451876(777600) U 509476(777600) U 705406(777600) U 768676(777600)
  U 2649406(3110400)
 451876(777600) U 705406(777600) U 768676(777600) U 2649406(3110400)
 451876(777600) U 705406(777600) U 2649406(3110400)
 705406(777600) U 2007076(3110400) U 2649406(3110400) U 2784676(3110400)
-<union of 14 residue classes (mod 9331200)>
+<union of 14 residue classes (mod 9331200) (8 classes)>
 2260606(2332800) U 5759806(9331200) U 5895076(9331200) U 8227876(9331200)
 4593406(6998400) U 15091006(27993600) U 17559076(27993600)
  U 24557476(27993600)
-<union of 14 residue classes (mod 83980800)>
+<union of 14 residue classes (mod 83980800) (8 classes)>
 18590206(20995200) U 24557476(83980800) U 45552676(83980800)
  U 71078206(83980800)
 [  ]
@@ -2733,7 +2733,7 @@ gap> S1 := S0^T;
 gap> S2 := S1^T;
 0(3) U 5(9) U 7(9) U 8(27)
 gap> S3 := S2^T;
-<union of 20 residue classes (mod 27)>
+<union of 20 residue classes (mod 27) (6 classes)>
 gap> S4 := S3^T;
 <union of 73 residue classes (mod 81)>
 gap> S5 := S4^T;

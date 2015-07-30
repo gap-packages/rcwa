@@ -284,29 +284,6 @@ DeclareGlobalFunction( "RcwaMappingsType" );
 
 #############################################################################
 ##
-#O  SparseRepresentation( <f> )
-#O  SparseRepresentation( <M> )
-#O  SparseRep( <f> )
-#O  SparseRep( <M> )
-#O  StandardRepresentation( <f> )
-#O  StandardRepresentation( <M> )
-#O  StandardRep( <f> )
-#O  StandardRep( <M> )
-##
-##  Conversion between the two representations of rcwa mappings:
-##  `IsRcwaMappingStandardRep' and `IsRcwaMappingSparseRep'.
-##  The operations are also available for rcwa monoids, where the conversion
-##  is applied to all generators.
-##
-DeclareOperation( "SparseRepresentation", [ IsRcwaMapping ] );
-DeclareOperation( "SparseRepresentation", [ IsRcwaMonoid ] );
-DeclareOperation( "StandardRepresentation", [ IsRcwaMapping ] );
-DeclareOperation( "StandardRepresentation", [ IsRcwaMonoid ] );
-DeclareSynonym( "SparseRep", SparseRepresentation );
-DeclareSynonym( "StandardRep", StandardRepresentation );
-
-#############################################################################
-##
 #F  LocalizedRcwaMapping( <f>, <p> )
 #F  SemilocalizedRcwaMapping( <f>, <pi> )
 ##

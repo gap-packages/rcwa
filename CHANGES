@@ -3,7 +3,10 @@
                        ===================================
 
 
-Changes between version 3.7.0 and version 3.X.X ():
+Changes between version 3.7.0 and version 3.8.0 ():
+
+ - RCWA makes now use of the new sparse representation of residue class unions
+   implemented in ResClasses 4.0.0.
 
  - A couple of methods for computing stabilizers in rcwa groups have been added.
 

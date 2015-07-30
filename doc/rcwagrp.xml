@@ -1013,7 +1013,8 @@ rec(
   classes := [ [ 1(2) ], [ 2(4) ], [ 4(32) ], [ 8(24), 44(48), 20(96) ], 
       [ 0(24), 16(24) ] ], complete := false, 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 1(4), 2(6) ) 
-     ], smallpointbound := 42, status := "unclear", 
+     ], remaining := [ 12(48), 28(48), 52(96), 84(96) ], 
+  smallpointbound := 42, status := "unclear", 
   words := [ a, b, (a*c)^2*b*a*b, c, a*c*b ] )
 gap> Union(Flat(cert.classes));
 <union of 90 residue classes (mod 96)>
@@ -1021,12 +1022,15 @@ gap> Difference(Integers,Union(Flat(cert.classes)));
 12(48) U 28(48) U 52(96) U 84(96)
 gap> cert := TryToComputeTransitivityCertificate(G,20); # try larger bound
 rec(
-  classes := [ [ 1(2) ], [ 2(4) ], [ 4(32) ], [ 8(24), 44(48), 20(96) ],
-      [ 0(24), 16(24) ], [ 12(768), 268(768) ], [ 28(768), 540(768) ] ],
-  complete := false,
-  phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 1(4), 2(6) )
-     ], smallpointbound := 1074, status := "unclear",
-  words := [ a, b, (a*c)^2*b*a*b, c, a*c*b, (a*c)^3*b*c*b*a*b,
+  classes := [ [ 1(2) ], [ 2(4) ], [ 4(32) ], [ 8(24), 44(48), 20(96) ], 
+      [ 0(24), 16(24) ], [ 12(768), 268(768) ], [ 28(768), 540(768) ] ], 
+  complete := false, 
+  phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 1(4), 2(6) ) 
+     ], 
+  remaining := [ 52(96), 84(96), 60(192), 108(192), 124(192), 172(192), 
+      76(384), 204(384), 220(384), 348(384), 156(768), 396(768), 
+      412(768), 652(768) ], smallpointbound := 1074, status := "unclear", 
+  words := [ a, b, (a*c)^2*b*a*b, c, a*c*b, (a*c)^3*b*c*b*a*b, 
       (a*c)^4*b*a*b*a*b ] )
 gap> Difference(Integers,Union(Flat(cert.classes)));
 <union of 44 residue classes (mod 768)>
