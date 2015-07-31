@@ -5449,12 +5449,12 @@ InstallMethod( ImagesSet,
       c := f!.coeffs[(cl!.cls[1][1]) mod f!.modulus + 1];
       return ResidueClass(Integers,c[1]*cl!.m/c[3],
                                   (c[1]*cl!.cls[1][1]+c[2])/c[3]);
-    else
+    elif IsResidueClassUnionInResidueListRep(cl) then
       if cl!.m mod f!.modulus <> 0 then TryNextMethod(); fi;
       c := f!.coeffs[(cl!.r[1]) mod f!.modulus + 1];
       return ResidueClass(Integers,c[1]*cl!.m/c[3],
                                   (c[1]*cl!.r[1]+c[2])/c[3]);
-    fi;
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -5483,13 +5483,13 @@ InstallMethod( ImagesSet,
       if c = fail then TryNextMethod(); fi;
       return ResidueClass(Integers,c[3]*cl!.m/c[5],
                                   (c[3]*cl!.cls[1][1]+c[4])/c[5]);
-    else
+    elif IsResidueClassUnionInResidueListRep(cl) then
       c := First(f!.coeffs,
                     c->cl!.r[1] mod c[2] = c[1] and cl!.m mod c[2] = 0);
       if c = fail then TryNextMethod(); fi;
       return ResidueClass(Integers,c[3]*cl!.m/c[5],
                                   (c[3]*cl!.r[1]+c[4])/c[5]);
-    fi;
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
