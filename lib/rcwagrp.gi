@@ -4850,7 +4850,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
           B := RestrictedBall(G,n,searchlimit,limit:Spheres,UntilSmaller);
           m := Minimum(B[Length(B)]);
           limit := 2 * limit;
-        until m < n or B = B_last;
+        until (m < n or B = B_last) and limit > Product(List(gens,Mult)) * n;
         if m >= n then
           return rec( phi := phi, classes := classes,
                       words := words, complete := false, remaining := R,
