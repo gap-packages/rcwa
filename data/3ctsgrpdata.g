@@ -27,6 +27,9 @@
 ##  For the description of the list 'conjugacyclasses', see the file
 ##  3ctsgrp-conjugacyclasses.g.
 ##
+##  For the description of the lists 'subgroups' and 'supergroups', see the
+##  files 3ctsgrp-subgroups.g and 3ctsgrp-supergroups.g, respectively.
+##
 ##  For the description of the list 'intransitivemodulo', see the file
 ##  3ctsgrp-intransitivemodulo.g.
 ##
@@ -181,6 +184,8 @@ end,
 cts  := List(ClassPairs(6),ClassTransposition),
 
 grps := List(Combinations(~.cts,3),Group),
+
+groups := ~.grps, # synonym for `grps'
 
 mods :=
 [ 6,6,12,12,12,0,12,12,0,12,0,0,30,30,30,30,30,
@@ -11627,6 +11632,14 @@ equalityclasses :=
 conjugacyclasses :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgrp-conjugacyclasses.g"))(),
+
+subgroups :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-subgroups.g"))(),
+
+supergroups :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-supergroups.g"))(),
 
 partitionlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
