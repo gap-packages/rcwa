@@ -169,6 +169,28 @@ BindGlobal( "RCWACheckDatabaseOfGroupsGeneratedBy3ClassTranspositions",
     return errors;
   end );
 
+#############################################################################
+##
+#F  CompressWhitespace( <src>, <dest> )
+##
+##  Utility function used to compress whitespace in data files.
+##
+BindGlobal( "CompressWhitespace",
+
+  function ( src, dest )
+
+    local  str;
+
+    str := StringFile(src);
+    str := ReplacedString(str,", ",",");
+    str := ReplacedString(str," ]","]");
+    str := ReplacedString(str,"[ ","[");
+    #str := ReplacedString(str,"      "," ");
+    str := ReplacedString(str,"  "," ");
+    str := ReplacedString(str," \n],","],\n");
+    FileString(dest,str);
+  end );
+
 ResidueClassUnionViewingFormat( "short" );
 
 #############################################################################
