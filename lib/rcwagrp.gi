@@ -2986,26 +2986,22 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
 
 #############################################################################
 ##
-#M  CheckForWildness( <G>, <max_r>, <cheap> ). for rcwa group & search radius
+#M  CheckForWildness( <G>, <maxlng>, <maxmod> ) . . . . . . . for rcwa groups
 ##
 InstallMethod( CheckForWildness,
                "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsPosInt, IsBool ], 0,
+               [ IsRcwaGroup, IsPosInt, IsPosInt ], 0,
 
-  function ( G, max_r, cheap )
+  function ( G, maxlng, maxmod )
 
-    local  B, r, g;
+    local  g, lng;
 
-    for r in [1..max_r] do
-      B := Ball(G,One(G),r);
-      if cheap then
-        if   not ForAll(B,IsBalanced) or ForAny(B,g->Loops(g)<>[])
-        then SetIsTame(G,false); break; fi;
-      else
-        if   not ForAll(B,IsBalanced) or not ForAll(B,IsTame)
-        then SetIsTame(G,false); break; fi;
-      fi;
-    od;
+    g := One(G); lng := 0;
+    repeat
+      lng := lng + 1;
+      g := g * Random(GeneratorsOfGroup(G));
+      if Loops(g) <> [] then SetIsTame(G,false); break; fi;
+    until lng >= maxlng or Mod(g) > maxmod;
   end );
 
 #############################################################################
@@ -3098,7 +3094,9 @@ InstallMethod( Modulus,
       SetModulusOfRcwaMonoid(G,m); return m;
     fi;
 
-    if not HasIsTame(G) then CheckForWildness(G,2,false); fi;
+    if not HasIsTame(G) then
+      CheckForWildness(G,50,Lcm(R,List(GeneratorsOfGroup(G),Modulus))^2);
+    fi;
 
     if   HasIsTame(G) and not IsTame(G)
     then SetModulusOfRcwaMonoid(G,Zero(R)); return Zero(R); fi;
@@ -3175,7 +3173,7 @@ InstallMethod( RespectedPartition,
         if (Length(P) > 256 and Length(P_last) <= 256)
           or   (IsRcwaGroupOverZ(G) and Maximum(List(P,Mod)) > 16384
             and Maximum(List(P_last,Mod)) <= 16384) then
-          CheckForWildness(G,3,true);
+          CheckForWildness(G,100,Lcm(List(gens,Mod))^3);
           if HasIsTame(G) and not IsTame(G) then return fail; fi;
         fi;
       elif Runtime() - start > 30000 # 30s; to be improved:
