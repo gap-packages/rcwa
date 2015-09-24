@@ -437,15 +437,15 @@ InstallGlobalFunction( PrimeNumbersIterator,
 
 #############################################################################
 ##
-#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
-#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
+#M  \*( <n>, infinity ) . . . . . . . . .  for positive rational and infinity
+#M  \*( infinity, <n> ) . . . . . . . . .  for infinity and positive rational
 #M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
 ##
-InstallMethod( \*, "for positive integer and infinity (RCWA)",
-               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
+InstallMethod( \*, "for positive rational and infinity (RCWA)",
+               ReturnTrue, [ IsPosRat, IsInfinity ], 0,
                function ( n, infty ) return infinity; end );
-InstallMethod( \*, "for infinity and positive integer (RCWA)",
-               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
+InstallMethod( \*, "for infinity and positive rational (RCWA)",
+               ReturnTrue, [ IsInfinity, IsPosRat ], 0,
                function ( infty, n ) return infinity; end );
 InstallMethod( \*, "for infinity and infinity (RCWA)",
                ReturnTrue, [ IsInfinity, IsInfinity ], 0,
