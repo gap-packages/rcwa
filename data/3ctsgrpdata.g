@@ -27,8 +27,9 @@
 ##  For the description of the list 'conjugacyclasses', see the file
 ##  3ctsgrp-conjugacyclasses.g.
 ##
-##  For the description of the lists 'subgroups' and 'supergroups', see the
-##  files 3ctsgrp-subgroups.g and 3ctsgrp-supergroups.g, respectively.
+##  For the description of the lists 'subgroups', 'supergroups' and 'chains',
+##  see the files 3ctsgrp-subgroups.g, 3ctsgrp-supergroups.g and
+##  3ctsgrp-chains, respectively.
 ##
 ##  For the description of the list 'intransitivemodulo', see the file
 ##  3ctsgrp-intransitivemodulo.g.
@@ -11640,6 +11641,10 @@ subgroups :=
 supergroups :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgrp-supergroups.g"))(),
+
+chains :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgrp-chains.g"))(),
 
 partitionlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
