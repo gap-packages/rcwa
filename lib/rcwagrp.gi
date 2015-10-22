@@ -3000,7 +3000,11 @@ InstallMethod( CheckForWildness,
     repeat
       lng := lng + 1;
       g := g * Random(GeneratorsOfGroup(G));
-      if Loops(g) <> [] then SetIsTame(G,false); break; fi;
+      if Loops(g) <> [] then
+        SetIsTame(G,false);
+        SetModulusOfRcwaMonoid(G,Zero(Source(One(G))));
+        break;
+      fi;
     until lng >= maxlng or Mod(g) > maxmod;
   end );
 
@@ -3244,7 +3248,12 @@ InstallMethod( RespectedPartition,
                           "for cl0 = ",cl0[1],"(",cl0[2],"), at r = ",r);
           return "loop";
         fi;
+        if B[r+1] <> [] and Sum(List(B,Length)) > 60 then
+          CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
+          if HasIsTame(G) and not IsTame(G) then return "abort"; fi;
+        fi;
         if B[r+1] <> [] and Sum(List(B,Length)) > orbitlengthbound then
+          CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
           Info(InfoRCWA,2,"RespectedPartition: orbit length for ",
                           "for cl0 = ",cl0[1],"(",cl0[2],") exceeded ",
                           orbitlengthbound," at r = ",r);
@@ -3298,7 +3307,11 @@ InstallMethod( RespectedPartition,
             Info(InfoRCWA,2,"RespectedPartition: exceeded bound ",
                             modulusbound," on the smallest modulus of ",
                             "a residue class in an orbit.");
-            return "computation aborted"; 
+            CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
+            if HasIsTame(G) and not IsTame(G) then
+              SetSize(G,infinity);
+              return fail; 
+            else return "computation aborted"; fi;
           fi;
         fi;
         m := moduli[i];
@@ -3310,11 +3323,21 @@ InstallMethod( RespectedPartition,
         return fail; 
       fi;
       if orb = "abort" then
-        return "computation aborted"; 
+        if HasIsTame(G) and not IsTame(G) then
+          SetSize(G,infinity);
+          return fail; 
+        else return "computation aborted"; fi;
       fi;
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
+      if Length(P) > 100 then
+        CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
+        if HasIsTame(G) and not IsTame(G) then
+          SetSize(G,infinity);
+          return fail; 
+        fi;
+      fi;
       density := Sum(List(P,cl->1/cl[2]));
     until density >= 1;
     if density <> 1 then
