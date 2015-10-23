@@ -3204,7 +3204,7 @@ InstallMethod( RespectedPartition,
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
            primes, primes_multdiv, primes_onlymod, powers_impossible,
-           orb, orbitlengthbound, modulusbound, density, m, n, r, i, j, k;
+           orb, orbitlengthbound, modulusbound, density, m, n, r, i, j, k, b;
 
     compute_moduli := function (  )
       moduli := AllSmoothIntegers(primes,modulibound);
@@ -3248,7 +3248,7 @@ InstallMethod( RespectedPartition,
                           "for cl0 = ",cl0[1],"(",cl0[2],"), at r = ",r);
           return "loop";
         fi;
-        if B[r+1] <> [] and Sum(List(B,Length)) > 60 then
+        if B[r+1] <> [] and Sum(List(B,Length)) > b then
           CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
           if HasIsTame(G) and not IsTame(G) then return "abort"; fi;
         fi;
@@ -3272,6 +3272,7 @@ InstallMethod( RespectedPartition,
     if not IsSignPreserving(G) then TryNextMethod(); fi;
     gens := Set(GeneratorsAndInverses(SparseRep(G)));
     coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
+    b := Lcm(List(gens,Mod));
     for i in [1..Length(coeffs)] do
       Sort(coeffs[i],function(c1,c2)
                        return c1{[2,1]} < c2{[2,1]};
@@ -3331,7 +3332,7 @@ InstallMethod( RespectedPartition,
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
-      if Length(P) > 100 then
+      if Length(P) > b then
         CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
         if HasIsTame(G) and not IsTame(G) then
           SetSize(G,infinity);
