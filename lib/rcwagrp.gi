@@ -3332,7 +3332,7 @@ InstallMethod( RespectedPartition,
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
-      if Length(P) > b then
+      if Length(P) > 3 * b then
         CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
         if HasIsTame(G) and not IsTame(G) then
           SetSize(G,infinity);
