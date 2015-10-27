@@ -7770,7 +7770,7 @@ InstallMethod( Order,
       if not IsIntegral(g) then
         loopcheckbound := ValueOption("loopcheckbound");
         if loopcheckbound = fail then
-          loopcheckbound := RootInt(Mod(g),3) + 1; # 'reasonable' limit?
+          loopcheckbound := RootInt(Mod(g),2) + 5; # necessary AT LEAST
         fi;
         pow := g;
         for k in [1..loopcheckbound] do
