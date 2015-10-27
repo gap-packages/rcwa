@@ -3203,7 +3203,7 @@ InstallMethod( RespectedPartition,
   function ( G )
 
     local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
-           primes, primes_multdiv, primes_onlymod, powers_impossible,
+           primes, primes_multdiv, primes_onlymod, powers_impossible, nc,
            orb, orbitlengthbound, modulusbound, density, m, n, r, i, j, k, b;
 
     compute_moduli := function (  )
@@ -3248,12 +3248,12 @@ InstallMethod( RespectedPartition,
                           "for cl0 = ",cl0[1],"(",cl0[2],"), at r = ",r);
           return "loop";
         fi;
-        if B[r+1] <> [] and Sum(List(B,Length)) > b then
+        if not nc and B[r+1] <> [] and Sum(List(B,Length)) > b then
           CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
           if HasIsTame(G) and not IsTame(G) then return "abort"; fi;
         fi;
         if B[r+1] <> [] and Sum(List(B,Length)) > orbitlengthbound then
-          CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
+          if not nc then CheckForWildness(G,1000,Lcm(List(gens,Mod))^4); fi;
           Info(InfoRCWA,2,"RespectedPartition: orbit length for ",
                           "for cl0 = ",cl0[1],"(",cl0[2],") exceeded ",
                           orbitlengthbound," at r = ",r);
@@ -3268,6 +3268,8 @@ InstallMethod( RespectedPartition,
     if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
     modulusbound := ValueOption("modulusbound");
     if modulusbound = fail then modulusbound := infinity; fi;
+    nc := ValueOption("NC") = true;
+
     if IsTrivial(G) then return [ Integers ]; fi;
     if not IsSignPreserving(G) then TryNextMethod(); fi;
     gens := Set(GeneratorsAndInverses(SparseRep(G)));
@@ -3298,13 +3300,16 @@ InstallMethod( RespectedPartition,
         i := i + 1;
         if i > Length(moduli) then
           if modulibound < modulusbound then
-            Error("exceeded modulus bound ",modulibound,
-                  ", maybe the group is infinite?\n",
-                  "Enter return; to proceed with new bound ",
-                  16 * modulibound,".\n");
+            if not nc then
+              Error("exceeded modulus bound ",modulibound,
+                    ", maybe the group is infinite?\n",
+                    "Enter return; to proceed with new bound ",
+                    16 * modulibound,".\n");
+            fi;
             modulibound := modulibound * 16;
             compute_moduli();
           else
+            if nc then return "computation aborted"; fi;
             Info(InfoRCWA,2,"RespectedPartition: exceeded bound ",
                             modulusbound," on the smallest modulus of ",
                             "a residue class in an orbit.");
@@ -3332,7 +3337,7 @@ InstallMethod( RespectedPartition,
       Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
                       Length(orb),", with representative ",orb[1]);
       P := Union(P,orb);
-      if Length(P) > 3 * b then
+      if Length(P) > 3 * b and not nc then
         CheckForWildness(G,500,Lcm(List(gens,Mod))^4);
         if HasIsTame(G) and not IsTame(G) then
           SetSize(G,infinity);
