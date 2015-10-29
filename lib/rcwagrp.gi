@@ -3224,7 +3224,7 @@ InstallMethod( RespectedPartition,
         for i in [1..Length(B[r])] do
           for j in [1..Length(coeffs)] do
             cl := B[r][i];
-            if cl[2] > 10^50 then # finiteness no more plausible
+            if cl[2] > 10^16 then # finiteness no more plausible
               CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
               return "abort";
             fi;
