@@ -2994,12 +2994,15 @@ InstallMethod( CheckForWildness,
 
   function ( G, maxlng, maxmod )
 
-    local  g, lng;
+    local  g, gens, gen, lng;
 
-    g := One(G); lng := 0;
+    gens := GeneratorsOfGroup(G);
+    gen  := Random(gens);
+    g    := gen; lng := 1;
     repeat
       lng := lng + 1;
-      g := g * Random(GeneratorsOfGroup(G));
+      gen := Random(Difference(gens,[gen]));
+      g := g * gen;
       if Loops(g) <> [] then
         SetIsTame(G,false);
         SetModulusOfRcwaMonoid(G,Zero(Source(One(G))));
