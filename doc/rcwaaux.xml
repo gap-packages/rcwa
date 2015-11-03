@@ -12,7 +12,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-This version of &RCWA; needs at least &GAP;&nbsp;4.7.0,
+This version of &RCWA; needs at least &GAP;&nbsp;4.7.1,
 &ResClasses;&nbsp;4.0.0,
 <Package>GRAPE</Package>&nbsp;4.3&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/> and
@@ -274,9 +274,6 @@ gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
 </Index>
 <Index Key="ListOfPowers"><C>ListOfPowers</C></Index>
 <Index Key="AllProducts"><C>AllProducts</C></Index>
-<Index Key="DifferencesList"><C>DifferencesList</C></Index>
-<Index Key="QuotientsList"><C>QuotientsList</C></Index>
-<Index Key="FloatQuotientsList"><C>FloatQuotientsList</C></Index>
 
 &RCWA; provides a couple of small utility functions which can be used in
 a more general context. They are described in this section. <P/>
@@ -293,12 +290,6 @@ GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
 of powers of&nbsp;<A>g</A>, and the function
 <C>AllProducts(<A>l</A>,<A>k</A>)</C> which returns the list of
 all products of <A>k</A> entries of the list&nbsp;<A>l</A>. <P/>
-
-The utility functions for lists are <C>DifferencesList(<A>l</A>)</C> and
-<C>QuotientsList(<A>l</A>)</C>, which return the list of differences
-respectively quotients of consecutive entries of the list&nbsp;<A>l</A>, and
-the function <C>FloatQuotientsList(<A>l</A>)</C>, which returns the list of
-floating point approximations of the latter. <P/>
 
 <Index Key="EquivalenceClasses"
        Subkey="for a list and a function computing a class invariant">
@@ -337,11 +328,14 @@ Yet another utility function is <C>AssignGlobals(<A>rec</A>)</C> which
 takes as argument a record <A>rec</A> and assigns its components to global
 variables of the same (i.e. the component's) names. <P/>
 
+<Index Key="NextProbablyPrimeInt"><C>NextProbablyPrimeInt</C></Index>
 <Index Key="PrimeNumbersIterator"><C>PrimeNumbersIterator</C></Index>
 <Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
 <Index Key="ExponentOfPrime"><C>ExponentOfPrime</C></Index>
 <Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
 
+The function <C>NextProbablyPrimeInt(<A>n</A>)</C> returns the
+smallest integer passing <C>IsProbablyPrimeInt</C> larger than <A>n</A>.
 The function <C>PrimeNumbersIterator(  )</C> returns an
 iterator which runs over the prime numbers in ascending order; it takes
 an optional argument <A>chunksize</A> which specifies the length of the
@@ -358,6 +352,8 @@ prime <A>p</A> in the prime factorization of <A>n</A>, and the function
 of an integer <A>n</A> as a string in &LaTeX; format.
 
 </Section>
+
+<!-- #################################################################### -->
 
 </Chapter>
 

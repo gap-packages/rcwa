@@ -280,6 +280,26 @@ InstallGlobalFunction( ExponentOfPrime,
 
 #############################################################################
 ##
+#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
+##
+InstallGlobalFunction( NextProbablyPrimeInt,
+
+  function ( n )
+    if   -3 = n            then n := -2;
+    elif -3 < n  and n < 2 then n :=  2;
+    elif n mod 2 = 0       then n := n+1;
+    else                        n := n+2;
+    fi;
+    while not IsProbablyPrimeInt(n) do
+        if n mod 6 = 1 then n := n+4;
+        else                n := n+2;
+        fi;
+    od;
+    return n;
+  end );
+
+#############################################################################
+##
 #M  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
@@ -528,7 +548,6 @@ InstallGlobalFunction(  ListOfPowers,
 
 #############################################################################
 ##
-#M  GeneratorsAndInverses( <D> ) list of generators of <D> and their inverses
 #M  GeneratorsAndInverses( <G> ) . . . . . . . . . . . . . . . . . for groups
 ##
 InstallMethod( GeneratorsAndInverses,

@@ -54,6 +54,20 @@ DeclareGlobalFunction( "ExponentOfPrime" );
 
 #############################################################################
 ##
+#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
+##
+##  Returns the smallest integer larger than <n> which passes GAP's
+##  probabilistic primality test.
+##
+##  The function `NextProbablyPrimeInt' does the same as `NextPrimeInt',
+##  except that for reasons of performance it tests numbers only for
+##  `IsProbablyPrimeInt' instead of `IsPrimeInt'.
+##  For large <n>, this function is much faster than `NextPrimeInt'.
+##
+DeclareGlobalFunction( "NextProbablyPrimeInt" );
+
+#############################################################################
+##
 #F  PrimeNumbersIterator(  )
 #F  PrimeNumbersIterator( chunksize )
 ##
@@ -147,8 +161,9 @@ DeclareGlobalFunction( "ListOfPowers" );
 
 #############################################################################
 ##
-#O  GeneratorsAndInverses( <D> ) list of generators of <D> and their inverses
-#M  GeneratorsAndInverses( <G> ) . . . . . . . . . . . . . . . . . for groups
+#O  GeneratorsAndInverses( <D> ) 
+##
+##  Returns the set of generators of the domain <D> and their inverses.
 ##
 DeclareOperation( "GeneratorsAndInverses", [ IsMagmaWithInverses ] );
 

@@ -2996,12 +2996,13 @@ InstallMethod( CheckForWildness,
 
     local  g, gens, gen, lng;
 
-    gens := GeneratorsOfGroup(G);
-    gen  := Random(gens);
-    g    := gen; lng := 1;
+    gens := Set(GeneratorsAndInverses(G));
+    if Length(gens) <= 1 then return; fi;
+    gen := Random(gens);
+    g   := gen; lng := 1;
     repeat
       lng := lng + 1;
-      gen := Random(Difference(gens,[gen]));
+      gen := Random(Difference(gens,[gen^-1]));
       g := g * gen;
       if Loops(g) <> [] then
         SetIsTame(G,false);
