@@ -2989,8 +2989,8 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
 #M  CheckForWildness( <G>, <maxlng>, <maxmod> ) . . . . . . . for rcwa groups
 ##
 InstallMethod( CheckForWildness,
-               "for rcwa groups (RCWA)", true,
-               [ IsRcwaGroup, IsPosInt, IsPosInt ], 0,
+               "for rcwa groups (RCWA)", ReturnTrue,
+               [ IsRcwaGroup, IsPosInt, IsRingElement ], 0,
 
   function ( G, maxlng, maxmod )
 

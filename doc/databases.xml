@@ -47,7 +47,7 @@ gap> RecNames(examples);
   "ClassSwitches", "CollatzFactorizationOld" ]
 gap> AssignGlobals(examples.ZxZ);
 The following global variables have been assigned:
-[ "R", "b", "a", "twice", "twice1", "twice2", "switch", "reflection", 
+[ "b", "a", "R", "twice", "twice1", "twice2", "switch", "reflection", 
   "reflection1", "reflection2", "transvection", "hyperbolic", "T2", 
   "Sigma_T", "SigmaT", "SigmaTm", "commT_Tm" ]
 gap> a*b = Sigma_T;

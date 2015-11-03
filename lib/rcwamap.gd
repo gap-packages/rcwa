@@ -773,7 +773,8 @@ DeclareProperty( "IsTame", IsRcwaMonoid );
 ##    the product exceeds <maxmod>, the operation gives up.
 ##
 DeclareOperation( "CheckForWildness", [ IsRcwaMapping ] );
-DeclareOperation( "CheckForWildness", [ IsRcwaMonoid, IsPosInt, IsPosInt ] );
+DeclareOperation( "CheckForWildness", [ IsRcwaMonoid, IsPosInt,
+                                        IsRingElement ] );
 
 #############################################################################
 ##
