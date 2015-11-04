@@ -1227,7 +1227,7 @@ InstallGlobalFunction( RunDemonstration,
 
 #############################################################################
 ##
-#F  Log2HTML ( logfilename ) . . . .  convert GAP logfile to XHTML 1.0 Strict
+#F  Log2HTML( logfilename ) . . . . . convert GAP logfile to XHTML 1.0 Strict
 ##
 InstallGlobalFunction( Log2HTML,
 
