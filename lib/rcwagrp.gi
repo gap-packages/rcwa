@@ -6677,14 +6677,50 @@ InstallGlobalFunction(
 
 #############################################################################
 ##
+#F  LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( max_m )
 #F  LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
 ##
 InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
 
-  function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/3ctsgrpdata.g"))();
+  function ( arg )
+
+    local  data, mods, partlengths, sizes, sizesset, sizespos, i, j, k;
+
+    if not arg in [[],[6],[9]] then
+      Error("argument must be either 6 or 9, or left away");
+    fi;
+
+    if arg = [] or arg = [6] then
+      return ReadAsFunction(
+               Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                             "/data/3ctsgrpdata.g"))();
+    elif arg = [9] then
+      data := ReadAsFunction(
+                Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                             "/data/3cts9-database.g"))();
+      mods := data.mods;
+      partlengths := data.partlengths;
+      sizesset := data.sizesset;
+      sizespos := data.sizespos;
+      sizes := sizespos; # avoid copying(?)
+      for i in [3..264] do
+        for j in [2..i-1] do
+          for k in [1..j-1] do
+            if   not IsBound(mods[i][j][k])
+            then mods[i][j][k] := 0; fi;
+            if   not IsBound(partlengths[i][j][k])
+            then partlengths[i][j][k] := 0; fi;
+            if   not IsBound(sizespos[i][j][k])
+            then sizespos[i][j][k] := 1; fi;
+            sizes[i][j][k] := sizesset[sizespos[i][j][k]];
+          od;
+        od;
+      od;
+      return rec( cts         := data.cts,
+                  mods        := mods,
+                  partlengths := partlengths,
+                  sizes       := sizes );
+    else return fail; fi;
   end );
 
 #############################################################################
