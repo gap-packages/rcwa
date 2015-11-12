@@ -6659,7 +6659,7 @@ InstallGlobalFunction( LoadDatabaseOfProductsOf2ClassTranspositions,
   function ( )
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ctprodclass.g"))();
+                           "/data/ctproducts/ctprodclass.g"))();
   end );
 
 #############################################################################
@@ -6672,7 +6672,7 @@ InstallGlobalFunction(
   function ( )
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ctprods.g"))();
+                           "/data/ctproducts/ctprods.g"))();
   end );
 
 #############################################################################
@@ -6693,11 +6693,11 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
     if arg = [] or arg = [6] then
       return ReadAsFunction(
                Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                             "/data/3ctsgrpdata.g"))();
+                             "/data/3ctsgroups6/database.g"))();
     elif arg = [9] then
       data := ReadAsFunction(
                 Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                             "/data/3cts9-database.g"))();
+                             "/data/3ctsgroups9/database.g"))();
       mods := data.mods;
       partlengths := data.partlengths;
       sizesset := data.sizesset;
@@ -6732,7 +6732,7 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
   function ( )
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/4ctsgrpdata.g"))();
+                           "/data/4ctsgroups6/database.g"))();
   end );
 
 #############################################################################
@@ -6744,7 +6744,7 @@ InstallGlobalFunction( LoadDatabaseOfCTGraphs,
   function ( )
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ct-graphs.g"))();
+                           "/data/ctproducts/ct-graphs.g"))();
   end );
 
 #############################################################################
