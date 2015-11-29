@@ -26,6 +26,8 @@ Changes between version 3.7.0 and version 3.8.0 ():
 
  - A couple of methods for computing stabilizers in rcwa groups have been added.
 
+ - A method for `DirectFactorsOfGroup' for finite subgroups of CT(Z) has been added.
+
  - The method for `ShortResidueClassOrbits' for rcwa groups over Z has been
    made more efficient.
 

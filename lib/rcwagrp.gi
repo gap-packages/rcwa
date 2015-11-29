@@ -6469,6 +6469,31 @@ InstallMethod( EpimorphismFromFpGroup,
 
 #############################################################################
 ##
+#M  DirectFactorsOfGroup( <G> ) . . . . . . .  for a finite subgroup of CT(Z)
+##
+InstallMethod( DirectFactorsOfGroup,
+               "for a finite subgroup of CT(Z) (RCWA)", true,
+               [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  P, H, facts_H, Hi, facts_G, Gi;
+
+    if not IsSignPreserving(G) or not IsTame(G) then TryNextMethod(); fi;
+    P := RespectedPartition(G);
+    H := Action(G,P);
+    facts_H := DirectFactorsOfGroup(H);
+    facts_G := [];
+    for Hi in facts_H do
+      Gi := Group(List(GeneratorsOfGroup(Hi),
+                       h->RcwaMapping(P,Permuted(P,h))));
+      Add(facts_G,Gi);
+    od;
+    return facts_G;
+  end );
+
+#############################################################################
+##
 #M  StructureDescription( <G> ). . . . . . . . . . . . for rcwa groups over Z
 ##
 InstallMethod( StructureDescription,
