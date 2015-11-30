@@ -6486,7 +6486,7 @@ InstallMethod( DirectFactorsOfGroup,
     facts_G := [];
     for Hi in facts_H do
       Gi := Group(List(GeneratorsOfGroup(Hi),
-                       h->RcwaMapping(P,Permuted(P,h))));
+                       h->RcwaMapping(Permuted(P,h),P)));
       Add(facts_G,Gi);
     od;
     return facts_G;
