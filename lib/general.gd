@@ -385,7 +385,7 @@ DeclareGlobalFunction( "Log2HTML" );
 #############################################################################
 ##
 #F  ReadTestWithTimings( <filename> ) . . . read test file and return timings
-#F  ReadTestCompareTimings( <filename> [,<timingsdir> [,<createreference> ]])
+#F  ReadTestCompareRuntimes( <filename> [,<timingsdir> [,<createreference>]])
 ##
 DeclareGlobalFunction( "ReadTestWithTimings" ); TEST_TIMINGS := [];
 DeclareGlobalFunction( "ReadTestCompareRuntimes" );

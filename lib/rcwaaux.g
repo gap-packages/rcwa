@@ -46,7 +46,7 @@ BindGlobal( "RCWATestInstall",
 
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
     dir := Concatenation( RCWADir, "/tst/" );
-    ReadTest( Concatenation( dir, "testinstall.tst" ) );
+    Test( Concatenation( dir, "testinstall.tst" ) );
   end );
 
 #############################################################################
