@@ -299,18 +299,4 @@ DeclareGlobalFunction( "Log2HTML" );
 
 #############################################################################
 ##
-#S  Test utilities. /////////////////////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  ReadTestWithTimings( <filename> ) . . . read test file and return timings
-#F  ReadTestCompareRuntimes( <filename> [,<timingsdir> [,<createreference>]])
-##
-DeclareGlobalFunction( "ReadTestWithTimings" ); TEST_TIMINGS := [];
-DeclareGlobalFunction( "ReadTestCompareRuntimes" );
-
-#############################################################################
-##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

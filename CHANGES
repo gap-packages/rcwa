@@ -75,6 +75,11 @@ Changes between version 3.7.0 and version 3.8.0 ():
    and `AllProducts' have been removed from the package, since they will be
    moved to the new Utils package.
 
+ - The auxiliary functions `ReadTestWithTimings' and
+   `ReadTestCompareRuntimes' have been moved from general.gi to rcwaaux.g,
+   since given the improvements of the testing routines of 'core GAP',
+   they will be hardly of general interest any more.
+
 Changes between version 3.6.1 and version 3.7.0 (July 21, 2014):
 
  - An operation `MergerExtension' has been added.
