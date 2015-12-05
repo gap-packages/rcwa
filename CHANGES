@@ -71,9 +71,13 @@ Changes between version 3.7.0 and version 3.8.0 ():
  - An auxilliary function `WhiteBWPicture' has been added.
 
  - The utility functions `ShrinkMonochromePictureToGrayscalesPicture',
-   `EncryptIntoBitmapPicture', `DecryptFromBitmapPicture', `RunDemonstration'
-   and `AllProducts' have been removed from the package, since they will be
-   moved to the new Utils package.
+   `EncryptIntoBitmapPicture', `DecryptFromBitmapPicture' and
+   `RunDemonstration' have been removed from the package, since they will
+   be moved to the new Utils package.
+
+ - The utility function `WhiteBWPicture' has been discarded since its result
+   can trivially be obtained by NullMat(height,width,GF(2)) + One(GF(2)).
+   For similar reasons, `AllProducts' has been discarded.
 
  - The auxiliary functions `ReadTestWithTimings' and
    `ReadTestCompareRuntimes' have been moved from general.gi to rcwaaux.g,
