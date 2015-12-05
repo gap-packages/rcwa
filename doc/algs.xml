@@ -48,13 +48,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>AllProducts(<A>l</A>,<A>k</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Straightforward</Q>.
-  </Item>
-
-  <Mark>
     <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
   </Mark>
   <Item>

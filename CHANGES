@@ -68,11 +68,12 @@ Changes between version 3.7.0 and version 3.8.0 ():
 
  - A utility function `ComputeCycleLength' has been added.
 
- - Functions `DeMoire' and `DeMoireShrinkAndCrop' have been added.
-   These functions are for removing a certain type of Moire patterns
-   from bitmap pictures.
-
  - An auxilliary function `WhiteBWPicture' has been added.
+
+ - The utility functions `ShrinkMonochromePictureToGrayscalesPicture',
+   `EncryptIntoBitmapPicture', `DecryptFromBitmapPicture', `RunDemonstration'
+   and `AllProducts' have been removed from the package, since they will be
+   moved to the new Utils package.
 
 Changes between version 3.6.1 and version 3.7.0 (July 21, 2014):
 
