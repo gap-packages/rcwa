@@ -16,9 +16,9 @@
 
 #############################################################################
 ##
-#F  SearchCycle( <list> ) .  a utility function for detecting cycles in lists
+#F  FindCycle( <list> ) . . a utility function for detecting cycles in lists
 ##
-InstallGlobalFunction( SearchCycle,
+InstallGlobalFunction( FindCycle,
 
   function ( list )
 

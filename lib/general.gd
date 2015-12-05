@@ -16,9 +16,11 @@
 
 #############################################################################
 ##
-#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
+#F  FindCycle( <l> ) . . . . a utility function for detecting cycles in lists
 ##
-DeclareGlobalFunction( "SearchCycle" );
+DeclareGlobalFunction( "FindCycle" );
+DeclareSynonym( "SearchCycle", FindCycle );
+DeclareSynonym( "DetectCycle", FindCycle );
 
 #############################################################################
 ##
