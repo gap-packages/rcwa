@@ -792,6 +792,7 @@ InstallGlobalFunction( LoadBitmapPicture,
     then Error("usage: LoadBitmapPicture( <filename> )\n"); fi;
 
     str    := StringFile(filename);
+    if str = fail then Error("file not found"); return fail; fi;
     width  := List(str{[19..22]},INT_CHAR) * List([0..3],i->256^i);
     height := List(str{[23..26]},INT_CHAR) * List([0..3],i->256^i);
     if INT_CHAR(str[29]) = 24 then # 24-bit RGB picture
