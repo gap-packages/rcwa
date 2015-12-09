@@ -605,11 +605,18 @@ InstallMethod( AssignGeneratorVariables,
 InstallMethod( AbelianInvariants,
                "for groups knowing an isomorphism to a pcp group", true,
                [ IsGroup and HasIsomorphismPcpGroup ], 0,
-               G -> AbelianInvariants(Image(IsomorphismPcpGroup(G))) );
+  function ( G )
+    if IsPcpGroup(G) then TryNextMethod(); fi; # avoid recursion
+    return AbelianInvariants(Image(IsomorphismPcpGroup(G)));
+  end );
+
 InstallMethod( AbelianInvariants,
                "for groups knowing an isomorphism to a permutation group",
                true, [ IsGroup and HasIsomorphismPermGroup ], 0,
-               G -> AbelianInvariants(Image(IsomorphismPermGroup(G))) );
+  function ( G )
+    if IsPermGroup(G) then TryNextMethod(); fi; # avoid recursion
+    return AbelianInvariants(Image(IsomorphismPermGroup(G)));
+  end );
 
 #############################################################################
 ##
