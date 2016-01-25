@@ -115,8 +115,8 @@ gap> List([2..12],r->Intersection(Ball(M,1,r,OnPoints),[1..20]));
   [ 1, 2, 3, 4, 7, 8, 9, 11, 13, 14, 16, 17, 18 ] ]
 gap> M;
 <wild rcwa monoid over Z with 2 generators>
-gap> TrivialSubmonoid(M);
-Trivial rcwa group over Z
+gap> TrivialSubmonoid(M) = TrivialRcwaGroupOverZ;
+true
 gap> M2 := Restriction(M,RcwaMapping([[2,0,1]]));
 <wild rcwa monoid over Z with 2 generators>
 gap> Support(M2);
@@ -190,7 +190,7 @@ true
 gap> orbs := ShortOrbits(F,[5..10],20);
 [ [ -3, -2, 1, 2, 5, 6 ], [ -5, -4, 1, 2, 7, 8 ], [ -7, -6, 1, 2, 9, 10 ] ]
 gap> T := Action(F,orbs[1]);
-<transformation monoid on 6 pts with 2 generators>
+<transformation monoid of degree 6 with 2 generators>
 gap> IsTransformationMonoid(T);
 true
 gap> Size(T);

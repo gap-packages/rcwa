@@ -47,9 +47,9 @@ gap> RecNames(examples);
   "ClassSwitches", "CollatzFactorizationOld" ]
 gap> AssignGlobals(examples.ZxZ);
 The following global variables have been assigned:
-[ "R", "b", "a", "twice", "twice1", "twice2", "switch", "reflection", 
-  "reflection1", "reflection2", "transvection", "hyperbolic", "T2", 
-  "Sigma_T", "SigmaT", "SigmaTm", "commT_Tm" ]
+[ "R", "SigmaT", "SigmaTm", "Sigma_T", "T2", "a", "b", "commT_Tm", 
+  "hyperbolic", "reflection", "reflection1", "reflection2", "switch", 
+  "transvection", "twice", "twice1", "twice2" ]
 gap> a*b = Sigma_T;
 true
 gap> Display(Sigma_T);
@@ -235,8 +235,8 @@ gap> Collected(data.trsstatus);
 gap> data := LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions();;
 gap> AssignGlobals(data);
 The following global variables have been assigned:
-[ "cts", "grps4_3finitepos", "grps4_3finite", "conjugacyclasses4cts", 
-  "grps4_3finite_reps", "mods4", "sizes4set", "sizes4pos", "sizes4" ]
+[ "conjugacyclasses4cts", "cts", "grps4_3finite", "grps4_3finite_reps", 
+  "grps4_3finitepos", "mods4", "sizes4", "sizes4pos", "sizes4set" ]
 gap> Length(grps4_3finite);
 140947
 gap> Length(sizes4);

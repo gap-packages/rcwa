@@ -96,7 +96,7 @@ InstallGlobalFunction( AssignGlobals,
       MakeReadWriteGlobal(name);
     od;
     Print("The following global variables have been assigned:\n",
-          names,"\n");
+          Set(names),"\n");
   end );
 
 #############################################################################
