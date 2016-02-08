@@ -36,19 +36,18 @@ a browser, or its PDF version (manual.pdf) with a PDF viewer.
 
                                 Requirements
 
-This version of RCWA needs at least GAP 4.8.1,  ResClasses 4.0.0,  GRAPE 4.3,
-Polycyclic 2.6  and GAPDoc 1.4.  All required packages are already present in
-a standard GAP installation. RCWA can be used on all platforms  for which GAP
-is available. It is completely  written in the  GAP language and does neither
-contain nor require  external binaries. Possible warnings concerning  missing
-binaries issued by other packages when loading RCWA can safely be ignored.
+This version  of RCWA needs  GAP >=4.8.1,  ResClasses >=4.0.0,  GRAPE >=4.3,
+Polycyclic >=2.6  and GAPDoc >=1.4. All required packages are already present
+in a standard GAP installation.  RCWA can be used on all platforms  for which
+GAP is available. It is completely  written in the GAP language and does nei-
+ther contain nor require  external binaries.
 
 
                                 Installation
 
-Like any other GAP package,  RCWA must be installed in the pkg/  subdirectory
-of the GAP distribution.  This is accomplished by extracting the  package ar-
-chive file in this directory.  After this  you can load  the package as usual
+Like any other GAP package,  RCWA is usually installed in the pkg/  subdirec-
+tory of the GAP distribution.  This is accomplished by extracting the package
+archive file in this directory.  After this you can load the package as usual
 via LoadPackage( "rcwa" );.
     For further advice  on questions of technical nature please see the chap-
 ter `Installation and Auxiliary Functions' in the manual.
@@ -66,3 +65,4 @@ If you install RCWA or if you use it in some of your work, then please let me
 know. -- I am interested very much in any applications of this package.  Also
 please let me know  if you have problems with this package,  or if you find a
 bug.
+
