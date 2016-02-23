@@ -6933,7 +6933,10 @@ InstallMethod( InverseOp,
     else pi := NoninvertiblePrimes( Source( f ) );
          Result := RcwaMappingNC( pi, cInv );
     fi;
+
     SetInverse(f,Result); SetInverse(Result,f);
+    SetIsBijective(f,true); SetIsBijective(Result,true);
+
     if HasOrder(f) then SetOrder(Result,Order(f)); order := Order(f);
                    else order := fail; fi;
     if HasBaseRoot(f) then
@@ -6977,6 +6980,8 @@ InstallMethod( InverseOp,
                  [(c[3]*c[1]+c[4])/c[5],c[3]*c[2]/c[5],c[5],-c[4],c[3]]));
 
     SetInverse(f,inverse); SetInverse(inverse,f);
+    SetIsBijective(f,true); SetIsBijective(inverse,true);
+
     if HasOrder(f) then SetOrder(inverse,Order(f)); order := Order(f);
                    else order := fail; fi;
     if HasBaseRoot(f) then
@@ -7033,6 +7038,8 @@ InstallMethod( InverseOp,
     result := RcwaMapping(R,mInv,cInv); # ... NC, once tested
 
     SetInverse(f,result); SetInverse(result,f);
+    SetIsBijective(f,true); SetIsBijective(result,true);
+
     if HasOrder(f) then SetOrder(result,Order(f)); order := Order(f);
                    else order := fail; fi;
     if HasName(f) then
@@ -7096,7 +7103,10 @@ InstallMethod( InverseOp,
     then return fail; fi;
 
     Result := RcwaMappingNC( q, mInv, cInv );
+
     SetInverse(f,Result); SetInverse(Result,f);
+    SetIsBijective(f,true); SetIsBijective(Result,true);
+
     if HasOrder(f) then SetOrder(Result,Order(f)); order := Order(f);
                    else order := fail; fi;
     if HasName(f) then
