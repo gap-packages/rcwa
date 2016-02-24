@@ -19,11 +19,8 @@ This version of &RCWA; needs at least &GAP;&nbsp;4.8.1,
 &GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
 the most recent version of &ResClasses;, all needed packages are already
 present in an up-to-date standard &GAP; installation.
-The &RCWA; package can be used on all platforms for which &GAP; is available.
-It is completely written in the &GAP; language and does neither
-contain nor require external binaries. In particular, possible warnings
-concerning missing binaries issued by other packages when loading &RCWA;
-can safely be ignored.
+The &RCWA; package is completely written in the &GAP; language and can be
+used on all platforms for which &GAP; is available.
 
 </Section>
 
