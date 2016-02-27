@@ -54,6 +54,10 @@ gap> ct*ct;
 IdentityMapping( ( Integers^2 ) )
 gap> \*(ct,ct:sparse);
 IdentityMapping( ( Integers^2 ) )
+gap> ct in CT(Integers^2);
+true
+gap> ct in CT(Integers);  
+false
 gap> g := RcwaMapping(Integers^2,Mod(ct),ShallowCopy(Coefficients(ct)));
 <rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z>
 gap> String(g);

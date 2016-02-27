@@ -3721,9 +3721,11 @@ InstallMethod( IsomorphismMatrixGroup,
       for j in [1..deg/2] do
         b := [[0,0],[0,1]] * One(R);
         r := Residues(P[j])[1] mod Modulus(g[i]);
-        if   IsRcwaGroupOverZOrZ_pi(G)
-        then pos := r+1;
-        else pos := Position(res[DegreeOfLaurentPolynomial(g[i])],r); fi;
+        if IsRcwaGroupOverZOrZ_pi(G) then
+          pos := r+1;
+        else
+          pos := Position(res[DegreeOfLaurentPolynomial(Mod(g[i]))],r);
+        fi;
         c := Coefficients(g[i])[pos];
         b[1] := [c[1]/c[3],c[2]/c[3]];
         m[i]{[2*j^h[i]-1..2*j^h[i]]}{[2*j-1..2*j]} := b;

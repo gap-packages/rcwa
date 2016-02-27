@@ -294,6 +294,12 @@ gap> F2 := Source(phi);
 <free group on the generators [ f1, f2 ]>
 gap> (F2.1*F2.2^2)^phi;
 <rcwa permutation of Z_( 2 ) with modulus 128>
+gap> g := LocalizedRcwaMapping(ClassTransposition(2,4,3,4),2);
+<rcwa mapping of Z_( 2 ) with modulus 4>
+gap> h := LocalizedRcwaMapping(ClassShift(1,4),2);            
+<rcwa mapping of Z_( 2 ) with modulus 4>
+gap> IsConjugate(RCWA(Z_pi(2)),g,h);
+false
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "semiloc.tst", 400000000 );
 

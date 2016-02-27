@@ -39,6 +39,34 @@ Rcwa mapping of GF(2)[x] with modulus x^2
  x                        | x^2*P + x+Z(2)^0
  x+Z(2)^0                 | P + Z(2)^0
 
+gap> g := ClassTransposition(1,x,x,x^2);
+( 1(x), x(x^2) )
+gap> h := ClassTransposition(1,x^2,x+1,x^2);
+( 1(x^2), x+1(x^2) )
+gap> G := Group(g,h);
+<rcwa group over GF(2)[x] with 2 generators>
+gap> phi := IsomorphismMatrixGroup(G);
+[ ( 1(x), x(x^2) ), ( 1(x^2), x+1(x^2) ) ] -> 
+[ [ [ 0, 0, 0, 0, x^-1, 0 ], [ 0, 0, 0, 0, 0, 1 ], [ 0, 0, 1, 0, 0, 0 ], 
+      [ 0, 0, 0, 1, 0, 0 ], [ x, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ] ], 
+  [ [ 1, x, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], 
+      [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ] ]
+gap> g*h in G;
+true
+gap> ClassTransposition(0,x,x+1,x^3) in G;
+false
+gap> IsSubset(G,Group(g,g*h));
+true
+gap> G = Group(g,g*h);
+true
+gap> Support(G);
+GF(2)[x] \ 0(x^2)
+gap> H := Stabilizer(G,x);
+<rcwa group over GF(2)[x] with 2 generators>
+gap> Size(H);
+2
+gap> Support(H);
+1(x)
 gap> r := RcwaMapping( 2, x^2 + e,
 >                             [ [ x^2 + x + e, z      , x^2 + e ],
 >                               [ x^2 + x + e, x      , x^2 + e ],

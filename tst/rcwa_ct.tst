@@ -103,6 +103,10 @@ gap> NrConjugacyClassesOfRCWAZOfOrder(2);
 infinity
 gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 218
+gap> NrConjugacyClassesOfCTZOfOrder(5);  
+#I  Function `NrConjugacyClassesOfCTZOfOrder' assumes the conjecture 
+#I  that CT(Z) is the setwise stabilizer of N_0 in RCWA(Z).
+2
 gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
 ClassShift( Z )^19
 gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
@@ -268,6 +272,10 @@ gap> elm := RepresentativeAction(G,S1,S2);
 <rcwa permutation of GF(2)[x] with modulus x^3>
 gap> S1^elm = S2;
 true
+gap> R := PolynomialRing(GF(4),1);
+GF(2^2)[x]
+gap> IsSubset(CT(R),RCWA(R));
+false
 gap> G := CT(Integers);
 CT(Z)
 gap> props :=
