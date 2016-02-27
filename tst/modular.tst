@@ -14,6 +14,31 @@ gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> e := One(GF(2));; z := Zero(R);;
 gap> RcwaMapping(R,One(R),[[x,x,One(R)]]);
 Rcwa mapping of GF(2)[x]: P -> x*P + x
+gap> f := RcwaMapping(R,x^2,[[0,x,1],[1,0,1],[x^2,x+1,1],[1,1,1]]*One(R));
+<rcwa mapping of GF(2)[x] with modulus x^2>
+gap> Display(f);
+
+Rcwa mapping of GF(2)[x] with modulus x^2
+
+        /
+        | x           if P in 0(x^2)
+        | x^2*P + x+1 if P in x(x^2)
+ P |-> <  P + 1       if P in x+1(x^2)
+        | P           if P in 1(x^2)
+        |
+        \
+
+gap> Display(f:AsTable);
+
+Rcwa mapping of GF(2)[x] with modulus x^2
+
+        P mod x^2         |                    Image of P
+--------------------------+---------------------------------------------------
+ 0*Z(2)                   | x
+ Z(2)^0                   | P
+ x                        | x^2*P + x+Z(2)^0
+ x+Z(2)^0                 | P + Z(2)^0
+
 gap> r := RcwaMapping( 2, x^2 + e,
 >                             [ [ x^2 + x + e, z      , x^2 + e ],
 >                               [ x^2 + x + e, x      , x^2 + e ],

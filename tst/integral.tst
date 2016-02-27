@@ -57,6 +57,416 @@ Surjective rcwa mapping of Z with modulus 8
         |
         \
 
+gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]); 
+true
+gap> StandardRepresentation(T) = T;
+true
+gap> f := PiecewiseMapping(AllResidueClassesModulo(3),[T,T^2,T^3]);
+<rcwa mapping of Z with modulus 24 and 14 affine parts>
+gap> Display(f);
+
+Rcwa mapping of Z with modulus 24 and 14 affine parts
+
+        /
+        | n/2        if n in 0(6)
+        | (3n+1)/2   if n in 3(6)
+        | (3n+1)/4   if n in 1(12)
+        | n/4        if n in 4(12)
+        | (9n+5)/4   if n in 7(12)
+        | (3n+2)/4   if n in 10(12)
+        | (3n+2)/8   if n in 2(24)
+ n |-> <  (3n+1)/8   if n in 5(24)
+        | n/8        if n in 8(24)
+        | (9n+5)/8   if n in 11(24)
+        | (9n+10)/8  if n in 14(24)
+        | (9n+7)/8   if n in 17(24)
+        | (3n+4)/8   if n in 20(24)
+        | (27n+19)/8 if n in 23(24)
+        |
+        \
+
+gap> g := ClassTransposition(0,2,1,4) * ClassTransposition(0,3,1,6);
+<rcwa permutation of Z with modulus 12>
+gap> SparseRep(Mirrored(g)) = Mirrored(SparseRep(g));
+true
+gap> IsPowerOfClassShift(RcwaMapping([[1,0,1],[1,6,1],[1,0,1]]));
+true
+gap> IsPowerOfClassShift(RcwaMapping([[1,0,1],[1,4,1],[1,0,1]]));
+false
+gap> IsPowerOfClassShift(ClassTransposition(0,2,1,2));
+false
+gap> ct := GeneralizedClassTransposition(0,2,7,4);
+( [0/2], [7/4] )
+gap> IsGeneralizedClassTransposition(ct);
+true
+gap> g := RcwaMapping(ShallowCopy(Coefficients(ct)));
+<rcwa mapping of Z with modulus 4>
+gap> Display(g);
+
+Rcwa mapping of Z with modulus 4
+
+        /
+        | 2n+7    if n in 0(2)
+ n |-> <  (n-7)/2 if n in 3(4)
+        | n       if n in 1(4)
+        \
+
+gap> IsClassTransposition(g);
+false
+gap> IsGeneralizedClassTransposition(g);
+true
+gap> g;
+( [0/2], [7/4] )
+gap> g = ct;
+true
+gap> ViewString(ct);
+"( [0/2], [7/4] )"
+gap> ViewString(ct:AbridgedNotation:=false);
+"GeneralizedClassTransposition( [0/2], [7/4] )"
+gap> List([1..12],NumberClassPairs);        
+[ 0, 1, 4, 14, 24, 69, 90, 174, 264, 449, 504, 906 ]
+gap> Print(PrimeSwitch(3),"\n");
+PrimeSwitch(3)
+gap> g := ClassUnionShift(ResidueClassUnion(Integers,6,[1,4,5]));
+<rcwa mapping of Z with modulus 6>
+gap> Display(g);
+
+Rcwa mapping of Z with modulus 6
+
+        /
+        | n+6 if n in 1(3) U 5(6)
+ n |-> <  n   if n in 0(3) U 2(6)
+        |
+        \
+
+gap> FactorizationIntoCSCRCT(g);
+[ ClassShift( 5(6) ), ClassShift( 1(3) )^2 ]
+gap> String(g);
+"RcwaMapping( [ [ 1, 0, 1 ], [ 1, 6, 1 ], [ 1, 0, 1 ], [ 1, 0, 1 ], [ 1, 6, 1 \
+], [ 1, 6, 1 ] ] )"
+gap> String(ClassShift(3,7)^3);    
+"ClassShift(3,7)^3"
+gap> ViewString(ClassShift(3,7)^-3);
+"ClassShift( 3(7) )^-3"
+gap> f := RcwaMapping([[0,2,1],[1,0,1]]);
+<rcwa mapping of Z with modulus 2>
+gap> Display(f:AsTable);
+
+Rcwa mapping of Z with modulus 2
+
+                n mod 2                |             Image of n
+---------------------------------------+--------------------------------------
+  0                                    | 2
+  1                                    | n
+
+gap> Display(RcwaMapping([[1,1,1]]):AsTable);
+Rcwa mapping of Z: n -> n + 1
+gap> g := ClassTransposition(0,2,1,4)*ClassTransposition(0,2,1,2);;
+gap> LaTeXStringRcwaMapping(g:Factorization);
+"      &\\tau \\cdot \\tau_{1(2),0(4)}\n"
+gap> g := ClassTransposition(0,2,1,4)*ClassTransposition(0,2,1,2);;
+gap> h := ClassTransposition(0,2,1,6)*ClassTransposition(0,2,1,2);;
+gap> g < h;
+true
+gap> SparseRep(g) < g;
+false
+gap> g < SparseRep(g);    
+false
+gap> g < h;
+true
+gap> g < SparseRep(h);
+true
+gap> SparseRep(h) < g;
+false
+gap> SparseRep(g) < h;
+true
+gap> h < SparseRep(g);
+false
+gap> ViewString(Zero(g));
+"ZeroMapping( Integers, Integers )"
+gap> ViewString(One(g)); 
+"IdentityMapping( Integers )"
+gap> IsClassWiseTranslating(SparseRep(g));
+false
+gap> IsClassWiseTranslating(SparseRep(ClassShift(0,2)/ClassShift(2,3)));
+true
+gap> IsClassWiseOrderPreserving(SparseRep(g));                          
+true
+gap> IsClassWiseOrderPreserving(SparseRep(ClassShift(0,2)/ClassShift(2,3)));
+true
+gap> h := SparseRep(ClassShift(0,2)/ClassReflection(2,3));;
+gap> IsClassWiseOrderPreserving(h);
+false
+gap> ClassWiseOrderPreservingOn(h);
+Z \ 0(6) U 5(6)
+gap> ClassWiseOrderReversingOn(h); 
+0(6) U 5(6)
+gap> IsSignPreserving(h);
+false
+gap> IsSignPreserving(h^6);       
+true
+gap> List([1..4],k->IncreasingOn(T^k));                              
+[ 1(2), 3(4), 3(4) U 1(8) U 6(8), 7(8) U 9(16) U 11(16) U 14(16) ]
+gap> List([1..4],k->IncreasingOn(SparseRep(T^k)));
+[ 1(2), 3(4), 3(4) U 1(8) U 6(8), 7(8) U 9(16) U 11(16) U 14(16) ]
+gap> List([1..4],k->DecreasingOn(SparseRep(T^k)));
+[ 0(2), Z \ 3(4), 0(4) U 2(8) U 5(8), <union of 11 residue classes (mod 16) (
+    6 classes)> ]
+gap> ShiftsUpOn(h);
+2(6) U 4(6)
+gap> ShiftsDownOn(h);
+[  ]
+gap> ShiftsDownOn(h^-1);
+0(6) U 4(6)
+gap> DensityOfSetOfFixedPoints(h);
+1/3
+gap> DensityOfSetOfFixedPoints(StandardRep(h));
+1/3
+gap> DensityOfSupport(h);
+2/3
+gap> g := SparseRep(g);
+<rcwa permutation of Z with modulus 4 and 3 affine parts>
+gap> Multpk(g,2,0);            
+3(4)
+gap> Multpk(g,2,1);
+0(2)
+gap> Multpk(g,2,-1);
+1(4)
+gap> Multpk(g,2,2); 
+[  ]
+gap> Multpk(g,3,0);
+Integers
+gap> Multpk(g,3,1);
+[  ]
+gap> MultDivType(g);
+[ [ 1/2, 1/4 ], [ 1, 1/4 ], [ 2, 1/2 ] ]
+gap> MultDivType(StandardRep(g));
+[ [ 1/2, 1/4 ], [ 1, 1/4 ], [ 2, 1/2 ] ]
+gap> MappedPartitions(g);
+[ [ 1/2, 1/4, 1/4 ], [ 1/4, 1/2, 1/4 ] ]
+gap> MappedPartitions(StandardRep(g));
+[ [ 1/4, 1/4, 1/4, 1/4 ], [ 1/8, 1/2, 1/8, 1/4 ] ]
+gap> NrMovedPoints(g);
+infinity
+gap> ImagesElm(g,2);
+[ 4 ]
+gap> ImagesSet(g,ResidueClass(0,4));                         
+0(8)
+gap> ImagesSet(g,SparseRep(ResidueClass(0,4)));              
+0(8)
+gap> ImagesSet(StandardRep(g),SparseRep(ResidueClass(0,4)));
+0(8)
+gap> ImagesSet(g,ResidueClass(0,3));
+5(6) U 0(12) U 2(12)
+gap> ImagesSet(g,SparseRep(ResidueClass(0,3)));
+5(6) U 0(12) U 2(12)
+gap> ImagesSet(StandardRep(g),SparseRep(ResidueClass(0,3)));
+5(6) U 0(12) U 2(12)
+gap> ImagesSet(g,Union(ResidueClass(0,3),ResidueClass(1,3)));
+Z \ 3(6) U 4(6)
+gap> PreImagesElm(g,2);
+[ 3 ]
+gap> PreImagesElm(SparseRep(T),8);
+[ 5, 16 ]
+gap> f := RcwaMapping([[0,2,0,3,1],[1,2,2,5,1]]);
+<rcwa mapping of Z with modulus 2 and 2 affine parts>
+gap> Display(f);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 3    if n in 0(2)
+ n |-> <  2n+5 if n in 1(2)
+        |
+        \
+
+gap> PreImagesElm(f,3);
+0(2) U [ -1 ]
+gap> (-1)^f;
+3
+gap> PreImagesElm(f,9);
+[  ]
+gap> PreImagesElm(f,11);
+[ 3 ]
+gap> PreImagesRepresentative(T,8);
+16
+gap> PreImagesRepresentative(f,3);
+0
+gap> PreImagesRepresentative(f,5);
+fail
+gap> PreImagesRepresentative(f,7);
+1
+gap> PreImagesSet(f,ResidueClass(0,3));
+Z \ 1(6) U 3(6)
+gap> Display(f+f);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 6     if n in 0(2)
+ n |-> <  4n+10 if n in 1(2)
+        |
+        \
+
+gap> Display(f+g);
+
+Rcwa mapping of Z with modulus 4 and 3 affine parts
+
+        /
+        | 2n+3      if n in 0(2)
+ n |-> <  (5n+11)/2 if n in 1(4)
+        | 3n+4      if n in 3(4)
+        \
+
+gap> Display(f+T);
+
+Rcwa mapping of Z with modulus 2
+
+        /
+        | (n+6)/2   if n in 0(2)
+ n |-> <  (7n+11)/2 if n in 1(2)
+        |
+        \
+
+gap> f+T = T+f;
+true
+gap> Display(-f);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | -3    if n in 0(2)
+ n |-> <  -2n-5 if n in 1(2)
+        |
+        \
+
+gap> -(-f) = f;
+true
+gap> -(-g) = g;
+true
+gap> Display(f+1);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 4    if n in 0(2)
+ n |-> <  2n+6 if n in 1(2)
+        |
+        \
+
+gap> StandardRep(f)+1 = f+1;
+true
+gap> f+0 = f;
+true
+gap> ((g-100)+110)-10 = g;
+true
+gap> ((-100+StandardRep(g))+110)-10 = g;
+true
+gap> Display(f^2);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 11    if n in 0(2)
+ n |-> <  4n+15 if n in 1(2)
+        |
+        \
+
+gap> Display(f*g);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 2    if n in 0(2)
+ n |-> <  2n+4 if n in 1(2)
+        |
+        \
+
+gap> StandardRep(f)*g = f*StandardRep(g);
+true
+gap> \*(T,T:sparse) = T*T;               
+true
+gap> Display(2*f);
+
+Rcwa mapping of Z with modulus 2 and 2 affine parts
+
+        /
+        | 6     if n in 0(2)
+ n |-> <  4n+10 if n in 1(2)
+        |
+        \
+
+gap> csp := ClassShift(1,3)^3;
+ClassShift( 1(3) )^3
+gap> HasBaseRoot(csp);
+true
+gap> BaseRoot(csp);
+ClassShift( 1(3) )
+gap> PowerOverBaseRoot(csp);
+3
+gap> cspi := csp^-1;
+ClassShift( 1(3) )^-3
+gap> HasBaseRoot(cspi);
+true
+gap> BaseRoot(cspi);
+ClassShift( 1(3) )
+gap> PowerOverBaseRoot(cspi);
+-3
+gap> InverseGeneralMapping(cspi) = csp;
+true
+gap> IsCommuting(csp,cspi);
+true
+gap> IsCommuting(f,f);     
+true
+gap> IsCommuting(ClassShift(0,1),ClassShift(0,2));
+false
+gap> IsCommuting(ClassShift(0,2),ClassShift(1,2));
+true
+gap> IsTame(PrimeSwitch(5) * ClassTransposition(0,2,1,4));
+false
+gap> g := RcwaMapping([[1,0,2],[2,0,1]]);;
+gap> IsTame(g);
+false
+gap> g^5 = SparseRep(g)^5;
+true
+gap> g := ClassTransposition(0,2,1,6)*ClassTransposition(2,3,4,6);;
+gap> IsTame(g);                                                     
+true
+gap> g := SparseRep(g);
+( 0(6), 1(18) ) ( 2(6), 7(18), 4(12), 13(36) ) ( 5(6), 10(12), 31(36) )
+gap> P := RespectedPartition(g);
+[ 0(6), 2(6), 3(6), 5(6), 4(12), 10(12), 1(18), 7(18), 13(36), 31(36) ]
+gap> RespectsPartition(g,P);
+true
+gap> RespectsPartition(g,AllResidueClassesModulo(12));
+false
+gap> PermutationOpNC(g,P,OnPoints);
+(1,7)(2,8,5,9)(4,6,10)
+gap> Permutation(g,P);
+(1,7)(2,8,5,9)(4,6,10)
+gap> CompatibleConjugate(g,ClassTransposition(0,2,1,2));
+( 0(3), 2(3) ) ( 4(12), 10(12) ) ( 1(18), 7(18) ) ( 13(36), 31(36) )
+gap> Permutation(last,P);
+(1,2)(3,4)(5,6)(7,8)(9,10)
+gap> TransitionSets(T,3);
+[ [ 0(3), [  ], 5(9) ], [ [  ], [  ], 2(3) ], [ [  ], 1(3), 8(9) ] ]
+gap> Trajectory(T,27,[1]) mod 7 = Trajectory(T,27,[1],7);
+true
+gap> TraceTrajectoriesOfClasses(T,ResidueClass(1,2),4);
+[ [ 1(2) ], [ 2(3) ], [ 1(3), 8(9) ], [ 2(3), 4(9), 26(27) ] ]
+gap> Root(IdentityRcwaMappingOfZ,2);
+( 0(2), 1(2) )
+gap> Root(IdentityRcwaMappingOfZ,3);
+( 0(3), 1(3), 2(3) )
+gap> Root(IdentityRcwaMappingOfZ,4);
+( 0(4), 1(4), 2(4), 3(4) )
+gap> FactorizationIntoCSCRCT(IdentityRcwaMappingOfZ);
+[ IdentityMapping( Integers ) ]
+gap> ReducingConjugatorCT3Z(ClassTransposition(1,8,2,8));
+[ ( 1(2), 0(4) ), [ ( 0(4), 2(8) ), ( 2(4), 1(8) ), ( 1(2), 2(4) ) ] ]
+gap> FactorizationIntoElementaryCSCRCT(ClassTransposition(1,8,2,16));
+[ ( 0(4), 2(8) ), ( 2(4), 1(8) ), ( 1(2), 0(4) ), ( 1(4), 2(4) ), 
+  ( 1(2), 0(4) ), ( 2(4), 1(8) ), ( 0(4), 2(8) ) ]
 gap> Length(Trajectory(RcwaMapping([[1,0,2],[5,-1,2]]),19,[1]));
 307
 gap> cl1 := ResidueClass(Integers,3,2);
@@ -542,6 +952,7 @@ gap> s := RcwaMapping([[1,0,1],[1,1,1],[3,  6,1],
 >                      [1,0,1],[1,1,1],[3,-21,1]]);;
 gap> List([0..9],i->Modulus(s^i));
 [ 1, 9, 9, 27, 27, 27, 27, 27, 27, 1 ]
+gap> f := RcwaMapping((1,2,3)(8,9),[4..20]);;
 gap> G := Group(a*b,u^f,Comm(a,b));
 <rcwa group over Z with 3 generators>
 gap> PrimeSet(G);
@@ -2045,6 +2456,16 @@ gap> GeneratorsOfGroup(G);
   ( 0(3), 1(3) ), ( 1(3), 2(3) ), ( 0(3), 1(9) ), ( 0(3), 4(9) ), 
   ( 0(3), 7(9) ), ( 0(2), 1(6) ), ( 0(2), 5(6) ), ( 0(3), 1(6) ), 
   ( 0(4), 1(6) ), ( 0(6), 1(8) ) ]
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,4,2,6));      
+<(0(2),1(2)),(1(4),2(6))>
+gap> R := GroupRing(Integers,G);                                               
+Z <(0(2),1(2)),(1(4),2(6))>
+gap> (R.1 + R.2)^2 = 2*One(R) + R.1*R.2 + R.2*R.1;
+true
+gap> (R.1 + R.2)^2;                                
+2*IdentityMapping( Integers )
+ + <rcwa permutation of Z with modulus 12>
+ + <rcwa permutation of Z with modulus 12>
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

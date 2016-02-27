@@ -229,6 +229,16 @@ Rcwa permutation of Z_( 2 ) with modulus 2, of order 2
         |
         \
 
+gap> g := RcwaMapping(Z_pi(2),2,[[1,0,1],[3,-2,1]]);
+<rcwa mapping of Z_( 2 ) with modulus 2>
+gap> IsClassRotation(g); 
+true
+gap> cr := ClassRotation(Z_pi(2),1,2,3);
+ClassRotation( 1(2), 3 )
+gap> cr = g;
+true
+gap> IsClassRotation(ClassTransposition(0,2,1,2));
+false
 gap> ct := ClassTransposition(ResidueClass(Z_pi([2,3]),2,1),
 >                             ResidueClass(Z_pi([2,3]),6,4));
 ( 1(2), 4(6) )
@@ -244,6 +254,18 @@ Rcwa permutation of Z_( 2, 3 ) with modulus 6, of order 2
 
 gap> ct^2;
 IdentityMapping( Z_( 2, 3 ) )
+gap> f := RcwaMapping(Z_pi(2),[[0,2,1],[1,0,1],[3,0,2],[1,1,4]]);;
+gap> Display(f:AsTable);
+
+Rcwa mapping of Z_( 2 ) with modulus 4
+
+                n mod 4                |             Image of n
+---------------------------------------+--------------------------------------
+  0                                    | 2
+  1                                    | n
+  2                                    | 3 n / 2
+  3                                    | (n + 1) / 4
+
 gap> IsomorphismRcwaGroup(Group(()),Z_pi(2));
 [ () ] -> [ IdentityMapping( Z_( 2 ) ) ]
 gap> IsomorphismRcwaGroup(SmallGroup(1,1),Z_pi(2));

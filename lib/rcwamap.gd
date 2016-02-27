@@ -257,7 +257,7 @@ DeclareRepresentation( "IsRcwaMappingSparseRep",
 ##  (g) of GF(q)[x] with modulus <m> and coefficients <coeffs>, resp.
 ##
 ##  (h) a bijective rcwa mapping which induces a bijection between the
-##      partitions <P1> and <P2> of R into residue classes and which is
+##      partitions <P1> and <P2> of R into residue classes and which is
 ##      affine on the elements of <P1>, resp.
 ##
 ##  (i) a bijective rcwa mapping with "residue  class cycles" as given by
@@ -457,7 +457,7 @@ DeclareAttribute( "TransposedClasses", IsRcwaMapping );
 ##
 ##  Class transpositions can be written as products of any given number <k>
 ##  of class transpositions, as long as the underlying ring has a residue
-##  class ring of cardinality <k>.
+##  class ring of cardinality <k>.
 ##
 DeclareOperation( "SplittedClassTransposition",
                   [ IsRcwaMapping and IsClassTransposition, IsObject ] );
@@ -1101,15 +1101,16 @@ DeclareGlobalFunction( "GluckTaylorInvariant" );
 
 #############################################################################
 ##
-#F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
+#F  TraceTrajectoriesOfClasses( <f>, <S>, <maxlength> )
 ##
 ##  Traces the trajectories of the residue classes in the residue class union
-##  <classes> under the mapping <f>. All iterates are written as a list of
-##  single residue classes. This list is computed using the function
+##  <S> under the mapping <f>. All iterates are written as a list of single
+##  residue classes. This list is computed using the function
 ##  `AsUnionOfFewClasses' from the `ResClasses' package.
 ##
-##  The function stops once it detects a cycle or it detects that a timeout
-##  given as option "timeout" has expired.
+##  The function stops once it detects a cycle, once the list of iterates
+##  reaches length <maxlength> or once it detects that a timeout given as
+##  option "timeout" has expired.
 ##
 ##  The resulting list of lists of residue classes is returned.
 ##

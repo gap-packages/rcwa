@@ -1781,10 +1781,19 @@ InstallMethod( IsClassShift,
 ##
 InstallMethod( IsPowerOfClassShift, "for rcwa mappings of Z (RCWA)", true,
                [ IsRcwaMappingOfZ ], 0,
-  sigma -> IsResidueClass(Support(sigma))
-           and sigma = ClassShift(Support(sigma))^
-                       (First(List(Coefficients(sigma),c->c[2]),b->b<>0)/
-                        Modulus(sigma)) );
+
+  function ( sigma )
+
+    local  cl, c;
+
+    if not IsClassWiseOrderPreserving(sigma) then return false; fi;
+    if IsSignPreserving(sigma) then return IsOne(sigma); fi;
+    if not IsBijective(sigma) then return false; fi;
+    cl := Support(sigma);
+    if not IsResidueClass(cl) then return false; fi;
+    if Mod(sigma) <> Mod(cl) then return false; fi;
+    return true;
+  end );
 
 #############################################################################
 ##
@@ -3055,16 +3064,12 @@ InstallMethod( Display,
 
     local  StringAffineMapping, StringAffineMappingOfZ, 
            StringAffineMappingOfZxZ, StringAffineMappingOfZ_pi,
-           StringAffineMappingOfGFqx, IdChars,
+           StringAffineMappingOfGFqx,
 
            R, F, F_el, F_elints, m, c, src, img, res, idcoeffs, inds,
            P, Pcl, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
            cycles, cl, str, ustr, ringname, varname, maxsrclng, maximglng,
            looppos, prefix, col, i, j;
-
-    IdChars := function ( n, ch )
-      return Concatenation( ListWithIdenticalEntries( n, ch ) );
-    end;
 
     StringAffineMappingOfZ := function ( t )
 
@@ -5069,7 +5074,7 @@ InstallMethod( MappedPartitions,
                "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
                g -> [List(g!.coeffs,c->1/c[2]),
-                     List(g!.coeffs,c->c[5]/c[2]*c[3])] );
+                     List(g!.coeffs,c->c[5]/(c[2]*c[3]))] );
 
 #############################################################################
 ##
@@ -5780,11 +5785,11 @@ InstallMethod( PreImagesSet,
 
     for c in coeffs do
       if c[3] <> 0 then
-        img := ResidueClass((c[3]*c[1]+c[4])/c[5],c[3]*c[2]/c[5]);
+        img := ResidueClass(Integers,c[3]*c[2]/c[5],(c[3]*c[1]+c[4])/c[5]);
         img := Intersection(img,S);
         pre := (c[5]*img-c[4])/c[3];
       else
-        if c[4] in S then pre := ResidueClass(c[1],c[2]); fi;
+        if c[4] in S then pre := ResidueClass(c[1],c[2]); else pre := []; fi;
       fi;
       preimage := Union(preimage,pre);
     od;
@@ -8354,22 +8359,23 @@ InstallGlobalFunction( GluckTaylorInvariant,
 
 #############################################################################
 ##
-#F  TraceTrajectoriesOfClasses( <f>, <classes> ) . residue class trajectories
+#F  TraceTrajectoriesOfClasses( <f>, <S>, <maxlength> )
 ##
 InstallGlobalFunction( TraceTrajectoriesOfClasses,
 
-  function ( f, classes )
+  function ( f, S, maxlength )
 
     local  l, k, starttime, timeout;
 
-    l := [[classes]]; k := 1;
+    l := [[S]]; k := 1;
     starttime := Runtime(); timeout := ValueOption("timeout");
     if timeout = fail then timeout := infinity; fi;
     repeat
       Add(l,Flat(List(l[k],cl->AsUnionOfFewClasses(cl^f))));
       k := k + 1;
-      Print("k = ",k,": "); View(l[k]); Print("\n");
-    until Runtime() - starttime >= timeout or l[k] in l{[1..k-1]};
+      Info(InfoRCWA,2,"k = ",k,": ",ViewString(l[k]));
+    until Length(l) >= maxlength or Runtime() - starttime >= timeout
+       or l[k] in l{[1..k-1]};
     return l;
   end );
 

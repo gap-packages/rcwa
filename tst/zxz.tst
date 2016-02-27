@@ -21,6 +21,71 @@ gap> Lcm(R,L1,L2);
 [ [ 6, 8 ], [ 0, 30 ] ]
 gap> Lcm(L1,L1);
 [ [ 1, 3 ], [ 0, 5 ] ]
+gap> cls := AllResidueClassesModulo(Integers^2,[[2,1],[0,2]]);
+[ (0,0)+(2,1)Z+(0,2)Z, (0,1)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z, 
+  (1,1)+(2,1)Z+(0,2)Z ]
+gap> ct := ClassTransposition(cls[1],cls[3]);
+( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z )
+gap> Support(ct);                            
+(0,0)+(2,1)Z+(0,2)Z U (1,0)+(2,1)Z+(0,2)Z
+gap> [0,0]^ct;
+[ 1, 0 ]
+gap> [[0,0]]^ct;            
+[ [ 1, 0 ] ]
+gap> [[0,0],[1,0]]^ct;
+[ [ 0, 0 ], [ 1, 0 ] ]
+gap> [[0,0],[1,0],[1,1]]^ct;
+[ [ 0, 0 ], [ 1, 0 ], [ 1, 1 ] ]
+gap> ImagesElm(ct,[0,0]);
+[ [ 1, 0 ] ]
+gap> Display(ct+[2,3]);
+
+Rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z
+
+            /
+            | (m+2,n+3) if (m,n) in (0,1)+(2,1)Z+(0,2)Z U (1,1)+(2,1)Z+(0,2)Z
+ (m,n) |-> <  (m+3,n+3) if (m,n) in (0,0)+(2,1)Z+(0,2)Z
+            | (m+1,n+3) if (m,n) in (1,0)+(2,1)Z+(0,2)Z
+            \
+
+gap> [-2,-3]+ct+[2,3] = ct;
+true
+gap> ct*ct;
+IdentityMapping( ( Integers^2 ) )
+gap> \*(ct,ct:sparse);
+IdentityMapping( ( Integers^2 ) )
+gap> g := RcwaMapping(Integers^2,Mod(ct),ShallowCopy(Coefficients(ct)));
+<rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z>
+gap> String(g);
+"RcwaMapping( Integers^2, [ [ 2, 1 ], [ 0, 2 ] ], [ [ [ [ 1, 0 ], [ 0, 1 ] ], \
+[ 1, 0 ], 1 ], [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ], [ [ [ 1, 0 ], [ 0, 1 ]\
+ ], [ -1, 0 ], 1 ], [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ] ] )"
+gap> Print(g,"\n");                                                     
+RcwaMapping( Integers^2, [ [ 2, 1 ], [ 0, 2 ] ], 
+[ [ [ [ 1, 0 ], [ 0, 1 ] ], [ 1, 0 ], 1 ], 
+  [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ], 
+  [ [ [ 1, 0 ], [ 0, 1 ] ], [ -1, 0 ], 1 ], 
+  [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ] ] )
+gap> Length(LaTeXStringRcwaMapping(g));
+311
+gap> Order(g);
+2
+gap> IsClassTransposition(g);
+true
+gap> g;
+( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,2)Z )
+gap> g = ct;
+true
+gap> Display(2*ct);
+
+Injective rcwa mapping of Z^2 with modulus (2,1)Z+(0,2)Z
+
+            /
+            | (2m,2n)   if (m,n) in (0,1)+(2,1)Z+(0,2)Z U (1,1)+(2,1)Z+(0,2)Z
+ (m,n) |-> <  (2m+2,2n) if (m,n) in (0,0)+(2,1)Z+(0,2)Z
+            | (2m-2,2n) if (m,n) in (1,0)+(2,1)Z+(0,2)Z
+            \
+
 gap> SigmaT := RcwaMapping( Integers^2, [[1,0],[0,6]],
 >                           [[[0,0],[[[2,0],[0,1]],[0,0],2]],
 >                            [[0,1],[[[4,0],[0,3]],[0,1],2]],
@@ -78,6 +143,8 @@ gap> IsOne(SigmaT);
 false
 gap> IsZero(SigmaT);
 false
+gap> \*(SigmaT,ct:sparse) = SigmaT*ct;   
+true
 gap> l := LargestSourcesOfAffineMappings(SigmaT);
 [ (0,1)+(1,0)Z+(0,2)Z, (0,0)+(1,0)Z+(0,6)Z U (0,2)+(1,0)Z+(0,6)Z, 
   (0,4)+(1,0)Z+(0,6)Z ]
@@ -242,6 +309,19 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
             |
             \
 
+gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
+gap> Display(RcwaMapping(Integers^2,T,T));
+
+Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
+
+            /
+            | (m/2,n/2)           if (m,n) in (0,0)+(2,0)Z+(0,2)Z
+            | (m/2,(3n+1)/2)      if (m,n) in (0,1)+(2,0)Z+(0,2)Z
+ (m,n) |-> <  ((3m+1)/2,n/2)      if (m,n) in (1,0)+(2,0)Z+(0,2)Z
+            | ((3m+1)/2,(3n+1)/2) if (m,n) in (1,1)+(2,0)Z+(0,2)Z
+            |
+            \
+
 gap> Display(g:table);
 
 Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
@@ -253,6 +333,10 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,3)Z
  [1,0]                         | [m-1,n+3]
  [1,1] [1,2]                   | [m-1,n]
 
+gap> Projection(g,1) = ClassTransposition(0,2,1,2); 
+true
+gap> Projection(g,2) = ClassShift(0,3);            
+true
 gap> ProjectionsToCoordinates(g);
 [ <rcwa mapping of Z with modulus 2>, <rcwa mapping of Z with modulus 3> ]
 gap> List(last,Factorization);
