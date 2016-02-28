@@ -87,15 +87,16 @@ end;
 ##  grep -h "STOP_TEST" *.tst | sed -e 's:^gap> STOP_TEST( ":[ ":' | \
 ##  sed -e 's: );: ],:'
 ##
-TEST_FILES := [ [ "other.tst",       4000000 ],
-                [ "ngens.tst",      15000000 ],
-                [ "monoids.tst",   150000000 ],
-                [ "semiloc.tst",   400000000 ],
-                [ "cscrct.tst",   1700000000 ],
-                [ "rcwa_ct.tst",  1900000000 ],
-                [ "modular.tst",  2300000000 ],
-                [ "zxz.tst",      2300000000 ],
-                [ "integral.tst", 8000000000 ] ];
+TEST_FILES := [ [ "other.tst",        4000000 ],
+                [ "ngens.tst",       15000000 ],
+                [ "monoids.tst",    150000000 ],
+                [ "semiloc.tst",    400000000 ],
+                [ "cscrct.tst",    1700000000 ],
+                [ "rcwa_ct.tst",   1900000000 ],
+                [ "modular.tst",   2300000000 ],
+                [ "zxz.tst",       2300000000 ],
+                [ "database.tst",  5000000000 ],
+                [ "integral.tst", 10000000000 ] ];
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 

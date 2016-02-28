@@ -104,8 +104,6 @@ infinity
 gap> NrConjugacyClassesOfRCWAZOfOrder(105);
 218
 gap> NrConjugacyClassesOfCTZOfOrder(5);  
-#I  Function `NrConjugacyClassesOfCTZOfOrder' assumes the conjecture 
-#I  that CT(Z) is the setwise stabilizer of N_0 in RCWA(Z).
 2
 gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
 ClassShift( Z )^19

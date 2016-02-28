@@ -2604,14 +2604,22 @@ gap> ClassTransposition(0,2,1,6) in G;
 #I  \in for an rcwa permutation <g> of Z and an rcwa group <G> over Z
 #I  <g> does not act on some finite orbit of <G>.
 false
+gap> IsPrimitive(G,Integers);  
+#I  IsTransitive: group is sign-preserving, thus is
+#I  not transitive on Z or a union of residue classes
+false
 gap> H := Group(ClassTransposition(1,3,2,3),ClassTransposition(2,4,3,6), 
-                ClassTransposition(3,4,0,6));
+>               ClassTransposition(3,4,0,6));
 <(1(3),2(3)),(2(4),3(6)),(3(4),0(6))>
 gap> IsSubset(H,G);
 #I  \in for an rcwa permutation <g> of Z and an rcwa group <G> over Z
 #I  <g> does not act on some finite orbit of <G>.
 false
 gap> RCWAInfo(0);
+gap> orb := Orbit(G,0);
+<orbit of 0 under <(0(2),1(2)),(1(2),2(4)),(1(4),2(6))>>
+gap> IsSubset(Integers,orb);
+true
 gap> IsTransitive(H,NonnegativeIntegers);
 false
 gap> DistanceToNextSmallerPointInOrbit(G,4);
@@ -2624,6 +2632,44 @@ gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,2,3),
 <(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
 gap> IsTransitive(G,NonnegativeIntegers);
 true
+gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,5,4,5), 
+>               ClassTransposition(3,4,4,6));
+<(0(2),1(2)),(0(5),4(5)),(3(4),4(6))>
+gap> orb := Orbit(G,542);
+<orbit of 542 under <(0(2),1(2)),(0(5),4(5)),(3(4),4(6))>>
+gap> Size(orb);
+1400
+gap> Length(AsList(orb));
+1400
+gap> g := First(G,h->Order(h)=3);
+( 0(10), 4(10), 8(10) ) ( 1(10), 9(10), 5(10) )
+gap> g in G;                     
+true
+gap> Factorization(G,g);
+(f1*f2)^2
+gap> IsSimpleGroup(G);
+false
+gap> Exponent(G);
+infinity
+gap> phi := EpimorphismFromFpGroup(G,2);
+[ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(5), 4(5) ), ( 3(4), 4(6) ) ]
+gap> RelatorsOfFpGroup(Source(phi));
+[ a^2, b^2, c^2, (a*b)^6, (b*c)^12 ]
+gap> iter := Iterator(G);
+Iterator of <(0(2),1(2)),(0(5),4(5)),(3(4),4(6))>
+gap> iter2 := ShallowCopy(iter);
+Iterator of <(0(2),1(2)),(0(5),4(5)),(3(4),4(6))>
+gap> IsIdenticalObj(iter,iter2);
+false
+gap> G := Group(List([[0,2,1,2],[0,3,1,3],[0,4,1,4]],ClassTransposition));
+<(0(2),1(2)),(0(3),1(3)),(0(4),1(4))>
+gap> orbs := ShortResidueClassOrbits(G,60,100:classic);
+[ [ 0(12), 1(12) ], [ 2(12), 3(12), 4(12), 5(12) ], [ 6(12), 7(12) ], 
+  [ 8(12), 9(12), 10(12), 11(12) ] ]
+gap> DirectFactorsOfGroup(G);                                             
+[ <(6(12),7(12))>, <rcwa group over Z with 4 generators>, <(0(6),1(6))> ]
+gap> List(last,Size);
+[ 2, 24, 2 ]
 gap> Display(  ClassTransposition(0,3,1,3)
 >            * ClassTransposition(1,2,2,8):AsClassMapping);
 

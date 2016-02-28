@@ -67,6 +67,10 @@ gap> Size(H);
 2
 gap> Support(H);
 1(x)
+gap> g := RepresentativeAction(G,x,x^2+x,OnPoints);
+<rcwa permutation of GF(2)[x] with modulus x^2>
+gap> x^g; 
+x^2+x
 gap> r := RcwaMapping( 2, x^2 + e,
 >                             [ [ x^2 + x + e, z      , x^2 + e ],
 >                               [ x^2 + x + e, x      , x^2 + e ],
