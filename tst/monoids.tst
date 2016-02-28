@@ -70,6 +70,47 @@ gap> ClassReflection(0,1) in M;
 #I  <M> is class-wise order-preserving, but <f> is not.
 false
 gap> RCWAInfo(0);
+gap> T5 := RcwaMapping([[1,0,2],[5,-1,2]]);;
+gap> M2 := Monoid(T,T5);
+<rcwa monoid over Z with 2 generators>
+gap> M3 := SparseRep(M2);
+<rcwa monoid over Z with 2 generators>
+gap> GeneratorsOfMonoid(M3);
+[ <wild surjective rcwa mapping of Z with modulus 2 and 2 affine parts>, 
+  <rcwa mapping of Z with modulus 2 and 2 affine parts> ]
+gap> M2 = M3;
+true
+gap> M4 := StandardRep(M3);         
+<rcwa monoid over Z with 2 generators>
+gap> GeneratorsOfMonoid(M4);
+[ <wild surjective rcwa mapping of Z with modulus 2>, 
+  <rcwa mapping of Z with modulus 2> ]
+gap> M4 = M3;
+true
+gap> M4 = M2;
+true
+gap> Mirrored(M2) = Mirrored(M3);
+true
+gap> Mirrored(Mirrored(M2)) = M2;
+true
+gap> Mirrored(Mirrored(M3)) = M2;
+true
+gap> IsClassWiseTranslating(M2);
+false
+gap> IsClassWiseTranslating(M3);
+false
+gap> IsClassWiseTranslating(Monoid(RcwaMapping([[1,1,1],[1,0,1]])));
+true
+gap> Ball(M2,27,5:Spheres);
+[ [ 27 ], [ 41, 67 ], [ 62, 101, 102, 167 ], [ 31, 51, 152, 251, 252, 417 ], 
+  [ 47, 76, 77, 126, 127, 377, 626, 627, 1042 ], 
+  [ 38, 63, 71, 116, 117, 191, 192, 313, 317, 521, 566, 941, 942, 1567 ] ]
+gap> RCWAInfo(2);
+gap> RcwaMapping([[3,0,1]]) in M2;
+#I  \in for an rcwa mapping <f> and an rcwa monoid <M>
+#I  <f> is not surjective, but all generators of <M> are.
+false
+gap> RCWAInfo(0);
 gap> T5m := RcwaMapping([[1,0,2],[5,-1,2]]);; SetName(T5m,"T5-");
 gap> T5p := RcwaMapping([[1,0,2],[5, 1,2]]);; SetName(T5p,"T5+");
 gap> M5 := Monoid(T5m,T5p);

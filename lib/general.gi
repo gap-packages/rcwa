@@ -593,7 +593,10 @@ InstallMethod( AssignGeneratorVariables,
       MakeReadWriteGlobal(name);
     od;
     Print("The following global variables have been assigned: ");
-    for i in [1..Length(gens)] do Print(names{[i]},", "); od;
+    for i in [1..Length(gens)] do
+      Print(names{[i]});
+      if i < Length(gens) then Print(", "); fi;
+    od;
     Print("\n");
   end );
 
@@ -940,7 +943,6 @@ InstallGlobalFunction( Log2HTML,
       if pos > Length(s1) - 3 then break; fi;
     od;
     s2 := Concatenation(header,s2,footer);
-    logfilename := LowercaseString(logfilename); 
     if   PositionSublist(logfilename,".log") <> fail
     then outputname := ReplacedString(logfilename,".log",".html");
     elif PositionSublist(logfilename,".txt") <> fail
