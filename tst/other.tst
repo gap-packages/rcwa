@@ -9,6 +9,26 @@
 
 gap> START_TEST("other.tst");
 gap> RCWADoThingsToBeDoneBeforeTest();
+gap> IsCommuting((1,2),(3,4));
+true
+gap> IsCommuting((1,2,3),(3,4));
+false
+gap> QuotientsList([2,3,6,12,15,30]);
+[ 3/2, 2, 2, 5/4, 2 ]
+gap> FloatQuotientsList([2,3,6,12,15,30]);
+[ 1.5, 2., 2., 1.25, 2. ]
+gap> PositionsSublist([1,2,3,4,2,8,3,4,2,1,2,3,3,1,2,3],[2,3]);
+[ 2, 11, 15 ]
+gap> PositionsSublist([1,2,3,4,2,8,3,4,2,1,2,3,3,1,2,3],[3,3,4]);
+[  ]
+gap> Length(RandomCombination([1..10],5));
+5
+gap> QuotesStripped("\"abc\"");
+"abc"
+gap> IntOrInfinityToLaTeX(4);
+"4"
+gap> IntOrInfinityToLaTeX(infinity);
+"\\infty"
 gap> R := PolynomialRing(GF(4),1);; x := Z(4) * One(R);;
 gap> x in DefaultRing(x);
 true
