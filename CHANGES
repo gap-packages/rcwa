@@ -3,6 +3,13 @@
                        ===================================
 
 
+Changes between RCWA 4.0.1 and RCWA 4.1.0 (March 1, 2016):
+
+ - The test suite (a.k.a. RCWATestAll();) has been amended considerably,
+   in order to increase the code coverage of the tests.
+
+ - A few minor bugs which could have led to error messages have been fixed.
+
 Changes between RCWA 4.0.0 and RCWA 4.0.1 (February 23, 2016):
 
  - The propagation of the knowledge about bijectivity to inverses of bijective

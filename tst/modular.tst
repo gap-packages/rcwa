@@ -45,12 +45,6 @@ gap> h := ClassTransposition(1,x^2,x+1,x^2);
 ( 1(x^2), x+1(x^2) )
 gap> G := Group(g,h);
 <rcwa group over GF(2)[x] with 2 generators>
-gap> phi := IsomorphismMatrixGroup(G);
-[ ( 1(x), x(x^2) ), ( 1(x^2), x+1(x^2) ) ] -> 
-[ [ [ 0, 0, 0, 0, x^-1, 0 ], [ 0, 0, 0, 0, 0, 1 ], [ 0, 0, 1, 0, 0, 0 ], 
-      [ 0, 0, 0, 1, 0, 0 ], [ x, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ] ], 
-  [ [ 1, x, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], 
-      [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ] ]
 gap> g*h in G;
 true
 gap> ClassTransposition(0,x,x+1,x^3) in G;

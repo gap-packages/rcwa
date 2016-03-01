@@ -225,7 +225,7 @@ InstallMethod( ViewObj,
 
     local  R, G;
 
-    R := LeftActingDomain(RG); G := UnderlyingGroup(RG);
+    R := LeftActingDomain(RG); G := UnderlyingMagma(RG);
     if not IsRcwaGroup(G) or R <> Source(One(G)) then TryNextMethod(); fi;
     Print(RingToString(R)," "); ViewObj(G);
   end );

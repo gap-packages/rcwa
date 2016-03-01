@@ -2666,10 +2666,11 @@ gap> G := Group(List([[0,2,1,2],[0,3,1,3],[0,4,1,4]],ClassTransposition));
 gap> orbs := ShortResidueClassOrbits(G,60,100:classic);
 [ [ 0(12), 1(12) ], [ 2(12), 3(12), 4(12), 5(12) ], [ 6(12), 7(12) ], 
   [ 8(12), 9(12), 10(12), 11(12) ] ]
-gap> DirectFactorsOfGroup(G);                                             
-[ <(6(12),7(12))>, <rcwa group over Z with 4 generators>, <(0(6),1(6))> ]
-gap> List(last,Size);
+gap> facts := DirectFactorsOfGroup(G);;
+gap> List(facts,Size);
 [ 2, 24, 2 ]
+gap> G = Group(Union(List(facts,GeneratorsOfGroup))); 
+true
 gap> Display(  ClassTransposition(0,3,1,3)
 >            * ClassTransposition(1,2,2,8):AsClassMapping);
 
