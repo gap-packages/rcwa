@@ -6,10 +6,11 @@
 
 <Chapter Label="ch:Examples"><Heading>Examples</Heading>
 
-<Ignore Remark="set screen width to 75, for the example tester">
+<Ignore Remark="settings for the example tester">
 <Example>
 <![CDATA[
 gap> SizeScreen([75,24]);;
+gap> SetAssertionLevel(0);
 ]]>
 </Example>
 </Ignore>

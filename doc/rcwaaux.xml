@@ -13,14 +13,16 @@
 <Heading>Requirements</Heading>
 
 This version of &RCWA; needs at least &GAP;&nbsp;4.8.1,
-&ResClasses;&nbsp;4.2.0,
-<Package>GRAPE</Package>&nbsp;4.3&nbsp;<Cite Key="GRAPE"/>,
-<Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/> and
-&GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
-the most recent version of &ResClasses;, all needed packages are already
-present in an up-to-date standard &GAP; installation.
-The &RCWA; package is completely written in the &GAP; language and can be
-used on all platforms for which &GAP; is available.
+&ResClasses;&nbsp;4.3.0,
+<Package>GRAPE</Package>&nbsp;4.7&nbsp;<Cite Key="GRAPE"/>,
+<Package>Polycyclic</Package>&nbsp;2.11&nbsp;<Cite Key="Polycyclic"/>,
+<Package>FR</Package>&nbsp;2.2.1&nbsp;<Cite Key="FR"/>,
+&GAPDoc;&nbsp;1.5.1&nbsp;<Cite Key="GAPDoc"/>, and
+<Package>Utils</Package>&nbsp;0.38&nbsp;<Cite Key="Utils"/>.
+With possible exception of the most recent version of &ResClasses;,
+all needed packages are already present in an up-to-date standard &GAP;
+installation. The &RCWA; package is completely written in the &GAP; language
+and can be used on all platforms for which &GAP; is available.
 
 </Section>
 
@@ -29,7 +31,7 @@ used on all platforms for which &GAP; is available.
 <Section Label="sec:Installation">
 <Heading>Installation</Heading>
 
-Like any other &GAP; package, &RCWA; must be installed in the <F>pkg</F>
+Like any other &GAP; package, &RCWA; is usually installed in the <F>pkg</F>
 subdirectory of the &GAP; distribution. This is accomplished by extracting
 the distribution file in this directory. If you have done this, you can
 load the package as usual via <C>LoadPackage( "rcwa" );</C>.
@@ -51,8 +53,8 @@ are included in the distribution file anyway, users will not need it.
     This function builds the manual of the &RCWA; package in the file
     formats &LaTeX;, PDF, HTML and ASCII text.
     This is accomplished using the &GAPDoc; package by Frank Lübeck and
-    Max Neunhöffer. Building the manual is possible only on UNIX systems
-    and requires PDF&LaTeX;.
+    Max Neunhöffer. Building the manual is possible only on UNIX-type
+    systems and requires PDF&LaTeX;.
   </Description>
 </ManSection>
 
@@ -65,7 +67,9 @@ are included in the distribution file anyway, users will not need it.
 
 <ManSection>
   <Func Name="RCWATestInstall" Arg=""/>
-  <Returns> nothing. </Returns>
+  <Returns>
+    <C>true</C> if no errors were found, and <C>false</C> otherwise.
+  </Returns>
   <Description>
     Performs a nontrivial computation to check whether an installation of
     &RCWA; appears to work. Errors, i.e. differences to the correct results
@@ -76,12 +80,14 @@ are included in the distribution file anyway, users will not need it.
 
 <ManSection>
   <Func Name="RCWATestAll" Arg=""/>
-  <Returns> nothing. </Returns>
+  <Returns>
+    <C>true</C> if no errors were found, and <C>false</C> otherwise.
+  </Returns>
   <Description>
     Runs the full test suite of the &RCWA; package.
     Any differences to the supposed results of the test computations
-    are reported. The processed test file is
-    <F>pkg/rcwa/tst/testall.g</F>. <P/>
+    are reported. The processed test files are in the directory
+    <F>pkg/rcwa/tst</F>. <P/>
 
     Please note that the test suite is a tool for developing.
     The tests are deliberately very volatile to allow to spot possible
@@ -181,52 +187,11 @@ gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
 
 <!-- #################################################################### -->
 
-<Section Label="sec:ConvertingLogfilesToHTML">
-<Heading>Converting GAP logfiles to HTML</Heading>
-
-&RCWA; provides a routine to convert &GAP; logfiles to HTML.
-
-<ManSection>
-  <Func Name="Log2HTML" Arg="logfilename" Label="logfilename"/>
-  <Returns> nothing. </Returns>
-  <Description>
-    This function converts the &GAP; logfile <A>logfilename</A> to HTML.
-    The extension of the input file must be <C>*.log</C>. The name of the
-    output file is the same as the one of the input file except that the
-    extension <C>*.log</C> is replaced by <C>*.html</C>.
-    There is a sample CSS file in <File>rcwa/doc/gaplog.css</File>,
-    which you can adjust to your taste.
-  </Description>
-</ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
 <Section Label="sec:UtilityFunctions">
 <Heading>Some general utility functions</Heading>
 
-<Index Key="GeneratorsAndInverses" Subkey="for a group">
-  <C>GeneratorsAndInverses</C>
-</Index>
-<Index Key="EpimorphismByGenerators" Subkey="for two groups">
-  <C>EpimorphismByGenerators</C>
-</Index>
-<Index Key="ListOfPowers"><C>ListOfPowers</C></Index>
-
 &RCWA; provides a couple of small utility functions which can be used in
 a more general context. They are described in this section. <P/>
-
-The utility functions for groups and group elements are
-<C>GeneratorsAndInverses(<A>G</A>)</C> which returns a list of generators
-of <A>G</A> and their inverses, the function
-<C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C> which is
-a shorthand for <C>GroupHomomorphismByImages(<A>G</A>,<A>H</A>,
-GeneratorsOfGroup(<A>G</A>),GeneratorsOfGroup(<A>H</A>))</C>
-(there is also an <C>NC</C> version of this), and the function
-<C>ListOfPowers(<A>g</A>,<A>exp</A>)</C> which returns the list
-<C>[<A>g</A>,<A>g</A>&circum;2,...,<A>g</A>&circum;<A>exp</A>]</C>
-of powers of&nbsp;<A>g</A>. <P/>
 
 <Index Key="EquivalenceClasses"
        Subkey="for a list and a function computing a class invariant">
@@ -258,35 +223,6 @@ each edge is a list of the two vertices it connects, and they are ordered
 by ascending number of edges.
 The function <C>IdGraph(<A>graph</A>,<A>classes</A>)</C> returns the
 index <C>i</C> such that <A>graph</A> lies <A>classes</A><C>[i]</C>. <P/>
-
-<Index Key="AssignGlobals"><C>AssignGlobals</C></Index>
-
-Yet another utility function is <C>AssignGlobals(<A>rec</A>)</C> which
-takes as argument a record <A>rec</A> and assigns its components to global
-variables of the same (i.e. the component's) names. <P/>
-
-<Index Key="NextProbablyPrimeInt"><C>NextProbablyPrimeInt</C></Index>
-<Index Key="PrimeNumbersIterator"><C>PrimeNumbersIterator</C></Index>
-<Index Key="AllSmoothIntegers"><C>AllSmoothIntegers</C></Index>
-<Index Key="ExponentOfPrime"><C>ExponentOfPrime</C></Index>
-<Index Key="LaTeXStringFactorsInt"><C>LaTeXStringFactorsInt</C></Index>
-
-The function <C>NextProbablyPrimeInt(<A>n</A>)</C> returns the
-smallest integer passing <C>IsProbablyPrimeInt</C> larger than <A>n</A>.
-The function <C>PrimeNumbersIterator(  )</C> returns an
-iterator which runs over the prime numbers in ascending order; it takes
-an optional argument <A>chunksize</A> which specifies the length of the
-interval which is sieved in one go (the default is 10000000), and which
-can be used to balance runtime vs. memory consumption. It is assumed that
-<A>chunksize</A> is larger than any gap between two consecutive primes
-within the range one intends to run the iterator over.
-The function <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
-returns a list of all integers less than or equal to <A>maxn</A> which do
-not have prime divisors exceeding <A>maxp</A>, the function
-<C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C> returns the exponent of the
-prime <A>p</A> in the prime factorization of <A>n</A>, and the function
-<C>LaTeXStringFactorsInt(<A>n</A>)</C> returns the prime factorization
-of an integer <A>n</A> as a string in &LaTeX; format.
 
 </Section>
 

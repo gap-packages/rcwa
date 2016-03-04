@@ -10,84 +10,6 @@
 
 #############################################################################
 ##
-#S  Some utility functions for lists and records. ///////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  SearchCycle( <l> ) . . . a utility function for detecting cycles in lists
-##
-DeclareGlobalFunction( "SearchCycle" );
-
-#############################################################################
-##
-#F  AssignGlobals( <record> )
-##
-##  This auxiliary function assigns the record components of <record> to
-##  global variables with the same names.
-##
-DeclareGlobalFunction( "AssignGlobals" );
-
-#############################################################################
-##
-#S  Some utilities for integers and combinatorics. //////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  AllSmoothIntegers( <maxp>, <maxn> )
-##
-##  Returns the set of all integers in the range [1..<maxn>] which have only
-##  prime divisors in the range [2..<maxp>].
-##
-DeclareGlobalFunction( "AllSmoothIntegers" );
-
-#############################################################################
-##
-#F  ExponentOfPrime( <n>, <p> )
-##
-##  The exponent of the prime <p> in the prime factorization of <n>.
-##
-DeclareGlobalFunction( "ExponentOfPrime" );
-
-#############################################################################
-##
-#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
-##
-##  Returns the smallest integer larger than <n> which passes GAP's
-##  probabilistic primality test.
-##
-##  The function `NextProbablyPrimeInt' does the same as `NextPrimeInt',
-##  except that for reasons of performance it tests numbers only for
-##  `IsProbablyPrimeInt' instead of `IsPrimeInt'.
-##  For large <n>, this function is much faster than `NextPrimeInt'.
-##
-DeclareGlobalFunction( "NextProbablyPrimeInt" );
-
-#############################################################################
-##
-#F  PrimeNumbersIterator(  )
-#F  PrimeNumbersIterator( chunksize )
-##
-##  Iterator running through the prime numbers in ascending order.
-##
-DeclareGlobalFunction ( "PrimeNumbersIterator" );
-
-#############################################################################
-##
-#F  RestrictedPartitionsWithoutRepetitions( <n>, <S> )
-##
-##  Given a positive integer n and a set of positive integers S, this func-
-##  tion returns a list of all partitions of n into distinct elements of S.
-##  The only difference to `RestrictedPartitions' is that no repetitions are
-##  allowed.
-##
-DeclareGlobalFunction( "RestrictedPartitionsWithoutRepetitions" );
-
-#############################################################################
-##
 #S  Operations to construct new mappings from given ones. ///////////////////
 ##
 #############################################################################
@@ -148,29 +70,6 @@ DeclareGlobalFunction( "IdGraph" );
 
 #############################################################################
 ##
-#F  ListOfPowers( <g>, <exp> ) . . . . . .  list of powers <g>^1 .. <g>^<exp>
-##
-DeclareGlobalFunction( "ListOfPowers" );
-
-#############################################################################
-##
-#O  GeneratorsAndInverses( <D> ) 
-##
-##  Returns the set of generators of the domain <D> and their inverses.
-##
-DeclareOperation( "GeneratorsAndInverses", [ IsMagmaWithInverses ] );
-
-#############################################################################
-##
-#F  EpimorphismByGenerators( <D1>, <D2> ) .epi.: gen's of <D1>->gen's of <D2>
-#O  EpimorphismByGeneratorsNC( <D1>, <D2> ) .  NC version as underlying oper.
-#M  EpimorphismByGeneratorsNC( <G>, <H> ) . . . . . . . . . . . .  for groups
-##
-DeclareOperation( "EpimorphismByGeneratorsNC", [ IsDomain, IsDomain ] );
-DeclareGlobalFunction( "EpimorphismByGenerators" );
-
-#############################################################################
-##
 #F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
 ##
 ##  Given a word <w>, this function returns the word obtained from <w> by
@@ -195,21 +94,6 @@ DeclareGlobalFunction( "ReducedWordByOrdersOfGenerators" );
 ##  able to spot and remove redundant relators in easy cases.
 ##
 DeclareOperation( "NormalizedRelator", [ IsAssocWord, IsList ] );
-
-#############################################################################
-##
-#S  Some utilities related to output or conversion to strings. //////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  LaTeXStringFactorsInt( <n> )
-##
-##  Returns the prime factorization of the integer <n> as a string in LaTeX
-##  format.
-##
-DeclareGlobalFunction( "LaTeXStringFactorsInt" );
 
 #############################################################################
 ##
@@ -262,28 +146,6 @@ DeclareGlobalFunction( "LoadBitmapPicture" );
 ##  <U> of Z^2 into residue class unions, respectively.
 ##
 DeclareGlobalFunction( "DrawGrid" );
-
-#############################################################################
-##
-#S  Utility to convert GAP log files to XHTML 1.0 Strict. ///////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  Log2HTML( logfilename )
-##
-##  Utility to convert GAP log files to XHTML 1.0 Strict.
-##
-##  Usage:
-##
-##  - Issue Log2HTML( <logfilename> ). The extension of the input file must
-##    be *.log. The name of the output file is the same as the one of the
-##    input file except that the extension *.log is replaced by *.html.
-##
-##  - Adapt the style file rcwa/doc/gaplog.css to your taste.
-##
-DeclareGlobalFunction( "Log2HTML" );
 
 #############################################################################
 ##

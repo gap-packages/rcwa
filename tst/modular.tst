@@ -463,7 +463,7 @@ gap> List(last,ClassTransposition);
 gap> Length(ClassPairs(x^3));
 58
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "modular.tst", 2300000000 );
+gap> STOP_TEST( "modular.tst", 2200000000 );
 
 #############################################################################
 ##

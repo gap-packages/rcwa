@@ -5788,9 +5788,9 @@ InstallGlobalFunction( DrawOrbitPicture,
       white := 2^24-1;
       grid  := List([1..height],i->List([1..width],j->white));
       if IsInt(p0[1]) then # One orbit, color reflects distance from p0.
-        spheres := RestrictedBall(G,p0,infinity,action,bound:Spheres);
+        spheres := RestrictedBall(G,p0,bound,action,height+width:Spheres);
         if IsRcwaGroupOverZ(G) then
-          if   ForAny(spheres,sphere->sphere<>[] and Minimum(sphere)<0)
+          if   ForAny(spheres,sphere->sphere<>[] and Minimum(Flat(sphere))<0)
           then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
         elif IsRcwaGroupOverZxZ(G) then
           if   ForAny(spheres,sphere->sphere<>[]
@@ -5810,7 +5810,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         ps := p0; orbits := [];
         while ps <> [] do
           p0    := ps[1];
-          orbit := RestrictedBall(G,p0,infinity,action,bound);
+          orbit := RestrictedBall(G,p0,bound,action,height+width);
           ps    := Difference(ps,orbit);
           Add(orbits,orbit);
         od;
@@ -5831,7 +5831,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       z := Zero(GF(2)); e := One(GF(2));
       grid := List([1..height],i->List([1..width],j->e));
       for i in [1..height] do ConvertToGF2VectorRep(grid[i]); od;
-      orbit := RestrictedBall(G,p0,infinity,action,bound);
+      orbit := RestrictedBall(G,p0,bound,action,height+width);
       if   Minimum(Flat(orbit)) < 0
       then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
       for p in orbit do

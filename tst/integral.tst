@@ -2739,7 +2739,7 @@ false
 gap> ClassTransposition(1,3,2,3) in G;
 true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "integral.tst", 8000000000 );
+gap> STOP_TEST( "integral.tst", 7150000000 );
 
 #############################################################################
 ##

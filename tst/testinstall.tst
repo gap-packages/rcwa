@@ -13,7 +13,7 @@ gap> RCWADoThingsToBeDoneBeforeTest();
 gap> Product(Factorization(mKnot(3))) = mKnot(3);
 true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "testinstall.tst", 250000000 );
+gap> STOP_TEST( "testinstall.tst", 160000000 );
 
 #############################################################################
 ##

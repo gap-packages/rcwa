@@ -301,7 +301,7 @@ gap> h := LocalizedRcwaMapping(ClassShift(1,4),2);
 gap> IsConjugate(RCWA(Z_pi(2)),g,h);
 false
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "semiloc.tst", 400000000 );
+gap> STOP_TEST( "semiloc.tst", 640000000 );
 
 #############################################################################
 ##

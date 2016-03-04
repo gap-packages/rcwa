@@ -10,97 +10,6 @@
 
 #############################################################################
 ##
-#S  Some utility functions for lists and records. ///////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  SearchCycle( <list> ) .  a utility function for detecting cycles in lists
-##
-InstallGlobalFunction( SearchCycle,
-
-  function ( list )
-
-    local  preperiod, cycle, startpos, mainpart, mainpartdiffs,
-           elms, inds, min, n, d, i, j;
-
-    n        := Length(list);
-    mainpart := list{[Int(n/3)..n]};
-    elms     := Set(mainpart);
-    cycle    := [elms[1]];
-    startpos := Filtered(Positions(list,elms[1]),i->i>n/3);
-    if Length(elms) = 1 then
-      if ValueOption("alsopreperiod") <> true then return cycle; else
-        i := Length(list);
-        repeat i := i - 1; until i = 0 or list[i] <> elms[1];
-        preperiod := list{[1..i]};
-        return [preperiod,cycle];
-      fi;
-    fi;
-    i := 0;
-    repeat
-      i := i + 1;
-      inds := Intersection(startpos+i,[1..n]);
-      if inds = [] then return fail; fi;
-      min := Minimum(list{inds});
-      Add(cycle,min);
-      startpos := Filtered(startpos,j->j+i<=n and list[j+i]=min);
-      if Length(startpos) <= 1 then return fail; fi;
-      mainpartdiffs := DifferencesList(Intersection(startpos,[Int(n/3)..n]));
-      if mainpartdiffs = [] then return fail; fi;
-      d := Maximum(mainpartdiffs); 
-    until Length(cycle) = d;
-    if    Minimum(startpos) > n/2
-       or n-Maximum(startpos)-d+1 > d
-       or list{[Maximum(startpos)+d..n]}<>cycle{[1..n-Maximum(startpos)-d+1]}
-    then return fail; fi;
-    if ValueOption("alsopreperiod") <> true then return cycle; else
-      i := Minimum(startpos) + Length(cycle);
-      repeat
-        i := i - Length(cycle);
-      until i <= 0 or list{[i..i+Length(cycle)-1]} <> cycle;
-      preperiod := list{[1..i+Length(cycle)-1]};
-      return [preperiod,cycle];
-    fi;
-  end );
-
-#############################################################################
-##
-#F  AssignGlobals( <record> )
-##
-##  This auxiliary function assigns the record components of <record>
-##  to global variables with the same names.
-##
-InstallGlobalFunction( AssignGlobals,
-
-  function ( record )
-
-    local  names, name;
-
-    names := RecNames(record);
-    for name in names do
-      if IsBoundGlobal(name) then
-        if IsReadOnlyGlobal(name)
-        then
-          MakeReadWriteGlobal(name);
-          Info(InfoWarning,1,"The read-only global variable ",name,
-                             " has been overwritten.");
-        else
-          Info(InfoRCWA,1,"The global variable ",name,
-                          " has been overwritten.");
-        fi;
-        UnbindGlobal(name);
-      fi;
-      BindGlobal(name,record.(name));
-      MakeReadWriteGlobal(name);
-    od;
-    Print("The following global variables have been assigned:\n",
-          Set(names),"\n");
-  end );
-
-#############################################################################
-##
 #M  EquivalenceClasses( <list>, <relation> )
 #M  EquivalenceClasses( <list>, <classinvariant> )
 ##
@@ -223,225 +132,6 @@ InstallOtherMethod( Trajectory,
 
 #############################################################################
 ##
-#S  Some utilities for integers and combinatorics. //////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  AllSmoothIntegers( <maxp>, <maxn> )
-#F  AllSmoothIntegers( <primes>, <maxn> )
-##
-InstallGlobalFunction( AllSmoothIntegers,
-
-  function ( maxp, maxn )
-
-    local  extend, nums, primes, p;
-
-    extend := function ( n, mini )
-
-      local  i;
-
-      if n > maxn then return; fi;
-      Add(nums,n);
-      for i in [mini..Length(primes)] do
-        extend(primes[i]*n,i);
-      od;
-    end;
-
-    if   IsInt(maxp)
-    then primes := Filtered([2..maxp],IsPrimeInt);
-    elif IsList(maxp) and ForAll(maxp,p->IsInt(p) and IsPrimeInt(p))
-    then primes := maxp;
-    else return fail; fi;
-    if not IsPosInt(maxn) then return fail; fi;
-
-    nums := [];
-    extend(1,1);
-    return Set(nums);
-  end );
-
-#############################################################################
-##
-#F  ExponentOfPrime( <n>, <p> )
-##
-InstallGlobalFunction( ExponentOfPrime,
-
-  function ( n, p )
-
-    local  k;
-
-    if IsZero(p) then return fail; fi;
-    if IsZero(n) then return infinity; fi;
-    k := 0;
-    while IsZero(n mod p) do n := n/p; k := k + 1; od;
-    return k;
-  end );
-
-#############################################################################
-##
-#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
-##
-InstallGlobalFunction( NextProbablyPrimeInt,
-
-  function ( n )
-    if   -3 = n            then n := -2;
-    elif -3 < n  and n < 2 then n :=  2;
-    elif n mod 2 = 0       then n := n+1;
-    else                        n := n+2;
-    fi;
-    while not IsProbablyPrimeInt(n) do
-        if n mod 6 = 1 then n := n+4;
-        else                n := n+2;
-        fi;
-    od;
-    return n;
-  end );
-
-#############################################################################
-##
-#F  RestrictedPartitionsWithoutRepetitions( <n>, <S> )
-##
-##  Given a positive integer n and a set of positive integers S, this func-
-##  tion returns a list of all partitions of n into distinct elements of S.
-##  The only difference to `RestrictedPartitions' is that no repetitions are
-##  allowed.
-##
-InstallGlobalFunction( RestrictedPartitionsWithoutRepetitions,
-
-  function ( n, S )
-
-    local  look, comps;
-
-    look := function ( comp, remaining_n, remaining_S )
-
-      local  newcomp, newremaining_n, newremaining_S, part, l;
-
-      l := Reversed(remaining_S);
-      for part in l do
-        newcomp        := Concatenation(comp,[part]);
-        newremaining_n := remaining_n - part;
-        if newremaining_n = 0 then Add(comps,newcomp);
-        else
-          newremaining_S := Set(Filtered(remaining_S,
-                                         s->s<part and s<=newremaining_n));
-          if newremaining_S <> [] then
-            look(newcomp,newremaining_n,newremaining_S);
-          fi;
-        fi;
-      od;
-    end;
-
-    comps := [];
-    look([],n,S);
-    return comps;
-  end );
-
-#############################################################################
-##
-#S  Iterator for the prime numbers. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-##
-#############################################################################
-
-BindGlobal( "PrimeNumbersIterator_next",
-
-  function ( iter )
-
-    local  sieve, range, p, q, pos, endpos, maxdiv_old, maxdiv, i, j;
-
-    if iter!.index = 0 then
-      sieve := ListWithIdenticalEntries(iter!.chunksize,0);
-      if iter!.n = 0 then sieve[1] := 1; fi;
-      for i in [1..iter!.nrdivs] do
-        p := iter!.offset[i][1];
-        if p > iter!.n then pos := 2 * p;
-                       else pos := iter!.offset[i][2]; fi;
-        if pos = 0 then pos := p; fi;
-        endpos := pos + Int((iter!.chunksize-pos)/p) * p;
-        if pos <= iter!.chunksize then
-          range := [pos,pos+p..endpos];
-          if IsRangeRep(range) then
-            ADD_TO_LIST_ENTRIES_PLIST_RANGE(sieve,range,1);
-          else
-            for j in range do sieve[j] := sieve[j] + 1; od;
-          fi;
-        fi;
-        if endpos <= iter!.chunksize then
-          iter!.offset[i][2] := endpos + p - iter!.chunksize;
-        else
-          iter!.offset[i][2] := iter!.offset[i][2] - iter!.chunksize;
-        fi;
-      od;
-      iter!.primepos := Positions(sieve,0);
-    fi;
-    iter!.index := iter!.index + 1;
-    p           := iter!.n + iter!.primepos[iter!.index];
-    iter!.p     := p;
-    iter!.pi    := iter!.pi + 1;
-    if iter!.index = Length(iter!.primepos) then
-      iter!.index  := 0;
-      iter!.n      := iter!.n + iter!.chunksize;
-      maxdiv_old   := iter!.maxdiv;
-      iter!.maxdiv := RootInt(iter!.n + iter!.chunksize);
-      for q in Filtered([maxdiv_old+1..iter!.maxdiv],IsPrimeInt) do
-        Add(iter!.offset,[q,(q-iter!.n) mod q]);
-      od;
-      iter!.nrdivs := Length(iter!.offset);
-    fi;
-    return p;
-  end );
-
-BindGlobal( "PrimeNumbersIterator_copy",
-
-  function ( iter )
-
-    return rec( chunksize      := iter!.chunksize,
-                n              := iter!.n,
-                p              := iter!.p,
-                pi             := iter!.pi,
-                index          := iter!.index,
-                primepos       := ShallowCopy(iter!.primepos),
-                nrdivs         := iter!.nrdivs,
-                maxdiv         := iter!.maxdiv,
-                offset         := StructuralCopy(iter!.offset) );
-  end );
-
-#############################################################################
-##
-#F  PrimeNumbersIterator(  )
-#F  PrimeNumbersIterator( chunksize )
-##
-InstallGlobalFunction( PrimeNumbersIterator,
-
-  function ( arg )
-
-    local  next, copy, chunksize, maxdiv, nrdivs, offset;
-
-    if   Length(arg) >= 1 and IsPosInt(arg[1])
-    then chunksize := Maximum(arg[1],100); # must be bigger than largest
-    else chunksize := 10000000; fi;        # prime gap in range looped over
-
-    maxdiv     := RootInt(chunksize);
-    offset     := List(Filtered([2..maxdiv],IsPrimeInt),p->[p,0]);
-    nrdivs     := Length(offset);
-
-    return IteratorByFunctions( 
-             rec( NextIterator   := PrimeNumbersIterator_next,
-                  IsDoneIterator := ReturnFalse,
-                  ShallowCopy    := PrimeNumbersIterator_copy,
-                  chunksize      := chunksize,
-                  n              := 0,
-                  p              := 0,
-                  pi             := 0,
-                  index          := 0,
-                  primepos       := [],
-                  nrdivs         := nrdivs,
-                  maxdiv         := maxdiv,
-                  offset         := offset ) );
-  end );
-
-#############################################################################
-##
 #S  Multiplication with infinity. ///////////////////////////////////////////
 ##
 #############################################################################
@@ -524,84 +214,6 @@ InstallGlobalFunction( IdGraph,
 
 #############################################################################
 ##
-#F  ListOfPowers( <g>, <exp> ) . . . . . .  list of powers <g>^1 .. <g>^<exp>
-##
-InstallGlobalFunction(  ListOfPowers,
-
-  function ( g, exp )
-
-    local  powers, n;
-
-    powers := [g];
-    for n in [2..exp] do Add(powers,powers[n-1]*g); od;
-    return powers;
-  end );
-
-#############################################################################
-##
-#M  GeneratorsAndInverses( <G> ) . . . . . . . . . . . . . . . . . for groups
-##
-InstallMethod( GeneratorsAndInverses,
-               "for groups (RCWA)", true, [ IsGroup ], 0,
-               G -> Concatenation(GeneratorsOfGroup(G),
-                                  List(GeneratorsOfGroup(G),g->g^-1)) );
-
-#############################################################################
-##
-#F  EpimorphismByGenerators( <D1>, <D2> ) .  epi.: gen's of <F>->gen's of <G>
-#M  EpimorphismByGeneratorsNC( <D1>, <D2> ) .  NC version as underlying oper.
-#M  EpimorphismByGeneratorsNC( <G>, <H> ) . . . . . . . . . . . .  for groups
-##
-InstallMethod( EpimorphismByGeneratorsNC,
-               "for groups (RCWA)", ReturnTrue, [ IsGroup, IsGroup ], 0,
-  function ( G, H )
-    return GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
-                                           GeneratorsOfGroup(H));
-  end );
-InstallGlobalFunction( EpimorphismByGenerators,
-  function ( D1, D2 )
-    return EpimorphismByGeneratorsNC(D1,D2);
-  end );
-
-#############################################################################
-##
-#M  AssignGeneratorVariables( <G> ) . .  for rcwa groups with at most 6 gen's
-##
-##  This method assigns the generators of <G> to global variables a, b, ... .
-##
-InstallMethod( AssignGeneratorVariables,
-               "for rcwa groups with at most 6 generators (RCWA)",
-               true, [ IsRcwaGroup ], 0,
-
-  function ( G )
-
-    local  gens, names, name, i;
-
-    gens := GeneratorsOfGroup(G);
-    if Length(gens) > 6 then TryNextMethod(); fi;
-    names := "abcdef";
-    for i in [1..Length(gens)] do
-      name := names{[i]};
-      if IsBoundGlobal(name) then
-        if   IsReadOnlyGlobal(name)
-        then Error("variable ",name," is read-only"); fi;
-        UnbindGlobal(name);
-        Info(InfoWarning,1,"The global variable ",name,
-                           " has been overwritten.");
-      fi;
-      BindGlobal(name,gens[i]);
-      MakeReadWriteGlobal(name);
-    od;
-    Print("The following global variables have been assigned: ");
-    for i in [1..Length(gens)] do
-      Print(names{[i]});
-      if i < Length(gens) then Print(", "); fi;
-    od;
-    Print("\n");
-  end );
-
-#############################################################################
-##
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a pcp group
 #M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
 ##
@@ -680,36 +292,39 @@ InstallMethod( NormalizedRelator,
 
 #############################################################################
 ##
-#S  Some utilities related to output or conversion to strings. //////////////
+#M  AssignGeneratorVariables( <G> ) . .  for rcwa groups with at most 6 gen's
 ##
-#############################################################################
-
-#############################################################################
+##  This method assigns the generators of <G> to global variables a, b, ... .
 ##
-#F  LaTeXStringFactorsInt( <n> ) . . . . prime factorization in LaTeX format
-##
-InstallGlobalFunction( LaTeXStringFactorsInt,
+InstallMethod( AssignGeneratorVariables,
+               "for rcwa groups with at most 6 generators (RCWA)",
+               true, [ IsRcwaGroup ], 0,
 
-  function ( n )
+  function ( G )
 
-    local  facts, str, i; 
+    local  gens, names, name, i;
 
-    if   not IsInt(n)
-    then Error("usage: LaTeXStringFactorsInt( <n> ) for an integer <n>"); fi;
-
-    if n < 0 then str := "-"; n := -n; else str := ""; fi;
-    facts := Collected(Factors(n));
-    for i in [1..Length(facts)] do
-      Append(str,String(facts[i][1]));
-      if facts[i][2] > 1 then
-        Append(str,"^");
-        if facts[i][2] >= 10 then Append(str,"{"); fi;
-        Append(str,String(facts[i][2]));
-        if facts[i][2] >= 10 then Append(str,"}"); fi;
+    gens := GeneratorsOfGroup(G);
+    if Length(gens) > 6 then TryNextMethod(); fi;
+    names := "abcdef";
+    for i in [1..Length(gens)] do
+      name := names{[i]};
+      if IsBoundGlobal(name) then
+        if   IsReadOnlyGlobal(name)
+        then Error("variable ",name," is read-only"); fi;
+        UnbindGlobal(name);
+        Info(InfoWarning,1,"The global variable ",name,
+                           " has been overwritten.");
       fi;
-      if i < Length(facts) then Append(str," \\cdot "); fi;
+      BindGlobal(name,gens[i]);
+      MakeReadWriteGlobal(name);
     od;
-    return str;
+    Print("The following global variables have been assigned: ");
+    for i in [1..Length(gens)] do
+      Print(names{[i]});
+      if i < Length(gens) then Print(", "); fi;
+    od;
+    Print("\n");
   end );
 
 #############################################################################
@@ -884,71 +499,6 @@ InstallGlobalFunction( DrawGrid,
 
     SaveAsBitmapPicture( grid, filename );
 
-  end );
-
-#############################################################################
-##
-#S  Utility to convert GAP logfiles to XHTML 1.0 Strict. ////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  Log2HTML( logfilename ) . . . . . convert GAP logfile to XHTML 1.0 Strict
-##
-InstallGlobalFunction( Log2HTML,
-
-  function ( logfilename )
-
-    local  outputname, s1, s2, header, footer, pos,
-           lastlf, nextlf, crlf, prompt;
-
-    if ARCH_IS_UNIX() then crlf := 1; else crlf := 2; fi;
-    header := Concatenation(
-                "<?xml version = \"1.0\" encoding = \"ISO-8859-1\"?>\n\n",
-                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n",
-                "                      \"http://www.w3.org/TR/xhtml1/DTD/",
-                "xhtml1-strict.dtd\">\n<html>\n\n<head>\n  <title> ",
-                logfilename, " </title>\n  <link rel = \"stylesheet\" ",
-                "type = \"text/css\" href = \"gaplog.css\" />\n",
-                "</head>\n\n<body>\n\n<pre class = \"logfile\">\n");
-    footer := "</pre> </body> </html>";
-    s1 := StringFile(logfilename);
-    pos := PositionSublist(s1,"gap>"); prompt := "gap> ";
-    s2 := ReplacedString(s1{[1..pos-1]},"<","&lt;");
-    while pos <> fail do
-      s2 := Concatenation(s2,"<em class = \"prompt\">",prompt,"</em>");
-      s2 := Concatenation(s2,"<em class = \"input\">");
-      nextlf := Position(s1,'\n',pos); prompt := "gap>";
-      if nextlf = fail then nextlf := Length(s1); fi;
-      s2 := Concatenation(s2,ReplacedString(s1{[pos+5..nextlf-crlf]},
-                                            "<","&lt;"),"</em>");
-      while nextlf < Length(s1) and s1[nextlf+1] = '>' do
-        s2 := Concatenation(s2,"\n<em class = \"prompt\">></em>",
-                            "<em class = \"input\">");
-        lastlf := nextlf;
-        nextlf := Position(s1,'\n',lastlf);
-        if nextlf = fail then nextlf := Length(s1); fi;
-        s2 := Concatenation(s2,ReplacedString(s1{[lastlf+2..nextlf-crlf]},
-                                              "<","&lt;"),"</em>");
-      od;
-      s2 := Concatenation(s2,"\n");
-      pos := PositionSublist(s1,"\ngap>",nextlf-1);
-      if pos = fail then pos := Length(s1); fi;
-      if pos > nextlf then
-        s2 := Concatenation(s2,"<em class = \"output\">",
-                            ReplacedString(s1{[nextlf+1..pos-crlf]},
-                                           "<","&lt;"),"</em>\n");
-      fi;
-      if pos > Length(s1) - 3 then break; fi;
-    od;
-    s2 := Concatenation(header,s2,footer);
-    if   PositionSublist(logfilename,".log") <> fail
-    then outputname := ReplacedString(logfilename,".log",".html");
-    elif PositionSublist(logfilename,".txt") <> fail
-    then outputname := ReplacedString(logfilename,".txt",".html");
-    else outputname := Concatenation(logfilename,".html"); fi;
-    FileString(outputname,s2);
   end );
 
 #############################################################################

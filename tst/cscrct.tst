@@ -475,7 +475,7 @@ gap> ViewString(cr);
 gap> Print(cr,"\n");
 ClassRotation((Integers^2),[1,14],[[2,6],[0,15]],[[1,1],[0,1]])
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "cscrct.tst", 1700000000 );
+gap> STOP_TEST( "cscrct.tst", 1090000000 );
 
 #############################################################################
 ##

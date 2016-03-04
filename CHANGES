@@ -3,6 +3,22 @@
                        ===================================
 
 
+Changes between RCWA 4.1.0 and RCWA 4.2.0 (March 4, 2016):
+
+ - The utility functions and -operations `GeneratorsAndInverses',
+   `EpimorphismByGenerators', `ListOfPowers', `AssignGlobals', `SearchCycle',
+   `NextProbablyPrimeInt', `PrimeNumbersIterator', `AllSmoothIntegers',
+   `ExponentOfPrime' and `LaTeXStringFactorsInt' have been moved to the
+   Utils package. Therefore Utils is now a needed package of RCWA.
+
+ - The automated package test covers now the full test suite, and the tests
+   now use standard functionality instead of the old custom setup.
+
+ - The function `DrawOrbitPicture' which was broken due to some other changes
+   is now working again.
+
+ - RCWA needs now the FR package, which was before only suggested.
+
 Changes between RCWA 4.0.1 and RCWA 4.1.0 (March 1, 2016):
 
  - The test suite (a.k.a. RCWATestAll();) has been amended considerably,

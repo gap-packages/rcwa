@@ -41,7 +41,7 @@ gap> data := LoadDatabaseOfCTGraphs();;
 gap> Set(RecNames(data));
 [ "embeddings4", "embeddings5", "embeddings6" ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "database.tst", 5000000000 );
+gap> STOP_TEST( "database.tst", 4500000000 );
 
 #############################################################################
 ##

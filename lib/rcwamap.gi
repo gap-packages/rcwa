@@ -2532,12 +2532,12 @@ InstallMethod( ViewString, "for class transpositions (RCWA)", true,
     else name := "GeneralizedClassTransposition"; fi;
     if    ValueOption("CycleNotation") <> false
       and ValueOption("AbridgedNotation") <> false
-    then return QuotesStripped(Concatenation(List(["( ",cls[1],", ",
-                                                        cls[2]," )"],
-                                                  ViewString)));
-    else return QuotesStripped(Concatenation(List([name,"( ",cls[1],", ",
-                                                             cls[2]," )"],
-                                                  ViewString)));
+    then return Filtered(Concatenation(List(["( ",cls[1],", ",
+                                                  cls[2]," )"],
+                                             ViewString)),ch->ch<>'\"');
+    else return Filtered(Concatenation(List([name,"( ",cls[1],", ",
+                                                       cls[2]," )"],
+                                             ViewString)),ch->ch<>'\"');
     fi;
 
   end );

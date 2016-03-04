@@ -517,7 +517,7 @@ gap> List(last,ClassTransposition);
   ( (0,0)+(1,1)Z+(0,2)Z, (0,1)+(1,1)Z+(0,2)Z ), 
   ( (0,0)+(2,0)Z+(0,1)Z, (1,0)+(2,0)Z+(0,1)Z ) ]
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "zxz.tst", 2300000000 );
+gap> STOP_TEST( "zxz.tst", 2000000000 );
 
 #############################################################################
 ##

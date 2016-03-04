@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.1.0",
-Date             := "01/03/2016",
-ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-4.1.0",
+Version          := "4.2.0",
+Date             := "04/03/2016",
+ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-4.2.0",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -42,9 +42,10 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.8.1",
-                         NeededOtherPackages    := [ ["ResClasses",">=4.2.0"], ["GRAPE",">=4.3"],
-                                                     ["Polycyclic",">=2.6"], ["GAPDoc",">=1.4"] ],
-                         SuggestedOtherPackages := [ ["FR",">=1.1.3"] ],
+                         NeededOtherPackages    := [ ["ResClasses",">=4.3.0"], ["GRAPE",">=4.7"],
+                                                     ["Polycyclic",">=2.11"], ["FR",">=2.2.1"],
+                                                     ["GAPDoc",">=1.5.1"], ["Utils",">=0.38"] ],
+                         SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,
@@ -52,7 +53,7 @@ BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
                                    "\n  by Stefan Kohl, stefan@mcs.st-and.ac.uk.",
                                    "\nSee ?RCWA:About for information about the package.\n\n" ),
-TestFile         := "tst/testinstall.tst",
+TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings",
                       "combinatorial group theory", "residue-class-wise affine groups",
                       "residue-class-wise affine mappings",

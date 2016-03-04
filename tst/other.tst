@@ -23,8 +23,6 @@ gap> PositionsSublist([1,2,3,4,2,8,3,4,2,1,2,3,3,1,2,3],[3,3,4]);
 [  ]
 gap> Length(RandomCombination([1..10],5));
 5
-gap> QuotesStripped("\"abc\"");
-"abc"
 gap> IntOrInfinityToLaTeX(4);
 "4"
 gap> IntOrInfinityToLaTeX(infinity);
@@ -177,95 +175,13 @@ The following global variables have been assigned:
 [ "shembulli_i_dyte", "shembulli_i_pare" ]
 gap> shembulli_i_pare;
 1
-gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(0,6));    
+gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(0,6));
 <rcwa group over Z with 2 generators>
 gap> AssignGeneratorVariables(G);
 The following global variables have been assigned: a, b
-gap> pic_colored := RandomMat(30,40,[0..2^24-1]);;
-gap> filename := Concatenation(DirectoryTemporary()![1],"test.bmp");;
-gap> SaveAsBitmapPicture(pic_colored,filename);                             
-gap> pic_colored2 := LoadBitmapPicture(filename);;
-gap> pic_colored2 = pic_colored;
-true
-gap> pic_bw := RandomMat(40,60,GF(2));;
-gap> filename := Concatenation(DirectoryTemporary()![1],"test.bmp");;
-gap> SaveAsBitmapPicture(pic_bw,filename);
-gap> pic_bw2 := LoadBitmapPicture(filename);;
-gap> pic_bw2 = pic_bw;
-true
-gap> R := Integers^2;
-( Integers^2 )
-gap> S := Union(2*R,5*R+[1,3]);
-<union of 28 residue classes (mod (10,0)Z+(0,10)Z)>
-gap> filename := Concatenation(DirectoryTemporary()![1],"test.bmp");;
-gap> DrawGrid(S,[-50..50],[-50..50],filename);
 gap> if IN_LOGGING_MODE <> false then Log2HTML(IN_LOGGING_MODE); fi;
-gap> ct := ClassTransposition(0,3,2,3);
-( 0(3), 2(3) )
-gap> l := PeriodicList([],[0..11]);
-[/ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-gap> Permuted(l,ct);
-[/ 2, 1, 0, 5, 4, 3, 8, 7, 6, 11, 10, 9 ]
-gap> l := PeriodicList([17],[0..11]);
-[ 17, / 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-gap> Permuted(l,ct);                 
-[ 1, 0, 17, / 4, 3, 2, 7, 6, 5, 10, 9, 8, 1, 0, 11 ]
-gap> l := PeriodicList([17,23,45,47],[0..11]);
-[ 17, 23, 45, 47, / 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-gap> Permuted(l,ct);                          
-[ 45, 23, 17, 1, 0, 47, / 4, 3, 2, 7, 6, 5, 10, 9, 8, 1, 0, 11 ]
-gap> l := PeriodicList([17,23,45,47],[0..10]);
-[ 17, 23, 45, 47, / 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-gap> Permuted(l,ct);                          
-[ 45, 23, 17, 1, 0, 47, / 4, 3, 2, 7, 6, 5, 10, 9, 8, 2, 1, 0, 5, 4, 3, 8, 7, \
-6, 0, 10, 9, 3, 2, 1, 6, 5, 4, 9, 8, 7, 1, 0, 10 ]
-gap> T := RcwaMapping([[1,0,2],[3,1,2]]);;
-gap> l := PeriodicList([0],[1,2]);
-[ 0, / 1, 2 ]
-gap> Permuted(Permuted(l,T),T) = Permuted(l,T^2);
-true
-gap> IsSubset([0..2],l);
-true
-gap> IsSubset([0..1],l);
-false
-gap> IsSubset(NonnegativeIntegers,l);
-true
-gap> IsSubset(Integers,l);           
-true
-gap> Sum(l);
-infinity
-gap> Sum(PeriodicList([],[-1,1]));                                   
-fail
-gap> Sum(PeriodicList([1,2],[0]));   
-3
-gap> Product(PeriodicList([],[-1,1]));
-fail
-gap> Product(PeriodicList([],[1]));   
-1
-gap> Product(PeriodicList([],[-1]));
-fail
-gap> Product(PeriodicList([],[2])); 
-infinity
-gap> -l;
-[ 0, / -1, -2 ]
-gap> l1 := PeriodicList([1,2],[0..4]);  
-[ 1, 2, / 0, 1, 2, 3, 4 ]
-gap> l2 := PeriodicList([1,2,3],[0..3]);
-[ 1, 2, 3, / 0, 1, 2, 3 ]
-gap> l1+l2;
-[ 2, 4, / 3, 1, 3, 5, 7, 0, 2, 4, 6, 4, 1, 3, 5, 3, 5, 2, 4, 2, 4, 6 ]
-gap> 1+l;    
-[ 1, / 2, 3 ]
-gap> l-1;
-[ -1, / 0, 1 ]
-gap> 2*l;
-[ 0, / 2, 4 ]
-gap> l*3;
-[ 0, / 3, 6 ]
-gap> (l*3)/3 = l;
-true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "other.tst", 4000000 );
+gap> STOP_TEST( "other.tst", 62000000 );
 
 #############################################################################
 ##

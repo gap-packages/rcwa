@@ -2,6 +2,8 @@
 ##
 #W  ngens.tst                 GAP4 Package `RCWA'                 Stefan Kohl
 ##
+##  This file contains automated tests of the computations in some old draft.
+##
 #############################################################################
 
 gap> START_TEST( "ngens.tst" );
@@ -43,7 +45,7 @@ gap> Comm(ClassShift(1,2),ClassShift(1,3))^
 >  * Comm(ClassShift(0,2),ClassShift(2,3)) = ClassTransposition(1,3,2,3);
 true
 gap> RCWADoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "ngens.tst", 15000000 );
+gap> STOP_TEST( "ngens.tst", 50000000 );
 
 #############################################################################
 ##

@@ -18,7 +18,6 @@
 ##
 ##  This function builds the manual of the RCWA package in the file formats
 ##  LaTeX, PDF, HTML and ASCII-text.
-##
 ##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
 ##
 BindGlobal( "RCWABuildManual", 
@@ -61,8 +60,6 @@ BindGlobal( "RCWATestExamples",
 ##
 #############################################################################
 
-TEST_TIMINGS := [];
-
 #############################################################################
 ##
 #F  RCWATestInstall( ) . . . . quick test whether RCWA is installed correctly
@@ -73,12 +70,9 @@ TEST_TIMINGS := [];
 BindGlobal( "RCWATestInstall",
 
   function ( )
-
-    local  RCWADir, dir;
-
-    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-    dir := Concatenation( RCWADir, "/tst/" );
-    Test( Concatenation( dir, "testinstall.tst" ) );
+    RESCLASSES_ASSERTIONLEVEL_BACKUP := AssertionLevel();
+    return Test( Filename( DirectoriesPackageLibrary( "rcwa", "tst" ),
+                           "testinstall.tst" ) );
   end );
 
 #############################################################################
@@ -87,18 +81,11 @@ BindGlobal( "RCWATestInstall",
 ##
 ##  Runs the full test suite of the RCWA package.
 ##
-##  The function makes use of an adaptation of the test file tst/testall.g
-##  of the GAP Library to this package. 
-##
 BindGlobal( "RCWATestAll",
 
   function ( )
-
-    local  RCWADir, dir;
-
-    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-    dir := Concatenation( RCWADir, "/tst/" );
-    Read( Concatenation( dir, "testall.g" ) );
+    RESCLASSES_ASSERTIONLEVEL_BACKUP := AssertionLevel();
+    return TestDirectory( DirectoriesPackageLibrary( "rcwa", "tst" ) );
   end );
 
 #############################################################################
@@ -108,148 +95,22 @@ BindGlobal( "RCWATestAll",
 ##
 BindGlobal( "RCWADoThingsToBeDoneBeforeTest",
 
-  function (  )
-    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+  function ( )
+    RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel(InfoWarning);;
     SetInfoLevel(InfoWarning,0);
-    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    SetAssertionLevel(0);
+    RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;;
     ResidueClassUnionViewingFormat("short");
     CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
   end );
 
 BindGlobal( "RCWADoThingsToBeDoneAfterTest",
 
-  function (  )
+  function ( )
     CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
-    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
-    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
-  end );
-
-#############################################################################
-##
-#F  ReadTestWithTimings( <filename> ) . . . read test file and return timings
-##
-BindGlobal( "ReadTestWithTimings",
-
-  function ( filename )
-
-    local  timings, filewithtimings, inputlines, outputlines, isinput,
-           line, nextline, pos, intest, commands, command, lastbuf, i;
-
-    isinput := function ( line )
-      if Length(line) < 1 then return false; fi;
-      if line[1] = '>' then return true; fi;
-      if Length(line) < 4 then return false; fi;
-      if line{[1..4]} = "gap>" then return true; fi;
-      return false;
-    end;
-
-    if   not IsString(filename)
-    then Error("usage: ReadTestWithTimings( <filename> )"); fi;
-
-    inputlines := SplitString(StringFile(filename),"\n");
-    outputlines := []; intest := false; commands := []; command := [];
-    for pos in [1..Length(inputlines)] do
-      line := inputlines[pos];
-      Add(outputlines,line);
-      if PositionSublist(line,"START_TEST") <> fail then intest := true; fi;
-      if PositionSublist(line,"STOP_TEST") <> fail then intest := false; fi;
-      if intest then
-        if isinput(line) then Add(command,line); fi;
-        nextline := inputlines[pos+1];
-        if not isinput(line) and isinput(nextline) then
-          Add(commands,[pos-1,JoinStringsWithSeparator(command,"\n")]);
-          command := [];
-          Add(outputlines,"gap> lastbuf := [last,last2,last3];;");
-          Add(outputlines,"gap> runtime := Runtime()-TEST_START_TIME;;");
-          Add(outputlines,"gap> Add(TEST_TIMINGS,runtime);");
-          Add(outputlines,"gap> TEST_START_TIME := Runtime();;");
-          Add(outputlines,"gap> last3 := lastbuf[3];;");
-          Add(outputlines,"gap> last2 := lastbuf[2];;");
-          Add(outputlines,"gap> last1 := lastbuf[1];;");
-        fi;
-      fi;
-    od;
-    outputlines := JoinStringsWithSeparator(outputlines,"\n");
-    filename := SplitString(filename,"/");
-    filename := filename[Length(filename)];
-    filewithtimings := Filename(DirectoryTemporary(),filename);
-    FileString(filewithtimings,outputlines);
-    Unbind(TEST_TIMINGS);
-    BindGlobal("TEST_TIMINGS",[]);
-    MakeReadWriteGlobal("TEST_TIMINGS");
-    BindGlobal("TEST_START_TIME",Runtime());
-    MakeReadWriteGlobal("TEST_START_TIME"); 
-    Test(filewithtimings);
-    timings := TEST_TIMINGS;
-    UnbindGlobal("TEST_TIMINGS");
-    UnbindGlobal("TEST_START_TIME");
-    if   Length(timings) <> Length(commands)
-    then Error("ReadTestWithTimings: #commands <> #timings"); fi;
-    return List([1..Length(commands)],i->[commands[i],timings[i]]);
-  end );
-
-#############################################################################
-##
-#F  ReadTestCompareRuntimes( <filename> [,<timingsdir> [,<createreference>]])
-##
-BindGlobal( "ReadTestCompareRuntimes",
-
-  function ( arg )
-
-    local  filename, timingsdir, createreference, testdir,
-           timingsname, slashpos, oldtimings, newtimings, testnrs,
-           changes, changed, runtimechangesignificance, threshold, n, i;
-
-    runtimechangesignificance := function ( oldtime, newtime )
-      return AbsInt(newtime-oldtime)/(10*RootInt(oldtime)+100);
-    end;
-
-    filename := arg[1];
-    slashpos := Positions(filename,'/');
-    slashpos := slashpos[Length(slashpos)];
-    testdir  := filename{[1..slashpos]};
-    if   Length(arg) >= 2
-    then timingsdir := arg[2]; else timingsdir := testdir; fi;
-    if   Length(arg) >= 3
-    then createreference := arg[3]; else createreference := false; fi;
-    if not IsString(filename) or not IsBool(createreference) then
-      Error("usage: ReadTestCompareTimings( <filename> ",
-            "[, <createreference> ] )");
-    fi;
-    timingsname := ReplacedString(filename,testdir,timingsdir);
-    timingsname := ReplacedString(timingsname,".tst",".runtimes");
-    if   not IsExistingFile(timingsname)
-    then createreference := true;
-    else oldtimings := ReadAsFunction(timingsname)(); fi;
-    newtimings := ReadTestWithTimings(filename);
-    if createreference then
-      PrintTo(timingsname,"return ",newtimings,";\n");
-    else
-      n := Length(oldtimings);
-      if Length(newtimings) < n or TransposedMat(newtimings)[1]{[1..n]}
-                                <> TransposedMat(oldtimings)[1]
-      then
-        Info(InfoWarning,1,"Test file ",filename);
-        Info(InfoWarning,1,"has changed, thus performance ",
-                           "cannot be compared.");
-        Info(InfoWarning,1,"Please create new reference timings.");
-      else
-        testnrs := [1..n];
-        changes := List([1..n],
-                        i->runtimechangesignificance(newtimings[i][2],
-                                                     oldtimings[i][2]));
-        SortParallel(-changes,testnrs);
-        threshold := 1; # significance threshold for runtime change
-        changed := Filtered(testnrs,i->changes[i]>threshold);
-        for i in changed do
-          Print("Line ",oldtimings[i][1][1],": ");
-          if   newtimings[i][2] < oldtimings[i][2]
-          then Print("speedup "); else Print("slowdown "); fi;
-          Print(oldtimings[i][2],"ms -> ",newtimings[i][2],"ms\n");
-          Print(oldtimings[i][1][2],"\n");
-        od;
-      fi;
-    fi;
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BACKUP);
+    SetAssertionLevel(RESCLASSES_ASSERTIONLEVEL_BACKUP);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BACKUP);
   end );
 
 #############################################################################
@@ -279,7 +140,10 @@ BindGlobal( "RCWACheckDatabaseOfGroupsGeneratedBy3ClassTranspositions",
     grps := List(Combinations(cts,3),Group);;
 
     if   cts <> data.cts or grps <> data.grps
-    then Error("*** List of groups is corrupted !!! ***"); fi;
+    then Error("*** List of groups is corrupted!!! ***"); fi;
+
+    cts  := List(cts,SparseRep);
+    grps := List(Combinations(cts,3),Group);;
 
     mods  := data.mods;
     sizes := data.sizes;
@@ -299,8 +163,8 @@ BindGlobal( "RCWACheckDatabaseOfGroupsGeneratedBy3ClassTranspositions",
         n0 := Size(grps[i]);
         Info(InfoRCWA,2,"|grps[",i,"]| = ",n0);
         if m0 <> m or n0 <> n then
-          if m0 <> m then Error("** Modulus discrepancy !!! ***"); fi;
-          if n0 <> n then Error("** Order discrepancy !!! ***"); fi;
+          if m0 <> m then Error("*** Modulus discrepancy!!! ***"); fi;
+          if n0 <> n then Error("*** Order discrepancy!!! ***"); fi;
           Add(errors,rec(i:=i,m_wrong:=m ,n_wrong:=n,
                               m_right:=m0,n_right:=n0));
           Print("Errors =\n",errors,"\n");
