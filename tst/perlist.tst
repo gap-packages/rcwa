@@ -161,14 +161,6 @@ gap> Permuted(last,T);
 2, 5 ]
 gap> Sum(Period(last));
 64
-gap> l := PeriodicList([],[1,E(3),E(3)^2]);
-[/ 1, E(3), E(3)^2 ]
-gap> Permuted(l,T);
-[/ 1, E(3)^2, 2*E(3), 1, E(3)^2, -E(3)^2, 1, E(3)^2, -1 ]
-gap> Sum(Period(last));
-0
-gap> Sum(Period(Permuted(last2,T)));
-0
 gap> G := WreathProduct(Group(ClassTransposition(0,2,1,2)),
 >                       Group(ClassShift(0,1)));
 <wild rcwa group over Z with 2 generators>
