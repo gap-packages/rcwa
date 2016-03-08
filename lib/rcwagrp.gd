@@ -435,6 +435,13 @@ DeclareAttribute( "StabilizerInfo", IsRcwaGroup );
 
 #############################################################################
 ##
+#O  RepresentativeActionOp( <G>, <src>, <dest>, <act> )
+##
+DeclareOperation( "RepresentativeActionOp",
+                  [ IsGroup, IsObject, IsObject, IsFunction ] );
+
+#############################################################################
+##
 #O  RepresentativeActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 #O  RepresentativesActionPreImage( <G>, <src>, <dest>, <act>, <F> )
 ##
@@ -460,6 +467,26 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 
 #############################################################################
 ##
+#O  ProjectionsToInvariantUnionsOfResidueClasses( <G>, <m> )
+##
+##  Projections of the rcwa group <G> to unions of residue classes (mod m)
+##  which it fixes setwise.
+##
+DeclareOperation( "ProjectionsToInvariantUnionsOfResidueClasses",
+                  [ IsRcwaGroup, IsRingElement ] );
+
+#############################################################################
+##
+#O  CollatzLikeMappingByOrbitTree( <G>, <root>, <min_r>, <max_r> )
+##
+##  This operation is so far undocumented since its meaning has yet to be
+##  settled.
+##
+DeclareOperation( "CollatzLikeMappingByOrbitTree",
+                  [ IsRcwaGroup, IsRingElement, IsPosInt, IsPosInt ] );
+
+#############################################################################
+##
 #F  DrawOrbitPicture( <G>, <p0>, <r>, <height>, <width>, <colored>,
 #F                    <palette>, <filename> )
 ##
@@ -479,16 +506,6 @@ DeclareOperation( "OrbitUnion", [ IsRcwaGroup, IsListOrCollection ] );
 ##  <filename>. The filename should include the entire pathname.
 ##
 DeclareGlobalFunction( "DrawOrbitPicture" );
-
-#############################################################################
-##
-#O  CollatzLikeMappingByOrbitTree( <G>, <root>, <min_r>, <max_r> )
-##
-##  This operation is so far undocumented since its meaning has yet to be
-##  settled.
-##
-DeclareOperation( "CollatzLikeMappingByOrbitTree",
-                  [ IsRcwaGroup, IsRingElement, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##
@@ -639,6 +656,67 @@ DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
 
 #############################################################################
 ##
+#S  Words, free groups and fp groups. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
+##
+##  Given a word <w>, this function returns the word obtained from <w> by
+##  reducing the exponents of powers of generators modulo their orders, as
+##  specified in the list <gensords>.
+##
+DeclareGlobalFunction( "ReducedWordByOrdersOfGenerators" );
+
+#############################################################################
+##
+#O  NormalizedRelator( <w>, <gensords> )
+##
+##  Given a word <w>, this operation returns its normal form obtained by
+##
+##    1. reducing the exponents of powers of generators modulo their orders,
+##       as specified in the list <gensords>,
+##    2. cyclic reduction and
+##    3. cyclic conjugation to the lexicographically smallest such conjugate.
+##
+##  As the name of the operation suggests, the main purpose of this operation
+##  is to get the relators in a finite presentation short and nice, and to be
+##  able to spot and remove redundant relators in easy cases.
+##
+DeclareOperation( "NormalizedRelator", [ IsAssocWord, IsList ] );
+
+#############################################################################
+##
+#A  RankOfFreeGroup( <Fn> )
+##
+DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
+
+#############################################################################
+##
+#O  EpimorphismFromFpGroup( <G>, <r> ) . .  epimorphism from an fp group to G
+##
+##  Returns an epimorphism from a finitely presented group to the group <G>
+##  The argument <r> denotes the radius of the ball around 1 which should be
+##  searched for relations.
+##
+DeclareOperation( "EpimorphismFromFpGroup",
+                  [ IsFinitelyGeneratedGroup, IsPosInt ] );
+
+#############################################################################
+##
+#O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
+##
+##  This is an analogon to `PreImagesRepresentative', which returns a list
+##  of possibly several representatives if computing these is not harder than
+##  computing just one representative.
+##
+DeclareOperation( "PreImagesRepresentatives",
+                  [ IsGeneralMapping, IsObject ] );
+
+#############################################################################
+##
 #S  Data libraries. /////////////////////////////////////////////////////////
 ##
 #############################################################################
@@ -707,74 +785,6 @@ DeclareGlobalFunction(
 ##  order, or equivalently, iff both vertices respect a common partition.
 ##
 DeclareGlobalFunction( "LoadDatabaseOfCTGraphs" );
-
-#############################################################################
-##
-#S  Miscellanea. ////////////////////////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#A  RankOfFreeGroup( <Fn> )
-##
-DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
-
-#############################################################################
-##
-#O  EpimorphismFromFpGroup( <G>, <r> ) . .  epimorphism from an fp group to G
-##
-##  Returns an epimorphism from a finitely presented group to the group <G>
-##  The argument <r> denotes the radius of the ball around 1 which should be
-##  searched for relations.
-##
-DeclareOperation( "EpimorphismFromFpGroup",
-                  [ IsFinitelyGeneratedGroup, IsPosInt ] );
-
-#############################################################################
-##
-#O  ProjectionsToInvariantUnionsOfResidueClasses( <G>, <m> )
-##
-##  Projections of the rcwa group <G> to unions of residue classes (mod m)
-##  which it fixes setwise.
-##
-DeclareOperation( "ProjectionsToInvariantUnionsOfResidueClasses",
-                  [ IsRcwaGroup, IsRingElement ] );
-
-#############################################################################
-##
-#O  RepresentativeActionOp( <G>, <g>, <h>, <act> )
-##
-DeclareOperation( "RepresentativeActionOp",
-                  [ IsGroup, IsObject, IsObject, IsFunction ] );
-
-#############################################################################
-##
-#O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
-##
-##  This is an analogon to `PreImagesRepresentative', which returns a list
-##  of possibly several representatives if computing these is not harder than
-##  computing just one representative.
-##
-DeclareOperation( "PreImagesRepresentatives",
-                  [ IsGeneralMapping, IsObject ] );
-
-#############################################################################
-##
-#O  Factorization( [ <G>, ], <g> ) . . . . . .  factorization into generators
-##
-if not IsOperation( Factorization ) then # for GAP 4.4.12
-  SmallGroupFactorization := Factorization;
-  MakeReadWriteGlobal( "Factorization" );
-  Unbind( Factorization );
-  DeclareOperation( "Factorization",
-                    [ IsGroup, IsMultiplicativeElementWithInverse ] );
-  InstallMethod( Factorization, "Library method", IsCollsElms,
-                 [ IsGroup, IsMultiplicativeElementWithInverse ], 0,
-                 SmallGroupFactorization );
-fi;
-
-DeclareOperation( "Factorization", [ IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##

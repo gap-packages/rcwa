@@ -13,7 +13,7 @@
 <Heading>Requirements</Heading>
 
 This version of &RCWA; needs at least &GAP;&nbsp;4.8.2,
-&ResClasses;&nbsp;4.3.1,
+&ResClasses;&nbsp;4.4.0,
 <Package>GRAPE</Package>&nbsp;4.7&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.11&nbsp;<Cite Key="Polycyclic"/>,
 <Package>FR</Package>&nbsp;2.2.1&nbsp;<Cite Key="FR"/>,
@@ -135,94 +135,6 @@ are included in the distribution file anyway, users will not need it.
     <Index Key="RCWAInfo"><C>RCWAInfo</C></Index>
   </Description>
 </ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:BitmapPictures">
-<Heading>Utility functions for bitmap pictures</Heading>
-
-&RCWA; provides functions to create bitmap picture files from suitable
-pixel matrices and vice versa. The author has successfully tested this
-feature both under Linux and under Windows, and the produced pictures
-can be processed further with many common graphics programs:
-
-<ManSection>
-  <Func Name="SaveAsBitmapPicture"
-        Arg="picture, filename" Label="picture, filename"/>
-  <Returns> nothing. </Returns>
-  <Description>
-    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-)
-    picture file named <A>filename</A>. The filename should include
-    the entire pathname.
-
-    The argument <A>picture</A> can be a GF(2) matrix, in which case a
-    monochrome picture file is generated. In this case, zeros stand for
-    black pixels and ones stand for white pixels.
-
-    The argument <A>picture</A> can also be an integer matrix, in which case
-    a 24-bit True Color picture file is generated. In this case, the entries
-    of the matrix are supposed to be integers <M>n = 65536 \cdot red + 256
-    \cdot green + blue</M> in the range <M>0, \dots, 2^{24}-1</M> specifying
-    the RGB values of the colors of the pixels. <P/>
-
-    <Index Key="LoadBitmapPicture" Subkey="filename">
-      <C>LoadBitmapPicture</C>
-    </Index>
-
-    The picture can be read back into &GAP; by the function
-    <C>LoadBitmapPicture(<A>filename</A>)</C>.
-<Log>
-<![CDATA[
-gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
-gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
-gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
-]]>
-</Log>
-  </Description>
-</ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:UtilityFunctions">
-<Heading>Some general utility functions</Heading>
-
-&RCWA; provides a couple of small utility functions which can be used in
-a more general context. They are described in this section. <P/>
-
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function computing a class invariant">
-  <C>EquivalenceClasses</C>
-</Index>
-<Index Key="EquivalenceClasses"
-       Subkey="for a list and a function describing an equivalence relation">
-  <C>EquivalenceClasses</C>
-</Index>
-
-There are methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
-and  <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C>, which decompose
-a list&nbsp;<A>l</A> into equivalence classes under an equivalence
-relation. The equivalence relation is given either as a function <A>inv</A>
-computing a class invariant of a given list entry or as a function <A>rel</A>
-which takes as arguments two list entries and returns either <C>true</C>
-or <C>false</C> depending on whether the arguments belong to the same
-equivalence class or not. <P/>
-
-<Index Key="GraphClasses"><C>GraphClasses</C></Index>
-<Index Key="AllGraphs"><C>AllGraphs</C></Index>
-<Index Key="IdGraph"><C>IdGraph</C></Index>
-
-There is a function <C>GraphClasses(<A>n</A>)</C>, which computes a list of
-isomorphism classes of graphs with vertices <M>1, 2, \dots, n</M>, and a
-function <C>AllGraphs(<A>n</A>)</C> which computes a list of representatives
-of these classes. The graphs are represented as lists of edges, where
-each edge is a list of the two vertices it connects, and they are ordered
-by ascending number of edges.
-The function <C>IdGraph(<A>graph</A>,<A>classes</A>)</C> returns the
-index <C>i</C> such that <A>graph</A> lies <A>classes</A><C>[i]</C>. <P/>
 
 </Section>
 

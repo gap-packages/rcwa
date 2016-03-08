@@ -537,18 +537,21 @@ DeclareGlobalFunction( "ClassUnionShift" );
 
 #############################################################################
 ##
+#O  Factorization( <g> )
 #A  FactorizationIntoCSCRCT( <g> )
 #A  FactorizationIntoElementaryCSCRCT( <g> )
 ##
 ##  A factorization of an rcwa permutation into class shifts,
 ##  class reflections and class transpositions. The latter operation
-##  decomposes into factors with particularly small moduli -- for
-##  elements of CT_P(Z), where P is some finite set of odd primes,
+##  decomposes into factors with particularly small moduli --
+##  for elements of CT_P(Z), where P is some finite set of odd primes,
 ##  the factors are taken from a finite set of generators.
 ##
-DeclareAttribute( "FactorizationIntoCSCRCT", IsMultiplicativeElement );
+DeclareOperation( "Factorization", [ IsMultiplicativeElementWithInverse ] );
+DeclareAttribute( "FactorizationIntoCSCRCT",
+                  IsMultiplicativeElementWithInverse );
 DeclareAttribute( "FactorizationIntoElementaryCSCRCT",
-                  IsMultiplicativeElement );
+                  IsMultiplicativeElementWithInverse );
 DeclareSynonym( "FactorizationIntoGenerators", FactorizationIntoCSCRCT );
 
 #############################################################################
@@ -804,6 +807,17 @@ DeclareAttribute( "MovedPoints", IsRcwaMonoid );
 ##
 DeclareOperation( "\^", [ IsListOrCollection, IsRcwaMapping ] );
 DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
+
+#############################################################################
+##
+#O  PiecewiseMapping( <sources>, <maps> )
+##
+##  Returns the mapping f composed from the mappings <maps> defined on
+##  <sources>. Here, <sources> and and <maps> must be lists of the same
+##  length, and for any i, <maps>[i] must be defined on <sources>[i] or
+##  on a superset thereof.
+##
+DeclareOperation( "PiecewiseMapping", [ IsList, IsList ] );
 
 #############################################################################
 ##

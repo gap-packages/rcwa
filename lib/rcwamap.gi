@@ -8204,6 +8204,67 @@ InstallMethod( Loops,
 
 #############################################################################
 ##
+#M  Trajectory( <f>, <n>, <length> )
+##
+InstallOtherMethod( Trajectory,
+                    "for function, start point and length (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsPosInt ], 0,
+
+  function ( f, n, length )
+
+    local  l, i;
+
+    l := [n];
+    for i in [2..length] do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+#############################################################################
+##
+#M  Trajectory( <f>, <n>, <terminal> )
+##
+InstallOtherMethod( Trajectory,
+                    "for function, start point and terminal set (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsListOrCollection ],
+                    0,
+
+  function ( f, n, terminal )
+
+    local  l, i;
+
+    l := [n];
+    while not n in terminal do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+#############################################################################
+##
+#M  Trajectory( <f>, <n>, <halt> )
+##
+InstallOtherMethod( Trajectory,
+                    "for function, start point and halting criterion (RCWA)",
+                    ReturnTrue, [ IsFunction, IsObject, IsFunction ], 0,
+
+  function ( f, n, halt )
+
+    local  l, i;
+
+    l := [n];
+    while not halt(n) do
+      n := f(n);
+      Add(l,n);
+    od;
+    return l;
+  end );
+
+#############################################################################
+##
 #M  Trajectory( <f>, <n>, <length> ) . . . . . . . . . for rcwa mappings, (1)
 ##
 InstallMethod( Trajectory,

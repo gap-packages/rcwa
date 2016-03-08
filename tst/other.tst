@@ -161,7 +161,7 @@ gap> List(GraphClasses(4),Length);
 [ 1, 6, 12, 3, 4, 4, 12, 12, 3, 6, 1 ]
 gap> Sum(last);
 64
-gap> IdGraph([[6,7],[7,8],[8,9]],GraphClasses(4));
+gap> IdGraphNC([[6,7],[7,8],[8,9]],GraphClasses(4));
 7
 gap> GraphClasses(4)[7];
 [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ] ], [ [ 1, 3 ], [ 2, 3 ], [ 2, 4 ] ], 

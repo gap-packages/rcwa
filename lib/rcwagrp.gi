@@ -39,7 +39,15 @@ InstallTrueMethod( KnowsHowToDecompose,
 
 #############################################################################
 ##
-#S  Checking whether a list is a set of generators of an rcwa group. ////////
+#M  IsWholeFamily . . . . . . . . . . . . . for an rcwa group -- return false
+##
+InstallMethod( IsWholeFamily,
+               "for an rcwa group -- return false (RCWA)", true,
+               [ IsRcwaGroup ], 0, ReturnFalse );
+
+#############################################################################
+##
+#S  Rcwa groups and lists of generators. ////////////////////////////////////
 ##
 #############################################################################
 
@@ -63,11 +71,42 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
 
 #############################################################################
 ##
-#M  IsWholeFamily . . . . . . . . . . . . . for an rcwa group -- return false
+#M  AssignGeneratorVariables( <G> ) . .  for rcwa groups with at most 6 gen's
 ##
-InstallMethod( IsWholeFamily,
-               "for an rcwa group -- return false (RCWA)", true,
-               [ IsRcwaGroup ], 0, ReturnFalse );
+##  This method assigns the generators of <G> to global variables a, b, ... .
+##  As all functions which assign anything one-letter global variables, it is
+##  for interactive use only, and should not be called from inside code.
+##
+InstallMethod( AssignGeneratorVariables,
+               "for rcwa groups with at most 6 generators (RCWA)",
+               true, [ IsRcwaGroup ], 0,
+
+  function ( G )
+
+    local  gens, names, name, i;
+
+    gens := GeneratorsOfGroup(G);
+    if Length(gens) > 6 then TryNextMethod(); fi;
+    names := "abcdef";
+    for i in [1..Length(gens)] do
+      name := names{[i]};
+      if IsBoundGlobal(name) then
+        if   IsReadOnlyGlobal(name)
+        then Error("variable ",name," is read-only"); fi;
+        UnbindGlobal(name);
+        Info(InfoWarning,1,"The global variable ",name,
+                           " has been overwritten.");
+      fi;
+      BindGlobal(name,gens[i]);
+      MakeReadWriteGlobal(name);
+    od;
+    Print("The following global variables have been assigned: ");
+    for i in [1..Length(gens)] do
+      Print(names{[i]});
+      if i < Length(gens) then Print(", "); fi;
+    od;
+    Print("\n");
+  end );
 
 #############################################################################
 ##
@@ -6106,9 +6145,31 @@ InstallMethod( Factorization,
 
 #############################################################################
 ##
-#S  Methods for `IsSolvable', `IsPerfect', `IsSimple' and `Exponent'. ///////
+#S  Methods for `AbelianInvariants', `IsSolvable', `IsPerfect', `IsSimple' //
+#S  and `Exponent'. /////////////////////////////////////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a pcp group
+#M  AbelianInvariants( <G> ) . .  for groups knowing an iso. to a perm.-group
+##
+InstallMethod( AbelianInvariants,
+               "for groups knowing an isomorphism to a pcp group", true,
+               [ IsGroup and HasIsomorphismPcpGroup ], 0,
+  function ( G )
+    if IsPcpGroup(G) then TryNextMethod(); fi; # avoid recursion
+    return AbelianInvariants(Image(IsomorphismPcpGroup(G)));
+  end );
+
+InstallMethod( AbelianInvariants,
+               "for groups knowing an isomorphism to a permutation group",
+               true, [ IsGroup and HasIsomorphismPermGroup ], 0,
+  function ( G )
+    if IsPermGroup(G) then TryNextMethod(); fi; # avoid recursion
+    return AbelianInvariants(Image(IsomorphismPermGroup(G)));
+  end );
 
 #############################################################################
 ##
@@ -6309,6 +6370,69 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
     cosets := RightCosets(G,N);
     img    := Action(G,cosets,OnRight);
     return EpimorphismByGeneratorsNC(G,img);
+  end );
+
+#############################################################################
+##
+#S  Computing normal forms of words and relators. ///////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
+##
+InstallGlobalFunction(  ReducedWordByOrdersOfGenerators,
+
+  function ( w, gensords )
+
+    local  ext, fam, i;
+
+    fam := FamilyObj(w);
+    ext := ShallowCopy(ExtRepOfObj(w));
+    for i in [1,3..Length(ext)-1] do
+      if gensords[ext[i]] < infinity then
+        ext[i+1] := ext[i+1] mod gensords[ext[i]];
+        if   ext[i+1] > gensords[ext[i]]/2
+        then ext[i+1] := ext[i+1] - gensords[ext[i]]; fi;
+      fi;
+    od;
+    return ObjByExtRep(fam,ext);
+  end );
+
+#############################################################################
+##
+#M  NormalizedRelator( <w>, <gensords> )
+##
+InstallMethod( NormalizedRelator,
+               "for a word and a list of orders of generators", ReturnTrue,
+               [ IsAssocWord, IsList ], 0,
+
+  function ( w, gensords )
+
+    local  c, old, twice, words, min, max, start, i, j;
+
+    c := ShallowCopy(ExtRepOfObj(w));
+    repeat
+      old := ShallowCopy(c);
+      for i in [2,4..Length(c)] do
+        if   gensords[c[i-1]] < infinity
+        then c[i] := c[i] mod gensords[c[i-1]]; fi;
+      od;
+      c := ShallowCopy(ExtRepOfObj(ObjByExtRep(FamilyObj(w),c)));
+      if c = [] then return One(w); fi;
+      min   := Minimum(c{[1,3..Length(c)-1]});
+      start := Filtered([1,3..Length(c)-1],i->c[i]=min);
+      max   := Maximum(c{start+1});
+      start := Filtered(start,i->c[i+1]=max);
+      twice := Concatenation(c,c);
+      words := List(start,i->twice{[i..i+Length(c)-1]});
+      SortParallel(List(words,v->[v{[1,3..Length(v)-1]},
+                                  v{[2,4..Length(v)]}]),words);
+      c := words[1];
+    until c = old;
+    w := ObjByExtRep(FamilyObj(w),c);
+    return w;
   end );
 
 #############################################################################
