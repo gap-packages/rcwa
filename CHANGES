@@ -7,11 +7,11 @@ Changes between RCWA 4.2.0 and RCWA 4.3.0 (March 8, 2016):
 
  - The remaining utility functions and -operations `SaveAsBitmapPicture',
    `LoadBitmapPicture', `DrawGrid', `EquivalenceClasses', `GraphClasses',
-   `AllGraphs' and `IdGraphs' have been moved to the ResClasses package.
+   `AllGraphs' and `IdGraph' have been moved to the ResClasses package.
 
  - Some code reordering has been done (the remaining contents of general.gd
    and general.gi have been merged into rcwamap.gd, rcwamap.gi, rcwagrp.gd
-   and rcwagrp.gi).
+   and rcwagrp.gi, and frdepend.gi has been renamed to perlist.gi).
 
  - A few further minor adjustments have been made.
 

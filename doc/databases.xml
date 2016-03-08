@@ -32,19 +32,19 @@ in this chapter.
 <Example>
 <![CDATA[
 gap> examples := LoadRCWAExamples();;                                 
-gap> RecNames(examples);
-[ "Basics", "CollatzMapping", "HigmanThompson", "CTPZ", "CT3Z", 
-  "OddNumberOfGens_FiniteOrder", "ZxZ", "SlowlyContractingMappings", 
-  "MatthewsLeigh", "HicksMullenYucasZavislak", "CollatzlikePerms", 
-  "GF2xFiniteCycles", "GrigorchukQuotients", "F2_PSL2Z", 
-  "MaybeInfinitelyPresentedGroup", "Hexagon", "FiniteQuotients", 
-  "ClassTranspositionProducts", "Venturini", "Farkas", 
-  "SymmetrizingCollatzTree", "FiniteVsDenseCycles", 
-  "AbelianGroupOverPolynomialRing", "Semilocals", 
-  "LongCyclesOfPrimeLength", "ModuliOfPowers", 
-  "ClassTranspositionsAsCommutators", "CoprimeMultDiv", 
-  "TameGroupByCommsOfWildPerms", "CheckingForSolvability", "Syl3_S9", 
-  "ClassSwitches", "CollatzFactorizationOld" ]
+gap> Set(RecNames(examples));
+[ "AbelianGroupOverPolynomialRing", "Basics", "CT3Z", "CTPZ", 
+  "CheckingForSolvability", "ClassSwitches", 
+  "ClassTranspositionProducts", "ClassTranspositionsAsCommutators", 
+  "CollatzFactorizationOld", "CollatzMapping", "CollatzlikePerms", 
+  "CoprimeMultDiv", "F2_PSL2Z", "Farkas", "FiniteQuotients", 
+  "FiniteVsDenseCycles", "GF2xFiniteCycles", "GrigorchukQuotients", 
+  "Hexagon", "HicksMullenYucasZavislak", "HigmanThompson", 
+  "LongCyclesOfPrimeLength", "MatthewsLeigh", 
+  "MaybeInfinitelyPresentedGroup", "ModuliOfPowers", 
+  "OddNumberOfGens_FiniteOrder", "Semilocals", 
+  "SlowlyContractingMappings", "Syl3_S9", "SymmetrizingCollatzTree", 
+  "TameGroupByCommsOfWildPerms", "Venturini", "ZxZ" ]
 gap> AssignGlobals(examples.ZxZ);
 The following global variables have been assigned:
 [ "R", "SigmaT", "SigmaTm", "Sigma_T", "T2", "a", "b", "commT_Tm", 
@@ -323,11 +323,10 @@ gap> RepresentativeAction(RCWA(Integers),grps4_3finite[4],
 <Example>
 <![CDATA[
 gap> data := LoadDatabaseOfProductsOf2ClassTranspositions();;
-gap> RecNames(data);
-[ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", 
-  "CTPairIntersectionType", "CTPairProductType", 
-  "CTPairsProductClassification", "OrdersMatrix", "CTProds12", 
-  "CTProds32" ]
+gap> Set(RecNames(data));
+[ "CTPairIntersectionType", "CTPairProductType", "CTPairs", 
+  "CTPairsIntersectionTypes", "CTPairsProductClassification", 
+  "CTPairsProductType", "CTProds12", "CTProds32", "OrdersMatrix" ]
 gap> Length(data.CTPairs);
 2346
 gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
@@ -355,7 +354,7 @@ gap> Collected(List(data.CTPairsProductType,l->l[2])); # order statistics
 <Example>
 <![CDATA[
 gap> data := LoadDatabaseOfNonbalancedProductsOfClassTranspositions();;
-gap> RecNames(data);
+gap> Set(RecNames(data));
 [ "PairsOfCTsWhoseProductIsNotBalanced", 
   "TriplesOfCTsWhoseProductHasCoprimeMultiplierAndDivisor" ]
 gap> List(data.PairsOfCTsWhoseProductIsNotBalanced,

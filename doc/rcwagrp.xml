@@ -1146,11 +1146,11 @@ of <M>d</M> generators or inverses of generators of <A>G</A> which maps
 <A>n</A> to an integer with absolute value less than |<A>n</A>|, provided
 that the orbit of <A>n</A> contains such integer.
 
-&RCWA; permits drawing pictures of orbits of rcwa groups
+&RCWA; provides a function to draw pictures of orbits of rcwa groups
 on&nbsp;<M>&ZZ;^2</M>. The pictures are written to files in bitmap-
 (bmp-) format. The author has successfully tested this feature both under
-Linux and under Windows, and the produced pictures can be processed further
-with many common graphics programs:
+Linux and under Windows, and the generated pictures can be processed
+further with many common graphics programs:
 
 <ManSection>
   <Func Name="DrawOrbitPicture"
@@ -1163,15 +1163,15 @@ with many common graphics programs:
     The argument <A>p0</A> is either one point or a list of points.
     The argument <A>bound</A> denotes the bound to which the ball about
     <A>p0</A> is to be computed, in terms of absolute values of coordinates.
-    The size of the produced picture is <A>h</A>&nbsp;x&nbsp;<A>w</A> pixels.
+    The size of the generated picture is <A>h</A>&nbsp;x&nbsp;<A>w</A> pixels.
     The argument <A>colored</A> is a boolean which indicates whether a 24-bit
-    True-Color picture or a monochrome picture should be drawn.
+    true color picture or a monochrome picture should be generated.
     In the former case, <A>palette</A> must be a list of triples of integers
-    in the range <M>0, \dots, 255</M>, denoting the RGB values of colors to
-    be used. In the latter case, <A>palette</A> is not used, and any value
+    in the range <M>0, \dots, 255</M>, denoting the RGB values of the colors
+    to be used. In the latter case, <A>palette</A> is not used, and any value
     can be passed. The picture is written in bitmap- (bmp-) format to a file
     named <A>filename</A>. This is done using the utility function
-    <Ref Func="SaveAsBitmapPicture" Label="picture, filename"/>.
+    <C>SaveAsBitmapPicture</C> from &ResClasses;.
 <Log>
 <![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),

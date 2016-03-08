@@ -1,15 +1,9 @@
 #############################################################################
 ##
-#W  frdepend.gi                GAP4 Package `RCWA'                Stefan Kohl
+#W  perlist.gi                GAP4 Package `RCWA'                 Stefan Kohl
 ##
-##  This file contains code which depends on the FR package.
-##  Therefore it is read only when FR is available.
-##
-#############################################################################
-
-#############################################################################
-##
-#S  Methods dealing with periodic lists. ////////////////////////////////////
+##  This file contains code which deals with periodic lists.
+##  Periodic lists are implemented in the FR package.
 ##
 #############################################################################
 
@@ -216,4 +210,4 @@ InstallOtherMethod( \/,"for periodic list and constant (RCWA)", ReturnTrue,
 
 #############################################################################
 ##
-#E  frdepend.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  perlist.gi . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

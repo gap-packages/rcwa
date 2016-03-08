@@ -48,22 +48,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Straightforward</Q>. --
-    The taken time is essentially proportional to the size of the
-    resulting list.
-  </Item>
-
-  <Mark>
-    <C>AssignGlobals(<A>record</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q>.
-  </Item>
-
-  <Mark>
     <C>Ball(<A>G</A>,<A>g</A>,<A>r</A>)</C>
   </Mark>
   <Item>
@@ -241,13 +225,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q>.
-  </Item>
-
-  <Mark>
     <C>EpimorphismFromFpGroup(<A>G</A>,<A>r</A>)</C>
   </Mark>
   <Item>
@@ -255,14 +232,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     radius&nbsp;<A>r</A> about&nbsp;1 in&nbsp;<A>G</A>,
     and uses the corresponding relations if they affect
     the abelian invariants of <A>G</A>, <A>G'</A>, <A>G''</A>, etc..
-  </Item>
-
-  <Mark>
-    <C>EquivalenceClasses(<A>list</A>,<A>relation</A>)</C>, &nbsp;
-    <C>EquivalenceClasses(<A>list</A>,<A>classinvariant</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -279,13 +248,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     the assumption that any finitely generated wild rcwa group has a wild
     element. It looks likely that this holds, but currently the author does
     not know a proof.
-  </Item>
-
-  <Mark>
-    <C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -342,13 +304,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
 
   <Mark>
     <C>FloatQuotientsList(<A>l</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q>.
-  </Item>
-
-  <Mark>
-    <C>GeneratorsAndInverses(<A>G</A>)</C>
   </Mark>
   <Item>
     <Q>Trivial</Q>.
@@ -968,13 +923,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>LaTeXStringFactorsInt(<A>n</A>)</C>
-  </Mark>
-  <Item>
-    Integer factorization and straightforward string operations.
-  </Item>
-
-  <Mark>
     <C>LaTeXStringRcwaMapping(<A>f</A>)</C>, &nbsp;
     <C>LaTeXAndXDVI(<A>f</A>)</C>
   </Mark>
@@ -990,20 +938,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     Computes trajectories with starting values from a given interval, until
     a cycle is reached. Aborts if the trajectory exceeds the prescribed
     bound. Form the union of the detected cycles.
-  </Item>
-
-  <Mark>
-    <C>ListOfPowers(<A>g</A>,<A>n</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Trivial</Q> -- but uses only <M>n-1</M> multiplications.
-  </Item>
-
-  <Mark>
-    <C>LoadBitmapPicture(<A>filename</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Straightforward</Q>, interprets the format of bitmap picture files.
   </Item>
 
   <Mark>
@@ -1490,14 +1424,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Mark>
   <Item>
     <Q>Trivial</Q> -- only I/O operations.
-  </Item>
-
-  <Mark>
-    <C>SaveAsBitmapPicture(<A>picture</A>,<A>filename</A>)</C>
-  </Mark>
-  <Item>
-    <Q>Straightforward</Q> -- only needs to know how to produce
-    a bitmap picture file.
   </Item>
 
   <Mark>
