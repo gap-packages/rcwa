@@ -1994,7 +1994,7 @@ InstallMethod( IsomorphismRcwaGroup,
       gensH := List(gensG,g->SemilocalizedRcwaMapping(g,pi));
       if not IsGeneratorsOfMagmaWithInverses(gensH) then TryNextMethod(); fi;
       H     := Group(gensH);
-      phi   := EpimorphismByGeneratorsNC(G,H);
+      phi   := GroupHomomorphismByImagesNC(G,H);
       SetIsBijective(phi,true);
       return phi;
     fi;
@@ -2195,7 +2195,7 @@ InstallMethod( IsomorphismRcwaGroup,
     if DimensionOfMatrixGroup(gl) <> 2 then TryNextMethod(); fi;
 
     img := Group(List(GeneratorsOfGroup(gl),gen->ClassRotation(cl,gen)));
-    phi := EpimorphismByGeneratorsNC(gl,img);
+    phi := GroupHomomorphismByImagesNC(gl,img);
 
     SetIsBijective(phi,true);
     SetIsNaturalRcwaRepresentationOfGLOrSL(phi,true);
@@ -2219,7 +2219,7 @@ InstallMethod( IsomorphismRcwaGroup,
     if DimensionOfMatrixGroup(sl) <> 2 then TryNextMethod(); fi;
 
     img := Group(List(GeneratorsOfGroup(sl),gen->ClassRotation(cl,gen)));
-    phi := EpimorphismByGeneratorsNC(sl,img);
+    phi := GroupHomomorphismByImagesNC(sl,img);
 
     SetIsBijective(phi,true);
     SetIsNaturalRcwaRepresentationOfGLOrSL(phi,true);
@@ -2288,7 +2288,7 @@ InstallMethod( IsomorphismRcwaGroup,
     H    := GroupWithGenerators(Hgens);
     SetIsTame(H,true);
     SetRespectedPartition(H,P);
-    phi2 := EpimorphismByGeneratorsNC(Gperm,H);
+    phi2 := GroupHomomorphismByImagesNC(Gperm,H);
     phi := Immutable(CompositionMapping(phi2,phi1));
     SetIsInjective(phi,true); SetIsSurjective(phi,true);
     if HasSize(G) then SetSize(Image(phi),Size(G)); fi;
@@ -2339,7 +2339,7 @@ InstallMethod( IsomorphismRcwaGroup,
     image := Group(gamma);
     SetSize(image,infinity); SetIsTame(image,false);
     SetRankOfFreeGroup(image,rank);
-    phi := EpimorphismByGeneratorsNC(F,image);
+    phi := GroupHomomorphismByImagesNC(F,image);
     SetIsBijective(phi,true);
     return phi;
   end );
@@ -2402,7 +2402,7 @@ InstallMethod( IsomorphismRcwaGroup,
     img := Group(gens);
     SetSize(img,infinity); SetIsTame(img,false);
     SetFreeProductInfo(img,info);
-    phi := EpimorphismByGeneratorsNC(F,img);
+    phi := GroupHomomorphismByImagesNC(F,img);
     SetIsBijective(phi,true);
     return phi;
   end );
@@ -2430,7 +2430,7 @@ InstallMethod( IsomorphismRcwaGroup,
     img  := Group(gens);
     SetIsTame(img,true); SetSize(img,infinity);
     SetFreeProductInfo(img,info);
-    phi := EpimorphismByGeneratorsNC(F,img);
+    phi := GroupHomomorphismByImagesNC(F,img);
     SetIsBijective(phi,true);
     return phi;
   end );
@@ -3013,7 +3013,7 @@ InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
     gens   := GeneratorsOfGroup(G);
     orbs   := List(OrbitsModulo(G,m),orb->ResidueClassUnion(R,m,orb));
     groups := List(orbs,orb->Group(List(gens,gen->RestrictedPerm(gen,orb))));
-    return List(groups,grp->EpimorphismByGeneratorsNC(G,grp));
+    return List(groups,grp->GroupHomomorphismByImagesNC(G,grp));
   end );
 
 #############################################################################
@@ -3557,7 +3557,7 @@ InstallMethod( KernelOfActionOnRespectedPartition,
     SetRankOfKernelOfActionOnRespectedPartition(K,rank);
     SetKernelOfActionOnRespectedPartition(K,K);
     if   not IsTrivial(K)
-    then SetIsomorphismPcpGroup(K,EpimorphismByGeneratorsNC(K,KPoly));
+    then SetIsomorphismPcpGroup(K,GroupHomomorphismByImagesNC(K,KPoly));
     else SetIsomorphismPcpGroup(K,GroupHomomorphismByImages(K,KPoly,
                                   [One(K)],[One(KPoly)])); fi;
     return K;
@@ -3723,7 +3723,7 @@ InstallMethod( IsomorphismPermGroup,
     if   IsClassWiseOrderPreserving(G)
     then H := ActionOnRespectedPartition(G);
     else H := Action(G,Flat(List(P,cl->SplittedClass(cl,3)))); fi;
-    phi := Immutable(EpimorphismByGeneratorsNC(G,H));
+    phi := Immutable(GroupHomomorphismByImagesNC(G,H));
     if   not HasParent(G)
     then SetNiceMonomorphism(G,phi); SetNiceObject(G,H); fi;
     return phi;
@@ -4395,7 +4395,7 @@ BindGlobal( "ActionHomomorphism",
     G := arg[1]; S := arg[2];
     imgs := List(GeneratorsOfGroup(G),g->RestrictedPerm(g,S));
     H := GroupWithGenerators(imgs);
-    phi := EpimorphismByGeneratorsNC(G,H);
+    phi := GroupHomomorphismByImagesNC(G,H);
     return phi;
   end );
 
@@ -4906,7 +4906,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
       varnames := List("abcdefghijklmnopqrstuvwxyz",ch->[ch]);
       F := FreeGroup(varnames{[1..Length(gens)]});
     else F := FreeGroup(Length(gens)); fi;
-    phi := EpimorphismByGenerators(F,G);
+    phi := GroupHomomorphismByImagesNC(F,G);
     D := []; S := Support(G);
     R := AsUnionOfFewClasses(S);
     classes := []; words := []; imgs := []; smallpointbound := 0;
@@ -6049,7 +6049,7 @@ InstallMethod( EpimorphismFromFreeGroup,
       else Add(gensnames,Concatenation("f",String(i))); fi;
     od;
     F := FreeGroup(gensnames);
-    return EpimorphismByGenerators(F,G);
+    return GroupHomomorphismByImagesNC(F,G);
   end );
 
 #############################################################################
@@ -6369,7 +6369,7 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
     if IndexNC(G,N) = infinity then TryNextMethod(); fi;
     cosets := RightCosets(G,N);
     img    := Action(G,cosets,OnRight);
-    return EpimorphismByGeneratorsNC(G,img);
+    return GroupHomomorphismByImagesNC(G,img);
   end );
 
 #############################################################################
@@ -6486,7 +6486,7 @@ InstallMethod( EpimorphismFromFpGroup,
     fi;
 
     Fp     := F/rels;
-    phiFp  := EpimorphismByGeneratorsNC(Fp,G);
+    phiFp  := GroupHomomorphismByImagesNC(Fp,G);
     phiFpS := InverseGeneralMapping(IsomorphismSimplifiedFpGroup(Fp));
 
     return CompositionMapping(phiFp,phiFpS);
@@ -6583,7 +6583,7 @@ InstallMethod( EpimorphismFromFpGroup,
     rels := Union(relsgenspows,
                   Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
     Q := F/rels;
-    phi := EpimorphismByGenerators(Q,G);
+    phi := GroupHomomorphismByImagesNC(Q,G);
     return phi;
   end );
 
