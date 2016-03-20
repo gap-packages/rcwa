@@ -3310,7 +3310,10 @@ InstallMethod( RespectedPartition,
       return Concatenation(B);
     end;
 
-    if ValueOption("classic") = true then TryNextMethod(); fi;
+    if   ValueOption("classic") = true
+      or ValueOption("classic_partition") = true
+    then TryNextMethod(); fi;
+
     orbitlengthbound := ValueOption("orbitlengthbound");
     if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
     modulusbound := ValueOption("modulusbound");
@@ -5717,7 +5720,10 @@ InstallMethod( ShortResidueClassOrbits,
       return Concatenation(B);
     end;
 
-    if ValueOption("classic") = true then TryNextMethod(); fi;
+    if   ValueOption("classic") = true
+      or ValueOption("classic_orbits") = true
+    then TryNextMethod(); fi;
+
     if IsTrivial(G) then return [ [ Integers ] ]; fi;
     G := SparseRep(G);
     gens := Set(GeneratorsAndInverses(G));

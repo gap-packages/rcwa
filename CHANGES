@@ -3,6 +3,12 @@
                        ===================================
 
 
+Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
+
+ - A new method for computing the order of an element of CT(Z) has been added.
+   Its use can be triggered by setting the option "new_order" when calling the
+   operation `Order'.
+
 Changes between RCWA 4.3.0 and RCWA 4.3.1 (March 9, 2016):
 
  - Minor adjustments.

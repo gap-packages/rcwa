@@ -7933,6 +7933,62 @@ InstallMethod( Order,
 
 #############################################################################
 ##
+#M  Order( <g> ) . . . . . . . . . . . . . . . . . . .  for elements of CT(Z)
+##
+InstallMethod( Order,
+               "for elements of CT(Z) (RCWA)", true, [ IsRcwaMappingOfZ ], 5,
+
+  function ( g )
+
+    local  cycs, density, lastdensity, pow, partsbound, modbound, lngbound, n;
+
+    if   not IsRcwaMappingOfZ(g) or not IsBijective(g)
+      or not IsSignPreserving(g) or ValueOption("new_order") <> true
+    then TryNextMethod(); fi;
+
+    if IsOne(g) then return 1; fi;
+    if IsIntegral(g) then
+      SetIsTame(g,true);
+      return Lcm(List(Cycles(g,[0..Mod(g)-1]),Length));
+    fi;
+    if Loops(g) <> [] then
+      SetIsTame(g,false); return infinity;
+    fi;
+
+    if not IsRcwaMappingInSparseRep(g) then g := SparseRep(g); fi;
+
+    n := 1; pow := g; lastdensity := 0;
+    partsbound := 16; modbound := 32; lngbound := 16;
+    repeat
+      n := n + 1;
+      pow := pow * g;
+      if IsOne(pow) then SetIsTame(g,true); return n; fi;
+      if Loops(pow) <> [] then SetIsTame(g,false); return infinity; fi;
+      if Length(Coefficients(pow)) > partsbound
+        or n mod (RootInt(Mod(g),2) + 5) = 0
+      then
+        cycs := ShortResidueClassCycles(g,modbound,lngbound);
+        density := Sum(Flat(cycs),Density);
+        if density = 1 then
+          SetIsTame(g,true);
+          return Lcm(List(cycs,Length));
+        fi;
+        if density > lastdensity then
+          partsbound := partsbound * 2;
+          modbound := modbound * Maximum(PrimeSet(g));
+        else
+          partsbound := 4 * Length(Coefficients(pow));
+          modbound := modbound * Minimum(PrimeSet(g));
+        fi;
+        lngbound := lngbound * 2;
+        lastdensity := density;
+      fi;
+    until false;
+
+  end );
+
+#############################################################################
+##
 #S  Transition matrices and transition graphs. //////////////////////////////
 ##
 #############################################################################
