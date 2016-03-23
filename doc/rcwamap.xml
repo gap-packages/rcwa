@@ -1269,22 +1269,39 @@ factoring rcwa permutations of&nbsp;&ZZ; into class shifts,
 class reflections and class transpositions:
 
 <ManSection>
-  <Func Name="PrimeSwitch" Arg="p" Label="p"/>
-  <Func Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
+  <Meth Name="PrimeSwitch" Arg="p" Label="p"/>
+  <Meth Name="PrimeSwitch" Arg="p, k" Label="p, k"/>
+  <Meth Name="PrimeSwitch" Arg="p, r, m" Label="p, r, m"/>
+  <Meth Name="PrimeSwitch" Arg="p, cl" Label="p, cl"/>
   <Returns>
-    in the one-argument form the <E>prime switch</E>
+    in the first form the <E>prime switch</E>
     <M>\sigma_p := \tau_{0(8),1(2p)} \cdot \tau_{4(8),-1(2p)} \cdot
     \tau_{0(4),1(2p)} \cdot \tau_{2(4),-1(2p)} \cdot \tau_{2(2p),1(4p)}
-    \cdot \tau_{4(2p),2p+1(4p)}</M>, and in the two-argument form
-    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>.
+    \cdot \tau_{4(2p),2p+1(4p)}</M>, in the second form
+    the restriction of <M>\sigma_p</M> by <M>n \mapsto kn</M>,
+    and in the third and fourth form the <E>prime switch</E>
+    <M>\sigma_{p,r(m)} := \tau_{r(m),r_1(\tilde{m})} \cdot
+    \tau_{\overline{r}(m),r_2(\tilde{m})} \cdot
+    \tau_{r(m/2),r_2(\tilde{m})}</M>.
+    In the latter case, <A>cl</A> is the residue class
+    <M>r(m)</M>, the residues <M>r_1</M> and <M>r_2</M>
+    are the smallest and the second-smallest nonnegative integer
+    not congruent to <M>r</M> modulo <M>m/2</M> and not congruent to
+    <M>r</M> modulo 2, and <M>\overline{r}</M> is <M>r+m/2</M> if
+    <M>r</M> is less than <M>m/2</M>, and <M>r-m/2</M> otherwise.
   </Returns>
   <Description>
     For an odd prime <M>p</M>, the prime switch <M>\sigma_p</M> is
     an rcwa permutation of&nbsp;&ZZ; with modulus&nbsp;<M>4p</M>,
     multiplier&nbsp;<M>p</M> and divisor&nbsp;2.
-    The key mathematical property of a prime switch is that it is a product
-    of class transpositions, but that its multiplier and its divisor are
-    coprime anyway. Prime switches can be distinguished from other
+    The prime switch <M>\sigma_{p,r(m)}</M> has
+    multiplier&nbsp;<M>2p</M> and divisor&nbsp;2, and the class where the
+    multiplication by <M>p</M> occurs is just <M>r(m)</M>
+    The key mathematical property of a prime switch is that it is
+    a product of class transpositions, but one prime divides only its
+    multiplier and not its divisor. <P/>
+
+    Prime switches can be distinguished from other
     rcwa mappings by their &GAP; property <C>IsPrimeSwitch</C>.
     <Index Key="IsPrimeSwitch" Subkey="for an rcwa mapping">
        <C>IsPrimeSwitch</C>
@@ -1320,6 +1337,24 @@ Wild rcwa permutation of Z with modulus 12
 gap> Factorization(PrimeSwitch(3));
 [ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), 
   ( 2(6), 1(12) ), ( 4(6), 7(12) ) ]
+gap> Display(PrimeSwitch(5,3,4));
+
+Wild rcwa permutation of Z with modulus 20
+
+        /
+        | (n+1)/2   if n in 1(4)
+        | (5n-15)/2 if n in 3(4)
+ n |-> <  2n+12     if n in 0(10)
+        | 2n-2      if n in 2(10)
+        | n         if n in 4(10) U 6(10) U 8(10)
+        \
+
+gap> Multpk(PrimeSwitch(5,3,4),5,1);
+3(4)
+gap> PrimeSwitch(5,3,4) = PrimeSwitch(5,ResidueClass(3,4));
+true
+gap> Factorization(PrimeSwitch(5,3,4));                    
+[ ( 3(4), 0(10) ), ( 1(4), 2(10) ), ( 1(2), 2(10) ) ]
 ]]>
 </Example>
   </Description>

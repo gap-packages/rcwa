@@ -9,6 +9,10 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
    Its use can be triggered by setting the option "new_order" when calling the
    operation `Order'.
 
+ - The function `PrimeSwitch' has been turned into an operation, and new
+   methods PrimeSwitch(p,r,m) and PrimeSwitch(p,cl) to construct "residue
+   class specific" prime switches have been added.
+
 Changes between RCWA 4.3.0 and RCWA 4.3.1 (March 9, 2016):
 
  - Minor adjustments.

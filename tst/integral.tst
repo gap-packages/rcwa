@@ -2738,6 +2738,122 @@ gap> ClassTransposition(0,2,1,2) in G;
 false
 gap> ClassTransposition(1,3,2,3) in G;
 true
+gap> g := PrimeSwitch(3,3,4);
+PrimeSwitch(3,3,4)
+gap> Display(g);
+
+Wild rcwa permutation of Z with modulus 12
+
+        /
+        | (n+1)/2  if n in 1(4)
+        | (3n-9)/2 if n in 3(4)
+ n |-> <  2n+8     if n in 0(6)
+        | 2n-2     if n in 2(6)
+        | n        if n in 4(6)
+        \
+
+gap> Mult(g);
+6
+gap> Div(g);
+2
+gap> Multpk(g,3,1);
+3(4)
+gap> Factorization(g);
+[ ( 3(4), 0(6) ), ( 1(4), 2(6) ), ( 1(2), 2(6) ) ]
+gap> g = Product(last);
+true
+gap> g := PrimeSwitch(5,1,6);
+PrimeSwitch(5,1,6)
+gap> Display(g);             
+
+Wild rcwa permutation of Z with modulus 30
+
+        /
+        | (5n-5)/2 if n in 1(6)
+        | (n-2)/2  if n in 4(6)
+ n |-> <  2n+2     if n in 0(15)
+        | 2n+13    if n in 2(15)
+        | n        otherwise
+        \
+
+gap> Multpk(g,5,1);
+1(6)
+gap> Multpk(g,5,-1);
+[  ]
+gap> Factorization(g);
+[ ( 1(6), 0(15) ), ( 4(6), 2(15) ), ( 1(3), 2(15) ) ]
+gap> g = Product(last);      
+true
+gap> g := PrimeSwitch(5,0,6);
+PrimeSwitch(5,0,6)
+gap> Display(g);                 
+
+Wild rcwa permutation of Z with modulus 30
+
+        /
+        | (5n+2)/2 if n in 0(6)
+        | (n-3)/2  if n in 3(6)
+ n |-> <  2n+3     if n in 1(15)
+        | 2n+10    if n in 5(15)
+        | n        otherwise
+        \
+
+gap> g := PrimeSwitch(5,5,6);
+PrimeSwitch(5,5,6)
+gap> g := PrimeSwitch(5,5,10);
+PrimeSwitch(5,5,10)
+gap> Display(g);
+
+Wild rcwa permutation of Z with modulus 50
+
+        /
+        | n/2   if n in 0(10)
+        | 5n-23 if n in 5(10)
+ n |-> <  2n+50 if n in 2(50)
+        | 2n-4  if n in 4(50)
+        | n     otherwise
+        \
+
+gap> Multpk(g,5,1); 
+5(10)
+gap> Div(g);
+2
+gap> Display(g^-1);
+
+Wild rcwa permutation of Z with modulus 100
+
+        /
+        | 2n       if n in 0(5)
+        | (n+23)/5 if n in 2(50)
+ n |-> <  (n+4)/2  if n in 4(100)
+        | (n-50)/2 if n in 54(100)
+        | n        otherwise
+        \
+
+gap> Factorization(g);
+[ ( 5(10), 2(50) ), ( 0(10), 4(50) ), ( 0(5), 4(50) ) ]
+gap> Factorization(g^-1);
+[ ( 0(5), 4(50) ), ( 0(10), 4(50) ), ( 5(10), 2(50) ) ]
+gap> Product(last) = g^-1;
+true
+gap> g := PrimeSwitch(5,17,10);
+PrimeSwitch(5,7,10)
+gap> g = PrimeSwitch(5,7,10);
+true
+gap> g := PrimeSwitch(5,3,4);
+PrimeSwitch(5,3,4)
+gap> Multpk(g,5,1);
+3(4)
+gap> IsPrimeSwitch(RcwaMapping(ShallowCopy(Coefficients(g))));
+true
+gap> IsPrimeSwitch(RcwaMapping(ShallowCopy(Coefficients(PrimeSwitch(3)))));
+true
+gap> IsPrimeSwitch(RcwaMapping(ShallowCopy(Coefficients(PrimeSwitch(3,2)))));
+true
+gap> IsPrimeSwitch(ClassShift(0,2));
+false
+gap> IsPrimeSwitch(ClassTransposition(0,2,1,2));
+false
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 

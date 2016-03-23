@@ -2694,25 +2694,35 @@ InstallGlobalFunction( NumberClassPairs,
 
 #############################################################################
 ##
-#F  PrimeSwitch( <p> ) . an rcwa mapping of Z with multiplier p and divisor 2
-#F  PrimeSwitch( <p>, <k> )
+#M  PrimeSwitch( <p> ) . . . . . . . . . . . . . . .  for an odd prime number
 ##
-InstallGlobalFunction( PrimeSwitch,
+InstallMethod( PrimeSwitch,
+               "for an odd prime number (RCWA)",  true, [ IsPosInt ], 0,
 
-  function ( arg )
+  function ( p )
+    if   p = 2 or not IsPrimeInt(p)
+    then Error("PrimeSwitch( <p> ): <p> must be an odd prime\n"); fi;
+    return PrimeSwitch(p,1);
+  end );
 
-    local  p, k, result, facts, kstr, latex;
+#############################################################################
+##
+#M  PrimeSwitch( <p>, <k> ) .  for an odd prime number and a positive integer
+##
+InstallMethod( PrimeSwitch,
+               "for an odd prime number and a positive integer (RCWA)", 
+               ReturnTrue, [ IsPosInt, IsPosInt ], 0,
 
-    if not Length(arg) in [1,2] then Error("usage: see ?PrimeSwitch\n"); fi;
-    p := arg[1]; if Length(arg) = 2 then k := arg[2]; else k := 1; fi;
-    if   not IsPosInt(p) or not IsPrimeInt(p) or not IsPosInt(k)
-    then Error("usage: see ?PrimeSwitch\n"); fi;
-    facts := [ ClassTransposition(k,2*k*p,0,8*k),
-               ClassTransposition(2*k*p-k,2*k*p,4*k,8*k),
-               ClassTransposition(0,4*k,k,2*k*p),
-               ClassTransposition(2*k,4*k,2*k*p-k,2*k*p),
-               ClassTransposition(2*k,2*k*p,k,4*k*p),
-               ClassTransposition(4*k,2*k*p,2*k*p+k,4*k*p) ];
+  function ( p, k )
+
+    local  result, facts, kstr, latex;
+
+    if   p = 2 or not IsPrimeInt(p)
+    then Error("PrimeSwitch( <p>, <k> ): <p> must be an odd prime\n"); fi;
+    facts := List([[k,2*k*p,0,8*k],[2*k*p-k,2*k*p,4*k,8*k],
+                   [0,4*k,k,2*k*p],[2*k,4*k,2*k*p-k,2*k*p],
+                   [2*k,2*k*p,k,4*k*p],[4*k,2*k*p,2*k*p+k,4*k*p]],
+                  ClassTransposition);
     result := Product(facts); SetIsPrimeSwitch(result,true);
     SetIsTame(result,false); SetOrder(result,infinity);
     SetBaseRoot(result,result); SetPowerOverBaseRoot(result,1);
@@ -2728,13 +2738,83 @@ InstallGlobalFunction( PrimeSwitch,
 
 #############################################################################
 ##
-#M  IsPrimeSwitch( <sigma> ) . . . . . . . . . . . . . for rcwa mappings of Z
+#M  PrimeSwitch( <p>, <r>, <m> ) .  for odd prime number, residue and modulus 
+##
+InstallMethod( PrimeSwitch,
+               "for an odd prime number, a residue and a modulus (RCWA)", 
+               ReturnTrue, [ IsPosInt, IsInt, IsPosInt ], 0,
+
+  function ( p, r, m )
+
+    local  result, facts, mp, r1, r2, rc, latex;
+
+    if p = 2 or not IsPrimeInt(p) then
+      Error("PrimeSwitch( <p>, <r>, <m> ): <p> must be an odd prime\n");
+    fi;
+    r := r mod m;
+    if m < 4 or m mod 2 = 1 then return fail; fi;
+
+    if m mod p <> 0 then mp := p*m/2; else mp := p*m; fi;
+    r1 := First([0..mp-1],
+                ri->(ri-r) mod (m/2) <> 0 and (ri-r) mod 2 <> 0);
+    r2 := First([r1+1..mp-1],
+                ri->(ri-r) mod (m/2) <> 0 and (ri-r) mod 2 <> 0);
+    if r < m/2 then rc := r+m/2; else rc := r-m/2; fi;
+
+    facts := List([[r,m,r1,mp],[rc,m,r2,mp],[r mod (m/2),m/2,r2,mp]],
+                  ClassTransposition);
+    result := Product(facts);
+
+    SetIsPrimeSwitch(result,true);
+    SetIsTame(result,false); SetOrder(result,infinity);
+    SetBaseRoot(result,result); SetPowerOverBaseRoot(result,1);
+    SetFactorizationIntoCSCRCT(result,facts);
+    SetFactorizationIntoCSCRCT(result^-1,Reversed(facts));
+    latex := ValueOption("LaTeXString");
+    if latex = fail then
+      SetLaTeXString(result,Concatenation("\\sigma_{",String(p),",",
+                                          String(r),",",String(m),"}"));
+    elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
+
+    return result;
+  end );
+
+#############################################################################
+##
+#M  PrimeSwitch( <p>, <cl> ) . .  for an odd prime number and a residue class
+##
+InstallMethod( PrimeSwitch,
+               "for an odd prime number and a residue class (RCWA)", 
+               ReturnTrue, [ IsPosInt, IsUnionOfResidueClassesOfZ ], 0,
+
+  function ( p, cl )
+    if   p = 2 or not IsPrimeInt(p)
+    then Error("PrimeSwitch( <p>, <cl> ): <p> must be an odd prime\n"); fi;
+    if not IsResidueClass(cl) then TryNextMethod(); fi;
+    return PrimeSwitch(p,Residue(cl),Mod(cl));
+  end );
+
+#############################################################################
+##
+#M  IsPrimeSwitch( <g> ) . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
 InstallMethod( IsPrimeSwitch,
                "for rcwa mappings of Z (RCWA)", 
                true, [ IsRcwaMappingOfZ ], 0,
-               sigma -> Multiplier(sigma) > 2 and IsPrime(Multiplier(sigma))
-                        and sigma = PrimeSwitch(Multiplier(sigma)) );
+
+  function ( g )
+
+    local  p, cl, k;
+
+    if not IsBijective(g) or not IsSignPreserving(g) then return false; fi;
+    p := Maximum(Factors(Mult(g)));
+    if Div(g) <> 2 or not Mult(g) in [p,2*p] then return false; fi;
+    cl := Multpk(g,p,1);
+    if not IsResidueClass(cl) then return false; fi;
+    k := Mod(cl)/4;
+    if IsInt(k) and g = PrimeSwitch(p,k) then return true; fi;
+    return g = PrimeSwitch(p,cl);
+  end );
 
 #############################################################################
 ##
@@ -2748,11 +2828,21 @@ InstallMethod( String, "for prime switches (RCWA)", true,
 
   function ( sigma_p )
 
-    local  p, k, kstr;
+    local  p, k, kstr, cl;
 
-    p := Multiplier(sigma_p); k := 1/(4*Density(Multpk(sigma_p,p,1)));
-    if k = 1 then kstr := ""; else kstr := Concatenation(",",String(k)); fi;
-    return Concatenation("PrimeSwitch(",String(p),kstr,")");
+    p := Maximum(Factors(Multiplier(sigma_p)));
+    k := 1/(4*Density(Multpk(sigma_p,p,1)));
+    if IsInt(k) and sigma_p = PrimeSwitch(p,k) then
+      if k = 1 then kstr := "";
+               else kstr := Concatenation(",",String(k)); fi;
+      return Concatenation("PrimeSwitch(",String(p),kstr,")");
+    else
+      cl := Multpk(sigma_p,p,1);
+      if sigma_p = PrimeSwitch(p,cl) then
+        return Concatenation("PrimeSwitch(",String(p),",",
+                             String(Residue(cl)),",",String(Mod(cl)),")");
+      else return fail; fi;
+    fi;
   end );
 
 InstallMethod( ViewString, "for prime switches (RCWA)", true,
@@ -2779,7 +2869,7 @@ InstallMethod( ViewObj, "for prime switches (RCWA)", true,
 
 #############################################################################
 ##
-#F  mKnot( <m> ) . . . . . . . .  an rcwa mapping of Timothy P. Keller's type
+#F  mKnot( <m> ) . . . . . .  an rcwa permutation of Timothy P. Keller's type
 ##
 InstallGlobalFunction ( mKnot,
 
