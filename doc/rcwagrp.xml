@@ -917,6 +917,17 @@ true
 ]]>
 </Example>
 
+<Alt Only="LaTeX">
+<Index Key="IsTransitiveOnNonnegativeIntegersInSupport"
+       Subkey="for an rcwa group over Z">
+  <C>IsTransitiveOnNonnegativeIntegersIn- Support</C>
+</Index>
+<Index Key="TryIsTransitiveOnNonnegativeIntegersInSupport"
+       Subkey="for an rcwa group over Z and a search limit">
+  <C>TryIsTransitiveOnNonnegativeIntegers- InSupport</C>
+</Index>
+</Alt>
+<Alt Not="LaTeX">
 <Index Key="IsTransitiveOnNonnegativeIntegersInSupport"
        Subkey="for an rcwa group over Z">
   <C>IsTransitiveOnNonnegativeIntegersInSupport</C>
@@ -925,6 +936,7 @@ true
        Subkey="for an rcwa group over Z and a search limit">
   <C>TryIsTransitiveOnNonnegativeIntegersInSupport</C>
 </Index>
+</Alt>
 <Index Key="TransitivityCertificate"
        Subkey="for an rcwa group over Z and a search limit">
   <C>TransitivityCertificate</C>

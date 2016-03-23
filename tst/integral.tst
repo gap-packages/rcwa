@@ -2844,6 +2844,14 @@ gap> g := PrimeSwitch(5,3,4);
 PrimeSwitch(5,3,4)
 gap> Multpk(g,5,1);
 3(4)
+gap> String(g);
+"PrimeSwitch(5,3,4)"
+gap> ViewString(g);
+"PrimeSwitch(5,3,4)"
+gap> PrintString(g);
+"PrimeSwitch(5,3,4)"
+gap> LaTeXString(g);
+"\\sigma_{5,3(4)}"
 gap> IsPrimeSwitch(RcwaMapping(ShallowCopy(Coefficients(g))));
 true
 gap> IsPrimeSwitch(RcwaMapping(ShallowCopy(Coefficients(PrimeSwitch(3)))));

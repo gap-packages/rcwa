@@ -2773,7 +2773,7 @@ InstallMethod( PrimeSwitch,
     latex := ValueOption("LaTeXString");
     if latex = fail then
       SetLaTeXString(result,Concatenation("\\sigma_{",String(p),",",
-                                          String(r),",",String(m),"}"));
+                                          String(r),"(",String(m),")}"));
     elif not IsEmpty(latex) then SetLaTeXString(result,latex); fi;
 
     return result;

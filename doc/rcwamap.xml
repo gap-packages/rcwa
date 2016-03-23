@@ -420,9 +420,9 @@ Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
   <C>IsGeneralizedClassTransposition</C>
 </Index>
 
-There are properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
+The properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
 <C>IsClassRotation</C>, <C>IsClassTransposition</C> and
-<C>IsGeneralizedClassTransposition</C>, which indicate whether a given
+<C>IsGeneralizedClassTransposition</C> indicate whether a given
 rcwa mapping belongs to the corresponding series. <P/>
 
 In the sequel we describe the general-purpose constructor for rcwa
