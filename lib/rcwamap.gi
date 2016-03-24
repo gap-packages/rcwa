@@ -3460,7 +3460,7 @@ InstallMethod( Display,
         fi;
 
         P := ShallowCopy(LargestSourcesOfAffineMappings(f));
-        D := List(P,cl->1/Density(cl));
+        D := List(P,src->[1/Density(src),src]);
         #i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
         if   IsRing(R) then idcoeffs := [1,0,1] * One(R);
         elif IsZxZ(R)  then idcoeffs := [[[1,0],[0,1]],[0,0],1]; fi;
@@ -3473,7 +3473,7 @@ InstallMethod( Display,
                      j -> c[PositionProperty(c,d->d[1] in P[j])]{[3..5]}
                         = idcoeffs);
         fi;
-        if i <> fail then D[i] := infinity; fi; # constant mappings -> end
+        if i <> fail then D[i][1] := infinity; fi; # constant mappings -> end
 
         SortParallel(D,P);
 
