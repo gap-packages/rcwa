@@ -2748,20 +2748,15 @@ InstallMethod( PrimeSwitch,
 
     local  result, facts, mp, r1, r2, rc, latex;
 
-    if p = 2 or not IsPrimeInt(p) then
-      Error("PrimeSwitch( <p>, <r>, <m> ): <p> must be an odd prime\n");
+    if p = 2 or not IsPrimeInt(p) or m mod 4 <> 0 then
+      Error("PrimeSwitch( <p>, <r>, <m> ): <p> must be an odd prime ",
+            "and <m> must be\na multiple of 4\n");
+      return fail;
     fi;
-    r := r mod m;
-    if m < 4 or m mod 2 = 1 then return fail; fi;
 
-    if m mod p <> 0 then mp := p*m/2; else mp := p*m; fi;
-    r1 := First([0..mp-1],
-                ri->(ri-r) mod (m/2) <> 0 and (ri-r) mod 2 <> 0);
-    r2 := First([r1+1..mp-1],
-                ri->(ri-r) mod (m/2) <> 0 and (ri-r) mod 2 <> 0);
-    if r < m/2 then rc := r+m/2; else rc := r-m/2; fi;
-
-    facts := List([[r,m,r1,mp],[rc,m,r2,mp],[r mod (m/2),m/2,r2,mp]],
+    r := r mod m; r1 := 1 - r mod 2;
+    if r < m/2 then r2 := r+m/2; else r2 := r-m/2; fi;
+    facts := List([[r1,m/2,r2,m],[r2,m,r1,p*m/2],[r mod (m/2),m/2,r1,p*m/2]],
                   ClassTransposition);
     result := Product(facts);
 
@@ -2808,7 +2803,7 @@ InstallMethod( IsPrimeSwitch,
 
     if not IsBijective(g) or not IsSignPreserving(g) then return false; fi;
     p := Maximum(Factors(Mult(g)));
-    if Div(g) <> 2 or not Mult(g) in [p,2*p] then return false; fi;
+    if Mult(g) <> p or Div(g) <> 2 then return false; fi;
     cl := Multpk(g,p,1);
     if not IsResidueClass(cl) then return false; fi;
     k := Mod(cl)/4;

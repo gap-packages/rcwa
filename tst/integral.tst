@@ -2745,100 +2745,100 @@ gap> Display(g);
 Wild rcwa permutation of Z with modulus 12
 
         /
-        | (n+1)/2  if n in 1(4)
-        | (3n-9)/2 if n in 3(4)
- n |-> <  2n+8     if n in 0(6)
-        | 2n-2     if n in 2(6)
-        | n        if n in 4(6)
+        | n+1     if n in 0(2)
+        | 3n-3    if n in 3(4)
+ n |-> <  (n-1)/2 if n in 5(12) U 9(12)
+        | n-1     if n in 1(12)
+        |
         \
 
 gap> Mult(g);
-6
+3
 gap> Div(g);
 2
 gap> Multpk(g,3,1);
 3(4)
 gap> Factorization(g);
-[ ( 3(4), 0(6) ), ( 1(4), 2(6) ), ( 1(2), 2(6) ) ]
+[ ( 0(2), 1(4) ), ( 1(4), 0(6) ), ( 1(2), 0(6) ) ]
 gap> g = Product(last);
 true
-gap> g := PrimeSwitch(5,1,6);
-PrimeSwitch(5,1,6)
+gap> g := PrimeSwitch(5,1,8);
+PrimeSwitch(5,1,8)
 gap> Display(g);             
 
-Wild rcwa permutation of Z with modulus 30
+Wild rcwa permutation of Z with modulus 40
 
         /
-        | (5n-5)/2 if n in 1(6)
-        | (n-2)/2  if n in 4(6)
- n |-> <  2n+2     if n in 0(15)
-        | 2n+13    if n in 2(15)
-        | n        otherwise
+        | n+1     if n in 0(4)
+        | 5n-5    if n in 1(8)
+ n |-> <  (n-5)/2 if n in 5(8) \ 5(40)
+        | n+15    if n in 5(40)
+        | n       if n in 2(4) U 3(4)
         \
 
 gap> Multpk(g,5,1);
-1(6)
+1(8)
 gap> Multpk(g,5,-1);
 [  ]
 gap> Factorization(g);
-[ ( 1(6), 0(15) ), ( 4(6), 2(15) ), ( 1(3), 2(15) ) ]
+[ ( 0(4), 5(8) ), ( 5(8), 0(20) ), ( 1(4), 0(20) ) ]
 gap> g = Product(last);      
 true
-gap> g := PrimeSwitch(5,0,6);
-PrimeSwitch(5,0,6)
+gap> g := PrimeSwitch(5,0,8);
+PrimeSwitch(5,0,8)
 gap> Display(g);                 
 
-Wild rcwa permutation of Z with modulus 30
+Wild rcwa permutation of Z with modulus 40
 
         /
-        | (5n+2)/2 if n in 0(6)
-        | (n-3)/2  if n in 3(6)
- n |-> <  2n+3     if n in 1(15)
-        | 2n+10    if n in 5(15)
-        | n        otherwise
+        | n-1     if n in 1(4)
+        | 5n+1    if n in 0(8)
+ n |-> <  (n-2)/2 if n in 4(8) \ 4(40)
+        | n+17    if n in 4(40)
+        | n       if n in 2(4) U 3(4)
         \
 
-gap> g := PrimeSwitch(5,5,6);
-PrimeSwitch(5,5,6)
-gap> g := PrimeSwitch(5,5,10);
-PrimeSwitch(5,5,10)
+gap> g := PrimeSwitch(5,5,8);
+PrimeSwitch(5,5,8)
+gap> g := PrimeSwitch(5,5,12);
+PrimeSwitch(5,5,12)
 gap> Display(g);
 
-Wild rcwa permutation of Z with modulus 50
+Wild rcwa permutation of Z with modulus 60
 
         /
-        | n/2   if n in 0(10)
-        | 5n-23 if n in 5(10)
- n |-> <  2n+50 if n in 2(50)
-        | 2n-4  if n in 4(50)
-        | n     otherwise
+        | n+5      if n in 0(6)
+        | 5n-25    if n in 5(12)
+ n |-> <  (n-11)/2 if n in 11(12) \ 11(60)
+        | n+19     if n in 11(60)
+        | n        if n in 1(3) U 2(6) U 3(6)
         \
 
 gap> Multpk(g,5,1); 
-5(10)
+5(12)
 gap> Div(g);
 2
 gap> Display(g^-1);
 
-Wild rcwa permutation of Z with modulus 100
+Wild rcwa permutation of Z with modulus 60
 
         /
-        | 2n       if n in 0(5)
-        | (n+23)/5 if n in 2(50)
- n |-> <  (n+4)/2  if n in 4(100)
-        | (n-50)/2 if n in 54(100)
-        | n        otherwise
+        | n-5      if n in 5(6)
+        | 2n+11    if n in 0(6) \ 0(30)
+ n |-> <  (n+25)/5 if n in 0(60)
+        | n-19     if n in 30(60)
+        | n        if n in 1(3) U 2(6) U 3(6)
         \
 
 gap> Factorization(g);
-[ ( 5(10), 2(50) ), ( 0(10), 4(50) ), ( 0(5), 4(50) ) ]
+[ ( 0(6), 11(12) ), ( 11(12), 0(30) ), ( 5(6), 0(30) ) ]
 gap> Factorization(g^-1);
-[ ( 0(5), 4(50) ), ( 0(10), 4(50) ), ( 5(10), 2(50) ) ]
+[ ( 5(6), 0(30) ), ( 11(12), 0(30) ), ( 0(6), 11(12) ) ]
 gap> Product(last) = g^-1;
 true
-gap> g := PrimeSwitch(5,17,10);
-PrimeSwitch(5,7,10)
-gap> g = PrimeSwitch(5,7,10);
+gap> g := PrimeSwitch(5,17,12);
+PrimeSwitch(5,5,12)
+gap> g = PrimeSwitch(5,5,12);
 true
 gap> g := PrimeSwitch(5,3,4);
 PrimeSwitch(5,3,4)
