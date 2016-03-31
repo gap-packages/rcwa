@@ -22,12 +22,12 @@ gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions(6);;
 gap> Set(RecNames(data));
 [ "3CTsGroupsWithGivenOrbit", "Id3CTsGroup", "ProbablyFixesDigitSumsModulo", 
   "ProbablyStabilizesDigitSumsModulo", "TriangleTypes", "abc_torsion", 
-  "chains", "conjugacyclasses", "cts", "cyclist", "degrees", "eqclsgt1", 
+  "chains", "conjugacyclasses", "cts", "cyclist", "degrees", 
   "equalityclasses", "finiteorbits", "freeproductcandidates", 
   "freeproductlikes", "groups", "grps", "intransitivemodulo", "mods", 
   "orbitgrowthtype", "orbitlengths", "partitionlengths", "permgroupgens", 
-  "respectedpartitions", "shortresidueclassorbitlengths", "sizes", 
-  "sizespos", "sizesset", "stabilize_digitsum_base2_mod2", 
+  "respectedpartitions", "samegroups", "shortresidueclassorbitlengths", 
+  "sizes", "sizespos", "sizesset", "stabilize_digitsum_base2_mod2", 
   "stabilize_digitsum_base2_mod3", "stabilize_digitsum_base3_mod2", 
   "subgroups", "supergroups", "trsstatus", "trsstatuspos", "trsstatusset" ]
 gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions(9);;

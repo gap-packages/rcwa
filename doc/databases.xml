@@ -45,24 +45,9 @@ gap> Set(RecNames(examples));
   "OddNumberOfGens_FiniteOrder", "Semilocals", 
   "SlowlyContractingMappings", "Syl3_S9", "SymmetrizingCollatzTree", 
   "TameGroupByCommsOfWildPerms", "Venturini", "ZxZ" ]
-gap> AssignGlobals(examples.ZxZ);
+gap> AssignGlobals(examples.CollatzMapping);
 The following global variables have been assigned:
-[ "R", "SigmaT", "SigmaTm", "Sigma_T", "T2", "a", "b", "commT_Tm", 
-  "hyperbolic", "reflection", "reflection1", "reflection2", "switch", 
-  "transvection", "twice", "twice1", "twice2" ]
-gap> a*b = Sigma_T;
-true
-gap> Display(Sigma_T);
-
-Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
-
-            /
-            | (2m+1,(3n+1)/2) if (m,n) in (0,1)+(1,0)Z+(0,2)Z
-            | (m,n/2)         if (m,n) in (0,0)+(1,0)Z+(0,6)Z U 
- (m,n) |-> <                              (0,2)+(1,0)Z+(0,6)Z
-            | (2m,n/2)        if (m,n) in (0,4)+(1,0)Z+(0,6)Z
-            |
-            \
+[ "T", "T5", "T5m", "T5p", "Tm", "Tp" ]
 ]]>
 </Example>
   </Description>
@@ -84,54 +69,225 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
     moduli <M>\leq 6</M>.
   </Returns>
   <Description>
-    The record presently has the components <C>grps</C>
-    (the list of the 52394 groups -- 21948 finite and 30446 infinite ones),
-    <C>sizes</C> (the list of group orders), <C>mods</C> (the list of
-    moduli of the groups), <C>trsstatus</C> (lists what is known about
-    whether the groups are transitive on the nonnegative integers in their
-    support), <C>cts</C> (the list of all 69 class transpositions which
-    interchange residue classes with moduli <M>\leq 6</M>), and possibly
-    further which are not described here.
-    For all integers <C>i</C> from 1 to 52394 it holds that
-    <C>Size(grps[i]) = sizes[i]</C> and that
-    <C>Modulus(grps[i]) = mods[i]</C>. Similarly, <C>trsstatus[i]</C>
-    describes what is known about whether the group <C>grps[i]</C> acts
-    transitively on the set of nonnegative integers in its support --
-    for many of the groups this is a description of how the computation
-    failed. <P/>
+    The record has at least the following components (the index <C>i</C>
+    is always an integer in the range <C>[1..52394]</C>, and the term
+    <Q>indices</Q> always refers to list indices in that range):
+    <List>
+
+      <Mark><C>cts</C></Mark>
+      <Item>
+        The list of all 69 class transpositions which interchange residue
+        classes with moduli <M>\leq 6</M>.
+      </Item>
+
+      <Mark><C>grps</C></Mark>
+      <Item>
+        The list of the 52394 groups -- 21948 finite and 30446 infinite ones.
+      </Item>
+
+      <Mark><C>sizes</C></Mark>
+      <Item>
+        The list of group orders --
+        it is <C>Size(grps[i]) = sizes[i]</C>.
+      </Item>
+
+      <Mark><C>mods</C></Mark>
+      <Item>
+        The list of moduli of the groups --
+        it is <C>Mod(grps[i]) = mods[i]</C>.
+      </Item>
+
+      <Mark><C>equalityclasses</C></Mark>
+      <Item>
+        A list of lists of indices <C>i</C> of groups which are known
+        to be equal, i.e. if <C>i</C> and <C>j</C> lie in the same list,
+        then <C>grps[i] = grps[j]</C>.
+      </Item>
+
+      <Mark><C>samegroups</C></Mark>
+      <Item>
+        A list of lists, where <C>samegroups[i]</C> is a list of indices
+        of groups which are known to be equal to <C>grps[i]</C>.
+      </Item>
+
+      <Mark><C>conjugacyclasses</C></Mark>
+      <Item>
+        A list of lists of indices of groups which are known to be conjugate
+        in RCWA(&ZZ;).
+      </Item>
+
+      <Mark><C>subgroups</C></Mark>
+      <Item>
+        A list of lists, where <C>subgroups[i]</C> is a list of indices
+        of groups which are known to be proper subgroups of <C>grps[i]</C>.
+      </Item>
+
+      <Mark><C>supergroups</C></Mark>
+      <Item>
+        A list of lists, where <C>supergroups[i]</C> is a list of indices
+        of groups which are known to be proper supergroups of <C>grps[i]</C>.
+      </Item>
+
+      <Mark><C>chains</C></Mark>
+      <Item>
+        A list of lists, where each list contains the indices of the groups
+        in a descending chain of subgroups.
+      </Item>
+
+      <Mark><C>respectedpartitions</C></Mark>
+      <Item>
+        The list of shortest respected partitions.
+        If <C>grps[i]</C> is finite, then <C>respectedpartitions[i]</C>
+        is a list of pairs (residue, modulus) for the residue classes
+        in the shortest respected partition <C>grps[i]</C>. If <C>grps[i]</C>
+        is infinite, then <C>respectedpartitions[i] = fail</C>.
+      </Item>
+
+      <Mark><C>partitionlengths</C></Mark>
+      <Item>
+        List of lengths of shortest respected partitions.
+        If te group <C>grps[i]</C> is finite, then <C>partitionlengths[i]</C>
+        is the length of the shortest respected partition of <C>grps[i]</C>.
+        If <C>grps[i]</C> is infinite, then <C>partitionlengths[i] = 0</C>.
+      </Item>
+
+      <Mark><C>degrees</C></Mark>
+      <Item>
+        The list of permutation degrees, i.e. numbers of moved points,
+        in the action of the finite groups on their shortest respected
+        partitions. If there is no respected partition, i.e. if
+        <C>grps[i]</C> is infinite, then <C>degrees[i] = 0</C>.
+      </Item>
+
+      <Mark><C>orbitlengths</C></Mark>
+      <Item>
+        The list of lists of orbit lengths in the action of the finite groups
+        on their shortest respected partitions.
+        If <C>grps[i]</C> is infinite, then <C>orbitlengths[i] = fail</C>.
+      </Item>
+
+      <Mark><C>permgroupgens</C></Mark>
+      <Item>
+        The list of lists of generators of the isomorphic permutation groups
+        induced by the finite groups on their shortest respected partitions.
+        If <C>grps[i]</C> is infinite, then <C>permgroupgens[i] = fail</C>.
+      </Item>
+
+      <Mark><C>stabilize_digitsum_base2_mod2</C></Mark>
+      <Item>
+         The list of indices of groups which stabilize the digit sum
+         in base 2 modulo&nbsp;2.
+      </Item>
+      <Mark><C>stabilize_digitsum_base2_mod3</C></Mark>
+      <Item>
+         The list of indices of groups which stabilize the digit sum
+         in base 2 modulo&nbsp;3.
+      </Item>
+
+      <Mark><C>stabilize_digitsum_base3_mod2</C></Mark>
+      <Item>
+         The list of indices of groups which stabilize the digit sum
+         in base 3 modulo&nbsp;2.
+      </Item>
+
+      <Mark><C>freeproductcandidates</C></Mark>
+      <Item>
+         A list of indices of groups which may be isomorphic to the free
+         product of 3 copies of the cyclic group of order&nbsp;2.
+      </Item>
+
+      <Mark><C>freeproductlikes</C></Mark>
+      <Item>
+         A list of indices of groups which are not isomorphic to the free
+         product of 3 copies of the cyclic group of order&nbsp;2, but
+         where the shortest relation indicating this is relatively long.
+      </Item>
+
+      <Mark><C>abc_torsion</C></Mark>
+      <Item>
+         A list of pairs (index, order of product of generators) for all
+         infinite groups for which the product of the generators has
+         finite order.
+      </Item>
+
+      <Mark><C>cyclist</C></Mark>
+      <Item>
+         A list described in the comments in
+         <F>rcwa/data/3ctsgroups6/spheresizecycles.g</F>.
+      </Item>
+
+      <Mark><C>finiteorbits</C></Mark>
+      <Item>
+         A record described in the comments in
+         <F>rcwa/data/3ctsgroups6/finite-orbits.g</F>.
+      </Item>
+
+      <Mark><C>intransitivemodulo</C></Mark>
+      <Item>
+        For every modulus <C>m</C> from 1 to 60, <C>intransitivemodulo[m]</C>
+        is the list of indices of groups none of whose orbits on &ZZ;
+        has nontrivial intersection with all residue classes
+        modulo&nbsp;<C>m</C>.
+      </Item>
+
+      <Mark><C>trsstatus</C></Mark>
+      <Item>
+        A list of strings which describe what is known about whether the
+        groups <C>grps[i]</C> act transitively on the nonnegative integers
+        in their support, or how the computation has failed.
+      </Item>
+
+      <Mark><C>orbitgrowthtype</C></Mark>
+      <Item>
+        A list of integers and lists of integers which encode what has been
+        observed heuristically on the growth of the orbits of the groups
+        <C>grps[i]</C> on&nbsp;&ZZ;.
+      </Item>
+
+    </List>
+    Note that the database contains an entry for every suitable unordered
+    3-tuple of distinct class transpositions in <C>cts</C>, which means
+    that it contains multiple copies of equal groups -- cf. the components
+    <C>equalityclasses</C> and <C>samegroups</C> described above. <P/>
 
     The group <C>grps[44132]</C> might be called the <Q>Collatz group</Q>
     or the <Q><M>3n+1</M> - group</Q> -- its action on the set of positive
     integers which are not divisible by 6 is transitive if and only if
-    the <M>3n+1</M> conjecture is true. <P/>
-
-    Note that the contents of this database are not <Q>set in stone</Q>,
-    and are likely to change in coming releases. Also note that the database
-    presently contains an entry for every unordered triple of distinct
-    class transpositions in <C>cts</C>, which means that it contains
-    multiple copies of equal groups. For the future it is planned to
-    include information on which groups are equal and which are isomorphic,
-    but in particular for the infinite groups this task seems to be
-    algorithmically hard.
+    the <M>3n+1</M> conjecture is true.
 <Example>
 <![CDATA[
 gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
-gap> ViewString(data.grps[44132]); # the "3n+1 group"
-"<(2(3),4(6)),(1(3),2(6)),(1(2),4(6))>"
+gap> data.grps[44132]; # the "3n+1 group"
+<(2(3),4(6)),(1(3),2(6)),(1(2),4(6))>
 gap> data.trsstatus[44132]; # deciding this would solve the 3n+1 problem
 "exceeded memory bound"
 gap> Length(Set(data.sizes));
 1066
-gap> Maximum(Filtered(data.sizes,IsInt));
+gap> Maximum(Filtered(data.sizes,IsInt)); # there are large finite groups
 7165033589793852697531456980706732548435609645091822296777976465116824959\
 2135499174617837911754921014138184155204934961004073853323458315539461543\
 4480515260818409913846161473536000000000000000000000000000000000000000000\
 000000
-gap> Positions(data.sizes,last);
+gap> PrintFactorsInt(last);                                    
+2^200*3^103*5^48*7^28*11^16*13^13*17^8*19^6*23^6*29
+gap> Positions(data.sizes,last);                               
 [ 33814, 36548 ]
-gap> List(data.grps{last},ViewString);
-[ "<(1(5),4(5)),(0(3),1(6)),(3(4),0(6))>", 
-  "<(0(5),3(5)),(2(3),4(6)),(0(4),5(6))>" ]
+gap> data.grps{last};
+[ <(1(5),4(5)),(0(3),1(6)),(3(4),0(6))>, 
+  <(0(5),3(5)),(2(3),4(6)),(0(4),5(6))> ]
+gap> data.samegroups[1];    
+[ 1, 2, 68 ]
+gap> data.grps[1] = data.grps[68];
+true
+gap> Maximum(data.mods);
+77760
+gap> Positions(data.mods,last);
+[ 26311, 26313, 26452, 26453, 26455, 26456, 26457, 26459, 26461, 26462, 
+  27781, 27784, 27785, 27786, 27788, 27789, 27790, 27791, 27829, 27832, 
+  30523, 30524, 30525, 30526, 30529, 30530, 30532, 30534, 32924, 32927, 
+  32931, 32933 ]
+gap> Set(data.sizes{last});     
+[ 45509262704640000 ]
 gap> Collected(data.mods);
 [ [ 0, 30446 ], [ 3, 1 ], [ 4, 37 ], [ 5, 120 ], [ 6, 1450 ], [ 8, 18 ], 
   [ 10, 45 ], [ 12, 3143 ], [ 15, 165 ], [ 18, 484 ], [ 20, 528 ], 
@@ -182,17 +338,37 @@ gap> Collected(data.trsstatus);
   <Description>
     If <A>max_m</A> is 6, this is equivalent to the call of the function
     without argument described above. If <A>max_m</A> is 9, the function
-    returns a record with components <C>cts</C> (a list of all class
-    transpositions which interchange residue classes with moduli
-    <M>\leq 9</M>), <C>mods</C> (the list of moduli of the groups, i.e.
-    <C>Mod(Group(cts{[i,j,k]})) = mods[i][j][k]</C>, for all triples
-    <M>(i,j,k)</M> of positive integers which satisfy
-    <M>264 \geq i > j > k</M>), <C>partlengths</C> (the list of shortest
-    respected partitions of the groups, i.e.
-    <C>Length(RespectedPartition(Group(cts{[i,j,k]})))</C> <C>=</C>
-    <C>partlengths[i][j][k]</C>), and <C>sizes</C> (the list of orders
-    of the groups, i.e. <C>Size(Group(cts{[i,j,k]}))</C> <C>=</C>
-    <C>sizes[i][j][k]</C>).
+    returns a record with at least the following components (the indices
+    <C>i > j > k</C> are always integers in the range <C>[1..264]</C>):
+    <List>
+
+      <Mark><C>cts</C></Mark>
+      <Item>
+        The list of all 264 class transpositions which interchange residue
+        classes with moduli <M>\leq 9</M>.
+      </Item>
+
+      <Mark><C>mods</C></Mark>
+      <Item>
+        The list of moduli of the groups, i.e.
+        <C>Mod(Group(cts{[i,j,k]})) = mods[i][j][k]</C>.
+      </Item>
+
+      <Mark><C>partlengths</C></Mark>
+      <Item>
+        The list of lengths of shortest respected partitions of the groups
+        in the database, i.e.
+        <C>Length(RespectedPartition(Group(cts{[i,j,k]})))</C> <C>=</C>
+        <C>partlengths[i][j][k]</C>.
+      </Item>
+
+      <Mark><C>sizes</C></Mark>
+      <Item>
+        The list of orders of the groups, i.e.
+        <C>Size(Group(cts{[i,j,k]}))</C> <C>=</C> <C>sizes[i][j][k]</C>.
+      </Item>
+
+    </List>
   </Description>
 </ManSection>
 
@@ -206,30 +382,57 @@ gap> Collected(data.trsstatus);
     3 out of the 4 generators are finite. 
   </Returns>
   <Description>
-    The record presently has the components <C>grps4_3finite</C>
-    (the list of all 140947 groups in the database),
-    <C>sizes4</C> (the list of group orders), <C>mods4</C> (the list of
-    moduli of the groups),
-    <C>conjugacyclasses4cts</C> (a list of lists of positions of groups
-    in the list <C>grps4_3finite</C> which are already known to be
-    conjugate), <C>grps4_3finite_reps</C> (tentative conjugacy class
-    representatives from the list <C>grps4_3finite</C> --
-    <E>tentative</E> in the sense that likely some of the groups
-    in the list are still conjugate), <C>cts</C> (the list of all
-    69 class transpositions which interchange residue classes with
-    moduli <M>\leq 6</M>), <C>grps4_3finitepos</C> (the list
-    obtained from <C>grps4_3finite</C> by replacing every group
-    generator by its position in the list <C>cts</C>,
-    and possibly further which are not described here.
-    For all integers <C>i</C> from 1 to 140947 it holds that
-    <C>Size(grps4_3finite[i]) = sizes4[i]</C> and that
-    <C>Modulus(grps4_3finite[i]) = mods4[i]</C>.
+    The record has at least the following components (the index <C>i</C>
+    is always an integer in the range <C>[1..140947]</C>, and the term
+    <Q>indices</Q> always refers to list indices in that range):
+    <List>
 
-    Note that the contents of this database are not <Q>set in stone</Q>,
-    and are likely to change in coming releases. Also note that the
-    database contains an entry for every suitable unordered 4-tuple of
-    distinct class transpositions in <C>cts</C>, which means that it
-    contains multiple copies of equal groups. 
+      <Mark><C>cts</C></Mark>
+      <Item>
+        The list of all 69 class transpositions which interchange residue
+        classes with moduli <M>\leq 6</M>.
+      </Item>
+
+      <Mark><C>grps4_3finite</C></Mark>
+      <Item>
+        The list of all 140947 groups in the database.
+      </Item>
+
+      <Mark><C>grps4_3finitepos</C></Mark>
+      <Item>
+        The list obtained from <C>grps4_3finite</C> by replacing every group
+        generator by its position in the list <C>cts</C>.
+      </Item>
+
+      <Mark><C>sizes4</C></Mark>
+      <Item>
+        The list of group orders.
+        It is <C>Size(grps4_3finite[i]) = sizes4[i]</C>.
+      </Item>
+
+      <Mark><C>mods4</C></Mark>
+      <Item>
+        The list of moduli of the groups.
+        It is <C>Mod(grps4_3finite[i]) = mods4[i]</C>.
+      </Item>
+
+      <Mark><C>conjugacyclasses4cts</C></Mark>
+      <Item>
+        A list of lists of indices of groups which are known to be conjugate
+        in RCWA(&ZZ;).
+      </Item>
+
+      <Mark><C>grps4_3finite_reps</C></Mark>
+      <Item>
+        Tentative conjugacy class representatives from the list
+        <C>grps4_3finite</C> -- <E>tentative</E> in the sense that likely
+        some of the groups in the list are still conjugate.
+      </Item>
+
+    </List>
+    Note that the database contains an entry for every suitable unordered
+    4-tuple of distinct class transpositions in <C>cts</C>, which means
+    that it contains multiple copies of equal groups. 
 <Example>
 <![CDATA[
 gap> data := LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions();;
@@ -255,15 +458,6 @@ gap> Length(Set(sizes4));
 7339
 gap> Length(Set(mods4));
 91
-gap> Set(mods4);
-[ 0, 4, 5, 6, 8, 10, 12, 15, 18, 20, 24, 30, 36, 40, 48, 60, 72, 80, 90, 
-  96, 108, 120, 144, 160, 180, 192, 216, 240, 270, 288, 320, 360, 384, 
-  432, 480, 540, 576, 720, 810, 864, 960, 1080, 1440, 1620, 1728, 1920, 
-  2160, 2430, 2592, 2880, 3240, 3840, 4320, 4860, 5760, 6480, 7680, 
-  8640, 9720, 10368, 12960, 14580, 15360, 17280, 19440, 25920, 30720, 
-  34560, 38880, 43740, 51840, 61440, 69120, 77760, 103680, 116640, 
-  122880, 155520, 207360, 233280, 311040, 349920, 414720, 466560, 
-  622080, 933120, 1244160, 1658880, 1866240, 5598720, 33592320 ]
 gap> conjugacyclasses4cts{[1..4]};
 [ [ 1, 23, 563, 867 ], [ 2, 859 ], [ 3, 622 ], [ 4, 16, 868, 873 ] ]
 gap> grps4_3finite[1] = grps4_3finite[23];
@@ -318,8 +512,8 @@ gap> RepresentativeAction(RCWA(Integers),grps4_3finite[4],
     <C>CTPairsIntersectionTypes</C>, <C>CTPairIntersectionType</C> and
     <C>CTPairProductType</C> as well as data lists
     <C>CTPairsProductClassification</C> and <C>CTPairsProductType</C>.
-    -- For a precise description see the file
-    <F>pkg/rcwa/data/ctprodclass.g</F>.
+    -- For the description of these components, see the file
+    <F>pkg/rcwa/data/ctproducts/ctprodclass.g</F>.
 <Example>
 <![CDATA[
 gap> data := LoadDatabaseOfProductsOf2ClassTranspositions();;
@@ -357,20 +551,20 @@ gap> data := LoadDatabaseOfNonbalancedProductsOfClassTranspositions();;
 gap> Set(RecNames(data));
 [ "PairsOfCTsWhoseProductIsNotBalanced", 
   "TriplesOfCTsWhoseProductHasCoprimeMultiplierAndDivisor" ]
-gap> List(data.PairsOfCTsWhoseProductIsNotBalanced,
->         p->List(p,TransposedClasses));
-[ [ [ 1(2), 2(4) ], [ 2(4), 3(6) ] ], [ [ 1(2), 2(4) ], [ 2(4), 5(6) ] ],
-  [ [ 1(2), 2(4) ], [ 2(4), 1(6) ] ], [ [ 1(2), 0(4) ], [ 0(4), 1(6) ] ],
-  [ [ 1(2), 0(4) ], [ 0(4), 3(6) ] ], [ [ 1(2), 0(4) ], [ 0(4), 5(6) ] ],
-  [ [ 0(2), 1(4) ], [ 1(4), 2(6) ] ], [ [ 0(2), 1(4) ], [ 1(4), 4(6) ] ],
-  [ [ 0(2), 1(4) ], [ 1(4), 0(6) ] ], [ [ 0(2), 3(4) ], [ 3(4), 4(6) ] ],
-  [ [ 0(2), 3(4) ], [ 3(4), 2(6) ] ], [ [ 0(2), 3(4) ], [ 3(4), 0(6) ] ],
-  [ [ 1(2), 2(6) ], [ 3(4), 2(6) ] ], [ [ 1(2), 2(6) ], [ 1(4), 2(6) ] ],
-  [ [ 1(2), 4(6) ], [ 3(4), 4(6) ] ], [ [ 1(2), 4(6) ], [ 1(4), 4(6) ] ],
-  [ [ 1(2), 0(6) ], [ 1(4), 0(6) ] ], [ [ 1(2), 0(6) ], [ 3(4), 0(6) ] ],
-  [ [ 0(2), 1(6) ], [ 2(4), 1(6) ] ], [ [ 0(2), 1(6) ], [ 0(4), 1(6) ] ],
-  [ [ 0(2), 3(6) ], [ 2(4), 3(6) ] ], [ [ 0(2), 3(6) ], [ 0(4), 3(6) ] ],
-  [ [ 0(2), 5(6) ], [ 2(4), 5(6) ] ], [ [ 0(2), 5(6) ], [ 0(4), 5(6) ] ] ]
+gap> data.PairsOfCTsWhoseProductIsNotBalanced;
+[ [ ( 1(2), 2(4) ), ( 2(4), 3(6) ) ], [ ( 1(2), 2(4) ), ( 2(4), 5(6) ) ], 
+  [ ( 1(2), 2(4) ), ( 2(4), 1(6) ) ], [ ( 1(2), 0(4) ), ( 0(4), 1(6) ) ], 
+  [ ( 1(2), 0(4) ), ( 0(4), 3(6) ) ], [ ( 1(2), 0(4) ), ( 0(4), 5(6) ) ], 
+  [ ( 0(2), 1(4) ), ( 1(4), 2(6) ) ], [ ( 0(2), 1(4) ), ( 1(4), 4(6) ) ], 
+  [ ( 0(2), 1(4) ), ( 1(4), 0(6) ) ], [ ( 0(2), 3(4) ), ( 3(4), 4(6) ) ], 
+  [ ( 0(2), 3(4) ), ( 3(4), 2(6) ) ], [ ( 0(2), 3(4) ), ( 3(4), 0(6) ) ], 
+  [ ( 1(2), 2(6) ), ( 3(4), 2(6) ) ], [ ( 1(2), 2(6) ), ( 1(4), 2(6) ) ], 
+  [ ( 1(2), 4(6) ), ( 3(4), 4(6) ) ], [ ( 1(2), 4(6) ), ( 1(4), 4(6) ) ], 
+  [ ( 1(2), 0(6) ), ( 1(4), 0(6) ) ], [ ( 1(2), 0(6) ), ( 3(4), 0(6) ) ], 
+  [ ( 0(2), 1(6) ), ( 2(4), 1(6) ) ], [ ( 0(2), 1(6) ), ( 0(4), 1(6) ) ], 
+  [ ( 0(2), 3(6) ), ( 2(4), 3(6) ) ], [ ( 0(2), 3(6) ), ( 0(4), 3(6) ) ], 
+  [ ( 0(2), 5(6) ), ( 2(4), 5(6) ) ], [ ( 0(2), 5(6) ), ( 0(4), 5(6) ) ] 
+ ]
 ]]>
 </Example>
   </Description>
