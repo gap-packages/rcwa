@@ -5988,7 +5988,7 @@ InstallMethod( RepresentativesActionPreImage,
       quots := List(quots,quot->ReducedWordByOrdersOfGenerators(quot,
                                   List(GeneratorsOfGroup(G),Order)));
     fi;
-    return quots;
+    return Set(quots);
   end );
 
 #############################################################################
