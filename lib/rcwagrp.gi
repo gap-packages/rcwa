@@ -6802,9 +6802,14 @@ InstallMethod( StructureDescription,
 InstallGlobalFunction( LoadRCWAExamples,
 
   function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/examples/examples.g"))();
+    if IsBoundGlobal("RCWAExamples") then
+      Info(InfoRCWA,1,"The examples were already loaded.");
+    fi;
+    AssignGlobalNC( "RCWAExamples",
+                    ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/examples/examples.g"))() );
+    return "RCWAExamples";
   end );
 
 #############################################################################
@@ -6814,9 +6819,14 @@ InstallGlobalFunction( LoadRCWAExamples,
 InstallGlobalFunction( LoadDatabaseOfProductsOf2ClassTranspositions,
             
   function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ctproducts/ctprodclass.g"))();
+    if IsBoundGlobal("CTProducts") then
+      Info(InfoRCWA,1,"The requested database was already loaded.");
+    fi;
+    AssignGlobalNC( "CTProducts",
+                    ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/data/ctproducts/ctprodclass.g"))() );
+    return "CTProducts";
   end );
 
 #############################################################################
@@ -6827,9 +6837,14 @@ InstallGlobalFunction(
   LoadDatabaseOfNonbalancedProductsOfClassTranspositions,
 
   function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ctproducts/ctprods.g"))();
+    if IsBoundGlobal("CTProductsNB") then
+      Info(InfoRCWA,1,"The requested database was already loaded.");
+    fi;
+    AssignGlobalNC( "CTProductsNB",
+                    ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/data/ctproducts/ctprods.g"))() );
+    return "CTProductsNB";
   end );
 
 #############################################################################
@@ -6848,10 +6863,18 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
     fi;
 
     if arg = [] or arg = [6] then
-      return ReadAsFunction(
-               Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                             "/data/3ctsgroups6/database.g"))();
+      if IsBoundGlobal("3CTsGroups6") then
+        Info(InfoRCWA,1,"The requested database was already loaded.");
+      fi;
+      AssignGlobalNC( "3CTsGroups6",
+                      ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/data/3ctsgroups6/database.g"))() );
+      return "3CTsGroups6";
     elif arg = [9] then
+      if IsBoundGlobal("3CTsGroups9") then
+        Info(InfoRCWA,1,"The requested database was already loaded.");
+      fi;
       data := ReadAsFunction(
                 Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                              "/data/3ctsgroups9/database.g"))();
@@ -6873,10 +6896,14 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
           od;
         od;
       od;
-      return rec( cts         := data.cts,
-                  mods        := mods,
-                  partlengths := partlengths,
-                  sizes       := sizes );
+      AssignGlobalNC( "3CTsGroups9",
+                      rec( cts         := data.cts,
+                           mods        := mods,
+                           partlengths := partlengths,
+                           sizes       := sizes,
+                           All3CTs9Indices := data.All3CTs9Indices,
+                           All3CTs9Groups  := data.All3CTs9Groups ) );
+      return "3CTsGroups9";
     else return fail; fi;
   end );
 
@@ -6887,9 +6914,14 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
 InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
 
   function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/4ctsgroups6/database.g"))();
+    if IsBoundGlobal("4CTsGroups6") then
+      Info(InfoRCWA,1,"The requested database was already loaded.");
+    fi;
+    AssignGlobalNC( "4CTsGroups6",
+                    ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/data/4ctsgroups6/database.g"))() );
+    return "4CTsGroups6";
   end );
 
 #############################################################################
@@ -6899,9 +6931,14 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
 InstallGlobalFunction( LoadDatabaseOfCTGraphs,
 
   function ( )
-    return ReadAsFunction(
-             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                           "/data/ctproducts/ct-graphs.g"))();
+    if IsBoundGlobal("CTGraphs") then
+      Info(InfoRCWA,1,"The requested database was already loaded.");
+    fi;
+    AssignGlobalNC( "CTGraphs",
+                    ReadAsFunction(
+                      Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                                    "/data/ctproducts/ct-graphs.g"))() );
+    return "CTGraphs";
   end );
 
 #############################################################################

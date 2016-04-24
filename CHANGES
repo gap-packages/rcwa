@@ -17,6 +17,12 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
    methods PrimeSwitch(p,r,m) and PrimeSwitch(p,cl) to construct "residue
    class specific" prime switches have been added.
 
+ - The functions for loading the databases of rcwa groups and -mappings do
+   no longer return the content of the respective database itself, but just
+   the name of the variable which the database record is assigned to.
+   Hence forgetting the ';;' at the end of the line when loading one of the
+   databases does no longer result in megabytes of data printed to the screen.
+
 Changes between RCWA 4.3.0 and RCWA 4.3.1 (March 9, 2016):
 
  - Minor adjustments.

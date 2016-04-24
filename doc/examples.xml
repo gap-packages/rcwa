@@ -26,12 +26,12 @@ they are not ordered by degree of difficulty or interest. <P/>
 The rcwa mappings, rcwa groups and other objects defined in this chapter can
 be found in the file <F>pkg/rcwa/examples/examples.g</F>. This file can be
 read into the current &GAP; session by the function
-<Ref Func="LoadRCWAExamples"/> which takes no arguments and returns
-a record containing all examples.
+<Ref Func="LoadRCWAExamples"/> which takes no arguments and returns the name
+of a variable which the record containing the examples got assigned to.
 The global variable assignments made in a section of this chapter can be
 made by applying the function <C>AssignGlobals</C> to the respective
-component of the record returned by <C>LoadRCWAExamples</C>. The component
-names are given at the end of the corresponding sections. <P/>
+component of the examples record. The component names are given at the end
+of the corresponding sections. <P/>
 
 The discussions of the examples are typically far from being exhaustive.
 It is quite likely that in many instances by just a few little modifications
@@ -356,8 +356,9 @@ gap> b := ClassTransposition(1,3,2,6);;
 gap> c := ClassTransposition(2,3,4,6);;
 gap> G := Group(a,b,c);
 <(1(2),4(6)),(1(3),2(6)),(2(3),4(6))>
-gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
-gap> data.Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
+gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
+"3CTsGroups6"
+gap> 3CTsGroups6.Id3CTsGroup(G,3CTsGroups6.grps); # 'catalogue number' of G
 44132
 ]]>
 </Example>
@@ -813,8 +814,9 @@ gap> b := ClassTransposition(0,5,4,5);;
 gap> c := ClassTransposition(1,4,0,6);;
 gap> G := Group(a,b,c);
 <(0(2),1(2)),(0(5),4(5)),(1(4),0(6))>
-gap> data := LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();;
-gap> data.Id3CTsGroup(G,data.grps); # the 'catalogue number' of G
+gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
+"3CTsGroups6"
+gap> 3CTsGroups6.Id3CTsGroup(G,3CTsGroups6.grps); # 'catalogue number' of G
 1284
 ]]>
 </Example>

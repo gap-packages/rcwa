@@ -18,6 +18,14 @@
 ##      sizes[i][j][k] = Size(Group(cts{[i,j,k]})).
 ##      This list is recovered from the two lists 'sizesset' and 'sizespos',
 ##      where sizes[i][j][k] = sizesset[sizespos[i][j][k]].
+##    - 'All3CTs9Indices' is a selector function which takes as argument
+##      a function <func> of three arguments i, j and k.
+##      It returns a list of all triples of indices [i,j,k] for which
+##      <func> returns `true'.
+##      'All3CTs9Groups' is a selector function which takes as argument
+##      a function <func> of three arguments i, j and k.
+##      It returns a list of all groups Group(cts{[i,j,k]}) from the
+##      database for which <func>(i,j,k) returns `true'.
 ##
 return rec(
 
@@ -37,7 +45,41 @@ return rec(
 
   sizespos :=
     ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                                 "/data/3ctsgroups9/sizespos.g"))()
+                                 "/data/3ctsgroups9/sizespos.g"))(),
+
+  All3CTs9Indices := function ( func )
+
+    local  indices, i, j, k;
+
+    indices := [];
+    for i in [3..264] do
+      for j in [2..i-1] do
+        for k in [1..j-1] do
+          if   CallFuncList(func,[i,j,k]) = true
+          then Add(indices,[i,j,k]); fi;
+        od;
+      od;
+    od;
+    return indices;
+  end,
+
+  All3CTs9Groups := function ( func )
+
+    local  indices, groups, cts, i, j, k;
+
+    cts := List(ClassPairs(9),ClassTransposition);
+    indices := [];
+    for i in [3..264] do
+      for j in [2..i-1] do
+        for k in [1..j-1] do
+          if   CallFuncList(func,[i,j,k]) = true
+          then Add(indices,[i,j,k]); fi;
+        od;
+      od;
+    od;
+    groups  := List(indices,inds->Group(cts{inds}));
+    return groups;
+  end
 
 );
 

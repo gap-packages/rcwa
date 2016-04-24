@@ -41,10 +41,10 @@ PackageDoc       := rec(
                          Autoload         := true
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.8.2",
-                         NeededOtherPackages    := [ ["ResClasses",">=4.4.0"], ["GRAPE",">=4.7"],
+                         GAP                    := ">=4.8.3",
+                         NeededOtherPackages    := [ ["ResClasses",">=4.5.0"], ["GRAPE",">=4.7"],
                                                      ["Polycyclic",">=2.11"], ["FR",">=2.2.1"],
-                                                     ["GAPDoc",">=1.5.1"], ["Utils",">=0.38"] ],
+                                                     ["GAPDoc",">=1.5.1"], ["Utils",">=0.39"] ],
                          SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
