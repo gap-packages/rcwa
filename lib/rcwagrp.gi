@@ -3035,6 +3035,7 @@ InstallMethod( CheckForWildness,
 
     local  g, gens, gen, lng;
 
+    if ValueOption("AssumeIsTame") = true then return; fi;
     gens := Set(GeneratorsAndInverses(G));
     if Length(gens) <= 1 then return; fi;
     gen := Random(gens);
