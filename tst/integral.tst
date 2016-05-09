@@ -2689,12 +2689,12 @@ Rcwa permutation of Z with modulus 24
   19(24) -> 5(6)
   21(24) -> 22(24)
 
-gap> V := CT([],Integers);
-CT_[ ](Z)
+gap> V := CT([2],Integers);
+CT_[ 2 ](Z)
 gap> GeneratorsOfGroup(V);
 [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 0(2), 1(4) ), ( 1(4), 2(4) ) ]
-gap> G := CT([3],Integers);
-CT_[ 3 ](Z)
+gap> G := CT([2,3],Integers);
+CT_[ 2, 3 ](Z)
 gap> GeneratorsOfGroup(G);
 [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 0(2), 1(4) ), ( 1(4), 2(4) ), 
   ( 0(3), 1(3) ), ( 1(3), 2(3) ), ( 0(3), 1(9) ), ( 0(3), 4(9) ), 
@@ -2706,21 +2706,21 @@ gap> Display(CT(Integers));
 CT(Z)
 gap> Display(RCWA(Integers));
 RCWA(Z)
-gap> ClassTransposition(0,2,1,4) in CT([],Integers);
+gap> ClassTransposition(0,2,1,4) in CT([2],Integers);
 true
-gap> ClassTransposition(0,2,1,6) in CT([],Integers);
+gap> ClassTransposition(0,2,1,6) in CT([2],Integers);
 false
-gap> ClassTransposition(0,2,1,6) in CT([3],Integers);
+gap> ClassTransposition(0,2,1,6) in CT([2,3],Integers);
 true
-gap> ClassTransposition(0,2,1,6) in CT([5],Integers);
+gap> ClassTransposition(0,2,1,6) in CT([2,5],Integers);
 false
-gap> ClassTransposition(0,2,1,10) in CT([3],Integers);  
+gap> ClassTransposition(0,2,1,10) in CT([2,3],Integers);  
 false
-gap> ClassTransposition(0,2,1,10) in CT([5],Integers);
+gap> ClassTransposition(0,2,1,10) in CT([2,5],Integers);
 true
-gap> ClassTransposition(0,2,1,10) in CT([3,5],Integers);
+gap> ClassTransposition(0,2,1,10) in CT([2,3,5],Integers);
 true
-gap> ClassTransposition(0,2,1,60) in CT([3,5],Integers);
+gap> ClassTransposition(0,2,1,60) in CT([2,3,5],Integers);
 true
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,4,2,6));      
 <(0(2),1(2)),(1(4),2(6))>
