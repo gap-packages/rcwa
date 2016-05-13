@@ -35,6 +35,14 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
  - There is now a generating set for CT([2,3],Integers) consisting of only
    6 class transpositions known, instead of 14 as before.
 
+ - The performance of the function `ClassPairs' has been improved, and this
+   function takes now an optional first argument P and interprets an option
+   "divisors".
+
+ - A method for `ExtRepOfObj' for class transpositions has been added.
+   This method returns the 4-tuple [r1,m1,r2,m2] corresponding to the
+   interchanged residue classes r1(m1) and r2(m2).
+
 Changes between RCWA 4.3.0 and RCWA 4.3.1 (March 9, 2016):
 
  - Minor adjustments.

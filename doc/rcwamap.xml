@@ -280,18 +280,30 @@ Rcwa permutation of Z with modulus 9, of order 2
     as an attribute <C>TransposedClasses</C>. <P/>
 
     <Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-    <Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
 
     A list of all class transpositions interchanging residue classes with
     moduli less than or equal to a given bound <A>m</A> can be obtained
-    by <C>List(ClassPairs(<A>m</A>),ClassTransposition)</C>,
+    by <C>List(ClassPairs([<A>P</A>],<A>m</A>),ClassTransposition)</C>,
     where the function <C>ClassPairs</C> returns a list of all 4-tuples
     <M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
     pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
     with <M>m_1</M> and <M>m_2</M> less than or equal to the specified
-    bound. The function <C>NrClassPairs(<A>m</A>)</C> returns the length
-    of the list <C>ClassPairs(<A>m</A>)</C>, where the result is computed
-    much faster and without actually generating the list of tuples. <P/>
+    bound. If a list of primes is given as optional argument <A>P</A>,
+    then the returned list contains only those 4-tuples where all prime
+    factors of <M>m_1</M> and <M>m_2</M> lie in <A>P</A>.
+    If the option <C>divisors</C> is set, the returned list contains
+    only the 4-tuples where <M>m_1</M> and <M>m_2</M> divide <A>m</A>. <P/>
+
+    <Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
+    <Index Key="ExtRepOfObj" Subkey="for a class transposition">
+      <C>ExtRepOfObj</C>
+    </Index>
+
+    The function <C>NrClassPairs(<A>m</A>)</C> returns the length of the
+    list <C>ClassPairs(<A>m</A>)</C>, where the result is computed much
+    faster and without actually generating the list of tuples.
+    Given a class transposition <A>ct</A>, the corresponding 4-tuple
+    can be obtained by <C>ExtRepOfObj(<A>ct</A>)</C> <P/>
 
     <Index Key="SplittedClassTransposition"
            Subkey="for a class transposition and a number of factors">
@@ -303,12 +315,6 @@ Rcwa permutation of Z with modulus 9, of order 2
     by <C>SplittedClassTransposition(<A>ct</A>,<A>k</A>)</C>. <P/>
 <Example>
 <![CDATA[
-gap> Display(ClassTransposition(1,2,8,10));
-
-Rcwa permutation of Z with modulus 10, of order 2
-
-( 1(2), 8(10) )
-
 gap> Display(ClassTransposition(1,2,8,10):CycleNotation:=false);
 
 Rcwa permutation of Z with modulus 10, of order 2
@@ -420,10 +426,10 @@ Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
   <C>IsGeneralizedClassTransposition</C>
 </Index>
 
-The properties <C>IsClassShift</C>, <C>IsClassReflection</C>,
+<C>IsClassShift</C>, <C>IsClassReflection</C>,
 <C>IsClassRotation</C>, <C>IsClassTransposition</C> and
-<C>IsGeneralizedClassTransposition</C> indicate whether a given
-rcwa mapping belongs to the corresponding series. <P/>
+<C>IsGeneralizedClassTransposition</C> are properties which indicate
+whether a given rcwa mapping belongs to the corresponding series. <P/>
 
 In the sequel we describe the general-purpose constructor for rcwa
 mappings. The constructor may look a bit technical on a first glance,

@@ -1451,6 +1451,22 @@ InstallMethod( ExtRepOfObj,
 
 #############################################################################
 ##
+#M  ExtRepOfObj( <ct> ) . . . . . . . . . . . . . .  for class transpositions
+##
+InstallMethod( ExtRepOfObj,
+               "for class transpositions (RCWA)", true,
+               [ IsRcwaMapping and IsClassTransposition ], 0,
+
+  function ( ct )
+
+    local  cls;
+
+    cls := TransposedClasses(ct);
+    return [ Residue(cls[1]), Mod(cls[1]), Residue(cls[2]), Mod(cls[2]) ];
+  end );
+
+#############################################################################
+##
 #M  ObjByExtRep( <fam>, <l> ) . rcwa mapping, by list [ <modulus>, <coeffs> ]
 ##
 InstallMethod( ObjByExtRep,
@@ -2583,12 +2599,20 @@ InstallMethod( SplittedClassTransposition,
 
 #############################################################################
 ##
+#F  ClassPairs( [ <P> ], <m> )
 #F  ClassPairs( [ <R> ], <m> )
 ##
 ##  In the one-argument version, this function returns a list of all
 ##  unordered pairs of disjoint residue classes of Z with modulus <= <m>.
+##  If the option "divisors" is set, the list contains only those pairs of
+##  residue classes where the moduli divide <m>.
 ##
-##  In the two-argument version, it does the following:
+##  In the two-argument version, if <P> is a set of primes, the function
+##  returns a list of all unordered pairs of disjoint residue classes of Z
+##  whose moduli are less than or equal to <m> and factor completely
+##  over <P>.
+##
+##  If <R> is a ring, the function does the following:
 ##
 ##    - If <R> is either the ring of integers or a semilocalization thereof,
 ##      it returns a list of all unordered pairs of disjoint residue classes
@@ -2613,20 +2637,48 @@ InstallGlobalFunction( ClassPairs,
 
   function ( arg )
 
-    local  R, m, tuples, moduli, Degree, classes, m1, r1, m2, r2;
+    local  R, P, m, tuples, moduli, Degree, classes,
+           m1, r1, m2, r2, d, i, j, usage;
 
-    if   Length(arg) = 1 then
+    usage := "usage: ClassPairs( [ <R> | <P> ], <m> )\n";
+
+    if Length(arg) = 1 then
       m := arg[1];
       if IsInt(m) then R := Integers; else R := DefaultRing(m); fi;
     elif Length(arg) = 2 then
-      R := arg[1];
+      if IsRing(arg[1]) or IsZxZ(arg[1]) then
+        R := arg[1];
+      elif IsList(arg[1]) and ForAll(arg[1],p->IsPosInt(p) and IsPrime(p))
+      then R := Integers; P := arg[1];
+      else Error(usage); return fail; fi;
       m := arg[2];
-    else Error("usage: ClassPairs( [ <R> ], <m> )\n"); fi;
+    else Error(usage); return fail; fi;
+
     if IsIntegers(R) or IsZ_pi(R) then
-      tuples := Filtered(Cartesian([0..m-1],[1..m],[0..m-1],[1..m]),
-                         t -> t[1] < t[2] and t[3] < t[4] and t[2] <= t[4]
-                              and (t[1]-t[3]) mod Gcd(t[2],t[4]) <> 0
-                              and (t[2] <> t[4] or t[1] < t[3]));
+      tuples := [];
+      if ValueOption("divisors") = true then
+        moduli := Difference(DivisorsInt(m),[1]);
+      elif IsBound(P) then
+        moduli := Difference(AllSmoothIntegers(P,m),[1]);
+      else
+        moduli := [2..m];
+      fi;
+      for i in [1..Length(moduli)] do
+        m2 := moduli[i];
+        for j in [1..i] do
+          m1 := moduli[j];
+          d := Gcd(m1,m2);
+          for r1 in [0..m1-1] do
+            for r2 in [0..m2-1] do
+              if m1 = m2 and r1 > r2 then continue; fi;
+              if (r1 - r2) mod d <> 0 then
+                Add(tuples,[r1,m1,r2,m2]);
+              fi;
+            od;
+          od;
+        od;
+      od;
+      tuples := Set(tuples);
       if IsZ_pi(R) then
         tuples := Filtered(tuples,t->IsSubset(NoninvertiblePrimes(R),
                                               Factors(t[2]*t[4])));
