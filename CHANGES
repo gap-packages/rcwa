@@ -32,6 +32,9 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
    constructed group. -- That means e.g. that the former CT([],Integers) is
    now CT([2],Integers).
 
+ - There is now a generating set for CT([2,3],Integers) consisting of only
+   6 class transpositions known, instead of 14 as before.
+
 Changes between RCWA 4.3.0 and RCWA 4.3.1 (March 9, 2016):
 
  - Minor adjustments.
