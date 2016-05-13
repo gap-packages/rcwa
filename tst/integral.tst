@@ -2880,6 +2880,8 @@ gap> ClassPairs(6:divisors);
   [ 4, 6, 5, 6 ] ]
 gap> Length(ClassPairs(30)) = NrClassPairs(30);
 true
+gap> ExtRepOfObj(ClassTransposition(0,2,1,4));
+[ 0, 2, 1, 4 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 
