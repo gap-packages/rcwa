@@ -55,7 +55,7 @@
   <#Include SYSTEM "abstract.xml">
   <Acknowledgements>
     I am grateful to John P. McDermott for the discovery that the group
-    discussed in Section&nbsp;<Ref Label="sec:HigmanThompsonGroup"/> is
+    discussed in Section&nbsp;<Ref Label="sec:ThompsonsGroupV"/> is
     isomorphic to Thompson's Group V (which is a finitely presented
     infinite simple group) in July 2008, and to Laurent Bartholdi for his
     hint on how to construct wreath products of residue-class-wise affine
