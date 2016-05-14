@@ -11,7 +11,8 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
 
  - A new method for computing the order of an element of CT(Z) has been added.
    Its use can be triggered by setting the option "new_order" when calling the
-   operation `Order'.
+   operation `Order'. This method is sometimes faster and sometimes slower
+   than the default method.
 
  - The function `PrimeSwitch' has been turned into an operation, and new
    methods PrimeSwitch(p,r,m) and PrimeSwitch(p,cl) to construct "residue
@@ -34,6 +35,7 @@ Changes between RCWA 4.3.1 and RCWA 4.4.0 (, 2016):
 
  - There is now a generating set for CT([2,3],Integers) consisting of only
    6 class transpositions known, instead of 14 as before.
+   Also, a generating set for CT([3],Integers) has been added.
 
  - The performance of the function `ClassPairs' has been improved, and this
    function takes now an optional first argument P and interprets an option

@@ -653,6 +653,9 @@ InstallMethod( CTCons,
     if P = [2] then # Higman-Thompson group / Thompson's group V
       SetGeneratorsOfGroup(G,List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
                                   ClassTransposition));
+    elif P = [3] then
+      SetGeneratorsOfGroup(G,List([[0,3,1,3],[1,3,2,3],[2,9,3,9],[5,9,6,9],
+                                   [2,3,3,9]],ClassTransposition));
     elif P = [2,3] then
       SetGeneratorsOfGroup(G,List([[0,2,1,2],[0,3,1,3],[1,3,2,3],
                                    [0,2,1,4],[0,2,5,6],[0,3,1,6]],
