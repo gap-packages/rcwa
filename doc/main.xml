@@ -33,7 +33,7 @@
       http://www.gap-system.org/DevelopersPages/StefanKohl/
     </Homepage>
   </Author>
-  <Date>March 9, 2016</Date>
+  <Date>May 14, 2016</Date>
   <Copyright>
     &copyright; 2003 - 2016 by Stefan Kohl. <P/>
 
@@ -56,7 +56,7 @@
   <Acknowledgements>
     I am grateful to John P. McDermott for the discovery that the group
     discussed in Section&nbsp;<Ref Label="sec:HigmanThompsonGroup"/> is
-    isomorphic to the Higman-Thompson group (which is a finitely presented
+    isomorphic to Thompson's Group V (which is a finitely presented
     infinite simple group) in July 2008, and to Laurent Bartholdi for his
     hint on how to construct wreath products of residue-class-wise affine
     groups with&nbsp;(&ZZ;,+) in April 2006.

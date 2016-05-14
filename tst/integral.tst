@@ -2693,6 +2693,9 @@ gap> V := CT([2],Integers);
 CT_[ 2 ](Z)
 gap> GeneratorsOfGroup(V);
 [ ( 0(2), 1(2) ), ( 1(2), 2(4) ), ( 0(2), 1(4) ), ( 1(4), 2(4) ) ]
+gap> GeneratorsOfGroup(CT([3],Integers));
+[ ( 0(3), 1(3) ), ( 1(3), 2(3) ), ( 2(9), 3(9) ), ( 5(9), 6(9) ), 
+  ( 2(3), 3(9) ) ]
 gap> G := CT([2,3],Integers);
 CT_[ 2, 3 ](Z)
 gap> GeneratorsOfGroup(G);
