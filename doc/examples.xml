@@ -40,13 +40,13 @@ or additional easy commands you can find out interesting things yourself
 
 <!-- #################################################################### -->
 
-<Section Label="sec:HigmanThompsonGroup">
+<Section Label="sec:ThompsonsGroupV">
 <Heading>
-  The Higman-Thompson group
+  Thompson's group V
 </Heading>
 
-The Higman-Thompson group is a finitely presented infinite simple group,
-cf.&nbsp;<Cite Key="Higman74"/>. <P/>
+Thompson's group V, also known as Higman-Thompson group, is a finitely
+presented infinite simple group, cf.&nbsp;<Cite Key="Higman74"/>. <P/>
 
 We show that the group
 
@@ -58,7 +58,7 @@ gap> G := Group(List([[0,2,1,4],[0,4,1,4],[1,4,2,4],[2,4,3,4]],
 ]]>
 </Example>
 
-is isomorphic to the Higman-Thompson group. 
+is isomorphic to Thompson's group V. 
 This isomorphism has been pointed out by John P. McDermott.
 We take a slightly different set of generators
 
@@ -106,9 +106,9 @@ gap> HigmanThompsonRels :=
 ]]>
 </Example>
 
-We conclude that our group is an homomorphic image of the Higman-Thompson
-group. But since the Higman-Thompson group is simple and our group is not
-trivial, this means indeed that the two groups are isomorphic. <P/>
+We conclude that our group is an homomorphic image of Thompson's group V.
+But since Thompson's group V is simple and our group is not trivial,
+this means indeed that the two groups are isomorphic. <P/>
 
 In fact it is straightforward to show that <C>G</C> is the group
 <M>{\rm CT}_\emptyset(&ZZ;)</M> in Corollary&nbsp;3.7
@@ -204,8 +204,7 @@ ClassTransposition(1,4,2,4)
 ]]>
 </Listing>
 
-The Higman-Thompson group can also be embedded in a natural way
-into CT(GF(2)[x]):
+Thompson's group V can also be embedded in a natural way into CT(GF(2)[x]):
 
 <Example>
 <![CDATA[

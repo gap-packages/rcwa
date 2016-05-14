@@ -2240,7 +2240,7 @@ gap> G := GroupByResidueClasses(List([[0,2],[0,4],[1,4],[2,4],[3,4]],
 >                                    ResidueClass));
 <rcwa group over Z with 8 generators>
 gap> H := Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
->                    ClassTransposition)); # (first) Higman-Thompson group
+>                    ClassTransposition)); # Thompson's group V
 <(0(2),1(2)),(1(2),2(4)),(0(2),1(4)),(1(4),2(4))>
 gap> G = H;
 true
