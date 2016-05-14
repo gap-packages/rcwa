@@ -130,10 +130,10 @@ true
 Then we give a function which takes a class transposition
 <M>\tau \in {\rm CT}_\emptyset(&ZZ;)</M>, and which returns
 a factorization of an element <M>\gamma</M> satisfying
-<M>\tau^\gamma \in S</M> into <M>g_1 := (0(2),1(4)) \in S</M>,
-<M>g_2 := (0(2),3(4)) \in S</M>, <M>g_3 := (1(2),0(4)) \in S</M>,
-<M>g_4 := (1(2),2(4)) \in S</M>, <M>h_1 := (0(4),1(4)) \in S</M>
-and <M>h_2 := (1(4),2(4)) \in S</M>:
+<M>\tau^\gamma \in S</M> into <M>g_1 := \tau_{0(2),1(4)} \in S</M>,
+<M>g_2 := \tau_{0(2),3(4)} \in S</M>, <M>g_3 := \tau_{1(2),0(4)} \in S</M>,
+<M>g_4 := \tau_{1(2),2(4)} \in S</M>, <M>h_1 := \tau_{0(4),1(4)} \in S</M>
+and <M>h_2 := \tau_{1(4),2(4)} \in S</M>:
 
 <Listing Type="GAP code">
 <![CDATA[
