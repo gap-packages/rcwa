@@ -1226,7 +1226,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    Performs basically the first part of the computations done by
+    Performs the first part of the computations done by
     <C>KernelOfActionOnRespectedPartition</C>.
   </Item>
 

@@ -1942,7 +1942,7 @@ Depending on the rcwa mappings involved, using this representation may
 speed up computations and reduce memory requirements by orders of
 magnitude. For rcwa mappings with almost as many distinct affine partial
 mappings as there are residue classes modulo the modulus, using sparse
-representation makes computations somewhat slower and more memory-consuming.
+representation makes computations slower and more memory-consuming.
 Presently, the sparse representation is only available for rcwa mappings
 of &ZZ;. <P/>
 
@@ -1953,7 +1953,7 @@ Any such 5-tuple specifies the coefficients of the restriction
 to a residue class <M>r(m)</M>. The <M>r(m)</M> are chosen to form the
 coarsest possible partition of &ZZ; into residue classes such that the
 restriction of the mapping to any of them is affine. Also the list of
-coefficient triples is sorted, all <M>c_{r(m)}</M> are positive and
+coefficient tuples is sorted, all <M>c_{r(m)}</M> are positive and
 <M>\gcd(c_{r(m)},\gcd(a_{r(m)},b_{r(m)})) = 1</M>. This way the coefficient
 list of an rcwa mapping of &ZZ; is unique. <P/>
 
@@ -2006,11 +2006,13 @@ gap> h^3;
 <rcwa permutation of Z with modulus 663552 and 201 affine parts>
 ]]>
 </Example>
+    Memory consumption may differ a lot between sparse- and standard
+    representation:
 <Log>
-gap> MemoryUsage(h^3); # on a 32-bit machine
-9978
-gap> MemoryUsage(StandardRep(h^3));
-23888202
+gap> MemoryUsage(h^3);               # on a 64-bit machine
+18254
+gap> MemoryUsage(StandardRep(h^3));  # on a 64-bit machine
+42467894
 </Log>
   </Description>
 </ManSection>

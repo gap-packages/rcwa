@@ -36,7 +36,8 @@ BindGlobal( "RCWABuildManual",
                        "../lib/rcwagrp.gd", "../lib/rcwagrp.gi" ],
                        "RCWA", "../../../" );
     od;
-    RemoveTemporaryPackageFiles("rcwa");
+    if   ValueOption("keepclutter") <> true
+    then RemoveTemporaryPackageFiles("rcwa"); fi;
   end );
 
 #############################################################################

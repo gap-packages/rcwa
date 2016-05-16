@@ -8,6 +8,15 @@
 <?LaTeX ExtraPreamble="
 \usepackage{amsfonts}
 \usepackage{amsxtra}
+
+\tolerance 2500
+\hbadness 2500
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\clubpenalty=10000
+\vfuzz \hfuzz
+\raggedbottom
 "?>
 
 <!-- #################################################################### -->
