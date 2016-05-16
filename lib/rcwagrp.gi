@@ -1185,7 +1185,7 @@ InstallOtherMethod( Determinant,
 
 #############################################################################
 ##
-#S  Generating random elements of RCWA(R) and CT(R). ////////////////////////
+#S  Generating random elements of RCWA(R), CT(R) and other rcwa groups. /////
 ##
 #############################################################################
 
@@ -1321,6 +1321,30 @@ InstallMethod( Random,
     fi;
     IsBijective(result);
     return result;
+  end );
+
+#############################################################################
+##
+#M  Random( <G>, <n> ) . .  for finitely generated rcwa group and word length
+##
+InstallOtherMethod( Random,
+                    "for rcwa group and word length (RCWA)",
+                    ReturnTrue, [ IsRcwaGroup, IsPosInt ], 0,
+
+  function ( G, n )
+
+    local  gens, g, i;
+
+    if not HasGeneratorsOfGroup(G) then TryNextMethod(); fi;
+    if   ForAll(GeneratorsOfGroup(G),g->HasIsClassTransposition(g)
+                                    and IsClassTransposition(g))
+    then gens := GeneratorsOfGroup(G);
+    else gens := Set(GeneratorsAndInverses(G)); fi;
+    g := One(G);
+    for i in [1..n] do
+      g := g * Random(gens);
+    od;
+    return g;
   end );
 
 #############################################################################
