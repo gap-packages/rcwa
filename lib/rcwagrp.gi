@@ -1333,16 +1333,19 @@ InstallOtherMethod( Random,
 
   function ( G, n )
 
-    local  gens, g, i;
+    local  gens, g, gi, last_gi, i;
 
-    if not HasGeneratorsOfGroup(G) then TryNextMethod(); fi;
+    if   not HasGeneratorsOfGroup(G) or Length(GeneratorsOfGroup(G)) <= 1
+    then TryNextMethod(); fi;
     if   ForAll(GeneratorsOfGroup(G),g->HasIsClassTransposition(g)
                                     and IsClassTransposition(g))
     then gens := GeneratorsOfGroup(G);
     else gens := Set(GeneratorsAndInverses(G)); fi;
-    g := One(G);
+    g := One(G); last_gi := One(G);
     for i in [1..n] do
-      g := g * Random(gens);
+      repeat gi := Random(gens); until gi <> last_gi^-1;
+      g := g * gi;
+      last_gi := gi;
     od;
     return g;
   end );
