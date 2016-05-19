@@ -2885,6 +2885,16 @@ gap> Length(ClassPairs(30)) = NrClassPairs(30);
 true
 gap> ExtRepOfObj(ClassTransposition(0,2,1,4));
 [ 0, 2, 1, 4 ]
+gap> G := Group(List([[1,7,3,7],[0,7,6,7],[0,6,2,6]],ClassTransposition));
+<(1(7),3(7)),(0(7),6(7)),(0(6),2(6))>
+gap> P := RespectedPartition(G);
+[ 1(14), 3(14), 5(14), 7(14), 9(14), 11(14), 13(14), 0(42), 2(42), 4(42), 
+  6(42), 8(42), 10(42), 12(42), 14(42), 16(42), 18(42), 20(42), 22(42), 
+  24(42), 26(42), 28(42), 30(42), 32(42), 34(42), 36(42), 38(42), 40(42) ]
+gap> Union(P);
+Integers
+gap> Sum(List(P,Density));
+1
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 

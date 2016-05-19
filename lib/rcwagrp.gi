@@ -3299,12 +3299,14 @@ InstallMethod( RespectedPartition,
         r := r + 1;
         Add(B,[]);
         for i in [1..Length(B[r])] do
+          cl := B[r][i];
+          if   ForAny(P,c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0)
+          then return fail; fi;
+          if cl[2] > 10^16 then # finiteness no more plausible
+            CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
+            return "abort";
+          fi;
           for j in [1..Length(coeffs)] do
-            cl := B[r][i];
-            if cl[2] > 10^16 then # finiteness no more plausible
-              CheckForWildness(G,1000,Lcm(List(gens,Mod))^4);
-              return "abort";
-            fi;
             inter := Filtered(coeffs[j],
                               c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
             if    Length(inter) > 1
