@@ -9,7 +9,7 @@ Changes between RCWA 4.4.0 and RCWA 4.5.0 ():
    has been added.
 
  - A bug in the default method for `RespectedPartition' for subgroups of CT(Z)
-   has been fixed. This bug caused inconsistent return values in very rare cases.
+   has been fixed. This bug caused wrong results in very rare cases.
 
 Changes between RCWA 4.3.1 and RCWA 4.4.0 (May 14, 2016):
 

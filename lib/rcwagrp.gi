@@ -3372,7 +3372,7 @@ InstallMethod( RespectedPartition,
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
-    modulibound := 2^16;
+    modulibound := 2^20;
     compute_moduli();
     P := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
               cl->[Residue(cl),Modulus(cl)]);
