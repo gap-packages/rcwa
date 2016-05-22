@@ -3,7 +3,7 @@
                        ===================================
 
 
-Changes between RCWA 4.4.0 and RCWA 4.5.0 ():
+Changes between RCWA 4.4.0 and RCWA 4.4.1 (May 22, 2016):
 
  - A `Random' method for finitely generated rcwa groups and given word length
    has been added.

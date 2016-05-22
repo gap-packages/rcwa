@@ -42,7 +42,7 @@
       http://www.gap-system.org/DevelopersPages/StefanKohl/
     </Homepage>
   </Author>
-  <Date>May 14, 2016</Date>
+  <Date>May 22, 2016</Date>
   <Copyright>
     &copyright; 2003 - 2016 by Stefan Kohl. <P/>
 
@@ -65,10 +65,9 @@
   <Acknowledgements>
     I am grateful to John P. McDermott for the discovery that the group
     discussed in Section&nbsp;<Ref Label="sec:ThompsonsGroupV"/> is
-    isomorphic to Thompson's Group V (which is a finitely presented
-    infinite simple group) in July 2008, and to Laurent Bartholdi for his
-    hint on how to construct wreath products of residue-class-wise affine
-    groups with&nbsp;(&ZZ;,+) in April 2006.
+    isomorphic to Thompson's Group V in July 2008, and to Laurent Bartholdi
+    for his hint on how to construct wreath products of residue-class-wise
+    affine groups with&nbsp;(&ZZ;,+) in April 2006.
     Further, I thank Bettina&nbsp;Eick for communicating this package
     and for her valuable suggestions on its manual in the time before its
     first public release in April 2005.
