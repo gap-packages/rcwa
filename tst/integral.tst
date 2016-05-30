@@ -2895,6 +2895,30 @@ gap> Union(P);
 Integers
 gap> Sum(List(P,Density));
 1
+gap> G := CT(Integers);
+CT(Z)
+gap> Index(G,Group(ClassTransposition(0,2,1,2)));
+infinity
+gap> G := CT([2],Integers);                      
+CT_[ 2 ](Z)
+gap> Index(G,Group(ClassTransposition(0,2,1,2)));
+infinity
+gap> G := CT([2,3],Integers);                    
+CT_[ 2, 3 ](Z)
+gap> Index(G,Group(ClassTransposition(0,2,1,2)));
+infinity
+gap> Index(G,Group(ClassTransposition(0,2,1,2),ClassTransposition(0,2,1,4)));
+infinity
+gap> H := SparseRep(G);
+<(0(2),1(2)),(0(3),1(3)),(1(3),2(3)),(0(2),1(4)),(0(2),5(6)),(0(3),1(6))>
+gap> G=H;
+true
+gap> HasIsSimpleGroup(H);
+true
+gap> IsSimpleGroup(H);   
+true
+gap> IsNaturalCTP_Z(H);
+true
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 
