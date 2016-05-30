@@ -672,20 +672,21 @@ InstallMethod( CTCons,
       SetIsPerfectGroup( G, true );
       SetIsSimpleGroup( G, true );
     fi;
-    SetRepresentative( G, ClassTransposition(0,P[1],1,P[1]) );
+    SetRepresentative( G, SparseRep(ClassTransposition(0,P[1],1,P[1])) );
     SetSupport( G, Integers );
     SetName( G, Concatenation( "CT_", String(P), "(Z)" ) );
     SetStructureDescription( G, Name( G ) );
     if P = [2] then # Higman-Thompson group / Thompson's group V
       SetGeneratorsOfGroup(G,List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
-                                  ClassTransposition));
+                                  c->SparseRep(ClassTransposition(c))));
     elif P = [3] then
       SetGeneratorsOfGroup(G,List([[0,3,1,3],[1,3,2,3],[2,9,3,9],[5,9,6,9],
-                                   [2,3,3,9]],ClassTransposition));
+                                   [2,3,3,9]],
+                                  c->SparseRep(ClassTransposition(c))));
     elif P = [2,3] then
       SetGeneratorsOfGroup(G,List([[0,2,1,2],[0,3,1,3],[1,3,2,3],
                                    [0,2,1,4],[0,2,5,6],[0,3,1,6]],
-                                  ClassTransposition));
+                                  c->SparseRep(ClassTransposition(c))));
     fi;
     return G;
   end );

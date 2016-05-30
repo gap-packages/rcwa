@@ -174,7 +174,7 @@ end,
 ##
 #############################################################################
 
-cts  := List(ClassPairs(6),ClassTransposition),
+cts  := List(ClassPairs(6),c->SparseRep(ClassTransposition(c))),
 
 grps := List(Combinations(~.cts,3),Group),
 
