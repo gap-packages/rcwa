@@ -106,10 +106,10 @@ DeclareGlobalFunction( "NrConjugacyClassesOfCTZOfOrder" );
 
 #############################################################################
 ##
-#A  Sign( <g> ) . . . . . . . . . .  the sign of the element <g> of RCWA( Z )
+#A  Sign( <g> ) . . . . . . . . . . . .  sign of the element <g> of RCWA( Z )
 ##
 ##  The *sign* of the rcwa permutation <g>.
-##  The sign mapping is an epimorphism from RCWA(Z) to U(Z) = C_2.
+##  The sign mapping is an epimorphism from RCWA(Z) to U(Z) = <-1> = C_2.
 ##
 DeclareAttribute( "Sign", IsRcwaMapping );
 
@@ -151,6 +151,13 @@ DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );
 ##
 DeclareGlobalFunction( "AllElementsOfCTZWithGivenModulus" );
 
+#############################################################################
+## 
+#A  DecompositionIntoPermutationalAndOrderPreservingElement( <g> )
+##
+DeclareAttribute( "DecompositionIntoPermutationalAndOrderPreservingElement",
+                  IsRcwaMapping );
+ 
 #############################################################################
 ##
 #P  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . RCWA( R ) or CT( R )

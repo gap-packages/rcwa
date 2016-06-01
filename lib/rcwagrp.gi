@@ -607,7 +607,7 @@ InstallMethod( CTCons,
                               IsRcwaGroupOverZ and IsAttributeStoringRep ),
                      rec( ) );
     SetIsTrivial( G, false );
-    SetOne( G, IdentityRcwaMappingOfZ );
+    SetOne( G, SparseRep( IdentityRcwaMappingOfZ ) );
     SetIsNaturalRCWA_OR_CT( G, true );
     SetIsNaturalCT( G, true );
     SetIsNaturalCT_Z( G, true );
@@ -617,12 +617,12 @@ InstallMethod( CTCons,
     SetIsFinite( G, false );
     SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, false );
-    SetCentre( G, TrivialRcwaGroupOverZ );
+    SetCentre( G, SparseRep( TrivialRcwaGroupOverZ ) );
     SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     SetIsPerfectGroup( G, true );
     SetIsSimpleGroup( G, true );
-    SetRepresentative( G, ClassTransposition(0,2,1,2) );
+    SetRepresentative( G, SparseRep( ClassTransposition(0,2,1,2) ) );
     SetSupport( G, Integers );
     SetName( G, "CT(Z)" );
     SetStructureDescription( G, Name( G ) );
@@ -656,7 +656,7 @@ InstallMethod( CTCons,
                               IsRcwaGroupOverZ and IsAttributeStoringRep ),
                      rec( ) );
     SetIsTrivial( G, false );
-    SetOne( G, IdentityRcwaMappingOfZ );
+    SetOne( G, SparseRep( IdentityRcwaMappingOfZ ) );
     SetIsNaturalCTP_Z( G, true );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
@@ -665,7 +665,7 @@ InstallMethod( CTCons,
     SetIsFinite( G, false );
     SetSize( G, infinity );
     SetIsFinitelyGeneratedGroup( G, true );
-    SetCentre( G, TrivialRcwaGroupOverZ );
+    SetCentre( G, SparseRep( TrivialRcwaGroupOverZ ) );
     SetIsAbelian( G, false );
     SetIsSolvableGroup( G, false );
     if 2 in P then
@@ -1096,6 +1096,34 @@ InstallMethod( Factorization,
    if g in CT_R then return FactorizationIntoCSCRCT(g);
                 else return fail; fi;
  end );
+
+#############################################################################
+##
+#S  Decomposing elements of CT(Z). //////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+## 
+#A  DecompositionIntoPermutationalAndOrderPreservingElement( <g> )
+##
+InstallMethod( DecompositionIntoPermutationalAndOrderPreservingElement,
+               "for elements of CT(Z) (RCWA)", true, [ IsRcwaMappingOfZ ], 0,
+
+  function ( g )
+
+    local  a, b, cls, P;
+
+    if   not IsBijective(g) or not IsSignPreserving(g)
+    then TryNextMethod(); fi;
+
+    cls := AllResidueClassesModulo(Mod(g));
+    P   := cls^g;
+    SortParallel(List(P,Residue),P);
+    b   := RcwaMapping(cls,P);
+    a   := g/b;
+    return [ a, b ];
+  end );
 
 ############################################################################
 ##

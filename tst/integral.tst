@@ -2919,6 +2919,47 @@ gap> IsSimpleGroup(H);
 true
 gap> IsNaturalCTP_Z(H);
 true
+gap> V := CT([2],Integers);           
+CT_[ 2 ](Z)
+gap> a := V.1; b := V.2; c := V.3; d := V.4;    
+( 0(2), 1(2) )
+( 1(2), 2(4) )
+( 0(2), 1(4) )
+( 1(4), 2(4) )
+gap> DecompositionIntoPermutationalAndOrderPreservingElement(a);
+[ ( 0(2), 1(2) ), IdentityMapping( Integers ) ]
+gap> DecompositionIntoPermutationalAndOrderPreservingElement(b);
+[ ( 1(4), 2(4) ), <rcwa permutation of Z with modulus 4> ]
+gap> b = Product(last);
+true
+gap> AllResidueClassesModulo(4)^last2[2];
+[ 0(4), 1(2), 2(8), 6(8) ]
+gap> DecompositionIntoPermutationalAndOrderPreservingElement(c);
+[ ( 0(2), 1(2) ), <rcwa permutation of Z with modulus 4> ]
+gap> c = Product(last);
+true
+gap> AllResidueClassesModulo(4)^last2[2];
+[ 0(2), 1(8), 3(4), 5(8) ]
+gap> DecompositionIntoPermutationalAndOrderPreservingElement(d);
+[ ( 1(4), 2(4) ), IdentityMapping( Integers ) ]
+gap> d = Product(last);
+true
+gap> g := a*b*c*d;
+<rcwa permutation of Z with modulus 16 and 5 affine parts>
+gap> D := DecompositionIntoPermutationalAndOrderPreservingElement(g);;
+gap> g = Product(D);
+true
+gap> AllResidueClassesModulo(16)^D[2];    
+[ 0(4), 1(4), 2(32), 3(8), 6(64), 7(8), 10(32), 14(64), 18(32), 22(64), 
+  26(32), 30(64), 38(64), 46(64), 54(64), 62(64) ]
+gap> g := mKnot(3);
+mKnot(3)
+gap> DecompositionIntoPermutationalAndOrderPreservingElement(g);
+[ IdentityMapping( Integers ), <rcwa permutation of Z with modulus 3> ]
+gap> g = Product(last);
+true
+gap> AllResidueClassesModulo(3)^last2[2];
+[ 0(4), 1(2), 2(4) ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 
