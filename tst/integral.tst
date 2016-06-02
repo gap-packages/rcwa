@@ -2928,18 +2928,21 @@ gap> a := V.1; b := V.2; c := V.3; d := V.4;
 ( 1(4), 2(4) )
 gap> DecompositionIntoPermutationalAndOrderPreservingElement(a);
 [ ( 0(2), 1(2) ), IdentityMapping( Integers ) ]
-gap> DecompositionIntoPermutationalAndOrderPreservingElement(b);
-[ ( 1(4), 2(4) ), <rcwa permutation of Z with modulus 4> ]
+gap> D := DecompositionIntoPermutationalAndOrderPreservingElement(b);
+[ ( 1(4), 2(4), 3(4) ), <rcwa permutation of Z with modulus 4> ]
 gap> b = Product(last);
 true
-gap> AllResidueClassesModulo(4)^last2[2];
-[ 0(4), 1(2), 2(8), 6(8) ]
+gap> cls := AllResidueClassesModulo(4);
+[ 0(4), 1(4), 2(4), 3(4) ]
+gap> SortParallel(List(cls,cl->CoefficientsQadic(Residue(cl),2)),cls);
+gap> cls;
+[ 0(4), 2(4), 1(4), 3(4) ]
+gap> cls^D[2];
+[ 0(4), 2(8), 6(8), 1(2) ]
 gap> DecompositionIntoPermutationalAndOrderPreservingElement(c);
-[ ( 0(2), 1(2) ), <rcwa permutation of Z with modulus 4> ]
+[ ( 0(4), 2(4), 1(4) ), <rcwa permutation of Z with modulus 4> ]
 gap> c = Product(last);
 true
-gap> AllResidueClassesModulo(4)^last2[2];
-[ 0(2), 1(8), 3(4), 5(8) ]
 gap> DecompositionIntoPermutationalAndOrderPreservingElement(d);
 [ ( 1(4), 2(4) ), IdentityMapping( Integers ) ]
 gap> d = Product(last);
@@ -2949,9 +2952,14 @@ gap> g := a*b*c*d;
 gap> D := DecompositionIntoPermutationalAndOrderPreservingElement(g);;
 gap> g = Product(D);
 true
-gap> AllResidueClassesModulo(16)^D[2];    
-[ 0(4), 1(4), 2(32), 3(8), 6(64), 7(8), 10(32), 14(64), 18(32), 22(64), 
-  26(32), 30(64), 38(64), 46(64), 54(64), 62(64) ]
+gap> cls := AllResidueClassesModulo(16);;
+gap> SortParallel(List(cls,cl->CoefficientsQadic(Residue(cl),2)),cls);
+gap> cls;
+[ 0(16), 8(16), 4(16), 12(16), 2(16), 10(16), 6(16), 14(16), 1(16), 9(16), 
+  5(16), 13(16), 3(16), 11(16), 7(16), 15(16) ]
+gap> cls^D[2];
+[ 0(4), 2(32), 18(32), 10(32), 26(32), 6(64), 38(64), 22(64), 54(64), 14(64), 
+  46(64), 30(64), 62(64), 1(4), 3(8), 7(8) ]
 gap> g := mKnot(3);
 mKnot(3)
 gap> DecompositionIntoPermutationalAndOrderPreservingElement(g);
@@ -2960,6 +2968,10 @@ gap> g = Product(last);
 true
 gap> AllResidueClassesModulo(3)^last2[2];
 [ 0(4), 1(2), 2(4) ]
+gap> G3 := CT([3],Integers);
+CT_[ 3 ](Z)
+gap> List([1..10],k->SignInOddCTPZ(Random(G3,k)));
+[ -1, 1, -1, 1, -1, 1, -1, 1, -1, 1 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 

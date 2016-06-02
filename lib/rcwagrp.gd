@@ -115,6 +115,17 @@ DeclareAttribute( "Sign", IsRcwaMapping );
 
 #############################################################################
 ##
+#A  SignInOddCTPZ( <g> ) . . .  sign of <g> as element of CT_P(Z), 2 \notin P
+##
+##  The *sign* of the element <g> of CT_P(Z), where P does not contain 2.
+##  This sign mapping is an epimorphism from CT_P(Z) to U(Z) = <-1> = C_2.
+##  Since there is no such epimorphism if P contains 2, the prime set of <g>
+##  must not contain 2.
+##
+DeclareAttribute( "SignInOddCTPZ", IsRcwaMappingOfZ );
+
+#############################################################################
+##
 #O  CTCons( <R> ) . . . . . . . . . . . . . . . . . . . .  CT( R ) for ring R
 #O  CTCons( <P>, <R> )  . . . . . . . . . . . . . . . . CT( P, R ) for ring R
 #F  CT( <R> )

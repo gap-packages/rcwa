@@ -1112,16 +1112,18 @@ InstallMethod( DecompositionIntoPermutationalAndOrderPreservingElement,
 
   function ( g )
 
-    local  a, b, cls, P;
+  local  a, b, cls, P, q;
 
     if   not IsBijective(g) or not IsSignPreserving(g)
     then TryNextMethod(); fi;
 
+    q := Product(PrimeSet(g));
     cls := AllResidueClassesModulo(Mod(g));
-    P   := cls^g;
-    SortParallel(List(P,Residue),P);
-    b   := RcwaMapping(cls,P);
-    a   := g/b;
+    SortParallel(List(cls,cl->CoefficientsQadic(Residue(cl),q)),cls);
+    P := cls^g;
+    SortParallel(List(P,cl->CoefficientsQadic(Residue(cl),q)),P);
+    b := RcwaMapping(cls,P);
+    a := g/b;
     return [ a, b ];
   end );
 
@@ -1236,6 +1238,24 @@ InstallOtherMethod( Determinant,
     return Sum(List(f!.coeffs,
                     c -> Density(Intersection(S,ResidueClass(c[1],c[2])))
                        * c[4]/AbsInt(c[3])));
+  end );
+
+#############################################################################
+##
+#M  SignInOddCTPZ( <g> ) . . . . . . . .  for elements of CT_P(Z), 2 \notin P
+##
+InstallMethod( SignInOddCTPZ,
+               "for elements of CT_P(Z) where P does not contain 2 (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+
+  function ( g )
+
+    local  factors;
+
+    if   not IsBijective(g) or not IsSignPreserving(g) or 2 in PrimeSet(g)
+    then TryNextMethod(); fi;
+    factors := DecompositionIntoPermutationalAndOrderPreservingElement(g);
+    return SignPerm(Permutation(factors[1],AllResidueClassesModulo(Mod(g))));
   end );
 
 #############################################################################

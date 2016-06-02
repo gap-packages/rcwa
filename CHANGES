@@ -5,8 +5,8 @@
 
 Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
 
- - An attribute `DecompositionIntoPermutationalAndOrderPreservingElement'
-   has been added.
+ - Attributes `DecompositionIntoPermutationalAndOrderPreservingElement'
+   and `SignInOddCTPZ' have been added.
 
 Changes between RCWA 4.4.0 and RCWA 4.4.1 (May 22, 2016):
 
