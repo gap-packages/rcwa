@@ -6398,6 +6398,7 @@ InstallMethod( IsSimpleGroup,
                               Lcm(List(GeneratorsOfGroup(G),
                                        Modulus)));
     fi;
+    interval := Intersection(interval,Support(G));
 
     if   ShortOrbits(G,interval,64) <> [] or not IsPerfect(G)
     then return false; fi;
