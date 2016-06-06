@@ -6664,6 +6664,14 @@ InstallMethod( EpimorphismFromFpGroup,
           if pos <> fail then
             W[i][pos] := w;
           fi;
+          if Order(gensG[k]) > 2 then
+            h := g*gensG[k]^-1;
+            w := v*gensF[k]^-1;
+            pos := Position(B[i],h);
+            if pos <> fail then
+              W[i][pos] := w;
+            fi;
+          fi;
         od;
       od;
     od;
@@ -6707,7 +6715,7 @@ InstallMethod( EpimorphismFromFpGroup,
     od;
     relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
     relsmain     := Difference(rels,relsgenspows);
-    rels := Union(relsgenspows,
+    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),
                   Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
     Q := F/rels;
     phi := GroupHomomorphismByImagesNC(Q,G);
