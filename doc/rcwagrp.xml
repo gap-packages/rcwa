@@ -796,6 +796,9 @@ the generators:
 <ManSection>
   <Meth Name="EpimorphismFromFpGroup"
         Arg="G, r" Label="for an rcwa group and a search radius"/>
+  <Meth Name="EpimorphismFromFpGroup"
+        Arg="G, r, maxparts"
+        Label="for rcwa group, search radius and bound on number of affine parts"/>
   <Returns>
     an epimorphism from a finitely presented group to the
     rcwa group&nbsp;<A>G</A>.
@@ -807,6 +810,8 @@ the generators:
     of the returned epimorphism is. If the group&nbsp;<A>G</A> has
     finite presentations, the kernel will in principle get trivial
     provided that <A>r</A> is chosen large enough.
+    If the optional argument <A>maxparts</A> is given, it limits the
+    search space to elements with at most <A>maxparts</A> affine parts.
 <Example>
 <![CDATA[
 gap> a := ClassTransposition(2,4,3,4);;

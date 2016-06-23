@@ -6624,7 +6624,7 @@ InstallMethod( EpimorphismFromFpGroup,
 #M  EpimorphismFromFpGroup( <G>, <r> ) . . . . . . . . . . .  for rcwa groups
 ##
 InstallMethod( EpimorphismFromFpGroup,
-               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               "for rcwa groups (RCWA)", ReturnTrue,
                [ IsRcwaGroup and IsFinitelyGeneratedGroup, IsPosInt ], 10,
 
   function ( G, r )
@@ -6713,6 +6713,70 @@ InstallMethod( EpimorphismFromFpGroup,
         until invs = [] or 0 in invs;
       od;
     od;
+    relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
+    relsmain     := Difference(rels,relsgenspows);
+    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),
+                  Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
+    Q := F/rels;
+    phi := GroupHomomorphismByImagesNC(Q,G);
+    return phi;
+  end );
+
+#############################################################################
+##
+#M  EpimorphismFromFpGroup( <G>, <r>, <maxparts> ) . . . . .  for rcwa groups
+##
+InstallMethod( EpimorphismFromFpGroup,
+               "for rcwa groups, bound on number of affine parts (RCWA)",
+               ReturnTrue, [ IsRcwaGroup and IsFinitelyGeneratedGroup,
+                             IsPosInt, IsPosInt ], 0,
+
+  function ( G, r, maxparts )
+
+    local  search, gensG, gensF, F, Q, phi, B, rels, relsgenspows, relsmain,
+           n, letters, orders, i;
+
+    search := function ( g, w, lng, i, sign, powlastgen )
+
+      local  pairs, pair, j;
+
+      g := g * gensG[i]^sign; w := w * gensF[i]^sign;
+      pairs := Filtered(B,p->p[1]=g);
+      if pairs <> [] then
+        for pair in pairs do
+          Add(rels,w/pair[2]);
+        od;
+      elif Length(Coefficients(g)) <= maxparts and lng < r then
+        Add(B,[g,w]);
+        for j in [1..n] do
+          if j <> i then
+            search(g,w,lng+1,j,1,1);
+            if orders[j] = infinity then
+              search(g,w,lng+1,j,-1,1);
+            fi;
+          elif powlastgen + 1 < orders[i] then
+            search(g,w,lng+1,j,sign,powlastgen+1);
+          fi;
+        od;
+      fi;
+    end;
+
+    G           := SparseRep(G);
+    gensG       := GeneratorsOfGroup(G);
+    n           := Length(gensG);
+    letters     := ["a","b","c","d","e","f","g","h","k","l","m","n"];
+    if n <= 12 then F := FreeGroup(letters{[1..n]});
+               else F := FreeGroup(n); fi;
+    gensF       := GeneratorsOfGroup(F);
+    orders      := List(gensG,Order);
+
+    B := [[One(G),One(F)]]; rels := [];
+    for i in [1..n] do
+      search(One(G),One(F),0,i,1,1);
+      if   orders[i] = infinity
+      then search(One(G),One(F),0,i,-1,1); fi;
+    od;
+
     relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
     relsmain     := Difference(rels,relsgenspows);
     rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),

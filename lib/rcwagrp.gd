@@ -714,13 +714,17 @@ DeclareAttribute( "RankOfFreeGroup", IsRcwaGroup );
 #############################################################################
 ##
 #O  EpimorphismFromFpGroup( <G>, <r> ) . .  epimorphism from an fp group to G
+#O  EpimorphismFromFpGroup( <G>, <r>, <maxparts> )
 ##
 ##  Returns an epimorphism from a finitely presented group to the group <G>
 ##  The argument <r> denotes the radius of the ball around 1 which should be
-##  searched for relations.
+##  searched for relations. If the optional argument <maxparts> is given, it
+##  limits the search space to elements with at most <maxparts> affine parts.
 ##
 DeclareOperation( "EpimorphismFromFpGroup",
                   [ IsFinitelyGeneratedGroup, IsPosInt ] );
+DeclareOperation( "EpimorphismFromFpGroup",
+                  [ IsFinitelyGeneratedGroup, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##
