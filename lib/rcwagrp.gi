@@ -6731,50 +6731,65 @@ InstallMethod( EpimorphismFromFpGroup,
                ReturnTrue, [ IsRcwaGroup and IsFinitelyGeneratedGroup,
                              IsPosInt, IsPosInt ], 0,
 
-  function ( G, r, maxparts )
+  function ( G, r_max, maxparts )
 
-    local  search, gensG, gensF, F, Q, phi, B, rels, relsgenspows, relsmain,
-           n, letters, orders, i;
+    local  process_entry, gensG, gensF, F, Q, phi, inverseclosed, inversepos,
+           B, S_last, S, S_next, r, rels, relsgenspows, relsmain,
+           pairs, pair, n, letters, orders, g, h, w, v, i, j,
+           last_j, powlast_j;
 
-    search := function ( g, w, lng, i, sign, powlastgen )
-
-      local  pairs, pair, j;
-
-      g := g * gensG[i]^sign; w := w * gensF[i]^sign;
-      pairs := Filtered(B,p->p[1]=g);
-      if pairs <> [] then
+    process_entry := function ( )
+      if Length(Coefficients(h)) <= maxparts then
+        if inverseclosed then
+          pairs := Concatenation(Filtered(S,pair->pair[1]=h),
+                                 Filtered(S_last,pair->pair[1]=h));
+        else
+          pairs := Concatenation(List(B,S->Filtered(S,pair->pair[1]=h)));
+        fi;
         for pair in pairs do
-          Add(rels,w/pair[2]);
+          Add(rels,v/pair[2]);
         od;
-      elif Length(Coefficients(g)) <= maxparts and lng < r then
-        Add(B,[g,w]);
-        for j in [1..n] do
-          if j <> i then
-            search(g,w,lng+1,j,1,1);
-            if orders[j] = infinity then
-              search(g,w,lng+1,j,-1,1);
-            fi;
-          elif powlastgen + 1 < orders[i] then
-            search(g,w,lng+1,j,sign,powlastgen+1);
-          fi;
-        od;
+        if pairs = [] then
+          if   j <> last_j
+          then Add(S_next,[h,v,j,1]);
+          else Add(S_next,[h,v,j,powlast_j+1]); fi;
+        fi;
       fi;
     end;
 
-    G           := SparseRep(G);
-    gensG       := GeneratorsOfGroup(G);
-    n           := Length(gensG);
-    letters     := ["a","b","c","d","e","f","g","h","k","l","m","n"];
+    G             := SparseRep(G);
+    gensG         := GeneratorsOfGroup(G);
+    if not IsDuplicateFreeList(gensG) then TryNextMethod(); fi;
+    n             := Length(gensG);
+    letters       := ["a","b","c","d","e","f","g","h","k","l","m","n"];
     if n <= 12 then F := FreeGroup(letters{[1..n]});
                else F := FreeGroup(n); fi;
-    gensF       := GeneratorsOfGroup(F);
-    orders      := List(gensG,Order);
+    gensF         := GeneratorsOfGroup(F);
+    orders        := List(gensG,Order);
+    inverseclosed := ForAll(gensG,g->g^-1 in gensG);
+    inversepos    := List(gensG,g->Position(gensG,g^-1));
 
-    B := [[One(G),One(F)]]; rels := [];
-    for i in [1..n] do
-      search(One(G),One(F),0,i,1,1);
-      if   orders[i] = infinity
-      then search(One(G),One(F),0,i,-1,1); fi;
+    S_last := []; S := [[One(G),One(F),0,0]]; B := [S]; rels := [];
+    for r in [1..r_max] do
+      if S = [] then break; fi;
+      S_next := [];
+      for i in [1..Length(S)] do
+        g := S[i][1]; w := S[i][2]; last_j := S[i][3]; powlast_j := S[i][4];
+        for j in [1..n] do
+          if j <> last_j or powlast_j + 1 < orders[j] then
+            if last_j <> 0 and j = inversepos[last_j] then continue; fi;
+            h := g*gensG[j]; v := w*gensF[j];
+            process_entry();
+            if orders[j] = infinity and inversepos[j] = fail then
+              h := g*gensG[j]^-1; v := w*gensF[j]^-1;
+              process_entry();
+            fi;
+          fi;
+        od;
+      od;
+      S_last := S;
+      S := S_next;
+      Add(B,S);
     od;
 
     relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
