@@ -6630,9 +6630,9 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r )
 
-    local  gensG, gensF, F, Q, D, rels, relsnew, relsgenspows, relsmain,
-           abinvs, invs, d, B, W, phi, n, letters, m, onlyperfect,
-           timeout, starttime, involutions, g, h, v, w, i, j, k, pos;
+    local  gensG, gensF, F, Q, D, rels, relsnew, abinvs, invs, d, B, W, phi,
+           n, letters, m, onlyperfect, timeout, starttime, involutions,
+           g, h, v, w, i, j, k, pos;
 
     onlyperfect := ValueOption("onlyperfect") = true
                 or ValueOption("OnlyPerfect") = true;
@@ -6714,10 +6714,8 @@ InstallMethod( EpimorphismFromFpGroup,
         until invs = [] or 0 in invs;
       od;
     od;
-    relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
-    relsmain     := Difference(rels,relsgenspows);
-    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),
-                  Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
+    rels := Set(rels,w->NormalizedRelator(w,List(gensG,Order)));
+    rels := Filtered(rels,w->not IsOne(w));
     Q := F/rels;
     phi := GroupHomomorphismByImagesNC(Q,G);
     return phi;
@@ -6818,8 +6816,7 @@ InstallMethod( EpimorphismFromFpGroup,
     fi;
 
     rels := Set(rels,w->NormalizedRelator(w,orders));
-    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),
-                  rels);
+    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),rels);
     Q := F/rels;
 
     # Try to simplify the presentation by Tietze transformations;
