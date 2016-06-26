@@ -6540,6 +6540,7 @@ InstallMethod( NormalizedRelator,
     local  c, old, twice, words, min, max, start, i, j;
 
     c := ShallowCopy(ExtRepOfObj(w));
+    if Length(c) = 2 then return w; fi;
     repeat
       old := ShallowCopy(c);
       for i in [2,4..Length(c)] do
@@ -6733,10 +6734,10 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r_max, maxparts )
 
-    local  process_entry, gensG, gensF, F, Q, phi, inverseclosed, inversepos,
-           B, S_last, S, S_next, r, rels, relsgenspows, relsmain,
-           pairs, pair, n, letters, orders, g, h, w, v, i, j,
-           last_j, powlast_j;
+    local  process_entry, gensG, gensF, F, Q, R, phi, inverseclosed,
+           inversepos, B, S_last, S, S_next, r, rels, relslast, pairs, pair,
+           n, letters, orders, P, gens1, gens2, g, h, w, v, i, j, lng,
+           inv, pos, last_j, powlast_j;
 
     process_entry := function ( )
       if Length(Coefficients(h)) <= maxparts then
@@ -6792,11 +6793,50 @@ InstallMethod( EpimorphismFromFpGroup,
       Add(B,S);
     od;
 
-    relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
-    relsmain     := Difference(rels,relsgenspows);
+    rels := Set(rels,w->NormalizedRelator(w,orders));
+    if rels <> [] then
+      repeat
+        relslast := rels;
+        rels     := relslast{[1]};
+        for i in [2..Length(relslast)] do
+          w := relslast[i];
+          for j in [1..i-1] do
+            while PositionWord(w,relslast[j]) <> fail do
+              pos := PositionWord(w,relslast[j]);
+              w := SubstitutedWord(w,pos,pos+Length(relslast[j])-1,One(w));
+            od;
+            inv := NormalizedRelator(relslast[j]^-1,orders);
+            while PositionWord(w,inv) <> fail do
+              pos := PositionWord(w,inv);
+              w := SubstitutedWord(w,pos,pos+Length(inv)-1,One(w));
+            od;
+          od;
+          if not IsOne(w) then Add(rels,w); fi;
+        od;
+        rels := Set(rels,w->NormalizedRelator(w,orders));
+      until rels = relslast;
+    fi;
+
+    rels := Set(rels,w->NormalizedRelator(w,orders));
     rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),
-                  Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
+                  rels);
     Q := F/rels;
+
+    # Try to simplify the presentation by Tietze transformations;
+    # take the outcome if successful and if no change of generators occurs.
+
+    P := PresentationFpGroup(Q); gens1 := GeneratorsOfPresentation(P);
+    TzGo(P);                     gens2 := GeneratorsOfPresentation(P);
+    if gens1 = gens2 then
+      R := FpGroupPresentation(P);
+      rels := Set(RelatorsOfFpGroup(R),w->NormalizedRelator(w,orders));
+      rels := List(rels,w->ObjByExtRep(FamilyObj(gens2[1]),ExtRepOfObj(w)));
+      R := F/List(rels,w->ObjByExtRep(FamilyObj(One(F)),ExtRepOfObj(w)));
+      if Sum(RelatorsOfFpGroup(R),Length) < Sum(RelatorsOfFpGroup(Q),Length)
+        and ForAll(rels,w->IsOne(MappedWord(w,gens2,gensG)))
+      then Q := R; fi;
+    fi;
+
     phi := GroupHomomorphismByImagesNC(Q,G);
     return phi;
   end );
