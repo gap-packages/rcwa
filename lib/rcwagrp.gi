@@ -6733,9 +6733,9 @@ InstallMethod( EpimorphismFromFpGroup,
   function ( G, r_max, maxparts )
 
     local  process_entry, gensG, gensF, F, Q, R, phi, inverseclosed,
-           inversepos, B, S_last, S, S_next, r, rels, relslast, pairs, pair,
-           n, letters, orders, P, gens1, gens2, g, h, w, v, i, j, lng,
-           inv, pos, last_j, powlast_j;
+           inversepos, B, S_last, S, S_next, r, rels, relslast, stepnr,
+           pairs, pair, n, letters, orders, P, gens1, gens2,
+           g, h, w, v, i, j, lng, inv, pos, last_j, powlast_j;
 
     process_entry := function ( )
       if Length(Coefficients(h)) <= maxparts then
@@ -6768,8 +6768,11 @@ InstallMethod( EpimorphismFromFpGroup,
     inverseclosed := ForAll(gensG,g->g^-1 in gensG);
     inversepos    := List(gensG,g->Position(gensG,g^-1));
 
+    Info(InfoRCWA,1,"EpimorphismFromFpGroup for G = ",ViewString(G));
     S_last := []; S := [[One(G),One(F),0,0]]; B := [S]; rels := [];
     for r in [1..r_max] do
+      Info(InfoRCWA,1,"r = ",r,": |S| = ",Length(S),
+                      ", |rels| = ",Length(rels));
       if S = [] then break; fi;
       S_next := [];
       for i in [1..Length(S)] do
@@ -6790,10 +6793,15 @@ InstallMethod( EpimorphismFromFpGroup,
       S := S_next;
       Add(B,S);
     od;
+    Info(InfoRCWA,1,"Found ",Length(rels)," relations of total length ",
+                    Sum(List(rels,Length)),".");
 
     rels := Set(rels,w->NormalizedRelator(w,orders));
+    rels := Filtered(rels,w->not IsOne(w)); stepnr := 1;
     if rels <> [] then
       repeat
+        Info(InfoRCWA,1,"Reduction step ",stepnr," (",Length(rels),":",
+                        Sum(List(rels,Length)),")");
         relslast := rels;
         rels     := relslast{[1]};
         for i in [2..Length(relslast)] do
@@ -6817,11 +6825,16 @@ InstallMethod( EpimorphismFromFpGroup,
 
     rels := Set(rels,w->NormalizedRelator(w,orders));
     rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),rels);
-    Q := F/rels;
+
+    Info(InfoRCWA,1,"After reduction: ",Length(rels),
+                    " relations of total length ",
+                    Sum(List(rels,Length)),".");
+    Info(InfoRCWA,1,"Trying Tietze transformations ...");
 
     # Try to simplify the presentation by Tietze transformations;
     # take the outcome if successful and if no change of generators occurs.
 
+    Q := F/rels;
     P := PresentationFpGroup(Q); gens1 := GeneratorsOfPresentation(P);
     TzGo(P);                     gens2 := GeneratorsOfPresentation(P);
     if gens1 = gens2 then
@@ -6831,7 +6844,13 @@ InstallMethod( EpimorphismFromFpGroup,
       R := F/List(rels,w->ObjByExtRep(FamilyObj(One(F)),ExtRepOfObj(w)));
       if Sum(RelatorsOfFpGroup(R),Length) < Sum(RelatorsOfFpGroup(Q),Length)
         and ForAll(rels,w->IsOne(MappedWord(w,gens2,gensG)))
-      then Q := R; fi;
+      then
+        Q := R;
+        Info(InfoRCWA,1,"After Tietze transformations: ",
+                        Length(RelatorsOfFpGroup(Q)),
+                        " relations of total length ",
+                        Sum(List(RelatorsOfFpGroup(Q),Length)),".");
+      fi;
     fi;
 
     phi := GroupHomomorphismByImagesNC(Q,G);
