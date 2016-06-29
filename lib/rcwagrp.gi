@@ -6732,8 +6732,9 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r_max, maxparts )
 
-    local  process_entry, gensG, gensF, F, Q, R, phi, inverseclosed,
-           inversepos, B, S_last, S, S_next, r, rels, relslast, stepnr,
+    local  process_entry, basic_reduction,
+           gensG, gensF, F, Q, R, phi, inverseclosed, inversepos,
+           B, S_last, S, S_next, r, rels, relslast,
            pairs, pair, n, letters, orders, P, gens1, gens2,
            g, h, w, v, i, j, lng, inv, pos, last_j, powlast_j;
 
@@ -6753,6 +6754,39 @@ InstallMethod( EpimorphismFromFpGroup,
           then Add(S_next,[h,v,j,1]);
           else Add(S_next,[h,v,j,powlast_j+1]); fi;
         fi;
+      fi;
+    end;
+
+    basic_reduction := function ( )
+
+      local  stepnr;
+
+      stepnr := 1;
+      if rels <> [] then
+        repeat
+          Info(InfoRCWA,1,"Reduction step ",stepnr," (",Length(rels),":",
+                          Sum(List(rels,Length)),")");
+          relslast := rels;
+          rels     := relslast{[1]};
+          for i in [2..Length(relslast)] do
+            w := relslast[i];
+            for j in [1..i-1] do
+              while PositionWord(w,relslast[j]) <> fail do
+                pos := PositionWord(w,relslast[j]);
+                w := SubstitutedWord(w,pos,pos+Length(relslast[j])-1,One(w));
+              od;
+              inv := NormalizedRelator(relslast[j]^-1,orders);
+              while PositionWord(w,inv) <> fail do
+                pos := PositionWord(w,inv);
+                w := SubstitutedWord(w,pos,pos+Length(inv)-1,One(w));
+              od;
+            od;
+            if not IsOne(w) then Add(rels,w); fi;
+          od;
+          rels := Set(rels,w->NormalizedRelator(w,orders));
+          stepnr := stepnr + 1;
+        until rels = relslast;
+        rels := Set(rels,w->NormalizedRelator(w,orders));
       fi;
     end;
 
@@ -6797,36 +6831,9 @@ InstallMethod( EpimorphismFromFpGroup,
                     Sum(List(rels,Length)),".");
 
     rels := Set(rels,w->NormalizedRelator(w,orders));
-    rels := Filtered(rels,w->not IsOne(w)); stepnr := 1;
-    if rels <> [] then
-      repeat
-        Info(InfoRCWA,1,"Reduction step ",stepnr," (",Length(rels),":",
-                        Sum(List(rels,Length)),")");
-        relslast := rels;
-        rels     := relslast{[1]};
-        for i in [2..Length(relslast)] do
-          w := relslast[i];
-          for j in [1..i-1] do
-            while PositionWord(w,relslast[j]) <> fail do
-              pos := PositionWord(w,relslast[j]);
-              w := SubstitutedWord(w,pos,pos+Length(relslast[j])-1,One(w));
-            od;
-            inv := NormalizedRelator(relslast[j]^-1,orders);
-            while PositionWord(w,inv) <> fail do
-              pos := PositionWord(w,inv);
-              w := SubstitutedWord(w,pos,pos+Length(inv)-1,One(w));
-            od;
-          od;
-          if not IsOne(w) then Add(rels,w); fi;
-        od;
-        rels := Set(rels,w->NormalizedRelator(w,orders));
-      until rels = relslast;
-    fi;
+    rels := Filtered(rels,w->not IsOne(w));
 
-    rels := Set(rels,w->NormalizedRelator(w,orders));
-    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),rels);
-
-    Info(InfoRCWA,1,"After reduction: ",Length(rels),
+    Info(InfoRCWA,1,"After first reduction: ",Length(rels),
                     " relations of total length ",
                     Sum(List(rels,Length)),".");
     Info(InfoRCWA,1,"Trying Tietze transformations ...");
@@ -6834,9 +6841,10 @@ InstallMethod( EpimorphismFromFpGroup,
     # Try to simplify the presentation by Tietze transformations;
     # take the outcome if successful and if no change of generators occurs.
 
+    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),rels);
     Q := F/rels;
     P := PresentationFpGroup(Q); gens1 := GeneratorsOfPresentation(P);
-    TzGo(P);                     gens2 := GeneratorsOfPresentation(P);
+    TzGoGo(P);                   gens2 := GeneratorsOfPresentation(P);
     if gens1 = gens2 then
       R := FpGroupPresentation(P);
       rels := Set(RelatorsOfFpGroup(R),w->NormalizedRelator(w,orders));
@@ -6850,6 +6858,11 @@ InstallMethod( EpimorphismFromFpGroup,
                         Length(RelatorsOfFpGroup(Q)),
                         " relations of total length ",
                         Sum(List(RelatorsOfFpGroup(Q),Length)),".");
+      else
+        Info(InfoRCWA,1,"Tietze transformations unsuccessful, ",
+                        "trying basic reductions ... ");
+        basic_reduction();
+        Q := F/rels;
       fi;
     fi;
 
