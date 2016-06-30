@@ -13,12 +13,12 @@
 <Heading>Requirements</Heading>
 
 This version of &RCWA; needs at least &GAP;&nbsp;4.8.3,
-&ResClasses;&nbsp;4.5.0,
+&ResClasses;&nbsp;4.6.0,
 <Package>GRAPE</Package>&nbsp;4.7&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.11&nbsp;<Cite Key="Polycyclic"/>,
 <Package>FR</Package>&nbsp;2.2.1&nbsp;<Cite Key="FR"/>,
 &GAPDoc;&nbsp;1.5.1&nbsp;<Cite Key="GAPDoc"/>, and
-<Package>Utils</Package>&nbsp;0.39&nbsp;<Cite Key="Utils"/>.
+<Package>Utils</Package>&nbsp;0.40&nbsp;<Cite Key="Utils"/>.
 With possible exception of the most recent version of &ResClasses;,
 all needed packages are already present in an up-to-date standard &GAP;
 installation. The &RCWA; package is completely written in the &GAP; language
