@@ -6805,7 +6805,7 @@ InstallMethod( EpimorphismFromFpGroup,
     Info(InfoRCWA,1,"EpimorphismFromFpGroup for G = ",ViewString(G));
     S_last := []; S := [[One(G),One(F),0,0]]; B := [S]; rels := [];
     for r in [1..r_max] do
-      Info(InfoRCWA,1,"r = ",r,": |S| = ",Length(S),
+      Info(InfoRCWA,1,"r = ",r-1,": |S| = ",Length(S),
                       ", |rels| = ",Length(rels));
       if S = [] then break; fi;
       S_next := [];
