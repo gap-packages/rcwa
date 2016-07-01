@@ -5980,7 +5980,12 @@ trsstatus := List(~.trsstatuspos,i->~.trsstatusset[i]),
 
 orbitgrowthtype := 
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                               "/data/3ctsgroups6/orbitgrowthtype.g"))()
+                               "/data/3ctsgroups6/orbitgrowthtype.g"))(),
+
+minwordlengthnonbalanced :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/minwordlengthnonbalanced.g"))()
+
 );
 
 #############################################################################
