@@ -5984,7 +5984,19 @@ orbitgrowthtype :=
 
 minwordlengthnonbalanced :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                 "/data/3ctsgroups6/minwordlengthnonbalanced.g"))()
+                 "/data/3ctsgroups6/minwordlengthnonbalanced.g"))(),
+
+minwordlengthcoprimemultdiv :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/minwordlengthcoprimemultdiv.g"))(),
+
+epifromfpgrouptocollatzgroup_c :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/epifromfpgrouptocollatzgroup_c.g"))(),
+
+epifromfpgrouptocollatzgroup_t :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/epifromfpgrouptocollatzgroup_t.g"))()
 
 );
 

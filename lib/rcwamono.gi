@@ -625,15 +625,16 @@ InstallMethod( RestrictedBall,
                ReturnTrue, [ IsRcwaMonoid, IsRcwaMapping,
                              IsInt, IsPosInt ], 0,
 
-  function ( G, f, r, modulusbound )
+  function ( G, f, r, bound )
 
-    local  R, gens, ball, old, new, h1, h2, h, k, spheres;
+    local  R, gens, ball, old, new, h1, h2, h, k, spheres, boundaffineparts;
 
     R := Source(f);
     if   not IsCollsElms(FamilyObj(G),FamilyObj(f))
       or not IsRing(R) or r < 0
     then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
+    boundaffineparts := ValueOption("boundaffineparts") = true;
     if spheres then ball := [[f]]; else ball := [f]; fi;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
@@ -644,8 +645,11 @@ InstallMethod( RestrictedBall,
       for h1 in old do
         for h2 in gens do
           h := h1 * h2;
-          if   NumberOfResidues(R,Mod(h)) <= modulusbound
-          then Add(new,h); fi;
+          if boundaffineparts then
+            if Length(Coefficients(h)) <= bound then Add(new,h); fi;
+          else
+            if NumberOfResidues(R,Mod(h)) <= bound then Add(new,h); fi;
+          fi;
         od;
       od;
       if spheres then

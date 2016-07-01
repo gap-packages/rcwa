@@ -1498,7 +1498,11 @@ properties or be it for other purposes:
     specifically for rcwa groups which computes only those elements of the
     ball whose moduli do not exceed <A>modulusbound</A>, and which can be
     reached from <A>g</A> without computing intermediate elements whose
-    moduli do exceed <A>modulusbound</A>.
+    moduli do exceed <A>modulusbound</A>. The latter operation interprets
+    an option <C>"boundaffineparts"</C>. -- If this option is set and the
+    group <A>G</A> and the element <A>g</A> are in sparse representation,
+    then <A>modulusbound</A> is actually taken to be a bound on the number
+    of affine parts rather than a bound on the modulus.
 
     <Index Key="RestrictedBall" Subkey="G, g, r, modulusbound">
       <C>RestrictedBall</C>
