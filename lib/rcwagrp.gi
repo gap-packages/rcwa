@@ -6761,6 +6761,10 @@ InstallMethod( EpimorphismFromFpGroup,
 
       local  stepnr;
 
+      if ValueOption("OnlyTietze") = true then
+        rels := Set(rels,w->NormalizedRelator(w,orders));
+        rels := Filtered(rels,w->not IsOne(w));
+      fi;
       stepnr := 1;
       if rels <> [] then
         repeat
@@ -6830,12 +6834,14 @@ InstallMethod( EpimorphismFromFpGroup,
     Info(InfoRCWA,1,"Found ",Length(rels)," relations of total length ",
                     Sum(List(rels,Length)),".");
 
-    rels := Set(rels,w->NormalizedRelator(w,orders));
-    rels := Filtered(rels,w->not IsOne(w));
+    if ValueOption("OnlyTietze") <> true then
+      rels := Set(rels,w->NormalizedRelator(w,orders));
+      rels := Filtered(rels,w->not IsOne(w));
+      Info(InfoRCWA,1,"After first reduction: ",Length(rels),
+                      " relations of total length ",
+                      Sum(List(rels,Length)),".");
+    fi;
 
-    Info(InfoRCWA,1,"After first reduction: ",Length(rels),
-                    " relations of total length ",
-                    Sum(List(rels,Length)),".");
     Info(InfoRCWA,1,"Trying Tietze transformations ...");
 
     # Try to simplify the presentation by Tietze transformations;
