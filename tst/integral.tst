@@ -2972,6 +2972,16 @@ gap> G3 := CT([3],Integers);
 CT_[ 3 ](Z)
 gap> List([1..10],k->SignInOddCTPZ(Random(G3,k)));
 [ -1, 1, -1, 1, -1, 1, -1, 1, -1, 1 ]
+gap> G := CT([2,3],Integers);
+CT_[ 2, 3 ](Z)
+gap> phi := EpimorphismFromFpGroup(G,200,4);
+#I  there are 6 generators and 8 relators of total length 30
+[ a, b, c, d, e, f ] -> [ ( 0(2), 1(2) ), ( 0(3), 1(3) ), ( 1(3), 2(3) ), 
+  ( 0(2), 1(4) ), ( 0(2), 5(6) ), ( 0(3), 1(6) ) ]
+gap> H := Source(phi);
+<fp group on the generators [ a, b, c, d, e, f ]>
+gap> rels := RelatorsOfFpGroup(H);
+[ a^2, b^2, c^2, d^2, e^2, f^2, (b*c)^3, (b*c*b*f)^3 ]
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 
