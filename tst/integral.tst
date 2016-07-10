@@ -2081,6 +2081,7 @@ gap> c := ClassTransposition(3,4,4,6);; SetName(c,"c");
 gap> G := Group(a,b,c);
 <(2(4),3(4)),(4(6),8(12)),(3(4),4(6))>
 gap> phi := EpimorphismFromFpGroup(G,3);
+#I  there are 3 generators and 5 relators of total length 24
 [ a, b, c ] -> [ a, b, c ]
 gap> Length(RelatorsOfFpGroup(Source(phi))) >= 4;
 true
@@ -2652,6 +2653,7 @@ false
 gap> Exponent(G);
 infinity
 gap> phi := EpimorphismFromFpGroup(G,2);
+#I  there are 3 generators and 5 relators of total length 42
 [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(5), 4(5) ), ( 3(4), 4(6) ) ]
 gap> RelatorsOfFpGroup(Source(phi));
 [ a^2, b^2, c^2, (a*b)^6, (b*c)^12 ]

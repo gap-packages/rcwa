@@ -6630,25 +6630,21 @@ InstallMethod( EpimorphismFromFpGroup,
 
   function ( G, r )
 
-    local  gensG, gensF, F, Q, D, rels, relsnew, abinvs, invs, d, B, W, phi,
-           n, letters, m, onlyperfect, timeout, starttime, involutions,
-           g, h, v, w, i, j, k, pos;
+    local  gensG, gensF, F, Q, R, P, rels, B, W, phi, n, letters, orders,
+           gens1, gens2, g, h, m, v, w, i, j, k, pos, timeout, starttime;
 
-    onlyperfect := ValueOption("onlyperfect") = true
-                or ValueOption("OnlyPerfect") = true;
     timeout     := ValueOption("timeout");
     starttime   := Runtime();
 
     letters := ["a","b","c","d","e","f","g","h","k","l","m","n"];
     gensG   := GeneratorsOfGroup(G);
+    orders  := List(gensG,Order);
     n       := Length(gensG);
     if n <= 12 then F := FreeGroup(letters{[1..n]});
                else F := FreeGroup(n); fi;
     gensF   := GeneratorsOfGroup(F);
 
-    involutions := Set(gensG,Order) = [2];
-
-    Info(InfoRCWA,2,"EpimorphismFromFpGroup: computing ball of radius ",r);
+    Info(InfoRCWA,1,"EpimorphismFromFpGroup: computing ball of radius ",r);
 
     B := Ball(G,One(G),r:Spheres);
     W := [[One(F)]];
@@ -6676,46 +6672,48 @@ InstallMethod( EpimorphismFromFpGroup,
       od;
     od;
 
-    Info(InfoRCWA,2,"EpimorphismFromFpGroup: searching for relations");
+    Info(InfoRCWA,1,"EpimorphismFromFpGroup: searching for relations");
 
     rels   := [];
-    abinvs := [ListWithIdenticalEntries(n,0)];
     for i in [2..r+1] do
       if IsInt(timeout) and Runtime()-starttime >= timeout
       then break; fi;
-      Info(InfoRCWA,2,"r = ",i-1);
+      Info(InfoRCWA,1,"r = ",i-1);
       for j in [1..Length(B[i])] do
         if IsInt(timeout) and Runtime()-starttime >= timeout
         then break; fi;
-        Info(InfoRCWA,3,"Element number = ",j);
+        Info(InfoRCWA,2,"Element number = ",j);
         g := B[i][j];
         w := W[i][j];
-        if involutions 
-          and Set(Collected(LetterRepAssocWord(w)),l->l[2]) mod 2 = [0]
-        then continue; fi;
         m := Order(g);
         if IsInfinity(m) then continue; fi;
-        if   i > 2 and onlyperfect and involutions and m mod 2 = 0
-        then continue; fi;
-        relsnew := Concatenation(rels,[w^m]);
-        Q := F/relsnew; D := Q; d := 1;
-        repeat
-          invs := AbelianInvariants(D);
-          if not IsBound(abinvs[d]) or invs <> abinvs[d] then
-            abinvs[d] := invs;
-            rels := relsnew;
-            break;
-          elif invs = [] or 0 in invs then break;
-          elif onlyperfect then break;
-          else D := DerivedSubgroup(D);
-               d := d + 1;
-          fi;
-        until invs = [] or 0 in invs;
+        Add(rels,w^m);
       od;
     od;
     rels := Set(rels,w->NormalizedRelator(w,List(gensG,Order)));
     rels := Filtered(rels,w->not IsOne(w));
+
     Q := F/rels;
+    P := PresentationFpGroup(Q); gens1 := GeneratorsOfPresentation(P);
+    TzGoGo(P);                   gens2 := GeneratorsOfPresentation(P);
+    if gens1 = gens2 then
+      R := FpGroupPresentation(P);
+      rels := Set(RelatorsOfFpGroup(R),w->NormalizedRelator(w,orders));
+      rels := List(rels,w->ObjByExtRep(FamilyObj(gens2[1]),ExtRepOfObj(w)));
+      R := F/List(rels,w->ObjByExtRep(FamilyObj(One(F)),ExtRepOfObj(w)));
+      if Sum(RelatorsOfFpGroup(R),Length) < Sum(RelatorsOfFpGroup(Q),Length)
+        and ForAll(rels,w->IsOne(MappedWord(w,gens2,gensG)))
+      then
+        Q := R;
+        Info(InfoRCWA,1,"After Tietze transformations: ",
+                        Length(RelatorsOfFpGroup(Q)),
+                        " relations of total length ",
+                        Sum(List(RelatorsOfFpGroup(Q),Length)),".");
+      else
+        Info(InfoRCWA,1,"Tietze transformations unsuccessful.");
+      fi;
+    fi;
+
     phi := GroupHomomorphismByImagesNC(Q,G);
     return phi;
   end );
