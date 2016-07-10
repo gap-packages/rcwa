@@ -6648,8 +6648,7 @@ InstallMethod( EpimorphismFromFpGroup,
 
     involutions := Set(gensG,Order) = [2];
 
-    Info(InfoRCWA,2,"EpimorphismFromFpGroup: computing ball of radius ",
-                    r,"\n");
+    Info(InfoRCWA,2,"EpimorphismFromFpGroup: computing ball of radius ",r);
 
     B := Ball(G,One(G),r:Spheres);
     W := [[One(F)]];
@@ -6684,11 +6683,11 @@ InstallMethod( EpimorphismFromFpGroup,
     for i in [2..r+1] do
       if IsInt(timeout) and Runtime()-starttime >= timeout
       then break; fi;
-      Info(InfoRCWA,2,"r = ",i-1,"\n");
+      Info(InfoRCWA,2,"r = ",i-1);
       for j in [1..Length(B[i])] do
         if IsInt(timeout) and Runtime()-starttime >= timeout
         then break; fi;
-        Info(InfoRCWA,3,"Element number = ",j,"\n");
+        Info(InfoRCWA,3,"Element number = ",j);
         g := B[i][j];
         w := W[i][j];
         if involutions 
