@@ -5996,7 +5996,11 @@ epifromfpgrouptocollatzgroup_c :=
 
 epifromfpgrouptocollatzgroup_t :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                 "/data/3ctsgroups6/epifromfpgrouptocollatzgroup_t.g"))()
+                 "/data/3ctsgroups6/epifromfpgrouptocollatzgroup_t.g"))(),
+
+epifromfpgroupto_ct23z :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/epifromfpgroupto_ct23z.g"))()
 
 );
 
