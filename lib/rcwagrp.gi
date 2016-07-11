@@ -6690,7 +6690,7 @@ InstallMethod( EpimorphismFromFpGroup,
         Add(rels,w^m);
       od;
     od;
-    rels := Set(rels,w->NormalizedRelator(w,List(gensG,Order)));
+    rels := Set(rels,w->NormalizedRelator(w,orders));
     rels := Filtered(rels,w->not IsOne(w));
 
     Q := F/rels;
@@ -6844,7 +6844,8 @@ InstallMethod( EpimorphismFromFpGroup,
     # Try to simplify the presentation by Tietze transformations;
     # take the outcome if successful and if no change of generators occurs.
 
-    rels := Union(List([1..Length(gensG)],i->gensF[i]^Order(gensG[i])),rels);
+    rels := Union(List(Difference([1..n],Positions(orders,infinity)),
+                       i->gensF[i]^orders[i]),rels);
     Q := F/rels;
     P := PresentationFpGroup(Q); gens1 := GeneratorsOfPresentation(P);
     TzGoGo(P);                   gens2 := GeneratorsOfPresentation(P);
