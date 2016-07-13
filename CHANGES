@@ -20,6 +20,10 @@ Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
    does now interpret an option "boundaffineparts". -- If set, the specified bound
    is on the number of affine parts rather than on the modulus of the mapping.
 
+ - An operation `HashValueOfRcwaMapping' has been added.
+   The purpose of the hash values is to allow faster searching of rcwa mappings
+   by algorithms.
+
 Changes between RCWA 4.4.0 and RCWA 4.4.1 (May 22, 2016):
 
  - A `Random' method for finitely generated rcwa groups and given word length

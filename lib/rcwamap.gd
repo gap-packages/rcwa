@@ -760,6 +760,17 @@ DeclareAttribute( "MappedPartitions", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  HashValueOfRcwaMapping( <f>, <m> )
+##
+##  Returns a hash value for the rcwa mapping <f> in the range [1..<m>].
+##  The hash value has no mathematical meaning, but given <f> and <m>, it
+##  is always the same. Its purpose is to allow speeding up the search of
+##  rcwa mappings within algorithms.
+##
+DeclareOperation( "HashValueOfRcwaMapping", [ IsRcwaMapping, IsPosInt ] );
+
+#############################################################################
+##
 #S  The notion of tameness. /////////////////////////////////////////////////
 ##
 #############################################################################

@@ -5215,6 +5215,30 @@ InstallMethod( MappedPartitions,
 
 #############################################################################
 ##
+#M  HashValueOfRcwaMapping( <f>, <m> ) . . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( HashValueOfRcwaMapping,
+               "for rcwa mappings of Z (RCWA)", ReturnTrue,
+               [ IsRcwaMappingOfZ, IsPosInt ], 0,
+
+  function ( f, m )
+
+    local  c, n, max, i;
+
+    if not IsRcwaMappingOfZInSparseRep(f)
+      and not IsRcwaMappingOfZInStandardRep(f)
+    then TryNextMethod(); fi;
+    c := Coefficients(f); max := m^3; n := 1;
+    for i in [1..Length(c)] do
+      n := (n*c[i][1]+c[i][2])*c[i][3]+c[i][1];
+      if Length(c[i]) = 5 then n := (n+c[i][4])*c[i][5]+c[i][3]; fi;
+      if AbsInt(n) > max then break; fi;
+    od;
+    return n mod m + 1;
+  end );
+
+#############################################################################
+##
 #S  The support of an rcwa mapping. /////////////////////////////////////////
 ##
 #############################################################################
