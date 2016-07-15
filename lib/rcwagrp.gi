@@ -6731,18 +6731,26 @@ InstallMethod( EpimorphismFromFpGroup,
 
     local  process_entry, basic_reduction,
            gensG, gensF, F, Q, R, phi, inverseclosed, inversepos,
-           B, S_last, S, S_next, r, rels, relslast,
-           pairs, pair, n, letters, orders, P, gens1, gens2,
+           B, S_last, S, S_next, hashtable, hashsize, hash, r,
+           rels, relslast, pairs, pair, n, letters, orders, P, gens1, gens2,
            g, h, w, v, i, j, lng, inv, pos, last_j, powlast_j;
 
     process_entry := function ( )
+
+      local  inds;
+
       if Length(Coefficients(h)) <= maxparts then
-        if inverseclosed then
-          pairs := Concatenation(Filtered(S,pair->pair[1]=h),
-                                 Filtered(S_last,pair->pair[1]=h));
-        else
-          pairs := Concatenation(List(B,S->Filtered(S,pair->pair[1]=h)));
-        fi;
+        hash := HashValueOfRcwaMapping(h,hashsize);
+        pairs := [];
+        for inds in hashtable[hash] do
+          if inds[1] <= Length(B) then
+            if   B[inds[1]][inds[2]][1] = h
+            then Add(pairs,B[inds[1]][inds[2]]); fi;
+          elif inds[1] = Length(B) + 1 then
+            if   S_next[inds[2]][1] = h
+            then Add(pairs,S_next[inds[2]]); fi;
+          fi;
+        od;
         for pair in pairs do
           Add(rels,v/pair[2]);
         od;
@@ -6750,6 +6758,7 @@ InstallMethod( EpimorphismFromFpGroup,
           if   j <> last_j
           then Add(S_next,[h,v,j,1]);
           else Add(S_next,[h,v,j,powlast_j+1]); fi;
+          Add(hashtable[hash],[r+1,Length(S_next)]);
         fi;
       fi;
     end;
@@ -6802,8 +6811,11 @@ InstallMethod( EpimorphismFromFpGroup,
     orders        := List(gensG,Order);
     inverseclosed := ForAll(gensG,g->g^-1 in gensG);
     inversepos    := List(gensG,g->Position(gensG,g^-1));
+    hashsize      := ValueOption("hashsize");
+    if not IsPosInt(hashsize) then hashsize := 10000; fi;
 
     Info(InfoRCWA,1,"EpimorphismFromFpGroup for G = ",ViewString(G));
+    hashtable := List([1..hashsize],n->[]);
     S_last := []; S := [[One(G),One(F),0,0]]; B := [S]; rels := [];
     for r in [1..r_max] do
       Info(InfoRCWA,1,"r = ",r-1,": |S| = ",Length(S),
