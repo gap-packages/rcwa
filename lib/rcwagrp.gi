@@ -6877,9 +6877,16 @@ InstallMethod( EpimorphismFromFpGroup,
       else
         Info(InfoRCWA,1,"Tietze transformations unsuccessful, ",
                         "trying basic reductions ... ");
+        rels := RelatorsOfFpGroup(Q);
         basic_reduction();
         Q := F/rels;
       fi;
+    else
+      Info(InfoRCWA,1,"Tietze transformations changed generating set, ",
+                      "trying basic reductions ... ");
+      rels := RelatorsOfFpGroup(Q);
+      basic_reduction();
+      Q := F/rels;
     fi;
 
     phi := GroupHomomorphismByImagesNC(Q,G);
