@@ -5029,7 +5029,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
       k := 0;
       repeat
         n := Residue(R[1]);
-        if n = Residues(S)[1] then n := n + Modulus(R[1]); fi;
+        while Intersection(S,[0..n-1]) = [] do n := n + Modulus(R[1]); od;
         n := n + k * Modulus(R[1]);
         limit := 10000;
         Info(InfoRCWA,1,"n = ",n);
@@ -5074,7 +5074,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
     od;
 
     check := [ R = [], Sum(List(Flat(classes),Density)) = Density(S),
-               Union(Flat(classes)) = S ];
+               Union(Flat(classes)) = Union(S,ExcludedElements(S)) ];
     if not check in [[true,true,true],[false,false,false]]
     then Error("internal error!"); fi;
 
