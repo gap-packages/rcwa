@@ -17,8 +17,10 @@ Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
    'epifromfpgrouptocollatzgroup_c' and 'epifromfpgrouptocollatzgroup_t'.
 
  - The method for `RestrictedBall' for computing restricted balls in rcwa monoids
-   does now interpret an option "boundaffineparts". -- If set, the specified bound
-   is on the number of affine parts rather than on the modulus of the mapping.
+   does now interpret options "boundaffineparts" and "boundnonidentityaffineparts".
+   -- If set, the specified bound is on the number of affine parts, respectively,
+   on the number of affine parts distinct from the identity, rather than on the
+   modulus of the mapping.
 
  - An operation `HashValueOfRcwaMapping' has been added.
    The purpose of the hash values is to allow faster searching of rcwa mappings

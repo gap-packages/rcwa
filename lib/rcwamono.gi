@@ -627,7 +627,8 @@ InstallMethod( RestrictedBall,
 
   function ( G, f, r, bound )
 
-    local  R, gens, ball, old, new, h1, h2, h, k, spheres, boundaffineparts;
+    local  R, gens, ball, old, new, h1, h2, h, k, spheres,
+           boundaffineparts, boundnonidentityaffineparts, identity;
 
     R := Source(f);
     if   not IsCollsElms(FamilyObj(G),FamilyObj(f))
@@ -635,6 +636,9 @@ InstallMethod( RestrictedBall,
     then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
     boundaffineparts := ValueOption("boundaffineparts") = true;
+    boundnonidentityaffineparts :=
+      ValueOption("boundnonidentityaffineparts") = true;
+    identity := [One(R),Zero(R),One(R)];
     if spheres then ball := [[f]]; else ball := [f]; fi;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
@@ -645,8 +649,12 @@ InstallMethod( RestrictedBall,
       for h1 in old do
         for h2 in gens do
           h := h1 * h2;
-          if boundaffineparts then
+          if   boundaffineparts then
             if Length(Coefficients(h)) <= bound then Add(new,h); fi;
+          elif boundnonidentityaffineparts then
+            if   Number(Coefficients(h),
+                        c->c{[Length(c)-2..Length(c)]}<>identity) <= bound
+            then Add(new,h); fi;
           else
             if NumberOfResidues(R,Mod(h)) <= bound then Add(new,h); fi;
           fi;
