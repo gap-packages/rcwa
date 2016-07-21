@@ -654,6 +654,8 @@ InstallMethod( RestrictedBall,
       od;
       if spheres then
         Add(ball,Difference(new,Union(ball[Maximum(1,k-1)],ball[k])));
+        Info(InfoRCWA,1,"r = ",Length(ball)-1,": |S| = ",
+                               Length(ball[Length(ball)]));
       else
         ball := Union(ball,new);
       fi;
