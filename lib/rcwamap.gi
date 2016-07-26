@@ -4899,10 +4899,11 @@ InstallMethod( IncreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
   function ( f )
     if ValueOption("classes") = true then
       return Set(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
-                  c->ResidueClass(c[1],c[2]));
+                 c->ResidueClass(c[1],c[2]));
     else
-      return Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
-                        c->ResidueClass(c[1],c[2])));
+      return ResidueClassUnion(Integers,
+                               List(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
+                                    c->c{[1,2]}));
     fi;
   end );
 
@@ -4939,10 +4940,11 @@ InstallMethod( DecreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
   function ( f )
     if ValueOption("classes") = true then
       return Set(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
-                  c->ResidueClass(c[1],c[2]));
+                 c->ResidueClass(c[1],c[2]));
     else
-      return Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
-                        c->ResidueClass(c[1],c[2])));
+      return ResidueClassUnion(Integers,
+                               List(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
+                                    c->c{[1,2]}));
     fi;
   end );
 
@@ -4965,9 +4967,10 @@ InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                            c->c{[3,5]}=[1,1] and c[4]>0),
                   c->ResidueClass(c[1],c[2]));
     else
-      return Union(List(Filtered(f!.coeffs,
-                                 c->c{[3,5]}=[1,1] and c[4]>0),
-                        c->ResidueClass(c[1],c[2])));
+      return ResidueClassUnion(Integers,
+                               List(Filtered(f!.coeffs,
+                                             c->c{[3,5]}=[1,1] and c[4]>0),
+                                    c->c{[1,2]}));
     fi;
   end );
 
@@ -4991,9 +4994,10 @@ InstallMethod( ShiftsDownOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
                            c->c{[3,5]}=[1,1] and c[4]<0),
                   c->ResidueClass(c[1],c[2]));
     else
-      return Union(List(Filtered(f!.coeffs,
-                                 c->c{[3,5]}=[1,1] and c[4]<0),
-                        c->ResidueClass(c[1],c[2])));
+      return ResidueClassUnion(Integers,
+                               List(Filtered(f!.coeffs,
+                                             c->c{[3,5]}=[1,1] and c[4]<0),
+                                    c->c{[1,2]}));
     fi;
   end );
 
@@ -5039,11 +5043,12 @@ InstallMethod( LargestSourcesOfAffineMappings,
                "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep ], 0,
                f -> Set(EquivalenceClasses(f!.coeffs,c->c{[3..5]}),
-                        cl->Union(List(cl,c->ResidueClass(c[1],c[2])))) );
+                        cl->ResidueClassUnion(Integers,
+                                              List(cl,c->c{[1,2]}))) );
 
 #############################################################################
 ##
-#A  FixedPointsOfAffinePartialMappings( <f> ) for rcwa mapping of Z or Z_(pi)
+#M  FixedPointsOfAffinePartialMappings( <f> ) for rcwa mapping of Z or Z_(pi)
 ##
 InstallMethod( FixedPointsOfAffinePartialMappings,
                "for rcwa mappings of Z or Z_(pi) (RCWA)",
@@ -5147,8 +5152,10 @@ InstallMethod( Multpk, "for rcwa mappings of Z in sparse rep. (RCWA)",
                true, [ IsRcwaMappingOfZInSparseRep, IsInt, IsInt ], 0,
 
   function ( f, p, k )
-    return Union(List(Filtered(f!.coeffs,c->PadicValuation(c[3]/c[5],p)=k),
-                      c->ResidueClass(c[1],c[2])));
+    return ResidueClassUnion(Integers,
+                             List(Filtered(f!.coeffs,
+                                           c->PadicValuation(c[3]/c[5],p)=k),
+                                  c->c{[1,2]}));
   end );
 
 #############################################################################
@@ -5313,12 +5320,12 @@ InstallMethod( MovedPoints,
 
   function ( f )
 
-    local  S, c, fixedpoint, fixedpoints;
+    local  S, classes, fixedpoints, fixedpoint, c;
 
-    S := []; fixedpoints := [];
+    classes := []; fixedpoints := [];
     for c in f!.coeffs do
       if c{[3..5]} <> [1,0,1] then
-        S := Union(S,ResidueClass(c[1],c[2]));
+        Add(classes,c{[1,2]});
         if c{[3,5]} <> [1,1] then
           fixedpoint := c[4]/(c[5]-c[3]);
           if   IsInt(fixedpoint) and fixedpoint mod c[2] = c[1]
@@ -5326,7 +5333,7 @@ InstallMethod( MovedPoints,
         fi;
       fi;
     od;
-    S := Difference(S,fixedpoints);
+    S := ResidueClassUnion(Integers,classes,[],fixedpoints);
     return S;
   end );
 

@@ -2348,7 +2348,7 @@ true
 gap> Support(k);
 2(4) U 3(4) U 4(12) U 8(12) \ [ -2 ]
 gap> Support(k^4);
-<union of 30 residue classes (mod 72)> \ [ -4, -2, -1 ]
+<union of 30 residue classes (mod 72) (7 classes)> \ [ -4, -2, -1 ]
 gap> Display(k);
 
 Rcwa permutation of Z with modulus 12 and 8 affine parts
