@@ -26,6 +26,10 @@ Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
    The purpose of the hash values is to allow faster searching of rcwa mappings
    by algorithms.
 
+ - Now the operations `Support', `IncreasingOn', `DecreasingOn', `ShiftsUpOn',
+   `ShiftsDownOn', `LargestSourcesOfAffineMappings' and `Multpk' return their
+   result in sparse representation if the argument is in sparse representation.
+
 Changes between RCWA 4.4.0 and RCWA 4.4.1 (May 22, 2016):
 
  - A `Random' method for finitely generated rcwa groups and given word length
