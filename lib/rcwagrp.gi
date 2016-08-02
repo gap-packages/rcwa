@@ -3238,8 +3238,11 @@ InstallMethod( RefinementSequence,
 
   function ( G, maxlng, maxparts )
 
-    local  Pk, P, Pimgs, gens, k;
+    local  Pk, P, Pimgs, gens, k, starttime, timeout;
 
+    timeout := ValueOption("timeout");
+    if not IsPosInt(timeout) then timeout := infinity; fi;
+    starttime := Runtime();
     gens := GeneratorsOfGroup(G);
     if not ForAll(gens,IsTame) then return fail; fi; 
     P  := CommonRefinementOfPartitionsOfZ_NC(List(gens,RespectedPartition));
@@ -3249,6 +3252,7 @@ InstallMethod( RefinementSequence,
       P     := CommonRefinementOfPartitionsOfZ_NC(Pimgs);
       Add(Pk,P);
       if Pk[Length(Pk)-1] = P then break; fi;
+      if Runtime() - starttime > timeout then break; fi;
     od;
     return Pk;
   end );
