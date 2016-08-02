@@ -667,6 +667,25 @@ DeclareGlobalFunction( "CommonRefinementOfPartitionsOfZ_NC" );
 
 #############################################################################
 ##
+#O  RefinementSequence( <G>, <maxlng>, <maxparts> )
+##
+##  Returns a sequence P of partitions of the base ring of <G> as follows:
+##
+##  - P[1] is the return value of `CommonRefinementOfPartitionsOfR_NC' when
+##    called for the list of respected partitions of the generators of <G>.
+##
+##  - For k > 1, P[k] is what `CommonRefinementOfPartitionsOfR_NC' returns
+##    when called for the list of images of P[k-1] under the generators of
+##    <G> (plus the identity).
+##
+##  The sequence is returned once its length reaches <maxlng> or the length
+##  of a partition exceeds <maxparts>.
+##
+DeclareOperation( "RefinementSequence",
+                  [ IsRcwaGroup, IsPosInt, IsPosInt ] );
+
+#############################################################################
+##
 #P  IsNaturalRcwaRepresentationOfGLOrSL
 ##
 DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",

@@ -3230,6 +3230,31 @@ InstallGlobalFunction( CommonRefinementOfPartitionsOfZ_NC,
 
 #############################################################################
 ##
+#M  RefinementSequence( <G>, <maxlng>, <maxparts> ) .  for rcwa groups over Z
+##
+InstallMethod( RefinementSequence, 
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, maxlng, maxparts )
+
+    local  Pk, P, Pimgs, gens, k;
+
+    gens := GeneratorsOfGroup(G);
+    if not ForAll(gens,IsTame) then return fail; fi; 
+    P  := CommonRefinementOfPartitionsOfZ_NC(List(gens,RespectedPartition));
+    Pk := [P];
+    while Length(Pk) < maxlng and Length(P) < maxparts do
+      Pimgs := Concatenation([P],List(gens,g->P^g));
+      P     := CommonRefinementOfPartitionsOfZ_NC(Pimgs);
+      Add(Pk,P);
+      if Pk[Length(Pk)-1] = P then break; fi;
+    od;
+    return Pk;
+  end );
+
+#############################################################################
+##
 #M  Modulus( <G> ) . . . . . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
 InstallMethod( Modulus, 

@@ -30,6 +30,8 @@ Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
    `ShiftsDownOn', `LargestSourcesOfAffineMappings' and `Multpk' return their
    result in sparse representation if the argument is in sparse representation.
 
+ - An operation `RefinementSequence' has been added.
+
 Changes between RCWA 4.4.0 and RCWA 4.4.1 (May 22, 2016):
 
  - A `Random' method for finitely generated rcwa groups and given word length
