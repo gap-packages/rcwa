@@ -5168,15 +5168,19 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
 
   function ( G, n )
 
-    local  gens, B, r;
+    local  gens, B, r, ceiling;
 
     if n = 0 then return infinity; fi;
 
+    ceiling := ValueOption("ceiling");
     gens := Set(GeneratorsAndInverses(G));
 
     B := [n]; r := 0;
     repeat
       B := Union(B,Union(List(gens,g->B^g)));
+      if IsPosInt(ceiling) then
+        B := Filtered(B,n->AbsInt(n)<=ceiling);
+      fi;
       r := r + 1;
     until Minimum(List(B,AbsInt)) < AbsInt(n);
 
