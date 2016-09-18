@@ -31,11 +31,11 @@ gap> Set(RecNames(3CTsGroups6));
   "freeproductcandidates", "freeproductlikes", "groups", "grps", 
   "intransitivemodulo", "minwordlengthcoprimemultdiv", 
   "minwordlengthnonbalanced", "mods", "orbitgrowthtype", "orbitlengths", 
-  "partitionlengths", "permgroupgens", "respectedpartitions", "samegroups", 
-  "shortresidueclassorbitlengths", "sizes", "sizespos", "sizesset", 
-  "stabilize_digitsum_base2_mod2", "stabilize_digitsum_base2_mod3", 
-  "stabilize_digitsum_base3_mod2", "subgroups", "supergroups", "trsstatus", 
-  "trsstatuspos", "trsstatusset" ]
+  "partitionlengths", "permgroupgens", "refinementseqlngs", 
+  "respectedpartitions", "samegroups", "shortresidueclassorbitlengths", 
+  "sizes", "sizespos", "sizesset", "stabilize_digitsum_base2_mod2", 
+  "stabilize_digitsum_base2_mod3", "stabilize_digitsum_base3_mod2", 
+  "subgroups", "supergroups", "trsstatus", "trsstatuspos", "trsstatusset" ]
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions(9);
 "3CTsGroups9"
 gap> Set(RecNames(3CTsGroups9));
