@@ -580,21 +580,31 @@ InstallMethod( Ball,
 
   function ( G, p, r, act )
 
-    local  ball, gens, k, spheres;
+    local  ball, gens, k, spheres, untilsmaller;
 
     if r < 0 then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
     if spheres then ball := [[p]]; else ball := [p]; fi;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
+    untilsmaller := true in List(["untilsmaller","UntilSmaller"],
+                                 ValueOption);
     for k in [1..r] do
       if spheres then
         Add(ball,Difference(Union(List(gens,
                                        gen->List(ball[k],pt->act(pt,gen)))),
                             Union(ball[Maximum(1,k-1)],ball[k])));
+        if IsInt(p) then
+          if   untilsmaller and Minimum(List(ball[k+1],AbsInt)) < AbsInt(p)
+          then break; fi;
+        fi;
       else
         ball := Union(ball,
                       Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+        if IsInt(p) then
+          if   untilsmaller and Minimum(List(ball,AbsInt)) < AbsInt(p)
+          then break; fi;
+        fi;
       fi;
     od;
     return ball;
@@ -703,7 +713,8 @@ InstallMethod( RestrictedBall,
       if IsInt(p) then
         ball[k+1] := Filtered(ball[k+1],n->AbsInt(n)<=bound);
         if ball[k+1] = [] then break; fi;
-        if untilsmaller and Minimum(ball[k+1]) < p then break; fi;
+        if   untilsmaller and Minimum(List(ball[k+1],AbsInt)) < AbsInt(p)
+        then break; fi;
       else
         ball[k+1] := Filtered(ball[k+1],
                               l->ForAll(Flat(l),n->AbsInt(n)<=bound));

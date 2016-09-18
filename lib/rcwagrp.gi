@@ -5168,23 +5168,30 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
 
   function ( G, n )
 
-    local  gens, B, r, ceiling;
+    local  B, ceiling;
 
     if n = 0 then return infinity; fi;
 
     ceiling := ValueOption("ceiling");
-    gens := Set(GeneratorsAndInverses(G));
-
-    B := [n]; r := 0;
-    repeat
-      B := Union(B,Union(List(gens,g->B^g)));
-      if IsPosInt(ceiling) then
-        B := Filtered(B,n->AbsInt(n)<=ceiling);
+    if IsPosInt(ceiling) then
+      B := RestrictedBall(G,n,ceiling,ceiling:UntilSmaller,Spheres);
+      if Minimum(List(B[Length(B)],AbsInt)) < AbsInt(n) then
+        return Length(B) - 1;
+      else
+        Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
+        Info(InfoRCWA,1,"'ceiling': chosen value too small, ");
+        Info(InfoRCWA,1,"redoing computation without the bound ...");
       fi;
-      r := r + 1;
-    until Minimum(List(B,AbsInt)) < AbsInt(n);
+    else
+      Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
+      Info(InfoRCWA,1,"you might want to set option 'ceiling' to specify");
+      Info(InfoRCWA,1,"an upper bound on intermediate ('saddle-') points.");
+    fi;
 
-    return r;
+    B := Ball(G,n,2^60-1:UntilSmaller,Spheres); # 2^60-1=max. list lng./64bit
+    if   Minimum(List(B[Length(B)],AbsInt)) < AbsInt(n)
+    then return Length(B) - 1;
+    else return fail; fi;
   end );
 
 #############################################################################
