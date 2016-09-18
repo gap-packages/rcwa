@@ -271,11 +271,11 @@ The following global variables have been assigned:
   "freeproductlikes", "groups", "grps", "intransitivemodulo", 
   "minwordlengthcoprimemultdiv", "minwordlengthnonbalanced", "mods", 
   "orbitgrowthtype", "orbitlengths", "partitionlengths", "permgroupgens",
-  "respectedpartitions", "samegroups", "shortresidueclassorbitlengths", 
-  "sizes", "sizespos", "sizesset", "stabilize_digitsum_base2_mod2", 
-  "stabilize_digitsum_base2_mod3", "stabilize_digitsum_base3_mod2", 
-  "subgroups", "supergroups", "trsstatus", "trsstatuspos", 
-  "trsstatusset" ]
+  "refinementseqlngs", "respectedpartitions", "samegroups", 
+  "shortresidueclassorbitlengths", "sizes", "sizespos", "sizesset", 
+  "stabilize_digitsum_base2_mod2", "stabilize_digitsum_base2_mod3", 
+  "stabilize_digitsum_base3_mod2", "subgroups", "supergroups", 
+  "trsstatus", "trsstatuspos", "trsstatusset" ]
 gap> grps[44132]; # the "3n+1 group"
 <(2(3),4(6)),(1(3),2(6)),(1(2),4(6))>
 gap> trsstatus[44132]; # deciding this would solve the 3n+1 problem
