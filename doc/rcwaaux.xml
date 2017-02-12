@@ -12,7 +12,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-This version of &RCWA; needs at least &GAP;&nbsp;4.8.3,
+This version of &RCWA; needs at least &GAP;&nbsp;4.8.5,
 &ResClasses;&nbsp;4.6.0,
 <Package>GRAPE</Package>&nbsp;4.7&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.11&nbsp;<Cite Key="Polycyclic"/>,

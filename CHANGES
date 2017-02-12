@@ -3,7 +3,7 @@
                        ===================================
 
 
-Changes between RCWA 4.4.1 and RCWA 4.5.0 (, 2016):
+Changes between RCWA 4.4.1 and RCWA 4.5.0 (February 12, 2017):
 
  - A further method for `EpimorphismFromFpGroup' has been added.
    This method allows to limit the search space to elements with not more than
