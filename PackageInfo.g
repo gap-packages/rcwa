@@ -17,7 +17,7 @@ Persons          := [
                            FirstNames    := "Stefan",
                            IsAuthor      := true,
                            IsMaintainer  := true,
-                           Email         := "stefan@mcs.st-and.ac.uk",
+                           Email         := "stefan@gap-system.org",
                            WWWHome       := "https://stefan-kohl.github.io/"
                          )
                     ],
@@ -51,7 +51,7 @@ Dependencies     := rec(
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
-                                   "\n  by Stefan Kohl, stefan@mcs.st-and.ac.uk.",
+                                   "\n  by Stefan Kohl, stefan@gap-system.org.",
                                    "\nSee ?RCWA:About for information about the package.\n\n" ),
 TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings",
