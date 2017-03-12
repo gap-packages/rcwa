@@ -589,7 +589,9 @@ InstallMethod( Ball,
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
     untilsmaller := true in List(["untilsmaller","UntilSmaller"],
                                  ValueOption);
-    for k in [1..r] do
+    k := 0;
+    while k < r do
+      k := k + 1;
       if spheres then
         Add(ball,Difference(Union(List(gens,
                                        gen->List(ball[k],pt->act(pt,gen)))),
