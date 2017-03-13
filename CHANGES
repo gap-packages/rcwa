@@ -3,6 +3,12 @@
                        ===================================
 
 
+Changes between RCWA 4.5.0 and RCWA 4.5.1 (March 13, 2017):
+
+ - RCWA now prints a warning if GAP is run in legacy 32-bit mode.
+   The reason is the limitation on the size of integers in ranges in 32-bit GAP
+   which may make some computations fail and trigger error messages.
+
 Changes between RCWA 4.4.1 and RCWA 4.5.0 (February 12, 2017):
 
  - A further method for `EpimorphismFromFpGroup' has been added.

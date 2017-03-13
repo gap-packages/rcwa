@@ -12,7 +12,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-This version of &RCWA; needs at least &GAP;&nbsp;4.8.5,
+This version of &RCWA; needs at least &GAP;&nbsp;4.8.5 in 64-bit mode,
 &ResClasses;&nbsp;4.6.0,
 <Package>GRAPE</Package>&nbsp;4.7&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.11&nbsp;<Cite Key="Polycyclic"/>,
@@ -86,8 +86,8 @@ are included in the distribution file anyway, users will not need it.
   <Description>
     Runs the full test suite of the &RCWA; package.
     Any differences to the supposed results of the test computations
-    are reported. The processed test files are in the directory
-    <F>pkg/rcwa/tst</F>. <P/>
+    are reported. The processed test files are in the
+    <F>tst</F> subdirectory of the package directory. <P/>
 
     Please note that the test suite is a tool for developing.
     The tests are deliberately very volatile to allow to spot possible
