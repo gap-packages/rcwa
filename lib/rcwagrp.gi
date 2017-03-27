@@ -5170,7 +5170,7 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
 
     local  B, ceiling;
 
-    if n = 0 then return infinity; fi;
+    if n = 0 or not n in Support(G) then return infinity; fi;
 
     ceiling := ValueOption("ceiling");
     if IsPosInt(ceiling) then
