@@ -6111,6 +6111,8 @@ InstallMethod( RepresentativesActionPreImage,
       or Length(GeneratorsOfGroup(G)) <> Length(GeneratorsOfGroup(F))
     then TryNextMethod(); fi;
     if Length(src) <> Length(dest) then return []; fi;
+    if not IsSubset(dest,Difference(src,Support(G)) then return []; fi;
+    if not IsSubset(src,Difference(dest,Support(G)) then return []; fi;
     gensF := GeneratorsAndInverses(F); gensG := GeneratorsAndInverses(G);
     orbsrc := [[src,One(F)]]; orbdest := [[dest,One(F)]]; extstep := 0;
     repeat
