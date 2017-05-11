@@ -4,7 +4,7 @@
 
                            -- A GAP 4 Package --
 
-                               Version 4.5.1
+                               Version 4.6.0
 
          Author and Maintainer:  Stefan Kohl, stefan@gap-system.org
 
@@ -36,7 +36,7 @@ a browser, or its PDF version (manual.pdf) with a PDF viewer.
 
                                 Requirements
 
-This version of  RCWA needs  GAP >=4.8.5 in 64-bit mode,  ResClasses >=4.6.0,
+This version of  RCWA needs  GAP >=4.8.7 in 64-bit mode,  ResClasses >=4.7.0,
 GRAPE >=4.7, Polycyclic >=2.11, FR >=2.2.1,  GAPDoc >=1.5.1 and Utils >=0.40.
 All required  packages  are already present  in a standard  GAP installation.
 RCWA can be used on all platforms for which GAP is available. It is complete-
@@ -65,8 +65,7 @@ and distributed with GAP.
 
                                      ---
 
-If you install RCWA or if you use it in some of your work, then please let me
-know. -- I am interested very much in any applications of this package.  Also
-please let me know  if you have problems with this package,  or if you find a
-bug.
+If you use RCWA in some of your work, then please let me know. --
+I am  interested very much in any  applications of this package.  Also please
+let me know if you have problems with this package, or if you find a bug.
 

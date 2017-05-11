@@ -3,6 +3,11 @@
                        ===================================
 
 
+Changes between RCWA 4.5.1 and RCWA 4.6.0 (, 2017):
+
+ - Determining transitivity and computing transitivity certificates has been
+   made more efficient in some cases.
+
 Changes between RCWA 4.5.0 and RCWA 4.5.1 (March 13, 2017):
 
  - RCWA now prints a warning if GAP is run in legacy 32-bit mode.

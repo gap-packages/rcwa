@@ -5051,7 +5051,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
     else F := FreeGroup(Length(gens)); fi;
     phi := GroupHomomorphismByImagesNC(F,G);
     D := []; S := Support(G);
-    R := AsUnionOfFewClasses(S);
+    R := List(AsUnionOfFewClasses(S),SparseRep);
     classes := []; words := []; imgs := []; smallpointbound := 0;
     while R <> [] and Sum(List(R,Density)) > abortdensity do
       Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
@@ -5082,7 +5082,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
         downcls := [];
         for c in Coefficients(g) do
           if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
-          then Add(downcls,ResidueClass(c[1],c[2])); fi;
+          then Add(downcls,SparseRep(ResidueClass(c[1],c[2]))); fi;
         od;
         k := k + 1;
       until ForAny(downcls,cl->n in cl);
@@ -5091,11 +5091,11 @@ InstallMethod( TryToComputeTransitivityCertificate,
         for cl in downcls do
           I := Intersection(R[i],cl);
           if I <> [] then
-            Append(coveredcls,AsUnionOfFewClasses(I));
+            Append(coveredcls,List(AsUnionOfFewClasses(I),SparseRep));
             R[i] := Difference(R[i],I);
           fi;
         od;
-        R[i] := AsUnionOfFewClasses(R[i]);
+        R[i] := List(AsUnionOfFewClasses(R[i]),SparseRep);
       od;
       R := Filtered(Set(Flat(R)),cl->cl<>[]);
       coveredcls := Set(coveredcls);
