@@ -5179,8 +5179,9 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
         return Length(B) - 1;
       else
         Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
-        Info(InfoRCWA,1,"'ceiling': chosen value too small, ");
-        Info(InfoRCWA,1,"redoing computation without the bound ...");
+        Info(InfoRCWA,1,"'ceiling': chosen value too small, ",
+                        "you might try a larger one ...");
+        return fail;
       fi;
     else
       Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
