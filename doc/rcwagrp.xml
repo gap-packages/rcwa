@@ -1034,7 +1034,7 @@ rec(
   smallpointbound := 42, status := "unclear", 
   words := [ a, b, (a*c)^2*b*a*b, c, a*c*b ] )
 gap> Union(Flat(cert.classes));
-<union of 90 residue classes (mod 96)>
+<union of 90 residue classes (mod 96) (6 classes)>
 gap> Difference(Integers,Union(Flat(cert.classes)));
 12(48) U 28(48) U 52(96) U 84(96)
 gap> cert := TryToComputeTransitivityCertificate(G,20); # try larger bound
@@ -1050,7 +1050,7 @@ rec(
   words := [ a, b, (a*c)^2*b*a*b, c, a*c*b, (a*c)^3*b*c*b*a*b, 
       (a*c)^4*b*a*b*a*b ] )
 gap> Difference(Integers,Union(Flat(cert.classes)));
-<union of 44 residue classes (mod 768)>
+<union of 44 residue classes (mod 768) (14 classes)>
 gap> Intersection([0..100],last);
 [ 52, 60, 76, 84 ]
 ]]>
