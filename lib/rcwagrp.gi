@@ -5168,31 +5168,29 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
 
   function ( G, n )
 
-    local  B, ceiling;
+    local  B, m, ceiling;
 
     if n = 0 or not n in Support(G) then return infinity; fi;
 
     ceiling := ValueOption("ceiling");
     if IsPosInt(ceiling) then
       B := RestrictedBall(G,n,ceiling,ceiling:UntilSmaller,Spheres);
-      if Minimum(List(B[Length(B)],AbsInt)) < AbsInt(n) then
-        return Length(B) - 1;
-      else
-        Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
-        Info(InfoRCWA,1,"'ceiling': chosen value too small, ",
-                        "you might try a larger one ...");
-        return fail;
-      fi;
     else
-      Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
-      Info(InfoRCWA,1,"you might want to set option 'ceiling' to specify");
-      Info(InfoRCWA,1,"an upper bound on intermediate ('saddle-') points.");
+      B := Ball(G,n,2^60-1:UntilSmaller,Spheres); # 2^60-1 = max.-lng./64bit
     fi;
-
-    B := Ball(G,n,2^60-1:UntilSmaller,Spheres); # 2^60-1=max. list lng./64bit
-    if   Minimum(List(B[Length(B)],AbsInt)) < AbsInt(n)
-    then return Length(B) - 1;
-    else return fail; fi;
+    m := Minimum(List(B[Length(B)],AbsInt));
+    if m < AbsInt(n) then
+      if   ValueOption("alsopoint") = true
+      then return [ Length(B) - 1, m ];
+      else return Length(B) - 1; fi;
+    else
+      if IsPosInt(ceiling) then
+        Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
+        Info(InfoRCWA,1,"'ceiling': chosen value might be too small, ",
+                        "you might try a larger one ...");
+      fi;
+      return fail;
+    fi;
   end );
 
 #############################################################################
