@@ -5185,8 +5185,8 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
       else return Length(B) - 1; fi;
     else
       if IsPosInt(ceiling) then
-        Info(InfoRCWA,1,"DistanceToNextSmallerPointInOrbit: ");
-        Info(InfoRCWA,1,"'ceiling': chosen value might be too small, ",
+        Info(InfoRCWA,3,"DistanceToNextSmallerPointInOrbit: ");
+        Info(InfoRCWA,3,"'ceiling': chosen value might be too small, ",
                         "you might try a larger one ...");
       fi;
       return fail;
