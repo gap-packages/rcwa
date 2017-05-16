@@ -324,7 +324,7 @@ gap> Collected(trsstatus);
 [ [ "> 1 orbit (mod m)", 593 ], 
   [ "Mod(U DecreasingOn) exceeded <maxmod>", 23 ], 
   [ "U DecreasingOn stable and exceeded memory bound", 11 ], 
-  [ "U DecreasingOn stable for <maxeq> steps", 5757 ], 
+  [ "U DecreasingOn stable for <maxeq> steps", 5753 ], 
   [ "exceeded memory bound", 497 ], [ "finite", 21948 ], 
   [ "intransitive, but finitely many orbits", 8 ], 
   [ "seemingly only finite orbits (long)", 1227 ], 
@@ -338,7 +338,7 @@ gap> Collected(trsstatus);
   [ "there are infinite orbits which have linear sphere size growth", 
       10881 ],
   [ "there are infinite orbits which have unclear sphere size growth", 
-      86 ], [ "transitive", 558 ], 
+      86 ], [ "transitive", 562 ], 
   [ "transitive up to one finite orbit", 40 ] ]
 ]]>
 </Example>
