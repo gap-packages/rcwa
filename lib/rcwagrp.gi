@@ -5023,7 +5023,151 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
 
 #############################################################################
 ##
+#M  TryToComputeTransitivityCertificate( <G>, <searchradius> )
+##
+InstallMethod( TryToComputeTransitivityCertificate,
+               "for rcwa groups over Z (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 5,
+
+  function ( G, searchradius )
+
+    local  classes, words, imgs, gens, m0, smallestmoved, smallpointbound,
+           S, R, dists, d, limit, F, phi, B, B_last, r, n, m, g, w, downcls,
+           coveredcls, cl, I, c,  rem, p0, abortdensity, varnames, i, j;
+
+    if ValueOption("old") = true then TryNextMethod(); fi;
+
+    Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'");
+    Info(InfoRCWA,1,"for G = ",ViewString(G));
+
+    abortdensity := ValueOption("abortdensity");
+    if not IsPosRat(abortdensity) then abortdensity := 0; fi;
+
+    G    := SparseRep(G);
+    gens := GeneratorsOfGroup(G);
+    m0   := Lcm(List(gens,Mod));
+
+    if not IsSignPreserving(G)
+      or ShortOrbits(G,Intersection([0..m0-1],Support(G)),100) <> []
+      or ForAny(ShortResidueClassOrbits(G,m0,100),orb->Length(orb)>1)
+    then return fail; fi;
+
+    if Length(gens) <= 26 then
+      varnames := List("abcdefghijklmnopqrstuvwxyz",ch->[ch]);
+      F := FreeGroup(varnames{[1..Length(gens)]});
+    else F := FreeGroup(Length(gens)); fi;
+
+    phi := GroupHomomorphismByImagesNC(F,G);
+    S := Support(G);
+    R := List(AsUnionOfFewClasses(S),SparseRep);
+    classes := []; words := []; imgs := []; smallpointbound := 0;
+    smallestmoved := 0;
+    while not smallestmoved in S do smallestmoved := smallestmoved + 1; od;
+
+    while R <> [] and Sum(List(R,Density)) > abortdensity do
+      Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
+      dists := [];
+      for cl in R do
+        n := Residue(cl);
+        while n <= smallestmoved do n := n + Modulus(cl); od;
+        limit := 2;
+        repeat
+          limit := 2 * limit;
+          if limit >= 256 then
+            Info(InfoRCWA,1,"n = ",n,": doubling limit; new limit = ",limit);
+          fi;
+          d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=limit*n,
+                                                     alsopoint);
+        until d <> fail;
+        if d[1] <= searchradius then Add(dists,[d[1],limit,n,d[2]]); fi;
+      od;
+      if dists = [] then break; fi;
+      Sort(dists);
+      for i in [1..Length(dists)] do
+        n := dists[i][3]; m := dists[i][4]; limit := dists[i][2];
+        w := RepresentativeActionPreImage(G,n,m,OnPoints,
+                                          F:pointlimit:=limit*n);
+        g := Image(phi,w);
+        Add(words,w); Add(imgs,g);
+        smallpointbound := Maximum(smallpointbound,MaximalShift(g));
+        downcls := [];
+        for c in Coefficients(g) do
+          if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
+          then Add(downcls,SparseRep(ResidueClass(c[1],c[2]))); fi;
+        od;
+        coveredcls := [];
+        for j in [1..Length(R)] do
+          for cl in downcls do
+            I := Intersection(R[j],cl);
+            if I <> [] then
+              Append(coveredcls,List(AsUnionOfFewClasses(I),SparseRep));
+              R[j] := Difference(R[j],I);
+            fi;
+          od;
+          R[j] := List(AsUnionOfFewClasses(R[j]),SparseRep);
+        od;
+        R := Filtered(Set(Flat(R)),cl->cl<>[]);
+        coveredcls := Set(coveredcls);
+        Add(classes,coveredcls);
+      od;
+    od;
+
+    if R <> [] then
+      return rec( phi := phi, classes := classes,
+                  words := words, complete := false, remaining := R,
+                  smallpointbound := smallpointbound,
+                  status := "unclear" );
+    fi;
+
+    Info(InfoRCWA,1,"Checking transitivity on moved points ",
+                    "0 <= n <= ",smallpointbound," ...");
+    rem := Intersection([0..smallpointbound],S);
+    for i in [1..Length(imgs)] do
+      g := imgs[i];
+      rem := Filtered( rem, n -> n^g >= n );
+      if i = 1 then
+        Info(InfoRCWA,1,"Number of points not decreased by the ",
+                        "first element: ",Length(rem));
+      else
+        Info(InfoRCWA,1,"Number of points not decreased by any of the ",
+                        "first ",i," elements: ",Length(rem));
+      fi;
+    od;
+    p0 := Minimum(rem);
+    Info(InfoRCWA,1,"Computing balls about ",p0," ...");
+    B := [p0]; r := 8; limit := 4 * Maximum(rem) + 1;
+    repeat
+      Info(InfoRCWA,1,"Checking up to radius ",r,
+                      " and up to limit ",limit," ...");
+      B_last := B;
+      B := RestrictedBall(G,p0,r,limit);
+      r := 2 * r;
+      limit := 2 * limit;
+      if MemoryUsage(B) > 2^24 then # 16MB; at most finitely many orbits
+        return rec( phi := phi, classes := classes,
+                    words := words, complete := false, remaining := R,
+                    smallpointbound := smallpointbound,
+                    status := "finitely many orbits" );
+      fi;
+    until IsSubset(B,rem) or B = B_last;
+    if IsSubset(B,rem) then
+      return rec( phi := phi, classes := classes,
+                  words := words, complete := true,
+                  smallpointbound := smallpointbound,
+                  status := "transitive" );
+    else # p0^G finite 
+      return rec( phi := phi, classes := classes,
+                  words := words, complete := false,
+                  smallpointbound := smallpointbound,
+                  status := "intransitive, but finitely many orbits" );
+    fi;
+  end );
+
+#############################################################################
+##
 #M  TryToComputeTransitivityCertificate( <G>, <searchlimit> )
+##
+##  -- Old method --
 ##
 InstallMethod( TryToComputeTransitivityCertificate,
                "for rcwa groups over Z (RCWA)",
