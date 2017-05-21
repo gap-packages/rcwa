@@ -5031,9 +5031,10 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
   function ( G, searchradius )
 
-    local  classes, words, imgs, gens, m0, smallestmoved, smallpointbound,
-           S, R, dists, d, limit, F, phi, B, B_last, r, n, m, g, w, downcls,
-           coveredcls, cl, I, c,  rem, p0, abortdensity, varnames, i, j;
+    local  words, imgs, classes, gens, m0, smallestmoved, smallpointbound,
+           S, R, D, U, dists, d, limit, F, phi, B, B_last, r, n, m, g, w,
+           inds, indssel, reduced, down, cl, I, c, rem, p0, abortdensity,
+           varnames, i, j;
 
     if ValueOption("old") = true then TryNextMethod(); fi;
 
@@ -5059,17 +5060,18 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
     phi := GroupHomomorphismByImagesNC(F,G);
     S := Support(G);
-    R := List(AsUnionOfFewClasses(S),SparseRep);
-    classes := []; words := []; imgs := []; smallpointbound := 0;
+    R := SparseRep(S);
+    words := []; imgs := []; smallpointbound := 0;
     smallestmoved := 0;
     while not smallestmoved in S do smallestmoved := smallestmoved + 1; od;
 
-    while R <> [] and Sum(List(R,Density)) > abortdensity do
-      Info(InfoRCWA,1,"Remaining classes: ",ViewString(R));
+    while R <> [] and Density(R) > abortdensity do
+      Info(InfoRCWA,1,"Remaining classes: ",
+                    ViewString(AsUnionOfFewClasses(R)));
       dists := [];
-      for cl in R do
-        n := Residue(cl);
-        while n <= smallestmoved do n := n + Modulus(cl); od;
+      for cl in Classes(R) do
+        n := cl[1];
+        while n <= smallestmoved do n := n + cl[2]; od;
         limit := 2;
         repeat
           limit := 2 * limit;
@@ -5090,27 +5092,39 @@ InstallMethod( TryToComputeTransitivityCertificate,
         g := Image(phi,w);
         Add(words,w); Add(imgs,g);
         smallpointbound := Maximum(smallpointbound,MaximalShift(g));
-        downcls := [];
         for c in Coefficients(g) do
           if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
-          then Add(downcls,SparseRep(ResidueClass(c[1],c[2]))); fi;
+          then R := Difference(R,SparseRep(ResidueClass(c[1],c[2]))); fi;
         od;
-        coveredcls := [];
-        for j in [1..Length(R)] do
-          for cl in downcls do
-            I := Intersection(R[j],cl);
-            if I <> [] then
-              Append(coveredcls,List(AsUnionOfFewClasses(I),SparseRep));
-              R[j] := Difference(R[j],I);
-            fi;
-          od;
-          R[j] := List(AsUnionOfFewClasses(R[j]),SparseRep);
-        od;
-        R := Filtered(Set(Flat(R)),cl->cl<>[]);
-        coveredcls := Set(coveredcls);
-        Add(classes,coveredcls);
       od;
     od;
+
+    D    := Difference(S,R);
+    inds := [1..Length(words)];
+    repeat
+      reduced := false;
+      for i in [Length(inds),Length(inds)-1..1] do
+        indssel := Difference(inds,[inds[i]]);
+        if Union(List(imgs{indssel},
+                      g->Union(DecreasingOn(g),ShiftsDownOn(g)))) = D
+        then
+          inds := indssel;
+          reduced := true;
+          break;
+        else continue; fi;
+      od;
+    until not reduced;
+    words := words{inds};
+    imgs  := imgs{inds};
+
+    U := SparseRep(D); classes := [];
+    for i in [1..Length(imgs)] do
+      down := Intersection(U,Union(DecreasingOn(imgs[i]),
+                                   ShiftsDownOn(imgs[i])));
+      Add(classes,AsUnionOfFewClasses(down));
+      U := Difference(U,down);
+    od;
+    if U <> [] then Error("internal error"); fi;
 
     if R <> [] then
       return rec( phi := phi, classes := classes,

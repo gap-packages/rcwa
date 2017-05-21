@@ -2543,32 +2543,33 @@ gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],ClassTransposition));
 gap> IsTransitiveOnNonnegativeIntegersInSupport(G);
 true
 gap> TransitivityCertificate(G);
-rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ] 
-     ], complete := true, 
+rec( classes := [ [ 1(2) ], [ 2(4) ], [ 4(12) ], [ 0(12), 8(12) ] ], 
+  complete := true, 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
-  smallpointbound := 4, status := "transitive", 
-  words := [ a, b, c, b*c, a*b ] )
+  smallpointbound := 4, status := "transitive", words := [ a, c, a*b, b*c ] )
 gap> G := Group(List([[0,3,1,3],[1,2,4,6],[0,4,3,6]],ClassTransposition));
 <(0(3),1(3)),(1(2),4(6)),(0(4),3(6))>
 gap> TryToComputeTransitivityCertificate(G,20);
-rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ], 
-      [ 6(48), 23(48) ], [ 11(24), 47(48) ], [ 18(24) ], [ 30(432) ], 
-      [ 78(144) ] ], complete := false, 
+rec( 
+  classes := 
+    [ [ 1(3) ], 
+      [ 21(36), 6(48), 23(48), 32(48), 9(108), 3(144), 15(144), 27(162), 
+          135(162), 243(486), 405(486) ], 
+      [ 33(36), 45(54), 39(72), 51(72), 63(108), 75(144), 87(144), 81(486) ], 
+      [ 0(12), 20(24), 8(48) ], [ 5(12), 11(24), 47(48) ], [ 18(24) ], 
+      [ 30(144) ], [ 78(288), 270(288) ], [ 222(288) ] ], complete := false, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
-  remaining := [ 126(144), 174(432), 318(432) ], smallpointbound := 8343, 
-  status := "unclear", 
-  words := [ a, c, b*c*a*b*c, (a*b)^2*c*(a*c*a*b)^2*c*b, (b*a)^2*c*b*a*b, 
-      (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, 
-      (a*b)^2*(a*b*a*c)^2*b*a*b*c*b ] )
+  remaining := 126(288), smallpointbound := 9778, status := "unclear", 
+  words := [ a, (a*b)^2*c*(a*c*a*b)^2*c*b, c, c*a*b, (b*a)^2*c*b*a*b, 
+      (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*b*c*b*a*b, 
+      (a*b)^2*c*a*c*(a*c*a*b)^2*a*b*c*b, (a*b)^2*(a*b*a*c)^2*b*a*b*c*b ] )
 gap> TryToComputeTransitivityCertificate(G,25);
-rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ], 
-      [ 6(48), 23(48) ], [ 11(24), 47(48) ], [ 18(24) ], [ 30(432) ], 
-      [ 78(144) ], [ 126(144), 174(432), 318(432) ] ], complete := true, 
+rec( classes := [ [ 1(3) ], [ 3(6) ], [ 0(12), 8(12) ], [ 5(6) ], [ 6(12) ] ],
+  complete := true, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
-  smallpointbound := 8343, status := "transitive", 
-  words := [ a, c, b*c*a*b*c, (a*b)^2*c*(a*c*a*b)^2*c*b, (b*a)^2*c*b*a*b, 
-      (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, 
-      (a*b)^2*(a*b*a*c)^2*b*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
+  smallpointbound := 9778, status := "transitive", 
+  words := [ a, c, c*a*b, (b*a)^2*c*b*a*b, 
+      (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
 gap> RCWAInfo(2);
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4), 
 >               ClassTransposition(1,4,2,6));
