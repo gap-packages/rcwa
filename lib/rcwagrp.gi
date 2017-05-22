@@ -5038,9 +5038,9 @@ InstallMethod( TryToComputeTransitivityCertificate,
   function ( G, searchlimit )
 
     local  words, imgs, classes, gens, m0, smallestmoved, smallpointbound,
-           S, R, D, U, dists, d, limit, F, phi, B, B_last, r, n, m, g, w,
-           inds, indssel, reduced, down, cl, I, c, rem, p0, abortdensity,
-           varnames, i, j;
+           S, R, R_old, D, U, dists, d, limit, F, phi, B, B_last, r, n, m, k,
+           g, w, inds, indssel, reduced, down, cl, I, c, rem, p0,
+           abortdensity, varnames, i, j;
 
     if ValueOption("old") = true then TryNextMethod(); fi;
 
@@ -5068,7 +5068,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
     S := Support(G);
     R := SparseRep(S);
     words := []; imgs := []; smallpointbound := 0;
-    smallestmoved := 0;
+    smallestmoved := 0; k := 0;
     while not smallestmoved in S do smallestmoved := smallestmoved + 1; od;
 
     while R <> [] and Density(R) > abortdensity do
@@ -5078,6 +5078,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
       for cl in Classes(R) do
         n := cl[1];
         while n <= smallestmoved do n := n + cl[2]; od;
+        n := n + k * cl[2];
+        while not n in S do n := n + cl[2]; od;
         limit := 1;
         repeat
           limit := 2 * limit;
@@ -5091,6 +5093,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
       od;
       if dists = [] then break; fi;
       Sort(dists);
+      R_old := R;
       for i in [1..Length(dists)] do
         n := dists[i][3]; m := dists[i][4]; limit := dists[i][2];
         w := RepresentativeActionPreImage(G,n,m,OnPoints,
@@ -5103,6 +5106,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
           then R := Difference(R,SparseRep(ResidueClass(c[1],c[2]))); fi;
         od;
       od;
+      if R = R_old then k := k + 1; else k := 0; fi;
     od;
 
     D    := Difference(S,R);
