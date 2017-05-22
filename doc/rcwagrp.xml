@@ -1001,8 +1001,8 @@ as follows:
 Parts of this information for possibly intransitive groups can be
 obtained by the operation
 <C>TryToComputeTransitivityCertificate(<A>G</A>,<A>searchlimit</A>)</C>,
-where <A>searchlimit</A> is the maximum radius about a point within
-which smaller points are searched and taken into consideration.
+where <C>n * 2^</C><A>searchlimit</A> is the upper bound on the integers
+in a path to be found from a point <C>n</C> to some smaller point.
 This operation interprets an option <C>abortdensity</C> -- if set,
 the operation returns the data computed so far once the density of
 the set of positive integers in the support of <A>G</A> for which no
@@ -1016,16 +1016,16 @@ gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],
 gap> IsTransitiveOnNonnegativeIntegersInSupport(G);
 true
 gap> TransitivityCertificate(G);
-rec(
-  classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], 
-      [ 4(12) ] ], complete := true, 
+gap> TransitivityCertificate(G);
+rec( classes := [ [ 1(2) ], [ 2(4) ], [ 4(12) ], [ 0(12), 8(12) ] ], 
+  complete := true, 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) 
      ], smallpointbound := 4, status := "transitive", 
-  words := [ a, b, c, b*c, a*b ] )
+  words := [ a, c, a*b, b*c ] )
 gap> G := Group(List([[0,2,1,2],[1,2,2,4],[1,4,2,6]],
 >                    ClassTransposition));              # '3n+1 group'
 <(0(2),1(2)),(1(2),2(4)),(1(4),2(6))>
-gap> cert := TryToComputeTransitivityCertificate(G,10);
+gap> cert := TryToComputeTransitivityCertificate(G,10:old);
 rec(
   classes := [ [ 1(2) ], [ 2(4) ], [ 4(32) ], [ 8(24), 44(48), 20(96) ], 
       [ 0(24), 16(24) ] ], complete := false, 
@@ -1037,7 +1037,7 @@ gap> Union(Flat(cert.classes));
 <union of 90 residue classes (mod 96) (6 classes)>
 gap> Difference(Integers,Union(Flat(cert.classes)));
 12(48) U 28(48) U 52(96) U 84(96)
-gap> cert := TryToComputeTransitivityCertificate(G,20); # try larger bound
+gap> cert := TryToComputeTransitivityCertificate(G,20:old); # try larger bound
 rec(
   classes := [ [ 1(2) ], [ 2(4) ], [ 4(32) ], [ 8(24), 44(48), 20(96) ], 
       [ 0(24), 16(24) ], [ 12(768), 268(768) ], [ 28(768), 540(768) ] ], 

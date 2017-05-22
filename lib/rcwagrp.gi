@@ -4953,11 +4953,17 @@ InstallMethod( IsTransitiveOnNonnegativeIntegersInSupport,
 
     local  info;
 
-    info := TryIsTransitiveOnNonnegativeIntegersInSupport(G,20);
+    info := TryIsTransitiveOnNonnegativeIntegersInSupport(G,7);
     Info(InfoRCWA,1,"`IsTransitiveOnNonnegativeIntegersInSupport': ",info);
-    if   HasIsTransitiveOnNonnegativeIntegersInSupport(G)
-    then return IsTransitiveOnNonnegativeIntegersInSupport(G);
-    else Info(InfoRCWA,1,"cannot decide transitivity"); return fail; fi;
+    if HasIsTransitiveOnNonnegativeIntegersInSupport(G) then
+      return IsTransitiveOnNonnegativeIntegersInSupport(G);
+    else
+     Info(InfoRCWA,1,"cannot decide transitivity, you might try");
+     Info(InfoRCWA,1,"TryIsTransitiveOnNonnegativeIntegersInSupport",
+                     "( <G>, <searchlimit> )");
+     Info(InfoRCWA,1,"with <searchlimit> greater than 7.");
+     return fail;
+    fi;
   end );
 
 #############################################################################
@@ -5023,13 +5029,13 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
 
 #############################################################################
 ##
-#M  TryToComputeTransitivityCertificate( <G>, <searchradius> )
+#M  TryToComputeTransitivityCertificate( <G>, <searchlimit> )
 ##
 InstallMethod( TryToComputeTransitivityCertificate,
                "for rcwa groups over Z (RCWA)",
                ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 5,
 
-  function ( G, searchradius )
+  function ( G, searchlimit )
 
     local  words, imgs, classes, gens, m0, smallestmoved, smallpointbound,
            S, R, D, U, dists, d, limit, F, phi, B, B_last, r, n, m, g, w,
@@ -5072,7 +5078,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
       for cl in Classes(R) do
         n := cl[1];
         while n <= smallestmoved do n := n + cl[2]; od;
-        limit := 2;
+        limit := 1;
         repeat
           limit := 2 * limit;
           if limit >= 256 then
@@ -5080,8 +5086,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
           fi;
           d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=limit*n,
                                                      alsopoint);
-        until d <> fail;
-        if d[1] <= searchradius then Add(dists,[d[1],limit,n,d[2]]); fi;
+        until d <> fail or limit >= 2^searchlimit;
+        if d <> fail then Add(dists,[d[1],limit,n,d[2]]); fi;
       od;
       if dists = [] then break; fi;
       Sort(dists);
