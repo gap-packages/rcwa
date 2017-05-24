@@ -5038,9 +5038,9 @@ InstallMethod( TryToComputeTransitivityCertificate,
   function ( G, searchlimit )
 
     local  words, imgs, classes, gens, m0, smallestmoved, smallpointbound,
-           S, R, R_old, D, U, dists, d, limit, F, phi, B, B_last, r, n, m, k,
-           g, w, inds, indssel, reduced, down, cl, I, c, rem, p0,
-           abortdensity, varnames, i, j;
+           S, R, R_old, R_buf, maxclsgrowth, D, U, dists, d, limit, F, phi,
+           B, B_last, r, n, m, k, g, w, inds, indssel, reduced, down, cl,
+           I, c, rem, p0, abortdensity, varnames, i, j;
 
     if ValueOption("old") = true then TryNextMethod(); fi;
 
@@ -5049,6 +5049,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
     abortdensity := ValueOption("abortdensity");
     if not IsPosRat(abortdensity) then abortdensity := 0; fi;
+    maxclsgrowth := ValueOption("maxclsgrowth");
+    if not IsPosInt(maxclsgrowth) then maxclsgrowth := 20; fi;
 
     G    := SparseRep(G);
     gens := GeneratorsOfGroup(G);
@@ -5101,10 +5103,13 @@ InstallMethod( TryToComputeTransitivityCertificate,
         g := Image(phi,w);
         Add(words,w); Add(imgs,g);
         smallpointbound := Maximum(smallpointbound,MaximalShift(g));
-        for c in Coefficients(g) do
-          if   c[5] > c[3] or (c[5] = c[3] and c[4] < 0)
-          then R := Difference(R,SparseRep(ResidueClass(c[1],c[2]))); fi;
-        od;
+        R_buf := R;
+        R := Difference(R,DecreasingOn(g));
+        if   Length(Classes(R)) > Length(Classes(R_buf)) + maxclsgrowth
+        then R := R_buf; else R_buf := R; fi;
+        R := Difference(R,ShiftsDownOn(g));
+        if   Length(Classes(R)) > Length(Classes(R_buf)) + maxclsgrowth
+        then R := R_buf; fi;
       od;
       if R = R_old then k := k + 1; else k := 0; fi;
     od;
