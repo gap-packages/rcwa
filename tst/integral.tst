@@ -2543,25 +2543,28 @@ gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],ClassTransposition));
 gap> IsTransitiveOnNonnegativeIntegersInSupport(G);
 true
 gap> TransitivityCertificate(G);
-rec( classes := [ [ 1(2) ], [ 2(4) ], [ 4(12) ], [ 0(12), 8(12) ] ], 
-  complete := true, 
+rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ] 
+     ], complete := true, 
   phi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
-  smallpointbound := 4, status := "transitive", words := [ a, c, a*b, b*c ] )
+  smallpointbound := 4, status := "transitive", 
+  words := [ a, b, c, b*c, a*b ] )
 gap> G := Group(List([[0,3,1,3],[1,2,4,6],[0,4,3,6]],ClassTransposition));
 <(0(3),1(3)),(1(2),4(6)),(0(4),3(6))>
-gap> TryToComputeTransitivityCertificate(G,4);
-rec( classes := [ [ 1(3) ], [ 3(6) ], [ 0(12), 8(12) ], [ 5(6) ] ], 
-  complete := false, 
+gap> TryToComputeTransitivityCertificate(G,10);
+rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ] ]
+    , complete := false, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
-  remaining := 6(12), smallpointbound := 80, status := "unclear", 
-  words := [ a, c, c*a*b, (b*a)^2*c*b*a*b ] )
-gap> TryToComputeTransitivityCertificate(G,6);
-rec( classes := [ [ 1(3) ], [ 3(6) ], [ 0(12), 8(12) ], [ 5(6) ], [ 6(12) ] ],
-  complete := true, 
+  remaining := [ 6(12), 11(12) ], smallpointbound := 26, status := "unclear", 
+  words := [ a, c, b*c*a*b*c ] )
+gap> TryToComputeTransitivityCertificate(G,30);
+rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ], 
+      [ 6(48), 23(48) ], [ 11(24), 47(48) ], [ 18(24) ], [ 30(432) ], 
+      [ 78(144) ], [ 126(144), 174(432), 318(432) ] ], complete := true, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
-  smallpointbound := 9778, status := "transitive", 
-  words := [ a, c, c*a*b, (b*a)^2*c*b*a*b, 
-      (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
+  smallpointbound := 8343, status := "transitive", 
+  words := [ a, c, b*c*a*b*c, (a*b)^2*c*(a*c*a*b)^2*c*b, (b*a)^2*c*b*a*b, 
+      (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, 
+      (a*b)^2*(a*b*a*c)^2*b*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
 gap> RCWAInfo(2);
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4), 
 >               ClassTransposition(1,4,2,6));
