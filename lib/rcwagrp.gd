@@ -403,20 +403,23 @@ DeclareAttribute( "TransitivityCertificate", IsRcwaGroup );
 #############################################################################
 ##
 #O  TryToComputeTransitivityCertificate( <G>, <searchlimit> )
+#O  SimplifiedCertificate( <cert> )
 ##
-##  This operation tries to compute a "transitivity certificate" as described
-##  above for the action of the rcwa group <G> over Z on the set of nonnega-
-##  tive integers in its support. Of course this can be successful only if
-##  this action is indeed transitive. The argument <searchlimit> is the
-##  largest radius of a ball about a point within which smaller points are
-##  looked for and taken into consideration. If not for all sufficiently
-##  large positive integers n there is a number smaller than n within the
-##  ball of radius <searchlimit> about n, the operation either returns 'fail'
-##  or -- if the option "partial" is set -- the part of the result computed
-##  so far.
+##  The operation `TryToComputeTransitivityCertificate' tries to compute a
+##  "transitivity certificate" as described above for the action of the rcwa
+##  group <G> over Z on the set of nonnegative integers in its support. Of
+##  course this can be successful only if this action is indeed transitive.
+##  The argument <searchlimit> is the largest radius of a ball about a point
+##  within which smaller points are looked for and taken into consideration.
+##  The computed certificate is returned.
+##  
+##  The operation `SimplifiedCertificate' tries to simplify the transitivity
+##  certificate <cert> by removing redundant words.
+##  The simplified certificate is returned.
 ##
 DeclareOperation( "TryToComputeTransitivityCertificate",
                   [ IsRcwaGroup, IsPosInt ] );
+DeclareOperation( "SimplifiedCertificate", [ IsRecord ] );
 
 #############################################################################
 ##

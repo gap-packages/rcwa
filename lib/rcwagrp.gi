@@ -5155,6 +5155,65 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
 #############################################################################
 ##
+#M  SimplifiedCertificate( <cert> )
+##
+InstallMethod( SimplifiedCertificate,
+               "for transitivity certificates of rcwa groups over Z (RCWA)",
+               ReturnTrue, [ IsRecord ], 0,
+
+  function ( input )
+
+    local  output, G, S, phi, words, imgs, classes,
+           R, D, U, inds, indssel, down, reduced, i;
+
+    if not IsSubset(NamesOfComponents(input), [ "status", "words", "classes",
+                    "phi", "complete", "smallpointbound" ])
+    then TryNextMethod(); fi;
+
+    phi   := input.phi;
+    G     := Range(phi);
+    S     := Support(G);
+    words := AsSortedList(input.words);
+    imgs  := List(words,w->w^phi);
+    if IsBound(input.remaining) then R := input.remaining; else R := []; fi;
+    R     := Union(R);
+    D     := SparseRep(Difference(S,R));
+
+    inds := [1..Length(words)];
+    repeat
+      reduced := false;
+      for i in [Length(inds),Length(inds)-1..1] do
+        indssel := Difference(inds,[inds[i]]);
+        if Union(List(imgs{indssel},
+                      g->Union(DecreasingOn(g),ShiftsDownOn(g)))) = D
+        then
+          inds := indssel;
+          reduced := true;
+          break;
+        else continue; fi;
+      od;
+    until not reduced;
+    words := words{inds};
+    imgs  := imgs{inds};
+
+    U := D; classes := [];
+    for i in [1..Length(imgs)] do
+      down := Intersection(U,Union(DecreasingOn(imgs[i]),
+                                   ShiftsDownOn(imgs[i])));
+      Add(classes,AsUnionOfFewClasses(down));
+      U := Difference(U,down);
+    od;
+    if U <> [] then Error("internal error"); fi;
+
+    output := rec( phi := phi, words := words, classes := classes,
+                   complete := input.complete,
+                   smallpointbound := input.smallpointbound,
+                   status := input.status );
+    return output;
+  end );
+
+#############################################################################
+##
 #M  DistanceToNextSmallerPointInOrbit( <G>, <n> ) . .  for rcwa groups over Z
 ##
 InstallMethod( DistanceToNextSmallerPointInOrbit,
