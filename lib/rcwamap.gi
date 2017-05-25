@@ -8501,8 +8501,7 @@ InstallMethod( Trajectory,
 
     if   not (n in Source(f) or IsSubset(Source(f),n))
     then TryNextMethod(); fi;
-    action := ValueOption("Action");
-    if action = fail then action := OnPoints; fi;
+    action := GetOption("Action",OnPoints,IsFunction);
     seq := [n];
     for step in [1..length-1] do
       n := action(n,f);
@@ -8526,8 +8525,7 @@ InstallMethod( Trajectory,
 
     if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
     then TryNextMethod(); fi;
-    action := ValueOption("Action");
-    if action = fail then action := OnPoints; fi;
+    action := GetOption("Action",OnPoints,IsFunction);
     seq := [n mod m];
     for step in [1..length-1] do
       n := action(n,f);
@@ -8551,8 +8549,7 @@ InstallMethod( Trajectory,
 
     if   not (n in Source(f) or IsSubset(Source(f),n))
     then TryNextMethod(); fi;
-    action := ValueOption("Action");
-    if action = fail then action := OnPoints; fi;
+    action := GetOption("Action",OnPoints,IsFunction);
     seq := [n];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
     then terminal := [terminal]; fi;
@@ -8579,8 +8576,7 @@ InstallMethod( Trajectory,
 
     if   not (n in Source(f) or IsSubset(Source(f),n)) or IsZero(m)
     then TryNextMethod(); fi;
-    action := ValueOption("Action");
-    if action = fail then action := OnPoints; fi;
+    action := GetOption("Action",OnPoints,IsFunction);
     seq := [n mod m];
     if   IsListOrCollection(n) or not IsListOrCollection(terminal)
     then terminal := [terminal]; fi;
@@ -8657,8 +8653,8 @@ InstallGlobalFunction( TraceTrajectoriesOfClasses,
     local  l, k, starttime, timeout;
 
     l := [[S]]; k := 1;
-    starttime := Runtime(); timeout := ValueOption("timeout");
-    if timeout = fail then timeout := infinity; fi;
+    starttime := Runtime();
+    timeout := GetOption("timeout",infinity,IsPosInt);
     repeat
       Add(l,Flat(List(l[k],cl->AsUnionOfFewClasses(cl^f))));
       k := k + 1;

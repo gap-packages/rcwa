@@ -1278,16 +1278,11 @@ InstallMethod( Random,
            tame, integralpairs, g, i;
 
     tame       := ValueOption("IsTame") = true;
-    noct       := ValueOption("NumberOfCTs");
-    nocs       := ValueOption("NumberOfCSs");
-    nocr       := ValueOption("NumberOfCRs");
-    maxmodcscr := ValueOption("ModulusBoundForCSCRs");
-    maxmodct   := ValueOption("ModulusBoundForCTs");
-    if noct   = fail then noct := Random([0..2]); fi;
-    if nocs   = fail then nocs := Random([0..3]); fi;
-    if nocr   = fail then nocr := Random([0..3]); fi;
-    if maxmodcscr = fail then maxmodcscr :=  6; fi;
-    if maxmodct   = fail then maxmodct   := 14; fi;
+    noct       := GetOption("NumberOfCTs",Random([0..2]),IsInt);
+    nocs       := GetOption("NumberOfCSs",Random([0..3]),IsInt);
+    nocr       := GetOption("NumberOfCRs",Random([0..3]),IsInt);
+    maxmodcscr := GetOption("ModulusBoundForCSCRs",6,IsPosInt);
+    maxmodct   := GetOption("ModulusBoundForCTs",14,IsPosInt);
     if maxmodct <> CLASS_PAIRS_LARGE[1] then
       MakeReadWriteGlobal("CLASS_PAIRS_LARGE");
       CLASS_PAIRS_LARGE := [maxmodct,ClassPairs(maxmodct)];
@@ -1343,8 +1338,7 @@ InstallMethod( Random,
 
     local  noct;
 
-    noct := ValueOption("NumberOfCTs");
-    if noct = fail then noct := RootInt(Random([0..125]),3); fi;
+    noct := GetOption("NumberOfCTs",RootInt(Random([0..125]),3),IsInt);
     return Random(RCWA(Integers):NumberOfCTs:=noct,NumberOfCSs:=0,
                                  NumberOfCRs:=0);
   end );
@@ -3240,8 +3234,7 @@ InstallMethod( RefinementSequence,
 
     local  Pk, P, Pimgs, gens, k, starttime, timeout;
 
-    timeout := ValueOption("timeout");
-    if not IsPosInt(timeout) then timeout := infinity; fi;
+    timeout := GetOption("timeout",infinity,IsPosInt);
     starttime := Runtime();
     gens := GeneratorsOfGroup(G);
     if not ForAll(gens,IsTame) then return fail; fi; 
@@ -3454,10 +3447,8 @@ InstallMethod( RespectedPartition,
       or ValueOption("classic_partition") = true
     then TryNextMethod(); fi;
 
-    orbitlengthbound := ValueOption("orbitlengthbound");
-    if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
-    modulusbound := ValueOption("modulusbound");
-    if modulusbound = fail then modulusbound := infinity; fi;
+    orbitlengthbound := GetOption("orbitlengthbound",infinity,IsPosInt);
+    modulusbound := GetOption("modulusbound",infinity,IsPosInt);
     nc := ValueOption("NC") = true;
 
     if IsTrivial(G) then return [ Integers ]; fi;
@@ -4660,10 +4651,9 @@ InstallMethod( StabilizerOp,
     if not point in Support(G) then return G; fi;
 
     if ValueOption("symbolic") = true then TryNextMethod(); fi;
-    if   ValueOption("maxr") = true or ValueOption("maxm") = true
+    if   ValueOption("maxr") <> fail or ValueOption("maxm") <> fail
     then TryNextMethod(); fi;
-    maxgens := ValueOption("maxgens");
-    if maxgens = fail then maxgens := infinity; fi;
+    maxgens := GetOption("maxgens",infinity,IsPosInt);
 
     gens := GeneratorsOfGroup(G);
     orb  := [point];
@@ -5047,10 +5037,8 @@ InstallMethod( TryToComputeTransitivityCertificate,
     Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'");
     Info(InfoRCWA,1,"for G = ",ViewString(G));
 
-    abortdensity := ValueOption("abortdensity");
-    if not IsPosRat(abortdensity) then abortdensity := 0; fi;
-    maxclsgrowth := ValueOption("maxclsgrowth");
-    if not IsPosInt(maxclsgrowth) then maxclsgrowth := 20; fi;
+    abortdensity := GetOption("abortdensity",0,IsPosRat);
+    maxclsgrowth := GetOption("maxclsgrowth",20,IsPosInt);
 
     G    := SparseRep(G);
     gens := GeneratorsOfGroup(G);
@@ -5210,8 +5198,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
 
     Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'",
                     " for G = ",ViewString(G));
-    abortdensity := ValueOption("abortdensity");
-    if not IsPosRat(abortdensity) then abortdensity := 0; fi;
+    abortdensity := GetOption("abortdensity",0,IsPosRat);
     if not IsSignPreserving(G)
       or ForAny(ShortResidueClassOrbits(G,60,60),orb->Length(orb)>1)
     then return fail; fi;
@@ -6268,10 +6255,8 @@ InstallMethod( RepresentativesActionPreImage,
       return SetOfRepresentatives(orb,eq,lt,shorter);
     end;
 
-    orbitlengthbound := ValueOption("OrbitLengthBound");
-    if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
-    pointlimit := ValueOption("pointlimit");
-    if pointlimit = fail then pointlimit := infinity; fi;
+    orbitlengthbound := GetOption("OrbitLengthBound",infinity,IsPosInt);
+    pointlimit := GetOption("pointlimit",infinity,IsPosInt);
 
     if   IsPermGroup(G)
     then R := PositiveIntegers;
@@ -7027,8 +7012,7 @@ InstallMethod( EpimorphismFromFpGroup,
     orders        := List(gensG,Order);
     inverseclosed := ForAll(gensG,g->g^-1 in gensG);
     inversepos    := List(gensG,g->Position(gensG,g^-1));
-    hashsize      := ValueOption("hashsize");
-    if not IsPosInt(hashsize) then hashsize := 10000; fi;
+    hashsize      := GetOption("hashsize",10000,IsPosInt);
 
     Info(InfoRCWA,1,"EpimorphismFromFpGroup for G = ",ViewString(G));
     hashtable := List([1..hashsize],n->[]);
