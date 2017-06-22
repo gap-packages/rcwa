@@ -5,6 +5,10 @@
 
 Changes between RCWA 4.5.1 and RCWA 4.6.0 (, 2017):
 
+ - An operation `Epimorphisms' has been added, together with a method which
+   computes all epimorphisms from a given finitely presented group to a given
+   finite group up to automorphisms of the latter.
+
  - Determining transitivity and computing transitivity certificates has been
    made more efficient in some cases, and an operation `SimplifiedCertificate'
    has been added.

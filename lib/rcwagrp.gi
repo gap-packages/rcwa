@@ -6989,6 +6989,69 @@ InstallMethod( EpimorphismFromFpGroup,
 
 #############################################################################
 ##
+#S  Finite quotients of finitely presented groups. //////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Epimorphisms( G, H ) . . . . . . . . . for an fp group and a finite group
+##
+InstallMethod( Epimorphisms,
+               "for an fp group and a finite group (RCWA)", ReturnTrue,
+               [ IsFpGroup, IsGroup and IsFinite ], 0,
+
+  function ( G, H )
+
+    local  search, epis, rels, gensG, gensF, A, orders, r, l;
+
+    search := function ( imgs, stab )
+
+      local  reps, rep, stab_new;
+
+      if Length(imgs) = Length(gensG) then
+        if H = Group(imgs)
+          and ForAll(rels,r->IsOne(MappedWord(r,gensF,imgs)))
+        then
+          Add(epis,GroupHomomorphismByImagesNC(G,H,gensG,imgs));
+        fi;
+      else
+        reps := List(Orbits(stab,H),Representative);
+        if orders[Length(imgs)+1] <> fail then
+          reps := Filtered(reps,g->orders[Length(imgs)+1] mod Order(g) = 0);
+        fi;
+        for rep in reps do
+          if Length(imgs) < Length(gensG) - 1 then
+            stab_new := Intersection(stab,Stabilizer(A,rep));
+          else # not needed any more
+            stab_new := stab;
+          fi;
+          search(Concatenation(imgs,[rep]),stab_new);
+        od;
+      fi;
+    end;
+
+    gensG  := GeneratorsOfGroup(G);
+    gensF  := GeneratorsOfGroup(FreeGroupOfFpGroup(G));
+    orders := List(gensG,g->fail);
+    rels   := RelatorsOfFpGroup(G);
+    A      := AutomorphismGroup(H);
+
+    for r in rels do
+      l := ExtRepOfObj(r);
+      if Length(l) = 2 then
+        orders[l[1]] := l[2];
+      fi;
+    od;
+
+    epis   := [];
+    search([],A);
+
+    return epis;
+  end );
+
+#############################################################################
+##
 #S  Computing structure descriptions for rcwa groups. ///////////////////////
 ##
 #############################################################################

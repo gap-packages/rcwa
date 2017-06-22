@@ -702,6 +702,12 @@ DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
 
 #############################################################################
 ##
+#O  Epimorphisms( G, H ) . . . . epimorphisms from <G> to <H>, up to Aut(<H>)
+##
+DeclareOperation( "Epimorphisms", [ IsGroup, IsGroup ] );
+
+#############################################################################
+##
 #F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
 ##
 ##  Given a word <w>, this function returns the word obtained from <w> by
