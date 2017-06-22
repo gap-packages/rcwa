@@ -261,7 +261,6 @@ The following global variables have been assigned:
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
 "3CTsGroups6"
 gap> AssignGlobals(3CTsGroups6); # for convenience
-The following global variables have been assigned:
 [ "3CTsGroupsWithGivenOrbit", "Id3CTsGroup", 
   "ProbablyFixesDigitSumsModulo", "ProbablyStabilizesDigitSumsModulo", 
   "TriangleTypes", "abc_torsion", "chains", "conjugacyclasses", "cts", 
@@ -271,8 +270,10 @@ The following global variables have been assigned:
   "freeproductlikes", "groups", "grps", "intransitivemodulo", 
   "minwordlengthcoprimemultdiv", "minwordlengthnonbalanced", "mods", 
   "orbitgrowthtype", "orbitlengths", "partitionlengths", "permgroupgens",
-  "refinementseqlngs", "respectedpartitions", "samegroups", 
-  "shortresidueclassorbitlengths", "sizes", "sizespos", "sizesset", 
+  "redundant_generator", "refinementseqlngs", "respectedpartitions", 
+  "samegroups", "shortresidueclassorbitlengths", "sizes", "sizespos", 
+  "sizesset", "spheresizebound_12", "spheresizebound_24", 
+  "spheresizebound_4", "spheresizebound_6", 
   "stabilize_digitsum_base2_mod2", "stabilize_digitsum_base2_mod3", 
   "stabilize_digitsum_base3_mod2", "subgroups", "supergroups", 
   "trsstatus", "trsstatuspos", "trsstatusset" ]
