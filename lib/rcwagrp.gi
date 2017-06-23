@@ -7016,7 +7016,7 @@ InstallMethod( Epimorphisms,
           Add(epis,GroupHomomorphismByImagesNC(G,H,gensG,imgs));
         fi;
       else
-        reps := List(Orbits(stab,H),Representative);
+        reps := List(OrbitsDomain(stab,H),Representative);
         if orders[Length(imgs)+1] <> fail then
           reps := Filtered(reps,g->orders[Length(imgs)+1] mod Order(g) = 0);
         fi;
