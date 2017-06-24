@@ -6995,9 +6995,9 @@ InstallMethod( EpimorphismFromFpGroup,
 
 #############################################################################
 ##
-#M  Epimorphisms( G, H ) . . . . . . . . . for an fp group and a finite group
+#M  EpimorphismsUpToAutomorphisms( G, H )  for an fp group and a finite group
 ##
-InstallMethod( Epimorphisms,
+InstallMethod( EpimorphismsUpToAutomorphisms,
                "for an fp group and a finite group (RCWA)", ReturnTrue,
                [ IsFpGroup, IsGroup and IsFinite ], 0,
 

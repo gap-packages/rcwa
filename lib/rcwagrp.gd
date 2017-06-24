@@ -702,9 +702,11 @@ DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
 
 #############################################################################
 ##
-#O  Epimorphisms( G, H ) . . . . epimorphisms from <G> to <H>, up to Aut(<H>)
+#O  EpimorphismsUpToAutomorphisms( G, H )
 ##
-DeclareOperation( "Epimorphisms", [ IsGroup, IsGroup ] );
+##  Epimorphisms from <G> to <H>, up to automorphisms of <H>.
+##
+DeclareOperation( "EpimorphismsUpToAutomorphisms", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##

@@ -183,9 +183,9 @@ gap> F := FreeGroup("a","b","c");;
 gap> a := F.1;; b := F.2;; c := F.3;;
 gap> Q := F/[a^2,b^2,c^2,(a*b)^3,(a*c)^3,(b*c)^3];
 <fp group on the generators [ a, b, c ]>
-gap> epis := Epimorphisms(Q,SymmetricGroup(4));  
+gap> epis := EpimorphismsUpToAutomorphisms(Q,SymmetricGroup(4));  
 [ [ a, b, c ] -> [ (3,4), (2,3), (1,3) ] ]
-gap> epis := Epimorphisms(Q,SmallGroup(18,4));
+gap> epis := EpimorphismsUpToAutomorphisms(Q,SmallGroup(18,4));
 [ [ a, b, c ] -> [ f1, f1*f2, f1*f3 ] ]
 gap> StructureDescription(Image(epis[1]));
 "(C3 x C3) : C2"
