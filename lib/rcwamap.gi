@@ -8191,6 +8191,35 @@ InstallMethod( TransitionMatrix,
 
 #############################################################################
 ##
+#M  TransitionMatrix( <g> ) .  for rcwa permutations of Z, single-arg. method
+##
+InstallMethod( TransitionMatrix,
+               "for rcwa permutations of Z, single-argument method (RCWA)",
+               true, [ IsRcwaMappingOfZ and IsBijective ], 0,
+
+  function ( g )
+
+    local  cls, img, pre, int, M, d, i, j;
+
+    if not IsRcwaMappingOfZInSparseRep(g) then g := SparseRep(g); fi;
+    cls := List(Coefficients(g),c->ResidueClass(c[1],c[2]));
+    d := Length(cls);
+    M := NullMat(d,d);
+    for i in [1..d] do
+      img := cls[i]^g;
+      for j in [1..d] do
+        int := Intersection(img,cls[j]);
+        if int <> [] then
+          pre := int^(g^-1);
+          M[i][j] := Density(pre)/Density(cls[i]);
+        fi;
+      od;
+    od;
+    return M;
+  end );
+
+#############################################################################
+##
 #F  TransitionSets( <f>, <m> ) . . . . . . . . . . . .  set transition matrix
 ##
 InstallGlobalFunction( TransitionSets,
@@ -8228,6 +8257,23 @@ InstallMethod( TransitionGraph,
     local  M;
 
     M := TransitionMatrix(f,m); 
+    return Graph(Group(()), [1..m], OnPoints,
+                 function(i,j) return M[i][j] <> 0; end, true);
+  end );
+
+#############################################################################
+##
+#M  TransitionGraph( <f> )  .  for rcwa mappings of Z, single-argument method
+##
+InstallMethod( TransitionGraph,
+               "for rcwa mappings of Z, single-argument method (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
+
+  function ( f )
+
+    local  M, m;
+
+    M := TransitionMatrix(f); m := Length(M);
     return Graph(Group(()), [1..m], OnPoints,
                  function(i,j) return M[i][j] <> 0; end, true);
   end );

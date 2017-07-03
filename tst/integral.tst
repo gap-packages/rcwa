@@ -2980,6 +2980,23 @@ gap> H := Source(phi);
 <fp group on the generators [ a, b, c, d, e, f ]>
 gap> rels := RelatorsOfFpGroup(H);
 [ a^2, b^2, c^2, d^2, e^2, f^2, (b*c)^3, (b*c*b*f)^3 ]
+gap> g := RcwaMapping("(0(2),1(2))*(0(5),4(5))*(1(4),0(6))");
+<rcwa permutation of Z with modulus 60>
+gap> M := TransitionMatrix(g);;
+gap> RankMat(M);
+10
+gap> List(M,Sum);
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> List(TransposedMat(M),Sum); 
+[ 3/2, 2/3, 3/2, 2/3, 3/2, 2/3, 3/2, 2/3, 3/2, 2/3, 3/2, 2/3, 3/2, 2/3, 3/2, 
+  2/3, 3/2, 2/3, 3/2, 2/3, 2/3, 2/3, 2/3, 2/3, 2/3 ]
+gap> gamma := TransitionGraph(g);;
+gap> A := AutGroupGraph(gamma);
+<permutation group with 5 generators>
+gap> Size(A);
+32
+gap> StructureDescription(A);
+"C2 x C2 x C2 x C2 x C2"
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 

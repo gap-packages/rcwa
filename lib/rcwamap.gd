@@ -975,6 +975,7 @@ DeclareOperation( "CommonRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 #############################################################################
 ##
 #O  TransitionGraph( <f>, <m> ) . .  transition graph of the rcwa mapping <f>
+#O  TransitionGraph( <f> )
 ##
 ##  Returns the transition graph for modulus <m> of the rcwa mapping <f>.
 ##
@@ -986,11 +987,16 @@ DeclareOperation( "CommonRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 ##  - There is an edge from r1(m) to r2(m) if and only if there is some
 ##    n1 in r1(m) such that n1^f in r2(m).
 ##
+##  If the argument <m> is omitted, the vertices are taken to be the largest
+##  residue classes on which <f> is affine.
+##
 DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
+DeclareOperation( "TransitionGraph", [ IsRcwaMapping ] );
 
 #############################################################################
 ##
 #O  TransitionMatrix( <f>, <m> ) . . transition matrix of <f> for modulus <m>
+#O  TransitionMatrix( <f> )
 ##
 ##  Returns the *transition matrix* T of <f> for modulus <m>.
 ##
@@ -999,7 +1005,11 @@ DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
 ##  The numbering of the residue classes is the same as in the corresponding
 ##  return value of the function `AllResidues'.
 ##
+##  If the argument <m> is omitted, the vertices are taken to be the largest
+##  residue classes on which <f> is affine.
+##
 DeclareOperation( "TransitionMatrix", [ IsRcwaMapping, IsRingElement ] );
+DeclareOperation( "TransitionMatrix", [ IsRcwaMapping ] );
 
 #############################################################################
 ##
