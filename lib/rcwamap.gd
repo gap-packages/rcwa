@@ -988,7 +988,8 @@ DeclareOperation( "CommonRightInverse", [ IsRcwaMapping, IsRcwaMapping ] );
 ##    n1 in r1(m) such that n1^f in r2(m).
 ##
 ##  If the argument <m> is omitted, the vertices are taken to be the largest
-##  residue classes on which <f> is affine.
+##  residue classes on which <f> is affine and which <f> does not fix
+##  pointwise.
 ##
 DeclareOperation( "TransitionGraph", [ IsRcwaMapping, IsRingElement ] );
 DeclareOperation( "TransitionGraph", [ IsRcwaMapping ] );
@@ -1006,7 +1007,8 @@ DeclareOperation( "TransitionGraph", [ IsRcwaMapping ] );
 ##  return value of the function `AllResidues'.
 ##
 ##  If the argument <m> is omitted, the vertices are taken to be the largest
-##  residue classes on which <f> is affine.
+##  residue classes on which <f> is affine and which <f> does not fix
+##  pointwise.
 ##
 DeclareOperation( "TransitionMatrix", [ IsRcwaMapping, IsRingElement ] );
 DeclareOperation( "TransitionMatrix", [ IsRcwaMapping ] );

@@ -8202,7 +8202,8 @@ InstallMethod( TransitionMatrix,
     local  cls, img, pre, int, M, d, i, j;
 
     if not IsRcwaMappingOfZInSparseRep(g) then g := SparseRep(g); fi;
-    cls := List(Coefficients(g),c->ResidueClass(c[1],c[2]));
+    cls := List(Filtered(Coefficients(g),c->c{[3..5]}<>[1,0,1]),
+                c->ResidueClass(c[1],c[2]));
     d := Length(cls);
     M := NullMat(d,d);
     for i in [1..d] do
