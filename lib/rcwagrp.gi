@@ -5811,6 +5811,69 @@ InstallMethod( CyclesOnFiniteOrbit,
   end );
 
 #############################################################################
+## 
+#M  ShortOrbits( <G>, <S>, <maxlng> ) . . . . . . . .  for rcwa groups over Z
+## 
+InstallMethod( ShortOrbits,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroupOverZ, IsList, IsInt ], 0,
+
+  function ( G, S, maxlng )
+
+    local  gens, coeffs, coeff, orbs, size, remaining, ceiling,
+           spheres, sphere, lastsphere, nextsphere, g, c, m, n, i;
+
+    ceiling := ValueOption("ceiling");
+
+    gens := Set(GeneratorsAndInverses(StandardRep(G)));
+    coeffs := List(gens,Coefficients);
+
+    orbs := []; remaining := ShallowCopy(Set(S));
+    while remaining <> [] do
+      lastsphere := []; sphere := [remaining[1]];
+      spheres := [sphere]; size := 1;
+      remaining := remaining{[2..Length(remaining)]};
+      repeat
+        nextsphere := [];
+        for i in [1..Length(coeffs)] do
+          coeff := coeffs[i]; m := Length(coeff);
+          for n in sphere do
+            c := coeff[n mod m + 1];
+            Add(nextsphere,(c[1]*n+c[2])/c[3]);
+          od;
+        od;
+        nextsphere := Set(nextsphere);
+        nextsphere := Difference(nextsphere,sphere);
+        nextsphere := Difference(nextsphere,lastsphere);
+        if IsPosInt(ceiling) then
+          if   nextsphere <> [] and Maximum(nextsphere) > ceiling
+          then break; fi;
+        fi;
+        lastsphere := sphere;
+        sphere := nextsphere;
+        Add(spheres,sphere);
+        remaining := Difference(remaining,sphere);
+        size := size + Length(sphere);
+      until size > maxlng or sphere = [];
+      if sphere = [] and size <= maxlng then Add(orbs,Union(spheres)); fi;
+    od;
+    return orbs;
+  end );
+
+#############################################################################
+## 
+#M  ShortOrbits( <G>, <S>, <maxlng>, <maxn> ) . . . . . . . . for rcwa groups
+## 
+InstallMethod( ShortOrbits,
+               Concatenation("for an rcwa group over Z, a set and ",
+                             "two positive integers (RCWA)"), ReturnTrue,
+               [ IsRcwaGroupOverZ, IsList, IsPosInt, IsPosInt ], 0,
+
+  function ( G, S, maxlng, maxn )
+    return ShortOrbits(G,S,maxlng:ceiling:=maxn);
+  end );
+
+#############################################################################
 ##
 #M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
 ##
