@@ -5929,6 +5929,8 @@ InstallMethod( ShortResidueClassOrbits,
     then TryNextMethod(); fi;
 
     if IsTrivial(G) then return [ [ Integers ] ]; fi;
+
+    Info(InfoRCWA,1,"`ShortResidueClassOrbits': preprocessing ...");
     G := SparseRep(G);
     gens := Set(GeneratorsAndInverses(G));
     coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
@@ -5962,6 +5964,7 @@ InstallMethod( ShortResidueClassOrbits,
         n := n + 1;
       until n >= modulusbound or not covered[n+1];
       if n = modulusbound then break; fi;
+      Info(InfoRCWA,2,"Testing n = ",n," ...\n");
       i := startmodind - 1; orb := fail;
       repeat
         i := i + 1;
@@ -5986,6 +5989,8 @@ InstallMethod( ShortResidueClassOrbits,
             covered[cl[1]+i*cl[2]+1] := true;
           od;
         od;
+        Info(InfoRCWA,1,"Found orbit for ",n mod m,"(",m,") of length ",
+             Length(orb),".\n");
       fi;
       if Length(orbits) > Length(Set(orbits)) then Error(); fi;
     until n >= modulusbound;
