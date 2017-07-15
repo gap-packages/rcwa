@@ -5820,7 +5820,7 @@ InstallMethod( ShortOrbits,
 
   function ( G, S, maxlng )
 
-    local  gens, coeffs, coeff, orbs, size, remaining, ceiling,
+    local  gens, coeffs, coeff, orbs, orb, size, remaining, ceiling,
            spheres, sphere, lastsphere, nextsphere, g, c, m, n, i;
 
     ceiling := ValueOption("ceiling");
@@ -5852,10 +5852,11 @@ InstallMethod( ShortOrbits,
         lastsphere := sphere;
         sphere := nextsphere;
         Add(spheres,sphere);
-        remaining := Difference(remaining,sphere);
         size := size + Length(sphere);
       until size > maxlng or sphere = [];
-      if sphere = [] and size <= maxlng then Add(orbs,Union(spheres)); fi;
+      orb := Union(spheres);
+      remaining := Difference(remaining,orb);
+      if sphere = [] and size <= maxlng then Add(orbs,orb); fi;
     od;
     return orbs;
   end );
