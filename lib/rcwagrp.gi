@@ -5956,7 +5956,7 @@ InstallMethod( ShortResidueClassOrbits,
     local  orbit, orbits, gens, coeffs, moduli,
            primes, primes_multdiv, primes_onlymod,
            powers_impossible, orb, cl, covered, pointorbs, pointorb,
-           startmodind, m, n, r, i, j, k, p;
+           B, startmodind, m, n, r, i, j, k, p;
 
     orbit := function ( cl0 )
 
@@ -6011,15 +6011,20 @@ InstallMethod( ShortResidueClassOrbits,
     powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
     moduli    := AllSmoothIntegers(primes,modulusbound);
     moduli    := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
-    covered   := ListWithIdenticalEntries(modulusbound,true);
-    pointorbs := ShortOrbits(G,[0..modulusbound-1],maxlng,
-                             modulusbound*Maximum(List(gens,Mult))^maxlng);
-    for orb in pointorbs do
-      for n in orb do
-        if   n < modulusbound and Length(orb) > 1
-        then covered[n+1] := false; fi;
+
+    if ValueOption("DontUsePointOrbits") = true then
+      covered := ListWithIdenticalEntries(modulusbound,false);
+    else
+      covered := ListWithIdenticalEntries(modulusbound,true);
+      pointorbs := ShortOrbits(G,[0..modulusbound-1],maxlng);
+      for orb in pointorbs do
+        for n in orb do
+          if   n < modulusbound and Length(orb) > 1
+          then covered[n+1] := false; fi;
+        od;
       od;
-    od;
+    fi;
+
     orbits := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
                    cl->[[Residue(cl),Modulus(cl)]]);
     n := -1; startmodind := 1;
@@ -6040,10 +6045,17 @@ InstallMethod( ShortResidueClassOrbits,
         orb := orbit([n mod m,m]);
       until orb <> fail or i = Length(moduli);
       if orb = fail then
-        pointorb := First(pointorbs,ptorb->n in ptorb);
-        for j in pointorb do
-          if j < modulusbound then covered[j+1] := true; fi;
-        od;
+        if IsBound(pointorbs) then # if point orbits have been precomputed
+          pointorb := First(pointorbs,ptorb->n in ptorb);
+          for j in pointorb do
+            if j < modulusbound then covered[j+1] := true; fi;
+          od;
+        else
+          B := RestrictedBall(G,n,maxlng,modulusbound-1);
+          for j in B do
+            if j < modulusbound then covered[j+1] := true; fi;
+          od;
+        fi;
       else
         orb := Set(orb);
         Add(orbits,orb);
