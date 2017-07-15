@@ -6025,8 +6025,24 @@ InstallMethod( ShortResidueClassOrbits,
       od;
     fi;
 
-    orbits := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
-                   cl->[[Residue(cl),Modulus(cl)]]);
+    orbits := ShallowCopy(ValueOption("known"));
+    if orbits = fail then
+      orbits := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
+                     cl->[[Residue(cl),Modulus(cl)]]);
+    else
+      for orb in orbits do
+        for cl in orb do
+          m := Modulus(cl); r := Residue(cl);
+          if r >= modulusbound then continue; fi;
+          n := r;
+          repeat
+            covered[n+1] := false;
+            n := n + m;
+          until n >= modulusbound;
+        od;
+      od;
+    fi;
+
     n := -1; startmodind := 1;
     repeat
       repeat
