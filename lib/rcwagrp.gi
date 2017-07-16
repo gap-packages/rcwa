@@ -5960,7 +5960,7 @@ InstallMethod( ShortResidueClassOrbits,
 
     local  orbit, orbits, gens, coeffs, moduli,
            primes, primes_multdiv, primes_onlymod,
-           powers_impossible, orb, cl, covered, pointorbs, pointorb,
+           powers_impossible, orb, cl, R, covered, pointorbs, pointorb,
            B, startmodind, m, n, r, i, j, k, p;
 
     orbit := function ( cl0 )
@@ -6027,6 +6027,13 @@ InstallMethod( ShortResidueClassOrbits,
           if   n < modulusbound and Length(orb) > 1
           then covered[n+1] := false; fi;
         od;
+      od;
+    fi;
+
+    R := ValueOption("OrbitRepresentatives");
+    if R <> fail then
+      for n in [0..modulusbound-1] do
+        if not n in R then covered[n+1] := true; fi;
       od;
     fi;
 
