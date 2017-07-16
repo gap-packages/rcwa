@@ -6074,7 +6074,7 @@ InstallMethod( ShortResidueClassOrbits,
         else
           B := RestrictedBall(G,n,maxlng,modulusbound-1);
           for j in B do
-            if j < modulusbound then covered[j+1] := true; fi;
+            if j >= 0 and j < modulusbound then covered[j+1] := true; fi;
           od;
         fi;
       else
