@@ -6041,7 +6041,7 @@ InstallMethod( ShortResidueClassOrbits,
           if r >= modulusbound then continue; fi;
           n := r;
           repeat
-            covered[n+1] := false;
+            covered[n+1] := true;
             n := n + m;
           until n >= modulusbound;
         od;
