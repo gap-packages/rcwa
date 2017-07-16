@@ -6054,7 +6054,7 @@ InstallMethod( ShortResidueClassOrbits,
         n := n + 1;
       until n >= modulusbound or not covered[n+1];
       if n = modulusbound then break; fi;
-      Info(InfoRCWA,2,"Testing n = ",n," ...\n");
+      Info(InfoRCWA,2,"Testing n = ",n," ...");
       i := startmodind - 1; orb := fail;
       repeat
         i := i + 1;
