@@ -5820,19 +5820,23 @@ InstallMethod( ShortOrbits,
 
   function ( G, S, maxlng )
 
-    local  gens, coeffs, coeff, orbs, orb, size, remaining, ceiling,
-           spheres, sphere, lastsphere, nextsphere, g, c, m, n, i;
+    local  gens, coeffs, coeff, orbs, orb, size, max, remaining, ceiling,
+           spheres, sphere, lastsphere, nextsphere, g, c, m, n0, n, i;
+
+    max := Maximum(S);
+    if S <> [0..max] then TryNextMethod(); fi;
 
     ceiling := ValueOption("ceiling");
 
     gens := Set(GeneratorsAndInverses(StandardRep(G)));
     coeffs := List(gens,Coefficients);
 
-    orbs := []; remaining := ShallowCopy(Set(S));
-    while remaining <> [] do
-      lastsphere := []; sphere := [remaining[1]];
+    orbs := []; remaining := ListWithIdenticalEntries(max+1,true); n0 := 0;
+    while true do
+      n0 := Position(remaining,true);
+      if n0 = fail then break; else n0 := n0 - 1; fi;
+      lastsphere := []; sphere := [n0];
       spheres := [sphere]; size := 1;
-      remaining := remaining{[2..Length(remaining)]};
       repeat
         nextsphere := [];
         for i in [1..Length(coeffs)] do
@@ -5842,7 +5846,6 @@ InstallMethod( ShortOrbits,
             Add(nextsphere,(c[1]*n+c[2])/c[3]);
           od;
         od;
-        nextsphere := Set(nextsphere);
         nextsphere := Difference(nextsphere,sphere);
         nextsphere := Difference(nextsphere,lastsphere);
         if IsPosInt(ceiling) then
@@ -5855,7 +5858,9 @@ InstallMethod( ShortOrbits,
         size := size + Length(sphere);
       until size > maxlng or sphere = [];
       orb := Union(spheres);
-      remaining := Difference(remaining,orb);
+      for n in orb do
+        if n >= 0 and n <= max then remaining[n+1] := false; fi;
+      od;
       if sphere = [] and size <= maxlng then Add(orbs,orb); fi;
     od;
     return orbs;
