@@ -6013,9 +6013,13 @@ InstallMethod( ShortResidueClassOrbits,
     primes_multdiv := Difference(primes_multdiv,[1]);
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
-    powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
-    moduli    := AllSmoothIntegers(primes,modulusbound);
-    moduli    := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+
+    moduli := ValueOption("moduli");
+    if moduli = fail then
+      powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
+      moduli    := AllSmoothIntegers(primes,modulusbound);
+      moduli    := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    fi;
 
     if ValueOption("DontUsePointOrbits") = true then
       covered := ListWithIdenticalEntries(modulusbound,false);
