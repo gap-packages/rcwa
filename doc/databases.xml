@@ -261,6 +261,7 @@ The following global variables have been assigned:
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
 "3CTsGroups6"
 gap> AssignGlobals(3CTsGroups6); # for convenience
+The following global variables have been assigned:
 [ "3CTsGroupsWithGivenOrbit", "Id3CTsGroup", 
   "ProbablyFixesDigitSumsModulo", "ProbablyStabilizesDigitSumsModulo", 
   "TriangleTypes", "abc_torsion", "chains", "conjugacyclasses", "cts", 
