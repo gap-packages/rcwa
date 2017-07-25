@@ -5987,7 +5987,8 @@ InstallMethod( ShortResidueClassOrbits,
             Add(B[r+1],img);
           od;
         od;
-        B[r+1] := Set(B[r+1]);
+        B[r+1] := Immutable(Set(B[r+1]));
+        IsSSortedList(B[r+1]);
         if Sum(List(B,Length)) > maxlng then return fail; fi;
       until B[r+1] = [];
       return Concatenation(B);
