@@ -108,8 +108,7 @@ gap> NrConjugacyClassesOfCTZOfOrder(5);
 gap> RepresentativeAction(RCWA(Integers),-6,13,OnPoints);
 ClassShift( Z )^19
 gap> elm := RepresentativeAction(RCWA(Integers),[0,-7,1,2],[7,1,3,0],
->                                OnTuples);
-<rcwa permutation of Z with modulus 15, of order 18>
+>                                OnTuples);;
 gap> OnTuples([0,-7,1,2],elm);
 [ 7, 1, 3, 0 ]
 gap> elm := RepresentativeAction(RCWA(Integers),ResidueClass(1,2),
