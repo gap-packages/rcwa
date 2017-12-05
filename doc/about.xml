@@ -15,14 +15,12 @@ of the <M>3n+1</M> conjecture, which asserts that iterated application of
 the <E>Collatz mapping</E>
 <Alt Only="LaTeX">
   <Display>
-  <![CDATA[
-    T: \ \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
-    n \ \longmapsto \
-    \begin{cases}
-      \frac{n}{2}    & \text{if} \ \ n \ \ \text{is even}, \\
-      \frac{3n+1}{2} & \text{if} \ \ n \ \ \text{is odd}
-    \end{cases}
-  ]]>
+  <![CDATA[T: \ \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
+           n \ \longmapsto \
+          \begin{cases}
+          \frac{n}{2}    & \text{if} \ \ n \ \ \text{is even}, \\
+          \frac{3n+1}{2} & \text{if} \ \ n \ \ \text{is odd}
+          \end{cases}]]>
   </Display>
 </Alt>
 <Alt Only="HTML"><![CDATA[<center>

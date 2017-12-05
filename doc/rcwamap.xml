@@ -1745,11 +1745,10 @@ gap> List(FactorizationOnConnectedComponents(sigma,36),Support);
     r_2(m) \in R/mR</M>, the entry <M>M_{r_1(m),r_2(m)}</M> is defined by
     <Alt Only="LaTeX">
       <Display>
-        <![CDATA[
-          M_{r_1(m),r_2(m)} \ := \ \displaystyle{\frac{|R/mR|}{|R/\hat{m}R|}}
-          \cdot \left|\left\{r(\hat{m}) \in R/\hat{m}R | \ r \in r_1(m)
-          \wedge r^f \in r_2(m)\right\}\right|,
-        ]]>
+        <![CDATA[M_{r_1(m),r_2(m)} \ := \
+                 \displaystyle{\frac{|R/mR|}{|R/\hat{m}R|}} \cdot
+                 \left|\left\{r(\hat{m}) \in R/\hat{m}R | \ r \in r_1(m)
+                 \wedge r^f \in r_2(m)\right\}\right|,]]>
       </Display>
     </Alt>
     <Alt Only="HTML"><![CDATA[<center>

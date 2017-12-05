@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
 Version          := "4.6.0",
-Date             := "13/03/2017",
+Date             := "05/12/2017",
 ArchiveURL       := "https://stefan-kohl.github.io/rcwa/rcwa-4.6.0",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [

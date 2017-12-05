@@ -366,14 +366,12 @@ conjecture holds, and for every vertex <M>n</M> there is an edge from
 <M>n</M> to <M>T(n)</M>, where <M>T</M> denotes the Collatz mapping 
 <Alt Only="LaTeX">
   <Display>
-  <![CDATA[
-    T: \ \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
+  <![CDATA[T: \ \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
     n \ \longmapsto \
     \begin{cases}
       \frac{n}{2}    & \text{if} \ \ n \ \ \text{is even}, \\
       \frac{3n+1}{2} & \text{if} \ \ n \ \ \text{is odd}
-    \end{cases}
-  ]]>
+    \end{cases}]]>
   </Display>
 </Alt>
 <Alt Only="HTML"><![CDATA[<center>
@@ -3070,14 +3068,12 @@ integer under the Collatz mapping <M>T</M> contains&nbsp;1. In contrast,
 it seems likely that <Q>most</Q> trajectories of the two mappings
 <Alt Only="LaTeX">
   <Display>
-  <![CDATA[
-    T_5^\pm: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
+  <![CDATA[T_5^\pm: \ \mathbb{Z} \longrightarrow \mathbb{Z}, \ \ \ \
     n \ \longmapsto \
     \begin{cases}
       \frac{n}{2}        & \text{if} \ n \ \text{even}, \\
       \frac{5n \pm 1}{2} & \text{if} \ n \ \text{odd}
-    \end{cases}
-  ]]>
+    \end{cases}]]>
   </Display>
 </Alt>
 <Alt Only="HTML"><![CDATA[<center>

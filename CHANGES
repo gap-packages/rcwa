@@ -3,7 +3,7 @@
                        ===================================
 
 
-Changes between RCWA 4.5.1 and RCWA 4.6.0 (, 2017):
+Changes between RCWA 4.5.1 and RCWA 4.6.0 (December 5, 2017):
 
  - Determining transitivity and computing transitivity certificates has been
    made more efficient in some cases, and an operation `SimplifiedCertificate'
