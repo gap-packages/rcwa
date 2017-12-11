@@ -3170,6 +3170,9 @@ InstallMethod( ViewObj,
 
     local  l, grpelms, coeffs, supplng, g, i;
 
+    if not IsRcwaMapping(CoefficientsAndMagmaElements(One(elm))[1]) then
+      TryNextMethod();
+    fi;
     l       := CoefficientsAndMagmaElements(elm);
     grpelms := l{[1,3..Length(l)-1]};
     coeffs  := l{[2,4..Length(l)]};
