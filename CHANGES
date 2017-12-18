@@ -3,6 +3,11 @@
                        ===================================
 
 
+Changes between RCWA 4.6.0 and RCWA 4.6.1 (December 18, 2017):
+
+ - The email address stefan@gap-system.org does not seem to work any more
+   since a few days, so it has been changed back to stefan@mcs.st-and.ac.uk.
+
 Changes between RCWA 4.5.1 and RCWA 4.6.0 (December 5, 2017):
 
  - Determining transitivity and computing transitivity certificates has been
