@@ -506,9 +506,9 @@ gap> Mirrored(ct);
 ( 1(2), 4(6) )
 gap> G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;
 gap> ShortOrbits(G,[-100..100],100);
-[ [ 0, 1, 2, 3, 4, 5 ] ]
+[ [ 0 .. 5 ] ]
 gap> ShortOrbits(Mirrored(G),[-100..100],100);
-[ [ -6, -5, -4, -3, -2, -1 ] ]
+[ [ -6 .. -1 ] ]
 ]]>
 </Example>
 
@@ -1274,7 +1274,7 @@ gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
 >               ClassTransposition(3,9,6,18)*ClassTransposition(1,6,3,9));;
 gap> List(ShortOrbits(G,[-15..15],100),
 >         orb->StructureDescription(Action(G,orb)));
-[ "A15", "A4", "1", "1", "C3", "1", "((C2 x C2 x C2) : C7) : C3", "1", 
+[ "A15", "A4", "1", "1", "C3", "1", "(C2 x C2 x C2) : (C7 : C3)", "1", 
   "1", "C3", "A19" ]
 gap> ShortCycles(mKnot(7),[1..100],20);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7, 8 ], [ 9, 10 ], 
