@@ -1,0 +1,1495 @@
+  
+  [1X2 [33X[0;0YResidue-Class-Wise Affine Mappings[133X[101X
+  
+  [33X[0;0YThis  chapter  contains the basic definitions, and it describes how to enter
+  residue-class-wise affine mappings and how to compute with them.[133X
+  
+  [33X[0;0YHow  to compute with residue-class-wise affine groups is described in detail
+  in  the  next  chapter. The reader is encouraged to look there already after
+  having  read the first few pages of this chapter, and to look up definitions
+  as he needs to.[133X
+  
+  
+  [1X2.1 [33X[0;0YBasic definitions[133X[101X
+  
+  [33X[0;0YResidue-class-wise  affine groups, or [13Xrcwa[113X groups for short, are permutation
+  groups whose elements are bijective residue-class-wise affine mappings.[133X
+  
+  [33X[0;0YA mapping [22Xf: ℤ → ℤ[122X is called [13Xresidue-class-wise affine[113X, or for short an [13Xrcwa[113X
+  mapping, if there is a positive integer [22Xm[122X such that the restrictions of [22Xf[122X to
+  the residue classes [22Xr(m) ∈ ℤ/mℤ[122X are all affine, i.e. given by[133X
+  
+                                          a_r(m) * n + b_r(m)
+             f|_r(m):  r(m) -> Z,  n |->  -------------------
+                                                c_r(m)
+  
+  [33X[0;0Yfor  certain  coefficients [22Xa_r(m), b_r(m), c_r(m) ∈ ℤ[122X depending on [22Xr(m)[122X. The
+  smallest  possible  [22Xm[122X  is called the [13Xmodulus[113X of [22Xf[122X. It is understood that all
+  fractions are reduced, i.e. that [22Xgcd( a_r(m), b_r(m), c_r(m) ) = 1[122X, and that
+  [22Xc_r(m)  >  0[122X.  The  lcm  of the coefficients [22Xa_r(m)[122X is called the [13Xmultiplier[113X
+  of [22Xf[122X, and the lcm of the coefficients [22Xc_r(m)[122X is called the [13Xdivisor[113X of [22Xf[122X.[133X
+  
+  [33X[0;0YIt  is  easy  to see that the residue-class-wise affine mappings of ℤ form a
+  monoid   under   composition,   and   that   the  residue-class-wise  affine
+  permutations  of ℤ form a countable subgroup of Sym(ℤ). We denote the former
+  by Rcwa(ℤ), and the latter by RCWA(ℤ).[133X
+  
+  [33X[0;0YAn  rcwa  mapping  is  called  [13Xtame[113X  if  the  set of moduli of its powers is
+  bounded,  or equivalently if it permutes a partition of ℤ into finitely many
+  residue  classes  on all of which it is affine. An rcwa group is called [13Xtame[113X
+  if there is a common such partition for all of its elements, or equivalently
+  if  the  set of moduli of its elements is bounded. Rcwa mappings and -groups
+  which  are  not  tame  are  called  [13Xwild[113X. Tame rcwa mappings and -groups are
+  something  which  one could call the [21Xtrivial cases[121X or [21Xbasic building blocks[121X,
+  while wild rcwa groups are the objects of primary interest.[133X
+  
+  [33X[0;0YThe  definitions  of  residue-class-wise  affine mappings and -groups can be
+  generalized in the obvious way to suitable rings other than ℤ. In fact, this
+  package provides also some support for residue-class-wise affine groups over
+  [22Xℤ^2[122X,  over  semilocalizations of ℤ and over univariate polynomial rings over
+  finite fields. The ring [22Xℤ^2[122X has been chosen as an example of a suitable ring
+  which  is not a principal ideal domain, the semilocalizations of ℤ have been
+  chosen  as examples of rings with only finitely many prime elements, and the
+  univariate  polynomial rings over finite fields have been chosen as examples
+  of rings with nonzero characteristic.[133X
+  
+  
+  [1X2.2 [33X[0;0YEntering residue-class-wise affine mappings[133X[101X
+  
+  [33X[0;0YEntering  an  rcwa  mapping  of ℤ  requires  giving  the  modulus [22Xm[122X  and the
+  coefficients  [22Xa_r(m)[122X,  [22Xb_r(m)[122X  and [22Xc_r(m)[122X  for [22Xr(m)[122X running over the residue
+  classes (mod [22Xm[122X).[133X
+  
+  [33X[0;0YThis can be done easiest by [10XRcwaMapping( [3Xcoeffs[103X[10X )[110X, where [3Xcoeffs[103X is a list of
+  [22Xm[122X coefficient triples [10Xcoeffs[[110X[22Xr+1[122X[10X] = [[110X[22Xa_r(m)[122X, [22Xb_r(m)[122X, [22Xc_r(m)[122X[10X][110X, with [22Xr[122X running
+  from 0 to [22Xm-1[122X.[133X
+  
+  [33X[0;0YIf  some  coefficient [22Xc_r(m)[122X is zero or if images of some integers under the
+  mapping to be defined would not be integers, an error message is printed and
+  a  break loop is entered. For example, the coefficient triple [10X[1,4,3][110X is not
+  allowed  at the first position. The reason for this is that not all integers
+  congruent to [22X1 ⋅ 0 + 4 = 4[122X mod [22Xm[122X are divisible by 3.[133X
+  
+  [33X[0;0YFor the general constructor for rcwa mappings, see [2XRcwaMapping[102X ([14X2.2-5[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]); # The Collatz mapping.[127X[104X
+    [4X[28X<rcwa mapping of Z with modulus 2>[128X[104X
+    [4X[25Xgap>[125X [27X[ IsSurjective(T), IsInjective(T) ];[127X[104X
+    [4X[28X[ true, false ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(T);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XSurjective rcwa mapping of Z with modulus 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | n/2      if n in 0(2)[128X[104X
+    [4X[28X n |-> <  (3n+1)/2 if n in 1(2)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);[127X[104X
+    [4X[28X<rcwa mapping of Z with modulus 3>[128X[104X
+    [4X[25Xgap>[125X [27XIsBijective(a);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(a); # This is Collatz' permutation:[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of Z with modulus 3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | 2n/3     if n in 0(3)[128X[104X
+    [4X[28X n |-> <  (4n-1)/3 if n in 1(3)[128X[104X
+    [4X[28X        | (4n+1)/3 if n in 2(3)[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSupport(a);[127X[104X
+    [4X[28XZ \ [ -1, 0, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XCycle(a,44);[127X[104X
+    [4X[28X[ 44, 59, 79, 105, 70, 93, 62, 83, 111, 74, 99, 66 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere    is   computational   evidence   for   the   conjecture   that   any
+  residue-class-wise  affine  permutation of ℤ can be factored into members of
+  the  following three series of permutations of particularly simple structure
+  (cf. [2XFactorizationIntoCSCRCT[102X ([14X2.5-1[114X)):[133X
+  
+  [1X2.2-1 ClassShift[101X
+  
+  [33X[1;0Y[29X[2XClassShift[102X( [3Xr[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XClassShift[102X( [3Xcl[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe class shift [22Xν_r(m)[122X.[133X
+  
+  [33X[0;0YThe [13Xclass shift[113X [22Xν_r(m)[122X is the rcwa mapping of ℤ which maps [22Xn ∈ r(m)[122X to [22Xn + m[122X
+  and which fixes [22Xℤ ∖ r(m)[122X pointwise.[133X
+  
+  [33X[0;0YIn the one-argument form, the argument [3Xcl[103X stands for the residue class [22Xr(m)[122X.
+  Enclosing the argument list in list brackets is permitted.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ClassShift(5,12));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XTame rcwa permutation of Z with modulus 12, of order infinity[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | n+12 if n in 5(12)[128X[104X
+    [4X[28X n |-> <  n    if n in Z \ 5(12)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-2 ClassReflection[101X
+  
+  [33X[1;0Y[29X[2XClassReflection[102X( [3Xr[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XClassReflection[102X( [3Xcl[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe class reflection [22Xς_r(m)[122X.[133X
+  
+  [33X[0;0YThe  [13Xclass reflection[113X [22Xς_r(m)[122X is the rcwa mapping of ℤ which maps [22Xn ∈ r(m)[122X to
+  [22X-n  + 2r[122X and which fixes [22Xℤ ∖ r(m)[122X pointwise, where it is understood that [22X0 ≤
+  r < m[122X.[133X
+  
+  [33X[0;0YIn the one-argument form, the argument [3Xcl[103X stands for the residue class [22Xr(m)[122X.
+  Enclosing the argument list in list brackets is permitted.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ClassReflection(5,9));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of Z with modulus 9, of order 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | -n+10 if n in 5(9)[128X[104X
+    [4X[28X n |-> <  n     if n in Z \ 5(9)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-3 ClassTransposition[101X
+  
+  [33X[1;0Y[29X[2XClassTransposition[102X( [3Xr1[103X, [3Xm1[103X, [3Xr2[103X, [3Xm2[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XClassTransposition[102X( [3Xcl1[103X, [3Xcl2[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe class transposition [22Xτ_r_1(m_1),r_2(m_2)[122X.[133X
+  
+  [33X[0;0YGiven  two  disjoint  residue classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X of the integers,
+  the  [13Xclass  transposition[113X  [22Xτ_r_1(m_1),r_2(m_2)[122X  [22X∈[122X  RCWA(ℤ) is defined as the
+  involution  which  interchanges  [22Xr_1+km_1[122X and [22Xr_2+km_2[122X for any integer [22Xk[122X and
+  which  fixes  all  other  points.  It  is  understood  that  [22Xm_1[122X and [22Xm_2[122X are
+  positive, that [22X0 ≤ r_1 < m_1[122X and that [22X0 ≤ r_2 < m_2[122X. For a [13Xgeneralized class
+  transposition[113X, the latter assumptions are not made.[133X
+  
+  [33X[0;0YThe class transposition [22Xτ_r_1(m_1),r_2(m_2)[122X interchanges the residue classes
+  [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X and fixes the complement of their union pointwise.[133X
+  
+  [33X[0;0YIn  the  four-argument  form, the arguments [3Xr1[103X, [3Xm1[103X, [3Xr2[103X and [3Xm2[103X stand for [22Xr_1[122X,
+  [22Xm_1[122X,  [22Xr_2[122X and [22Xm_2[122X, respectively. In the two-argument form, the arguments [3Xcl1[103X
+  and [3Xcl2[103X  stand  for the residue classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X, respectively.
+  Enclosing  the  argument  list  in  list  brackets is permitted. The residue
+  classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X are stored as an attribute [10XTransposedClasses[110X.[133X
+  
+  [33X[0;0YA list of all class transpositions interchanging residue classes with moduli
+  less   than   or   equal   to   a   given   bound   [3Xm[103X  can  be  obtained  by
+  [10XList(ClassPairs([[3XP[103X[10X],[3Xm[103X[10X),ClassTransposition)[110X,  where  the  function [10XClassPairs[110X
+  returns  a  list of all 4-tuples [22X(r_1,m_1,r_2,m_2)[122X of integers corresponding
+  to  the  unordered  pairs  of disjoint residue classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X
+  with  [22Xm_1[122X  and  [22Xm_2[122X  less than or equal to the specified bound. If a list of
+  primes is given as optional argument [3XP[103X, then the returned list contains only
+  those  4-tuples  where  all  prime  factors  of [22Xm_1[122X and [22Xm_2[122X lie in [3XP[103X. If the
+  option  [10Xdivisors[110X  is set, the returned list contains only the 4-tuples where
+  [22Xm_1[122X and [22Xm_2[122X divide [3Xm[103X.[133X
+  
+  [33X[0;0YThe  function  [10XNrClassPairs([3Xm[103X[10X)[110X returns the length of the list [10XClassPairs([3Xm[103X[10X)[110X,
+  where the result is computed much faster and without actually generating the
+  list  of  tuples.  Given a class transposition [3Xct[103X, the corresponding 4-tuple
+  can be obtained by [10XExtRepOfObj([3Xct[103X[10X)[110X[133X
+  
+  [33X[0;0YA  class  transposition can be written as a product of any given number [22Xk[122X of
+  class   transpositions.   Such   a   decomposition   can   be   obtained  by
+  [10XSplittedClassTransposition([3Xct[103X[10X,[3Xk[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ClassTransposition(1,2,8,10):CycleNotation:=false);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of Z with modulus 10, of order 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | 5n+3    if n in 1(2)[128X[104X
+    [4X[28X n |-> <  (n-3)/5 if n in 8(10)[128X[104X
+    [4X[28X        | n       if n in 0(2) \ 8(10)[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(ClassPairs(4),ClassTransposition);[127X[104X
+    [4X[28X[ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(3), 1(3) ), [128X[104X
+    [4X[28X  ( 0(3), 2(3) ), ( 0(4), 1(4) ), ( 0(4), 2(4) ), ( 0(4), 3(4) ), [128X[104X
+    [4X[28X  ( 1(2), 0(4) ), ( 1(2), 2(4) ), ( 1(3), 2(3) ), ( 1(4), 2(4) ), [128X[104X
+    [4X[28X  ( 1(4), 3(4) ), ( 2(4), 3(4) ) ][128X[104X
+    [4X[25Xgap>[125X [27XNrClassPairs(100);[127X[104X
+    [4X[28X3528138[128X[104X
+    [4X[25Xgap>[125X [27XSplittedClassTransposition(ClassTransposition(0,2,1,4),3);[127X[104X
+    [4X[28X[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  set  of  all class transpositions of the ring of integers generates the
+  simple  group  CT(ℤ) mentioned in Chapter [14X1[114X. This group has a representation
+  as  a  [5XGAP[105X  object  --  see [2XCT[102X  ([14X3.1-9[114X).  The  set  of all generalized class
+  transpositions of ℤ generates a simple group as well, cf. [Koh10].[133X
+  
+  [33X[0;0YClass  shifts,  class  reflections and class transpositions of rings [22XR[122X other
+  than ℤ are defined in an entirely analogous way -- all one needs to do is to
+  replace ℤ by [22XR[122X and to read [22X<[122X and [22X≤[122X in the sense of the ordering used by [5XGAP[105X.
+  They  can  also  be entered basically as described above -- just prepend the
+  desired  ring [22XR[122X  to the argument list. Often also a sensible [21Xdefault ring[121X ([22X→[122X
+  [10XDefaultRing[110X  in  the  [5XGAP[105X Reference Manual) is chosen if that optional first
+  argument is omitted.[133X
+  
+  [33X[0;0YOn  rings  which  have more than two units, there is another basic series of
+  rcwa permutations which generalizes class reflections:[133X
+  
+  [1X2.2-4 ClassRotation[101X
+  
+  [33X[1;0Y[29X[2XClassRotation[102X( [3Xr[103X, [3Xm[103X, [3Xu[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XClassRotation[102X( [3Xcl[103X, [3Xu[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe class rotation [22Xρ_r(m),u[122X.[133X
+  
+  [33X[0;0YGiven  a  residue  class  [22Xr(m)[122X  and a unit [22Xu[122X of a suitable ring [22XR[122X, the [13Xclass
+  rotation[113X [22Xρ_r(m),u[122X is the rcwa mapping which maps [22Xn ∈ r(m)[122X to [22Xun + (1-u)r[122X and
+  which   fixes   [22XR   ∖  r(m)[122X  pointwise.  Class  rotations  generalize  class
+  reflections, as we have [22Xρ_r(m),-1 = ς_r(m)[122X.[133X
+  
+  [33X[0;0YIn the two-argument form, the argument [3Xcl[103X stands for the residue class [22Xr(m)[122X.
+  Enclosing the argument list in list brackets is permitted. The argument [3Xu[103X is
+  stored as an attribute [10XRotationFactor[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ClassRotation(ResidueClass(Z_pi(2),2,1),1/3));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XTame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | 1/3 n + 2/3 if n in 1(2)[128X[104X
+    [4X[28X n |-> <  n           if n in 0(2)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xx := Indeterminate(GF(8),1);; SetName(x,"x");[127X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing(GF(8),1);;[127X[104X
+    [4X[25Xgap>[125X [27Xcr := ClassRotation(1,x,Z(8)*One(R)); Support(cr);[127X[104X
+    [4X[28XClassRotation( 1(x), Z(2^3) )[128X[104X
+    [4X[28X1(x) \ [ 1 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(cr);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of GF(2^3)[x] with modulus x, of order 7[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | Z(2^3)*P + Z(2^3)^3 if P in 1(x)[128X[104X
+    [4X[28X P |-> <  P                   otherwise[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[10XIsClassShift[110X,  [10XIsClassReflection[110X,  [10XIsClassRotation[110X, [10XIsClassTransposition[110X and
+  [10XIsGeneralizedClassTransposition[110X  are  properties  which  indicate  whether a
+  given rcwa mapping belongs to the corresponding series.[133X
+  
+  [33X[0;0YIn the sequel we describe the general-purpose constructor for rcwa mappings.
+  The  constructor may look a bit technical on a first glance, but knowing all
+  possible  ways  of  entering  an  rcwa  mapping is by no means necessary for
+  understanding this manual or for using this package.[133X
+  
+  
+  [1X2.2-5 [33X[0;0YRcwaMapping (the general constructor)[133X[101X
+  
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3XR[103X, [3Xm[103X, [3Xcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3XR[103X, [3Xcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xperm[103X, [3Xrange[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xm[103X, [3Xvalues[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xpi[103X, [3Xcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xq[103X, [3Xm[103X, [3Xcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3XP1[103X, [3XP2[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xcycles[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRcwaMapping[102X( [3Xexpression[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yan rcwa mapping.[133X
+  
+  [33X[0;0YIn  all  cases  the  argument [3XR[103X is the underlying ring, [3Xm[103X is the modulus and
+  [3Xcoeffs[103X  is the coefficient list. A [13Xcoefficient list[113X for an rcwa mapping with
+  modulus  [22Xm[122X  consists of [22X|R/mR|[122X coefficient triples [10X[[110X[22Xa_r(m)[122X, [22Xb_r(m)[122X, [22Xc_r(m)[122X[10X][110X.
+  Their  ordering  is determined by the ordering of the representatives of the
+  residue classes (mod [22Xm[122X) in the sorted list returned by [10XAllResidues([3XR[103X[10X, [3Xm[103X[10X)[110X. In
+  case [22XR = ℤ[122X this means that the coefficient triple for the residue class [22X0(m)[122X
+  comes first and is followed by the one for [22X1(m)[122X, the one for [22X2(m)[122X and so on.[133X
+  
+  [33X[0;0YIf  one  or several of the arguments [3XR[103X, [3Xm[103X and [3Xcoeffs[103X are omitted or replaced
+  by other arguments, the former are either derived from the latter or default
+  values  are  chosen.  The  meaning  of the other arguments is defined in the
+  detailed  description  of  the  particular  methods given in the sequel. The
+  above methods return the rcwa mapping[133X
+  
+  [8X(a)[108X
+        [33X[0;6Yof [3XR[103X with modulus [3Xm[103X and coefficients [3Xcoeffs[103X,[133X
+  
+  [8X(b)[108X
+        [33X[0;6Yof  [3XR[103X  =  ℤ  or [3XR[103X = [22Xℤ_(π)[122X with modulus [10XLength([3Xcoeffs[103X[10X)[110X and coefficients
+        [3Xcoeffs[103X,[133X
+  
+  [8X(c)[108X
+        [33X[0;6Yof [3XR[103X = ℤ with modulus [10XLength([3Xcoeffs[103X[10X)[110X and coefficients [3Xcoeffs[103X,[133X
+  
+  [8X(d)[108X
+        [33X[0;6Yof  [3XR[103X  = ℤ, permuting any set [10X[3Xrange[103X[10X+k*Length([3Xrange[103X[10X)[110X like [3Xperm[103X permutes
+        [3Xrange[103X,[133X
+  
+  [8X(e)[108X
+        [33X[0;6Yof  [3XR[103X  =  ℤ  with  modulus [3Xm[103X and values given by a list [3Xval[103X of 2 pairs
+        [10X[[110Xpreimage[10X, [110Ximage[10X][110X per residue class (mod [3Xm[103X),[133X
+  
+  [8X(f)[108X
+        [33X[0;6Yof  [3XR[103X = [22Xℤ_(π)[122X with modulus [10XLength([3Xcoeffs[103X[10X)[110X and coefficients [3Xcoeffs[103X (the
+        set  of  primes  [22Xπ[122X  which  denotes  the  underlying  ring is passed as
+        argument [3Xpi[103X),[133X
+  
+  [8X(g)[108X
+        [33X[0;6Yof [3XR[103X = GF([3Xq[103X)[[3Xx[103X] with modulus [3Xm[103X and coefficients [3Xcoeffs[103X,[133X
+  
+  [8X(h)[108X
+        [33X[0;6Yan  rcwa  permutation which induces a bijection between the partitions
+        [3XP1[103X  and  [3XP2[103X  of [3XR[103X  into  residue  classes  and  which is affine on the
+        elements of [3XP1[103X,[133X
+  
+  [8X(i)[108X
+        [33X[0;6Yan  rcwa  permutation with [21Xresidue class cycles[121X given by a list [3Xcycles[103X
+        of  lists  of  pairwise  disjoint  residue  classes,  each of which it
+        permutes cyclically, or[133X
+  
+  [8X(j)[108X
+        [33X[0;6Ythe  rcwa  permutation  of ℤ  given  by  the  arithmetical  expression
+        [3Xexpression[103X  --  a  string  consisting  of  class  transpositions (e.g.
+        [10X"(0(2),1(4))"[110X)    or    cycles   permuting   residue   classes   (e.g.
+        [10X"(0(2),1(8),3(4),5(8))"[110X),   class   shifts   (e.g.  [10X"cs(4(6))"[110X,  class
+        reflections  (e.g.  [10X"cr(3(4))"[110X),  arithmetical operators ([10X"*"[110X, [10X"/"[110X and
+        [10X"^"[110X) and brackets ([10X"("[110X, [10X")"[110X),[133X
+  
+  [33X[0;0Yrespectively.  The methods for the operation [10XRcwaMapping[110X perform a number of
+  argument checks, which can be skipped by using [10XRcwaMappingNC[110X instead.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing(GF(2),1);; x := X(GF(2),1);; SetName(x,"x");[127X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping(R,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));     # (a)[127X[104X
+    [4X[28X<rcwa mapping of GF(2)[x] with modulus x+1>[128X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping(Z_pi(2),[[1/3,0,1]]);                              # (b)[127X[104X
+    [4X[28XRcwa mapping of Z_( 2 ): n -> 1/3 n[128X[104X
+    [4X[25Xgap>[125X [27Xa := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)[127X[104X
+    [4X[28X<rcwa mapping of Z with modulus 3>[128X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping((1,2,3),[1..4]);                                   # (d)[127X[104X
+    [4X[28X( 1(4), 2(4), 3(4) )[128X[104X
+    [4X[25Xgap>[125X [27XT = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);                  # (e)[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping([2],[[1/3,0,1]]);                                  # (f)[127X[104X
+    [4X[28XRcwa mapping of Z_( 2 ): n -> 1/3 n[128X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping(2,x+1,[[1,0,x+One(R)],[x+One(R),0,1]]*One(R));     # (g)[127X[104X
+    [4X[28X<rcwa mapping of GF(2)[x] with modulus x+1>[128X[104X
+    [4X[25Xgap>[125X [27Xa = RcwaMapping(List([[0,3],[1,3],[2,3]],ResidueClass),[127X[104X
+    [4X[25X>[125X [27X                   List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)[127X[104X
+    [4X[28X( 0(2), 1(4), 3(8), 7(16) )[128X[104X
+    [4X[25Xgap>[125X [27XCycle(last,ResidueClass(0,2));[127X[104X
+    [4X[28X[ 0(2), 1(4), 3(8), 7(16) ][128X[104X
+    [4X[25Xgap>[125X [27Xg := RcwaMapping("((0(4),1(6))*cr(0(6)))^2/cs(2(8))");         # (j)[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 72>[128X[104X
+    [4X[25Xgap>[125X [27Xg = (ClassTransposition(0,4,1,6) * ClassReflection(0,6))^2/[127X[104X
+    [4X[25X>[125X [27X        ClassShift(2,8);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRcwa   mappings   of   ℤ   can  be  [21Xtranslated[121X  to  rcwa  mappings  of  some
+  semilocalization [22Xℤ_(π)[122X of ℤ:[133X
+  
+  [1X2.2-6 LocalizedRcwaMapping[101X
+  
+  [33X[1;0Y[29X[2XLocalizedRcwaMapping[102X( [3Xf[103X, [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSemilocalizedRcwaMapping[102X( [3Xf[103X, [3Xpi[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  rcwa  mapping  of  [22Xℤ_(p)[122X  respectively  [22Xℤ_(π)[122X  with  the same
+            coefficients as the rcwa mapping [3Xf[103X of ℤ.[133X
+  
+  [33X[0;0YThe  argument  [3Xp[103X or [3Xpi[103X must be a prime or a set of primes, respectively. The
+  argument [3Xf[103X  must  be  an rcwa mapping of ℤ whose modulus is a power of [3Xp[103X, or
+  whose modulus has only prime divisors which lie in [3Xpi[103X, respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27XCycle(LocalizedRcwaMapping(T,2),131/13);[127X[104X
+    [4X[28X[ 131/13, 203/13, 311/13, 473/13, 716/13, 358/13, 179/13, 275/13, [128X[104X
+    [4X[28X  419/13, 635/13, 959/13, 1445/13, 2174/13, 1087/13, 1637/13, 2462/13, [128X[104X
+    [4X[28X  1231/13, 1853/13, 2786/13, 1393/13, 2096/13, 1048/13, 524/13, 262/13 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRcwa mappings can be [10XView[110Xed, [10XDisplay[110Xed, [10XPrint[110Xed and written to a [10XString[110X. The
+  output  of  the  [10XView[110X method is kept reasonably short. In most cases it does
+  not  describe  an  rcwa  mapping  completely.  In  these cases the output is
+  enclosed  in  brackets.  There  are  options  [10XCycleNotation[110X, [10XAsClassMapping[110X,
+  [10XPrintNotation[110X  and  [10XAbridgedNotation[110X  to  take influence on how certain rcwa
+  mappings  are shown. These options can either be not set, set to [10Xtrue[110X or set
+  to  [10Xfalse[110X.  If  the option [10XCycleNotation[110X is set, it is tried harder to write
+  down  an  rcwa  permutation  of  ℤ  of finite order as a product of disjoint
+  residue  class  cycles, if this is possible. If the option [10XAsClassMapping[110X is
+  set,  [10XDisplay[110X  shows which residue classes are mapped to which by the affine
+  partial  mappings,  and marks any loops. The option [10XPrintNotation[110X influences
+  the  output  in favour of [5XGAP[105X - readability, and the option [10XAbridgedNotation[110X
+  can  be  used to abridge longer names like [10XClassShift[110X, [10XClassReflection[110X etc..
+  By  default,  the  output  of the methods for [10XDisplay[110X and [10XPrint[110X describes an
+  rcwa mapping in full. The [10XPrint[110Xed representation of an rcwa mapping is [5XGAP[105X -
+  readable  if  and  only if the [10XPrint[110Xed representation of the elements of the
+  underlying ring is so.[133X
+  
+  [33X[0;0YThere  is  also an operation [10XLaTeXStringRcwaMapping[110X, which takes as argument
+  an  rcwa  mapping and returns a corresponding LaTeX string. The output makes
+  use  of  the LaTeX macro package [5Xamsmath[105X. If the option [3XFactorization[103X is set
+  and  the  argument  is  bijective,  a factorization into class shifts, class
+  reflections,  class  transpositions  and  prime  switches  is  printed  (cf.
+  [2XFactorizationIntoCSCRCT[102X  ([14X2.5-1[114X)).  For  rcwa  mappings with modulus greater
+  than 1,  an indentation by [3XIndentation[103X characters can be obtained by setting
+  this option value accordingly.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPrint(LaTeXStringRcwaMapping(T));[127X[104X
+    [4X[28Xn \ \mapsto \[128X[104X
+    [4X[28X\begin{cases}[128X[104X
+    [4X[28X  n/2      & \text{if} \ n \in 0(2), \\[128X[104X
+    [4X[28X  (3n+1)/2 & \text{if} \ n \in 1(2).[128X[104X
+    [4X[28X\end{cases}[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere is an operation [10XLaTeXAndXDVI[110X which displays an rcwa mapping in an [5Xxdvi[105X
+  window. This works as follows: The string returned by [10XLaTeXStringRcwaMapping[110X
+  is  inserted  into  a  LaTeX  template  file. This file is LaTeX'ed, and the
+  result  is  shown  with  [5Xxdvi[105X. Calling [10XDisplay[110X with option [3Xxdvi[103X has the same
+  effect.  The  operation  [10XLaTeXAndXDVI[110X is only available on UNIX systems, and
+  requires suitable installations of LaTeX and [5Xxdvi[105X.[133X
+  
+  
+  [1X2.3 [33X[0;0YBasic arithmetic for residue-class-wise affine mappings[133X[101X
+  
+  [33X[0;0YTesting rcwa mappings for equality requires only comparing their coefficient
+  lists,  hence  is  cheap.  Rcwa  mappings can be multiplied, thus there is a
+  method for [10X*[110X. Rcwa permutations can also be inverted, thus there is a method
+  for [10XInverse[110X. The latter method is usually accessed by raising a mapping to a
+  power with negative exponent. Multiplying, inverting and computing powers of
+  tame  rcwa  mappings  is cheap. Computing powers of wild mappings is usually
+  expensive  --  run  time and memory requirements normally grow approximately
+  exponentially  with the exponent. How expensive multiplying a couple of wild
+  mappings  is,  varies  very much. In any case, the amount of memory required
+  for  storing an rcwa mapping is proportional to its modulus. Whether a given
+  mapping  is tame or wild can be determined by the operation [10XIsTame[110X. There is
+  a method for [10XOrder[110X, which can not only compute a finite order, but which can
+  also detect infinite order.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);;          # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27Xa := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation.[127X[104X
+    [4X[25Xgap>[125X [27XList([-4..4],k->Modulus(a^k));[127X[104X
+    [4X[28X[ 256, 64, 16, 4, 1, 3, 9, 27, 81 ][128X[104X
+    [4X[25Xgap>[125X [27XIsTame(T) or IsTame(a);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsTame(ClassShift(0,1)) and IsTame(ClassTransposition(0,2,1,2));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT^2*a*T*a^-3;[127X[104X
+    [4X[28X<rcwa mapping of Z with modulus 768>[128X[104X
+    [4X[25Xgap>[125X [27X(ClassShift(1,3)*ClassReflection(2,7))^1000000;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 21>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  are  methods installed for [10XIsInjective[110X, [10XIsSurjective[110X, [10XIsBijective[110X and
+  [10XImage[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ IsInjective(T), IsSurjective(T), IsBijective(a) ];[127X[104X
+    [4X[28X[ false, true, true ][128X[104X
+    [4X[25Xgap>[125X [27XImage(RcwaMapping([[2,0,1]]));[127X[104X
+    [4X[28X0(2)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YImages  of  elements,  of  finite sets of elements and of unions of finitely
+  many  residue  classes of the source of an rcwa mapping can be computed with
+  [10X^[110X,  the  same  symbol  as  used for exponentiation and conjugation. The same
+  works for partitions of the source into a finite number of residue classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X15^T;[127X[104X
+    [4X[28X23[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(1,2)^T;[127X[104X
+    [4X[28X2(3)[128X[104X
+    [4X[25Xgap>[125X [27XList([[0,3],[1,3],[2,3]],ResidueClass)^a;[127X[104X
+    [4X[28X[ 0(2), 1(4), 3(4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  computing  preimages of elements under rcwa mappings, there are methods
+  for  [10XPreImageElm[110X  and  [10XPreImagesElm[110X.  The  preimage  of a finite set of ring
+  elements  or  of  a  union  of  finitely  many residue classes under an rcwa
+  mapping can be computed by [10XPreImage[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPreImagesElm(T,8);[127X[104X
+    [4X[28X[ 5, 16 ][128X[104X
+    [4X[25Xgap>[125X [27XPreImage(T,ResidueClass(Integers,3,2));[127X[104X
+    [4X[28XZ \ 0(6) U 2(6)[128X[104X
+    [4X[25Xgap>[125X [27XM := [1];; l := [1];;[127X[104X
+    [4X[25Xgap>[125X [27Xwhile Length(M) < 5000 do M := PreImage(T,M); Add(l,Length(M)); od; l;[127X[104X
+    [4X[28X[ 1, 1, 2, 2, 4, 5, 8, 10, 14, 18, 26, 36, 50, 67, 89, 117, 157, 208, [128X[104X
+    [4X[28X  277, 367, 488, 649, 869, 1154, 1534, 2039, 2721, 3629, 4843, 6458 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  is a method for the operation [10XSupport[110X for computing the support of an
+  rcwa  mapping.  A synonym for [10XSupport[110X is [10XMovedPoints[110X. The natural density of
+  the  support  of  an  rcwa mapping of ℤ can be computed efficiently with the
+  operation  [10XDensityOfSupport[110X.  Likewise,  the  natural  density of the set of
+  fixed  points  of  an rcwa mapping of ℤ can be computed efficiently with the
+  operation   [10XDensityOfSetOfFixedPoints[110X.   There   is   also   a   method  for
+  [10XRestrictedPerm[110X  for  computing  the  restriction of an rcwa permutation to a
+  union of residue classes which it fixes setwise.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([a,a^2],Support);[127X[104X
+    [4X[28X[ Z \ [ -1, 0, 1 ], Z \ [ -3, -2, -1, 0, 1, 2, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRestrictedPerm(ClassShift(0,2)*ClassReflection(1,2),[127X[104X
+    [4X[25X>[125X [27X                  ResidueClass(0,2));[127X[104X
+    [4X[28X<rcwa mapping of Z with modulus 2>[128X[104X
+    [4X[25Xgap>[125X [27Xlast = ClassShift(0,2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRcwa  mappings  can  be added and subtracted pointwise. However, please note
+  that the set of rcwa mappings of a ring does not form a ring under [10X+[110X and [10X*[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xb := ClassShift(0,3) * a;;[127X[104X
+    [4X[25Xgap>[125X [27X[ Image((a + b)), Image((a - b)) ];[127X[104X
+    [4X[28X[ 2(4), [ -2, 0 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere   are  operations  [10XModulus[110X  (abbreviated  [10XMod[110X)  and  [10XCoefficients[110X  for
+  retrieving  the  modulus  and  the  coefficient list of an rcwa mapping. The
+  meaning of the return values is as described in Section [14X2.2[114X.[133X
+  
+  [33X[0;0YGeneral  documentation  for most operations mentioned in this section can be
+  found  in the [5XGAP[105X reference manual. For rcwa mappings of rings other than ℤ,
+  not for all operations applicable methods are available.[133X
+  
+  [33X[0;0YAs  in  general  a  subring relation [22XR_1<R_2[122X does [13Xnot[113X give rise to a natural
+  embedding  of  RCWA([22XR_1[122X)  into  RCWA([22XR_2[122X), there is no coercion between rcwa
+  mappings or rcwa groups over different rings.[133X
+  
+  
+  [1X2.4 [33X[0;0YAttributes and properties of residue-class-wise affine mappings[133X[101X
+  
+  [33X[0;0YA  number  of basic attributes and properties of an rcwa mapping are derived
+  immediately from the coefficients of its affine partial mappings. This holds
+  for  example for the multiplier and the divisor. These two values are stored
+  as  attributes  [10XMultiplier[110X and [10XDivisor[110X, or for short [10XMult[110X and [10XDiv[110X. The [13Xprime
+  set[113X  of  an  rcwa mapping is the set of prime divisors of the product of its
+  modulus  and  its  multiplier.  It  is  stored as an attribute [10XPrimeSet[110X. The
+  [13Xmaximal  shift[113X of an rcwa mapping of ℤ is the maximum of the absolute values
+  of  its coefficients [22Xb_r(m)[122X in the notation introduced in Section [14X2.1[114X. It is
+  stored  as  an  attribute [10XMaximalShift[110X. An rcwa mapping is called [13Xclass-wise
+  translating[113X  if  all  of its affine partial mappings are translations, it is
+  called  [13Xintegral[113X  if  its divisor equals 1, and it is called [13Xbalanced[113X if its
+  multiplier  and  its  divisor  have  the  same  prime divisors. A class-wise
+  translating  mapping  has  the  property [10XIsClassWiseTranslating[110X, an integral
+  mapping  has the property [10XIsIntegral[110X and a balanced mapping has the property
+  [10XIsBalanced[110X.  An  rcwa  mapping  of  the  ring  of  integers or of one of its
+  semilocalizations  is  called [13Xclass-wise order-preserving[113X if and only if all
+  coefficients  [22Xa_r(m)[122X  (cf. Section [14X2.1[114X)  in  the  numerators  of  the affine
+  partial    mappings    are   positive.   The   corresponding   property   is
+  [10XIsClassWiseOrderPreserving[110X.  An  rcwa mapping of ℤ is called [13Xsign-preserving[113X
+  if  it does not map nonnegative integers to negative integers or vice versa.
+  The  corresponding  property is [10XIsSignPreserving[110X. All elements of the simple
+  group   CT(ℤ)   generated  by  the  set  of  all  class  transpositions  are
+  sign-preserving.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xu := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsBijective(u);; Display(u);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of Z with modulus 5[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | 3n/5     if n in 0(5)[128X[104X
+    [4X[28X        | (9n+1)/5 if n in 1(5)[128X[104X
+    [4X[28X n |-> <  (3n-1)/5 if n in 2(5)[128X[104X
+    [4X[28X        | (9n-2)/5 if n in 3(5)[128X[104X
+    [4X[28X        | (9n+4)/5 if n in 4(5)[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XMultiplier(u);[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27XDivisor(u);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XPrimeSet(u);[127X[104X
+    [4X[28X[ 3, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XIsIntegral(u) or IsBalanced(u);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsClassWiseOrderPreserving(u) and IsSignPreserving(u);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  are  a  couple  of  further  attributes and operations related to the
+  affine partial mappings of an rcwa mapping:[133X
+  
+  [1X2.4-1 LargestSourcesOfAffineMappings[101X
+  
+  [33X[1;0Y[29X[2XLargestSourcesOfAffineMappings[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe  coarsest  partition  of  [10XSource([3Xf[103X[10X)[110X on whose elements the rcwa
+            mapping [3Xf[103X is affine.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLargestSourcesOfAffineMappings(ClassShift(3,7));[127X[104X
+    [4X[28X[ Z \ 3(7), 3(7) ][128X[104X
+    [4X[25Xgap>[125X [27XLargestSourcesOfAffineMappings(ClassReflection(0,1));[127X[104X
+    [4X[28X[ Integers ][128X[104X
+    [4X[25Xgap>[125X [27Xu := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;[127X[104X
+    [4X[25Xgap>[125X [27XList( [ u, u^-1 ], LargestSourcesOfAffineMappings );[127X[104X
+    [4X[28X[ [ 0(5), 1(5), 2(5), 3(5), 4(5) ], [ 0(3), 1(3), 2(9), 5(9), 8(9) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xkappa := ClassTransposition(2,4,3,4) * ClassTransposition(4,6,8,12)[127X[104X
+    [4X[25X>[125X [27X          * ClassTransposition(3,4,4,6);[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 12>[128X[104X
+    [4X[25Xgap>[125X [27XLargestSourcesOfAffineMappings(kappa);[127X[104X
+    [4X[28X[ 2(4), 1(4) U 0(12), 3(12) U 7(12), 4(12), 8(12), 11(12) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-2 FixedPointsOfAffinePartialMappings[101X
+  
+  [33X[1;0Y[29X[2XFixedPointsOfAffinePartialMappings[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  list of the sets of fixed points of the affine partial mappings
+            of the rcwa mapping [3Xf[103X in the quotient field of its source.[133X
+  
+  [33X[0;0YThe  returned list contains entries for the restrictions of [3Xf[103X to all residue
+  classes  modulo  [10XMod([3Xf[103X[10X)[110X. A list entry can either be an empty set, the source
+  of [3Xf[103X  or  a set of cardinality 1. The ordering of the entries corresponds to
+  the ordering of the residues in [10XAllResidues(Source([3Xf[103X[10X),[3Xm[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFixedPointsOfAffinePartialMappings(ClassShift(0,2));[127X[104X
+    [4X[28X[ [  ], Rationals ][128X[104X
+    [4X[25Xgap>[125X [27XList([1..3],k->FixedPointsOfAffinePartialMappings(T^k));[127X[104X
+    [4X[28X[ [ [ 0 ], [ -1 ] ], [ [ 0 ], [ 1 ], [ 2 ], [ -1 ] ], [128X[104X
+    [4X[28X  [ [ 0 ], [ -7 ], [ 2/5 ], [ -5 ], [ 4/5 ], [ 1/5 ], [ -10 ], [ -1 ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-3 Multpk[101X
+  
+  [33X[1;0Y[29X[2XMultpk[102X( [3Xf[103X, [3Xp[103X, [3Xk[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe union of the residue classes [22Xr(m)[122X such that [22Xp^k||a_r(m)[122X if [22Xk ≥
+            0[122X, and the union of the residue classes [22Xr(m)[122X such that [22Xp^k||c_r(m)[122X
+            if  [22Xk ≤ 0[122X. In this context, [22Xm[122X denotes the modulus of [3Xf[103X, and [22Xa_r(m)[122X
+            and   [22Xc_r(m)[122X   denote  the  coefficients  of [3Xf[103X  as  introduced  in
+            Section [14X2.1[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27X[ Multpk(T,2,-1), Multpk(T,3,1) ];[127X[104X
+    [4X[28X[ Integers, 1(2) ][128X[104X
+    [4X[25Xgap>[125X [27Xu := RcwaMapping([[3,0,5],[9,1,5],[3,-1,5],[9,-2,5],[9,4,5]]);;[127X[104X
+    [4X[25Xgap>[125X [27X[ Multpk(u,3,0), Multpk(u,3,1), Multpk(u,3,2), Multpk(u,5,-1) ];[127X[104X
+    [4X[28X[ [  ], 0(5) U 2(5), Z \ 0(5) U 2(5), Integers ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  are  attributes  [10XClassWiseOrderPreservingOn[110X,  [10XClassWiseConstantOn[110X and
+  [10XClassWiseOrderReversingOn[110X  which  store  the  union  of  the residue classes
+  (mod [10XMod([3Xf[103X[10X)[110X)  on  which  an  rcwa  mapping [3Xf[103X  of ℤ  or of a semilocalization
+  thereof  is  class-wise  order-preserving, class-wise constant or class-wise
+  order-reversing, respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([ClassTransposition(1,2,0,4),ClassShift(2,3),[127X[104X
+    [4X[25X>[125X [27X         ClassReflection(2,5)],ClassWiseOrderPreservingOn);[127X[104X
+    [4X[28X[ Integers, Integers, Z \ 2(5) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlso  there are attributes [10XShiftsUpOn[110X and [10XShiftsDownOn[110X which store the union
+  of  the residue classes (mod [10XMod([3Xf[103X[10X)[110X) on which an rcwa mapping [3Xf[103X of ℤ induces
+  affine mappings [22Xn ↦ n + c[122X for [22Xc > 0[122X, respectively, [22Xc < 0[122X.[133X
+  
+  [33X[0;0YFinally,  there  are epimorphisms from the subgroup of RCWA(ℤ) formed by all
+  class-wise order-preserving elements to (ℤ,+) and from RCWA(ℤ) itself to the
+  cyclic group of order 2, respectively:[133X
+  
+  [1X2.4-4 Determinant[101X
+  
+  [33X[1;0Y[29X[2XDeterminant[102X( [3Xf[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe determinant of the rcwa mapping [3Xf[103X of ℤ.[133X
+  
+  [33X[0;0YThe  [13Xdeterminant[113X of an affine mapping [22Xn ↦ (an+b)/c[122X whose source is a residue
+  class  [22Xr(m)[122X  is defined by [22Xb/|a|m[122X. This definition is extended additively to
+  determinants of rcwa mappings.[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  an  rcwa  mapping of the integers, and let [22Xm[122X denote its modulus.
+  Using  the notation [22Xf|_r(m): n ↦ (a_r(m) ⋅ n + b_r(m))/c_r(m)[122X for the affine
+  partial mappings, the [13Xdeterminant[113X det([22Xf[122X) of [22Xf[122X is given by[133X
+  
+                            -----
+                             \           b_r(m)
+                              >     --------------
+                             /       |a_{r(m)}| * m
+                            -----
+                        r(m) in Z/mZ                .
+      
+  
+  [33X[0;0YThe  determinant  mapping is an epimorphism from the group of all class-wise
+  order-preserving    rcwa    permutations   of ℤ   to   (ℤ,+),   see [Koh05],
+  Theorem 2.11.9.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([ClassTransposition(0,4,5,12),ClassShift(3,7)],Determinant);[127X[104X
+    [4X[28X[ 0, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XDeterminant(ClassTransposition(0,4,5,12)*ClassShift(3,7)^100);   [127X[104X
+    [4X[28X100[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-5 Sign[101X
+  
+  [33X[1;0Y[29X[2XSign[102X( [3Xg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe sign of the rcwa permutation [3Xg[103X of ℤ.[133X
+  
+  [33X[0;0YLet  [22Xσ[122X be an rcwa permutation of the integers, and let [22Xm[122X denote its modulus.
+  Using  the notation [22Xσ|_r(m): n ↦ (a_r(m) ⋅ n + b_r(m))/c_r(m)[122X for the affine
+  partial mappings, the [13Xsign[113X of [22Xσ[122X is defined by[133X
+  
+                                      -----
+                                       \       m - 2r
+                        det(sigma) +    >      -------
+                                       /          m
+                                      -----
+                                   a_r(m) < 0
+                (-1)                                   .
+      
+  
+  [33X[0;0YThe  sign  mapping  is an epimorphism from RCWA(ℤ) to the group [22Xℤ^×[122X of units
+  of ℤ,  see [Koh05], Theorem 2.12.8. Therefore the kernel of the sign mapping
+  is  a  normal  subgroup  of  RCWA(ℤ) of index 2. The simple group CT(ℤ) is a
+  subgroup of this kernel.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([ClassTransposition(3,4,2,6),[127X[104X
+    [4X[25X>[125X [27X         ClassShift(0,3),ClassReflection(2,5)],Sign);[127X[104X
+    [4X[28X[ 1, -1, -1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.5 [33X[0;0YFactoring residue-class-wise affine permutations[133X[101X
+  
+  [33X[0;0YFactoring  group elements into the members of some [21Xnice[121X set of generators is
+  often  helpful.  In  this section we describe an operation which attempts to
+  solve  this  problem  for  the group RCWA(ℤ). Elements of finitely generated
+  rcwa    groups    can    be    factored    into    generators    [21Xas   usual[121X,
+  see [2XPreImagesRepresentative[102X ([14X3.2-3[114X).[133X
+  
+  [1X2.5-1 FactorizationIntoCSCRCT[101X
+  
+  [33X[1;0Y[29X[2XFactorizationIntoCSCRCT[102X( [3Xg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XFactorization[102X( [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ya  factorization of the rcwa permutation [3Xg[103X of ℤ into class shifts,
+            class  reflections  and class transpositions, provided that such a
+            factorization exists and the method finds it.[133X
+  
+  [33X[0;0YThe  method  may  return  [10Xfail[110X,  stop  with  an error message or run into an
+  infinite loop. If it returns a result, this result is always correct.[133X
+  
+  [33X[0;0YThe  problem  of  obtaining  a factorization as described is algorithmically
+  difficult,  and  this  factorization  routine  is currently perhaps the most
+  sophisticated  part  of  the [5XRCWA[105X package. Information about the progress of
+  the  factorization  process can be obtained by setting the info level of the
+  Info class [2XInfoRCWA[102X ([14X9.5-1[114X) to 2.[133X
+  
+  [33X[0;0YBy  default, prime switches ([22X→[122X [2XPrimeSwitch[102X ([14X2.5-2[114X)) are taken as one factor.
+  If  the option [3XExpandPrimeSwitches[103X is set, they are each decomposed into the
+  6 class transpositions given in the definition.[133X
+  
+  [33X[0;0YBy default, the factoring process begins with splitting off factors from the
+  right.  This  can  be  changed  by setting the option [3XDirection[103X to [10X"from the
+  left"[110X.[133X
+  
+  [33X[0;0YBy  default, a reasonably coarse respected partition of the integral mapping
+  occurring  in  the  final  stage  of  the algorithm is computed. This can be
+  suppressed by setting the option [3XShortenPartition[103X equal to [10Xfalse[110X.[133X
+  
+  [33X[0;0YBy  default,  at the end it is checked whether the product of the determined
+  factors  indeed equals [3Xg[103X. This check can be suppressed by setting the option
+  [3XNC[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFactorization(Comm(ClassShift(0,3)*ClassReflection(1,2),[127X[104X
+    [4X[25X>[125X [27X                      ClassShift(0,2)));[127X[104X
+    [4X[28X[ ClassReflection( 2(3) ), ClassShift( 2(6) )^-1, ( 0(6), 2(6) ), [128X[104X
+    [4X[28X  ( 0(6), 5(6) ) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor purposes of demonstrating the capabilities of the factorization routine,
+  in   Section [14X7.2[114X  Collatz'  permutation  is  factored.  Lothar  Collatz  has
+  investigated  this  permutation  in 1932.  Its cycle structure is unknown so
+  far.[133X
+  
+  [33X[0;0YThe  permutations  of the following kind play an important role in factoring
+  rcwa  permutations  of ℤ  into  class  shifts,  class  reflections and class
+  transpositions:[133X
+  
+  [1X2.5-2 PrimeSwitch[101X
+  
+  [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X, [3Xk[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X, [3Xr[103X, [3Xm[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X, [3Xcl[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yin  the  first  form  the  [13Xprime  switch[113X  [22Xσ_p  :=  τ_0(8),1(2p)  ⋅
+            τ_4(8),-1(2p)  ⋅  τ_0(4),1(2p)  ⋅  τ_2(4),-1(2p) ⋅ τ_2(2p),1(4p) ⋅
+            τ_4(2p),2p+1(4p)[122X, in the second form the restriction of [22Xσ_p[122X by [22Xn ↦
+            kn[122X,  and in the third and fourth form the [13Xprime switch[113X [22Xσ_p,r(m) :=
+            τ_r_1(m/2),r_2(m)  ⋅  τ_r_2(m),r_1(pm/2)  ⋅ τ_r(m/2),r_1(pm/2)[122X. In
+            the  latter case, [3Xcl[103X is the residue class [22Xr(m)[122X, the residue [22Xr_1[122X is
+            [22X1-(r  mod  2)[122X,  and [22Xr_2[122X is defined by the equality [22Xr(m) ∪ r_2(m) =
+            r(m/2)[122X.[133X
+  
+  [33X[0;0YFor  an  odd  prime [22Xp[122X, the prime switch [22Xσ_p[122X is an rcwa permutation of ℤ with
+  modulus [22X4p[122X,  multiplier [22Xp[122X  and  divisor 2.  The  prime  switch  [22Xσ_p,r(m)[122X has
+  multiplier [22Xp[122X  and  divisor 2,  and  the  class where the multiplication by [22Xp[122X
+  occurs is just [22Xr(m)[122X. The key mathematical property of a prime switch is that
+  it  is  a  product  of class transpositions whose multiplier and divisor are
+  coprime.[133X
+  
+  [33X[0;0YPrime  switches  can  be distinguished from other rcwa mappings by their [5XGAP[105X
+  property [10XIsPrimeSwitch[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(PrimeSwitch(3));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XWild rcwa permutation of Z with modulus 12[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | (3n+4)/2 if n in 2(4)[128X[104X
+    [4X[28X        | n-1      if n in 5(6) U 8(12)[128X[104X
+    [4X[28X        | n+1      if n in 1(6)[128X[104X
+    [4X[28X n |-> <  n/2      if n in 0(12)[128X[104X
+    [4X[28X        | n-3      if n in 4(12)[128X[104X
+    [4X[28X        | n        if n in 3(6)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(PrimeSwitch(3):AsClassMapping);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XWild rcwa permutation of Z with modulus 12[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X  0(12) -> 0(6)  loop[128X[104X
+    [4X[28X   1(6) -> 2(6)[128X[104X
+    [4X[28X   2(4) -> 5(6)[128X[104X
+    [4X[28X   3(6) -> 3(6)  id[128X[104X
+    [4X[28X  4(12) -> 1(12)[128X[104X
+    [4X[28X   5(6) -> 4(6)[128X[104X
+    [4X[28X  8(12) -> 7(12)[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFactorization(PrimeSwitch(3));[127X[104X
+    [4X[28X[ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), [128X[104X
+    [4X[28X  ( 2(6), 1(12) ), ( 4(6), 7(12) ) ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(PrimeSwitch(5,3,4));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XWild rcwa permutation of Z with modulus 20[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | n+1     if n in 0(2)[128X[104X
+    [4X[28X        | 5n-5    if n in 3(4)[128X[104X
+    [4X[28X n |-> <  (n-1)/2 if n in 1(4) \ 1(20)[128X[104X
+    [4X[28X        | n-1     if n in 1(20)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XMultpk(PrimeSwitch(5,3,4),5,1);[127X[104X
+    [4X[28X3(4)[128X[104X
+    [4X[25Xgap>[125X [27XPrimeSwitch(5,3,4) = PrimeSwitch(5,ResidueClass(3,4));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XFactorization(PrimeSwitch(5,3,4));[127X[104X
+    [4X[28X[ ( 0(2), 1(4) ), ( 1(4), 0(10) ), ( 1(2), 0(10) ) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YObtaining  a  factorization  of an rcwa permutation into class shifts, class
+  reflections and class transpositions is particularly difficult if multiplier
+  and  divisor  are  coprime.  A  prototype  of  permutations  which have this
+  property has been introduced in a different context in [Kel99]:[133X
+  
+  [1X2.5-3 mKnot[101X
+  
+  [33X[1;0Y[29X[2XmKnot[102X( [3Xm[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe permutation [22Xg_m[122X as defined in [Kel99].[133X
+  
+  [33X[0;0YThe argument [3Xm[103X must be an odd integer greater than 1.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(mKnot(5));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XWild rcwa permutation of Z with modulus 5[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | 6n/5     if n in 0(5)[128X[104X
+    [4X[28X        | (4n+1)/5 if n in 1(5)[128X[104X
+    [4X[28X n |-> <  (6n-2)/5 if n in 2(5)[128X[104X
+    [4X[28X        | (4n+3)/5 if n in 3(5)[128X[104X
+    [4X[28X        | (6n-4)/5 if n in 4(5)[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  his  article,  Timothy  P.  Keller shows that a permutation of this type
+  cannot have infinitely many cycles of any given finite length.[133X
+  
+  
+  [1X2.6 [33X[0;0YExtracting roots of residue-class-wise affine mappings[133X[101X
+  
+  [1X2.6-1 Root[101X
+  
+  [33X[1;0Y[29X[2XRoot[102X( [3Xf[103X, [3Xk[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yan  rcwa  mapping  [10Xg[110X such that [10Xg^[3Xk[103X[10X=[3Xf[103X[10X[110X, provided that such a mapping
+            exists  and  that  there is a method available which can determine
+            it.[133X
+  
+  [33X[0;0YCurrently,  extracting  roots is implemented for rcwa permutations of finite
+  order.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRoot(ClassTransposition(0,2,1,2),100);[127X[104X
+    [4X[28X( 0(8), 2(8), 4(8), 6(8), 1(8), 3(8), 5(8), 7(8) )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last:CycleNotation:=false);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XTame rcwa permutation of Z with modulus 8[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | n+2 if n in Z \ 6(8) U 7(8)[128X[104X
+    [4X[28X n |-> <  n-5 if n in 6(8)[128X[104X
+    [4X[28X        | n-7 if n in 7(8)[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xlast^100 = ClassTransposition(0,2,1,2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.7 [33X[0;0YSpecial functions for non-bijective mappings[133X[101X
+  
+  [1X2.7-1 RightInverse[101X
+  
+  [33X[1;0Y[29X[2XRightInverse[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  right inverse of the injective rcwa mapping [3Xf[103X, i.e. a mapping [22Xg[122X
+            such that [3Xf[103X[22Xg[122X = 1.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtwice := 2*IdentityRcwaMappingOfZ;[127X[104X
+    [4X[28XRcwa mapping of Z: n -> 2n[128X[104X
+    [4X[25Xgap>[125X [27Xtwice * RightInverse(twice);[127X[104X
+    [4X[28XIdentityMapping( Integers )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.7-2 CommonRightInverse[101X
+  
+  [33X[1;0Y[29X[2XCommonRightInverse[102X( [3Xl[103X, [3Xr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya mapping [22Xd[122X such that [3Xl[103X[22Xd[122X = [3Xr[103X[22Xd[122X = 1.[133X
+  
+  [33X[0;0YThe  mappings  [3Xl[103X  and  [3Xr[103X  must  be  injective,  and their images must form a
+  partition of their source.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtwice := 2*IdentityRcwaMappingOfZ; twiceplus1 := twice+1;[127X[104X
+    [4X[28XRcwa mapping of Z: n -> 2n[128X[104X
+    [4X[28XRcwa mapping of Z: n -> 2n + 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(CommonRightInverse(twice,twiceplus1));[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa mapping of Z with modulus 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X        /[128X[104X
+    [4X[28X        | n/2     if n in 0(2)[128X[104X
+    [4X[28X n |-> <  (n-1)/2 if n in 1(2)[128X[104X
+    [4X[28X        |[128X[104X
+    [4X[28X        \[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.7-3 ImageDensity[101X
+  
+  [33X[1;0Y[29X[2XImageDensity[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe [13Ximage density[113X of the rcwa mapping [3Xf[103X.[133X
+  
+  [33X[0;0YIn  the  notation introduced in the definition of an rcwa mapping, the [13Ximage
+  density[113X   of   an   rcwa   mapping [22Xf[122X   is  defined  by  1/m  [22X∑_r(m)  ∈  R/mR
+  |R/c_r(m)R|/|R/a_r(m)R|[122X. The image density of an injective rcwa mapping is [22X≤
+  1[122X,  and  the  image density of a surjective rcwa mapping is [22X≥ 1[122X (this can be
+  seen  easily).  Thus  in  particular  the  image density of a bijective rcwa
+  mapping is 1.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27XList( [ T, ClassShift(0,1), RcwaMapping([[2,0,1]]) ], ImageDensity );[127X[104X
+    [4X[28X[ 4/3, 1, 1/2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YGiven an rcwa mapping [10Xf[110X, the function [10XInjectiveAsMappingFrom[110X returns a set [10XS[110X
+  such that the restriction of [10Xf[110X to [10XS[110X is injective, and such that the image of
+  [10XS[110X under [10Xf[110X is the entire image of [10Xf[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XInjectiveAsMappingFrom(T);[127X[104X
+    [4X[28X0(2)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.8 [33X[0;0YOn trajectories and cycles of residue-class-wise affine mappings[133X[101X
+  
+  [33X[0;0Y[5XRCWA[105X provides various methods to compute trajectories of rcwa mappings:[133X
+  
+  
+  [1X2.8-1 [33X[0;0YTrajectory (methods for rcwa mappings)[133X[101X
+  
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xlength[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xlength[103X, [3Xm[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xterminal[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xterminal[103X, [3Xm[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe  first [3Xlength[103X iterates in the trajectory of the rcwa mapping [3Xf[103X
+            starting  at [3Xn[103X, respectively the initial part of the trajectory of
+            the   rcwa  mapping [3Xf[103X  starting  at [3Xn[103X  which  ends  at  the  first
+            occurrence of an iterate in the set [3Xterminal[103X. If the argument [3Xm[103X is
+            given, the iterates are reduced (mod [3Xm[103X).[133X
+  
+  [33X[0;0YTo  save  memory  when computing long trajectories containing huge iterates,
+  the  reduction (mod [3Xm[103X) is done each time before storing an iterate. In place
+  of the ring element [3Xn[103X, the methods also accept a finite set of ring elements
+  or a union of residue classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27XTrajectory(T,27,15); Trajectory(T,27,20,5);[127X[104X
+    [4X[28X[ 27, 41, 62, 31, 47, 71, 107, 161, 242, 121, 182, 91, 137, 206, 103 ][128X[104X
+    [4X[28X[ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3, 0, 3, 0, 0, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XTrajectory(T,15,[1]); Trajectory(T,15,[1],2);[127X[104X
+    [4X[28X[ 15, 23, 35, 53, 80, 40, 20, 10, 5, 8, 4, 2, 1 ][128X[104X
+    [4X[28X[ 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XTrajectory(T,ResidueClass(Integers,3,0),Integers);[127X[104X
+    [4X[28X[ 0(3), 0(3) U 5(9), 0(3) U 5(9) U 7(9) U 8(27), [128X[104X
+    [4X[28X  <union of 20 residue classes (mod 27) (6 classes)>, [128X[104X
+    [4X[28X  <union of 73 residue classes (mod 81)>, Z \ 10(81) U 37(81), Integers ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.8-2 [33X[0;0YTrajectory (methods for rcwa mappings -- [21Xaccumulated coefficients[121X[101X[1X)[133X[101X
+  
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xlength[103X, [3Xwhichcoeffs[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XTrajectory[102X( [3Xf[103X, [3Xn[103X, [3Xterminal[103X, [3Xwhichcoeffs[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yeither the list [10Xc[110X of triples of coprime coefficients such that for
+            any [10Xk[110X it holds that [10X[3Xn[103X[10X^([3Xf[103X[10X^(k-1)) = (c[k][1]*[3Xn[103X[10X + c[k][2])/c[k][3][110X or
+            the  last  entry of that list, depending on whether [3Xwhichcoeffs[103X is
+            [10X"AllCoeffs"[110X or [10X"LastCoeffs"[110X.[133X
+  
+  [33X[0;0YThe  meanings  of  the  arguments [3Xlength[103X and [3Xterminal[103X are the same as in the
+  methods  for the operation [10XTrajectory[110X described above. In general, computing
+  only   the  last  coefficient  triple  ([3Xwhichcoeffs[103X  =  [10X"LastCoeffs"[110X)  needs
+  considerably less memory than computing the entire list.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XTrajectory(T,27,[1],"LastCoeffs");[127X[104X
+    [4X[28X[ 36472996377170786403, 195820718533800070543, 1180591620717411303424 ][128X[104X
+    [4X[25Xgap>[125X [27X(last[1]*27+last[2])/last[3];[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWhen  dealing with problems like the [22X3n+1[122X-Conjecture or when determining the
+  degree  of  transitivity  of  the  natural  action  of  an rcwa group on its
+  underlying ring, an important task is to determine the residue classes whose
+  elements get larger or smaller when applying a given rcwa mapping:[133X
+  
+  
+  [1X2.8-3 [33X[0;0YIncreasingOn & DecreasingOn (for an rcwa mapping)[133X[101X
+  
+  [33X[1;0Y[29X[2XIncreasingOn[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDecreasingOn[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe  union  of  all  residue  classes [22Xr(m)[122X such that [22X|R/a_r(m)R| >
+            |R/c_r(m)R|[122X  or  [22X|R/a_r(m)R|  < |R/c_r(m)R|[122X, respectively, where [22XR[122X
+            denotes  the  source, [22Xm[122X denotes the modulus and [22Xa_r(m)[122X, [22Xb_r(m)[122X and
+            [22Xc_r(m)[122X denote the coefficients of [3Xf[103X as introduced in Section [14X2.1[114X.[133X
+  
+  [33X[0;0YIf  the argument is an rcwa mapping of ℤ in sparse representation, an option
+  [10Xclasses[110X is interpreted; if set, the step of forming the union of the residue
+  classes  in question is omitted, and the list of residue classes is returned
+  instead  of  their  union.  This  may save time and memory if the modulus is
+  large.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([1..3],k->IncreasingOn(T^k));[127X[104X
+    [4X[28X[ 1(2), 3(4), 3(4) U 1(8) U 6(8) ][128X[104X
+    [4X[25Xgap>[125X [27XList([1..3],k->DecreasingOn(T^k));[127X[104X
+    [4X[28X[ 0(2), Z \ 3(4), 0(4) U 2(8) U 5(8) ][128X[104X
+    [4X[25Xgap>[125X [27Xa := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; # Collatz' permutation[127X[104X
+    [4X[25Xgap>[125X [27XList([-2..2],k->IncreasingOn(a^k));[127X[104X
+    [4X[28X[ Z \ 1(8) U 7(8), 0(2), [  ], Z \ 0(3), 1(9) U 4(9) U 5(9) U 8(9) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  assign  certain directed graphs to rcwa mappings, which encode the order
+  in which trajectories may traverse the residue classes modulo some modulus:[133X
+  
+  [1X2.8-4 TransitionGraph[101X
+  
+  [33X[1;0Y[29X[2XTransitionGraph[102X( [3Xf[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe transition graph of the rcwa mapping [3Xf[103X for modulus [3Xm[103X.[133X
+  
+  [33X[0;0YThe [13Xtransition graph[113X [22XΓ_f,m[122X of [22Xf[122X for modulus [22Xm[122X is defined as follows:[133X
+  
+  [31X1[131X   [33X[0;6YThe vertices are the residue classes (mod [22Xm[122X).[133X
+  
+  [31X2[131X   [33X[0;6YThere  is an edge from [22Xr_1(m)[122X to [22Xr_2(m)[122X if and only if there is some [22Xn
+        ∈ r_1(m)[122X such that [22Xn^f ∈ r_2(m)[122X.[133X
+  
+  [33X[0;0YThe  assignment  of the residue classes (mod [22Xm[122X) to the vertices of the graph
+  corresponds to the ordering of the residues in [10XAllResidues(Source([3Xf[103X[10X),[3Xm[103X[10X)[110X. The
+  result is returned in the format used by the package [5XGRAPE[105X [Soi16].[133X
+  
+  [33X[0;0YThere  are  a  couple  of operations and attributes which are based on these
+  graphs:[133X
+  
+  [1X2.8-5 OrbitsModulo[101X
+  
+  [33X[1;0Y[29X[2XOrbitsModulo[102X( [3Xf[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  partition  of  [10XAllResidues(Source([3Xf[103X[10X),[3Xm[103X[10X)[110X  corresponding to the
+            weakly  connected  components  of the transition graph of the rcwa
+            mapping [3Xf[103X for modulus [3Xm[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XOrbitsModulo(ClassTransposition(0,2,1,4),8);[127X[104X
+    [4X[28X[ [ 0, 1, 4 ], [ 2, 5, 6 ], [ 3 ], [ 7 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.8-6 FactorizationOnConnectedComponents[101X
+  
+  [33X[1;0Y[29X[2XFactorizationOnConnectedComponents[102X( [3Xf[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  set  of  restrictions  of  the  rcwa  mapping [3Xf[103X to the weakly
+            connected components of its transition graph [22XΓ_f,m[122X.[133X
+  
+  [33X[0;0YThe  product  of  the  returned  mappings  is [3Xf[103X. They have pairwise disjoint
+  supports, hence any two of them commute.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsigma := ClassTransposition(1,4,2,4)  * ClassTransposition(1,4,3,4)[127X[104X
+    [4X[25X>[125X [27X          * ClassTransposition(3,9,6,18) * ClassTransposition(1,6,3,9);;[127X[104X
+    [4X[25Xgap>[125X [27XList(FactorizationOnConnectedComponents(sigma,36),Support);[127X[104X
+    [4X[28X[ 33(36) U 34(36) U 35(36), 9(36) U 10(36) U 11(36), [128X[104X
+    [4X[28X  <union of 23 residue classes (mod 36)> \ [ -6, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.8-7 TransitionMatrix[101X
+  
+  [33X[1;0Y[29X[2XTransitionMatrix[102X( [3Xf[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe transition matrix of the rcwa mapping [3Xf[103X for modulus [3Xm[103X.[133X
+  
+  [33X[0;0YLet  [22XM[122X  be  this  matrix.  Then for any two residue classes [22Xr_1(m), r_2(m) ∈
+  R/mR[122X, the entry [22XM_r_1(m),r_2(m)[122X is defined by[133X
+  
+  [33X[0;0Y(see the PDF- or HTML version of the manual), where [22Xhatm[122X is the product of [3Xm[103X
+  and  the  square  of the modulus of [3Xf[103X. The assignment of the residue classes
+  (mod [3Xm[103X) to the rows and columns of the matrix corresponds to the ordering of
+  the residues in [10XAllResidues(Source([3Xf[103X[10X),[3Xm[103X[10X)[110X.[133X
+  
+  [33X[0;0YThe  transition  matrix  is a weighted adjacency matrix of the corresponding
+  transition  graph [10XTransitionGraph([3Xf[103X[10X,[3Xm[103X[10X)[110X. The sums of the rows of a transition
+  matrix are always equal to 1.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(TransitionMatrix(T^3,3));[127X[104X
+    [4X[28X[ [  1/8,  1/4,  5/8 ],[128X[104X
+    [4X[28X  [    0,  1/4,  3/4 ],[128X[104X
+    [4X[28X  [    0,  3/8,  5/8 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.8-8 [33X[0;0YSources & Sinks (of an rcwa mapping)[133X[101X
+  
+  [33X[1;0Y[29X[2XSources[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSinks[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  list  of  unions of residue classes modulo the modulus [22Xm[122X of the
+            rcwa mapping [3Xf[103X, as described below.[133X
+  
+  [33X[0;0YThe  returned list contains an entry for any strongly connected component of
+  the  transition  graph of [3Xf[103X for modulus [10XMod([3Xf[103X[10X)[110X which has only outgoing edges
+  ([21Xsource[121X)  or  which  has  only  ingoing edges ([21Xsink[121X), respectively. The list
+  entry  corresponding  to  such  a  component  is  the  union of the vertices
+  belonging to it.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg := ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4);;[127X[104X
+    [4X[25Xgap>[125X [27XSources(g); Sinks(g);[127X[104X
+    [4X[28X[ 0(4) ][128X[104X
+    [4X[28X[ 1(4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.8-9 Loops[101X
+  
+  [33X[1;0Y[29X[2XLoops[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yif  [3Xf[103X  is  bijective,  the  list  of  non-isolated vertices of the
+            transition  graph  of [3Xf[103X  for modulus [10XMod([3Xf[103X[10X)[110X which carry a loop. In
+            general, the list of vertices of that transition graph which carry
+            a loop, but which [3Xf[103X does not fix setwise.[133X
+  
+  [33X[0;0YThe  returned  list  may also include supersets of the named residue classes
+  instead if [3Xf[103X is affine even on these.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLoops(ClassTransposition(0,2,1,2)*ClassTransposition(0,2,1,4));[127X[104X
+    [4X[28X[ 0(4), 1(4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere is a nice invariant of trajectories of the Collatz mapping:[133X
+  
+  [1X2.8-10 GluckTaylorInvariant[101X
+  
+  [33X[1;0Y[29X[2XGluckTaylorInvariant[102X( [3Xa[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  invariant defined in [GT02]. This is [22X(∑_i=1^l a_i ⋅ a_i mod l
+            + 1)/(∑_i=1^l a_i^2)[122X, where [22Xl[122X denotes the length of [3Xa[103X.[133X
+  
+  [33X[0;0YThe  argument  [3Xa[103X must be a list of integers. In [GT02] it is shown that if [3Xa[103X
+  is  a  trajectory of the `original' Collatz mapping [22Xn[122X [22X↦[122X ([22Xn/2[122X if [22Xn[122X even, [22X3n+1[122X
+  if [22Xn[122X odd) starting at an odd integer [22X≥ 3[122X and ending at 1, then the invariant
+  lies in the interval [22X]9/13,5/7[[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC := RcwaMapping([[1,0,2],[3,1,1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XList([3,5..49],n->Float(GluckTaylorInvariant(Trajectory(C,n,[1]))));[127X[104X
+    [4X[28X[ 0.701053, 0.696721, 0.708528, 0.707684, 0.706635, 0.695636, 0.711769,[128X[104X
+    [4X[28X  0.699714, 0.707409, 0.693833, 0.710432, 0.706294, 0.714242, 0.699935,[128X[104X
+    [4X[28X  0.714242, 0.705383, 0.706591, 0.698198, 0.712222, 0.714242, 0.709048,[128X[104X
+    [4X[28X  0.69612, 0.714241, 0.701076 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YQuite  often  one can make certain [21Xeducated guesses[121X on the overall behaviour
+  of  the  trajectories  of a given rcwa mapping. For example it is reasonably
+  straightforward  to make the conjecture that all trajectories of the Collatz
+  mapping eventually enter the finite set [22X{-136, -91, -82, -68, -61, -55, -41,
+  -37,  -34, -25, -17, -10, -7, -5, -1, 0, 1, 2 }[122X, or that [21Xon average[121X the next
+  number  in a trajectory of the Collatz mapping is smaller than the preceding
+  one  by  a  factor  of [22Xsqrt3/2[122X. However it is clear that such guesses can be
+  wrong,   and   that  they  therefore  cannot  be  used  to  prove  anything.
+  Nevertheless they can sometimes be useful:[133X
+  
+  [1X2.8-11 LikelyContractionCentre[101X
+  
+  [33X[1;0Y[29X[2XLikelyContractionCentre[102X( [3Xf[103X, [3Xmaxn[103X, [3Xbound[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of ring elements (see below).[133X
+  
+  [33X[0;0YThis  operation  tries to compute the [13Xcontraction centre[113X of the rcwa mapping
+  [3Xf[103X. Assuming its existence this is the unique finite subset [22XS_0[122X of the source
+  of [3Xf[103X  on  which  [3Xf[103X  induces a permutation and which intersects non-trivially
+  with  any  trajectory of [3Xf[103X. The mapping [3Xf[103X is assumed to be [13Xcontracting[113X, i.e.
+  to  have  such  a  contraction centre. As in general contraction centres are
+  likely  not computable, the methods for this operation are probabilistic and
+  may return wrong results. The argument [3Xmaxn[103X is a bound on the starting value
+  and  [3Xbound[103X is a bound on the elements of the trajectories to be searched. If
+  the  limit [3Xbound[103X is exceeded, an Info message on Info level 3 of [10XInfoRCWA[110X is
+  given.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XT := RcwaMapping([[1,0,2],[3,1,2]]);; # The Collatz mapping.[127X[104X
+    [4X[25Xgap>[125X [27XS0 := LikelyContractionCentre(T,100,1000);[127X[104X
+    [4X[28X#I  Warning: `LikelyContractionCentre' is highly probabilistic.[128X[104X
+    [4X[28XThe returned result can only be regarded as a rough guess.[128X[104X
+    [4X[28XSee ?LikelyContractionCentre for more information.[128X[104X
+    [4X[28X[ -136, -91, -82, -68, -61, -55, -41, -37, -34, -25, -17, -10, -7, -5, [128X[104X
+    [4X[28X  -1, 0, 1, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.8-12 GuessedDivergence[101X
+  
+  [33X[1;0Y[29X[2XGuessedDivergence[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  floating  point  value which is intended to be a rough guess on
+            how  fast  the  trajectories of the rcwa mapping [3Xf[103X diverge (return
+            value greater than 1) or converge (return value smaller than 1).[133X
+  
+  [33X[0;0YNothing particular is guaranteed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGuessedDivergence(T);[127X[104X
+    [4X[28X#I  Warning: GuessedDivergence: no particular return value is guaranteed.[128X[104X
+    [4X[28X0.866025[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.9 [33X[0;0YSaving memory -- the sparse representation of rcwa mappings[133X[101X
+  
+  [33X[0;0YIt  is  quite  common  that  an rcwa mapping with large modulus has only few
+  distinct  affine  partial mappings. In this case the [21Xstandard[121X representation
+  which  stores a coefficient triple for each residue class modulo the modulus
+  is  unsuitable.  For  this  reason  there is a second representation of rcwa
+  mappings,   the  [21Xsparse[121X  representation.  Depending  on  the  rcwa  mappings
+  involved,  using  this  representation  may speed up computations and reduce
+  memory requirements by orders of magnitude. For rcwa mappings with almost as
+  many  distinct  affine  partial mappings as there are residue classes modulo
+  the  modulus, using sparse representation makes computations slower and more
+  memory-consuming. Presently, the sparse representation is only available for
+  rcwa mappings of ℤ.[133X
+  
+  [33X[0;0YThe  sparse  representation of an rcwa mapping consists of the modulus and a
+  list  of  5-tuples  [22X(r,m,a_r(m),b_r(m),c_r(m))[122X of integers. Any such 5-tuple
+  specifies   the   coefficients  of  the  restriction  [22Xn  ↦  (a_r(m)  ⋅  n  +
+  b_r(m))/c_r(m)[122X  of  the mapping to a residue class [22Xr(m)[122X. The [22Xr(m)[122X are chosen
+  to  form the coarsest possible partition of ℤ into residue classes such that
+  the  restriction  of  the mapping to any of them is affine. Also the list of
+  coefficient    tuples    is    sorted,   all   [22Xc_r(m)[122X   are   positive   and
+  [22Xgcd(c_r(m),gcd(a_r(m),b_r(m))) = 1[122X. This way the coefficient list of an rcwa
+  mapping of ℤ is unique.[133X
+  
+  [33X[0;0YChanging the representation of rcwa mappings does not change their behaviour
+  with  respect  to  [21X[10X=[110X[121X  and  [21X[10X<[110X[121X  The  product  of  two  rcwa mappings in sparse
+  representation  is  in sparse representation again, just like the product of
+  two  rcwa mappings in standard representation is in standard representation.
+  Also,  inverses  are  in  the  same  representation. The product of two rcwa
+  mappings in different representation may be in any of the representations of
+  the factors.[133X
+  
+  [1X2.9-1 SparseRepresentation[101X
+  
+  [33X[1;0Y[29X[2XSparseRepresentation[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSparseRep[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardRepresentation[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardRep[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe   rcwa   mapping   [3Xf[103X   in   sparse,   respectively,   standard
+            representation.[133X
+  
+  [33X[0;0YAppropriate  attribute  values  and  properties  are copied over to the rcwa
+  mapping in the [21Xnew[121X representation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa := ClassTransposition(1,2,4,6);[127X[104X
+    [4X[28X( 1(2), 4(6) )[128X[104X
+    [4X[25Xgap>[125X [27Xb := ClassTransposition(1,3,2,6);[127X[104X
+    [4X[28X( 1(3), 2(6) )[128X[104X
+    [4X[25Xgap>[125X [27Xc := ClassTransposition(2,3,4,6);[127X[104X
+    [4X[28X( 2(3), 4(6) )[128X[104X
+    [4X[25Xgap>[125X [27Xg := (b*a*c)^2*a;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 288>[128X[104X
+    [4X[25Xgap>[125X [27Xh := SparseRep(g);[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 288 and 21 affine parts>[128X[104X
+    [4X[25Xgap>[125X [27Xg = h;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCoefficients(h);[127X[104X
+    [4X[28X[ [ 0, 6, 1, 0, 1 ], [ 1, 3, 16, -1, 3 ], [ 2, 96, 9, 14, 16 ], [128X[104X
+    [4X[28X  [ 3, 24, 9, 5, 4 ], [ 5, 24, 3, 1, 4 ], [ 8, 36, 2, -7, 9 ], [128X[104X
+    [4X[28X  [ 9, 48, 27, 29, 8 ], [ 11, 24, 9, 5, 4 ], [ 14, 48, 27, 38, 8 ], [128X[104X
+    [4X[28X  [ 15, 24, 27, 19, 4 ], [ 17, 48, 9, 7, 8 ], [ 20, 72, 3, 4, 4 ], [128X[104X
+    [4X[28X  [ 21, 24, 1, -3, 6 ], [ 23, 24, 27, 19, 4 ], [ 26, 48, 3, 2, 8 ], [128X[104X
+    [4X[28X  [ 32, 36, 4, -11, 9 ], [ 33, 48, 9, 7, 8 ], [ 38, 48, 9, 10, 8 ], [128X[104X
+    [4X[28X  [ 41, 48, 27, 29, 8 ], [ 50, 96, 27, 58, 16 ], [ 56, 72, 1, 0, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xh^2;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 13824 and 71 affine parts>[128X[104X
+    [4X[25Xgap>[125X [27Xh^3;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 663552 and 201 affine parts>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMemory   consumption   may   differ  a  lot  between  sparse-  and  standard
+  representation:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMemoryUsage(h^3);               # on a 64-bit machine[127X[104X
+    [4X[28X18254[128X[104X
+    [4X[25Xgap>[125X [27XMemoryUsage(StandardRep(h^3));  # on a 64-bit machine[127X[104X
+    [4X[28X42467894[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.10 [33X[0;0YThe categories and families of rcwa mappings[133X[101X
+  
+  [1X2.10-1 IsRcwaMapping[101X
+  
+  [33X[1;0Y[29X[2XIsRcwaMapping[102X( [3Xf[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRcwaMappingOfZ[102X( [3Xf[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRcwaMappingOfZ_pi[102X( [3Xf[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRcwaMappingOfGFqx[102X( [3Xf[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if  [3Xf[103X  is  an  rcwa  mapping, an rcwa mapping of the ring of
+            integers,  an  rcwa  mapping  of a semilocalization of the ring of
+            integers  or  an rcwa mapping of a polynomial ring in one variable
+            over a finite field, respectively, and [10Xfalse[110X otherwise.[133X
+  
+  [33X[0;0YOften the same methods can be used for rcwa mappings of the ring of integers
+  and   of  its  semilocalizations.  For  this  reason  there  is  a  category
+  [10XIsRcwaMappingOfZOrZ_pi[110X   which   is   the   union  of  [10XIsRcwaMappingOfZ[110X  and
+  [10XIsRcwaMappingOfZ_pi[110X.  The internal representation of rcwa mappings is called
+  [10XIsRcwaMappingStandardRep[110X.  There  are  methods available for [10XExtRepOfObj[110X and
+  [10XObjByExtRep[110X.[133X
+  
+  [1X2.10-2 RcwaMappingsFamily[101X
+  
+  [33X[1;0Y[29X[2XRcwaMappingsFamily[102X( [3XR[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe family of rcwa mappings of the ring [3XR[103X.[133X
+  

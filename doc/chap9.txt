@@ -1,0 +1,93 @@
+  
+  [1X9 [33X[0;0YInstallation and Auxiliary Functions[133X[101X
+  
+  
+  [1X9.1 [33X[0;0YRequirements[133X[101X
+  
+  [33X[0;0YThis   version   of   [5XRCWA[105X   needs   at  least  [5XGAP[105X 4.9.0  in  64-bit  mode,
+  [5XResClasses[105X 4.7.0,         [5XGRAPE[105X 4.7 [Soi16],        [5XPolycyclic[105X 2.11 [EHN13],
+  [5XFR[105X 2.2.1 [Bar15], [5XGAPDoc[105X 1.5.1 [LN12], and [5XUtils[105X 0.40 [GKW16]. With possible
+  exception  of the most recent version of [5XResClasses[105X, all needed packages are
+  already present in an up-to-date standard [5XGAP[105X installation. The [5XRCWA[105X package
+  is  completely  written in the [5XGAP[105X language and can be used on all platforms
+  for which [5XGAP[105X is available.[133X
+  
+  
+  [1X9.2 [33X[0;0YInstallation[133X[101X
+  
+  [33X[0;0YLike   any  other  [5XGAP[105X  package,  [5XRCWA[105X  is  usually  installed  in  the  [11Xpkg[111X
+  subdirectory of the [5XGAP[105X distribution. This is accomplished by extracting the
+  distribution file in this directory. If you have done this, you can load the
+  package as usual via [10XLoadPackage( "rcwa" );[110X.[133X
+  
+  
+  [1X9.3 [33X[0;0YBuilding the manual[133X[101X
+  
+  [33X[0;0YThe  following  routine is a development tool. As all files it generates are
+  included in the distribution file anyway, users will not need it.[133X
+  
+  [1X9.3-1 RCWABuildManual[101X
+  
+  [33X[1;0Y[29X[2XRCWABuildManual[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function  builds  the  manual  of the [5XRCWA[105X package in the file formats
+  LaTeX,  PDF,  HTML  and  ASCII  text.  This is accomplished using the [5XGAPDoc[105X
+  package  by Frank Lübeck and Max Neunhöffer. Building the manual is possible
+  only on UNIX-type systems and requires PDFLaTeX.[133X
+  
+  
+  [1X9.4 [33X[0;0YThe testing routines[133X[101X
+  
+  [1X9.4-1 RCWATestInstall[101X
+  
+  [33X[1;0Y[29X[2XRCWATestInstall[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if no errors were found, and [10Xfalse[110X otherwise.[133X
+  
+  [33X[0;0YPerforms  a  nontrivial computation to check whether an installation of [5XRCWA[105X
+  appears to work. Errors, i.e. differences to the correct results of the test
+  computation,     are     reported.    The    processed    test    file    is
+  [11Xpkg/rcwa/tst/testinstall.tst[111X.[133X
+  
+  [1X9.4-2 RCWATestAll[101X
+  
+  [33X[1;0Y[29X[2XRCWATestAll[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if no errors were found, and [10Xfalse[110X otherwise.[133X
+  
+  [33X[0;0YRuns  the  full  test  suite  of  the  [5XRCWA[105X  package. Any differences to the
+  supposed  results  of the test computations are reported. The processed test
+  files are in the [11Xtst[111X subdirectory of the package directory.[133X
+  
+  [33X[0;0YPlease  note  that  the  test  suite is a tool for developing. The tests are
+  deliberately  very  volatile  to allow to spot possible problems of any kind
+  also  in  other  packages or in the [5XGAP[105X Library. For this reason you may see
+  reports  of  differences  which  simply  reflect  improved  methods in other
+  packages  or in the [5XGAP[105X Library (for example an object may already know more
+  of  its attributes or properties than it is expected to, or an object may be
+  represented  in  a  better  way),  or which are caused by changes of the way
+  certain  objects  are  printed, and which are therefore harmless. However if
+  the  correct  and  the actual output look different mathematically or if you
+  see  error  messages  or  if  [5XGAP[105X  crashes, then something went wrong. Also,
+  reports  about  significantly  increased run times of individual commands as
+  well  as  run  times  of test files which are much longer than the predicted
+  times shown may indicate a problem.[133X
+  
+  [1X9.4-3 RCWATestExamples[101X
+  
+  [33X[1;0Y[29X[2XRCWATestExamples[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YRuns  all  examples  in  the  manual  of  the  [5XRCWA[105X package, and reports any
+  differences between the actual output and the output printed in the manual.[133X
+  
+  
+  [1X9.5 [33X[0;0YThe Info class of the package[133X[101X
+  
+  [1X9.5-1 InfoRCWA[101X
+  
+  [33X[1;0Y[29X[2XInfoRCWA[102X[32X info class[133X
+  
+  [33X[0;0YThis  is  the  Info class of the [5XRCWA[105X package. See section [13XInfo Functions[113X in
+  the  [5XGAP[105X  Reference  Manual  for  a  description  of the Info mechanism. For
+  convenience: [10XRCWAInfo([110X[3Xn[103X[10X)[110X is a shorthand for [10XSetInfoLevel(InfoRCWA[110X,[3Xn[103X[10X)[110X.[133X
+  

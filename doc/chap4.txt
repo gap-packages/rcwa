@@ -1,0 +1,198 @@
+  
+  [1X4 [33X[0;0YResidue-Class-Wise Affine Monoids[133X[101X
+  
+  [33X[0;0YIn  this  short  chapter, we describe how to compute with residue-class-wise
+  affine  monoids.  [13XResidue-class-wise  affine[113X  monoids,  or  [13Xrcwa[113X monoids for
+  short, are monoids whose elements are residue-class-wise affine mappings.[133X
+  
+  
+  [1X4.1 [33X[0;0YConstructing residue-class-wise affine monoids[133X[101X
+  
+  [33X[0;0YAs  any  other  monoids  in  [5XGAP[105X,  residue-class-wise  affine monoids can be
+  constructed by [10XMonoid[110X or [10XMonoidByGenerators[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM := Monoid(RcwaMapping([[ 0,1,1],[1,1,1]]),[127X[104X
+    [4X[25X>[125X [27X               RcwaMapping([[-1,3,1],[0,2,1]]));[127X[104X
+    [4X[28X<rcwa monoid over Z with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(M);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(MultiplicationTable(M));[127X[104X
+    [4X[28X[ [   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11 ], [128X[104X
+    [4X[28X  [   2,   8,   5,  11,   8,   3,  10,   5,   2,   8,   5 ], [128X[104X
+    [4X[28X  [   3,  10,  11,   5,   5,   5,   8,   8,   8,   2,   3 ], [128X[104X
+    [4X[28X  [   4,   9,   6,   8,   8,   8,   5,   5,   5,   7,   4 ], [128X[104X
+    [4X[28X  [   5,   8,   5,   8,   8,   8,   5,   5,   5,   8,   5 ], [128X[104X
+    [4X[28X  [   6,   7,   4,   8,   8,   8,   5,   5,   5,   9,   6 ], [128X[104X
+    [4X[28X  [   7,   5,   8,   6,   5,   4,   9,   8,   7,   5,   8 ], [128X[104X
+    [4X[28X  [   8,   5,   8,   5,   5,   5,   8,   8,   8,   5,   8 ], [128X[104X
+    [4X[28X  [   9,   5,   8,   4,   5,   6,   7,   8,   9,   5,   8 ], [128X[104X
+    [4X[28X  [  10,   8,   5,   3,   8,  11,   2,   5,  10,   8,   5 ], [128X[104X
+    [4X[28X  [  11,   2,   3,   5,   5,   5,   8,   8,   8,  10,  11 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  are  methods for the operations [10XView[110X, [10XDisplay[110X, [10XPrint[110X and [10XString[110X which
+  are  applicable  to  rcwa  monoids.  All  rcwa  monoids  over  a  ring [22XR[122X are
+  submonoids  of Rcwa([22XR[122X). The monoid Rcwa([22XR[122X) itself is not finitely generated,
+  thus  cannot  be  constructed as described above. It is handled as a special
+  case:[133X
+  
+  [1X4.1-1 Rcwa[101X
+  
+  [33X[1;0Y[29X[2XRcwa[102X( [3XR[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  monoid  Rcwa([3XR[103X)  of all residue-class-wise affine mappings of
+            the ring [3XR[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRcwaZ := Rcwa(Integers);[127X[104X
+    [4X[28XRcwa(Z)[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(RcwaZ,M);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  our  methods  to  construct  rcwa groups, two kinds of mappings played a
+  crucial role, namely the restriction monomorphisms (cf. [2XRestriction[102X ([14X3.1-6[114X))
+  and  the  induction  epimorphisms  (cf. [2XInduction[102X  ([14X3.1-7[114X)). The restriction
+  monomorphisms  extend  in  a  natural  way  to  the monoids Rcwa([22XR[122X), and the
+  induction  epimorphisms  have corresponding generalizations, also. Therefore
+  the  operations  [10XRestriction[110X and [10XInduction[110X can be applied to rcwa monoids as
+  well:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM2 := Restriction(M,2*One(Rcwa(Integers)));[127X[104X
+    [4X[28X<rcwa monoid over Z with 2 generators, of size 11>[128X[104X
+    [4X[25Xgap>[125X [27XSupport(M2);[127X[104X
+    [4X[28X0(2)[128X[104X
+    [4X[25Xgap>[125X [27XAction(M2,ResidueClass(1,2));[127X[104X
+    [4X[28XTrivial rcwa monoid over Z[128X[104X
+    [4X[25Xgap>[125X [27XInduction(M2,2*One(Rcwa(Integers))) = M;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2 [33X[0;0YComputing with residue-class-wise affine monoids[133X[101X
+  
+  [33X[0;0YThere  is  a  method  for  [10XSize[110X  which computes the order of an rcwa monoid.
+  Further  there  is a method for [10Xin[110X which checks whether a given rcwa mapping
+  lies  in  a  given  rcwa monoid (membership test), and there is a method for
+  [10XIsSubset[110X which checks for a submonoid relation.[133X
+  
+  [33X[0;0YThere  are  also methods for [10XSupport[110X, [10XModulus[110X, [10XIsTame[110X, [10XPrimeSet[110X, [10XIsIntegral[110X,
+  [10XIsClassWiseOrderPreserving[110X and [10XIsSignPreserving[110X available for rcwa monoids.[133X
+  
+  [33X[0;0YThe  [13Xsupport[113X of an rcwa monoid is the union of the supports of its elements.
+  The  [13Xmodulus[113X  of  an rcwa monoid is the lcm of the moduli of its elements in
+  case  such  an  lcm exists and 0 otherwise. An rcwa monoid is called [13Xtame[113X if
+  its  modulus is nonzero, and [13Xwild[113X otherwise. The [13Xprime set[113X of an rcwa monoid
+  is  the  union  of  the prime sets of its elements. An rcwa monoid is called
+  [13Xintegral[113X,  [13Xclass-wise  order-preserving[113X  or  [13Xsign-preserving[113X  if  all of its
+  elements are so.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf1 := RcwaMapping([[-1, 1, 1],[ 0,-1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xf2 := RcwaMapping([[ 1,-1, 1],[-1,-2, 1],[-1, 2, 1]]);; [127X[104X
+    [4X[25Xgap>[125X [27Xf3 := RcwaMapping([[ 1, 0, 1],[-1, 0, 1]]);; [127X[104X
+    [4X[25Xgap>[125X [27XN := Monoid(f1,f2,f3);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(N);[127X[104X
+    [4X[28X366[128X[104X
+    [4X[25Xgap>[125X [27XList([Monoid(f1,f2),Monoid(f1,f3),Monoid(f2,f3)],Size);[127X[104X
+    [4X[28X[ 96, 6, 66 ][128X[104X
+    [4X[25Xgap>[125X [27Xf1*f2*f3 in N;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(N,M);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(N,Monoid(f1*f2,f3*f2));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSupport(N);[127X[104X
+    [4X[28XIntegers[128X[104X
+    [4X[25Xgap>[125X [27XModulus(N);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XIsTame(N) and IsIntegral(N);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsClassWiseOrderPreserving(N) or IsSignPreserving(N);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(AsList(N),Image)); # The images of the elements of N.[127X[104X
+    [4X[28X[ [ Integers, 2 ], [ 1(2), 2 ], [ Z \ 1(3), 32 ], [ 0(6), 44 ], [128X[104X
+    [4X[28X  [ 0(6) U 1(6), 4 ], [ Z \ 4(6) U 5(6), 32 ], [ 0(6) U 2(6), 4 ], [128X[104X
+    [4X[28X  [ 0(6) U 5(6), 4 ], [ 1(6), 44 ], [ 1(6) U [ -1 ], 2 ], [128X[104X
+    [4X[28X  [ 1(6) U 3(6), 4 ], [ 1(6) U 5(6), 40 ], [ 2(6), 44 ], [128X[104X
+    [4X[28X  [ 2(6) U 3(6), 4 ], [ 3(6), 44 ], [ 3(6) U 5(6), 4 ], [ 5(6), 44 ], [128X[104X
+    [4X[28X  [ 5(6) U [ 1 ], 2 ], [ [ -5 ], 1 ], [ [ -4 ], 1 ], [ [ -3 ], 1 ], [128X[104X
+    [4X[28X  [ [ -1 ], 1 ], [ [ 0 ], 1 ], [ [ 1 ], 1 ], [ [ 2 ], 1 ], [ [ 3 ], 1 ], [128X[104X
+    [4X[28X  [ [ 5 ], 1 ], [ [ 6 ], 1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFinite forward orbits under the action of an rcwa monoid can be found by the
+  operation [10XShortOrbits[110X:[133X
+  
+  [1X4.2-1 ShortOrbits[101X
+  
+  [33X[1;0Y[29X[2XShortOrbits[102X( [3XM[103X, [3XS[103X, [3Xmaxlng[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ya  list of finite forward orbits of the rcwa monoid [3XM[103X of length at
+            most [3Xmaxlng[103X which start at points in the set [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XShortOrbits(M,[-5..5],20);[127X[104X
+    [4X[28X[ [ -5, -4, 1, 2, 7, 8 ], [ -3, -2, 1, 2, 5, 6 ], [ -1 .. 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XPrint(Action(M,last[1]),"\n");[127X[104X
+    [4X[28XMonoid( [ Transformation( [ 2, 3, 4, 3, 6, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 5, 4, 3, 4, 1 ] ) ] )[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := ShortOrbits(N,[0..10],100);[127X[104X
+    [4X[28X[ [ -5, -4, -3, -1, 0, 1, 2, 3, 5, 6 ], [128X[104X
+    [4X[28X  [ -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, [128X[104X
+    [4X[28X      11, 12 ], [128X[104X
+    [4X[28X  [ -17, -16, -15, -13, -12, -11, -10, -9, -7, -6, -5, -4, -3, -1, 0, 1, [128X[104X
+    [4X[28X      2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xquots := List(orbs,orb->Action(N,orb));;[127X[104X
+    [4X[25Xgap>[125X [27XList(quots,Size);[127X[104X
+    [4X[28X[ 268, 332, 366 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YBalls of given radius around an element of an rcwa monoid can be computed by
+  the  operation  [10XBall[110X.  This operation can also be used for computing forward
+  orbits or subsets of such under the action of an rcwa monoid:[133X
+  
+  
+  [1X4.2-2  [33X[0;0YBall  (for  monoid,  element  and radius or monoid, point, radius and[101X
+  [1Xaction)[133X[101X
+  
+  [33X[1;0Y[29X[2XBall[102X( [3XM[103X, [3Xf[103X, [3Xr[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XBall[102X( [3XM[103X, [3Xp[103X, [3Xr[103X, [3Xaction[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe  ball  of  radius [3Xr[103X  around  the  element [3Xf[103X  in  the monoid [3XM[103X,
+            respectively  the  ball  of  radius [3Xr[103X around the point [3Xp[103X under the
+            action [3Xaction[103X of the monoid [3XM[103X.[133X
+  
+  [33X[0;0YAll   balls   are  understood  with  respect  to  [10XGeneratorsOfMonoid([3XM[103X[10X)[110X.  As
+  membership tests can be expensive, the first-mentioned method does not check
+  whether  [3Xf[103X  is  indeed  an  element  of [3XM[103X. The methods require that point- /
+  element comparisons are cheap. They are not only applicable to rcwa monoids.
+  If the option [3XSpheres[103X is set, the ball is split up and returned as a list of
+  spheres.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList([0..12],k->Length(Ball(N,One(N),k)));[127X[104X
+    [4X[28X[ 1, 4, 11, 26, 53, 99, 163, 228, 285, 329, 354, 364, 366 ][128X[104X
+    [4X[25Xgap>[125X [27XBall(N,[0..3],2,OnTuples);[127X[104X
+    [4X[28X[ [ -3, 3, 3, 3 ], [ -1, -3, 0, 2 ], [ -1, -1, -1, -1 ], [128X[104X
+    [4X[28X  [ -1, -1, 1, -1 ], [ -1, 1, 1, 1 ], [ -1, 3, 0, -4 ], [ 0, -1, 2, -3 ], [128X[104X
+    [4X[28X  [ 0, 1, 2, 3 ], [ 1, -1, -1, -1 ], [ 1, 3, 0, 2 ], [ 3, -4, -1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xl := 2*IdentityRcwaMappingOfZ; r := l+1;[127X[104X
+    [4X[28XRcwa mapping of Z: n -> 2n[128X[104X
+    [4X[28XRcwa mapping of Z: n -> 2n + 1[128X[104X
+    [4X[25Xgap>[125X [27XBall(Monoid(l,r),1,4,OnPoints:Spheres);[127X[104X
+    [4X[28X[ [ 1 ], [ 2, 3 ], [ 4, 5, 6, 7 ], [ 8, 9, 10, 11, 12, 13, 14, 15 ], [128X[104X
+    [4X[28X  [ 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

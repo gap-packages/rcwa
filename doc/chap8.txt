@@ -1,0 +1,890 @@
+  
+  [1X8 [33X[0;0YThe Algorithms Implemented in RCWA[133X[101X
+  
+  [33X[0;0YThis  chapter  lists  brief  descriptions  of  the  algorithms  and  methods
+  implemented  in  this package. These descriptions are kept very informal and
+  terse,  and  some  of  them  provide  only rudimentary information. They are
+  listed  in  alphabetical order. The word [21Xtrivial[121X as a description means that
+  essentially  nothing is done except of performing I/O operations, storing or
+  recalling  one  or  several  values  or  doing  very basic computations, and
+  [21Xstraightforward[121X  means  that  no  sophisticated algorithm is used. Note that
+  [21Xtrivial[121X  and  [21Xstraightforward[121X  are  to  be  read  as  [13Xmathematically[113X trivial
+  respectively  straightforward,  and  that  the  code of a function or method
+  attributed  in this way can still be reasonably long and complicated. Longer
+  and  better  descriptions of [13Xsome[113X of the algorithms and methods can be found
+  in [Koh08].[133X
+  
+  [8X [10XActionOnRespectedPartition([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X   after  having  computed  a  respected  partition  by
+        [10XRespectedPartition[110X.[133X
+  
+  [8X [10XAllElementsOfCTZWithGivenModulus([3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThis  function  first  determines  a  list of all unordered partitions
+        [22XmathcalP[122X  of  ℤ  into  [3Xm[103X  residue classes. Then for any such partition
+        [22XmathcalP[122X  it  runs  a loop over the elements of the symmetric group of
+        degree [3Xm[103X. For any [22Xσ ∈ S_m[122X and any partition [22XmathcalP[122X it constructs the
+        element  of  [22XCT(Z)[122X  with  modulus  dividing  [22Xm[122X  which maps the ordered
+        partition [22X{0(m), 1(m), dots, m-1(m)}[122X to the ordered partition obtained
+        from  [22XmathcalP[122X  by  permuting  the  residue classes with [22Xσ[122X. Finally it
+        discards  the  elements  whose  modulus  is a proper divisor of [3Xm[103X, and
+        returns the [21Xrest[121X.[133X
+  
+  [8X [10XBall([3XG[103X[8X[10X,[3Xg[103X[8X[10X,[3Xr[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XBall([3XG[103X[8X[10X,[3Xp[103X[8X[10X,[3Xr[103X[8X[10X,[3Xact[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XClassPairs([3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YRuns a loop over all 4-tuples of nonnegative integers less than [3Xm[103X, and
+        filters by congruence criteria and ordering of the entries.[133X
+  
+  [8X [10XClassReflection([3Xr[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XClassRotation([3Xr[103X[8X[10X,[3Xm[103X[8X[10X,[3Xu[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XClassShift([3Xr[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XClassTransposition([3Xr1[103X[8X[10X,[3Xm1[103X[8X[10X,[3Xr2[103X[8X[10X,[3Xm2[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XClassWiseOrderPreservingOn([3Xf[103X[8X[10X)[110X[8X, etc. [108X
+        [33X[0;6YForms  the  union  of  the  residue classes modulo the modulus of [3Xf[103X in
+        whose  corresponding  coefficient  triple the first entry is positive,
+        zero or negative, respectively.[133X
+  
+  [8X [10XCoefficients([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XCommonRightInverse([3Xl[103X[8X[10X,[3Xr[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSee [10XRightInverse[110X.[133X
+  
+  [8X [10XCT([3XR[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YAttributes and properties are set according to [Koh10].[133X
+  
+  [8X [10XCycleRepresentativesAndLengths([3Xg[103X[8X[10X,[3XS[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XCyclesOnFiniteOrbit([3XG[103X[8X[10X,[3Xg[103X[8X[10X,[3Xn[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XDecreasingOn([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YForms  the  union  of  the residue classes which are determined by the
+        coefficients as indicated.[133X
+  
+  [8X [10XDerivedSubgroup([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YNo genuine method -- [5XGAP[105X Library methods already work for tame groups.[133X
+  
+  [8X [10XDeterminant([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEvaluation  of  the  given  expression.  For  the mathematical meaning
+        (epimorphism!), see Theorem 2.11.9 in [Koh05].[133X
+  
+  [8X [10XDifferencesList([3Xl[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XDirectProduct([3XG1[103X[8X[10X,[3XG2[103X[8X[10X, ... )[110X[8X [108X
+        [33X[0;6YRestricts  the  groups  [3XG1[103X,  [3XG2[103X,  ... to disjoint residue classes. See
+        [10XRestriction[110X and Corollary 2.3.3 in [Koh05].[133X
+  
+  [8X [10XDisplay([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XDistanceToNextSmallerPointInOrbit([3XG[103X[8X[10X,[3Xn[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X  --  computes  balls of radius [22Xr[122X about [3Xn[103X for [22Xr = 1, 2,
+        dots[122X until a point smaller than [22Xn[122X is found.[133X
+  
+  [8X [10XDivisor([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YLcm of coefficients, as indicated.[133X
+  
+  [8X [10XDrawGrid([3XU[103X[8X[10X,[3Xrange_y[103X[8X[10X,[3Xrange_x[103X[8X[10X,[3Xfilename[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XDrawOrbitPicture[110X[8X [108X
+        [33X[0;6YCompute spheres of radius [22X1, dots, r[122X around the given point(s). Choose
+        the  origin  either  in  the  lower left corner of the picture (if all
+        points  lie in the first quadrant) or in the middle of the picture (if
+        they  don't).  Mark  points of the ball with black pixels in case of a
+        monochrome  picture. Choose colors from the given palette depending on
+        the distance from the starting points in case of a colored picture.[133X
+  
+  [8X [10XEpimorphismFromFpGroup([3XG[103X[8X[10X,[3Xr[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  orders of elements in the ball of radius [3Xr[103X about 1 in [3XG[103X, and
+        uses the corresponding relations if they affect the abelian invariants
+        of [3XG[103X, [3XG'[103X, [3XG''[103X, etc..[133X
+  
+  [8X [10XExponent([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YCheck  whether [3XG[103X is finite. If it is, then use the [5XGAP[105X Library method,
+        applied to [10XImage(IsomorphismPermGroup([3XG[103X[10X))[110X. Check whether [3XG[103X is tame. If
+        yes,  return  [10Xinfinity[110X.  If  not,  run  a loop over [3XG[103X until finding an
+        element of infinite order. Once one is found, return [10Xinfinity[110X.[133X
+  
+        [33X[0;6YThe  final  loop  to find a non-torsion element can be left away under
+        the  assumption that any finitely generated wild rcwa group has a wild
+        element.  It  looks  likely  that this holds, but currently the author
+        does not know a proof.[133X
+  
+  [8X [10XExtRepOfObj([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XFactorizationIntoCSCRCT([3Xg[103X[8X[10X)[110X[8X,   [10XFactorization([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThe  method  used  here  is rather sophisticated, and will likely some
+        time  be  published  elsewhere.  At  the  moment  termination  is  not
+        guaranteed,  but  in  case  of  termination the result is certain. The
+        strategy   is   roughly   first   to   make   the  mapping  class-wise
+        order-preserving  and  balanced,  and then to remove all prime factors
+        from multiplier and divisor one after the other in decreasing order by
+        dividing  by  appropriate class transpositions. The remaining integral
+        mapping  can be factored in a similar way as a permutation of a finite
+        set can be factored into transpositions.[133X
+  
+  [8X [10XFactorizationOnConnectedComponents([3Xf[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YCalls  [5XGRAPE[105X  to get the connected components of the transition graph,
+        and  then  computes  a  partition of the suitably [21Xblown up[121X coefficient
+        list corresponding to the connected components.[133X
+  
+  [8X [10XFixedPointsOfAffinePartialMappings([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XFixedResidueClasses([3Xg[103X[8X[10X,[3Xmaxmod[103X[8X[10X)[110X[8X,   [10XFixedResidueClasses([3XG[103X[8X[10X,[3Xmaxmod[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YRuns a loop over all moduli [22Xm ≤[122X [3Xmaxmod[103X and all residues [22Xr[122X modulo these
+        moduli,  and  selects  those  residue classes [22Xr(m)[122X which are mapped to
+        itself by [3Xg[103X, respectively, by all generators of [3XG[103X.[133X
+  
+  [8X [10XFloatQuotientsList([3Xl[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XGluckTaylorInvariant([3Xa[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEvaluation of the given expression.[133X
+  
+  [8X [10XGroupByResidueClasses([3Xclasses[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YFinds  all  pairs  of  residue  classes  in the list [3Xclasses[103X which are
+        disjoint, forms the corresponding class transpositions and returns the
+        group generated by them.[133X
+  
+  [8X [10XGuessedDivergence([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YNumerical  computation  of  the  limit  of some series, which seems to
+        converge [21Xoften[121X. Caution!!![133X
+  
+  [8X [10XImage([3Xf[103X[8X[10X)[110X[8X,   [10XImage([3Xf[103X[8X[10X,[3XS[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X  if  one  can  compute images of residue classes under
+        affine  mappings  and  unite  and  intersect  residue classes (Chinese
+        Remainder Theorem). See Lemma 1.2.1 in [Koh05].[133X
+  
+  [8X [10XImageDensity([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEvaluation of the given expression.[133X
+  
+  [8X [10X[3Xg[103X[8X[10X in [3XG[103X[8X[10X[110X[8X (membership test for rcwa groups) [108X
+        [33X[0;6YTest whether the mapping [3Xg[103X or its inverse is in the list of generators
+        of [3XG[103X. If it is, return [10Xtrue[110X. Test whether its prime set is a subset of
+        the  prime set of [3XG[103X. If not, return [10Xfalse[110X. Test whether the multiplier
+        or  the  divisor  of [3Xg[103X  has  a  prime factor which does not divide the
+        multiplier  of [3XG[103X.  If  yes,  return  [10Xfalse[110X.  Test  if  [3XG[103X is class-wise
+        order-preserving,  and [3Xg[103X is not. If so, return [10Xfalse[110X. Test if the sign
+        of  [3Xg[103X is -1 and all generators of [3XG[103X have sign 1. If yes, return [10Xfalse[110X.
+        Test  if  [3XG[103X  is  class-wise order-preserving, all generators of [3XG[103X have
+        determinant 0  and  [3Xg[103X  has determinant [22X≠ 0[122X. If yes, return [10Xfalse[110X. Test
+        whether  the  support  of [3Xg[103X  is  a subset of the support of [3XG[103X. If not,
+        return  [10Xfalse[110X.  Test whether [3XG[103X fixes the nonnegative integers setwise,
+        but [3Xg[103X does not. If yes, return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  [3XG[103X  is  tame,  proceed  as  follows:  Test whether the modulus of [3Xg[103X
+        divides  the  modulus  of  [3XG[103X.  If not, return [10Xfalse[110X. Test whether [3XG[103X is
+        finite  and  [3Xg[103X has infinite order. If so, return [10Xfalse[110X. Test whether [3Xg[103X
+        is  tame.  If  not, return [10Xfalse[110X. Compute a respected partition [10XP[110X of [3XG[103X
+        and   the  finite  permutation  group  [10XH[110X  induced  by  [3XG[103X  on  it  (see
+        [10XRespectedPartition[110X). Check whether [3Xg[103X permutes [10XP[110X. If not, return [10Xfalse[110X.
+        Let [10Xh[110X be the permutation induced by [3Xg[103X on [10XP[110X. Check whether [10Xh[110X lies in [10XH[110X.
+        If  not,  return  [10Xfalse[110X.  Compute  an  element [10Xg1[110X of [3XG[103X which acts on [10XP[110X
+        like [3Xg[103X.  For  this  purpose,  factor  [3Xh[103X  into  generators  of [10XH[110X  using
+        [10XPreImagesRepresentative[110X,  and  compute  the  corresponding  product of
+        generators  of [3XG[103X.  Let  [10Xk  :=  g/g1[110X. The mapping [10Xk[110X is always integral.
+        Compute    the    kernel [10XK[110X   of   the   action   of   [3XG[103X   on [10XP[110X   using
+        [10XKernelOfActionOnRespectedPartition[110X. Check whether [10Xk[110X lies in [10XK[110X. This is
+        done  using  the  package  [5XPolycyclic[105X [EHN13], and uses an isomorphism
+        from  a  supergroup  of   [10XK[110X which is isomorphic to the [10X|P|[110X-fold direct
+        product  of the infinite dihedral group and which always contains [10Xk[110X to
+        a  polycyclically  presented  group.  If [10Xk[110X  lies  in [10XK[110X,  return  [10Xtrue[110X,
+        otherwise return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  [3XG[103X is not tame, proceed as follows: Look for finite orbits of [3XG[103X. If
+        some  are  found, test whether [3Xg[103X acts on them, and whether the induced
+        permutations lie in the permutation groups induced by [3XG[103X. If for one of
+        the  examined  orbits  one  of the latter two questions has a negative
+        answer,  then  return [10Xfalse[110X. Look for a positive integer [22Xm[122X such that [3Xg[103X
+        does not leave a partition of ℤ into unions of residue classes (mod [22Xm[122X)
+        invariant  which  is  fixed by [3XG[103X. If successful, return [10Xfalse[110X. If not,
+        try to factor [3Xg[103X into generators of [3XG[103X using [10XPreImagesRepresentative[110X. If
+        successful,  return [10Xtrue[110X. If [3Xg[103X is in [3XG[103X, this terminates after a finite
+        number of steps. Both run time and memory requirements are exponential
+        in  the  word  length. If [3Xg[103X is not in [3XG[103X at this stage, the method runs
+        into an infinite loop.[133X
+  
+  [8X [10X[3Xf[103X[8X[10X in [3XM[103X[8X[10X[110X[8X (membership test for rcwa monoids) [108X
+        [33X[0;6YTest  whether  the  mapping [3Xf[103X is in the list of generators of [3XG[103X. If it
+        is,  return  [10Xtrue[110X.  Test  whether the multiplier of [3Xf[103X is zero, but all
+        generators of [3XM[103X have nonzero multiplier. If yes, return [10Xfalse[110X. Test if
+        neither [3Xf[103X  nor  any  generator  of [3XM[103X has multiplier zero. If so, check
+        whether  the  prime  set  of [3Xf[103X  is a subset of the prime set of [3XM[103X, and
+        whether the set of prime factors of the multiplier of [3Xf[103X is a subset of
+        the  union  of  the  sets  of  prime factors of the multipliers of the
+        generators  of [3XM[103X. If one of these is not the case, return [10Xfalse[110X. Check
+        whether  the  set  of prime factors of the divisor of [3Xf[103X is a subset of
+        the  union  of  the  sets  of  prime  factors  of  the divisors of the
+        generators  of [3XM[103X. If not, return [10Xfalse[110X. If the underlying ring is ℤ or
+        a  semilocalization  thereof,  then  check whether [3Xf[103X is not class-wise
+        order-preserving, but [3XM[103X is. If so, return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf [3Xf[103X is not injective, but all generators of [3XM[103X are, then return [10Xfalse[110X.
+        If  [3Xf[103X  is  not  surjective,  but  all generators of [3XM[103X are, then return
+        [10Xfalse[110X.  If  the support of [3Xf[103X is not a subset of the support of [3XM[103X, then
+        return  [10Xfalse[110X.  If  [3Xf[103X  is  not  sign-preserving, but [3XM[103X is, then return
+        [10Xfalse[110X. Check whether [3XM[103X is tame. If so, then return [10Xfalse[110X provided that
+        one  of  the following three conditions hold: 1. The modulus of [3Xf[103X does
+        not  divide  the modulus of [3XM[103X. 2. [3Xf[103X is not tame. 3. [3XM[103X is finite, and [3Xf[103X
+        is  bijective and has infinite order. If membership has still not been
+        decided,  use  [10XShortOrbits[110X  to  look for finite orbits of [3XM[103X, and check
+        whether  [3Xf[103X fixes all of them setwise. If a finite orbit is found which
+        [3Xf[103X does not map to itself, then return [10Xfalse[110X.[133X
+  
+        [33X[0;6YFinally  compute  balls of increasing radius around 1 until [3Xf[103X is found
+        to  lie  in  one  of  them.  If  that happens, return [10Xtrue[110X. If [3Xf[103X is an
+        element  of [3XM[103X,  this will eventually terminate, but if at this stage [3Xf[103X
+        is not an element of [3XM[103X, this will run into an infinite loop.[133X
+  
+  [8X [10X[3Xpoint[103X[8X[10X in [3Xorbit[103X[8X[10X[110X[8X (membership test for orbits) [108X
+        [33X[0;6YUses  the  equality  test for orbits: The orbit equality test computes
+        balls of increasing radius around the orbit representatives until they
+        intersect non-trivially. Once they do so, it returns [10Xtrue[110X. If it finds
+        that  one  or  both  of  the  orbits  are finite, it makes use of that
+        information,  and returns [10Xfalse[110X if appropriate. In between, i.e. after
+        having  computed balls to a certain extent depending on the properties
+        of  the  group,  it  chooses  a suitable modulus [22Xm[122X and computes orbits
+        (modulo [22Xm[122X). If the representatives of the orbits to be compared belong
+        to different orbits (mod [22Xm[122X), it returns [10Xfalse[110X. If this is not the case
+        although  the  orbits  are  different,  the equality test runs into an
+        infinite loop.[133X
+  
+  [8X [10XIncreasingOn([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YForms  the  union  of  the residue classes which are determined by the
+        coefficients as indicated.[133X
+  
+  [8X [10XIndex([3XG[103X[8X[10X,[3XH[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIn  general, i.e. if the underlying ring is not ℤ, proceed as follows:
+        If  both  groups  [3XG[103X  and [3XH[103X  are  finite,  return the quotient of their
+        orders.  If [3XG[103X is infinite, but [3XH[103X is finite, return [10Xinfinity[110X. Otherwise
+        return  the  number  of  right  cosets  of [3XH[103X in [3XG[103X, computed by the [5XGAP[105X
+        Library function [10XRightCosets[110X.[133X
+  
+        [33X[0;6YIf  the  underlying  ring  is ℤ,  do additionally the following before
+        attempting  to  compute  the  list  of right cosets: If the group [3XG[103X is
+        class-wise  order-preserving,  check whether one of its generators has
+        nonzero   determinant,   and   whether   all   generators   of [3XH[103X  have
+        determinant zero.  If  so,  then  return  [10Xinfinity[110X. Check whether [3XH[103X is
+        tame,  but  [3XG[103X  is not. If so, then return [10Xinfinity[110X. If [3XG[103X is tame, then
+        check  whether  the  rank  of the largest free abelian subgroup of the
+        kernel  of the action of [3XG[103X on a respected partition is higher than the
+        corresponding      rank     for [3XH[103X.     For     this     check,     use
+        [10XRankOfKernelOfActionOnRespectedPartition[110X.   If   it  is,  then  return
+        [10Xinfinity[110X.[133X
+  
+  [8X [10XInduction([3Xg[103X[8X[10X,[3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes [10Xf * g * RightInverse([3Xf[103X[10X)[110X.[133X
+  
+  [8X [10XInduction([3XG[103X[8X[10X,[3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YGets  a set of generators by applying [10XInduction([3Xg[103X[10X,[3Xf[103X[10X)[110X to the generators
+        [3Xg[103X of [3XG[103X.[133X
+  
+  [8X [10XInjectiveAsMappingFrom([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThe  function  starts  with the entire source of [3Xf[103X as [21Xpreimage[121X [10Xpre[110X and
+        the  empty  set  as  [21Ximage[121X [10Xim[110X.  It  loops  over  the  residue  classes
+        (mod [10XMod([3Xf[103X[10X)[110X).  For  any  such  residue class [10Xcl[110X the following is done:
+        Firstly,  the  image  of  [10Xcl[110X  under [3Xf[103X  is  added  to [10Xim[110X. Secondly, the
+        intersection  of  the  preimage of the intersection of the image of [10Xcl[110X
+        under [3Xf[103X and [10Xim[110X under [3Xf[103X and [10Xcl[110X is subtracted from [10Xpre[110X.[133X
+  
+  [8X [10XIntegralConjugate([3Xf[103X[8X[10X)[110X[8X,   [10XIntegralConjugate([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses   the   algorithm   described  in  the  proof  of  Theorem 2.5.14
+        in [Koh05].[133X
+  
+  [8X [10XIntegralizingConjugator([3Xf[103X[8X[10X)[110X[8X,   [10XIntegralizingConjugator([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses   the   algorithm   described  in  the  proof  of  Theorem 2.5.14
+        in [Koh05].[133X
+  
+  [8X [10XInverse([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEssentially  inversion  of  affine mappings. See Lemma 1.3.1, Part (b)
+        in [Koh05].[133X
+  
+  [8X [10XIsBalanced([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YChecks  whether  the  sets  of prime factors of the multiplier and the
+        divisor of [3Xf[103X are the same.[133X
+  
+  [8X [10XIsBijective([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X, respectively, see [10XIsInjective[110X and [10XIsSurjective[110X.[133X
+  
+  [8X [10XIsClassReflection([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes the support of [3Xg[103X, and compares [3Xg[103X with the corresponding class
+        reflection.[133X
+  
+  [8X [10XIsClassRotation([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  the support of [3Xg[103X, extracts the possible rotation factor from
+        the coefficients and compares [3Xg[103X with the corresponding class rotation.[133X
+  
+  [8X [10XIsClassShift([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes the support of [3Xg[103X, and compares [3Xg[103X with the corresponding class
+        shift.[133X
+  
+  [8X [10XIsClassTransposition([3Xg[103X[8X[10X),   IsGeneralizedClassTransposition([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  the  support  of [3Xg[103X,  writes  it  as  a disjoint union of two
+        residue  classes  and  compares [3Xg[103X  with  the class transposition which
+        interchanges them.[133X
+  
+  [8X [10XIsClassWiseOrderPreserving([3Xf[103X[8X[10X)[110X[8X,   [10XIsClassWiseTranslating([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XIsConjugate(RCWA(Integers),[3Xf[103X[8X[10X,[3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YTest  whether  [3Xf[103X and [3Xg[103X have the same order, and whether either both or
+        none of them is tame. If not, return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  the mappings are wild, use [10XShortCycles[110X to search for finite cycles
+        not  belonging  to  an  infinite  series,  until  their  numbers for a
+        particular  length  differ.  This may run into an infinite loop. If it
+        terminates, return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  the  mappings  are  tame, use the method described in the proof of
+        Theorem 2.5.14 in [Koh05] to construct integral conjugates of [3Xf[103X and [3Xg[103X.
+        Then   essentially  use  the  algorithm  described  in  the  proof  of
+        Theorem 2.6.7  in [Koh05]  to  compute [21Xstandard representatives[121X of the
+        conjugacy  classes which the integral conjugates of [3Xf[103X and [3Xg[103X belong to.
+        Finally  compare  these  standard  representatives, and return [10Xtrue[110X if
+        they are equal and [10Xfalse[110X if not.[133X
+  
+  [8X [10XIsInjective([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSee [10XImage[110X.[133X
+  
+  [8X [10XIsIntegral([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XIsNaturalCT([3XG[103X[8X[10X)[110X[8X,   [10XIsNaturalRCWA([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YOnly checks a set flag.[133X
+  
+  [8X [10XIsomorphismMatrixGroup([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses the algorithm described in the proof of Theorem 2.6.3 in [Koh05].[133X
+  
+  [8X [10XIsomorphismPermGroup([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIf  the  group  [3XG[103X  is  finite  and  class-wise  order-preserving,  use
+        [10XActionOnRespectedPartition[110X.   If  [3XG[103X  is  finite,  but  not  class-wise
+        order-preserving,  compute the action on the respected partition which
+        is    obtained    by    splitting    any   residue   class   [22Xr(m)[122X   in
+        [10XRespectedPartition([3XG[103X[10X)[110X  into  three  residue  classes  [22Xr(3m),  r+m(3m),
+        r+2m(3m)[122X.  If  [3XG[103X  is  infinite,  there  is  no isomorphism to a finite
+        permutation group, thus return [10Xfail[110X.[133X
+  
+  [8X [10XIsomorphismRcwaGroup([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThe method for finite groups uses [10XRcwaMapping[110X, Part (d).[133X
+  
+        [33X[0;6YThe  method  for  free products of finite groups uses the Table-Tennis
+        Lemma  (which is also known as [13XPing-Pong Lemma[113X, cf. e.g. Section II.B.
+        in [dlH00]).  It  uses  regular  permutation  representations  of  the
+        factors  [22XG_r[122X ([22Xr = 0, dots ,m-1[122X) of the free product on residue classes
+        modulo [22Xn_r := |G_r|[122X. The basic idea is that since point stabilizers in
+        regular  permutation groups are trivial, all non-identity elements map
+        any  of  the  permuted  residue classes into their complements. To get
+        into  a  situation  where  the  Table-Tennis  Lemma is applicable, the
+        method  computes conjugates of the images of the mentioned permutation
+        representations under rcwa permutations [22Xσ_r[122X which satisfy [22X0(n_r)^σ_r =
+        ℤ ∖ r(m)[122X.[133X
+  
+        [33X[0;6YThe  method  for  free  groups  uses an adaptation of the construction
+        given on page 27 in [dlH00] from PSL(2,ℂ) to RCWA(ℤ). As an equivalent
+        for  the closed discs used there, the method takes the residue classes
+        modulo two times the rank of the free group.[133X
+  
+  [8X [10XIsOne([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XIsPerfect([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIf  the  group  [3XG[103X  is  trivial,  then  return [10Xtrue[110X. Otherwise if it is
+        abelian, then return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  the  underlying  ring  is ℤ,  then do the following: If one of the
+        generators  of [3XG[103X  has  sign -1,  then return [10Xfalse[110X. If [3XG[103X is class-wise
+        order-preserving  and  one  of the generators has nonzero determinant,
+        then return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  [3XG[103X  is wild, and perfectness has not been decided so far, then give
+        up.  If  [3XG[103X  is finite, then check the image of [10XIsomorphismPermGroup([3XG[103X[10X)[110X
+        for perfectness, and return [10Xtrue[110X or [10Xfalse[110X accordingly.[133X
+  
+        [33X[0;6YIf  the  group [3XG[103X  is  tame  and  if it acts transitively on its stored
+        respected  partition,  then  return [10Xtrue[110X or [10Xfalse[110X depending on whether
+        the  finite permutation group [10XActionOnRespectedPartition([3XG[103X[10X)[110X is perfect
+        or  not.  If [3XG[103X  does  not  act  transitively  on  its stored respected
+        partition, then give up.[133X
+  
+  [8X [10XIsPrimeSwitch([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YChecks  whether  the  multiplier  of [3Xg[103X is an odd prime, and compares [3Xg[103X
+        with the corresponding prime switch.[133X
+  
+  [8X [10XIsSignPreserving([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIf  [3Xf[103X is not class-wise order-preserving, then return [10Xfalse[110X. Otherwise
+        let  [22Xc  ≥  1[122X  be  greater than or equal to the maximum of the absolute
+        values of the coefficients [22Xb_r(m)[122X of the affine partial mappings of [3Xf[103X,
+        and  check whether the minimum of the image of [22X{0, dots, c}[122X under [3Xf[103X is
+        nonnegative  and  whether  the  maximum of the image of [22X{-c, dots, -1}[122X
+        under [3Xf[103X  is negative. If both is the case, then return [10Xtrue[110X, otherwise
+        return [10Xfalse[110X.[133X
+  
+  [8X [10XIsSolvable([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIf  [3XG[103X  is abelian, then return [10Xtrue[110X. If [3XG[103X is tame, then return [10Xtrue[110X or
+        [10Xfalse[110X  depending  on whether [10XActionOnRespectedPartition([3XG[103X[10X)[110X is solvable
+        or not. If [3XG[103X is wild, then give up.[133X
+  
+  [8X [10XIsSubset([3XG[103X[8X[10X,[3XH[103X[8X[10X)[110X[8X (checking for a subgroup relation) [108X
+        [33X[0;6YCheck whether the set of stored generators of [3XH[103X is a subset of the set
+        of stored generators of [3XG[103X. If so, return [10Xtrue[110X. Check whether the prime
+        set  of [3XH[103X  is  a  subset  of the prime set of [3XG[103X. If not, return [10Xfalse[110X.
+        Check  whether  the  support  of [3XH[103X is a subset of the support of [3XG[103X. If
+        not,  return  [10Xfalse[110X.  Check  whether  [3XG[103X is tame, but [3XH[103X is wild. If so,
+        return [10Xfalse[110X.[133X
+  
+        [33X[0;6YIf  [3XG[103X  and [3XH[103X are both tame, then proceed as follows: If the multiplier
+        of [3XH[103X does not divide the multiplier of [3XG[103X, then return [10Xfalse[110X. If [3XH[103X does
+        not  respect  the  stored respected partition of [3XG[103X, then return [10Xfalse[110X.
+        Check   whether   the   finite  permutation  group  induced  by  [3XH[103X  on
+        [10XRespectedPartition([3XG[103X[10X)[110X  is a subgroup of [10XActionOnRespectedPartition([3XG[103X[10X)[110X.
+        If  yes, return [10Xtrue[110X. Check whether the order of [3XH[103X is greater than the
+        order of [3XG[103X. If so, return [10Xfalse[110X.[133X
+  
+        [33X[0;6YFinally  use  the membership test to check whether all generators of [3XH[103X
+        lie in [3XG[103X, and return [10Xtrue[110X or [10Xfalse[110X accordingly.[133X
+  
+  [8X [10XIsSurjective([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSee [10XImage[110X.[133X
+  
+  [8X [10XIsTame([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YChecks whether the modulus of the group is nonzero.[133X
+  
+  [8X [10XIsTame([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YApplication  of  the criteria given in Corollary 2.5.10 and 2.5.12 and
+        Theorem A.8  and A.11  in [Koh05],  as  well  as of the criteria given
+        in [Koh07a].  The  criterion  [21Xsurjective, but not injective means wild[121X
+        (Theorem A.8 in [Koh05]) is the subject of [Koh07b]. The package [5XGRAPE[105X
+        is needed for the application of the criterion which says that an rcwa
+        permutation  is  wild  if  a  transition  graph has a weakly-connected
+        component   which   is   not   strongly-connected   (cf.  Theorem A.11
+        in [Koh05]).[133X
+  
+  [8X [10XIsTransitive([3XG[103X[8X[10X,Integers)[110X[8X [108X
+        [33X[0;6YLook for finite orbits, using [10XShortOrbits[110X on a couple of intervals. If
+        a  finite  orbit  is found, return [10Xfalse[110X. Test if [3XG[103X is finite. If yes,
+        return [10Xfalse[110X.[133X
+  
+        [33X[0;6YSearch  for  an  element  [10Xg[110X  and  a  residue  class [22Xr(m)[122X such that the
+        restriction  of [10Xg[110X to [22Xr(m)[122X is given by [22Xn ↦ n + m[122X. Then the cyclic group
+        generated  by  [10Xg[110X  acts transitively on [22Xr(m)[122X. The element [10Xg[110X is searched
+        among  the generators of [3XG[103X, its powers, its commutators, powers of its
+        commutators  and  products of few different generators. The search for
+        such  an  element  may  run  into  an  infinite  loop,  as there is no
+        guarantee that the group has a suitable element.[133X
+  
+        [33X[0;6YIf suitable [10Xg[110X and [22Xr(m)[122X are found, proceed as follows:[133X
+  
+        [33X[0;6YPut  [22XS := r(m)[122X. Put [22XS := S ∪ S^g[122X for all generators [22Xg[122X of [3XG[103X, and repeat
+        this until [22XS[122X remains constant. This may run into an infinite loop.[133X
+  
+        [33X[0;6YIf it terminates: If [22XS = ℤ[122X, return [10Xtrue[110X, otherwise return [10Xfalse[110X.[133X
+  
+  [8X [10XIsTransitiveOnNonnegativeIntegersInSupport([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  balls about 1 with successively increasing radii, and checks
+        whether  the  union  of the sets where the elements of these balls are
+        decreasing  or  shifting  down  equals the support of [3XG[103X. If a positive
+        answer  is  found,  transitivity on [21Xsmall[121X points (nonnegative integers
+        less than an explicit bound) is verified.[133X
+  
+  [8X [10XIsZero([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XKernelOfActionOnRespectedPartition([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YFirst  determine  the  abelian  invariants  of the kernel [10XK[110X. For this,
+        compute  sufficiently  many  quotients of orders of permutation groups
+        induced by [3XG[103X on refinements of the stored respected partition [10XP[110X by the
+        order  of  the  permutation group induced by [3XG[103X on [10XP[110X itself. Then use a
+        random   walk   through  the  group  [3XG[103X.  Compute  powers  of  elements
+        encountered along the way which fix [10XP[110X. Translate these kernel elements
+        into  elements  of  a polycyclically presented group isomorphic to the
+        [10X|P|[110X-fold  direct  product  of the infinite dihedral group ([10XK[110X certainly
+        embeds into this group). Use [5XPolycyclic[105X [EHN13] to collect independent
+        [21Xnice[121X  generators  of [10XK[110X.  Proceed  until the permutation groups induced
+        by [10XK[110X  on  the  refined  respected  partitions  all equal the initially
+        stored quotients.[133X
+  
+  [8X [10XLargestSourcesOfAffineMappings([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YForms  unions  of  residue  classes modulo the modulus of the mapping,
+        whose corresponding coefficient triples are equal.[133X
+  
+  [8X [10XLaTeXStringRcwaMapping([3Xf[103X[8X[10X)[110X[8X,   [10XLaTeXAndXDVI([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YCollects  residue  classes those corresponding coefficient triples are
+        equal.[133X
+  
+  [8X [10XLikelyContractionCentre([3Xf[103X[8X[10X,[3Xmaxn[103X[8X[10X,[3Xbound[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  trajectories  with  starting  values  from a given interval,
+        until  a  cycle  is  reached.  Aborts  if  the  trajectory exceeds the
+        prescribed bound. Form the union of the detected cycles.[133X
+  
+  [8X [10XLoadDatabaseOf...()[110X[8X,   [10XLoadRCWAExamples()[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.  --  These  functions do nothing more than reading in certain
+        files.[133X
+  
+  [8X [10XLocalizedRcwaMapping([3Xf[103X[8X[10X,[3Xp[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XLog2HTML([3Xlogfilename[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YStraightforward string operations.[133X
+  
+  [8X [10XLoops([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YRuns  over  the  residue  classes modulo the modulus of [3Xf[103X, and selects
+        those  of them which [3Xf[103X does not map to themselves, but which intersect
+        non-trivially with their images under [3Xf[103X.[133X
+  
+  [8X [10XMaximalShift([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XMergerExtension([3XG[103X[8X[10X,[3Xpoints[103X[8X[10X,[3Xpoint[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YAs described in [2XMergerExtension[102X ([14X3.1-4[114X).[133X
+  
+  [8X [10XMirrored([3Xg[103X[8X[10X)[110X[8X,   [10XMirrored([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YConjugates with [22Xn ↦ -n - 1[122X, as indicated in the definition.[133X
+  
+  [8X [10XmKnot([3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X, following the definition given in [Kel99].[133X
+  
+  [8X [10XModulus([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSearches  for  a  wild element in the group. If unsuccessful, tries to
+        construct a respected partition (see [10XRespectedPartition[110X).[133X
+  
+  [8X [10XModulus([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XMovedPoints([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YNeeds  only  forming  unions  of residue classes and determining fixed
+        points of affine mappings.[133X
+  
+  [8X [10XMultiplier([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YLcm of coefficients, as indicated.[133X
+  
+  [8X [10XMultpk([3Xf[103X[8X[10X,[3Xp[103X[8X[10X,[3Xk[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YForms  the  union  of  the  residue  classes modulo the modulus of the
+        mapping,  which  are determined by the given divisibility criteria for
+        the coefficients of the corresponding affine mapping.[133X
+  
+  [8X [10XNrClassPairs([3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YRelatively  straightforward.  --  Practical for values of [3Xm[103X ranging up
+        into the hundreds and corresponding counts of $10^9$ and more.[133X
+  
+  [8X [10XNrConjugacyClassesOfCTZOfOrder([3Xord[103X[8X[10X)[110X[8X, [108X
+        [33X[0;6YEvaluation               of               the               expression
+        [10XLength(Filtered(Combinations(DivisorsInt(ord)),  l  ->  l  <>  []  and
+        Lcm(l) = ord))[110X.[133X
+  
+  [8X [10XNrConjugacyClassesOfRCWAZOfOrder([3Xord[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThe class numbers are taken from Corollary 2.7.1 in [Koh05].[133X
+  
+  [8X [10XObjByExtRep([3Xfam[103X[8X[10X,[3Xl[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XOne([3Xf[103X[8X[10X)[110X[8X,   [10XOne([3XG[103X[8X[10X)[110X[8X, [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XOrbit([3XG[103X[8X[10X,[3Xpnt[103X[8X[10X,[3Xgens[103X[8X[10X,[3Xacts[103X[8X[10X,[3Xact[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YCheck  if  the orbit has length less than a certain bound. If so, then
+        return  it  as  a  list. Otherwise test whether the group [3XG[103X is tame or
+        wild.[133X
+  
+        [33X[0;6YIf  [3XG[103X is tame, then test whether [3XG[103X is finite. If yes, then compute the
+        orbit by the [5XGAP[105X Library method. Otherwise proceed as follows: Compute
+        a  respected  partition [22XmathcalP[122X  of [3XG[103X. Use [22XmathcalP[122X to find a residue
+        class [22Xr(m)[122X  which is a subset of the orbit to be computed. In general,
+        [22Xr(m)[122X  will not be one of the residue classes in [22XmathcalP[122X, but a subset
+        of  one  of them. Put [22XΩ := r(m)[122X. Unite the set [22XΩ[122X with its images under
+        all  the  generators of [3XG[103X and their inverses. Repeat that until [22XΩ[122X does
+        not change any more. Return [22XΩ[122X.[133X
+  
+        [33X[0;6YIf  [3XG[103X  is  wild, then return an orbit object which stores the group [3XG[103X,
+        the representative [3Xrep[103X and the action [3Xact[103X.[133X
+  
+  [8X [10XOrbitsModulo([3Xf[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses  [5XGRAPE[105X  to  compute  the  connected  components of the transition
+        graph.[133X
+  
+  [8X [10XOrbitsModulo([3XG[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XOrder([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YTest  for  [10XIsTame[110X.  If  the mapping is not tame, then return [10Xinfinity[110X.
+        Otherwise use Corollary 2.5.10 in [Koh05].[133X
+  
+  [8X [10XPermutationOpNC([3Xsigma[103X[8X[10X,[3XP[103X[8X[10X,[3Xact[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSeveral  different  methods  for  different  types of arguments, which
+        either   provide  straightforward  optimizations  via  computing  with
+        coefficients directly, or just delegate to [10XPermutationOp[110X.[133X
+  
+  [8X [10XPreImage([3Xf[103X[8X[10X,[3XS[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YSee [10XImage[110X.[133X
+  
+  [8X [10XPreImagesRepresentative([3Xphi[103X[8X[10X,[3Xg[103X[8X[10X)[110X[8X,   [10XPreImagesRepresentatives([3Xphi[103X[8X[10X,[3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YAs  described  in  the  documentation of these methods. The underlying
+        idea  to  successively  compute  two  balls  around 1 and [3Xg[103X until they
+        intersect non-trivially is standard in computational group theory. For
+        rcwa groups it would mean wasting both memory and run time to actually
+        compute  group  elements.  Thus  only  images  of tuples of points are
+        computed and stored.[133X
+  
+  [8X [10XPrimeSet([3Xf[103X[8X[10X)[110X[8X,   [10XPrimeSet([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XPrimeSwitch([3Xp[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YMultiplication of rcwa mappings as indicated.[133X
+  
+  [8X [10XPrint([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10X[3Xf[103X[8X[10X*[3Xg[103X[8X[10X[110X[8X [108X
+        [33X[0;6YEssentially  composition of affine mappings. See Lemma 1.3.1, Part (a)
+        in [Koh05].[133X
+  
+  [8X [10XProjectionsToCoordinates([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YStraightforward coefficient operations.[133X
+  
+  [8X [10XProjectionsToInvariantUnionsOfResidueClasses([3XG[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUse  [10XOrbitsModulo[110X  to  determine  the  supports  of  the images of the
+        epimorphisms  to  be determined, and use [10XRestrictedPerm[110X to compute the
+        images of the generators of [3XG[103X under these epimorphisms.[133X
+  
+  [8X [10XQuotientsList([3Xl[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XRandom(RCWA(Integers))[110X[8X [108X
+        [33X[0;6YComputes  a product of [21Xrandomly[121X chosen class shifts, class reflections
+        and  class  transpositions.  This  seems to be suitable for generating
+        reasonably good examples.[133X
+  
+  [8X [10XRankOfKernelOfActionOnRespectedPartition([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YPerforms    the    first    part   of   the   computations   done   by
+        [10XKernelOfActionOnRespectedPartition[110X.[133X
+  
+  [8X [10XRcwa([3XR[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.  --  Attributes  and  properties set can be derived easily or
+        hold by definition.[133X
+  
+  [8X [10XRCWA([3XR[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YAttributes   and   properties  are  set  according  to  Theorem 2.1.1,
+        Theorem 2.1.2, Corollary 2.1.6 and Theorem 2.12.8 in [Koh05].[133X
+  
+  [8X [10XRCWABuildManual()[110X[8X [108X
+        [33X[0;6YConsists of a call to a function from the [5XGAPDoc[105X package.[133X
+  
+  [8X [10XRcwaGroupByPermGroup([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses [10XRcwaMapping[110X, Part (d).[133X
+  
+  [8X [10XRCWAInfo([3Xn[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XRcwaMapping[110X[8X [108X
+        [33X[0;6Y(a)-(c):  [21Xtrivial[121X,  (d):  [10Xn^perm - n[110X for determining the coefficients,
+        (e):  [21Xaffine  mappings  by  values  at  two given points[121X, (f) and (g):
+        [21Xtrivial[121X,  (h) and (i): correspond to Lemma 2.1.4 in [Koh05], (j): uses
+        a simple parser for the permitted expressions.[133X
+  
+  [8X [10XRCWATestAll()[110X[8X,   [10XRCWATestInstall()[110X[8X [108X
+        [33X[0;6YJust read in files running / containing the tests.[133X
+  
+  [8X [10XRCWATestExamples()[110X[8X [108X
+        [33X[0;6YRuns the example tester from the [5XGAPDoc[105X package.[133X
+  
+  [8X [10XRepresentativeAction([3XG[103X[8X[10X,[3Xsrc[103X[8X[10X,[3Xdest[103X[8X[10X,[3Xact[103X[8X[10X)[110X[8X,   [10XRepresentativeActionPreImage[110X[8X [108X
+        [33X[0;6YAs  described  in  the  documentation of these methods. The underlying
+        idea  to successively compute two balls around [3Xsrc[103X and [3Xdest[103X until they
+        intersect  non-trivially  is  standard  in computational group theory.
+        Words  standing  for  products of generators of [3XG[103X are stored for every
+        image of [3Xsrc[103X or [3Xdest[103X.[133X
+  
+  [8X [10XRepresentativeAction(RCWA(Integers),[3XP1[103X[8X[10X,[3XP2[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YArbitrary mapping: see Lemma 2.1.4 in [Koh05]. Tame mapping: see proof
+        of  Theorem 2.8.9  in [Koh05]. The former is almost trivial, while the
+        latter is a bit complicated and takes usually also much more time.[133X
+  
+  [8X [10XRepresentativeAction(RCWA(Integers),[3Xf[103X[8X[10X,[3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThe  algorithm used by [10XIsConjugate[110X constructs actually also an element
+        [10Xx[110X such that [10X[3Xf[103X[10X^x = [3Xg[103X[10X[110X.[133X
+  
+  [8X [10XRespectedPartition([3Xf[103X[8X[10X)[110X[8X,   [10XRespectedPartition([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThere  are  presently  two  sophisticated  algorithms  implemented for
+        finding  respected  partitions.  One  of  them  has  evolved  from the
+        algorithm  described  in  the  proof  of Theorem 2.5.8 in [Koh05]. The
+        other  one  starts  with  the coarsest partition of the base ring such
+        that  every  generator of [3XG[103X is affine on every part. This partition is
+        then refined successively until a respected partition is obtained. The
+        refinement  step  is  basically  as  follows:  Take  the images of the
+        partition  under  all  generators  of  [3XG[103X. This way one obtains as many
+        further partitions of the base ring as there are generators of [3XG[103X. Then
+        the  [21Xnew[121X  partition  is  the  coarsest  common refinement of all these
+        partitions.[133X
+  
+  [8X [10XRespectsPartition([3XG[103X[8X[10X,[3XP[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XRestrictedBall([3XG[103X[8X[10X,[3Xg[103X[8X[10X,[3Xr[103X[8X[10X,[3Xmodulusbound[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XRestrictedPerm([3Xg[103X[8X[10X,[3XS[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XRestriction([3Xg[103X[8X[10X,[3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes the action of [10XRightInverse([3Xf[103X[10X) * g * f[110X on the image of [3Xf[103X.[133X
+  
+  [8X [10XRestriction([3XG[103X[8X[10X,[3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YGets   a  set  of  generators  by  applying  [10XRestriction([3Xg[103X[10X,[3Xf[103X[10X)[110X  to  the
+        generators [3Xg[103X of [3XG[103X.[133X
+  
+  [8X [10XRightInverse([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X  if one knows how to compute images of residue classes
+        under affine mappings, and how to compute inverses of affine mappings.[133X
+  
+  [8X [10XRoot([3Xf[103X[8X[10X,[3Xk[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YIf [3Xf[103X is bijective, class-wise order-preserving and has finite order:[133X
+  
+        [33X[0;6YFind  a  conjugate  of  [3Xf[103X  which is a product of class transpositions.
+        Slice  cycles  [22X∏_i=2^l  τ_r_1(m_1),r_i(m_i)[122X of [3Xf[103X a respected partition
+        [22XmathcalP[122X  into  cycles [22X∏_i=1^l ∏_j=0^k-1 τ_r_1(km_1),r_i+jm_i(km_i)[122X of
+        the  [3Xk[103X-fold  length  on  the  refined  partition  which  one gets from
+        [22XmathcalP[122X  by  decomposing any [22Xr_i(m_i) ∈ mathcalP[122X into residue classes
+        (mod [22Xkm_i[122X). Finally conjugate the resulting permutation back.[133X
+  
+        [33X[0;6YOther cases seem to be more difficult and are currently not covered.[133X
+  
+  [8X [10XRotationFactor([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XRunDemonstration([3Xfilename[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X -- only I/O operations.[133X
+  
+  [8X [10XSemilocalizedRcwaMapping([3Xf[103X[8X[10X,[3Xpi[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XShiftsDownOn([3Xf[103X[8X[10X)[110X[8X,   [10XShiftsUpOn([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YStraightforward coefficient- and residue class operations.[133X
+  
+  [8X [10XShortCycles([3Xg[103X[8X[10X,[3Xmaxlng[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YLooks for fixed points of affine partial mappings of powers of [3Xg[103X.[133X
+  
+  [8X [10XShortCycles([3Xg[103X[8X[10X,[3XS[103X[8X[10X,[3Xmaxlng[103X[8X[10X)[110X[8X,   [10XShortCycles([3Xg[103X[8X[10X,[3XS[103X[8X[10X,[3Xmaxlng[103X[8X[10X,[3Xmaxn[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XShortOrbits([3XG[103X[8X[10X,[3XS[103X[8X[10X,[3Xmaxlng[103X[8X[10X)[110X[8X,   [10XShortOrbits([3XG[103X[8X[10X,[3XS[103X[8X[10X,[3Xmaxlng[103X[8X[10X,[3Xmaxn[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XShortResidueClassCycles([3Xg[103X[8X[10X,[3Xmodulusbound[103X[8X[10X,[3Xmaxlng[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YDifferent methods -- see source code in [11Xpkg/rcwa/lib/rcwamap.gi[111X.[133X
+  
+  [8X [10XShortResidueClassOrbits([3Xg[103X[8X[10X,[3Xmodulusbound[103X[8X[10X,[3Xmaxlng[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YDifferent methods -- see source code in [11Xpkg/rcwa/lib/rcwagrp.gi[111X.[133X
+  
+  [8X [10XSign([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEvaluation  of  the  given  expression.  For  the mathematical meaning
+        (epimorphism!), see Theorem 2.12.8 in [Koh05].[133X
+  
+  [8X [10XSinks([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  the strongly connected components of the transition graph by
+        the  function [10XSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH[110X, and selects those
+        which  are  proper  subsets of their preimages and proper supersets of
+        their images under [3Xf[103X.[133X
+  
+  [8X [10XSize([3XG[103X[8X[10X)[110X[8X (order of an rcwa group) [108X
+        [33X[0;6YTest  whether one of the generators of the group [3XG[103X has infinite order.
+        If  so,  return  [10Xinfinity[110X.  Test  whether the group [3XG[103X is tame. If not,
+        return               [10Xinfinity[110X.               Test              whether
+        [10XRankOfKernelOfActionOnRespectedPartition([3XG[103X[10X)[110X  is nonzero. If so, return
+        [10Xinfinity[110X.  Otherwise  if  [3XG[103X is class-wise order-preserving, return the
+        size  of  the  permutation  group  induced  on  the  stored  respected
+        partition. If [3XG[103X is not class-wise order-preserving, return the size of
+        the  permutation  group  induced  on  the  refinement  of  the  stored
+        respected  partition which is obtained by splitting each residue class
+        into three residue classes with equal moduli.[133X
+  
+  [8X [10XSize([3XM[103X[8X[10X)[110X[8X (order of an rcwa monoid) [108X
+        [33X[0;6YCheck  whether  [3XM[103X  is in fact an rcwa group. If so, use the method for
+        rcwa  groups  instead.  Check  whether  one  of the generators of [3XM[103X is
+        surjective,  but  not injective. If so, return [10Xinfinity[110X. Check whether
+        for  all  generators [22Xf[122X  of [3XM[103X, the image of the union of the loops of [22Xf[122X
+        under [22Xf[122X  is  finite. If not, return [10Xinfinity[110X. Check whether one of the
+        generators  of [3XM[103X  is  bijective  and has infinite order. If so, return
+        [10Xinfinity[110X.  Check  whether  one  of the generators of [3XM[103X is wild. If so,
+        return  [10Xinfinity[110X. Apply the above criteria to the elements of the ball
+        of  radius 2  around 1,  and  return  [10Xinfinity[110X if appropriate. Finally
+        attempt  to  compute the list of elements of [3XM[103X. If this is successful,
+        return the length of the resulting list.[133X
+  
+  [8X [10XSmallGeneratingSet([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEliminates  generators  [22Xg[122X  which  can be found to be redundant [13Xeasily[113X,
+        i.e.  by checking whether the balls about 1 and [22Xg[122X of some small radius
+        [22Xr[122X in the group generated by all generators of [3XG[103X except for [22Xg[122X intersect
+        nontrivially.[133X
+  
+  [8X [10XSources([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YComputes  the strongly connected components of the transition graph by
+        the  function [10XSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH[110X, and selects those
+        which  are  proper  supersets of their preimages and proper subsets of
+        their images under [3Xf[103X.[133X
+  
+  [8X [10XSparseRep([3Xf[103X[8X[10X)[110X[8X,   [10XStandardRep([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YStraightforward coefficient operations.[133X
+  
+  [8X [10XSplittedClassTransposition([3Xct[103X[8X[10X,[3Xk[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XStructureDescription([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YThis  method  uses  a  combination  of techniques to obtain some basic
+        information   on   the  structure  of  an  rcwa  group.  The  returned
+        description  reflects the way the group has been built ([10XDirectProduct[110X,
+        [10XWreathProduct[110X, etc.).[133X
+  
+  [8X [10X[3Xf[103X[8X[10X+[3Xg[103X[8X[10X[110X[8X [108X
+        [33X[0;6YPointwise addition of affine mappings.[133X
+  
+  [8X [10XString([3Xobj[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XSupport([3XG[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X [10XTrajectory([3Xf[103X[8X[10X,[3Xn[103X[8X[10X,...)[110X[8X [108X
+        [33X[0;6YIterated  application  of  an  rcwa  mapping. In the methods computing
+        [21Xaccumulated coefficients[121X, additionally composition of affine mappings.[133X
+  
+  [8X [10XTransitionGraph([3Xf[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XStraightforward[121X -- just check a sufficiently long interval.[133X
+  
+  [8X [10XTransitionMatrix([3Xf[103X[8X[10X,[3Xm[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YEvaluation of the given expression.[133X
+  
+  [8X [10XTransposedClasses([3Xg[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XView([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X [10XWreathProduct([3XG[103X[8X[10X,[3XP[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YUses  [10XDirectProduct[110X to embed the [10XNrMovedPoints([3XP[103X[10X)[110Xth direct power of [3XG[103X,
+        and [10XRcwaMapping[110X, Part (d) to embed the finite permutation group [3XP[103X.[133X
+  
+  [8X [10XWreathProduct([3XG[103X[8X[10X,[3XZ[103X[8X[10X)[110X[8X [108X
+        [33X[0;6YRestricts  [3XG[103X to the residue class 3(4), and encodes the generator of [3XZ[103X
+        as [22Xτ_0(2),1(2) ⋅ τ_0(2),1(4)[122X. It is used that the images of 3(4) under
+        powers of this mapping are pairwise disjoint residue classes.[133X
+  
+  [8X [10XZero([3Xf[103X[8X[10X)[110X[8X [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
