@@ -4,6 +4,7 @@
 ##                                                                
 #############################################################################
 
+LoadPackage("rcwa");
 TestDirectory(DirectoriesPackageLibrary( "rcwa", "tst" ),
               rec(exitGAP := true));
 
