@@ -10,8 +10,6 @@ PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
 Version          := "4.6.1",
 Date             := "18/12/2017",
-ArchiveURL       := "https://stefan-kohl.github.io/rcwa/rcwa-4.6.1",
-ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
@@ -24,9 +22,21 @@ Persons          := [
 Status           := "accepted",
 CommunicatedBy   := "Bettina Eick (Braunschweig)",
 AcceptDate       := "04/2005",
-PackageWWWHome   := "https://stefan-kohl.github.io/rcwa.html",
-README_URL       := "https://stefan-kohl.github.io/rcwa/README.rcwa",
-PackageInfoURL   := "https://stefan-kohl.github.io/rcwa/PackageInfo.g",
+
+
+PackageWWWHome  := "https://gap-packages.github.io/rcwa/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README"        ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/rcwa",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/rcwa-", ~.Version ),
+ArchiveFormats   := ".tar.gz",
+
 AbstractHTML     := Concatenation("This package provides implementations of algorithms and ",
                                   "methods for computation in certain infinite permutation groups.",
                                   " For an abstract, see ",
