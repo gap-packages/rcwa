@@ -71,7 +71,7 @@
   </title>
   <year>2015</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/fr.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/fr.html</URL>
   </other>
 </manual></entry>
 
@@ -96,7 +96,7 @@
   <organization>RWTH Aachen</organization>
   <year>2012</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/gapdoc.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/gapdoc.html</URL>
   </other>
 </manual></entry>
 
@@ -122,7 +122,7 @@
   <organization>Queen Mary, University of London</organization>
   <year>2016</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/grape.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/grape.html</URL>
   </other>
 </manual></entry>
 
@@ -135,7 +135,7 @@
     The Primes Contain Arbitrarily Long Arithmetic Progressions
   </title>
   <year>2004</year>
-  <note><URL>http://arxiv.org/abs/math.NT/0404188v1</URL></note>
+  <note><URL>https://arxiv.org/abs/math.NT/0404188v1</URL></note>
 </misc></entry>
 
 <entry id="Grigorchuk80"><article>
@@ -214,7 +214,7 @@
   <school>Universität Stuttgart</school>
   <year>2005</year>
   <type>Dissertation</type>
-  <note><URL>http://d-nb.info/977164071</URL></note>
+  <note><URL>https://d-nb.info/977164071</URL></note>
 </phdthesis></entry>
 
 <entry id="Kohl07a"><article>
@@ -243,7 +243,7 @@
   <year>2007</year>
   <other type="note">
     Preprint (short note),
-    <URL>http://www.gap-system.org/DevelopersPages/StefanKohl/preprints/graphcrit.pdf</URL>
+    <URL>https://www.gap-system.org/DevelopersPages/StefanKohl/preprints/graphcrit.pdf</URL>
   </other>
 </misc></entry>
 
@@ -258,7 +258,7 @@
   <year>2007</year>
   <other type="note">
     Preprint (short note),
-    <URL>http://www.gap-system.org/DevelopersPages/StefanKohl/preprints/3n+1tree.pdf</URL>
+    <URL>https://www.gap-system.org/DevelopersPages/StefanKohl/preprints/3n+1tree.pdf</URL>
   </other>
 </misc></entry>
 
@@ -334,8 +334,8 @@
   <title>The 3x+1 Problem: An Annotated Bibliography</title>
   <year>2003+</year>
   <note>
-    <URL>http://arxiv.org/abs/math.NT/0309224</URL> (Part I),
-    <URL>http://arxiv.org/abs/math.NT/0608208</URL> (Part II)
+    <URL>https://arxiv.org/abs/math.NT/0309224</URL> (Part I),
+    <URL>https://arxiv.org/abs/math.NT/0608208</URL> (Part II)
   </note>
 </misc></entry>
 
@@ -402,7 +402,7 @@
   </title>
   <year>2013</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/polycyclic.html</URL>
   </other>
 </manual></entry>
 
@@ -417,7 +417,7 @@
   </title>
   <year>2016</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/utils.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/utils.html</URL>
   </other>
 </manual></entry>
 
