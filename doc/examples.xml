@@ -2974,7 +2974,7 @@ in&nbsp;<Cite Key="Grigorchuk80"/> with the help of &RCWA;.
 
 The first of these, nowadays known as <Q>Grigorchuk group</Q>, is
 investigated in an example given on the &GAP; website -- see
-<URL>http://www.gap-system.org/Doc/Examples/grigorchuk.html</URL>.
+<URL>https://www.gap-system.org/Doc/Examples/grigorchuk.html</URL>.
 
 The &RCWA; package permits a simpler and more elegant construction
 of the finite quotients of this group: The function <C>TopElement</C>
