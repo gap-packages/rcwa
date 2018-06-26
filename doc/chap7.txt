@@ -2790,7 +2790,7 @@
   infinite  periodic groups introduced by Rostislav Grigorchuk in [Gri80] with
   the help of [5XRCWA[105X. The first of these, nowadays known as [21XGrigorchuk group[121X, is
   investigated   in   an   example   given   on   the   [5XGAP[105X   website  --  see
-  [7Xhttp://www.gap-system.org/Doc/Examples/grigorchuk.html[107X.   The  [5XRCWA[105X  package
+  [7Xhttps://www.gap-system.org/Doc/Examples/grigorchuk.html[107X.  The  [5XRCWA[105X  package
   permits  a  simpler and more elegant construction of the finite quotients of
   this  group:  The  function  [10XTopElement[110X  given on the mentioned webpage gets
   unnecessary, and the function [10XSequenceElement[110X can be simplified as follows:[133X

@@ -6,10 +6,10 @@
                         [1XResidue-Class-Wise Affine Groups[101X
   
   
-                                 Version 4.6.1
+                                 Version 4.6.2
   
   
-                               December 18, 2017
+                                 June 26, 2018
   
   
                                   Stefan Kohl
@@ -47,7 +47,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2003 - 2017 by Stefan Kohl.[133X
+  [33X[0;0Y© 2003 - 2018 by Stefan Kohl.[133X
   
   [33X[0;0Y[5XRCWA[105X  is  free  software: you can redistribute it and/or modify it under the
   terms  of  the  GNU General Public License as published by the Free Software
@@ -61,7 +61,7 @@
   
   [33X[0;0YFor  a  copy  of the GNU General Public License, see the file [11XGPL[111X in the [11Xetc[111X
   directory       of       the       [5XGAP[105X       distribution       or       see
-  [7Xhttp://www.gnu.org/licenses/gpl.html[107X.[133X
+  [7Xhttps://www.gnu.org/licenses/gpl.html[107X.[133X
   
   
   -------------------------------------------------------
