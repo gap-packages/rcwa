@@ -3468,7 +3468,7 @@ InstallMethod( RespectedPartition,
     primes_multdiv := Difference(primes_multdiv,[1]);
     primes_onlymod := Difference(primes,primes_multdiv);
     m := Lcm(List(gens,Mod));
-    powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
+    powers_impossible := List(primes_onlymod,p->p^(PValuation(m,p)+1));
     modulibound := 2^20;
     compute_moduli();
     P := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
@@ -6019,7 +6019,7 @@ InstallMethod( ShortResidueClassOrbits,
 
     moduli := ValueOption("moduli");
     if moduli = fail then
-      powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
+      powers_impossible := List(primes_onlymod,p->p^(PValuation(m,p)+1));
       moduli    := AllSmoothIntegers(primes,modulusbound);
       moduli    := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
     fi;
