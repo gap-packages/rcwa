@@ -200,7 +200,7 @@ InstallMethod( ViewObj,
 
     RingString := RingToString(Source(One(G)));
     if IsTrivial(G) then
-      Display(G:NoLineFeed);
+      Print("Trivial rcwa group over ",RingString);
     elif     IsRcwaGroupOverZ(G) and Length(GeneratorsOfGroup(G)) <=6
          and ForAll(GeneratorsOfGroup(G),IsClassTransposition)
     then
