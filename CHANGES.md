@@ -1,5 +1,9 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.6.2 and RCWA 4.x.y ():
+
+ - An operation `CTCSCRSplit' has been added.
+
 ## Changes between RCWA 4.6.1 and RCWA 4.6.2 (June 26, 2018):
 
  - First release after migrating the source code repository to GitHub.
@@ -8,8 +12,7 @@
  
 ## Changes between RCWA 4.6.0 and RCWA 4.6.1 (December 18, 2017):
 
- - The email address stefan@gap-system.org does not seem to work any more
-   since a few days, so it has been changed back to stefan@mcs.st-and.ac.uk.
+ - The author's email address has been updated.
 
 ## Changes between RCWA 4.5.1 and RCWA 4.6.0 (December 5, 2017):
 
