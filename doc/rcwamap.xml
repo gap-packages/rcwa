@@ -1240,7 +1240,7 @@ gap> Product(facts) = g;
 true
 gap> List(facts,IsSignPreserving);
 [ true, false, false ]
-gap> List(facts,IsIntegral);      
+gap> List(facts,IsIntegral);
 [ false, true, true ]
 gap> List(facts,IsClassWiseOrderPreserving);
 [ true, true, false ]
