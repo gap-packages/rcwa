@@ -93,7 +93,7 @@ InstallMethod( ViewObj,
 
     RingString := RingToString(Source(One(M)));
     if   IsTrivial(M)
-    then Display(M:NoLineFeed);
+    then Print("Trivial rcwa monoid over ",RingString);
     else Print("<");
          if   HasIsTame(M) and not (HasSize(M) and IsInt(Size(M)))
          then if IsTame(M) then Print("tame "); else Print("wild "); fi; fi;
