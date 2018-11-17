@@ -553,6 +553,16 @@ DeclareGlobalFunction( "ClassUnionShift" );
 
 #############################################################################
 ##
+#O  CTCSCRSplit( <g> )
+##
+##  A factorization of the rcwa permutation <g> of Z into 3 factors r, s and
+##  t, where r fixes the nonnegative integers setwise, s is integral and
+##  class-wise order-preserving, and t is integral.
+##
+DeclareOperation( "CTCSCRSplit", [ IsRcwaMappingOfZ ] );
+
+#############################################################################
+##
 #O  Factorization( <g> )
 #A  FactorizationIntoCSCRCT( <g> )
 #A  FactorizationIntoElementaryCSCRCT( <g> )

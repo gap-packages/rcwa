@@ -1218,6 +1218,38 @@ Elements of finitely generated rcwa groups can be factored into generators
 Label="for an epi. from a free group to an rcwa group"/>.
 
 <ManSection>
+  <Oper Name="CTCSCRSplit" Arg="g" Label="for an rcwa permutation of Z"/>
+  <Returns>
+    a list of 3 rcwa permutations <M>a</M>, <M>b</M> and <M>c</M> whose
+    product equals <A>g</A>, where <M>a</M> fixes the nonnegative integers
+    setwise, <M>b</M> is integral and class-wise order-preserving and
+    <M>c</M> is integral.
+  </Returns>
+  <Description>
+    Assuming the hypothesis that CT(&ZZ;) is the group of all rcwa
+    permutations of &ZZ; which fix the nonnegative integers setwise,
+    <M>a</M> is always an element of CT(&ZZ;).
+<Example>
+<![CDATA[
+gap> g := ClassTransposition(0,4,1,6)*ClassShift(2,5)*ClassReflection(2,3);
+<rcwa permutation of Z with modulus 180>
+gap> facts := CTCSCRSplit(g);
+[ <rcwa permutation of Z with modulus 60>, ClassShift( 2(30) ), 
+  ClassReflection( 2(3) ) ]
+gap> Product(facts) = g;
+true
+gap> List(facts,IsSignPreserving);
+[ true, false, false ]
+gap> List(facts,IsIntegral);      
+[ false, true, true ]
+gap> List(facts,IsClassWiseOrderPreserving);
+[ true, true, false ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Attr Name="FactorizationIntoCSCRCT"
         Arg="g" Label="for an rcwa permutation of Z"/>
   <Meth Name="Factorization" Arg="g" Label="for an rcwa permutation of Z"/>

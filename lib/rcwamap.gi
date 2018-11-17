@@ -9253,6 +9253,52 @@ InstallMethod( Root,
 
 #############################################################################
 ##
+#M  CTCSCRSplit( <g> ) . . . . . . . . . . . . . . for rcwa permutations of Z
+##
+InstallMethod( CTCSCRSplit,
+               "for bijective rcwa mappings of Z (RCWA)", true,
+               [ IsRcwaMappingOfZ ], 0,
+
+  function ( g )
+
+    local  coeffs, rev, reverts, revert, shifts, shift,
+           cl, img, c, r, m, e, stdrep;
+
+    if not IsBijective(g) then TryNextMethod(); fi;
+    stdrep := IsRcwaMappingOfZInStandardRep(g);
+    g := SparseRep(g);
+    if not IsClassWiseOrderPreserving(g) then
+       rev     := ClassWiseOrderReversingOn(g);
+       reverts := List(AsUnionOfFewClasses(rev^g),
+                       cl->SparseRep(ClassReflection(cl)));
+       revert  := Product(reverts);
+       g := g * revert^-1;
+    else reverts := []; revert := One(g); fi;
+    shifts := [];
+    coeffs := Coefficients(g);
+    for c in coeffs do
+      cl  := ResidueClassWithFixedRep(c[2],c[1]);
+      img := Classes(cl^g)[1];
+      m := img[1]; r := img[2];
+      e := (r - r mod m)/m;
+      if e <> 0 then Add(shifts,SparseRep(ClassShift(r,m)^e)); fi;
+    od;
+    if shifts <> [] then
+      shift := Product(shifts);
+    else
+      shift := One(g);
+    fi;
+    g := g * shift^-1;
+    if stdrep then
+      g      := StandardRep(g);
+      shift  := StandardRep(shift);
+      revert := StandardRep(revert);
+    fi;
+    return [ g, shift, revert ];
+  end );
+
+#############################################################################
+##
 #M  FactorizationIntoCSCRCT( <g> ) . . . . . for bijective rcwa mappings of Z
 ##
 InstallMethod( FactorizationIntoCSCRCT,

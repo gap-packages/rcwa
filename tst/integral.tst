@@ -127,6 +127,19 @@ gap> List([1..12],NumberClassPairs);
 [ 0, 1, 4, 14, 24, 69, 90, 174, 264, 449, 504, 906 ]
 gap> Print(PrimeSwitch(3),"\n");
 PrimeSwitch(3)
+gap> g := ClassTransposition(0,4,1,6)*ClassShift(2,5)*ClassReflection(2,3);
+<rcwa permutation of Z with modulus 180>
+gap> facts := CTCSCRSplit(g);
+[ <rcwa permutation of Z with modulus 60>, ClassShift( 2(30) ), 
+  ClassReflection( 2(3) ) ]
+gap> Product(facts) = g;
+true
+gap> List(facts,IsSignPreserving);
+[ true, false, false ]
+gap> List(facts,IsIntegral);      
+[ false, true, true ]
+gap> List(facts,IsClassWiseOrderPreserving);
+[ true, true, false ]
 gap> g := ClassUnionShift(ResidueClassUnion(Integers,6,[1,4,5]));
 <rcwa mapping of Z with modulus 6>
 gap> Display(g);
