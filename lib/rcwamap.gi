@@ -9262,9 +9262,10 @@ InstallMethod( CTCSCRSplit,
   function ( g )
 
     local  coeffs, rev, reverts, revert, shifts, shift,
-           cl, img, c, r, m, e, stdrep;
+           cl, img, c, r, m, e, stdrep, listfactors;
 
     if not IsBijective(g) then TryNextMethod(); fi;
+    listfactors := ValueOption("ListFactors");
     stdrep := IsRcwaMappingOfZInStandardRep(g);
     g := SparseRep(g);
     if not IsClassWiseOrderPreserving(g) then
@@ -9293,8 +9294,16 @@ InstallMethod( CTCSCRSplit,
       g      := StandardRep(g);
       shift  := StandardRep(shift);
       revert := StandardRep(revert);
+      if listfactors = true then
+        reverts := List(reverts,StandardRep);
+        shifts  := List(shifts,StandardRep);
+      fi;
     fi;
-    return [ g, shift, revert ];
+    if listfactors <> true then
+      return [ g, shift, revert ];
+    else
+      return [ g, shifts, reverts ];
+    fi;
   end );
 
 #############################################################################

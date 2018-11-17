@@ -140,6 +140,38 @@ gap> List(facts,IsIntegral);
 [ false, true, true ]
 gap> List(facts,IsClassWiseOrderPreserving);
 [ true, true, false ]
+gap> g := ClassShift(0,3) * ClassTransposition(1,2,0,4) * ClassReflection(2,6);
+<rcwa permutation of Z with modulus 12>
+gap> facts := CTCSCRSplit(g);
+[ <rcwa permutation of Z with modulus 12>, ClassShift( 1(6) ), 
+  ClassReflection( 2(6) ) ]
+gap> g = Product(facts);
+true
+gap> Coefficients(facts[1]);
+[ [ 2, 4, 1 ], [ 2, -2, 1 ], [ 1, 0, 1 ], [ 1, 3, 1 ], [ 1, 2, 2 ], 
+  [ 2, -2, 1 ], [ 2, 4, 1 ], [ 2, -2, 1 ], [ 1, 2, 2 ], [ 1, -7, 2 ], 
+  [ 1, 0, 1 ], [ 2, -2, 1 ] ]
+gap> Coefficients(facts[2]);
+[ [ 1, 0, 1 ], [ 1, 6, 1 ], [ 1, 0, 1 ], [ 1, 0, 1 ], [ 1, 0, 1 ], 
+  [ 1, 0, 1 ] ]
+gap> g := SparseRep(g);
+<rcwa permutation of Z with modulus 12 and 9 affine parts>
+gap> facts := CTCSCRSplit(g);
+[ <rcwa permutation of Z with modulus 12 and 9 affine parts>, 
+  ClassShift( 1(6) ), ClassReflection( 2(6) ) ]
+gap> g = Product(facts);
+true
+gap> Coefficients(facts[1]);
+[ [ 0, 6, 2, 4, 1 ], [ 1, 6, 2, -2, 1 ], [ 2, 12, 1, 0, 1 ], 
+  [ 3, 12, 1, 3, 1 ], [ 4, 12, 1, 2, 2 ], [ 5, 6, 2, -2, 1 ], 
+  [ 8, 12, 1, 2, 2 ], [ 9, 12, 1, -7, 2 ], [ 10, 12, 1, 0, 1 ] ]
+gap> Coefficients(facts[2]);
+[ [ 0, 2, 1, 0, 1 ], [ 1, 6, 1, 6, 1 ], [ 3, 6, 1, 0, 1 ], [ 5, 6, 1, 0, 1 ] ]
+gap> facts := CTCSCRSplit(g:ListFactors);
+[ <rcwa permutation of Z with modulus 12 and 9 affine parts>, 
+  [ ClassShift( 1(6) ) ], [ ClassReflection( 2(6) ) ] ]
+gap> g = Product(Flat(facts));
+true
 gap> g := ClassUnionShift(ResidueClassUnion(Integers,6,[1,4,5]));
 <rcwa mapping of Z with modulus 6>
 gap> Display(g);
