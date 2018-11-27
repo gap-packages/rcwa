@@ -1,6 +1,6 @@
 # Version history of the RCWA package
 
-## Changes between RCWA 4.6.2 and RCWA 4.x.y ():
+## Changes between RCWA 4.6.2 and RCWA 4.6.3 (November 27, 2018):
 
  - An operation `CTCSCRSplit' has been added.
 
