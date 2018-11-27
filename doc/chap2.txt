@@ -112,7 +112,7 @@
   [33X[0;0YThere    is   computational   evidence   for   the   conjecture   that   any
   residue-class-wise  affine  permutation of ℤ can be factored into members of
   the  following three series of permutations of particularly simple structure
-  (cf. [2XFactorizationIntoCSCRCT[102X ([14X2.5-1[114X)):[133X
+  (cf. [2XFactorizationIntoCSCRCT[102X ([14X2.5-2[114X)):[133X
   
   [1X2.2-1 ClassShift[101X
   
@@ -456,7 +456,7 @@
   use  of  the LaTeX macro package [5Xamsmath[105X. If the option [3XFactorization[103X is set
   and  the  argument  is  bijective,  a factorization into class shifts, class
   reflections,  class  transpositions  and  prime  switches  is  printed  (cf.
-  [2XFactorizationIntoCSCRCT[102X  ([14X2.5-1[114X)).  For  rcwa  mappings with modulus greater
+  [2XFactorizationIntoCSCRCT[102X  ([14X2.5-2[114X)).  For  rcwa  mappings with modulus greater
   than 1,  an indentation by [3XIndentation[103X characters can be obtained by setting
   this option value accordingly.[133X
   
@@ -820,7 +820,36 @@
   rcwa    groups    can    be    factored    into    generators    [21Xas   usual[121X,
   see [2XPreImagesRepresentative[102X ([14X3.2-3[114X).[133X
   
-  [1X2.5-1 FactorizationIntoCSCRCT[101X
+  [1X2.5-1 CTCSCRSplit[101X
+  
+  [33X[1;0Y[29X[2XCTCSCRSplit[102X( [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  list  of 3 rcwa permutations [22Xa[122X, [22Xb[122X and [22Xc[122X whose product equals [3Xg[103X,
+            where  [22Xa[122X fixes the nonnegative integers setwise, [22Xb[122X is integral and
+            class-wise order-preserving and [22Xc[122X is integral.[133X
+  
+  [33X[0;0YAssuming  the hypothesis that CT(ℤ) is the group of all rcwa permutations of
+  ℤ  which  fix  the  nonnegative  integers setwise, [22Xa[122X is always an element of
+  CT(ℤ).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg := ClassTransposition(0,4,1,6)*ClassShift(2,5)*ClassReflection(2,3);[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 180>[128X[104X
+    [4X[25Xgap>[125X [27Xfacts := CTCSCRSplit(g);[127X[104X
+    [4X[28X[ <rcwa permutation of Z with modulus 60>, ClassShift( 2(30) ), [128X[104X
+    [4X[28X  ClassReflection( 2(3) ) ][128X[104X
+    [4X[25Xgap>[125X [27XProduct(facts) = g;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XList(facts,IsSignPreserving);[127X[104X
+    [4X[28X[ true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XList(facts,IsIntegral);[127X[104X
+    [4X[28X[ false, true, true ][128X[104X
+    [4X[25Xgap>[125X [27XList(facts,IsClassWiseOrderPreserving);[127X[104X
+    [4X[28X[ true, true, false ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-2 FactorizationIntoCSCRCT[101X
   
   [33X[1;0Y[29X[2XFactorizationIntoCSCRCT[102X( [3Xg[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XFactorization[102X( [3Xg[103X ) [32X method[133X
@@ -837,7 +866,7 @@
   the  factorization  process can be obtained by setting the info level of the
   Info class [2XInfoRCWA[102X ([14X9.5-1[114X) to 2.[133X
   
-  [33X[0;0YBy  default, prime switches ([22X→[122X [2XPrimeSwitch[102X ([14X2.5-2[114X)) are taken as one factor.
+  [33X[0;0YBy  default, prime switches ([22X→[122X [2XPrimeSwitch[102X ([14X2.5-3[114X)) are taken as one factor.
   If  the option [3XExpandPrimeSwitches[103X is set, they are each decomposed into the
   6 class transpositions given in the definition.[133X
   
@@ -871,7 +900,7 @@
   rcwa  permutations  of ℤ  into  class  shifts,  class  reflections and class
   transpositions:[133X
   
-  [1X2.5-2 PrimeSwitch[101X
+  [1X2.5-3 PrimeSwitch[101X
   
   [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X ) [32X method[133X
   [33X[1;0Y[29X[2XPrimeSwitch[102X( [3Xp[103X, [3Xk[103X ) [32X method[133X
@@ -953,7 +982,7 @@
   and  divisor  are  coprime.  A  prototype  of  permutations  which have this
   property has been introduced in a different context in [Kel99]:[133X
   
-  [1X2.5-3 mKnot[101X
+  [1X2.5-4 mKnot[101X
   
   [33X[1;0Y[29X[2XmKnot[102X( [3Xm[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe permutation [22Xg_m[122X as defined in [Kel99].[133X

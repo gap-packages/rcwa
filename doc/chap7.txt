@@ -293,7 +293,7 @@
   [4X[32X[104X
   
   [33X[0;0YThe   factors   [10XPrimeSwitch(3)[110X   are  products  of  6  class  transpositions
-  (cf. [2XPrimeSwitch[102X ([14X2.5-2[114X)).[133X
+  (cf. [2XPrimeSwitch[102X ([14X2.5-3[114X)).[133X
   
   [33X[0;0YEnter [10XAssignGlobals(LoadRCWAExamples().CollatzlikePerms);[110X in order to assign
   the global variables defined in this section.[133X
@@ -1115,31 +1115,29 @@
     [4X[25X>[125X [27X   od;[127X[104X
     [4X[28X0(2)[128X[104X
     [4X[28X2(6) U 4(6)[128X[104X
+    [4X[28X<union of 19 residue classes (mod 60) (6 classes)>[128X[104X
     [4X[28X<union of 8 residue classes (mod 30)>[128X[104X
-    [4X[28X<union of 19 residue classes (mod 90) (9 classes)>[128X[104X
-    [4X[28X<union of 114 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 99 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 57 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 54 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 41 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 35 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 8 residue classes (mod 720) (6 classes)>[128X[104X
+    [4X[28X<union of 120 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 112 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 80 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 24 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 16 residue classes (mod 720) (12 classes)>[128X[104X
+    [4X[28X<union of 8 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 6 residue classes (mod 720)>[128X[104X
     [4X[28X4(720) U 94(720) U 148(720) U 238(720)[128X[104X
     [4X[28X<union of 24 residue classes (mod 5760)>[128X[104X
     [4X[28X<union of 72 residue classes (mod 51840)>[128X[104X
     [4X[28X<union of 48 residue classes (mod 51840)>[128X[104X
-    [4X[28X<union of 192 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 168 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 204 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 144 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 120 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 96 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 84 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 72 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 60 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 48 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 24 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 12 residue classes (mod 259200) (6 classes)>[128X[104X
-    [4X[28X<union of 24 residue classes (mod 777600)>[128X[104X
-    [4X[28X<union of 12 residue classes (mod 777600) (6 classes)>[128X[104X
-    [4X[28X111604(194400) U 14404(777600) U 208804(777600)[128X[104X
+    [4X[28X<union of 30 residue classes (mod 777600)>[128X[104X
+    [4X[28X54004(64800) U 151204(259200) U 216004(259200)[128X[104X
     [4X[28X[  ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -1203,40 +1201,46 @@
     [4X[25X>[125X [27X     if S = [] then break; fi;[127X[104X
     [4X[25X>[125X [27X   od;[127X[104X
     [4X[28XZ \ 1(8) U 7(8)[128X[104X
-    [4X[28X<union of 151 residue classes (mod 240)>[128X[104X
-    [4X[28X<union of 208 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 424 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 169 residue classes (mod 720)>[128X[104X
     [4X[28X<union of 51 residue classes (mod 720)>[128X[104X
     [4X[28X<union of 45 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 39 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 33 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 23 residue classes (mod 720)>[128X[104X
-    [4X[28X<union of 19 residue classes (mod 720) (7 classes)>[128X[104X
-    [4X[28X<union of 17 residue classes (mod 720) (6 classes)>[128X[104X
-    [4X[28X<union of 16 residue classes (mod 720) (7 classes)>[128X[104X
-    [4X[28X<union of 14 residue classes (mod 720) (9 classes)>[128X[104X
+    [4X[28X<union of 42 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 35 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 30 residue classes (mod 720)>[128X[104X
+    [4X[28X<union of 16 residue classes (mod 720) (10 classes)>[128X[104X
+    [4X[28X<union of 11 residue classes (mod 720) (7 classes)>[128X[104X
     [4X[28X<union of 8 residue classes (mod 720) (6 classes)>[128X[104X
-    [4X[28X<union of 7 residue classes (mod 720) (6 classes)>[128X[104X
+    [4X[28X148(360) U 238(360) U 4(720) U 454(720)[128X[104X
     [4X[28X238(360) U 4(720) U 148(720) U 454(720)[128X[104X
-    [4X[28X<union of 38 residue classes (mod 5760)>[128X[104X
-    [4X[28X<union of 37 residue classes (mod 5760)>[128X[104X
-    [4X[28X<union of 25 residue classes (mod 5760)>[128X[104X
-    [4X[28X<union of 21 residue classes (mod 5760)>[128X[104X
-    [4X[28X<union of 17 residue classes (mod 5760) (13 classes)>[128X[104X
+    [4X[28X<union of 28 residue classes (mod 5760)>[128X[104X
+    [4X[28X<union of 24 residue classes (mod 5760)>[128X[104X
+    [4X[28X<union of 23 residue classes (mod 5760)>[128X[104X
+    [4X[28X<union of 22 residue classes (mod 5760)>[128X[104X
+    [4X[28X<union of 20 residue classes (mod 5760) (14 classes)>[128X[104X
+    [4X[28X<union of 19 residue classes (mod 5760) (14 classes)>[128X[104X
     [4X[28X<union of 16 residue classes (mod 5760) (12 classes)>[128X[104X
-    [4X[28X<union of 138 residue classes (mod 51840)>[128X[104X
-    [4X[28X<union of 48 residue classes (mod 51840)>[128X[104X
-    [4X[28X<union of 32 residue classes (mod 51840)>[128X[104X
-    [4X[28X<union of 20 residue classes (mod 51840) (14 classes)>[128X[104X
+    [4X[28X<union of 112 residue classes (mod 51840)>[128X[104X
+    [4X[28X<union of 96 residue classes (mod 51840)>[128X[104X
+    [4X[28X<union of 90 residue classes (mod 51840)>[128X[104X
+    [4X[28X<union of 51 residue classes (mod 51840)>[128X[104X
+    [4X[28X<union of 21 residue classes (mod 51840)>[128X[104X
+    [4X[28X<union of 19 residue classes (mod 51840) (15 classes)>[128X[104X
     [4X[28X<union of 16 residue classes (mod 51840) (12 classes)>[128X[104X
-    [4X[28X<union of 68 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 42 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 54 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 53 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 50 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 38 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 35 residue classes (mod 259200)>[128X[104X
     [4X[28X<union of 32 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 26 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 25 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 11 residue classes (mod 259200) (10 classes)>[128X[104X
-    [4X[28X<union of 10 residue classes (mod 259200) (9 classes)>[128X[104X
-    [4X[28X<union of 7 residue classes (mod 259200) (6 classes)>[128X[104X
-    [4X[28X13414(129600) U 2164(259200) U 66964(259200) U 228964(259200)[128X[104X
+    [4X[28X<union of 24 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 22 residue classes (mod 259200)>[128X[104X
+    [4X[28X<union of 20 residue classes (mod 259200) (16 classes)>[128X[104X
+    [4X[28X<union of 18 residue classes (mod 259200) (15 classes)>[128X[104X
+    [4X[28X<union of 16 residue classes (mod 259200) (13 classes)>[128X[104X
+    [4X[28X<union of 15 residue classes (mod 259200) (12 classes)>[128X[104X
+    [4X[28X<union of 12 residue classes (mod 259200) (10 classes)>[128X[104X
+    [4X[28X<union of 7 residue classes (mod 259200)>[128X[104X
     [4X[28X2164(259200) U 66964(259200) U 228964(259200)[128X[104X
     [4X[28X[  ][128X[104X
     [4X[25Xgap>[125X [27XMaximum(List(stabelm,f->Maximum(List(Coefficients(f),c->c[2]))));[127X[104X
@@ -1289,71 +1293,69 @@
     [4X[25X>[125X [27X     if S = [] then maxind := i; break; fi;[127X[104X
     [4X[25X>[125X [27X   od;[127X[104X
     [4X[28XZ \ 1(8) U 7(8)[128X[104X
-    [4X[28X<union of 46 residue classes (mod 72)>[128X[104X
-    [4X[28X<union of 20 residue classes (mod 72) (8 classes)>[128X[104X
+    [4X[28X<union of 24 residue classes (mod 72)>[128X[104X
+    [4X[28X<union of 22 residue classes (mod 72)>[128X[104X
+    [4X[28X<union of 17 residue classes (mod 72) (9 classes)>[128X[104X
     [4X[28X4(18)[128X[104X
     [4X[28X<union of 28 residue classes (mod 576)>[128X[104X
-    [4X[28X<union of 22 residue classes (mod 576)>[128X[104X
+    [4X[28X<union of 26 residue classes (mod 576)>[128X[104X
     [4X[28X<union of 21 residue classes (mod 576)>[128X[104X
-    [4X[28X40(72) U 4(144) U 94(144) U 346(576) U 418(576)[128X[104X
+    [4X[28X<union of 20 residue classes (mod 576) (7 classes)>[128X[104X
+    [4X[28X<union of 18 residue classes (mod 576) (8 classes)>[128X[104X
     [4X[28X<union of 16 residue classes (mod 576) (6 classes)>[128X[104X
     [4X[28X<union of 15 residue classes (mod 576) (6 classes)>[128X[104X
-    [4X[28X4(144) U 94(144) U 346(576) U 418(576)[128X[104X
+    [4X[28X<union of 120 residue classes (mod 5184)>[128X[104X
+    [4X[28X<union of 45 residue classes (mod 5184)>[128X[104X
     [4X[28X<union of 30 residue classes (mod 5184)>[128X[104X
-    [4X[28X<union of 26 residue classes (mod 5184)>[128X[104X
+    [4X[28X<union of 28 residue classes (mod 5184)>[128X[104X
     [4X[28X<union of 6 residue classes (mod 1296)>[128X[104X
-    [4X[28X<union of 504 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 324 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 282 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 239 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 218 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 194 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 154 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 97 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 85 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 77 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 67 residue classes (mod 129600)>[128X[104X
-    [4X[28X<union of 125 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 108 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 107 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 101 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 100 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 84 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 80 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 76 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 70 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 66 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 54 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 53 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 47 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 43 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 31 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 24 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 23 residue classes (mod 259200)>[128X[104X
-    [4X[28X<union of 13 residue classes (mod 259200) (8 classes)>[128X[104X
+    [4X[28X<union of 116 residue classes (mod 32400)>[128X[104X
+    [4X[28X<union of 104 residue classes (mod 32400)>[128X[104X
+    [4X[28X<union of 92 residue classes (mod 32400)>[128X[104X
+    [4X[28X<union of 84 residue classes (mod 32400)>[128X[104X
+    [4X[28X<union of 80 residue classes (mod 32400)>[128X[104X
+    [4X[28X<union of 210 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 189 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 160 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 136 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 133 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 122 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 114 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 106 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 104 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 100 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 96 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 60 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 52 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 48 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 40 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 36 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 32 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 24 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 16 residue classes (mod 129600) (10 classes)>[128X[104X
+    [4X[28X<union of 12 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 10 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 8 residue classes (mod 129600)>[128X[104X
+    [4X[28X<union of 6 residue classes (mod 129600)>[128X[104X
+    [4X[28X57406(129600) U 63076(129600) U 115006(129600) U 120676(129600)[128X[104X
     [4X[28X57406(129600) U 115006(129600) U 192676(259200) U 250276(259200)[128X[104X
-    [4X[28X57406(129600) U 192676(259200) U 250276(259200) U 374206(388800)[128X[104X
-    [4X[28X57406(129600) U 192676(259200) U 250276(259200)[128X[104X
-    [4X[28X250276(259200) U 57406(388800) U 316606(388800) U 451876(777600)[128X[104X
-    [4X[28X316606(388800) U 451876(777600) U 509476(777600) U 768676(777600)[128X[104X
-    [4X[28X<union of 18 residue classes (mod 3110400) (6 classes)>[128X[104X
-    [4X[28X451876(777600) U 509476(777600) U 705406(777600) U 768676(777600)[128X[104X
-    [4X[28X U 2649406(3110400)[128X[104X
-    [4X[28X451876(777600) U 705406(777600) U 768676(777600) U 2649406(3110400)[128X[104X
-    [4X[28X451876(777600) U 705406(777600) U 2649406(3110400)[128X[104X
+    [4X[28X<union of 15 residue classes (mod 777600) (6 classes)>[128X[104X
+    [4X[28X<union of 9 residue classes (mod 777600) (6 classes)>[128X[104X
+    [4X[28X<union of 30 residue classes (mod 3110400)>[128X[104X
+    [4X[28X<union of 26 residue classes (mod 3110400)>[128X[104X
+    [4X[28X<union of 22 residue classes (mod 3110400)>[128X[104X
+    [4X[28X<union of 19 residue classes (mod 3110400) (10 classes)>[128X[104X
+    [4X[28X<union of 14 residue classes (mod 3110400) (8 classes)>[128X[104X
     [4X[28X705406(777600) U 2007076(3110400) U 2649406(3110400) U 2784676(3110400)[128X[104X
     [4X[28X<union of 14 residue classes (mod 9331200) (8 classes)>[128X[104X
-    [4X[28X2260606(2332800) U 5759806(9331200) U 5895076(9331200) U 8227876(9331200)[128X[104X
-    [4X[28X4593406(6998400) U 15091006(27993600) U 17559076(27993600)[128X[104X
-    [4X[28X U 24557476(27993600)[128X[104X
-    [4X[28X<union of 14 residue classes (mod 83980800) (8 classes)>[128X[104X
-    [4X[28X18590206(20995200) U 24557476(83980800) U 45552676(83980800)[128X[104X
-    [4X[28X U 71078206(83980800)[128X[104X
+    [4X[28X1483006(2332800) U 2649406(9331200) U 2784676(9331200) U 5117476(9331200)[128X[104X
+    [4X[28X<union of 16 residue classes (mod 27993600) (6 classes)>[128X[104X
+    [4X[28X2784676(9331200) U 5117476(9331200)[128X[104X
     [4X[28X[  ][128X[104X
     [4X[25Xgap>[125X [27XMaximum(List(stabelm{[1..maxind]},[127X[104X
     [4X[25X>[125X [27X                f->Maximum(List(Coefficients(f),c->c[2]))));[127X[104X
-    [4X[28X58975[128X[104X
-    [4X[25Xgap>[125X [27Xsmallnum := [5..58975];;[127X[104X
+    [4X[28X37387[128X[104X
+    [4X[25Xgap>[125X [27Xsmallnum := [5..37387];;[127X[104X
     [4X[25Xgap>[125X [27Xfor i in [1..maxind] do[127X[104X
     [4X[25X>[125X [27X     smallnum := Filtered(smallnum,n->n^stabelm[i]>=n);[127X[104X
     [4X[25X>[125X [27X   od;[127X[104X

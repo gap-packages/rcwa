@@ -79,6 +79,6 @@
   Interactive  sessions  with this package have also led to the development of
   most  of the algorithms which are now implemented in it. Just to mention one
   example,  developing  the factorization method for residue-class-wise affine
-  permutations (see [2XFactorizationIntoCSCRCT[102X ([14X2.5-1[114X)) solely by means of theory
+  permutations (see [2XFactorizationIntoCSCRCT[102X ([14X2.5-2[114X)) solely by means of theory
   would likely have been very hard.[133X
   

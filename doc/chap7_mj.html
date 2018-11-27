@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (RCWA) - Chapter 7: Examples</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -383,7 +383,7 @@ true
 
 </pre></div>
 
-<p>The factors <code class="code">PrimeSwitch(3)</code> are products of 6 class transpositions (cf. <code class="func">PrimeSwitch</code> (<a href="chap2_mj.html#X861C74E97AE5DA3B"><span class="RefLink">2.5-2</span></a>)).</p>
+<p>The factors <code class="code">PrimeSwitch(3)</code> are products of 6 class transpositions (cf. <code class="func">PrimeSwitch</code> (<a href="chap2_mj.html#X861C74E97AE5DA3B"><span class="RefLink">2.5-3</span></a>)).</p>
 
 <p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
 
@@ -1158,31 +1158,29 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
 0(2)
 2(6) U 4(6)
+&lt;union of 19 residue classes (mod 60) (6 classes)&gt;
 &lt;union of 8 residue classes (mod 30)&gt;
-&lt;union of 19 residue classes (mod 90) (9 classes)&gt;
-&lt;union of 114 residue classes (mod 720)&gt;
-&lt;union of 99 residue classes (mod 720)&gt;
-&lt;union of 57 residue classes (mod 720)&gt;
-&lt;union of 54 residue classes (mod 720)&gt;
-&lt;union of 41 residue classes (mod 720)&gt;
-&lt;union of 35 residue classes (mod 720)&gt;
-&lt;union of 8 residue classes (mod 720) (6 classes)&gt;
+&lt;union of 120 residue classes (mod 720)&gt;
+&lt;union of 112 residue classes (mod 720)&gt;
+&lt;union of 80 residue classes (mod 720)&gt;
+&lt;union of 24 residue classes (mod 720)&gt;
+&lt;union of 16 residue classes (mod 720) (12 classes)&gt;
+&lt;union of 8 residue classes (mod 720)&gt;
+&lt;union of 6 residue classes (mod 720)&gt;
 4(720) U 94(720) U 148(720) U 238(720)
 &lt;union of 24 residue classes (mod 5760)&gt;
 &lt;union of 72 residue classes (mod 51840)&gt;
 &lt;union of 48 residue classes (mod 51840)&gt;
-&lt;union of 192 residue classes (mod 259200)&gt;
-&lt;union of 168 residue classes (mod 259200)&gt;
+&lt;union of 204 residue classes (mod 259200)&gt;
+&lt;union of 144 residue classes (mod 259200)&gt;
 &lt;union of 120 residue classes (mod 259200)&gt;
-&lt;union of 96 residue classes (mod 259200)&gt;
+&lt;union of 84 residue classes (mod 259200)&gt;
 &lt;union of 72 residue classes (mod 259200)&gt;
-&lt;union of 60 residue classes (mod 259200)&gt;
 &lt;union of 48 residue classes (mod 259200)&gt;
 &lt;union of 24 residue classes (mod 259200)&gt;
 &lt;union of 12 residue classes (mod 259200) (6 classes)&gt;
-&lt;union of 24 residue classes (mod 777600)&gt;
-&lt;union of 12 residue classes (mod 777600) (6 classes)&gt;
-111604(194400) U 14404(777600) U 208804(777600)
+&lt;union of 30 residue classes (mod 777600)&gt;
+54004(64800) U 151204(259200) U 216004(259200)
 [  ]
 
 </pre></div>
@@ -1242,40 +1240,46 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     if S = [] then break; fi;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
 Z \ 1(8) U 7(8)
-&lt;union of 151 residue classes (mod 240)&gt;
-&lt;union of 208 residue classes (mod 720)&gt;
+&lt;union of 424 residue classes (mod 720)&gt;
+&lt;union of 169 residue classes (mod 720)&gt;
 &lt;union of 51 residue classes (mod 720)&gt;
 &lt;union of 45 residue classes (mod 720)&gt;
-&lt;union of 39 residue classes (mod 720)&gt;
-&lt;union of 33 residue classes (mod 720)&gt;
-&lt;union of 23 residue classes (mod 720)&gt;
-&lt;union of 19 residue classes (mod 720) (7 classes)&gt;
-&lt;union of 17 residue classes (mod 720) (6 classes)&gt;
-&lt;union of 16 residue classes (mod 720) (7 classes)&gt;
-&lt;union of 14 residue classes (mod 720) (9 classes)&gt;
+&lt;union of 42 residue classes (mod 720)&gt;
+&lt;union of 35 residue classes (mod 720)&gt;
+&lt;union of 30 residue classes (mod 720)&gt;
+&lt;union of 16 residue classes (mod 720) (10 classes)&gt;
+&lt;union of 11 residue classes (mod 720) (7 classes)&gt;
 &lt;union of 8 residue classes (mod 720) (6 classes)&gt;
-&lt;union of 7 residue classes (mod 720) (6 classes)&gt;
+148(360) U 238(360) U 4(720) U 454(720)
 238(360) U 4(720) U 148(720) U 454(720)
-&lt;union of 38 residue classes (mod 5760)&gt;
-&lt;union of 37 residue classes (mod 5760)&gt;
-&lt;union of 25 residue classes (mod 5760)&gt;
-&lt;union of 21 residue classes (mod 5760)&gt;
-&lt;union of 17 residue classes (mod 5760) (13 classes)&gt;
+&lt;union of 28 residue classes (mod 5760)&gt;
+&lt;union of 24 residue classes (mod 5760)&gt;
+&lt;union of 23 residue classes (mod 5760)&gt;
+&lt;union of 22 residue classes (mod 5760)&gt;
+&lt;union of 20 residue classes (mod 5760) (14 classes)&gt;
+&lt;union of 19 residue classes (mod 5760) (14 classes)&gt;
 &lt;union of 16 residue classes (mod 5760) (12 classes)&gt;
-&lt;union of 138 residue classes (mod 51840)&gt;
-&lt;union of 48 residue classes (mod 51840)&gt;
-&lt;union of 32 residue classes (mod 51840)&gt;
-&lt;union of 20 residue classes (mod 51840) (14 classes)&gt;
+&lt;union of 112 residue classes (mod 51840)&gt;
+&lt;union of 96 residue classes (mod 51840)&gt;
+&lt;union of 90 residue classes (mod 51840)&gt;
+&lt;union of 51 residue classes (mod 51840)&gt;
+&lt;union of 21 residue classes (mod 51840)&gt;
+&lt;union of 19 residue classes (mod 51840) (15 classes)&gt;
 &lt;union of 16 residue classes (mod 51840) (12 classes)&gt;
-&lt;union of 68 residue classes (mod 259200)&gt;
-&lt;union of 42 residue classes (mod 259200)&gt;
+&lt;union of 54 residue classes (mod 259200)&gt;
+&lt;union of 53 residue classes (mod 259200)&gt;
+&lt;union of 50 residue classes (mod 259200)&gt;
+&lt;union of 38 residue classes (mod 259200)&gt;
+&lt;union of 35 residue classes (mod 259200)&gt;
 &lt;union of 32 residue classes (mod 259200)&gt;
-&lt;union of 26 residue classes (mod 259200)&gt;
-&lt;union of 25 residue classes (mod 259200)&gt;
-&lt;union of 11 residue classes (mod 259200) (10 classes)&gt;
-&lt;union of 10 residue classes (mod 259200) (9 classes)&gt;
-&lt;union of 7 residue classes (mod 259200) (6 classes)&gt;
-13414(129600) U 2164(259200) U 66964(259200) U 228964(259200)
+&lt;union of 24 residue classes (mod 259200)&gt;
+&lt;union of 22 residue classes (mod 259200)&gt;
+&lt;union of 20 residue classes (mod 259200) (16 classes)&gt;
+&lt;union of 18 residue classes (mod 259200) (15 classes)&gt;
+&lt;union of 16 residue classes (mod 259200) (13 classes)&gt;
+&lt;union of 15 residue classes (mod 259200) (12 classes)&gt;
+&lt;union of 12 residue classes (mod 259200) (10 classes)&gt;
+&lt;union of 7 residue classes (mod 259200)&gt;
 2164(259200) U 66964(259200) U 228964(259200)
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Maximum(List(stabelm,f-&gt;Maximum(List(Coefficients(f),c-&gt;c[2]))));</span>
@@ -1329,71 +1333,69 @@ Z \ 1(8) U 7(8)
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     if S = [] then maxind := i; break; fi;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
 Z \ 1(8) U 7(8)
-&lt;union of 46 residue classes (mod 72)&gt;
-&lt;union of 20 residue classes (mod 72) (8 classes)&gt;
+&lt;union of 24 residue classes (mod 72)&gt;
+&lt;union of 22 residue classes (mod 72)&gt;
+&lt;union of 17 residue classes (mod 72) (9 classes)&gt;
 4(18)
 &lt;union of 28 residue classes (mod 576)&gt;
-&lt;union of 22 residue classes (mod 576)&gt;
+&lt;union of 26 residue classes (mod 576)&gt;
 &lt;union of 21 residue classes (mod 576)&gt;
-40(72) U 4(144) U 94(144) U 346(576) U 418(576)
+&lt;union of 20 residue classes (mod 576) (7 classes)&gt;
+&lt;union of 18 residue classes (mod 576) (8 classes)&gt;
 &lt;union of 16 residue classes (mod 576) (6 classes)&gt;
 &lt;union of 15 residue classes (mod 576) (6 classes)&gt;
-4(144) U 94(144) U 346(576) U 418(576)
+&lt;union of 120 residue classes (mod 5184)&gt;
+&lt;union of 45 residue classes (mod 5184)&gt;
 &lt;union of 30 residue classes (mod 5184)&gt;
-&lt;union of 26 residue classes (mod 5184)&gt;
+&lt;union of 28 residue classes (mod 5184)&gt;
 &lt;union of 6 residue classes (mod 1296)&gt;
-&lt;union of 504 residue classes (mod 129600)&gt;
-&lt;union of 324 residue classes (mod 129600)&gt;
-&lt;union of 282 residue classes (mod 129600)&gt;
-&lt;union of 239 residue classes (mod 129600)&gt;
-&lt;union of 218 residue classes (mod 129600)&gt;
-&lt;union of 194 residue classes (mod 129600)&gt;
-&lt;union of 154 residue classes (mod 129600)&gt;
-&lt;union of 97 residue classes (mod 129600)&gt;
-&lt;union of 85 residue classes (mod 129600)&gt;
-&lt;union of 77 residue classes (mod 129600)&gt;
-&lt;union of 67 residue classes (mod 129600)&gt;
-&lt;union of 125 residue classes (mod 259200)&gt;
-&lt;union of 108 residue classes (mod 259200)&gt;
-&lt;union of 107 residue classes (mod 259200)&gt;
-&lt;union of 101 residue classes (mod 259200)&gt;
-&lt;union of 100 residue classes (mod 259200)&gt;
-&lt;union of 84 residue classes (mod 259200)&gt;
-&lt;union of 80 residue classes (mod 259200)&gt;
-&lt;union of 76 residue classes (mod 259200)&gt;
-&lt;union of 70 residue classes (mod 259200)&gt;
-&lt;union of 66 residue classes (mod 259200)&gt;
-&lt;union of 54 residue classes (mod 259200)&gt;
-&lt;union of 53 residue classes (mod 259200)&gt;
-&lt;union of 47 residue classes (mod 259200)&gt;
-&lt;union of 43 residue classes (mod 259200)&gt;
-&lt;union of 31 residue classes (mod 259200)&gt;
-&lt;union of 24 residue classes (mod 259200)&gt;
-&lt;union of 23 residue classes (mod 259200)&gt;
-&lt;union of 13 residue classes (mod 259200) (8 classes)&gt;
+&lt;union of 116 residue classes (mod 32400)&gt;
+&lt;union of 104 residue classes (mod 32400)&gt;
+&lt;union of 92 residue classes (mod 32400)&gt;
+&lt;union of 84 residue classes (mod 32400)&gt;
+&lt;union of 80 residue classes (mod 32400)&gt;
+&lt;union of 210 residue classes (mod 129600)&gt;
+&lt;union of 189 residue classes (mod 129600)&gt;
+&lt;union of 160 residue classes (mod 129600)&gt;
+&lt;union of 136 residue classes (mod 129600)&gt;
+&lt;union of 133 residue classes (mod 129600)&gt;
+&lt;union of 122 residue classes (mod 129600)&gt;
+&lt;union of 114 residue classes (mod 129600)&gt;
+&lt;union of 106 residue classes (mod 129600)&gt;
+&lt;union of 104 residue classes (mod 129600)&gt;
+&lt;union of 100 residue classes (mod 129600)&gt;
+&lt;union of 96 residue classes (mod 129600)&gt;
+&lt;union of 60 residue classes (mod 129600)&gt;
+&lt;union of 52 residue classes (mod 129600)&gt;
+&lt;union of 48 residue classes (mod 129600)&gt;
+&lt;union of 40 residue classes (mod 129600)&gt;
+&lt;union of 36 residue classes (mod 129600)&gt;
+&lt;union of 32 residue classes (mod 129600)&gt;
+&lt;union of 24 residue classes (mod 129600)&gt;
+&lt;union of 16 residue classes (mod 129600) (10 classes)&gt;
+&lt;union of 12 residue classes (mod 129600)&gt;
+&lt;union of 10 residue classes (mod 129600)&gt;
+&lt;union of 8 residue classes (mod 129600)&gt;
+&lt;union of 6 residue classes (mod 129600)&gt;
+57406(129600) U 63076(129600) U 115006(129600) U 120676(129600)
 57406(129600) U 115006(129600) U 192676(259200) U 250276(259200)
-57406(129600) U 192676(259200) U 250276(259200) U 374206(388800)
-57406(129600) U 192676(259200) U 250276(259200)
-250276(259200) U 57406(388800) U 316606(388800) U 451876(777600)
-316606(388800) U 451876(777600) U 509476(777600) U 768676(777600)
-&lt;union of 18 residue classes (mod 3110400) (6 classes)&gt;
-451876(777600) U 509476(777600) U 705406(777600) U 768676(777600)
- U 2649406(3110400)
-451876(777600) U 705406(777600) U 768676(777600) U 2649406(3110400)
-451876(777600) U 705406(777600) U 2649406(3110400)
+&lt;union of 15 residue classes (mod 777600) (6 classes)&gt;
+&lt;union of 9 residue classes (mod 777600) (6 classes)&gt;
+&lt;union of 30 residue classes (mod 3110400)&gt;
+&lt;union of 26 residue classes (mod 3110400)&gt;
+&lt;union of 22 residue classes (mod 3110400)&gt;
+&lt;union of 19 residue classes (mod 3110400) (10 classes)&gt;
+&lt;union of 14 residue classes (mod 3110400) (8 classes)&gt;
 705406(777600) U 2007076(3110400) U 2649406(3110400) U 2784676(3110400)
 &lt;union of 14 residue classes (mod 9331200) (8 classes)&gt;
-2260606(2332800) U 5759806(9331200) U 5895076(9331200) U 8227876(9331200)
-4593406(6998400) U 15091006(27993600) U 17559076(27993600)
- U 24557476(27993600)
-&lt;union of 14 residue classes (mod 83980800) (8 classes)&gt;
-18590206(20995200) U 24557476(83980800) U 45552676(83980800)
- U 71078206(83980800)
+1483006(2332800) U 2649406(9331200) U 2784676(9331200) U 5117476(9331200)
+&lt;union of 16 residue classes (mod 27993600) (6 classes)&gt;
+2784676(9331200) U 5117476(9331200)
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Maximum(List(stabelm{[1..maxind]},</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                f-&gt;Maximum(List(Coefficients(f),c-&gt;c[2]))));</span>
-58975
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">smallnum := [5..58975];;</span>
+37387
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">smallnum := [5..37387];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..maxind] do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     smallnum := Filtered(smallnum,n-&gt;n^stabelm[i]&gt;=n);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>

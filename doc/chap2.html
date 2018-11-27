@@ -53,9 +53,10 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8475F844869DD060">2.5 <span class="Heading">Factoring residue-class-wise affine permutations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X853885A182EC5104">2.5-1 FactorizationIntoCSCRCT</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X861C74E97AE5DA3B">2.5-2 PrimeSwitch</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X789CB69C7D97B0C4">2.5-3 mKnot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X829BA0537F2372FF">2.5-1 CTCSCRSplit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X853885A182EC5104">2.5-2 FactorizationIntoCSCRCT</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X861C74E97AE5DA3B">2.5-3 PrimeSwitch</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X789CB69C7D97B0C4">2.5-4 mKnot</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8141065381B0942B">2.6 <span class="Heading">
   Extracting roots of residue-class-wise affine mappings
@@ -186,7 +187,7 @@ Z \ [ -1, 0, 1 ]
 
 </pre></div>
 
-<p>There is computational evidence for the conjecture that any residue-class-wise affine permutation of ℤ can be factored into members of the following three series of permutations of particularly simple structure (cf. <code class="func">FactorizationIntoCSCRCT</code> (<a href="chap2.html#X853885A182EC5104"><span class="RefLink">2.5-1</span></a>)):</p>
+<p>There is computational evidence for the conjecture that any residue-class-wise affine permutation of ℤ can be factored into members of the following three series of permutations of particularly simple structure (cf. <code class="func">FactorizationIntoCSCRCT</code> (<a href="chap2.html#X853885A182EC5104"><span class="RefLink">2.5-2</span></a>)):</p>
 
 <p><a id="X86B611BD7EED62A1" name="X86B611BD7EED62A1"></a></p>
 
@@ -461,7 +462,7 @@ true
 
 <p>Rcwa mappings can be <code class="code">View</code>ed, <code class="code">Display</code>ed, <code class="code">Print</code>ed and written to a <code class="code">String</code>. The output of the <code class="code">View</code> method is kept reasonably short. In most cases it does not describe an rcwa mapping completely. In these cases the output is enclosed in brackets. There are options <code class="code">CycleNotation</code>, <code class="code">AsClassMapping</code>, <code class="code">PrintNotation</code> and <code class="code">AbridgedNotation</code> to take influence on how certain rcwa mappings are shown. These options can either be not set, set to <code class="code">true</code> or set to <code class="code">false</code>. If the option <code class="code">CycleNotation</code> is set, it is tried harder to write down an rcwa permutation of ℤ of finite order as a product of disjoint residue class cycles, if this is possible. If the option <code class="code">AsClassMapping</code> is set, <code class="code">Display</code> shows which residue classes are mapped to which by the affine partial mappings, and marks any loops. The option <code class="code">PrintNotation</code> influences the output in favour of <strong class="pkg">GAP</strong> - readability, and the option <code class="code">AbridgedNotation</code> can be used to abridge longer names like <code class="code">ClassShift</code>, <code class="code">ClassReflection</code> etc.. By default, the output of the methods for <code class="code">Display</code> and <code class="code">Print</code> describes an rcwa mapping in full. The <code class="code">Print</code>ed representation of an rcwa mapping is <strong class="pkg">GAP</strong> - readable if and only if the <code class="code">Print</code>ed representation of the elements of the underlying ring is so.</p>
 
-<p>There is also an operation <code class="code">LaTeXStringRcwaMapping</code>, which takes as argument an rcwa mapping and returns a corresponding LaTeX string. The output makes use of the LaTeX macro package <strong class="pkg">amsmath</strong>. If the option <var class="Arg">Factorization</var> is set and the argument is bijective, a factorization into class shifts, class reflections, class transpositions and prime switches is printed (cf. <code class="func">FactorizationIntoCSCRCT</code> (<a href="chap2.html#X853885A182EC5104"><span class="RefLink">2.5-1</span></a>)). For rcwa mappings with modulus greater than 1, an indentation by <var class="Arg">Indentation</var> characters can be obtained by setting this option value accordingly.</p>
+<p>There is also an operation <code class="code">LaTeXStringRcwaMapping</code>, which takes as argument an rcwa mapping and returns a corresponding LaTeX string. The output makes use of the LaTeX macro package <strong class="pkg">amsmath</strong>. If the option <var class="Arg">Factorization</var> is set and the argument is bijective, a factorization into class shifts, class reflections, class transpositions and prime switches is printed (cf. <code class="func">FactorizationIntoCSCRCT</code> (<a href="chap2.html#X853885A182EC5104"><span class="RefLink">2.5-2</span></a>)). For rcwa mappings with modulus greater than 1, an indentation by <var class="Arg">Indentation</var> characters can be obtained by setting this option value accordingly.</p>
 
 
 <div class="example"><pre>
@@ -746,9 +747,37 @@ true
 
 <p>Factoring group elements into the members of some "nice" set of generators is often helpful. In this section we describe an operation which attempts to solve this problem for the group RCWA(ℤ). Elements of finitely generated rcwa groups can be factored into generators "as usual", see <code class="func">PreImagesRepresentative</code> (<a href="chap3.html#X8463E34286344F06"><span class="RefLink">3.2-3</span></a>).</p>
 
+<p><a id="X829BA0537F2372FF" name="X829BA0537F2372FF"></a></p>
+
+<h5>2.5-1 CTCSCRSplit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CTCSCRSplit</code>( <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of 3 rcwa permutations <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span> and <span class="SimpleMath">c</span> whose product equals <var class="Arg">g</var>, where <span class="SimpleMath">a</span> fixes the nonnegative integers setwise, <span class="SimpleMath">b</span> is integral and class-wise order-preserving and <span class="SimpleMath">c</span> is integral.</p>
+
+<p>Assuming the hypothesis that CT(ℤ) is the group of all rcwa permutations of ℤ which fix the nonnegative integers setwise, <span class="SimpleMath">a</span> is always an element of CT(ℤ).</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := ClassTransposition(0,4,1,6)*ClassShift(2,5)*ClassReflection(2,3);</span>
+&lt;rcwa permutation of Z with modulus 180&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">facts := CTCSCRSplit(g);</span>
+[ &lt;rcwa permutation of Z with modulus 60&gt;, ClassShift( 2(30) ), 
+  ClassReflection( 2(3) ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Product(facts) = g;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(facts,IsSignPreserving);</span>
+[ true, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(facts,IsIntegral);</span>
+[ false, true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(facts,IsClassWiseOrderPreserving);</span>
+[ true, true, false ]
+
+</pre></div>
+
 <p><a id="X853885A182EC5104" name="X853885A182EC5104"></a></p>
 
-<h5>2.5-1 FactorizationIntoCSCRCT</h5>
+<h5>2.5-2 FactorizationIntoCSCRCT</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorizationIntoCSCRCT</code>( <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factorization</code>( <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
@@ -758,7 +787,7 @@ true
 
 <p>The problem of obtaining a factorization as described is algorithmically difficult, and this factorization routine is currently perhaps the most sophisticated part of the <strong class="pkg">RCWA</strong> package. Information about the progress of the factorization process can be obtained by setting the info level of the Info class <code class="func">InfoRCWA</code> (<a href="chap9.html#X7BAF5F4986288983"><span class="RefLink">9.5-1</span></a>) to 2.</p>
 
-<p>By default, prime switches (<span class="SimpleMath">→</span> <code class="func">PrimeSwitch</code> (<a href="chap2.html#X861C74E97AE5DA3B"><span class="RefLink">2.5-2</span></a>)) are taken as one factor. If the option <var class="Arg">ExpandPrimeSwitches</var> is set, they are each decomposed into the 6 class transpositions given in the definition.</p>
+<p>By default, prime switches (<span class="SimpleMath">→</span> <code class="func">PrimeSwitch</code> (<a href="chap2.html#X861C74E97AE5DA3B"><span class="RefLink">2.5-3</span></a>)) are taken as one factor. If the option <var class="Arg">ExpandPrimeSwitches</var> is set, they are each decomposed into the 6 class transpositions given in the definition.</p>
 
 <p>By default, the factoring process begins with splitting off factors from the right. This can be changed by setting the option <var class="Arg">Direction</var> to <code class="code">"from the left"</code>.</p>
 
@@ -782,7 +811,7 @@ true
 
 <p><a id="X861C74E97AE5DA3B" name="X861C74E97AE5DA3B"></a></p>
 
-<h5>2.5-2 PrimeSwitch</h5>
+<h5>2.5-3 PrimeSwitch</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimeSwitch</code>( <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimeSwitch</code>( <var class="Arg">p</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
@@ -851,7 +880,7 @@ true
 
 <p><a id="X789CB69C7D97B0C4" name="X789CB69C7D97B0C4"></a></p>
 
-<h5>2.5-3 mKnot</h5>
+<h5>2.5-4 mKnot</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; mKnot</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the permutation <span class="SimpleMath">g_m</span> as defined in <a href="chapBib.html#biBKeller99">[Kel99]</a>.</p>

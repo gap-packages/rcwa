@@ -6,10 +6,10 @@
                         [1XResidue-Class-Wise Affine Groups[101X
   
   
-                                 Version 4.6.2
+                                 Version 4.6.3
   
   
-                                 June 26, 2018
+                               November 27, 2018
   
   
                                   Stefan Kohl
@@ -99,9 +99,10 @@
       2.4-4 Determinant
       2.4-5 Sign
     2.5 [33X[0;0YFactoring residue-class-wise affine permutations[133X
-      2.5-1 FactorizationIntoCSCRCT
-      2.5-2 PrimeSwitch
-      2.5-3 mKnot
+      2.5-1 CTCSCRSplit
+      2.5-2 FactorizationIntoCSCRCT
+      2.5-3 PrimeSwitch
+      2.5-4 mKnot
     2.6 [33X[0;0YExtracting roots of residue-class-wise affine mappings[133X
       2.6-1 Root
     2.7 [33X[0;0YSpecial functions for non-bijective mappings[133X

@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.6.2",
-Date             := "26/06/2018",
+Version          := "4.6.3",
+Date             := "27/11/2018",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
