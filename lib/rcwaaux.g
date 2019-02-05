@@ -105,13 +105,11 @@ BindGlobal( "RCWADoThingsToBeDoneBeforeTest",
     SetAssertionLevel(0);
     RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;;
     ResidueClassUnionViewingFormat("short");
-    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
   end );
 
 BindGlobal( "RCWADoThingsToBeDoneAfterTest",
 
   function ( )
-    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BACKUP);
     SetAssertionLevel(RESCLASSES_ASSERTIONLEVEL_BACKUP);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BACKUP);
