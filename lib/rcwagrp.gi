@@ -2790,10 +2790,12 @@ InstallMethod( Embedding,
                ReturnTrue, [ HasWreathProductInfo, IsPosInt ], 0,
 
   function ( W, i )
-    if not i in [1,2] or not IsBound(WreathProductInfo(W).embeddings[i]) then
-      TryNextMethod();
+    local info;
+    info := WreathProductInfo(W);
+    if IsBound(info.embeddings) and IsBound(info.embeddings[i]) then
+      return info.embeddings[i];
     fi;
-    return WreathProductInfo(W).embeddings[i];
+    TryNextMethod();
   end );
 
 #############################################################################
