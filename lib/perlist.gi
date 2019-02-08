@@ -178,6 +178,15 @@ InstallOtherMethod( \+,
 
 #############################################################################
 ##
+#M  \-( <l1>, <l2> ) . . . . . . . . . . . . . . . . . . . for periodic lists
+##
+InstallOtherMethod( \-,
+                    "for periodic lists (RCWA)", ReturnTrue,
+                    [ IsPeriodicList, IsPeriodicList ], 0,
+  function ( l1, l2 ) return l1 + (-l2); end );
+
+#############################################################################
+##
 #M  \+( <l>, <n> ) . . . . . . . . . . . . . . for periodic list and constant
 #M  \+( <n>, <l> ) . . . . . . . . . . . . . . for constant and periodic list
 ##
@@ -187,6 +196,18 @@ InstallOtherMethod( \+,"for periodic list and constant (RCWA)", ReturnTrue,
 InstallOtherMethod( \+,"for constant and periodic list (RCWA)", ReturnTrue,
                        [ IsAdditiveElement, IsPeriodicList ], 0,
   function ( n, l ) return PeriodicList(n+PrePeriod(l),n+Period(l)); end );
+
+#############################################################################
+##
+#M  \-( <l>, <n> ) . . . . . . . . . . . . . . for periodic list and constant
+#M  \-( <n>, <l> ) . . . . . . . . . . . . . . for constant and periodic list
+##
+InstallOtherMethod( \-,"for periodic list and constant (RCWA)", ReturnTrue,
+                       [ IsPeriodicList, IsAdditiveElement ], 0,
+  function ( l, n ) return PeriodicList(PrePeriod(l)-n,Period(l)-n); end );
+InstallOtherMethod( \-,"for constant and periodic list (RCWA)", ReturnTrue,
+                       [ IsAdditiveElement, IsPeriodicList ], 0,
+  function ( n, l ) return PeriodicList(n-PrePeriod(l),n-Period(l)); end );
 
 #############################################################################
 ##
