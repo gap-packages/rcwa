@@ -3850,13 +3850,12 @@ InstallMethod( StandardConjugate,
 ##
 InstallMethod( IsomorphismPermGroup,
                "for finite rcwa groups (RCWA)",
-               true, [ IsRcwaGroupOverZ ], 0,
+               true, [ IsRcwaGroupOverZ and IsFinite ], 0,
 
   function ( G )
 
     local  P, P3, H, phi;
 
-    if not IsFinite(G) then return fail; fi;
     P   := RespectedPartition(G);
     if   IsClassWiseOrderPreserving(G)
     then H := ActionOnRespectedPartition(G);
