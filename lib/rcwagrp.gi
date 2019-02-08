@@ -7205,7 +7205,11 @@ InstallMethod( DirectFactorsOfGroup,
 ##
 InstallMethod( StructureDescription,
                "for rcwa groups over Z (RCWA)",
-               true, [ IsRcwaGroupOverZ ], 0,
+               true, [ IsRcwaGroupOverZ ],
+               # the following rank adjustments works around an issue where a
+               # generic StructureDescription for abelian groups in GAP is
+               # triggered, which does not actually support infinite groups
+               NICE_FLAGS,
 
   function ( G )
 
@@ -7213,12 +7217,17 @@ InstallMethod( StructureDescription,
            bound, domain, induced, commgraph, e, comps, comp, comp_old, rem,
            i;
 
-    if not IsFinitelyGeneratedGroup(G) then TryNextMethod(); fi;
+    if not IsFinitelyGeneratedGroup(G) then
+      TryNextMethod();
+    fi;
     short := ValueOption("short") <> fail;
 
-    if IsTrivial(G) then return "1"; fi;
-    if   IsFinite(G)
-    then return StructureDescription(Image(IsomorphismPermGroup(G))); fi;
+    if IsTrivial(G) then
+      return "1";
+    fi;
+    if IsFinite(G) then
+      return StructureDescription(Image(IsomorphismPermGroup(G)));
+    fi;
     if HasDirectProductInfo(G) then
       factors := DirectProductInfo(G)!.groups;
       descs   := Filtered(List(factors,StructureDescription),str->str<>"1");
