@@ -9,7 +9,8 @@ SetPackageInfo( rec(
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
 Version          := "4.6.3dev",
-Date             := "05/02/2019",
+Date             := "05/02/2019", # dd/mm/yyyy format
+License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
