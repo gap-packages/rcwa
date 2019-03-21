@@ -19,6 +19,7 @@
 /doc/*.toc
 /doc/*.xml.bib
 /doc/manual.pdf
+/doc/title.xml
 
 /tmp/
 /gh-pages/
