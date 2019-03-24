@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.6.3dev",
-Date             := "05/02/2019", # dd/mm/yyyy format
+Version          := "4.6.4",
+Date             := "24/03/2019", # dd/mm/yyyy format
 License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -53,7 +53,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.9.1",
-                         NeededOtherPackages    := [ ["ResClasses",">=4.7.0"], ["GRAPE",">=4.7"],
+                         NeededOtherPackages    := [ ["ResClasses",">=4.7.2"], ["GRAPE",">=4.7"],
                                                      ["Polycyclic",">=2.11"], ["FR",">=2.2.1"],
                                                      ["GAPDoc",">=1.5.1"], ["Utils",">=0.40"] ],
                          SuggestedOtherPackages := [ ],

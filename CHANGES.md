@@ -1,5 +1,15 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.6.3 and RCWA 4.6.4 (March 24, 2019):
+
+ - Clarified that this package is licensed under GPL 2 or later.
+ - Moved package homepage to <https://gap-packages.github.io/rcwa>.
+ - Fixed some issues where loading ResClasses could inadvertently alter
+   the behavior of GAP library functions.
+ - Increased minimal required resclasses version to 4.7.2.
+ - Improved compatibility with future GAP releases (4.11 and later).
+ - Other minor adjustments.
+
 ## Changes between RCWA 4.6.2 and RCWA 4.6.3 (November 27, 2018):
 
  - An operation `CTCSCRSplit' has been added.
