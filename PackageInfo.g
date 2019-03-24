@@ -8,8 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.6.3",
-Date             := "27/11/2018",
+Version          := "4.6.4",
+Date             := "24/03/2019", # dd/mm/yyyy format
+License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
@@ -52,7 +53,7 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.9.1",
-                         NeededOtherPackages    := [ ["ResClasses",">=4.7.0"], ["GRAPE",">=4.7"],
+                         NeededOtherPackages    := [ ["ResClasses",">=4.7.2"], ["GRAPE",">=4.7"],
                                                      ["Polycyclic",">=2.11"], ["FR",">=2.2.1"],
                                                      ["GAPDoc",">=1.5.1"], ["Utils",">=0.40"] ],
                          SuggestedOtherPackages := [ ],
@@ -74,7 +75,43 @@ TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings",
                       "combinatorial group theory", "residue-class-wise affine groups",
                       "residue-class-wise affine mappings",
-                      "Collatz conjecture", "3n+1 conjecture" ]
+                      "Collatz conjecture", "3n+1 conjecture" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+&copyright; 2003 - 2018 by Stefan Kohl. <P/>
+
+&RCWA; is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version. <P/>
+
+&RCWA; is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. <P/>
+
+For a copy of the GNU General Public License, see 
+the file <F>GPL</F> in the <F>etc</F> directory of the &GAP;
+distribution or see <URL>https://www.gnu.org/licenses/gpl.html</URL>.
+<Alt Only="LaTeX">\vspace{-1cm}</Alt>
+        """,
+        Abstract := """<#Include SYSTEM "abstract.xml">""",
+        Acknowledgements := """
+I am grateful to John P. McDermott for the discovery that the group
+discussed in Section&nbsp;<Ref Label="sec:ThompsonsGroupV"/> is
+isomorphic to Thompson's Group V in July 2008, and to Laurent Bartholdi
+for his hint on how to construct wreath products of residue-class-wise
+affine groups with&nbsp;(&ZZ;,+) in April 2006.
+Further, I thank Bettina&nbsp;Eick for communicating this package
+and for her valuable suggestions on its manual in the time before its
+first public release in April 2005.
+Last but not least I thank the two anonymous referees for their
+constructive criticism and their helpful suggestions.
+        """,
+    ),
+),
 
 ) );
 

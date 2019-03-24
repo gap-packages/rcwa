@@ -5,7 +5,7 @@
 
 ## A GAP 4 Package
 
-### Version 4.6.3
+### Version 4.6.4
 
 Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
 

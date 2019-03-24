@@ -1,6 +1,6 @@
 name: RCWA
-version: 4.6.3
-date: 2018-11-27
+version: 4.6.4
+date: 2019-03-24
 description: |
     Residue-Class-Wise Affine Groups
 
@@ -16,8 +16,8 @@ GAP: ">=4.9.1"
 
 needed-pkgs:
     - name: "ResClasses"
-      version: ">=4.7.0"
-      url: "https://stefan-kohl.github.io/resclasses.html"
+      version: ">=4.7.2"
+      url: "https://gap-packages.github.io/resclasses/"
     - name: "GRAPE"
       version: ">=4.7"
       url: "https://gap-packages.github.io/grape"
@@ -40,7 +40,7 @@ packageinfo: https://gap-packages.github.io/rcwa/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/rcwa/releases/download/v4.6.3/rcwa-4.6.3.tar.gz
+      url: https://github.com/gap-packages/rcwa/releases/download/v4.6.4/rcwa-4.6.4.tar.gz
 
 abstract: |
     This package provides implementations of algorithms and methods for computation in certain infinite permutation groups. For an abstract, see <a href = "https://gap-packages.github.io/rcwa/">here</a>.
