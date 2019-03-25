@@ -1249,13 +1249,6 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>RCWABuildManual()</C>
-  </Mark>
-  <Item>
-    Consists of a call to a function from the &GAPDoc; package.
-  </Item>
-
-  <Mark>
     <C>RcwaGroupByPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
