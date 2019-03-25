@@ -8,37 +8,9 @@
 
 #############################################################################
 ##
-#S  Building the manual and testing the examples. ///////////////////////////
+#S  Testing the examples. ///////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  RCWABuildManual( ) . . . . . . . . . . . . . . . . . . . build the manual
-##
-##  This function builds the manual of the RCWA package in the file formats
-##  LaTeX, PDF, HTML and ASCII-text.
-##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
-##
-BindGlobal( "RCWABuildManual", 
-
-  function ( )
-
-    local  RCWADir, i;
-
-    RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
-    for i in [1..3] do
-      Print("\nCompiling RCWA manual: pass number ",i,"(3) . . .\n\n");
-      MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "main.xml",
-                     [ "../lib/rcwaaux.g", "../lib/perlist.gi",
-                       "../lib/rcwamap.gd", "../lib/rcwamap.gi",
-                       "../lib/rcwamono.gd", "../lib/rcwamono.gi",
-                       "../lib/rcwagrp.gd", "../lib/rcwagrp.gi" ],
-                       "RCWA", "../../../" );
-    od;
-    if   ValueOption("keepclutter") <> true
-    then RemoveTemporaryPackageFiles("rcwa"); fi;
-  end );
 
 #############################################################################
 ##
