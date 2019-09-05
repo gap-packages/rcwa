@@ -6474,8 +6474,8 @@ InstallMethod( Factorization,
 
 #############################################################################
 ##
-#S  Methods for `AbelianInvariants', `IsSolvable', `IsPerfect', `IsSimple' //
-#S  and `Exponent'. /////////////////////////////////////////////////////////
+#S  Methods for `AbelianInvariants', `IsSolvableGroup', `IsPerfectGroup',
+#S `IsSimpleGroup' and `Exponent'.
 ##
 #############################################################################
 
@@ -6502,50 +6502,22 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . default method for groups
+#M  IsSolvableGroup( <G> ) . . . . . . . . . . . . . . . . .  for rcwa groups
 ##
-InstallMethod( IsSolvable,
-               "default method for groups (RCWA)", true, [ IsGroup ],
-               SUM_FLAGS,
-
-  function ( G )
-    if   HasIsSolvableGroup(G)
-    then return IsSolvableGroup(G);
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsSolvable( <G> ) . . . . . . . . . . . . . . . . . . . . for rcwa groups
-##
-InstallMethod( IsSolvable,
+InstallMethod( IsSolvableGroup,
                "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
 
   function ( G )
     if IsAbelian(G) then return true; fi;
     if not IsTame(G) then TryNextMethod(); fi;
-    return IsSolvable(ActionOnRespectedPartition(G));
+    return IsSolvableGroup(ActionOnRespectedPartition(G));
   end );
 
 #############################################################################
 ##
-#M  IsPerfect( <G> ) . . . . . . . . . . . . . . .  default method for groups
+#M  IsPerfectGroup( <G> ) . . . . . . . . . . . . . . . . . . for rcwa groups
 ##
-InstallMethod( IsPerfect,
-               "default method for groups (RCWA)", true, [ IsGroup ],
-               SUM_FLAGS,
-
-  function ( G )
-    if   HasIsPerfectGroup(G)
-    then return IsPerfectGroup(G);
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsPerfect( <G> ) . . . . . . . . . . . . . . . . . . . .  for rcwa groups
-##
-InstallMethod( IsPerfect,
+InstallMethod( IsPerfectGroup,
                "for rcwa groups (RCWA)", ReturnTrue, [ IsRcwaGroup ], 0,
 
   function ( G )
@@ -6566,29 +6538,15 @@ InstallMethod( IsPerfect,
                                        Lcm(List(GeneratorsOfGroup(G),
                                                 Modulus))),64);
     quots := List(orbs,orb->Action(G,orb));
-    if not ForAll(quots,IsPerfect) then return false; fi;
+    if not ForAll(quots,IsPerfectGroup) then return false; fi;
 
-    if IsFinite(G) then return IsPerfect(Image(IsomorphismPermGroup(G))); fi;
+    if IsFinite(G) then return IsPerfectGroup(Image(IsomorphismPermGroup(G))); fi;
 
     if not IsTame(G) then TryNextMethod(); fi;
 
     H := ActionOnRespectedPartition(G);
     if   IsTransitive(H,[1..LargestMovedPoint(H)])
-    then return IsPerfect(H); else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsSimple( <G> ) . . . . . . . . . . . . . . . . default method for groups
-##
-InstallMethod( IsSimple,
-               "default method for groups (RCWA)", true, [ IsGroup ],
-               SUM_FLAGS,
-
-  function ( G )
-    if   HasIsSimpleGroup(G)
-    then return IsSimpleGroup(G);
-    else TryNextMethod(); fi;
+    then return IsPerfectGroup(H); else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -6612,7 +6570,7 @@ InstallMethod( IsSimpleGroup,
     fi;
     interval := Intersection(interval,Support(G));
 
-    if   ShortOrbits(G,interval,64) <> [] or not IsPerfect(G)
+    if   ShortOrbits(G,interval,64) <> [] or not IsPerfectGroup(G)
     then return false; fi;
 
     if IsTame(G) then

@@ -727,7 +727,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>IsPerfect(<A>G</A>)</C>
+    <C>IsPerfectGroup(<A>G</A>)</C>
   </Mark>
   <Item>
     If the group <A>G</A> is trivial, then return <C>true</C>.
@@ -776,7 +776,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>IsSolvable(<A>G</A>)</C>
+    <C>IsSolvableGroup(<A>G</A>)</C>
   </Mark>
   <Item>
     If <A>G</A> is abelian, then return <C>true</C>.
