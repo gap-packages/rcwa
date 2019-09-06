@@ -3850,12 +3850,15 @@ InstallMethod( StandardConjugate,
 ##
 InstallMethod( IsomorphismPermGroup,
                "for finite rcwa groups (RCWA)",
-               true, [ IsRcwaGroupOverZ and IsFinite ], 0,
+               true, [ IsRcwaGroupOverZ ], SUM_FLAGS,
 
   function ( G )
 
     local  P, P3, H, phi;
 
+    if not IsFinite(G) then
+      Error("<G> is infinite");
+    fi;
     P   := RespectedPartition(G);
     if   IsClassWiseOrderPreserving(G)
     then H := ActionOnRespectedPartition(G);
