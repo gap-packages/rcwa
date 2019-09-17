@@ -86,11 +86,11 @@ DeclareGlobalFunction( "RCWA" );
 #P  IsNaturalRCWA_Z_pi( <G> )  . . . . . . . . . . . . . . . . RCWA( Z_(pi) )
 #P  IsNaturalRCWA_GFqx( <G> )  . . . . . . . . . . . . . . . RCWA( GF(q)[x] )
 ##
-DeclareProperty( "IsNaturalRCWA", IsRcwaGroup );
-DeclareProperty( "IsNaturalRCWA_Z", IsRcwaGroup );
-DeclareProperty( "IsNaturalRCWA_ZxZ", IsRcwaGroup );
-DeclareProperty( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
-DeclareProperty( "IsNaturalRCWA_GFqx", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA_Z", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA_ZxZ", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA_Z_pi", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA_GFqx", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -145,12 +145,12 @@ DeclareGlobalFunction( "CT" );
 #P  IsNaturalCT_Z_pi( <G> )  . . . . . . . . . . . . . . . . . . CT( Z_(pi) )
 #P  IsNaturalCT_GFqx( <G> )  . . . . . . . . . . . . . . . . . CT( GF(q)[x] )
 ##
-DeclareProperty( "IsNaturalCT", IsRcwaGroup );
-DeclareProperty( "IsNaturalCT_Z", IsRcwaGroup );
-DeclareProperty( "IsNaturalCTP_Z", IsRcwaGroup );
-DeclareProperty( "IsNaturalCT_ZxZ", IsRcwaGroup );
-DeclareProperty( "IsNaturalCT_Z_pi", IsRcwaGroup );
-DeclareProperty( "IsNaturalCT_GFqx", IsRcwaGroup );
+DeclareCategory( "IsNaturalCT", IsRcwaGroup );
+DeclareCategory( "IsNaturalCT_Z", IsRcwaGroup );
+DeclareCategory( "IsNaturalCTP_Z", IsRcwaGroup );
+DeclareCategory( "IsNaturalCT_ZxZ", IsRcwaGroup );
+DeclareCategory( "IsNaturalCT_Z_pi", IsRcwaGroup );
+DeclareCategory( "IsNaturalCT_GFqx", IsRcwaGroup );
 
 #############################################################################
 ## 
@@ -173,7 +173,7 @@ DeclareAttribute( "DecompositionIntoPermutationalAndOrderPreservingElement",
 ##
 #P  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . RCWA( R ) or CT( R )
 ##
-DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
+DeclareCategory( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 
 #############################################################################
 ##
@@ -694,7 +694,7 @@ DeclareOperation( "RefinementSequence",
 ##
 #P  IsNaturalRcwaRepresentationOfGLOrSL
 ##
-DeclareProperty( "IsNaturalRcwaRepresentationOfGLOrSL",
+DeclareCategory( "IsNaturalRcwaRepresentationOfGLOrSL",
                   IsGroupHomomorphism and IsBijective );
 
 #############################################################################

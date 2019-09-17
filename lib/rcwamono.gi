@@ -227,7 +227,7 @@ InstallMethod( RcwaCons,
 
     SetIsTrivial( M, false );
     SetOne( M, id );
-    SetIsNaturalRcwa( M, true );
+    SetFilterObj( M, IsNaturalRcwa );
     SetIsWholeFamily( M, true );
     SetIsFinite( M, false );
     SetSize( M, infinity );
@@ -247,16 +247,6 @@ InstallMethod( RcwaCons,
 #F  Rcwa( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . Rcwa( R )
 ##
 InstallGlobalFunction( Rcwa, R -> RcwaCons( IsRcwaMonoid, R ) );
-
-#############################################################################
-##
-#M  IsNaturalRcwa( <M> ) . . . . . . . . . . . . . . . . . . . . . .  Rcwa(R)
-##
-##  The monoids Rcwa( <R> ) can only be obtained by the above constructor.
-##
-InstallMethod( IsNaturalRcwa,
-               "for rcwa monoids (RCWA)", true, [ IsRcwaMonoid ], 0,
-               ReturnFalse );
 
 #############################################################################
 ##

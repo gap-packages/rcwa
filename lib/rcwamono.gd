@@ -53,7 +53,7 @@ DeclareGlobalFunction( "Rcwa" );
 ##
 #P  IsNaturalRcwa( <M> ) . . . . . . . . . . . . . . . . . . . . .  Rcwa( R )
 ##
-DeclareProperty( "IsNaturalRcwa", IsRcwaMonoid );
+DeclareCategory( "IsNaturalRcwa", IsRcwaMonoid );
 
 #############################################################################
 ##
