@@ -142,8 +142,8 @@ InstallMethod( SparseRepresentation,
     then SetIsPerfectGroup(G_sparse,IsPerfectGroup(G)); fi;
     if   HasIsSimpleGroup(G)
     then SetIsSimpleGroup(G_sparse,IsSimpleGroup(G)); fi;
-    if   HasIsNaturalCTP_Z(G)
-    then SetIsNaturalCTP_Z(G_sparse,IsNaturalCTP_Z(G)); fi;
+    if   IsNaturalCTP_Z(G)
+    then SetFilterObj(G_sparse,IsNaturalCTP_Z); fi;
     return G_sparse;
   end );
 
@@ -175,8 +175,8 @@ InstallMethod( StandardRepresentation,
     then SetIsPerfectGroup(G_standard,IsPerfectGroup(G)); fi;
     if   HasIsSimpleGroup(G)
     then SetIsSimpleGroup(G_standard,IsSimpleGroup(G)); fi;
-    if   HasIsNaturalCTP_Z(G)
-    then SetIsNaturalCTP_Z(G_standard,IsNaturalCTP_Z(G)); fi;
+    if   IsNaturalCTP_Z(G)
+    then SetFilterObj(G_standard,IsNaturalCTP_Z); fi;
     return G_standard;
   end );
 
@@ -414,9 +414,9 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, IdentityRcwaMappingOfZ );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalRCWA( G, true );
-    SetIsNaturalRCWA_Z( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalRCWA );
+    SetFilterObj( G, IsNaturalRCWA_Z );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -456,9 +456,9 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalRCWA( G, true );
-    SetIsNaturalRCWA_ZxZ( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalRCWA );
+    SetFilterObj( G, IsNaturalRCWA_ZxZ );
     SetModulusOfRcwaMonoid( G, [ [ 0, 0 ], [ 0, 0 ] ] );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -498,9 +498,9 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalRCWA( G, true );
-    SetIsNaturalRCWA_Z_pi( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalRCWA );
+    SetFilterObj( G, IsNaturalRCWA_Z_pi );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -538,9 +538,9 @@ InstallMethod( RCWACons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalRCWA( G, true );
-    SetIsNaturalRCWA_GFqx( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalRCWA );
+    SetFilterObj( G, IsNaturalRCWA_GFqx );
     SetModulusOfRcwaMonoid( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -563,22 +563,6 @@ InstallMethod( RCWACons,
 #F  RCWA( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . RCWA( R )
 ##
 InstallGlobalFunction( RCWA, R -> RCWACons( IsRcwaGroup, R ) );
-
-#############################################################################
-##
-#M  IsNaturalRCWA( <G> ) . . . . . . . . . . . . . . . . . . . . . .  RCWA(R)
-#M  IsNaturalRCWA_Z( <G> ) . . . . . . . . . . . . . . . . . . . . .  RCWA(Z)
-#M  IsNaturalRCWA_Z_pi( <G> ) . . . . . . . . . . . . . . . . .  RCWA(Z_(pi))
-#M  IsNaturalRCWA_GFqx( <G> ) . . . . . . . . . . . . . . . .  RCWA(GF(q)[x])
-##
-##  The groups RCWA( <R> ) can only be obtained by the above constructors.
-##
-Perform( [ IsNaturalRCWA,
-           IsNaturalRCWA_Z, IsNaturalRCWA_Z_pi, IsNaturalRCWA_GFqx ],
-         function ( property )
-           InstallMethod( property, "for rcwa groups (RCWA)", true,
-                          [ IsRcwaGroup ], 0, ReturnFalse );
-         end );
 
 #############################################################################
 ##
@@ -608,9 +592,9 @@ InstallMethod( CTCons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, SparseRep( IdentityRcwaMappingOfZ ) );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalCT( G, true );
-    SetIsNaturalCT_Z( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalCT );
+    SetFilterObj( G, IsNaturalCT_Z );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -657,7 +641,7 @@ InstallMethod( CTCons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, SparseRep( IdentityRcwaMappingOfZ ) );
-    SetIsNaturalCTP_Z( G, true );
+    SetFilterObj( G, IsNaturalCTP_Z );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -714,9 +698,9 @@ InstallMethod( CTCons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, IdentityRcwaMappingOfZxZ );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalCT( G, true );
-    SetIsNaturalCT_ZxZ( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalCT );
+    SetFilterObj( G, IsNaturalCT_ZxZ );
     SetModulusOfRcwaMonoid( G, [ [ 0, 0 ], [ 0, 0 ] ] );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -759,9 +743,9 @@ InstallMethod( CTCons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalCT( G, true );
-    SetIsNaturalCT_Z_pi( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalCT );
+    SetFilterObj( G, IsNaturalCT_Z_pi );
     SetModulusOfRcwaMonoid( G, 0 );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -801,9 +785,9 @@ InstallMethod( CTCons,
                      rec( ) );
     SetIsTrivial( G, false );
     SetOne( G, id );
-    SetIsNaturalRCWA_OR_CT( G, true );
-    SetIsNaturalCT( G, true );
-    SetIsNaturalCT_GFqx( G, true );
+    SetFilterObj( G, IsNaturalRCWA_OR_CT );
+    SetFilterObj( G, IsNaturalCT );
+    SetFilterObj( G, IsNaturalCT_GFqx );
     SetModulusOfRcwaMonoid( G, Zero( R ) );
     SetMultiplier( G, infinity );
     SetDivisor( G, infinity );
@@ -841,33 +825,6 @@ InstallGlobalFunction( CT,
       return CTCons( IsRcwaGroup, P, R );
     else Error("usage: CT( [ <P>, ], <R> )"); fi;
   end );
-
-#############################################################################
-##
-#M  IsNaturalCT( <G> )  . . . . . . . . . . . . . . . . . . . . . . . . CT(R)
-#M  IsNaturalCT_Z( <G> )  . . . . . . . . . . . . . . . . . . . . . . . CT(Z)
-#M  IsNaturalCTP_Z( <G> ) . . . . . . . . . . . . . . . . . . . . . . CT_P(Z)
-#M  IsNaturalCT_ZxZ( <G> )  . . . . . . . . . . . . . . . . . . . . . CT(Z^2)
-#M  IsNaturalCT_Z_pi( <G> ) . . . . . . . . . . . . . . . . . . .  CT(Z_(pi))
-#M  IsNaturalCT_GFqx( <G> ) . . . . . . . . . . . . . . . . . .  CT(GF(q)[x])
-##
-##  The groups CT( <R> ) can only be obtained by the above constructors.
-##
-Perform( [ IsNaturalCT,
-           IsNaturalCT_Z, IsNaturalCTP_Z, IsNaturalCT_ZxZ,
-           IsNaturalCT_Z_pi, IsNaturalCT_GFqx ],
-         function ( property )
-           InstallMethod( property, "for rcwa groups (RCWA)", true,
-                          [ IsRcwaGroup ], 0, ReturnFalse );
-         end );
-
-#############################################################################
-##
-#M  IsNaturalRCWA_OR_CT( <G> ) . . . . . . . . . . . . . . . RCWA(R) or CT(R)
-##
-InstallMethod( IsNaturalRCWA_OR_CT,
-               "for rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               ReturnFalse );
 
 #############################################################################
 ##
@@ -2300,7 +2257,7 @@ InstallMethod( IsomorphismRcwaGroup,
     phi := GroupHomomorphismByImagesNC(gl,img);
 
     SetIsBijective(phi,true);
-    SetIsNaturalRcwaRepresentationOfGLOrSL(phi,true);
+    SetFilterObj(phi,IsNaturalRcwaRepresentationOfGLOrSL);
 
     return phi;
   end );
@@ -2324,7 +2281,7 @@ InstallMethod( IsomorphismRcwaGroup,
     phi := GroupHomomorphismByImagesNC(sl,img);
 
     SetIsBijective(phi,true);
-    SetIsNaturalRcwaRepresentationOfGLOrSL(phi,true);
+    SetFilterObj(phi,IsNaturalRcwaRepresentationOfGLOrSL);
 
     return phi;
   end );
@@ -2787,7 +2744,7 @@ InstallMethod( WreathProduct,
 ##
 InstallMethod( Embedding,
                "for a wreath product and 1 or 2 (RCWA)",
-               ReturnTrue, [ HasWreathProductInfo, IsPosInt ], 0,
+               ReturnTrue, [ IsGroup and HasWreathProductInfo, IsPosInt ], 0,
 
   function ( W, i )
     local info;
