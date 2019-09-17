@@ -931,7 +931,7 @@ InstallMethod( IsSubset,
 ## 
 InstallMethod( IsSubset,
                "for CT(Z) and an rcwa group over Z (RCWA)", ReturnTrue,
-               [ IsNaturalCT_Z, IsRcwaGroupOverZ ], SUM_FLAGS,
+               [ IsNaturalCT_Z, IsRcwaGroupOverZ and HasGeneratorsOfGroup ], SUM_FLAGS,
 
   function ( CT_Z, G )
     if not IsClassWiseOrderPreserving(G)
@@ -947,7 +947,7 @@ InstallMethod( IsSubset,
 ## 
 InstallMethod( IsSubset,
                "for CT(R) and an rcwa group (RCWA)", ReturnTrue,
-               [ IsNaturalCT, IsRcwaGroup ], 100,
+               [ IsNaturalCT, IsRcwaGroup and HasGeneratorsOfGroup ], 100,
 
   function ( CT_R, G )
     if FamilyObj(One(G)) <> FamilyObj(One(CT_R)) then return false; fi;
