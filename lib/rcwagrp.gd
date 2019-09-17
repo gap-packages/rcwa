@@ -191,10 +191,13 @@ DeclareProperty( "IsNaturalRCWA_OR_CT", IsRcwaGroup );
 ##  Returns a faithful rcwa representation of the group <G> over
 ##  the ring <R>, respectively over Z.
 ##
-DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsRing ] );
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup, IsResidueClass ] );
 DeclareOperation( "IsomorphismRcwaGroup", [ IsGroup ] );
 DeclareAttribute( "IsomorphismRcwaGroupOverZ", IsGroup );
+
+# every ring is a residue class in itself; several InstallMethod calls for
+# IsomorphismRcwaGroup rely on this implication
+InstallTrueMethod( IsResidueClass, IsRing );
 
 #############################################################################
 ##
