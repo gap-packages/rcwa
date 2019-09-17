@@ -1,8 +1,8 @@
 language: c
 env:
   global:
-    - GAP_PKGS_TO_BUILD="io profiling grape"
     - GAP_PKGS_TO_CLONE="resclasses"
+    - GAP_PKGS_TO_BUILD="io profiling grape"
 
 addons:
   apt_packages:
@@ -13,8 +13,9 @@ addons:
 matrix:
   include:
     - env: GAPBRANCH=master
-    - env: GAPBRANCH=stable-4.9
+    - env: GAPBRANCH=stable-4.11
     - env: GAPBRANCH=stable-4.10
+    - env: GAPBRANCH=stable-4.9
 
 branches:
   only:
