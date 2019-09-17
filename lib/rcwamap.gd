@@ -109,7 +109,7 @@ DeclareGlobalFunction( "RCWAInfo" );
 ##
 ##  The category of all rcwa mappings / -monoids / -groups.
 ##
-DeclareCategory( "IsRcwaMapping", IsRingElement );
+DeclareCategory( "IsRcwaMapping", IsMapping and IsRingElement );
 DeclareSynonym( "IsRcwaMonoid",
                  CategoryCollections(IsRcwaMapping) and IsMonoid );
 DeclareSynonym( "IsRcwaGroup",
@@ -128,11 +128,12 @@ DeclareSynonym( "IsRcwaGroup",
 ##  finite field, respectively. The category `IsRcwaMappingOfZOrZ_pi' is the
 ##  union of the categories `IsRcwaMappingOfZ' and `IsRcwaMappingOfZ_pi'.
 ##
-DeclareCategory( "IsRcwaMappingOfZ", IsRingElement );
-DeclareCategory( "IsRcwaMappingOfZxZ", IsRingElement );
-DeclareCategory( "IsRcwaMappingOfZ_pi", IsRingElement );
-DeclareCategory( "IsRcwaMappingOfGFqx", IsRingElement );
-DeclareCategory( "IsRcwaMappingOfZOrZ_pi", IsRingElement );
+DeclareCategory( "IsRcwaMappingOfZOrZ_pi", IsRcwaMapping );
+DeclareCategory( "IsRcwaMappingOfZ", IsRcwaMappingOfZOrZ_pi );
+DeclareCategory( "IsRcwaMappingOfZxZ", IsRcwaMapping );
+DeclareCategory( "IsRcwaMappingOfZ_pi", IsRcwaMappingOfZOrZ_pi );
+DeclareCategory( "IsRcwaMappingOfGFqx", IsRcwaMapping );
+
 
 #############################################################################
 ##
@@ -840,10 +841,11 @@ DeclareAttribute( "MovedPoints", IsRcwaMonoid );
 #############################################################################
 ##
 #O  \^( <S>, <f> )  . . . . . . . . . image of <S> under the rcwa mapping <f>
-#O  PreImagesSet( <f>, <S> )  . .  preimage of <S> under the rcwa mapping <f>
 ##
 DeclareOperation( "\^", [ IsListOrCollection, IsRcwaMapping ] );
-DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
+if not CompareVersionNumbers(GAPInfo.BuildVersion,"4.10") then
+  DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
+fi;
 
 #############################################################################
 ##
