@@ -23,19 +23,6 @@ InstallGlobalFunction( RCWAInfo,
 
 #############################################################################
 ##
-#S  Implications between the categories of rcwa mappings. ///////////////////
-##
-#############################################################################
-
-InstallTrueMethod( IsMapping,     IsRcwaMapping );
-InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfZOrZ_pi );
-InstallTrueMethod( IsRcwaMappingOfZOrZ_pi, IsRcwaMappingOfZ );
-InstallTrueMethod( IsRcwaMappingOfZOrZ_pi, IsRcwaMappingOfZ_pi );
-InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfZxZ );
-InstallTrueMethod( IsRcwaMapping, IsRcwaMappingOfGFqx );
-
-#############################################################################
-##
 #S  Shorthands for commonly used filters. ///////////////////////////////////
 ##
 #############################################################################
