@@ -2313,14 +2313,14 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
   [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) ], 
   [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
       120(144) ] ]
-gap> ResidueClassCyclesThroughClass(g,ResidueClass(1,4),2^2*12);
+gap> ResidueClassCyclesThroughResidueClass(g,ResidueClass(1,4),2^2*12);
 [ [ 5(24), 7(36), 6(36), 4(24) ], [ 21(24), 31(36), 30(36), 20(24) ], 
   [ 9(48), 13(72), 19(108), 18(108), 12(72), 8(48) ], 
   [ 41(48), 61(72), 91(108), 90(108), 60(72), 40(48) ] ]
-gap> Collected(List(ResidueClassCyclesThroughClass(g,
+gap> Collected(List(ResidueClassCyclesThroughResidueClass(g,
 >                   ResidueClass(1,4),2^6*12),Length));
 [ [ 4, 2 ], [ 6, 4 ], [ 8, 6 ], [ 10, 8 ], [ 12, 4 ], [ 14, 2 ] ]
-gap> List(ResidueClassCyclesThroughClass(g,ResidueClass(1,4),2^4*12),
+gap> List(ResidueClassCyclesThroughResidueClass(g,ResidueClass(1,4),2^4*12),
 >         cyc->cyc[1]);
 [ 5(24), 21(24), 9(48), 41(48), 13(72), 61(72), 17(96), 81(96), 25(144), 
   121(144), 33(192), 161(192) ]

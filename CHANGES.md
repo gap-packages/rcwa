@@ -2,7 +2,7 @@
 
 ## Changes between RCWA 4.6.4 and RCWA 4.7.0 (X Y, 2021):
 
- - An operation `ResidueClassCyclesThroughClass' has been added,
+ - An operation `ResidueClassCyclesThroughResidueClass' has been added,
    together with a method for rcwa permutations of Z.
 
 ## Changes between RCWA 4.6.3 and RCWA 4.6.4 (March 24, 2019):

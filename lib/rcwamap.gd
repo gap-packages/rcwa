@@ -917,7 +917,7 @@ DeclareOperation( "ShortResidueClassCycles", [ IsRcwaMapping, IsRingElement,
 
 #############################################################################
 ##
-#O  ResidueClassCyclesThroughClass( <g>, <cl>, <modulusbound> )
+#O  ResidueClassCyclesThroughResidueClass( <g>, <cl>, <modulusbound> )
 ##
 ##  Returns a list of all cycles of residue classes of the rcwa permutation
 ##  <g> which contain a residue class r(m) which is a subset of the residue
@@ -929,7 +929,7 @@ DeclareOperation( "ShortResidueClassCycles", [ IsRcwaMapping, IsRingElement,
 ##  of an rcwa permutation g if the restrictions of g to all contained
 ##  residue classes are affine.
 ##
-DeclareOperation( "ResidueClassCyclesThroughClass",
+DeclareOperation( "ResidueClassCyclesThroughResidueClass",
                   [ IsRcwaMapping, IsResidueClass, IsRingElement ] );
 
 #############################################################################

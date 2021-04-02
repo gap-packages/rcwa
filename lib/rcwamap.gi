@@ -9080,9 +9080,9 @@ InstallMethod( ShortResidueClassCycles,
 
 #############################################################################
 ##
-#M  ResidueClassCyclesThroughClass( <g>, <cl>, <modulusbound> )
+#M  ResidueClassCyclesThroughResidueClass( <g>, <cl>, <modulusbound> )
 ##
-InstallMethod( ResidueClassCyclesThroughClass,
+InstallMethod( ResidueClassCyclesThroughResidueClass,
                Concatenation("for an rcwa permutation of Z, a residue class",
                              " and a positive integer (RCWA)"),
                ReturnTrue, [ IsRcwaMappingOfZ, IsResidueClass, IsPosInt ], 0,
