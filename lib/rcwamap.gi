@@ -9080,6 +9080,58 @@ InstallMethod( ShortResidueClassCycles,
 
 #############################################################################
 ##
+#M  ResidueClassCyclesThroughClass( <g>, <cl>, <modulusbound> )
+##
+InstallMethod( ResidueClassCyclesThroughClass,
+               Concatenation("for an rcwa permutation of Z, a residue class",
+                             " and a positive integer (RCWA)"),
+               ReturnTrue, [ IsRcwaMappingOfZ, IsResidueClass, IsPosInt ], 0,
+
+  function ( g, cl, maxmod )
+
+    local  Try, cycs, cyc, cls;
+
+    Try := function ( cl0 )
+
+      local  cyc, cl, cls;
+
+      cl  := cl0;
+      cyc := [];
+      repeat
+        Add(cyc,cl);
+        cl := cl^g;
+      until cl = cl0 or not IsResidueClass(cl);
+      if cl = cl0 then
+        Add(cycs,cyc);
+      else
+        cls := SplittedClass(cl0,Length(AsUnionOfFewClasses(cl)));
+        if Modulus(cls[1]) <= maxmod then
+          Perform(cls,Try);
+        fi;
+      fi;
+    end; 
+
+    g  := SparseRep(g);
+    cl := SparseRep(cl);
+
+    cls := Union(List(LargestSourcesOfAffineMappings(g),
+                      AsUnionOfFewClasses));
+    if not IsBijective(g)
+       or Number(cls,cl2->Intersection(cl,cl2)<>[]) > 1
+    then
+      return fail;
+    fi;
+
+    cycs := [];
+    Try( cl );
+    SortParallel(List(cycs,cyc->[Length(cyc),
+                                 Modulus(cyc[1]),Residue(cyc[1])]),cycs);
+
+    return cycs;
+  end );
+
+#############################################################################
+##
 #M  FixedResidueClasses( <g>, <maxmod> )
 ##
 InstallMethod( FixedResidueClasses,

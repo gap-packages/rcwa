@@ -1,5 +1,10 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.6.4 and RCWA 4.7.0 (X Y, 2021):
+
+ - An operation `ResidueClassCyclesThroughClass' has been added,
+   together with a method for rcwa permutations of Z.
+
 ## Changes between RCWA 4.6.3 and RCWA 4.6.4 (March 24, 2019):
 
  - Clarified that this package is licensed under GPL 2 or later.

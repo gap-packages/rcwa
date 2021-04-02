@@ -1301,6 +1301,8 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
         Label="for rcwa group and bounds on modulus and length"/>
   <Oper Name="ShortResidueClassCycles" Arg="g, modulusbound, maxlng"
         Label="for rcwa permutation and bounds on modulus and length"/>
+  <Oper Name="ResidueClassCyclesThroughClass" Arg="g, cl, modulusbound"
+        Label="for rcwa permutation, residue class and bound on modulus"/>
   <Returns>
     in the first form a list of all orbits of residue classes under the
     action of the rcwa group <A>G</A> which contain a residue class
@@ -1310,6 +1312,11 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     rcwa permutation&nbsp;<A>g</A> which contain a residue class
     <M>r(m)</M> such that <M>m</M> divides <A>modulusbound</A> and
     which are not longer than <A>maxlng</A>.
+    In the third form a list of all cycles of residue classes of the
+    rcwa permutation&nbsp;<A>g</A> which contain a residue class
+    <M>r(m)</M> which is a subset of the residue class <A>cl</A>
+    on which <A>g</A> is affine and whose modulus <M>m</M> divides
+    <A>modulusbound</A>.
   </Returns>
   <Description>
     We are only talking about a <E>cycle</E> of residue classes of
@@ -1320,10 +1327,10 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     restrictions of all elements of <M>G</M> to all residue classes
     in the orbit are affine. <P/>
 
-    The returned lists may contain additional cycles, resp., orbits,
-    which do not contain a residue class <M>r(m)</M> such that <M>m</M>
-    divides <A>modulusbound</A>, but which happen to be found without
-    additional efforts.
+    In the first two cases, the returned lists may contain additional
+    cycles, resp., orbits, which do not contain a residue class <M>r(m)</M>
+    such that <M>m</M> divides <A>modulusbound</A>, but which happen to be
+    found without additional efforts.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
@@ -1337,6 +1344,19 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
      ], 
   [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
       120(144) ] ]
+gap> ResidueClassCyclesThroughClass(g,ResidueClass(1,4),2^2*12);
+[ [ 5(24), 7(36), 6(36), 4(24) ], [ 21(24), 31(36), 30(36), 20(24) ], 
+  [ 9(48), 13(72), 19(108), 18(108), 12(72), 8(48) ], 
+  [ 41(48), 61(72), 91(108), 90(108), 60(72), 40(48) ] ]
+gap> Collected(List(ResidueClassCyclesThroughClass(g,
+>                   ResidueClass(1,4),2^6*12),Length));
+[ [ 4, 2 ], [ 6, 4 ], [ 8, 6 ], [ 10, 8 ], [ 12, 4 ], [ 14, 2 ] ]
+gap> List(ResidueClassCyclesThroughClass(g,ResidueClass(1,4),2^4*12),
+>         cyc->cyc[1]);
+[ 5(24), 21(24), 9(48), 41(48), 13(72), 61(72), 17(96), 81(96), 25(144), 
+  121(144), 33(192), 161(192) ]
+gap> Display(Difference(ResidueClass(1,4),Union(last)));
+1(36) U 49(144) U 97(144) U 65(192) U 129(192)
 gap> G := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));
 <(0(6),5(6)),(1(4),4(6)),(2(4),3(6))>
 gap> ShortResidueClassOrbits(G,48,10);
