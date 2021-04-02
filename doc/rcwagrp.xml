@@ -1327,10 +1327,10 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     restrictions of all elements of <M>G</M> to all residue classes
     in the orbit are affine. <P/>
 
-    In the first two cases, the returned lists may contain additional
-    cycles, resp., orbits, which do not contain a residue class <M>r(m)</M>
-    such that <M>m</M> divides <A>modulusbound</A>, but which happen to be
-    found without additional efforts.
+    The returned lists may contain additional cycles, resp., orbits,
+    which do not contain a residue class <M>r(m)</M> such that <M>m</M>
+    divides <A>modulusbound</A>, but which happen to be found without
+    additional efforts.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
