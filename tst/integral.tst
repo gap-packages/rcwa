@@ -1262,6 +1262,19 @@ gap> cycs := ShortCycles(collatz,[-100..100],100);
     , [ -44, -59, -79, -105, -70, -93, -62, -83, -111, -74, -99, -66 ] ]
 gap> cycs = ShortCycles(collatz,[-100..100],100,1000);
 true
+gap> aa := ClassTransposition(1,2,4,6);
+( 1(2), 4(6) )
+gap> bb := ClassTransposition(1,3,2,6);
+( 1(3), 2(6) )
+gap> cc := ClassTransposition(2,3,4,6);
+( 2(3), 4(6) )
+gap> gg := (aa*bb)^3*cc*bb*aa*cc;
+<rcwa permutation of Z with modulus 144>
+gap> shortcycs2 := ShortCycles(gg,[7,31..7+48],50,10^50);
+[ [ 7, 112, 1792, 298, 224, 148, 2368, 394, 296, 196, 74, 9, 14, 17, 136, 22, 
+      352, 58, 928, 154, 116, 76, 1216, 202, 3232, 538, 404, 268, 101, 808, 
+      67, 1072, 178, 134, 152, 100, 38, 44, 28, 11, 88 ], 
+  [ 31, 496, 82, 62, 71, 568, 94, 1504, 250, 188, 124, 47, 376 ] ]
 gap> DeterminantMat(TransitionMatrix(T,13));
 -1/256
 gap> TransitionMatrix(T^3,11) = TransitionMatrix(T,11)^3;

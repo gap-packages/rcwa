@@ -8864,7 +8864,7 @@ InstallMethod( ShortCycles,
         Add(cyc,m); m := m^sigma; lng := lng + 1;
         if m >= min and m <= max then
           j := PositionSorted(S,m);
-          if j <> fail then done[j] := true; fi;
+          if j <> fail and S[j] = m then done[j] := true; fi;
         fi;
       until m = n or lng >= maxlng or AbsInt(m) > maxn;
       if m = n then Add(cycs,cyc); fi;
