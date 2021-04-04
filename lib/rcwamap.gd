@@ -934,6 +934,23 @@ DeclareOperation( "ResidueClassCyclesThroughResidueClass",
 
 #############################################################################
 ##
+#O  DrawResidueClassCyclesThroughResidueClassPicture
+#O    ( <g>, <cl>, <modulusbound>, <edge>, <filename> )
+##
+##  Draws a picture indicating by different colors the lengths of cycles of
+##  residue classes of the rcwa permutation <g> which contain a residue class
+##  r(m) which is a subset of the residue class <cl> and whose modulus m
+##  divides <modulusbound>.
+##
+##  The picture is written in svg format to <filename>.
+##  If no full path is given, the path defaults to "/user/GAP/pictures/".
+##
+DeclareOperation( "DrawResidueClassCyclesThroughResidueClassPicture",
+                  [ IsRcwaMapping, IsResidueClass, IsRingElement,
+                    IsPosInt, IsString ] );
+
+#############################################################################
+##
 #O  CycleRepresentativesAndLengths( <g>, <S> )
 ##
 ##  Returns a list of pairs (cycle representative, length of cycle) for all

@@ -9132,6 +9132,108 @@ InstallMethod( ResidueClassCyclesThroughResidueClass,
 
 #############################################################################
 ##
+#M  DrawResidueClassCyclesThroughResidueClassPicture
+#M    ( <g>, <cl>, <modulusbound>, <edge>, <filename> )
+##
+InstallMethod( DrawResidueClassCyclesThroughResidueClassPicture,
+               Concatenation("for an rcwa permutation of Z, a residue class",
+                             ", two positive integers and a string (RCWA)"),
+               ReturnTrue, [ IsRcwaMappingOfZ, IsResidueClass, IsPosInt,
+                             IsPosInt, IsString ], 0,
+
+  function ( g, cl, modulusbound, edge, filename )
+
+    local  classcycles, repslngs, lngset, lngcolor, color, splitfactor,
+           img, rect, w, h, x, y, r, m, lng, pos, i, j;
+
+    img := Concatenation(
+             """<?xml version="1.0" encoding="UTF-8" standalone="no"?> """,
+             """<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" """,
+             """ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> """,
+             """<svg xmlns="http://www.w3.org/2000/svg" """,
+             """xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" """,
+             """width="edgewidth" height="edgeheight">""",
+             """<desc>Residue class partition</desc>""");
+    rect := Concatenation("  <rect fill=\"#000000\" width=\"","edgewidth",
+                          "\" height=\"","edgeheight",
+                          "\" transform=\"translate(",
+                          String(0),",",String(0),")\"/>\n");
+    img := Concatenation(img,rect);
+
+    color := ["#ffff44","#0000ff","#00ff00","#ff0000","#ffff00","#ff00ff",
+              "#00ffff","#8800ff","#00ff88","#ffaabb","#66ff00","#7788ff",
+              "#ee44ff","#bb88ff","#ff0044","#fff070","#ffff66","#44ff99",
+              "#aabbff","#00aaff","#77ff22","#ff66aa","#eeff88","#33ff66",
+              "#aa55bb","#5500ff","#66ff77","#ff7777","#77ff77","#6644ff"];
+
+    classcycles := ResidueClassCyclesThroughResidueClass(g,cl,modulusbound);
+    r           := Residue(cl);
+    m           := Modulus(cl);
+    repslngs    := List(classcycles,cyc->[(cyc[1]-r)/m,Length(cyc)]);
+    lngset      := Set(repslngs,l->l[2]);
+
+    splitfactor := Set(QuotientsList(Set(repslngs,l->Modulus(l[1]))));
+    if Length(splitfactor) = 1 then
+      splitfactor := splitfactor[1];
+    else
+      Error("sorry, this case is presently not supported");
+      return fail;
+    fi;
+
+    img := Concatenation(ReplacedString(img,"edgeheight",String(edge)),"\n");
+    img := ReplacedString(img,"edgewidth",String(splitfactor^0.5 * edge));
+
+    lngcolor := [];
+    pos      := 1;
+    for lng in lngset do
+      if pos <= Length(color) then
+        lngcolor[lng] := color[pos];
+      else
+        lngcolor[lng] := Concatenation("#",
+                           HexStringInt(2^24+Random([0..2^24-1])){[2..7]});
+      fi;
+      pos := pos + 1;
+    od;
+
+    for i in [1..Length(repslngs)] do
+      r   := Residue(repslngs[i][1]);
+      m   := Modulus(repslngs[i][1]);
+      lng := repslngs[i][2];
+      w   := splitfactor^0.5 * edge;
+      h   := edge;
+      x   := 0;
+      y   := 0;
+      for j in [1..LogInt(m,splitfactor)] do
+        if j mod 2 = 0 then
+          h := h/splitfactor;
+          y := y + h * (r mod splitfactor);
+        else
+          w := w/3;
+          x := x + w * (r mod splitfactor);
+        fi;
+        r := Int(r/splitfactor);
+      od;
+      rect := Concatenation("  <rect fill=\"",lngcolor[lng],
+                            "\" width=\"",String(w),
+                            "\" height=\"",String(h),
+                            "\" transform=\"translate(",
+                            String(x),",",String(y),")\"/>\n");
+      img := Concatenation(img,rect);
+    od;
+    img := Concatenation(img,"</svg>\n\n");
+
+    if PositionSublist(filename,".svg") = fail then
+      Append(filename,".svg");
+    fi;
+    if Positions(filename,'/') = [] then
+      FileString(Concatenation("/user/GAP/pictures/",filename),img);
+    else
+      FileString(filename,img);
+    fi;
+  end );
+
+#############################################################################
+##
 #M  FixedResidueClasses( <g>, <maxmod> )
 ##
 InstallMethod( FixedResidueClasses,
