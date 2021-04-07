@@ -877,8 +877,8 @@ gap> orb := Orbit(G,1);
 [ -15, -12, -7, -6, -5, -4, -3, -2, -1, 1 ]
 gap> MovedPoints(G);
 Z \ 0(9)
-gap> OrbitsModulo(G,9);
-[ [ 0 ], [ 1, 2, 3, 4, 5, 6, 7, 8 ] ]
+gap> OrbitsModulo(G,9) = [ [ 0 ], [ 1 .. 8 ] ];
+true
 gap> H := Action(G,orb);;
 gap> H = Group([(1,2,3,4,6,8),(3,5,7,6,9,10)]);
 true
@@ -2272,10 +2272,10 @@ Rcwa permutation of Z with modulus 3
 
 gap> S4 := Image(IsomorphismRcwaGroup(SymmetricGroup(4)));
 <rcwa group over Z with 2 generators, of order 24>
-gap> OrbitsModulo(S4,7);
-[ [ 0, 1, 2, 3, 4, 5, 6 ] ]
-gap> OrbitsModulo(S4,12);
-[ [ 0, 1, 2, 3 ], [ 4, 5, 6, 7 ], [ 8, 9, 10, 11 ] ]
+gap> OrbitsModulo(S4,7) = [ [ 0 .. 6 ] ];
+true
+gap> OrbitsModulo(S4,12) = [ [ 0 .. 3 ], [ 4 .. 7 ], [ 8 .. 11 ] ];
+true
 gap> StructureDescription(IntegralConjugate(S4^ClassTransposition(1,2,4,6)));
 "S4"
 gap> NiceMonomorphism(S4);
