@@ -8983,7 +8983,9 @@ InstallGlobalFunction( ComputeCycleLength,
         Print("n = ",n0,": after ",steps," steps, the iterate has ",
               LogInt(AbsInt(n),2)+1," binary digits.\n");
       fi;
-      if IsPosInt(abortat) and steps >= abortat then
+      if IsPosInt(abortat)
+        and (steps >= abortat or (abortat >= 10^20 and n > abortat))
+      then
         aborted := true; break;
       fi; 
     until n = n0;
