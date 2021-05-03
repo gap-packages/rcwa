@@ -6670,7 +6670,13 @@ InstallMethod( NormalizedRelator,
     local  c, old, twice, words, min, max, start, i, j;
 
     c := ShallowCopy(ExtRepOfObj(w));
-    if Length(c) = 2 then return w; fi;
+    if Length(c) = 2 then
+      if c[2] mod gensords[c[1]] = 0 then
+        return ObjByExtRep(FamilyObj(w),[c[1],gensords[c[1]]]);
+      else
+        return ObjByExtRep(FamilyObj(w),[c[1],c[2] mod gensords[c[1]]]);
+      fi;
+    fi;
     repeat
       old := ShallowCopy(c);
       for i in [2,4..Length(c)] do
