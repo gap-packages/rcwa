@@ -5364,20 +5364,20 @@ InstallOtherMethod( OrbitOp,
 
   function ( G, pnt, gens, acts, act )
 
-    local  orbit, ball, oldball, orbs;
-
-    orbs := ShortOrbits(G,[pnt],100);
-    if orbs <> [] then return orbs[1]; fi;
+    local  orbit, ball, oldball, orbs, giveup;
 
     if IsTame(G) and act = OnPoints then TryNextMethod(); fi;
 
-    gens := Union(gens,List(gens,Inverse));
-    ball := [pnt];
+    giveup := ValueOption("giveup");
+    if not IsPosInt(giveup) then giveup := 100; fi;
+
+    gens  := Union(gens,List(gens,Inverse));
+    ball  := [pnt];
     repeat    
       oldball := ShallowCopy(ball);
       ball    := Union(oldball,
                        Union(List(gens,gen->List(oldball,pt->act(pt,gen)))));
-    until ball = oldball or Length(ball) > 1000;
+    until ball = oldball or Length(ball) > giveup;
     if ball = oldball then return Set(ball); fi;
     
     orbit := Objectify( NewType( CollectionsFamily( FamilyObj( pnt ) ),
