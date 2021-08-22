@@ -5364,12 +5364,12 @@ InstallOtherMethod( OrbitOp,
 
   function ( G, pnt, gens, acts, act )
 
-    local  orbit, ball, oldball, orbs, giveup;
+    local  orbit, ball, oldball, giveup;
 
     if IsTame(G) and act = OnPoints then TryNextMethod(); fi;
 
     giveup := ValueOption("giveup");
-    if not IsPosInt(giveup) then giveup := 100; fi;
+    if not IsPosInt(giveup) then giveup := 1000; fi;
 
     gens  := Union(gens,List(gens,Inverse));
     ball  := [pnt];
