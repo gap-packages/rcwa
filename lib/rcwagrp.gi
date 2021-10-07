@@ -3062,6 +3062,86 @@ InstallMethod( OrbitsModulo,
 
 #############################################################################
 ##
+#M  OrbitsModulo( <G>, <m>, <d> ) . . . . . . . . . .  for rcwa groups over Z
+##
+InstallMethod( OrbitsModulo,
+               "for rcwa groups over Z (RCWA)", true,
+               [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, m, d )
+
+    local  result, gens, orbit, spheres, S_last, S, S_next, remaining,
+           Neighbors;
+
+    Neighbors := function ( p, g )
+
+      local  me, pe, e, imgs;
+
+      e    := Mod(g)*Gcd(m,Div(g));
+      me   := m * e;
+      pe   := List(Tuples([0..e-1],d),t->m*t+p);
+      imgs := Set(pe,t->List(t,n->(n^g) mod m));
+      return imgs;
+    end;
+
+    gens := Set(GeneratorsAndInverses(G));
+    remaining := Tuples([0..m-1],d);
+    result := [];
+    repeat
+      S_last  := [];
+      S       := [remaining[1]];
+      spheres := [];
+      repeat
+        Add(spheres,S);
+        S_next := Union(List(S,p->Union(List(gens,g->Neighbors(p,g)))));
+        S_next := Difference(S_next,S_last);
+        S_next := Difference(S_next,S);
+        S_last := ShallowCopy(S);
+        S := ShallowCopy(S_next);
+      until S = [];
+      orbit := Union(spheres);
+      Add(result,orbit);
+      remaining := Difference(remaining,orbit);
+    until remaining = [];
+    return result;
+  end );
+
+#############################################################################
+##
+#M  OrbitsModulo( <G>, <m>, <d>, <trials> ) . . . . .  for rcwa groups over Z
+##
+##  Stochastic method. -- Accuracy can be increased by increasing <trials>.
+##  Returns never less orbits than there actually are.
+##
+InstallOtherMethod( OrbitsModulo,
+                    "for rcwa groups over Z (RCWA)", true,
+                    [ IsRcwaGroupOverZ, IsPosInt, IsPosInt, IsPosInt ], 0,
+
+  function ( G, m, d, trials )
+
+    local  gens, factor, trial, points, edges, gamma, orbits, g, p, pe, q;
+
+    gens   := Set(GeneratorsAndInverses(G));
+    factor := Lcm(List(gens,Mod)) * Lcm(List(gens,Div));
+    points := Tuples([0..m-1],d);
+    edges  := [];
+
+    for trial in [1..trials] do
+      g  := Random(gens);
+      p  := Random(points);
+      pe := List(p,c->c+Random([0..factor-1])*m);
+      q  := List(pe,c->c^g mod m);
+      Add(edges,[PositionSorted(points,p),PositionSorted(points,q)]);
+    od;
+    edges := Set(Filtered(List(edges,Set),e->Length(e)=2));
+    gamma := Graph(Group(()), [1..Length(points)], OnPoints,
+                   function(i,j) return Set([i,j]) in edges; end, true);
+    orbits := List(ConnectedComponents(gamma),comp->points{comp});
+    return orbits;
+  end );
+
+#############################################################################
+##
 #M  ProjectionsToInvariantUnionsOfResidueClasses( <G>, <m> )  for rcwa groups
 ##
 InstallMethod( ProjectionsToInvariantUnionsOfResidueClasses,
