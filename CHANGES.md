@@ -6,7 +6,8 @@
    together with a method for rcwa permutations of Z.
  - An operation `DrawResidueClassCyclesThroughResidueClassPicture'
    has been added, together with a method for rcwa permutations of Z.
-   (Not documented so far.). 
+   (Not documented so far.).
+ - Methods for `OrbitsModulo' on d-tuples of integers have been added.
 
 ## Changes between RCWA 4.6.3 and RCWA 4.6.4 (March 24, 2019):
 
