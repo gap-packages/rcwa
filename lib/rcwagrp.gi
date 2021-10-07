@@ -3133,10 +3133,12 @@ InstallOtherMethod( OrbitsModulo,
       q  := List(pe,c->c^g mod m);
       Add(edges,[PositionSorted(points,p),PositionSorted(points,q)]);
     od;
+
     edges := Set(Filtered(List(edges,Set),e->Length(e)=2));
     gamma := Graph(Group(()), [1..Length(points)], OnPoints,
                    function(i,j) return Set([i,j]) in edges; end, true);
     orbits := List(ConnectedComponents(gamma),comp->points{comp});
+
     return orbits;
   end );
 
