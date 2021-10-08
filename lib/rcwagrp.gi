@@ -3103,6 +3103,7 @@ InstallMethod( OrbitsModulo,
       Add(result,orbit);
       remaining := Difference(remaining,orbit);
     until remaining = [];
+
     return result;
   end );
 
@@ -3119,7 +3120,8 @@ InstallOtherMethod( OrbitsModulo,
 
   function ( G, m, d, trials )
 
-    local  gens, factor, trial, points, edges, gamma, orbits, g, p, pe, q;
+    local  gens, factor, trial, points, edges, edge, neighbors,
+           orbits, orbit, sphere, lastsphere, nextsphere, rem, g, p, pe, q;
 
     gens   := Set(GeneratorsAndInverses(G));
     factor := Lcm(List(gens,Mod)) * Lcm(List(gens,Div));
@@ -3135,9 +3137,29 @@ InstallOtherMethod( OrbitsModulo,
     od;
 
     edges := Set(Filtered(List(edges,Set),e->Length(e)=2));
-    gamma := Graph(Group(()), [1..Length(points)], OnPoints,
-                   function(i,j) return Set([i,j]) in edges; end, true);
-    orbits := List(ConnectedComponents(gamma),comp->points{comp});
+    neighbors := List([1..m^d],r->[]);
+    for edge in edges do
+      Add(neighbors[edge[1]],edge[2]);
+      Add(neighbors[edge[2]],edge[1]);
+    od;
+
+    orbits := [];
+    rem    := [1..m^d];
+    while rem <> [] do
+      lastsphere := [];
+      sphere     := [rem[1]];
+      orbit      := sphere;
+      repeat
+        nextsphere := Difference(Union(neighbors{sphere}),sphere);
+        nextsphere := Difference(nextsphere,lastsphere);
+        lastsphere := sphere;
+        sphere     := nextsphere;
+        orbit      := Union(orbit,sphere);
+      until sphere = [];
+      Add(orbits,orbit);
+      rem := Difference(rem,orbit);
+    od;
+    orbits := List(orbits,orbit->points{orbit});
 
     return orbits;
   end );
