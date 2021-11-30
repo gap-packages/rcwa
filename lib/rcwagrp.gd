@@ -426,6 +426,18 @@ DeclareOperation( "SimplifiedCertificate", [ IsRecord ] );
 
 #############################################################################
 ##
+#O  TryToComputeDegreeOfTransitivity( <G>, <timelimit> )
+##
+##  Tries to determine the degree of transirivity of the action of the group
+##  <G> on its support, and -- after approximately <timelimit> milliseconds
+##  have passed -- returns part of a stabilizer chain. Information on the
+##  progress of the computation is printed to the screen.
+##  
+DeclareOperation( "TryToComputeDegreeOfTransitivity",
+                  [ IsRcwaGroup, IsPosInt ] );
+
+#############################################################################
+##
 #O  DistanceToNextSmallerPointInOrbit( <G>, <n> )
 ##
 ##  Returns the smallest number d such that there is a product g of d genera-
