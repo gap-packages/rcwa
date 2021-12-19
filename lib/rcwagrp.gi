@@ -6277,6 +6277,32 @@ InstallMethod( FixedResidueClasses,
 
 #############################################################################
 ##
+#M  GuessOrbitRepresentatives( <G>, <maxrep>, <maxrad> )
+##
+InstallMethod( GuessOrbitRepresentatives,
+               "for a subgroup of CT(Z) and two positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, maxrep, maxrad )
+
+    local  reps, rem, n, B;
+
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+
+    reps := [];
+    rem  := [0..maxrep];
+    while rem <> [] do
+      n := rem[1];
+      Add(reps,n);
+      B := Ball(G,n,maxrad:Spheres);
+      rem := Difference(rem,Union(B));
+    od;
+
+    return reps;
+  end );
+
+#############################################################################
+##
 #F  DrawOrbitPicture( <G>, <p0>, <bound>, <height>, <width>, <colored>,
 #F                    <palette>, <filename> )
 ##

@@ -348,6 +348,16 @@ DeclareOperation( "CyclesOnFiniteOrbit",
 
 #############################################################################
 ##
+#O  GuessOrbitRepresentatives( <G>, <bound_or_range>, <search_bound> )
+##
+##  Returns a tentative list of orbit representatives.
+##  The meaning of the arguments depends on the method.
+##
+DeclareOperation( "GuessOrbitRepresentatives",
+                  [ IsRcwaGroup, IsObject, IsObject ] );
+
+#############################################################################
+##
 #O  IsTransitive( <G>, <S> ) . . . . . . . . . . . . . . . .  for rcwa groups
 #O  Transitivity( <G>, <S> )
 #O  IsPrimitive( <G>, <S> )
