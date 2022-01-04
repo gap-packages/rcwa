@@ -5095,12 +5095,13 @@ InstallMethod( TryToComputeTransitivityCertificate,
   function ( G, searchlimit )
 
     local  classes, words, imgs, gens, D, S, R, F, phi, B, B_last, r, limit,
-           n, m, k, g, w, downcls, coveredcls, cl, I, c, smallpointbound,
-           rem, p0, abortdensity, check, varnames, i;
+           peakbound, n, m, k, g, w, downcls, coveredcls, cl, I, c,
+           smallpointbound, rem, p0, abortdensity, check, varnames, i;
 
     Info(InfoRCWA,1,"Invoking `TryToComputeTransitivityCertificate'",
                     " for G = ",ViewString(G));
     abortdensity := GetOption("abortdensity",0,IsPosRat);
+    peakbound := GetOption("peakbound",infinity,IsPosInt);
     if not IsSignPreserving(G)
       or ForAny(ShortResidueClassOrbits(G,60,60),orb->Length(orb)>1)
     then return fail; fi;
@@ -5120,18 +5121,21 @@ InstallMethod( TryToComputeTransitivityCertificate,
       k := 0;
       repeat
         n := Residue(R[1]);
-        while Intersection(S,[0..n-1]) = [] do n := n + Modulus(R[1]); od;
+        while Intersection(S,[0..Minimum(n-1,Mod(S))]) = [] do
+          n := n + Modulus(R[1]);
+        od;
         n := n + k * Modulus(R[1]);
-        limit := 10000;
+        limit := 2 * n;
         Info(InfoRCWA,1,"n = ",n);
         repeat
           if IsBound(B) then B_last := B; else B_last := []; fi;
-          if   limit > 10000
+          if   limit > n
           then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
           B := RestrictedBall(G,n,searchlimit,limit:Spheres,UntilSmaller);
           m := Minimum(B[Length(B)]);
-          limit := 2 * limit;
-        until (m < n or B = B_last) and limit > Product(List(gens,Mult)) * n;
+          limit := Maximum(List(gens,Mult)) * limit;
+        until m < n or (peakbound <> infinity and limit > peakbound * n)
+           or B = B_last;
         if m >= n then
           return rec( phi := phi, classes := classes,
                       words := words, complete := false, remaining := R,
@@ -5164,9 +5168,13 @@ InstallMethod( TryToComputeTransitivityCertificate,
       Add(classes,coveredcls); Add(words,w);
     od;
 
-    check := [ R = [], Sum(List(Flat(classes),Density)) = Density(S),
-               Union(Flat(classes)) = Union(S,ExcludedElements(S)) ];
-    if not check in [[true,true,true],[false,false,false]]
+    # check := [ R = [], Sum(List(Flat(classes),Density)) = Density(S),
+    #           Union(Flat(classes)) = Union(S,ExcludedElements(S)) ];
+    # if not check in [[true,true,true],[false,false,false]]
+    # then Error("internal error!"); fi;
+
+    check := [ R = [], Sum(List(Flat(classes),Density)) = Density(S) ];
+    if not check in [[true,true],[false,false]]
     then Error("internal error!"); fi;
 
     if R <> [] then
@@ -5176,18 +5184,22 @@ InstallMethod( TryToComputeTransitivityCertificate,
                   status := "unclear" );
     fi;
 
+    if ValueOption("skipsmallpointcheck") = true then
+      return rec( phi := phi, classes := classes,
+                  words := words, complete := true,
+                  smallpointbound := smallpointbound,
+                  status := "transitive" );
+    fi;
+
     Info(InfoRCWA,1,"Checking transitivity on moved points ",
                     "0 <= n <= ",smallpointbound," ...");
-    rem := Intersection([0..smallpointbound],S);
-    for i in [1..Length(imgs)] do
-      g := imgs[i];
-      rem := Filtered( rem, n -> n^g >= n );
-      if i = 1 then
-        Info(InfoRCWA,1,"Number of points not decreased by the ",
-                        "first element: ",Length(rem));
-      else
-        Info(InfoRCWA,1,"Number of points not decreased by any of the ",
-                        "first ",i," elements: ",Length(rem));
+    rem := [];
+    for n in [0..smallpointbound] do
+      if n in S and not ForAny(imgs,g->n^g<n) then
+        Add(rem,n);
+      fi;
+      if n mod 1000000 = 0 then
+        Info(InfoRCWA,1,"n = ",n,": |rem| = ",Length(rem));
       fi;
     od;
     p0 := Minimum(rem);
