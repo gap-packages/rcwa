@@ -5130,10 +5130,11 @@ InstallMethod( TryToComputeTransitivityCertificate,
         repeat
           if IsBound(B) then B_last := B; else B_last := []; fi;
           if   limit > n
-          then Info(InfoRCWA,1,"Doubling limit -- new limit = ",limit); fi;
+          then Info(InfoRCWA,1,"Increasing limit -- new limit = ",limit); fi;
           B := RestrictedBall(G,n,searchlimit,limit:Spheres,UntilSmaller);
           m := Minimum(B[Length(B)]);
-          limit := Maximum(List(gens,Mult)) * limit;
+          limit := (Maximum(List(gens,Mult)) + 1) * limit
+                  + Maximum(List(gens,MaximalShift));
         until m < n or (peakbound <> infinity and limit > peakbound * n)
            or B = B_last;
         if m >= n then
