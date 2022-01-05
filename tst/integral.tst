@@ -2622,20 +2622,22 @@ rec( classes := [ [ 1(2) ], [ 2(6) ], [ 6(12), 10(12) ], [ 0(12) ], [ 4(12) ]
 gap> G := Group(List([[0,3,1,3],[1,2,4,6],[0,4,3,6]],ClassTransposition));
 <(0(3),1(3)),(1(2),4(6)),(0(4),3(6))>
 gap> TryToComputeTransitivityCertificate(G,10);
-rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ] ]
-    , complete := false, 
+rec( 
+  classes := [ [ 3(6) ], [ 4(12), 10(12) ], [ 1(6) ], [ 5(6) ], 
+      [ 0(12), 8(12) ] ], complete := false, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
-  remaining := [ 6(12), 11(12) ], smallpointbound := 26, status := "unclear", 
-  words := [ a, c, b*c*a*b*c ] )
+  remaining := [ 6(12) ], smallpointbound := 80, status := "unclear", 
+  words := [ c, b, a, (b*a)^2*c*b*a*b, c*a*b ] )
 gap> TryToComputeTransitivityCertificate(G,30);
-rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ], 
-      [ 6(48), 23(48) ], [ 11(24), 47(48) ], [ 18(24) ], [ 30(432) ], 
-      [ 78(144) ], [ 126(144), 174(432), 318(432) ] ], complete := true, 
+rec( 
+  classes := [ [ 3(6) ], [ 4(12), 10(12) ], [ 1(6) ], [ 5(6) ], 
+      [ 0(12), 8(12) ], [ 18(24) ], [ 30(216) ], [ 6(72) ], 
+      [ 54(72), 102(216), 174(216) ] ], complete := true, 
   phi := [ a, b, c ] -> [ ( 0(3), 1(3) ), ( 1(2), 4(6) ), ( 0(4), 3(6) ) ], 
   smallpointbound := 8343, status := "transitive", 
-  words := [ a, c, b*c*a*b*c, (a*b)^2*c*(a*c*a*b)^2*c*b, (b*a)^2*c*b*a*b, 
-      (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, 
-      (a*b)^2*(a*b*a*c)^2*b*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
+  words := [ c, b, a, (b*a)^2*c*b*a*b, c*a*b, (a*b)^2*c*a*b*a*c*a*b*c*b, 
+      (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, (a*b)^2*(a*b*a*c)^2*b*a*b*c*b, 
+      (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
 "3CTsGroups6"
 gap> grps := 3CTsGroups6.grps;;

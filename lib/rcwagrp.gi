@@ -5121,9 +5121,14 @@ InstallMethod( TryToComputeTransitivityCertificate,
       k := 0;
       repeat
         n := Residue(R[1]);
-        while Intersection(S,[0..Minimum(n-1,Mod(S))]) = [] do
+        # n must be in the support, and it must not be its
+        # smallest nonnegative element:
+        while not n in S do
           n := n + Modulus(R[1]);
         od;
+        repeat
+          n := n + Modulus(R[1]);
+        until n in S;
         n := n + k * Modulus(R[1]);
         limit := 2 * n;
         Info(InfoRCWA,1,"n = ",n);
