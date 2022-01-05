@@ -2636,6 +2636,20 @@ rec( classes := [ [ 1(6), 4(12), 10(12) ], [ 3(6) ], [ 0(12), 5(12), 8(12) ],
   words := [ a, c, b*c*a*b*c, (a*b)^2*c*(a*c*a*b)^2*c*b, (b*a)^2*c*b*a*b, 
       (a*b)^2*c*a*b*a*c*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*c)^2*b, 
       (a*b)^2*(a*b*a*c)^2*b*a*b*c*b, (a*b)^2*(a*b*a*c)^2*(b*a)^2*c*(a*b)^2 ] )
+gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
+"3CTsGroups6"
+gap> grps := 3CTsGroups6.grps;;
+gap> inds := [ 137, 160, 161, 167, 170, 171, 192, 193, 264, 326, 402, 410, 
+>    414, 415, 416, 420, 424, 426, 428, 438, 441, 1547, 1558, 1585, 1597, 
+>    1728, 1785, 1890, 1922, 2027, 2645, 2647, 2976, 8886, 10797, 10840, 
+>    14897, 14912, 15760, 16138, 16160, 16306, 16317, 20822, 43567, 49371 ];;
+gap> certs := [];;
+gap> for i in inds do
+>      G := grps[i];
+>      Add(certs,TryToComputeTransitivityCertificate(G,50));
+>    od;
+gap> ForAll(certs,c->c.status="transitive");
+true
 gap> RCWAInfo(2);
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4), 
 >               ClassTransposition(1,4,2,6));
