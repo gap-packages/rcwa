@@ -5384,6 +5384,79 @@ InstallMethod( TryToComputeDegreeOfTransitivity,
 
 #############################################################################
 ##
+#M  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )
+##
+InstallMethod( SupersetOfOrbitRepresentatives,
+               "for subgroups of CT(Z) (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, maxsaddle, maxprog )
+
+    local  R, D, words, w, g, h, c, cls, putaside, n, k, d, B, cl, r, m,
+           F, pi, gensnames, smallpointbound, rem, red;
+
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+
+    gensnames := List([27..52],i->LETTERS{[i]});
+    F := FreeGroup(gensnames{[1..Length(GeneratorsOfGroup(G))]});
+    pi := EpimorphismByGenerators(F,G);
+    R := Integers; D := []; words := []; g := []; putaside := [];
+    smallpointbound := 0;
+    repeat
+      cls := AsUnionOfFewClasses(R);
+      Info(InfoRCWA,1,"cls = ",ViewString(cls));
+      for cl in cls do
+        Info(InfoRCWA,1,"  cl = ",ViewString(cl));
+        r := Residue(cl); m := Mod(cl);
+        k := 0;
+        while k <= maxprog do
+          n := k*m+r;
+          d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
+          Info(InfoRCWA,1,"    k = ",k,": d = ",d);
+          if IsInt(d) then
+            B := Ball(G,n,d:Spheres);
+            w := RepresentativeActionPreImage(G,n,Minimum(B[d+1]),OnPoints,
+                                              F:pointlimit:=maxsaddle*m);
+            Info(InfoRCWA,1,"    w = ",w);
+            h := w^pi;
+            Add(words,w);
+            Add(g,h);
+            Add(D,Intersection(R,Union(DecreasingOn(h),ShiftsDownOn(h))));
+            Info(InfoRCWA,1,"    D = ",
+                 ViewString(AsUnionOfFewClasses(D[Length(D)])));
+            R := Difference(R,D[Length(D)]);
+            c := First(Coefficients(h),
+                       c->Intersection(ResidueClass(c[1],c[2]),cl)<>[]);
+            if (c[3]*c[1]+c[4])/c[5] > c[1] then
+              smallpointbound := Maximum(smallpointbound,c[1]);
+              Info(InfoRCWA,1,"    smallpointbound = ",smallpointbound);
+            fi;
+            break;
+          fi;
+          k := k + 1;
+        od;
+        if k > maxprog then
+          Add(putaside,cl);
+          R := SparseRep(Difference(R,cl));
+        fi;
+      od;
+    until R = [];
+    rem := [];
+    for n in [0..smallpointbound] do
+      if not ForAny(g,h->n^h<n) then
+        Add(rem,n);
+      fi;
+    od;
+    red   := Positions(D,[]);
+    words := words{Difference([1..Length(D)],red)};
+    g     := g{Difference([1..Length(D)],red)};
+    D     := D{Difference([1..Length(D)],red)};
+    return rec( R := Union(Union(putaside),rem),
+                D := D, w := words, g := g, pi := pi );
+  end );
+
+#############################################################################
+##
 #M  DistanceToNextSmallerPointInOrbit( <G>, <n> ) . .  for rcwa groups over Z
 ##
 InstallMethod( DistanceToNextSmallerPointInOrbit,

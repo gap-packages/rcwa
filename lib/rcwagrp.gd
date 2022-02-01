@@ -448,6 +448,18 @@ DeclareOperation( "TryToComputeDegreeOfTransitivity",
 
 #############################################################################
 ##
+#O  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )
+##
+##  Returns a set which has nontrivial intersection with every orbit of the
+##  subgroup <G> of CT(Z) on the nonnegative integers.
+##  The parameters <maxsaddle> and <maxprog> can be used to control the size
+##  of the set. In general, larger values may make the set smaller.
+##
+DeclareOperation( "SupersetOfOrbitRepresentatives",
+                  [ IsRcwaGroup, IsRingElement, IsRingElement ] );
+
+#############################################################################
+##
 #O  DistanceToNextSmallerPointInOrbit( <G>, <n> )
 ##
 ##  Returns the smallest number d such that there is a product g of d genera-
