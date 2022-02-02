@@ -5408,7 +5408,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
       for cl in cls do
         Info(InfoRCWA,1,"  cl = ",ViewString(cl));
         r := Residue(cl); m := Mod(cl);
-        k := 0;
+        k := 1;
         while k <= maxprog do
           n := k*m+r;
           d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
