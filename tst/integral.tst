@@ -2652,6 +2652,36 @@ gap> for i in inds do
 >    od;
 gap> ForAll(certs,c->c.status="transitive");
 true
+gap> G := grps[137];
+<(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
+gap> R := SupersetOfOrbitRepresentatives(G,2^5,3);
+rec( D := [ 1(2), 2(6), 6(12) U 10(12), 4(12), 0(12) ], R := [ 0 ], 
+  g := [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), 
+      <rcwa permutation of Z with modulus 4 and 3 affine parts>, 
+      ( 0(6), 1(6), 2(6), 5(6), 4(6), 3(6) ), 
+      <rcwa permutation of Z with modulus 12 and 9 affine parts> ], 
+  pi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
+  w := [ a, b, c, a*b, b*c ] )
+gap> G := grps[15356];
+<(1(2),2(4)),(0(5),3(5)),(0(2),3(6))>
+gap> R := SupersetOfOrbitRepresentatives(G,2^5,3);
+rec( 
+  D := 
+    [ 2(4), 3(10) U 8(20), <union of 8 residue classes (mod 60) (6 classes)>, 
+      7(30), 27(30) U 0(60) U 39(60) U 51(60), 11(30) U 52(60), 
+      19(30) U 29(30), 5(60) U 15(60) U 25(60) ], 
+  R := <union of 11 residue classes (mod 60) (7 classes)> U [ 0 ], 
+  g := [ <rcwa permutation of Z with modulus 4 and 3 affine parts>, 
+      ( 0(5), 3(5) ), <rcwa permutation of Z with modulus 180 and 
+        35 affine parts>, <rcwa permutation of Z with modulus 2160 and 
+        55 affine parts>, <rcwa permutation of Z with modulus 30 and 
+        20 affine parts>, <rcwa permutation of Z with modulus 8640 and 
+        59 affine parts>, <rcwa permutation of Z with modulus 1440 and 
+        43 affine parts>, <rcwa permutation of Z with modulus 360 and 
+        38 affine parts> ], 
+  pi := [ a, b, c ] -> [ ( 1(2), 2(4) ), ( 0(5), 3(5) ), ( 0(2), 3(6) ) ], 
+  w := [ a, b, c*b*a*c, a*c*a*b*c*a*c, b*c, a*c*(a*b)^2*(c*a)^2, 
+      a*(b*a*c)^2*a, a*c*b*a*c ] )
 gap> RCWAInfo(2);
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4), 
 >               ClassTransposition(1,4,2,6));

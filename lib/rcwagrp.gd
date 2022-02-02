@@ -450,10 +450,26 @@ DeclareOperation( "TryToComputeDegreeOfTransitivity",
 ##
 #O  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )
 ##
-##  Returns a set which has nontrivial intersection with every orbit of the
-##  subgroup <G> of CT(Z) on the nonnegative integers.
-##  The parameters <maxsaddle> and <maxprog> can be used to control the size
-##  of the set. In general, larger values may make the set smaller.
+##  Returns a record with the following components:
+##
+##   - R: A set which has nontrivial intersection with every orbit of the
+##        subgroup <G> of CT(Z) on the nonnegative integers.
+##        The parameters <maxsaddle> and <maxprog> can be used to control
+##        the size of this set. In general, larger values may make the set
+##        smaller.
+##
+##   - D: A list of residue class unions whose union is a (not necessarily
+##        proper) superset the complement of R in Z. The intersection of R
+##        and the union of the sets in D is always finite.
+##
+##   - g: A list of elements of <G> such that n^g[i] < n for all sufficiently
+##        large n in D[i], for i = 1, ... , Length(g) = Length(D).
+##
+##   - phi: An epimorphism from a free group F of rank the number of
+##          generators of <G> to <G> which maps generators to generators.
+##
+##   - w: A list of words w[i] in F such that w[i]^phi = g[i],
+##        for i = 1, ... , Length(w) = Length(g).
 ##
 DeclareOperation( "SupersetOfOrbitRepresentatives",
                   [ IsRcwaGroup, IsRingElement, IsRingElement ] );
