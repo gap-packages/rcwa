@@ -5416,7 +5416,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
           if IsInt(d) then
             B := Ball(G,n,d:Spheres);
             w := RepresentativeActionPreImage(G,n,Minimum(B[d+1]),OnPoints,
-                                              F:pointlimit:=maxsaddle*n);
+                                           F:pointlimit:=maxsaddle*n,onlyup);
             Info(InfoRCWA,1,"    w = ",w);
             h := w^pi;
             Add(words,w);
@@ -6494,7 +6494,7 @@ InstallMethod( RepresentativesActionPreImage,
 
     local  SetOfRepresentatives, Extended, R, gensG, gensF, 
            orbsrc, orbdest, orbitlengthbound, g, extstep, oldorbsizes,
-           inter, intersrc, interdest, compatible, quots, pointlimit;
+           inter, intersrc, interdest, compatible, quots, pointlimit, onlyup;
 
     SetOfRepresentatives := function ( S, rel, less, pref )
 
@@ -6534,6 +6534,7 @@ InstallMethod( RepresentativesActionPreImage,
 
     orbitlengthbound := GetOption("OrbitLengthBound",infinity,IsPosInt);
     pointlimit := GetOption("pointlimit",infinity,IsPosInt);
+    onlyup := ValueOption("onlyup") = true;
 
     if   IsPermGroup(G)
     then R := PositiveIntegers;
@@ -6558,6 +6559,10 @@ InstallMethod( RepresentativesActionPreImage,
         return [];
       fi;
       orbsrc := Extended(orbsrc,gensG); orbdest := Extended(orbdest,gensG);
+      if onlyup then
+        orbdest := Filtered(orbdest,pt->Maximum(pt[1])>=Maximum(src)
+                                     or Maximum(pt[1]) =Maximum(dest));
+      fi;
       extstep := extstep + 1;
       Info(InfoRCWA,2,"Orbit lengths after extension step ",extstep,": ",
                       [Length(orbsrc),Length(orbdest)]);
