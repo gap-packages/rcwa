@@ -5425,12 +5425,16 @@ InstallMethod( SupersetOfOrbitRepresentatives,
             Info(InfoRCWA,1,"    D = ",
                  ViewString(AsUnionOfFewClasses(D[Length(D)])));
             R := Difference(R,D[Length(D)]);
-            c := First(Coefficients(h),
-                       c->Intersection(ResidueClass(c[1],c[2]),cl)<>[]);
-            if (c[3]*c[1]+c[4])/c[5] > c[1] then
-              smallpointbound := Maximum(smallpointbound,c[1]);
-              Info(InfoRCWA,1,"    smallpointbound = ",smallpointbound);
-            fi;
+            for c in Filtered(Coefficients(h),
+                              c->Intersection(ResidueClass(c[1],c[2]),
+                                              D[Length(D)])<>[])
+            do
+              if c[4] > 0 then
+                smallpointbound := Maximum(smallpointbound,
+                                           Int(c[4]/(c[5]-c[3])));
+                Info(InfoRCWA,1,"    smallpointbound = ",smallpointbound);
+              fi;
+            od;
             break;
           fi;
           k := k + 1;
