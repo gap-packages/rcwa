@@ -5392,18 +5392,21 @@ InstallMethod( SupersetOfOrbitRepresentatives,
 
   function ( G, maxsaddle, maxprog )
 
-    local  R, D, words, w, g, h, c, cls, putaside, n, k, d, B, cl, r, m,
-           F, pi, gensnames, smallpointbound, rem, red;
+    local  R, R_last, D, words, w, g, h, c, cls, putaside, n, k, d, B,
+           cl, r, m, F, pi, gensnames, smallpointbound, rem, red, stuck;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
     gensnames := List([27..52],i->LETTERS{[i]});
     F := FreeGroup(gensnames{[1..Length(GeneratorsOfGroup(G))]});
     pi := EpimorphismByGenerators(F,G);
-    R := Integers; D := []; words := []; g := []; putaside := [];
+    R := Integers; R_last := fail;
+    D := []; words := []; g := []; putaside := [];
     smallpointbound := 0;
     repeat
-      cls := AsUnionOfFewClasses(R);
+      stuck  := R = R_last;
+      R_last := R;
+      cls    := AsUnionOfFewClasses(R);
       Info(InfoRCWA,1,"cls = ",ViewString(cls));
       for cl in cls do
         Info(InfoRCWA,1,"  cl = ",ViewString(cl));
@@ -5435,7 +5438,9 @@ InstallMethod( SupersetOfOrbitRepresentatives,
                 Info(InfoRCWA,1,"    smallpointbound = ",smallpointbound);
               fi;
             od;
-            break;
+            if not stuck then
+              break;
+            fi;
           fi;
           k := k + 1;
         od;
