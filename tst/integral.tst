@@ -2684,6 +2684,14 @@ rec(
   pi := [ a, b, c ] -> [ ( 1(2), 2(4) ), ( 0(5), 3(5) ), ( 0(2), 3(6) ) ], 
   w := [ a, b, c*b*a*c, c, b*c, c*(a*b)^2*c*a*c, a*c*b*a*c, a*(b*a*c)^2*a, 
       a*c*(a*b)^2*(c*a)^2, a*c*a*b*c*a*c ] )
+gap> G := grps[4450];
+<(1(3),2(3)),(2(4),3(6)),(3(4),0(6))>
+gap> DistanceToNextSmallerPointInOrbit(G,0);
+infinity
+gap> DistanceToNextSmallerPointInOrbit(G,1);
+3
+gap> DistanceToNextSmallerPointInOrbit(G,6);
+infinity
 gap> RCWAInfo(2);
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4), 
 >               ClassTransposition(1,4,2,6));

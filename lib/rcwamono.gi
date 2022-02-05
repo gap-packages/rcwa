@@ -570,11 +570,12 @@ InstallMethod( Ball,
 
   function ( G, p, r, act )
 
-    local  ball, gens, k, spheres, untilsmaller;
+    local  ball, gens, k, spheres, untilsmaller, lastsize;
 
     if r < 0 then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
     if spheres then ball := [[p]]; else ball := [p]; fi;
+    lastsize := 1;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
     untilsmaller := true in List(["untilsmaller","UntilSmaller"],
@@ -586,6 +587,9 @@ InstallMethod( Ball,
         Add(ball,Difference(Union(List(gens,
                                        gen->List(ball[k],pt->act(pt,gen)))),
                             Union(ball[Maximum(1,k-1)],ball[k])));
+        if ball[k+1] = [] then
+          break;
+        fi;
         if IsInt(p) then
           if   untilsmaller and Minimum(List(ball[k+1],AbsInt)) < AbsInt(p)
           then break; fi;
@@ -593,6 +597,10 @@ InstallMethod( Ball,
       else
         ball := Union(ball,
                       Union(List(gens,gen->List(ball,pt->act(pt,gen)))));
+        if Length(ball) = lastsize then
+          break;
+        fi;
+        lastsize := Length(ball);
         if IsInt(p) then
           if   untilsmaller and Minimum(List(ball,AbsInt)) < AbsInt(p)
           then break; fi;

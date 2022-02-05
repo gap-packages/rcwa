@@ -5484,6 +5484,7 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
     else
       B := Ball(G,n,2^60-1:UntilSmaller,Spheres); # 2^60-1 = max.-lng./64bit
     fi;
+    B := Filtered(B,S->S<>[]);
     m := Minimum(List(B[Length(B)],AbsInt));
     if m < AbsInt(n) then
       if   ValueOption("alsopoint") = true
@@ -5494,8 +5495,10 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
         Info(InfoRCWA,3,"DistanceToNextSmallerPointInOrbit: ");
         Info(InfoRCWA,3,"'ceiling': chosen value might be too small, ",
                         "you might try a larger one ...");
+        return fail;
+      else
+        return infinity;
       fi;
-      return fail;
     fi;
   end );
 
