@@ -5417,7 +5417,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
           d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
           Info(InfoRCWA,1,"    k = ",k,": d = ",d);
           if IsInt(d) then
-            B := Ball(G,n,d:Spheres);
+            B := RestrictedBall(G,n,d,maxsaddle*n:Spheres);
             w := RepresentativeActionPreImage(G,n,Minimum(B[d+1]),OnPoints,
                                            F:pointlimit:=maxsaddle*n,onlyup);
             Info(InfoRCWA,1,"    w = ",w);
