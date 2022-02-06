@@ -5393,10 +5393,12 @@ InstallMethod( SupersetOfOrbitRepresentatives,
   function ( G, maxsaddle, maxprog )
 
     local  R, R_last, D, words, w, g, h, c, cls, putaside, n, k, d, B,
-           cl, r, m, F, pi, gensnames, smallpointbound, rem, red, stuck;
+           cl, r, m, F, pi, gensnames, smallpointbound, rem, red,
+           maxdist, stuck;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
+    maxdist := GetOption("maxdist",infinity,IsPosInt);
     gensnames := List([27..52],i->LETTERS{[i]});
     F := FreeGroup(gensnames{[1..Length(GeneratorsOfGroup(G))]});
     pi := EpimorphismByGenerators(F,G);
@@ -5416,7 +5418,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
           n := k*m+r;
           d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
           Info(InfoRCWA,1,"    k = ",k,": d = ",d);
-          if IsInt(d) then
+          if IsInt(d) and d <= maxdist then
             B := RestrictedBall(G,n,d,maxsaddle*n:Spheres);
             w := RepresentativeActionPreImage(G,n,Minimum(B[d+1]),OnPoints,
                                            F:pointlimit:=maxsaddle*n,onlyup);
