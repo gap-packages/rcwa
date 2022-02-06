@@ -5394,7 +5394,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
 
     local  R, R_last, D, words, w, g, h, c, cls, putaside, n, k, d, B,
            cl, r, m, F, pi, gensnames, smallpointbound, rem, red,
-           maxdist, stuck;
+           maxdist, success, stuck;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
@@ -5413,7 +5413,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
       for cl in cls do
         Info(InfoRCWA,1,"  cl = ",ViewString(cl));
         r := Residue(cl); m := Mod(cl);
-        k := 1;
+        k := 1; success := false;
         while k <= maxprog do
           n := k*m+r;
           d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
@@ -5430,6 +5430,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
             Info(InfoRCWA,1,"    D = ",
                  ViewString(AsUnionOfFewClasses(D[Length(D)])));
             R := Difference(R,D[Length(D)]);
+            if D[Length(D)] <> [] then success := true; fi;
             for c in Filtered(Coefficients(h),
                               c->Intersection(ResidueClass(c[1],c[2]),
                                               D[Length(D)])<>[])
@@ -5446,7 +5447,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
           fi;
           k := k + 1;
         od;
-        if k > maxprog then
+        if k > maxprog and not success then
           Add(putaside,cl);
           R := SparseRep(Difference(R,cl));
         fi;
