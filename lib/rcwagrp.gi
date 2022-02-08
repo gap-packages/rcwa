@@ -5463,7 +5463,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
     words := words{Difference([1..Length(D)],red)};
     g     := g{Difference([1..Length(D)],red)};
     D     := D{Difference([1..Length(D)],red)};
-    return rec( R := Union(Union(putaside),rem),
+    return rec( R := Union(Difference(Integers,Union(D)),rem),
                 D := D, w := words, g := g, pi := pi );
   end );
 
