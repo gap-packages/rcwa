@@ -30,11 +30,11 @@ gap> Set(RecNames(3CTsGroups6));
   "epifromfpgrouptocollatzgroup_t", "equalityclasses", "finiteorbits", 
   "freeproductcandidates", "freeproductlikes", "groups", "grps", 
   "intransitivemodulo", "minwordlengthcoprimemultdiv", 
-  "minwordlengthnonbalanced", "mods", "orbitgrowthtype", "orbitlengths", 
-  "partitionlengths", "permgroupgens", "redundant_generator", 
-  "refinementseqlngs", "respectedpartitions", "samegroups", 
-  "shortresidueclassorbitlengths", "sizes", "sizespos", "sizesset", 
-  "spheresizebound_12", "spheresizebound_24", "spheresizebound_4", 
+  "minwordlengthnonbalanced", "mods", "non_abc_cycle_orbitcounts", 
+  "orbitgrowthtype", "orbitlengths", "partitionlengths", "permgroupgens", 
+  "redundant_generator", "refinementseqlngs", "respectedpartitions", 
+  "samegroups", "shortresidueclassorbitlengths", "sizes", "sizespos", 
+  "sizesset", "spheresizebound_12", "spheresizebound_24", "spheresizebound_4",
   "spheresizebound_6", "stabilize_digitsum_base2_mod2", 
   "stabilize_digitsum_base2_mod3", "stabilize_digitsum_base3_mod2", 
   "subgroups", "supergroups", "trsstatus", "trsstatuspos", "trsstatusset" ]
@@ -56,4 +56,4 @@ gap> STOP_TEST( "database.tst", 4500000000 );
 
 #############################################################################
 ##
-#E  database.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  database.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

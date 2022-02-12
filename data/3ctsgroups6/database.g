@@ -52,8 +52,9 @@
 ##    - `finiteorbits': finite-orbits.g,
 ##    - `shortresidueclassorbitlengths': residueclassorbitlengths.g,
 ##    - `cyclist': spheresizecycles.g,
-##    - `trsstatus', `trsstatuspos' and `trsstatusset': trsstatuspos.g, and
-##    - `orbitgrowthtype': orbitgrowthtype.g.
+##    - `trsstatus', `trsstatuspos' and `trsstatusset': trsstatuspos.g,
+##    - `orbitgrowthtype': orbitgrowthtype.g, and
+##    - `non_abc_cycle_orbitcounts': non_abc_cycle_orbitcounts.
 ##
 #############################################################################
 
@@ -6516,7 +6517,11 @@ epifromfpgroupto_ct23z :=
 
 refinementseqlngs :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
-                 "/data/3ctsgroups6/refinementseqlngs.g"))()
+                 "/data/3ctsgroups6/refinementseqlngs.g"))(),
+
+non_abc_cycle_orbitcounts :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                 "/data/3ctsgroups6/non_abc_cycle_orbitcounts.g"))()
 
 );
 
