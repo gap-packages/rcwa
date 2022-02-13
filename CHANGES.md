@@ -7,7 +7,6 @@
    (Not documented so far.)
  - An operation `SupersetOfOrbitRepresentatives' has been added,
    together with a method for subgroups of CT(Z).
-   (Not documented so far.)
  - An operation `ResidueClassCyclesThroughResidueClass' has been added,
    together with a method for rcwa permutations of Z.
  - An operation `DrawResidueClassCyclesThroughResidueClassPicture'

@@ -5400,6 +5400,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
 
     maxdist := GetOption("maxdist",infinity,IsPosInt);
     gensnames := List([27..52],i->LETTERS{[i]});
+    G := SparseRep(G);
     F := FreeGroup(gensnames{[1..Length(GeneratorsOfGroup(G))]});
     pi := EpimorphismByGenerators(F,G);
     R := Integers; R_last := fail;
