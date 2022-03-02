@@ -5413,6 +5413,10 @@ InstallMethod( SupersetOfOrbitRepresentatives,
       Info(InfoRCWA,1,"cls = ",ViewString(cls));
       for cl in cls do
         Info(InfoRCWA,1,"  cl = ",ViewString(cl));
+        if Intersection(R,cl) = [] then
+          Info(InfoRCWA,1," (already handled)");
+          continue;
+        fi;
         r := Residue(cl); m := Mod(cl);
         k := 1; success := false;
         while k <= maxprog do
