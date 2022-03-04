@@ -5384,11 +5384,11 @@ InstallMethod( TryToComputeDegreeOfTransitivity,
 
 #############################################################################
 ##
-#M  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )
+#M  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )  old method
 ##
 InstallMethod( SupersetOfOrbitRepresentatives,
                "for subgroups of CT(Z) (RCWA)",
-               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 5,
 
   function ( G, maxsaddle, maxprog )
 
@@ -5397,6 +5397,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
            maxdist, success, stuck;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
+    if ValueOption("new") = true then TryNextMethod(); fi;
 
     maxdist := GetOption("maxdist",infinity,IsPosInt);
     gensnames := List([27..52],i->LETTERS{[i]});
@@ -5470,6 +5471,114 @@ InstallMethod( SupersetOfOrbitRepresentatives,
     D     := D{Difference([1..Length(D)],red)};
     return rec( R := Union(Difference(Integers,Union(D)),rem),
                 D := D, w := words, g := g, pi := pi );
+  end );
+
+#############################################################################
+##
+#M  SupersetOfOrbitRepresentatives( <G>, <maxsaddle>, <maxprog> )
+##
+InstallMethod( SupersetOfOrbitRepresentatives,
+               "for subgroups of CT(Z) (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
+
+  function ( G, maxsaddle, maxprog )
+
+    local  R, R_last, D, I, words, w, g, h, c, cls, putaside, downcoeffs,
+           downcls, down, fraclimit, n, k, d, B, cl, r, m, F, pi, gensnames,
+           smallpointbound, rem, red, maxdist, success, stuck, perm;
+
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+
+    maxdist := GetOption("maxdist",infinity,IsPosInt);
+    fraclimit := GetOption("fraclimit",infinity,IsPosInt);
+
+    gensnames := List([27..52],i->LETTERS{[i]});
+    G := SparseRep(G);
+    F := FreeGroup(gensnames{[1..Length(GeneratorsOfGroup(G))]});
+    pi := EpimorphismByGenerators(F,G);
+
+    R := Integers; R_last := fail;
+    D := []; words := []; g := []; putaside := [];
+    smallpointbound := 0;
+    repeat
+      stuck  := R = R_last;
+      R_last := R;
+      cls    := AsUnionOfFewClasses(R);
+      Info(InfoRCWA,1,"cls = ",ViewString(cls));
+      for cl in cls do
+        Info(InfoRCWA,1,"  cl = ",ViewString(cl));
+        I := Intersection(R,cl);
+        if I = [] then
+          Info(InfoRCWA,1," (already handled)");
+          continue;
+        elif I <> cl then
+          Info(InfoRCWA,1,
+               " (already partially handled -- skipping to next round)");
+          continue;
+        fi;
+        r := Residue(cl); m := Mod(cl);
+        k := 1; success := false;
+        while k <= maxprog do
+          n := k*m+r;
+          d := DistanceToNextSmallerPointInOrbit(G,n:ceiling:=maxsaddle*n);
+          Info(InfoRCWA,1,"    k = ",k,": d = ",d);
+          if IsInt(d) and d <= maxdist then
+            B := RestrictedBall(G,n,d,maxsaddle*n:Spheres);
+            w := RepresentativeActionPreImage(G,n,Minimum(B[d+1]),OnPoints,
+                                           F:pointlimit:=maxsaddle*n,onlyup);
+            Info(InfoRCWA,1,"    w = ",w);
+            h := w^pi;
+            Add(words,w);
+            Add(g,h);
+            downcoeffs := Filtered(Coefficients(h),
+                                   c ->   (    c[3]<c[5]
+                                           or (c[3]=c[5] and c[4]<0))
+                                        and c[2] <= fraclimit*m );
+            downcls := List(downcoeffs,c->ResidueClass(c[1],c[2]));
+            down := Intersection(R,Union(downcls));
+            Add(D,down);
+            Info(InfoRCWA,1,"    D = ",
+                 ViewString(AsUnionOfFewClasses(down)));
+            R := Difference(R,down);
+            if down <> [] then success := true; fi;
+            for c in downcoeffs do
+              if c[4] > 0 then
+                smallpointbound := Maximum(smallpointbound,
+                                           Int(c[4]/(c[5]-c[3])));
+                Info(InfoRCWA,1,"    smallpointbound = ",smallpointbound);
+              fi;
+            od;
+            if not stuck then
+              break;
+            fi;
+          fi;
+          k := k + 1;
+        od;
+        if k > maxprog and not success then
+          Add(putaside,cl);
+          R := SparseRep(Difference(R,cl));
+        fi;
+      od;
+    until R = [];
+    rem := [];
+    for n in [0..smallpointbound] do
+      if not ForAny(g,h->n^h<n) then
+        Add(rem,n);
+      fi;
+    od;
+
+    red   := Positions(D,[]);
+    words := words{Difference([1..Length(D)],red)};
+    g     := g{Difference([1..Length(D)],red)};
+    D     := D{Difference([1..Length(D)],red)};
+    perm  := SortingPerm(words);
+    words := Permuted(words,perm);
+    g     := Permuted(g,perm);
+    D     := Permuted(D,perm);
+
+    return rec( R := Union(Difference(Integers,Union(D)),rem),
+                D := D, w := words, g := g, pi := pi );
+
   end );
 
 #############################################################################
