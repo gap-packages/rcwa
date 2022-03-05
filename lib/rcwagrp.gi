@@ -5440,7 +5440,7 @@ InstallMethod( SupersetOfOrbitRepresentatives,
             Add(words,w);
             Add(g,h);
             downcoeffs := Filtered( Coefficients( h ),
-                                    c ->   (    c[3]<c[5]
+                                    c ->   (     c[3] < c[5]
                                             or ( c[3] = c[5] and c[4] < 0))
                                          and c[2] <= fraclimit * m );
             down := ResidueClassUnion( Integers,
