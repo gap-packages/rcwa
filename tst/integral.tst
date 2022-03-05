@@ -2655,35 +2655,33 @@ true
 gap> G := grps[137];
 <(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
 gap> R := SupersetOfOrbitRepresentatives(G,2^5,3);
-rec( D := [ 1(2), 2(6), 6(12) U 10(12), 0(12), 4(12) ], R := [ 0 ], 
+rec( D := [ 1(2), 2(6), 6(12) U 10(12), 4(12), 0(12) ], R := [ 0 ], 
   g := [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), 
       <rcwa permutation of Z with modulus 4 and 3 affine parts>, 
-      <rcwa permutation of Z with modulus 12 and 9 affine parts>, 
-      ( 0(6), 1(6), 2(6), 5(6), 4(6), 3(6) ) ], 
+      ( 0(6), 1(6), 2(6), 5(6), 4(6), 3(6) ), 
+      <rcwa permutation of Z with modulus 12 and 9 affine parts> ], 
   pi := [ a, b, c ] -> [ ( 0(2), 1(2) ), ( 0(3), 2(3) ), ( 1(2), 2(4) ) ], 
-  w := [ a, b, c, b*c, a*b ] )
+  w := [ a, b, c, a*b, b*c ] )
 gap> G := grps[15356];
 <(1(2),2(4)),(0(5),3(5)),(0(2),3(6))>
 gap> R := SupersetOfOrbitRepresentatives(G,2^5,3);
-rec( 
-  D := 
-    [ 2(4), 3(10) U 8(20), <union of 8 residue classes (mod 60) (6 classes)>, 
-      27(30) U 15(60) U 39(60) U 51(60), 0(60), 52(60), 5(60) U 25(60), 
-      19(30) U 29(30), 11(30), 7(30) ], 
+rec( D := [ 2(4), 3(10) U 8(20), 27(30) U 15(60) U 39(60) U 51(60), 0(60), 
+      <union of 8 residue classes (mod 60) (6 classes)>, 5(60) U 25(60), 
+      7(30), 19(30) U 29(30), 52(60), 11(30) ], 
   R := <union of 11 residue classes (mod 60) (7 classes)> U [ 0 ], 
   g := [ <rcwa permutation of Z with modulus 4 and 3 affine parts>, 
-      ( 0(5), 3(5) ), <rcwa permutation of Z with modulus 180 and 
-        35 affine parts>, <rcwa permutation of Z with modulus 6 and 
+      ( 0(5), 3(5) ), <rcwa permutation of Z with modulus 6 and 
         4 affine parts>, <rcwa permutation of Z with modulus 30 and 
-        20 affine parts>, <rcwa permutation of Z with modulus 2160 and 
-        50 affine parts>, <rcwa permutation of Z with modulus 360 and 
-        38 affine parts>, <rcwa permutation of Z with modulus 1440 and 
-        43 affine parts>, <rcwa permutation of Z with modulus 8640 and 
-        59 affine parts>, <rcwa permutation of Z with modulus 2160 and 
-        55 affine parts> ], 
+        20 affine parts>, <rcwa permutation of Z with modulus 180 and 
+        35 affine parts>, <rcwa permutation of Z with modulus 360 and 
+        38 affine parts>, <rcwa permutation of Z with modulus 2160 and 
+        55 affine parts>, <rcwa permutation of Z with modulus 1440 and 
+        43 affine parts>, <rcwa permutation of Z with modulus 2160 and 
+        50 affine parts>, <rcwa permutation of Z with modulus 8640 and 
+        59 affine parts> ], 
   pi := [ a, b, c ] -> [ ( 1(2), 2(4) ), ( 0(5), 3(5) ), ( 0(2), 3(6) ) ], 
-  w := [ a, b, c*b*a*c, c, b*c, c*(a*b)^2*c*a*c, a*c*b*a*c, a*(b*a*c)^2*a, 
-      a*c*(a*b)^2*(c*a)^2, a*c*a*b*c*a*c ] )
+  w := [ a, b, c, b*c, c*b*a*c, a*c*b*a*c, a*c*a*b*c*a*c, a*(b*a*c)^2*a, 
+      c*(a*b)^2*c*a*c, a*c*(a*b)^2*(c*a)^2 ] )
 gap> pos7 := [ 137, 160, 161, 167, 170, 171, 192, 193, 264, 326, 402, 410,
 >              414, 415, 416, 420, 424, 426, 428, 438, 441, 1547, 1558,
 >              1585, 1597, 1728, 1785, 1890, 1922, 2027, 2645, 2647, 2976,
