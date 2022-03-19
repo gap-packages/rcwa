@@ -24,6 +24,9 @@
 ##  order 2, thus whose generators possibly do not satisfy any further
 ##  relations. Only one index per class in 'conjugacyclasses' is given.
 ##
+##  The list `freeproductlikes' is a list of indices of groups
+##  whose generators do not satisfy 'short' relations. 
+##
 ##  The lists `stabilize_digitsum_base2_mod2', 
 ##  `stabilize_digitsum_base2_mod3' and `stabilize_digitsum_base3_mod2'
 ##  contain indices of groups which stabilize the digit sum of an integer
@@ -33,6 +36,22 @@
 ##  The list `abc_torsion' contains an entry [ <group number>, <order of the
 ##  product of all 3 generators> ] for every infinite group in the database
 ##  for which the product of all 3 generators has finite order.
+##
+##  The lists `spheresizebound_4', `spheresizebound_6', `spheresizebound_12'
+##  and `spheresizebound_24' contain the indices of the groups for which
+##  the sizes of the spheres about any point are bounded by 4, 6, 12 and 24,
+##  respectively.
+##
+##  The list `redundant_generator' contains the indices of the groups for
+##  which one of the generators is redundant. For the obvious reasons,
+##  such groups are dihedral.
+##
+##  The list `D0pos' contains the indices of the groups which are isomorphic
+##  to the infinite dihedral group.
+##
+##  The list `D0xC2pos' contains the indices of the groups which are isomorphic
+##  to the direct product of the infinite dihedral group and the cyclic group
+##  of order 2.
 ##
 ##  Descriptions of the following components can be found in other files in
 ##  this directory:
@@ -6399,6 +6418,36 @@ spheresizebound_24 := Union( ~.spheresizebound_12,
  51020,51021,51029,51062,51063,51064,51193,51204,51364,51375,
  51387,51403,51542,51549,51655,51701,51785,51816,51901,51917,
  51986,52030,52073,52107,52131,52172] ),
+
+D0pos :=
+[393,569,1887,1915,2033,2215,2224,2254,2262,2268,2270,3794,3930,
+ 6183,6340,7996,8507],
+
+D0xC2pos :=
+[1314,1315,1429,1434,1549,1586,3800,3938,4001,4060,5863,5869,
+ 5875,5877,7977,8133,8136,8138,9881,10001,10038,11747,11760,
+ 12037,12038,13779,13850,14025,14114,14143,17210,17211,17330,
+ 18993,19000,19270,19372,19373,38301,38313,38449,38458,38461,
+ 38466,38537,38543,38547,38555,38719,38721,38727,38774,38807,
+ 38833,38839,38845,39282,39296,39390,39407,39493,39509,39541,
+ 39544,39548,39556,39593,39598,39599,39677,39733,39742,39748,
+ 39844,40103,40119,40177,40185,40187,40190,40253,40269,40270,
+ 40277,40282,40338,40339,40346,40351,40434,40435,40442,40565,
+ 40575,40582,40587,40617,40624,40636,40816,40821,40997,41005,
+ 41007,41010,41156,41209,41221,41225,41229,41237,41311,41335,
+ 41385,41437,41514,41518,41813,41822,41825,41830,41901,42026,
+ 42030,42034,42167,42171,42185,42186,42239,42257,42258,42264,
+ 42265,42268,42279,42280,42328,42339,42340,42357,42405,42630,
+ 42642,42648,42652,42660,42802,42804,42856,42906,42912,42958,
+ 42961,42963,43029,43035,43039,43380,43382,43559,43609,43661,
+ 43738,44011,44017,44021,44136,44195,44281,44703,44705,44710,
+ 44766,44770,44774,44855,45028,45034,45038,45068,45389,45394,
+ 45395,45529,45640,45647,45651,45666,45670,45678,45775,45783,
+ 46034,46090,46093,46099,46105,46201,46203,46205,46224,46419,
+ 46421,46426,46450,46509,46539,46712,46722,47003,47005,47011,
+ 47117,47168,47172,47180,47208,47285,47297,47301,47305,47347,
+ 47355,47713,47958,48014,48029,48125,48364,48423,48429,48898,
+ 48902,49158,49164],
 
 #############################################################################
 ##
