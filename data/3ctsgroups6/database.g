@@ -39,8 +39,8 @@
 ##
 ##  The lists `spheresizebound_4', `spheresizebound_6', `spheresizebound_12'
 ##  and `spheresizebound_24' contain the indices of the groups for which
-##  the sizes of the spheres about any point are bounded by 4, 6, 12 and 24,
-##  respectively.
+##  the sizes of the spheres about the identity are bounded by 4, 6, 12
+##  and 24, respectively.
 ##
 ##  The list `redundant_generator' contains the indices of the groups for
 ##  which one of the generators is redundant. For the obvious reasons,
