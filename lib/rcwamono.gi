@@ -541,11 +541,13 @@ InstallMethod( Ball,
 
   function ( G, f, r )
 
-    local  ball, gens, k, spheres;
+    local  ball, gens, k, spheres, maxspheresize;
 
     if   not IsCollsElms(FamilyObj(G),FamilyObj(f)) or r < 0
     then TryNextMethod(); fi;
     spheres := true in List(["spheres","Spheres"],ValueOption);
+    maxspheresize := ValueOption("maxspheresize");
+    if not IsPosInt(maxspheresize) then maxspheresize := infinity; fi;
     if spheres then ball := [[f]]; else ball := [f]; fi;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
@@ -553,6 +555,7 @@ InstallMethod( Ball,
       if spheres then
         Add(ball,Difference(Union(List(gens,gen->ball[k]*gen)),
                             Union(ball[Maximum(1,k-1)],ball[k])));
+        if Length(ball[k+1]) > maxspheresize then break; fi;
       else
         ball := Union(ball,Union(List(gens,gen->ball*gen)));
       fi;
