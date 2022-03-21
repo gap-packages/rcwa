@@ -541,13 +541,16 @@ InstallMethod( Ball,
 
   function ( G, f, r )
 
-    local  ball, gens, k, spheres, maxspheresize;
+    local  ball, gens, k, spheres, maxspheresize, timeout, start;
 
     if   not IsCollsElms(FamilyObj(G),FamilyObj(f)) or r < 0
     then TryNextMethod(); fi;
+
     spheres := true in List(["spheres","Spheres"],ValueOption);
-    maxspheresize := ValueOption("maxspheresize");
-    if not IsPosInt(maxspheresize) then maxspheresize := infinity; fi;
+    maxspheresize := GetOption("maxspheresize",infinity,IsPosInt);
+    timeout := GetOption("timeout",infinity,IsPosInt);
+
+    start := Runtime();
     if spheres then ball := [[f]]; else ball := [f]; fi;
     if IsGroup(G) then gens := Set(GeneratorsAndInverses(G));
                   else gens := Set(GeneratorsOfMonoid(G)); fi;
@@ -559,6 +562,7 @@ InstallMethod( Ball,
       else
         ball := Union(ball,Union(List(gens,gen->ball*gen)));
       fi;
+      if Runtime() - start >= timeout then break; fi;
     od;
     return ball;
   end );
