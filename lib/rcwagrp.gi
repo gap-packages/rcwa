@@ -5392,9 +5392,10 @@ InstallMethod( SupersetOfOrbitRepresentatives,
 
   function ( G, maxsaddle, maxprog )
 
-    local  R, R_last, D, I, words, w, g, h, c, cls, putaside, downcoeffs,
-           down, fraclimit, n, k, d, B, cl, r, m, F, pi, gensnames,
-           smallpointbound, rem, red, maxdist, success, stuck, perm;
+    local  R, R_last, R_red, D, D_red, I, words, w, g, h, c, cls, putaside,
+           downcoeffs, down, fraclimit, n, k, d, B, cl, r, m, m_0, F, pi,
+           gensnames, smallpointbound, rem, red, maxdist, success, stuck,
+           perm, m_max, S, inds, i;
 
     if not IsSignPreserving(G) then TryNextMethod(); fi;
 
@@ -5484,9 +5485,53 @@ InstallMethod( SupersetOfOrbitRepresentatives,
     words := Permuted(words,perm);
     g     := Permuted(g,perm);
     D     := Permuted(D,perm);
+    R     := Union(Difference(Integers,Union(D)),rem);
 
-    return rec( R := Union(Difference(Integers,Union(D)),rem),
-                D := D, w := words, g := g, pi := pi );
+    m_max := ValueOption("optimize");
+    if IsPosInt(m_max) then
+
+      Info(InfoRCWA,1,"Trying to reduce the cover ...");
+
+      m_0 := Lcm(List(D,Mod));
+      for m in DivisorsInt(m_0) do
+        if m > m_max then break; fi;
+        Info(InfoRCWA,1,"  Trying m = ",m," ...");
+        D_red := List(D,Di->ResidueClassUnion(Integers,
+                                              Filtered(Classes(Di),
+                                                       cl->m mod cl[2]=0)));
+        R_red := Union(Difference(Integers,Union(D_red)),rem);
+        if Density(R_red) = Density(R) then
+          Info(InfoRCWA,1,"Considering residue classes with moduli dividing",
+                          " ",m," suffices.");
+          inds := Filtered([1..Length(D)],i->D_red[i]<>[]);
+          repeat
+            k := Length(inds) + 1;
+            repeat
+              k := k - 1;
+              S := Integers;
+              for i in [1..Length(inds)] do
+                if i <> k then
+                  S := Difference(S,D_red[inds[i]]);
+                fi;
+              od;
+            until k < 1 or Density(S) <= Density(R);
+            if k >= 1 then
+              Info(InfoRCWA,1,"Element at position ",inds[k],
+                              " is redundant.");
+              inds := Difference(inds,inds{[k]});
+            fi;
+          until k = 0;
+          words := words{inds};
+          g     := g{inds};
+          D     := D{inds};
+          R     := Union(Difference(Integers,Union(D)),rem);
+          break;
+        fi;
+      od;
+    
+    fi;
+
+    return rec( R := R, D := D, w := words, g := g, pi := pi );
 
   end );
 
