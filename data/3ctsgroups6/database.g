@@ -65,6 +65,7 @@
 ##    - `subgroups': subgroups.g,
 ##    - `supergroups': supergroups.g,
 ##    - `chains': chains.g,
+##    - `growthsequences': growthsequences.g,
 ##    - `intransitivemodulo': intransitivemodulo.g,
 ##    - `partitionlengths': partitionlengths.g,
 ##    - `degrees': degrees.g,
@@ -6710,6 +6711,10 @@ supergroups :=
 chains :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgroups6/chains.g"))(),
+
+growthsequences :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgroups6/growthsequences.g"))(),
 
 partitionlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
