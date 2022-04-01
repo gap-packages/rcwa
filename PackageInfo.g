@@ -38,10 +38,8 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/rcwa-", ~.Version ),
 ArchiveFormats   := ".tar.gz",
 
-AbstractHTML     := Concatenation("This package provides implementations of algorithms and ",
-                                  "methods for computation in certain infinite permutation groups.",
-                                  " For an abstract, see ",
-                                  "<a href = \"",~.PackageWWWHome,"\">here</a>."),
+AbstractHTML     := Concatenation("This package provides implementations of algorithms and methods",
+                                  " for computation in certain infinite permutation groups."),
 PackageDoc       := rec(
                          BookName         := "RCWA",
                          ArchiveURLSubset := ["doc"],
