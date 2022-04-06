@@ -2804,7 +2804,9 @@ InstallMethod( SmallGeneratingSet,
 
     local  gens, gensred, H, r, modulusbound, i, shrinked;
 
-    gens         := Set(GeneratorsOfGroup(G));
+    if IsTrivial(G) then return [One(G)]; fi;
+
+    gens         := Set(Filtered(GeneratorsOfGroup(G),g->not IsOne(g)));
     modulusbound := Lcm(List(gens,Modulus));
 
     if ForAll(gens,IsClassTransposition) then
