@@ -69,6 +69,8 @@
 ##    - `supergroups': supergroups.g,
 ##    - `chains': chains.g,
 ##    - `growthsequences': growthsequences.g,
+##    - `abelianinvariants': abelianinvariants.g,
+##    - `compositionfactors': compositionfactors.g,
 ##    - `intransitivemodulo': intransitivemodulo.g,
 ##    - `partitionlengths': partitionlengths.g,
 ##    - `degrees': degrees.g,
@@ -6746,6 +6748,14 @@ chains :=
 growthsequences :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                                "/data/3ctsgroups6/growthsequences.g"))(),
+
+abelianinvariants :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgroups6/abelianinvariants.g"))(),
+
+compositionfactors :=
+  ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                               "/data/3ctsgroups6/compositionfactors.g"))(),
 
 partitionlengths :=
   ReadAsFunction(Concatenation(PackageInfo("rcwa")[1].InstallationPath,
