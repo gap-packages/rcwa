@@ -5,7 +5,7 @@
 
 ## A GAP 4 Package
 
-Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
+Author and Maintainer:  Stefan Kohl, sk239@st-andrews.ac.uk
 
 
 ## Abstract
