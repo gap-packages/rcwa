@@ -864,7 +864,7 @@
   difficult,  and  this  factorization  routine  is currently perhaps the most
   sophisticated  part  of  the [5XRCWA[105X package. Information about the progress of
   the  factorization  process can be obtained by setting the info level of the
-  Info class [2XInfoRCWA[102X ([14X9.5-1[114X) to 2.[133X
+  Info class [2XInfoRCWA[102X ([14X9.4-1[114X) to 2.[133X
   
   [33X[0;0YBy  default, prime switches ([22X→[122X [2XPrimeSwitch[102X ([14X2.5-3[114X)) are taken as one factor.
   If  the option [3XExpandPrimeSwitches[103X is set, they are each decomposed into the

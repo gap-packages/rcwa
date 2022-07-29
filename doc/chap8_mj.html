@@ -445,7 +445,7 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IsPerfect(<var class="Arg">G</var>)</code>
+    <code class="code">IsPerfectGroup(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>If the group <var class="Arg">G</var> is trivial, then return <code class="code">true</code>. Otherwise if it is abelian, then return <code class="code">false</code>.</p>
 
@@ -469,7 +469,7 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IsSolvable(<var class="Arg">G</var>)</code>
+    <code class="code">IsSolvableGroup(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>If <var class="Arg">G</var> is abelian, then return <code class="code">true</code>. If <var class="Arg">G</var> is tame, then return <code class="code">true</code> or <code class="code">false</code> depending on whether <code class="code">ActionOnRespectedPartition(<var class="Arg">G</var>)</code> is solvable or not. If <var class="Arg">G</var> is wild, then give up.</p>
 
@@ -773,12 +773,6 @@
     <code class="code">RCWA(<var class="Arg">R</var>)</code>
   </strong></dt>
 <dd><p>Attributes and properties are set according to Theorem 2.1.1, Theorem 2.1.2, Corollary 2.1.6 and Theorem 2.12.8 in <a href="chapBib_mj.html#biBKohl05">[Koh05]</a>.</p>
-
-</dd>
-<dt><strong class="Mark">
-    <code class="code">RCWABuildManual()</code>
-  </strong></dt>
-<dd><p>Consists of a call to a function from the <strong class="pkg">GAPDoc</strong> package.</p>
 
 </dd>
 <dt><strong class="Mark">

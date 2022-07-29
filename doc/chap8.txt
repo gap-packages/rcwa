@@ -405,7 +405,7 @@
   [8X [10XIsOne([3Xf[103X[8X[10X)[110X[8X [108X
         [33X[0;6Y[21XTrivial[121X.[133X
   
-  [8X [10XIsPerfect([3XG[103X[8X[10X)[110X[8X [108X
+  [8X [10XIsPerfectGroup([3XG[103X[8X[10X)[110X[8X [108X
         [33X[0;6YIf  the  group  [3XG[103X  is  trivial,  then  return [10Xtrue[110X. Otherwise if it is
         abelian, then return [10Xfalse[110X.[133X
   
@@ -437,7 +437,7 @@
         under [3Xf[103X  is negative. If both is the case, then return [10Xtrue[110X, otherwise
         return [10Xfalse[110X.[133X
   
-  [8X [10XIsSolvable([3XG[103X[8X[10X)[110X[8X [108X
+  [8X [10XIsSolvableGroup([3XG[103X[8X[10X)[110X[8X [108X
         [33X[0;6YIf  [3XG[103X  is abelian, then return [10Xtrue[110X. If [3XG[103X is tame, then return [10Xtrue[110X or
         [10Xfalse[110X  depending  on whether [10XActionOnRespectedPartition([3XG[103X[10X)[110X is solvable
         or not. If [3XG[103X is wild, then give up.[133X
@@ -682,9 +682,6 @@
   [8X [10XRCWA([3XR[103X[8X[10X)[110X[8X [108X
         [33X[0;6YAttributes   and   properties  are  set  according  to  Theorem 2.1.1,
         Theorem 2.1.2, Corollary 2.1.6 and Theorem 2.12.8 in [Koh05].[133X
-  
-  [8X [10XRCWABuildManual()[110X[8X [108X
-        [33X[0;6YConsists of a call to a function from the [5XGAPDoc[105X package.[133X
   
   [8X [10XRcwaGroupByPermGroup([3XG[103X[8X[10X)[110X[8X [108X
         [33X[0;6YUses [10XRcwaMapping[110X, Part (d).[133X

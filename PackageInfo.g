@@ -8,15 +8,15 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.6.4",
-Date             := "24/03/2019", # dd/mm/yyyy format
+Version          := "4.7.0",
+Date             := "29/07/2022", # dd/mm/yyyy format
 License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
                            IsAuthor      := true,
                            IsMaintainer  := true,
-                           Email         := "stefan@mcs.st-and.ac.uk",
+                           Email         := "sk239@st-andrews.ac.uk",
                            WWWHome       := "https://stefan-kohl.github.io/"
                          )
                     ],
@@ -38,14 +38,12 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/rcwa-", ~.Version ),
 ArchiveFormats   := ".tar.gz",
 
-AbstractHTML     := Concatenation("This package provides implementations of algorithms and ",
-                                  "methods for computation in certain infinite permutation groups.",
-                                  " For an abstract, see ",
-                                  "<a href = \"",~.PackageWWWHome,"\">here</a>."),
+AbstractHTML     := Concatenation("This package provides implementations of algorithms and methods",
+                                  " for computation in certain infinite permutation groups."),
 PackageDoc       := rec(
                          BookName         := "RCWA",
                          ArchiveURLSubset := ["doc"],
-                         HTMLStart        := "doc/chap0.html",
+                         HTMLStart        := "doc/chap0_mj.html",
                          PDFFile          := "doc/manual.pdf",
                          SixFile          := "doc/manual.six",
                          LongTitle        := "[R]esidue-[C]lass-[W]ise [A]ffine groups",
@@ -69,7 +67,7 @@ AvailabilityTest := function ( )
                     end,
 BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
-                                   "\n  by Stefan Kohl, stefan@mcs.st-and.ac.uk.",
+                                   "\n  by Stefan Kohl, sk239@st-andrews.ac.uk.",
                                    "\nSee ?RCWA:About for information about the package.\n\n" ),
 TestFile         := "tst/testall.g",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings",

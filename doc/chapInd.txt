@@ -35,8 +35,8 @@
       for rcwa mappings of Z x Z 5.3 
   [10XCoefficients[110X, of an rcwa mapping 2.3 
       of an rcwa mapping of Z x Z 5.3 
-  Collatz mapping 1. 
   Collatz conjecture 1. 
+  Collatz mapping 1. 
   [2XCollatzLikeMappingByOrbitTree[102X, for rcwa group, root point and range of radii 3.3-13 
   [2XCommonRightInverse[102X, of two injective rcwa mappings 2.7-2 
   [2XComputeCycleLength[102X, for an rcwa permutation and a point 3.3-6 
@@ -94,7 +94,7 @@
   [10XInduction[110X, for an rcwa monoid, by an injective rcwa mapping 4.1-1 
   [2XInduction[102X, of an rcwa group, by an injective rcwa mapping 3.1-7 
       of an rcwa mapping, by an injective rcwa mapping 3.1-7 
-  [2XInfoRCWA[102X 9.5-1 
+  [2XInfoRCWA[102X 9.4-1 
   [10XInjectiveAsMappingFrom[110X, for an rcwa mapping 2.7-3 
   integral, definition 2.4 
   [10XIntegralConjugate[110X, of a tame rcwa group 3.4-2 
@@ -138,7 +138,7 @@
       for GL(2,Z) and a residue class 5.4-1 
       for SL(2,Z) and a residue class 5.4-1 
   [10XIsOne[110X, for an rcwa mapping of Z x Z 5.3 
-  [10XIsPerfect[110X, for an rcwa group 3.2-1 
+  [10XIsPerfectGroup[110X, for an rcwa group 3.2-1 
   [10XIsPrimeSwitch[110X, for an rcwa mapping 2.5-3 
   [2XIsRcwaGroup[102X 3.6-1 
   [2XIsRcwaGroupOverGFqx[102X 3.6-1 
@@ -154,7 +154,7 @@
   [10XIsSignPreserving[110X, for an rcwa group 3.1-7 
       for an rcwa mapping 2.4 
       for an rcwa monoid 4.2 
-  [10XIsSolvable[110X, for an rcwa group 3.2-1 
+  [10XIsSolvableGroup[110X, for an rcwa group 3.2-1 
   [10XIsSubset[110X, for two rcwa monoids 4.2 
   [10XIsSurjective[110X, for an rcwa mapping 2.3 
       for an rcwa mapping of Z x Z 5.3 
@@ -294,8 +294,7 @@
       tame 4.2 
       wild 4.2 
   [10Xrcwa monoids[110X, membership test 4.2 
-  [2XRCWABuildManual[102X 9.3-1 
-  [10XRCWAInfo[110X 9.5-1 
+  [10XRCWAInfo[110X 9.4-1 
   [2XRcwaMapping[102X, by arithmetical expression 2.2-5 
       by finite field size, modulus and list of coefficients 2.2-5 
       by list of coefficients 2.2-5 
@@ -312,12 +311,13 @@
       of Z x Z, by projections to coordinates 5.2-1 
       of Z x Z, by residue class cycles 5.2-1 
   [2XRcwaMappingsFamily[102X, of a ring 2.10-2 
-  [2XRCWATestAll[102X 9.4-2 
-  [2XRCWATestExamples[102X 9.4-3 
-  [2XRCWATestInstall[102X 9.4-1 
+  [2XRCWATestAll[102X 9.3-2 
+  [2XRCWATestExamples[102X 9.3-3 
+  [2XRCWATestInstall[102X 9.3-1 
   [2XRepresentativeAction[102X, for RCWA(R) and 2 partitions of R into residue classes 3.3-12 
       G, source, destination, action 3.3-10 
   [10XRepresentativeActionPreImage[110X, G, source, destination, action, F 3.3-10 
+  [2XResidueClassCyclesThroughResidueClass[102X, for rcwa permutation, residue class and bound on modulus 3.3-5 
   [2XRespectedPartition[102X, of a tame rcwa group 3.4-1 
       of a tame rcwa permutation 3.4-1 
   [10XRespectsPartition[110X, for an rcwa group 3.4-1 
@@ -363,6 +363,7 @@
       for an rcwa mapping of Z x Z 5.3 
       for an rcwa monoid 4.1 
   [2XStructureDescription[102X, for an rcwa group 3.2-1 
+  [10XSupersetOfOrbitRepresentatives[110X, for an rcwa group over Z and search limits 3.3 
   [10XSupport[110X, of an rcwa group 3.3 
       of an rcwa mapping 2.3 
       of an rcwa mapping of Z x Z 5.3 

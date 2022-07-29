@@ -1,13 +1,11 @@
-[![Build Status](https://travis-ci.org/gap-packages/rcwa.svg?branch=master)](https://travis-ci.org/gap-packages/rcwa)
-[![Code Coverage](https://codecov.io/github/gap-packages/rcwa/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/rcwa)
+[![Build Status](https://travis-ci.com/gap-packages/rcwa.svg)](https://travis-ci.com/gap-packages/rcwa)
+[![Code Coverage](https://codecov.io/github/gap-packages/rcwa/coverage.svg)](https://codecov.io/gh/gap-packages/rcwa)
 
 # RCWA -- [R]esidue-[C]lass-[W]ise [A]ffine groups
 
 ## A GAP 4 Package
 
-### Version 4.6.4
-
-Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
+Author and Maintainer:  Stefan Kohl, sk239@st-andrews.ac.uk
 
 
 ## Abstract

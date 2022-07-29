@@ -339,7 +339,7 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XCT_Z := CT(Integers);[127X[104X
     [4X[28XCT(Z)[128X[104X
-    [4X[25Xgap>[125X [27XIsSimple(CT_Z); # One of a number of stored attributes/properties.[127X[104X
+    [4X[25Xgap>[125X [27XIsSimpleGroup(CT_Z); # One of a number of stored attributes/properties.[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XV := CT([2],Integers);[127X[104X
     [4X[28XCT_[ 2 ](Z)[128X[104X
@@ -551,14 +551,14 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YFor  tame  rcwa  groups,  there  are  methods  for  [10XIsSolvable[110X and [10XIsPerfect[110X
-  available,  and  usually  derived  subgroups  and  subgroup  indices  can be
-  computed  as  well. Linear representations of tame groups over the rationals
-  can  be  determined  by the operation [10XIsomorphismMatrixGroup[110X. Testing a wild
-  group  for  solvability or perfectness is currently not always feasible, and
-  wild   groups   have   in  general  no  faithful  finite-dimensional  linear
-  representations.  There  is  a  method  for  [10XExponent[110X available, which works
-  basically for any rcwa group.[133X
+  [33X[0;0YFor   tame   rcwa   groups,   there  are  methods  for  [10XIsSolvableGroup[110X  and
+  [10XIsPerfectGroup[110X available, and usually derived subgroups and subgroup indices
+  can  be  computed  as  well.  Linear representations of tame groups over the
+  rationals can be determined by the operation [10XIsomorphismMatrixGroup[110X. Testing
+  a  wild  group  for  solvability  or  perfectness  is  currently  not always
+  feasible,  and  wild  groups  have in general no faithful finite-dimensional
+  linear  representations.  There  is  a  method for [10XExponent[110X available, which
+  works basically for any rcwa group.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -791,6 +791,50 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YLet  [3XG[103X be a subgroup of CT(ℤ). Then, a set which has nontrivial intersection
+  with   every  orbit  of  [3XG[103X  on  [22Xℕ_0[122X  can  be  determined  by  the  operation
+  [10XSupersetOfOrbitRepresentatives([3XG[103X[10X,[3Xmaxsaddle[103X[10X,[3Xmaxprog[103X[10X)[110X.  This operation returns
+  a record with the following components:[133X
+  
+  [8X[10XR[110X[8X[108X
+        [33X[0;6YA  set  which -- possibly among other numbers -- contains the smallest
+        representatives  of  all  the orbits of [3XG[103X on the nonnegative integers.
+        The  parameters  [3Xmaxsaddle[103X and [3Xmaxprog[103X can be used to control the size
+        of this set. In general, larger values may make the set smaller.[133X
+  
+  [8X[10XD[110X[8X[108X
+        [33X[0;6YA  list  of  residue  class  unions  whose union is a (not necessarily
+        proper)  superset  the complement of [10XR[110X in ℤ. The intersection of [10XR[110X and
+        the union of the sets in [10XD[110X is always finite.[133X
+  
+  [8X[10Xg[110X[8X[108X
+        [33X[0;6YA  list  of  elements  of  [3XG[103X such that [10Xn^g[i] < n[110X for all sufficiently
+        large [10Xn[110X in [10XD[i][110X, for [10Xi = 1, ... , Length(g) = Length(D)[110X.[133X
+  
+  [8X[10Xphi[110X[8X[108X
+        [33X[0;6YAn epimorphism from a free group [10XF[110X of rank the number of generators of
+        [3XG[103X to [3XG[103X which maps generators to generators.[133X
+  
+  [8X[10Xw[110X[8X[108X
+        [33X[0;6YA  list of words [10Xw[i][110X in [10XF[110X such that [10Xw[i]^phi = g[i][110X, for [10Xi = 1, ... ,
+        Length(w) = Length(g)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG := Group(ClassTransposition(1,3,2,3),ClassTransposition(3,4,4,6),[127X[104X
+    [4X[25X>[125X [27X              ClassTransposition(2,4,1,6));[127X[104X
+    [4X[28X<(1(3),2(3)),(3(4),4(6)),(2(4),1(6))>[128X[104X
+    [4X[25Xgap>[125X [27XR := SupersetOfOrbitRepresentatives(G,4,6);[127X[104X
+    [4X[28Xrec( D := [ 2(3), 4(6), 1(6) ], R := 0(3) U [ 1 ], [128X[104X
+    [4X[28X  g := [128X[104X
+    [4X[28X    [ ( 1(3), 2(3) ), <rcwa permutation of Z with modulus 12 and [128X[104X
+    [4X[28X        5 affine parts>, <rcwa permutation of Z with modulus 12 and [128X[104X
+    [4X[28X        5 affine parts> ], [128X[104X
+    [4X[28X  pi := [ a, b, c ] -> [ ( 1(3), 2(3) ), ( 3(4), 4(6) ), ( 2(4), 1(6) ) ], [128X[104X
+    [4X[28X  w := [ a, b, c ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   [33X[0;0YFurther,  there  are  methods  to compute orbits under the action of an rcwa
   group:[133X
   
@@ -982,12 +1026,17 @@
   
   [33X[1;0Y[29X[2XShortResidueClassOrbits[102X( [3XG[103X, [3Xmodulusbound[103X, [3Xmaxlng[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XShortResidueClassCycles[102X( [3Xg[103X, [3Xmodulusbound[103X, [3Xmaxlng[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XResidueClassCyclesThroughResidueClass[102X( [3Xg[103X, [3Xcl[103X, [3Xmodulusbound[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yin  the  first  form a list of all orbits of residue classes under
             the  action of the rcwa group [3XG[103X which contain a residue class [22Xr(m)[122X
             such  that  [22Xm[122X  divides  [3Xmodulusbound[103X and which are not longer than
             [3Xmaxlng[103X. In the second form a list of all cycles of residue classes
             of  the rcwa permutation [3Xg[103X which contain a residue class [22Xr(m)[122X such
-            that [22Xm[122X divides [3Xmodulusbound[103X and which are not longer than [3Xmaxlng[103X.[133X
+            that  [22Xm[122X divides [3Xmodulusbound[103X and which are not longer than [3Xmaxlng[103X.
+            In  the  third form a list of all cycles of residue classes of the
+            rcwa  permutation [3Xg[103X  which contain a residue class [22Xr(m)[122X which is a
+            subset  of  the  residue  class  [3Xcl[103X on which [3Xg[103X is affine and whose
+            modulus [22Xm[122X divides [3Xmodulusbound[103X.[133X
   
   [33X[0;0YWe  are only talking about a [13Xcycle[113X of residue classes of an rcwa permutation
   [22Xg[122X  if  the  restrictions  of  [22Xg[122X to all contained residue classes are affine.
@@ -1012,6 +1061,19 @@
     [4X[28X     ], [128X[104X
     [4X[28X  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), [128X[104X
     [4X[28X      120(144) ] ][128X[104X
+    [4X[25Xgap>[125X [27XResidueClassCyclesThroughResidueClass(g,ResidueClass(1,4),2^2*12);[127X[104X
+    [4X[28X[ [ 5(24), 7(36), 6(36), 4(24) ], [ 21(24), 31(36), 30(36), 20(24) ], [128X[104X
+    [4X[28X  [ 9(48), 13(72), 19(108), 18(108), 12(72), 8(48) ], [128X[104X
+    [4X[28X  [ 41(48), 61(72), 91(108), 90(108), 60(72), 40(48) ] ][128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(ResidueClassCyclesThroughResidueClass(g,[127X[104X
+    [4X[25X>[125X [27X                  ResidueClass(1,4),2^6*12),Length));[127X[104X
+    [4X[28X[ [ 4, 2 ], [ 6, 4 ], [ 8, 6 ], [ 10, 8 ], [ 12, 4 ], [ 14, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(ResidueClassCyclesThroughResidueClass(g,[127X[104X
+    [4X[25X>[125X [27X        ResidueClass(1,4),2^4*12),cyc->cyc[1]);[127X[104X
+    [4X[28X[ 5(24), 21(24), 9(48), 41(48), 13(72), 61(72), 17(96), 81(96), 25(144), [128X[104X
+    [4X[28X  121(144), 33(192), 161(192) ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(Difference(ResidueClass(1,4),Union(last)));[127X[104X
+    [4X[28X1(36) U 49(144) U 97(144) U 65(192) U 129(192)[128X[104X
     [4X[25Xgap>[125X [27XG := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));[127X[104X
     [4X[28X<(0(6),5(6)),(1(4),4(6)),(2(4),3(6))>[128X[104X
     [4X[25Xgap>[125X [27XShortResidueClassOrbits(G,48,10);[127X[104X
@@ -1387,11 +1449,11 @@
   [33X[0;0YThere  are  a  couple  of attributes which a priori make only sense for tame
   rcwa  groups.  With their help, various structural information about a given
   such  group  can  be obtained. We have already seen above that there are for
-  example  methods for [10XIsSolvable[110X, [10XIsPerfect[110X and [10XDerivedSubgroup[110X available for
-  tame  rcwa  groups, while testing wild groups for solvability or perfectness
-  is currently not always feasible. The purpose of this section is to describe
-  the   specific  attributes  of  tame  groups  which  are  needed  for  these
-  computations.[133X
+  example  methods  for  [10XIsSolvableGroup[110X,  [10XIsPerfectGroup[110X  and [10XDerivedSubgroup[110X
+  available for tame rcwa groups, while testing wild groups for solvability or
+  perfectness is currently not always feasible. The purpose of this section is
+  to  describe  the  specific  attributes  of tame groups which are needed for
+  these computations.[133X
   
   
   [1X3.4-1 [33X[0;0YRespectedPartition (of a tame rcwa group or -permutation)[133X[101X

@@ -402,7 +402,7 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CT_Z := CT(Integers);</span>
 CT(Z)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimple(CT_Z); # One of a number of stored attributes/properties.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleGroup(CT_Z); # One of a number of stored attributes/properties.</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := CT([2],Integers);</span>
 CT_[ 2 ](Z)
@@ -569,7 +569,7 @@ false
 
 </pre></div>
 
-<p>For tame rcwa groups, there are methods for <code class="code">IsSolvable</code> and <code class="code">IsPerfect</code> available, and usually derived subgroups and subgroup indices can be computed as well. Linear representations of tame groups over the rationals can be determined by the operation <code class="code">IsomorphismMatrixGroup</code>. Testing a wild group for solvability or perfectness is currently not always feasible, and wild groups have in general no faithful finite-dimensional linear representations. There is a method for <code class="code">Exponent</code> available, which works basically for any rcwa group.</p>
+<p>For tame rcwa groups, there are methods for <code class="code">IsSolvableGroup</code> and <code class="code">IsPerfectGroup</code> available, and usually derived subgroups and subgroup indices can be computed as well. Linear representations of tame groups over the rationals can be determined by the operation <code class="code">IsomorphismMatrixGroup</code>. Testing a wild group for solvability or perfectness is currently not always feasible, and wild groups have in general no faithful finite-dimensional linear representations. There is a method for <code class="code">Exponent</code> available, which works basically for any rcwa group.</p>
 
 
 <div class="example"><pre>
@@ -775,6 +775,48 @@ rec(
 
 </pre></div>
 
+<p>Let <var class="Arg">G</var> be a subgroup of CT(ℤ). Then, a set which has nontrivial intersection with every orbit of <var class="Arg">G</var> on <span class="SimpleMath">\(ℕ_0\)</span> can be determined by the operation <code class="code">SupersetOfOrbitRepresentatives(<var class="Arg">G</var>,<var class="Arg">maxsaddle</var>,<var class="Arg">maxprog</var>)</code>. This operation returns a record with the following components:</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">R</code></strong></dt>
+<dd><p>A set which -- possibly among other numbers -- contains the smallest representatives of all the orbits of <var class="Arg">G</var> on the nonnegative integers. The parameters <var class="Arg">maxsaddle</var> and <var class="Arg">maxprog</var> can be used to control the size of this set. In general, larger values may make the set smaller.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">D</code></strong></dt>
+<dd><p>A list of residue class unions whose union is a (not necessarily proper) superset the complement of <code class="code">R</code> in ℤ. The intersection of <code class="code">R</code> and the union of the sets in <code class="code">D</code> is always finite.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">g</code></strong></dt>
+<dd><p>A list of elements of <var class="Arg">G</var> such that <code class="code">n^g[i] &lt; n</code> for all sufficiently large <code class="code">n</code> in <code class="code">D[i]</code>, for <code class="code">i = 1, ... , Length(g) = Length(D)</code>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">phi</code></strong></dt>
+<dd><p>An epimorphism from a free group <code class="code">F</code> of rank the number of generators of <var class="Arg">G</var> to <var class="Arg">G</var> which maps generators to generators.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">w</code></strong></dt>
+<dd><p>A list of words <code class="code">w[i]</code> in <code class="code">F</code> such that <code class="code">w[i]^phi = g[i]</code>, for <code class="code">i = 1, ... , Length(w) = Length(g)</code>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(ClassTransposition(1,3,2,3),ClassTransposition(3,4,4,6),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              ClassTransposition(2,4,1,6));</span>
+&lt;(1(3),2(3)),(3(4),4(6)),(2(4),1(6))&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := SupersetOfOrbitRepresentatives(G,4,6);</span>
+rec( D := [ 2(3), 4(6), 1(6) ], R := 0(3) U [ 1 ], 
+  g := 
+    [ ( 1(3), 2(3) ), &lt;rcwa permutation of Z with modulus 12 and 
+        5 affine parts&gt;, &lt;rcwa permutation of Z with modulus 12 and 
+        5 affine parts&gt; ], 
+  pi := [ a, b, c ] -&gt; [ ( 1(3), 2(3) ), ( 3(4), 4(6) ), ( 2(4), 1(6) ) ], 
+  w := [ a, b, c ] )
+
+</pre></div>
+
 <p>Further, there are methods to compute orbits under the action of an rcwa group:</p>
 
 <p><a id="X7C046BE97EE53692" name="X7C046BE97EE53692"></a></p>
@@ -928,7 +970,8 @@ rec( smallpoints := [ 18, 24, 25, 27, 30, 32, 33, 36, 37, 39, 40, 41,
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortResidueClassOrbits</code>( <var class="Arg">G</var>, <var class="Arg">modulusbound</var>, <var class="Arg">maxlng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortResidueClassCycles</code>( <var class="Arg">g</var>, <var class="Arg">modulusbound</var>, <var class="Arg">maxlng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: in the first form a list of all orbits of residue classes under the action of the rcwa group <var class="Arg">G</var> which contain a residue class <span class="SimpleMath">\(r(m)\)</span> such that <span class="SimpleMath">\(m\)</span> divides <var class="Arg">modulusbound</var> and which are not longer than <var class="Arg">maxlng</var>. In the second form a list of all cycles of residue classes of the rcwa permutation <var class="Arg">g</var> which contain a residue class <span class="SimpleMath">\(r(m)\)</span> such that <span class="SimpleMath">\(m\)</span> divides <var class="Arg">modulusbound</var> and which are not longer than <var class="Arg">maxlng</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResidueClassCyclesThroughResidueClass</code>( <var class="Arg">g</var>, <var class="Arg">cl</var>, <var class="Arg">modulusbound</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: in the first form a list of all orbits of residue classes under the action of the rcwa group <var class="Arg">G</var> which contain a residue class <span class="SimpleMath">\(r(m)\)</span> such that <span class="SimpleMath">\(m\)</span> divides <var class="Arg">modulusbound</var> and which are not longer than <var class="Arg">maxlng</var>. In the second form a list of all cycles of residue classes of the rcwa permutation <var class="Arg">g</var> which contain a residue class <span class="SimpleMath">\(r(m)\)</span> such that <span class="SimpleMath">\(m\)</span> divides <var class="Arg">modulusbound</var> and which are not longer than <var class="Arg">maxlng</var>. In the third form a list of all cycles of residue classes of the rcwa permutation <var class="Arg">g</var> which contain a residue class <span class="SimpleMath">\(r(m)\)</span> which is a subset of the residue class <var class="Arg">cl</var> on which <var class="Arg">g</var> is affine and whose modulus <span class="SimpleMath">\(m\)</span> divides <var class="Arg">modulusbound</var>.</p>
 
 <p>We are only talking about a <em>cycle</em> of residue classes of an rcwa permutation <span class="SimpleMath">\(g\)</span> if the restrictions of <span class="SimpleMath">\(g\)</span> to all contained residue classes are affine. Similarly we are only talking about an <em>orbit</em> of residue classes under the action of an rcwa group <span class="SimpleMath">\(G\)</span> if the restrictions of all elements of <span class="SimpleMath">\(G\)</span> to all residue classes in the orbit are affine.</p>
 
@@ -948,6 +991,19 @@ rec( smallpoints := [ 18, 24, 25, 27, 30, 32, 33, 36, 37, 39, 40, 41,
      ], 
   [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
       120(144) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ResidueClassCyclesThroughResidueClass(g,ResidueClass(1,4),2^2*12);</span>
+[ [ 5(24), 7(36), 6(36), 4(24) ], [ 21(24), 31(36), 30(36), 20(24) ], 
+  [ 9(48), 13(72), 19(108), 18(108), 12(72), 8(48) ], 
+  [ 41(48), 61(72), 91(108), 90(108), 60(72), 40(48) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(List(ResidueClassCyclesThroughResidueClass(g,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  ResidueClass(1,4),2^6*12),Length));</span>
+[ [ 4, 2 ], [ 6, 4 ], [ 8, 6 ], [ 10, 8 ], [ 12, 4 ], [ 14, 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ResidueClassCyclesThroughResidueClass(g,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        ResidueClass(1,4),2^4*12),cyc-&gt;cyc[1]);</span>
+[ 5(24), 21(24), 9(48), 41(48), 13(72), 61(72), 17(96), 81(96), 25(144), 
+  121(144), 33(192), 161(192) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(Difference(ResidueClass(1,4),Union(last)));</span>
+1(36) U 49(144) U 97(144) U 65(192) U 129(192)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));</span>
 &lt;(0(6),5(6)),(1(4),4(6)),(2(4),3(6))&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShortResidueClassOrbits(G,48,10);</span>
@@ -1280,7 +1336,7 @@ Rcwa mapping of Z with modulus 4 and 4 affine parts
   Special attributes of tame residue-class-wise affine groups
 </span></h4>
 
-<p>There are a couple of attributes which a priori make only sense for tame rcwa groups. With their help, various structural information about a given such group can be obtained. We have already seen above that there are for example methods for <code class="code">IsSolvable</code>, <code class="code">IsPerfect</code> and <code class="code">DerivedSubgroup</code> available for tame rcwa groups, while testing wild groups for solvability or perfectness is currently not always feasible. The purpose of this section is to describe the specific attributes of tame groups which are needed for these computations.</p>
+<p>There are a couple of attributes which a priori make only sense for tame rcwa groups. With their help, various structural information about a given such group can be obtained. We have already seen above that there are for example methods for <code class="code">IsSolvableGroup</code>, <code class="code">IsPerfectGroup</code> and <code class="code">DerivedSubgroup</code> available for tame rcwa groups, while testing wild groups for solvability or perfectness is currently not always feasible. The purpose of this section is to describe the specific attributes of tame groups which are needed for these computations.</p>
 
 <p><a id="X7F523A6B87825AB8" name="X7F523A6B87825AB8"></a></p>
 
