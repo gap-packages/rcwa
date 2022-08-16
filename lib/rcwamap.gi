@@ -2287,6 +2287,11 @@ InstallGlobalFunction( ClassTransposition,
     fi;
 
     result := RcwaMapping([[cl1,cl2]]);
+    if IsRcwaMappingOfZ(result)
+      and IsBoundGlobal("CTSparse") and ValueGlobal("CTSparse") = true
+    then
+      result := SparseRepresentation(result);
+    fi;
 
     if is_usual_ct then SetIsClassTransposition(result,true); fi;
     SetIsGeneralizedClassTransposition(result,true);
