@@ -3927,6 +3927,7 @@ InstallMethod( IsomorphismPermGroup,
     then H := ActionOnRespectedPartition(G);
     else H := Action(G,Flat(List(P,cl->SplittedClass(cl,3)))); fi;
     phi := Immutable(GroupHomomorphismByImagesNC(G,H));
+    SetIsInjective( phi, true );
     if   not HasParent(G)
     then SetNiceMonomorphism(G,phi); SetNiceObject(G,H); fi;
     return phi;
