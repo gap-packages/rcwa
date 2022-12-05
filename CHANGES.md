@@ -1,5 +1,11 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.7.0 and RCWA 4.7.1 (December 6, 2022):
+
+  - Added a global switch `CTSparse` to choose sparse representation
+    for class transpositions of Z.
+  - Some janitorial changes
+
 ## Changes between RCWA 4.6.4 and RCWA 4.7.0 (July 29, 2022):
 
  - An operation `TryToComputeDegreeOfTransitivity` has been added,
