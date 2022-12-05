@@ -109,7 +109,7 @@ gap> EquivalenceClasses([1..100],n->Phi(n));
   [ 41, 55, 75, 82, 88, 100 ], [ 43, 49, 86, 98 ], [ 69, 92 ], [ 47, 94 ], 
   [ 65 ], [ 53 ], [ 81 ], [ 87 ], [ 59 ], [ 61, 77, 93, 99 ], [ 85 ], [ 67 ], 
   [ 71 ], [ 73, 91, 95 ], [ 79 ], [ 83 ], [ 89 ], [ 97 ] ]
-gap> S4 := SymmetricGroup(4);; elms := AsList(S4);;
+gap> S4 := SymmetricGroup(4);; elms := AsSet(S4);;
 gap> EquivalenceClasses(elms,function(g,h) return IsConjugate(S4,g,h); end);
 [ [ (2,3,4), (2,4,3), (1,2,3), (1,2,4), (1,3,2), (1,3,4), (1,4,2), (1,4,3) ], 
   [ (3,4), (2,3), (2,4), (1,2), (1,3), (1,4) ], 
