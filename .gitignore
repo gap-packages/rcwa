@@ -20,6 +20,7 @@
 /doc/*.xml.bib
 /doc/manual.pdf
 /doc/title.xml
+/doc/_*.xml
 
 /tmp/
 /gh-pages/
