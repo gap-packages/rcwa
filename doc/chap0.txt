@@ -6,10 +6,10 @@
                        [1X Residue-Class-Wise Affine Groups [101X
   
   
-                                     4.7.0
+                                     4.7.1
   
   
-                                  29 July 2022
+                                6 December 2022
   
   
                                   Stefan Kohl
