@@ -5735,12 +5735,12 @@ InstallMethod( \^,
 
 #############################################################################
 ##
-#M  PreImageElmNC( <f>, <n> ) for a bijective rcwa mapping and a ring element
+#M  PreImageElm( <f>, <n> ) . for a bijective rcwa mapping and a ring element
 ##
 ##  Returns the preimage of the ring element <n> under the bijective
 ##  rcwa mapping <f>.
 ##
-InstallMethod( PreImageElmNC,
+InstallMethod( PreImageElm,
                "for a bijective rcwa mapping and a ring element (RCWA)",
                true, [ IsRcwaMapping and IsBijective, IsRingElement ], 0,
 
