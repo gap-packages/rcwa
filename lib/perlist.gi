@@ -92,9 +92,9 @@ InstallOtherMethod( Permuted,
                        * (Int((preperiod_bound-1)/period_bound)+1);
     else preperiod_bound := 0; fi;
     preperiod_img := List([0..preperiod_bound-1],
-                          n->Sum(perlist{PreImagesElm(f,n)+1}));
+                          n->Sum(perlist{PreImagesElmNC(f,n)+1}));
     period_img := List([preperiod_bound..preperiod_bound+period_bound-1],
-                       n->Sum(perlist{PreImagesElm(f,n)+1}));
+                       n->Sum(perlist{PreImagesElmNC(f,n)+1}));
 
     perlist_img := PeriodicList(preperiod_img,period_img);
     CompressPeriodicList(perlist_img);

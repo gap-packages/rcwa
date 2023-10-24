@@ -465,7 +465,7 @@ gap> List(B,Length);
 [ 1, 3, 6, 12, 24, 48, 96, 192 ]
 gap> List(B[3],Order);
 [ 12, infinity, infinity, infinity, infinity, 12 ]
-gap> List(B[3],g->PreImagesRepresentative(phi,g));
+gap> List(B[3],g->PreImagesRepresentativeNC(phi,g));
 [ b*a, c*b, c*a, b*c, a*c, a*b ]
 gap> g := a*b;; Order(g);;
 gap> Display(g);

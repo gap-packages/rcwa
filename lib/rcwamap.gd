@@ -843,9 +843,11 @@ DeclareAttribute( "MovedPoints", IsRcwaMonoid );
 #O  \^( <S>, <f> )  . . . . . . . . . image of <S> under the rcwa mapping <f>
 ##
 DeclareOperation( "\^", [ IsListOrCollection, IsRcwaMapping ] );
-if not CompareVersionNumbers(GAPInfo.BuildVersion,"4.10") then
-  DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
-fi;
+##
+## this declaration commented out when PreImages... changed to PreImages...NC
+## if not CompareVersionNumbers(GAPInfo.BuildVersion,"4.10") then
+##   DeclareOperation( "PreImagesSet", [ IsRcwaMapping, IsList ] );
+## fi;
 
 #############################################################################
 ##

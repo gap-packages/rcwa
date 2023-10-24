@@ -2456,8 +2456,8 @@ InstallMethod( IsomorphismRcwaGroup,
                                         g->IsIdenticalObj(f,g))));
     gens     := List([1..Length(gensF)],
                      i->Image(embs[embnrs[i]],
-                              PreImagesRepresentative(embsF[embnrs[i]],
-                                                      gensF[i])));
+                              PreImagesRepresentativeNC(embsF[embnrs[i]],
+                                                        gensF[i])));
     img := Group(gens);
     SetSize(img,infinity); SetIsTame(img,false);
     SetFreeProductInfo(img,info);
@@ -4166,7 +4166,7 @@ InstallMethod( \in,
     then return true; fi;
     Info(InfoRCWA,2,"\\in: trying to factor <g> into gen's ...");
     phi := EpimorphismFromFreeGroup(G);
-    return PreImagesRepresentative(phi,g) <> fail;
+    return PreImagesRepresentativeNC(phi,g) <> fail;
   end );
 
 #############################################################################
@@ -4259,7 +4259,7 @@ InstallMethod( \in,
       fi;
       Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
-      return PreImagesRepresentative(phi,g) <> fail;
+      return PreImagesRepresentativeNC(phi,g) <> fail;
     else
       if Modulus(G) mod Modulus(g) <> 0 then
         Info(InfoRCWA,2,"Mod(<g>) does not divide Mod(<G>).");
@@ -4296,7 +4296,7 @@ InstallMethod( \in,
       Info(InfoRCWA,2,"on RespectedPartition(<G>).");
 
       phi := EpimorphismFromFreeGroup(H);
-      h   := PreImagesRepresentative(phi,h:NoStabChain);
+      h   := PreImagesRepresentativeNC(phi,h:NoStabChain);
       if h = fail then return false; fi;
       h   := Product(List(LetterRepAssocWord(h),
                           id->gens[AbsInt(id)]^SignInt(id)));
@@ -4392,7 +4392,7 @@ InstallMethod( \in,
       fi;
       Info(InfoRCWA,2,"<G> is wild -- trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);
-      return PreImagesRepresentative(phi,g) <> fail;
+      return PreImagesRepresentativeNC(phi,g) <> fail;
     else
       if Modulus(G) mod Modulus(g) <> 0 then
         Info(InfoRCWA,2,"Mod(<g>) does not divide Mod(<G>).");
@@ -4423,7 +4423,7 @@ InstallMethod( \in,
       then return true; fi;
       Info(InfoRCWA,2,"Trying to factor <g> into gen's ...");
       phi := EpimorphismFromFreeGroup(G);            # <G> is tame -> this
-      return PreImagesRepresentative(phi,g) <> fail; # could be improved.
+      return PreImagesRepresentativeNC(phi,g) <> fail; # could be improved.
     fi;
   end );
 
@@ -6797,9 +6797,9 @@ InstallMethod( PreImagesRepresentatives,
 
 #############################################################################
 ##
-#M  PreImagesRepresentative( <phi>, <g> )
+#M  PreImagesRepresentativeNC( <phi>, <g> )
 ##
-InstallMethod( PreImagesRepresentative,
+InstallMethod( PreImagesRepresentativeNC,
                "for hom's from free groups to rcwa- or perm.-groups (RCWA)",
                ReturnTrue, [ IsGroupHomomorphism, IsObject ], SUM_FLAGS,
 
@@ -6826,7 +6826,7 @@ InstallMethod( Factorization,
                [ IsRcwaGroup, IsRcwaMapping ], 0,
 
   function ( G, g )
-    return PreImagesRepresentative(EpimorphismFromFreeGroup(G),g);
+    return PreImagesRepresentativeNC(EpimorphismFromFreeGroup(G),g);
   end );
 
 #############################################################################
