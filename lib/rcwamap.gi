@@ -3108,7 +3108,7 @@ InstallMethod( ViewObj,
     if HasBaseRoot(f) then
       View(BaseRoot(f)); Print("^",PowerOverBaseRoot(f)); return;
     fi;
-    if IsOne(Modulus(f)) then Display(f:NoLineFeed); return; fi;
+    if IsOne(Modulus(f)) then DisplayRcwaMapping(f:NoLineFeed); return; fi;
     cyclenotation := ValueOption("CycleNotation");
     if     IsRcwaMappingOfZ(f) and cyclenotation <> false
        and ( HasIsBijective(f) or cyclenotation = true ) and IsBijective(f)
@@ -3186,11 +3186,15 @@ InstallMethod( ViewObj,
 #############################################################################
 ##
 #M  Display( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#F  DisplayRcwaMapping( <f> )
 ##
 ##  Displays the rcwa mapping <f> in nice human-readable form.
 ##
 InstallMethod( Display,
                "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 10,
+               DisplayRcwaMapping );
+
+InstallGlobalFunction( "DisplayRcwaMapping",
 
   function ( f )
 
