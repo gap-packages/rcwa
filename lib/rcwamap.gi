@@ -5649,8 +5649,8 @@ InstallMethod( ImagesSet,
       c := First(f!.coeffs,
                     c->cl!.cls[1][1] mod c[2] = c[1] and cl!.m mod c[2] = 0);
       if c = fail then TryNextMethod(); fi;
-      return ResidueClass(Integers,c[3]*cl!.m/c[5],
-                                  (c[3]*cl!.cls[1][1]+c[4])/c[5]);
+      return SparseRep(ResidueClass(Integers,c[3]*cl!.m/c[5],
+                                            (c[3]*cl!.cls[1][1]+c[4])/c[5]));
     elif IsResidueClassUnionInResidueListRep(cl) then
       c := First(f!.coeffs,
                     c->cl!.r[1] mod c[2] = c[1] and cl!.m mod c[2] = 0);
