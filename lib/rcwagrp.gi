@@ -5251,7 +5251,7 @@ InstallMethod( SimplifiedCertificate,
 
   function ( input )
 
-    local  output, G, S, phi, words, imgs, classes,
+    local  output, G, S, phi, words, imgs, classes, smallpointbound,
            R, D, U, inds, indssel, down, reduced, i;
 
     if not IsSubset(NamesOfComponents(input), [ "status", "words", "classes",
@@ -5293,9 +5293,14 @@ InstallMethod( SimplifiedCertificate,
     od;
     if U <> [] then Error("internal error"); fi;
 
+    if input.status = "transitive" then
+      smallpointbound := Maximum(Filtered([0..input.smallpointbound],
+                                           n->not ForAny(imgs,g->n^g<n)));
+    fi;
+
     output := rec( phi := phi, words := words, classes := classes,
                    complete := input.complete,
-                   smallpointbound := input.smallpointbound,
+                   smallpointbound := smallpointbound,
                    status := input.status );
     return output;
   end );
