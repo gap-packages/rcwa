@@ -1732,7 +1732,7 @@ InstallGlobalFunction( ClassShiftOfZxZ,
 
     if Length(arg) = 1 and IsList(arg[1]) then arg := arg[1]; fi;
 
-    coord := arg[Length(arg)]; arg := arg{[1..Length(arg)-1]};
+    coord := Remove(arg);
     if IsZxZ(arg[1]) then arg := arg{[2..Length(arg)]}; fi;
 
     if   not coord in [1,2]
@@ -2096,7 +2096,7 @@ InstallGlobalFunction( ClassRotationOfZxZ,
 
     R := Integers^2; mats := FullMatrixAlgebra(Integers,2);
 
-    u := arg[Length(arg)]; arg := arg{[1..Length(arg)-1]};
+    u := Remove(arg);
     if IsZxZ(arg[1]) then arg := arg{[2..Length(arg)]}; fi;
 
     if   not u in mats or not DeterminantMat(u) in [-1,1]
@@ -7012,10 +7012,10 @@ BindGlobal( "NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
     local  strings, e;
 
     strings := SplitString(name,"^");
-    if not IsSubset("-0123456789",strings[Length(strings)]) then
+    if not IsSubset("-0123456789",Last(strings)) then
       e    := n;
     else
-      e    := Int(strings[Length(strings)]) * n;
+      e    := Int(Last(strings)) * n;
       name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
     fi;
     if order = fail or order = infinity then
@@ -7043,11 +7043,10 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
     local  strings, e;
 
     strings := SplitString(name,"^");
-    if not IsSubset("-0123456789{}",strings[Length(strings)]) then
+    if not IsSubset("-0123456789{}",Last(strings)) then
       e    := n;
     else
-      e    := Int(Filtered(strings[Length(strings)],
-                           ch->ch in "-0123456789")) * n;
+      e    := Int(Filtered(Last(strings),ch->ch in "-0123456789")) * n;
       name := JoinStringsWithSeparator(strings{[1..Length(strings)-1]},"^");
     fi;
     if   Position(name,'_') <> fail and name[1] <> '{'
@@ -9739,7 +9738,7 @@ InstallMethod( FactorizationIntoCSCRCT,
             od;
             if   Sum(List(Flat(disjoint),Density))
                > Density(Union(Flat(disjoint)))
-            then disjoint := disjoint{[1..Length(disjoint)-1]}; fi;
+            then Remove(disjoint); fi;
             DivideBy(List(disjoint,ClassTransposition):ct);
             pairs := Difference(pairs,disjoint);
           until pairs = [];

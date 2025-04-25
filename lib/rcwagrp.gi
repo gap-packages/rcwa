@@ -5140,7 +5140,7 @@ InstallMethod( TryToComputeTransitivityCertificate,
           if   limit > n
           then Info(InfoRCWA,1,"Increasing limit -- new limit = ",limit); fi;
           B := RestrictedBall(G,n,searchlimit,limit:Spheres,UntilSmaller);
-          m := Minimum(B[Length(B)]);
+          m := Minimum(Last(B));
           limit := Maximum(List(gens,Mult)) * limit
                  + Maximum(List(gens,MaximalShift));
         until m < n or (peakbound <> infinity and limit > peakbound * n)
@@ -5564,7 +5564,7 @@ InstallMethod( DistanceToNextSmallerPointInOrbit,
       B := Ball(G,n,2^60-1:UntilSmaller,Spheres); # 2^60-1 = max.-lng./64bit
     fi;
     B := Filtered(B,S->S<>[]);
-    m := Minimum(List(B[Length(B)],AbsInt));
+    m := Minimum(List(Last(B),AbsInt));
     if m < AbsInt(n) then
       if   ValueOption("alsopoint") = true
       then return [ Length(B) - 1, m ];
@@ -6132,7 +6132,7 @@ InstallMethod( CyclesOnFiniteOrbit,
     repeat
       r := 2 * r;
       orb := Ball(G,n,r,OnPoints:Spheres);
-    until orb[Length(orb)] = [];
+    until Last(orb) = [];
     orb := Union(orb);
     cycs := [];
     repeat
