@@ -12,9 +12,10 @@ gap> RCWADoThingsToBeDoneBeforeTest();
 gap> LoadDatabaseOfProductsOf2ClassTranspositions();
 "CTProducts"
 gap> Set(RecNames(CTProducts));
-[ "CTPairIntersectionType", "CTPairProductType", "CTPairs", 
-  "CTPairsIntersectionTypes", "CTPairsProductClassification", 
-  "CTPairsProductType", "CTProds12", "CTProds32", "OrdersMatrix" ]
+[ "CTPairIntersectionType", "CTPairIntersectionTypeNumber", 
+  "CTPairProductType", "CTPairs", "CTPairsIntersectionTypes", 
+  "CTPairsProductClassification", "CTPairsProductType", "CTProds12", 
+  "CTProds32", "OrdersMatrix" ]
 gap> LoadDatabaseOfNonbalancedProductsOfClassTranspositions();
 "CTProductsNB"
 gap> Set(RecNames(CTProductsNB));
