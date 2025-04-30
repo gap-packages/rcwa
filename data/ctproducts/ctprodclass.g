@@ -68,6 +68,20 @@
 ##  disjoint, the function `CTPairIntersectionType' returns the corresponding
 ##  intersection type, as described above.
 ##
+##  The function `CTPairIntersectionTypeNumber' takes the same arguments as
+##  `CTPairIntersectionType' (or alternatively also a list of two lists of
+##  length 4 of integers as returned by the function `ClassPairs'), and
+##  returns an integer in the range from 1 to 18, denoting the number of the
+##  intersection type. Here, the intersection types are numbered roughly by
+##  increasing "difficulty":
+##
+##   1 = [ 0, 3, 3, 0 ],  2 = [ 3, 3, 3, 3 ],  3 = [ 0, 3, 3, 3 ],
+##   4 = [ 1, 1, 3, 3 ],  5 = [ 3, 3, 3, 4 ],  6 = [ 1, 3, 3, 3 ],
+##   7 = [ 0, 3, 3, 4 ],  8 = [ 0, 3, 3, 1 ],  9 = [ 1, 3, 3, 2 ],
+##  10 = [ 1, 4, 3, 2 ], 11 = [ 1, 3, 3, 1 ], 12 = [ 1, 4, 3, 3 ],
+##  13 = [ 1, 3, 3, 4 ], 14 = [ 3, 4, 4, 3 ], 15 = [ 3, 3, 4, 4 ],
+##  16 = [ 1, 4, 3, 4 ], 17 = [ 3, 4, 4, 4 ], 18 = [ 4, 4, 4, 4 ].
+##
 ##  Given either 2 class transpositions or a 4-tuple of residue classes as
 ##  described in the last sentence, the function `CTPairProductType' returns
 ##  a list [ <intersection type>, <order>, <cycle type> ], where the entries
@@ -174,6 +188,78 @@ CTPairIntersectionType := function ( arg )
   od;
 
   return type;
+end,
+
+CTPairIntersectionTypeNumber := function ( arg )
+
+  local  cls, type, types, indices, pair,
+         equivalentsV4, equivalentslist, i;
+
+  if Length(arg) = 1 then arg := arg[1]; fi;
+
+  if   Length(arg) = 2 and ForAll(arg,IsRcwaMapping)
+    and ForAll(arg,IsClassTransposition)
+  then
+    cls := Concatenation(List(arg,TransposedClasses));
+    cls := List(cls,cl->[Residue(cl),Modulus(cl)]);
+  elif Length(arg) = 4 and ForAll(arg,IsResidueClassOfZ) then
+    cls := List(arg,cl->[Residue(cl),Modulus(cl)]);
+  elif Length(arg) = 2 and
+       ForAll(arg,l->IsList(l) and Length(l) = 4 and ForAll(l,IsInt))
+  then
+    cls := [arg[1]{[1,2]},arg[1]{[3,4]},arg[2]{[1,2]},arg[2]{[3,4]}];
+  else
+    Error("usage: CTPairIntersectionType(<2 class transpositions>|",
+                                        "<4 residue classes>|",
+                                        "<2 lists of 4 integers>)\n");
+  fi;
+
+  type := [];
+  for indices in [[1,3],[1,4],[2,3],[2,4]] do
+    pair := cls{indices};
+    if   pair[1] = pair[2]
+    then
+      Add(type,0);
+    elif pair[2][2] mod pair[1][2] = 0
+      and pair[2][1] mod pair[1][2] = pair[1][1]
+    then # IsSubset(pair[1],pair[2])
+      Add(type,1);
+    elif pair[1][2] mod pair[2][2] = 0
+      and pair[1][1] mod pair[2][2] = pair[2][1]
+    then # IsSubset(pair[2],pair[1])
+      Add(type,2);
+    elif (pair[1][1]-pair[2][1]) mod Gcd(pair[1][2],pair[2][2]) <> 0
+    then # Intersection(pair[1],pair[2]) = []
+      Add(type,3);
+    else
+      Add(type,4);
+    fi;
+  od;
+
+  equivalentsV4 := Set([type,Permuted(type,(1,2)(3,4)),
+                             Permuted(type,(1,3)(2,4)),
+                             Permuted(type,(1,4)(2,3))]);
+  type := equivalentsV4[1];
+
+  equivalentslist := [[[0,3,3,2],[0,3,3,1]],
+                      [[2,3,2,3],[1,1,3,3]],
+                      [[2,3,3,2],[1,3,3,1]],
+                      [[2,3,3,3],[1,3,3,3]],
+                      [[2,3,3,4],[1,3,3,4]],
+                      [[2,3,4,3],[1,4,3,3]],
+                      [[2,3,4,4],[1,4,3,4]],
+                      [[3,4,3,4],[3,3,4,4]]];
+
+  for i in [1..8] do
+    if   type  = equivalentslist[i][1]
+    then type := equivalentslist[i][2]; fi;
+  od;
+
+  types := [[0,3,3,0],[3,3,3,3],[0,3,3,3],[1,1,3,3],[3,3,3,4],[1,3,3,3],
+            [0,3,3,4],[0,3,3,1],[1,3,3,2],[1,4,3,2],[1,3,3,1],[1,4,3,3],
+            [1,3,3,4],[3,4,4,3],[3,3,4,4],[1,4,3,4],[3,4,4,4],[4,4,4,4]];
+
+  return Position(types,type);
 end,
 
 CTPairProductType := function ( arg )
