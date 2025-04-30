@@ -16,6 +16,12 @@ gap> Set(RecNames(CTProducts));
   "CTPairProductType", "CTPairs", "CTPairsIntersectionTypes", 
   "CTPairsProductClassification", "CTPairsProductType", "CTProds12", 
   "CTProds32", "OrdersMatrix" ]
+gap> cls1 := EquivalenceClasses(Combinations(ClassPairs(6),2),
+>              c->CTProducts.CTPairIntersectionTypeNumber(c));;
+gap> cls2 := EquivalenceClasses(Combinations(ClassPairs(6),2),
+>              c->CTProducts.CTPairIntersectionType(List(c,ClassTransposition)));;
+gap> AsSortedList(List(cls1,Length)) = AsSortedList(List(cls2,Length));
+true
 gap> LoadDatabaseOfNonbalancedProductsOfClassTranspositions();
 "CTProductsNB"
 gap> Set(RecNames(CTProductsNB));
