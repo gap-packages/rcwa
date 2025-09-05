@@ -35,12 +35,6 @@ DeclareSynonym( "IsRcwaMonoidOverZOrZ_pi",
 
 #############################################################################
 ##
-#V  TrivialRcwaMonoidOverZ . . . . . . . . . . . . trivial rcwa monoid over Z
-##
-DeclareGlobalVariable( "TrivialRcwaMonoidOverZ" );
-
-#############################################################################
-##
 #O  RcwaCons( <R> ) . . . . . . . . . . . . . . . . . .  Rcwa( R ) for ring R
 #F  Rcwa( <R> )
 ##

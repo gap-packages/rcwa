@@ -369,8 +369,8 @@ InstallMethod( LaTeXStringRcwaGroup,
 #V  TrivialRcwaGroupOverZ . . . . . . . . . . . . . trivial rcwa group over Z
 #V  TrivialRcwaGroupOverZxZ . . . . . . . . . . . trivial rcwa group over Z^2
 ##
-InstallValue( TrivialRcwaGroupOverZ, Group( IdentityRcwaMappingOfZ ) );
-InstallValue( TrivialRcwaGroupOverZxZ, Group( IdentityRcwaMappingOfZxZ ) );
+BindGlobal( "TrivialRcwaGroupOverZ", Group( IdentityRcwaMappingOfZ ) );
+BindGlobal( "TrivialRcwaGroupOverZxZ", Group( IdentityRcwaMappingOfZxZ ) );
 
 #############################################################################
 ##

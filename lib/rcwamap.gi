@@ -2704,8 +2704,8 @@ InstallGlobalFunction( ClassPairs,
     return tuples;
   end );
 
-InstallValue( CLASS_PAIRS, [ 6, ClassPairs(6) ] );
-InstallValue( CLASS_PAIRS_LARGE, CLASS_PAIRS );
+BindGlobal( "CLASS_PAIRS", [ 6, ClassPairs(6) ] );
+BindGlobal( "CLASS_PAIRS_LARGE", CLASS_PAIRS );
 
 #############################################################################
 ##
@@ -4442,10 +4442,10 @@ InstallMethod( \<,
 #V  ZeroRcwaMappingOfZ . . . . . . . . . . . . . . . . zero rcwa mapping of Z
 #V  ZeroRcwaMappingOfZxZ . . . . . . . . . . . . . . zero rcwa mapping of Z^2
 ##
-InstallValue( ZeroRcwaMappingOfZ, RcwaMapping( [ [ 0, 0, 1 ] ] ) );
+BindGlobal( "ZeroRcwaMappingOfZ", RcwaMapping( [ [ 0, 0, 1 ] ] ) );
 SetIsZero( ZeroRcwaMappingOfZ, true );
 SetImagesSource( ZeroRcwaMappingOfZ, [ 0 ] );
-InstallValue( ZeroRcwaMappingOfZxZ,
+BindGlobal( "ZeroRcwaMappingOfZxZ",
               RcwaMapping( Integers^2, [ [ 1, 0 ], [ 0, 1 ] ],
                            [ [ [ [ 0, 0 ], [ 0, 0 ] ], [ 0, 0 ], 1 ] ] ) );
 SetIsZero( ZeroRcwaMappingOfZxZ, true );
@@ -4535,9 +4535,9 @@ InstallMethod( IsZero, "for rcwa mappings of Z^2 (RCWA)", true,
 #V  IdentityRcwaMappingOfZ . . . . . . . . . . . . identity rcwa mapping of Z
 #V  IdentityRcwaMappingOfZxZ . . . . . . . . . . identity rcwa mapping of Z^2
 ##
-InstallValue( IdentityRcwaMappingOfZ, RcwaMapping( [ [ 1, 0, 1 ] ] ) );
+BindGlobal( "IdentityRcwaMappingOfZ", RcwaMapping( [ [ 1, 0, 1 ] ] ) );
 SetIsOne( IdentityRcwaMappingOfZ, true );
-InstallValue( IdentityRcwaMappingOfZxZ,
+BindGlobal( "IdentityRcwaMappingOfZxZ",
               RcwaMapping( Integers^2, [ [ 1, 0 ], [ 0, 1 ] ],
                            [ [ [ [ 1, 0 ], [ 0, 1 ] ], [ 0, 0 ], 1 ] ] ) );
 SetIsOne( IdentityRcwaMappingOfZxZ, true );

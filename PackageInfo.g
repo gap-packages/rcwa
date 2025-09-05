@@ -49,7 +49,7 @@ PackageDoc       := rec(
                          LongTitle        := "[R]esidue-[C]lass-[W]ise [A]ffine groups",
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.11.1",
+                         GAP                    := ">=4.12.0",
                          NeededOtherPackages    := [ ["ResClasses",">=4.7.2"], ["GRAPE",">=4.7"],
                                                      ["Polycyclic",">=2.11"], ["FR",">=2.2.1"],
                                                      ["GAPDoc",">=1.5.1"], ["Utils",">=0.40"] ],
