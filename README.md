@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/gap-packages/rcwa/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/rcwa/actions?query=workflow%3ACI+branch%3Amaster)
+[![CI](https://github.com/gap-packages/rcwa/actions/workflows/CI.yml/badge.svg)](https://github.com/gap-packages/rcwa/actions/workflows/CI.yml)
 [![Code Coverage](https://codecov.io/github/gap-packages/rcwa/coverage.svg)](https://codecov.io/gh/gap-packages/rcwa)
 
 # RCWA -- [R]esidue-[C]lass-[W]ise [A]ffine groups
