@@ -768,8 +768,8 @@ gap> List([[0,3],[1,3],[2,3]],ResidueClass)^a;
 <Index Key="PreImageElm" Subkey="of a ring element under an rcwa mapping">
   <C>PreImageElm</C>
 </Index>
-<Index Key="PreImagesElmNC" Subkey="of a ring element under an rcwa mapping">
-  <C>PreImagesElmNC</C>
+<Index Key="PreImagesElm" Subkey="of a ring element under an rcwa mapping">
+  <C>PreImagesElm</C>
 </Index>
 <Index Key="PreImage"
        Subkey="of a set of ring elements under an rcwa mapping">
@@ -788,7 +788,7 @@ many residue classes under an rcwa mapping can be computed by
 
 <Example>
 <![CDATA[
-gap> PreImagesElmNC(T,8);
+gap> PreImagesElm(T,8);
 [ 5, 16 ]
 gap> PreImage(T,ResidueClass(Integers,3,2));
 Z \ 0(6) U 2(6)

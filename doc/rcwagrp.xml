@@ -834,7 +834,7 @@ gap> RelatorsOfFpGroup(Source(phi));
 A related very common task is to factor group elements into generators:
 
 <ManSection>
-  <Meth Name ="PreImagesRepresentativeNC" Arg="phi, g"
+  <Meth Name ="PreImagesRepresentative" Arg="phi, g"
         Label="for an epi. from a free group to an rcwa group"/>
   <Returns>
     a representative of the set of preimages of&nbsp;<A>g</A> under
@@ -859,7 +859,7 @@ A related very common task is to factor group elements into generators:
     computing just one, i.e. often several preimages are found
     simultaneously. The operation <C>PreImagesRepresentatives</C>
     takes care of this. It takes the same arguments as
-    <C>PreImagesRepresentativeNC</C> and returns a list of preimages.
+    <C>PreImagesRepresentative</C> and returns a list of preimages.
     If multiple preimages are found, their quotients give rise to nontrivial
     relations among the generators of the image of&nbsp;<A>phi</A>.
 <Example>
@@ -870,7 +870,7 @@ gap> G := Group(a,b);; # G = <<Collatz permutation>, n -> n + 1>
 gap> phi := EpimorphismFromFreeGroup(G);;
 gap> g := Comm(a^2*b^4,a*b^3); # a sample element to be factored
 <rcwa permutation of Z with modulus 8>
-gap> PreImagesRepresentativeNC(phi,g); # -> a factorization of g
+gap> PreImagesRepresentative(phi,g); # -> a factorization of g
 b^-3*(b^-1*a^-1)^2*b^3*a*b^-1*a*b^3
 gap> g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check
 true
