@@ -454,7 +454,7 @@ gap> elm in H;
 true
 gap> elm in H2;
 true
-gap> PreImagesRepresentativeNC(phi,elm);
+gap> PreImagesRepresentative(phi,elm);
 ac^-1
 gap> ClassPairs(x^2);
 [ [ 0, x, 1, x ], [ 0, x+1, 1, x+1 ] ]

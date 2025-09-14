@@ -365,9 +365,9 @@ gap> ImagesSet(StandardRep(g),SparseRep(ResidueClass(0,3)));
 5(6) U 0(12) U 2(12)
 gap> ImagesSet(g,Union(ResidueClass(0,3),ResidueClass(1,3)));
 Z \ 3(6) U 4(6)
-gap> PreImagesElmNC(g,2);
+gap> PreImagesElm(g,2);
 [ 3 ]
-gap> PreImagesElmNC(SparseRep(T),8);
+gap> PreImagesElm(SparseRep(T),8);
 [ 5, 16 ]
 gap> f := RcwaMapping([[0,2,0,3,1],[1,2,2,5,1]]);
 <rcwa mapping of Z with modulus 2 and 2 affine parts>
@@ -381,23 +381,23 @@ Rcwa mapping of Z with modulus 2 and 2 affine parts
         |
         \
 
-gap> PreImagesElmNC(f,3);
+gap> PreImagesElm(f,3);
 0(2) U [ -1 ]
 gap> (-1)^f;
 3
-gap> PreImagesElmNC(f,9);
+gap> PreImagesElm(f,9);
 [  ]
-gap> PreImagesElmNC(f,11);
+gap> PreImagesElm(f,11);
 [ 3 ]
-gap> PreImagesRepresentativeNC(T,8);
+gap> PreImagesRepresentative(T,8);
 16
-gap> PreImagesRepresentativeNC(f,3);
+gap> PreImagesRepresentative(f,3);
 0
-gap> PreImagesRepresentativeNC(f,5);
+gap> PreImagesRepresentative(f,5);
 fail
-gap> PreImagesRepresentativeNC(f,7);
+gap> PreImagesRepresentative(f,7);
 1
-gap> PreImagesSetNC(f,ResidueClass(0,3));
+gap> PreImagesSet(f,ResidueClass(0,3));
 Z \ 1(6) U 3(6)
 gap> Display(f+f);
 
@@ -672,9 +672,9 @@ gap> PreImage(k,[0,1,4,8,16]);
 gap> PreImage(k,[0,1,3,4,8,14]);
 1(2) U [ 0, 2, 4 ]
 gap> ZeroOne := RcwaMapping([[0,0,1],[0,1,1]]);;
-gap> PreImagesElmNC(ZeroOne,6);
+gap> PreImagesElm(ZeroOne,6);
 [  ]
-gap> PreImagesElmNC(ZeroOne,1);
+gap> PreImagesElm(ZeroOne,1);
 1(2)
 gap> Image(ZeroOne);
 [ 0, 1 ]
@@ -735,12 +735,12 @@ gap> 15^T;
 23
 gap> PreImageElm(u,8);
 4
-gap> PreImagesElmNC(T,8);
+gap> PreImagesElm(T,8);
 [ 5, 16 ]
-gap> PreImagesElmNC(ZeroRcwaMappingOfZ,0);
+gap> PreImagesElm(ZeroRcwaMappingOfZ,0);
 Integers
 gap> d := RcwaMapping([[0,0,1],[0,1,1]]);;
-gap> PreImagesRepresentativeNC(d,1);
+gap> PreImagesRepresentative(d,1);
 1
 gap> ClassShift(0,1)^17 in Group(ClassShift(0,1));
 true
@@ -1591,15 +1591,15 @@ gap> last^T;
 [1/3] U [1/9] U [2/9] U [8/9] U [13/27] U [17/27] U [20/27] U [80/81]
 gap> AsOrdinaryUnionOfResidueClasses(last);
 Z \ 0(3) U 5(9)
-gap> PreImagesSetNC(T,cl);
+gap> PreImagesSet(T,cl);
 [2/4] U [3/4]
 gap> AsOrdinaryUnionOfResidueClasses(last);
 2(4) U 3(4)
-gap> PreImagesSetNC(T,last2);
+gap> PreImagesSet(T,last2);
 [1/8] U [4/8] U [6/8] U [7/8]
 gap> Delta(last);            
 1/4
-gap> PreImagesSetNC(T,last2);
+gap> PreImagesSet(T,last2);
 [2/16] U [8/16] U [9/16] U [11/16] U [12/16] U [13/16] U [14/16] U [15/16]
 gap> Delta(last);            
 5/4
@@ -2099,7 +2099,7 @@ gap> l := [];;
 gap> for h in H do Add(l,h); if Length(l) = 10 then break; fi; od;
 gap> List(l,h->0^h);
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-gap> List(l,h->PreImagesRepresentativeNC(phi,h));
+gap> List(l,h->PreImagesRepresentative(phi,h));
 [ <identity ...>, h*g^-1, g^-1*h^-1*g^2, g^-2*h*g, g*h^-1, g^-2*h^-1*g^3, 
   (g^2*h)^2*g^-3*h^-1*g^-2, g^2*h*g^3*(h^-1*g^-2)^2, g^3*h*g*h^-2*g^-3, 
   g^-3*h*g^2 ]
