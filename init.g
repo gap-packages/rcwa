@@ -6,7 +6,8 @@
 ##
 #############################################################################
 
-#I introducing globally the NC versions of PreImages...  
+# introducing globally the NC versions of PreImages* function for
+# compatibility with older GAP version which do not provide them
 if not IsBound( PreImagesNC ) then 
     BindGlobal( "PreImagesNC", PreImages ); 
 fi; 

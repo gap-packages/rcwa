@@ -813,7 +813,7 @@ DeclareOperation( "EpimorphismFromFpGroup",
 ##
 #O  PreImagesRepresentatives( <map>, <elm> ) . . . .  several representatives
 ##
-##  This is an analogue to `PreImagesRepresentativeNC', which returns a list
+##  This is an analogue to `PreImagesRepresentative', which returns a list
 ##  of possibly several representatives if computing these is not harder than
 ##  computing just one representative.
 ##
