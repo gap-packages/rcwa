@@ -768,8 +768,8 @@ gap> List([[0,3],[1,3],[2,3]],ResidueClass)^a;
 <Index Key="PreImageElm" Subkey="of a ring element under an rcwa mapping">
   <C>PreImageElm</C>
 </Index>
-<Index Key="PreImagesElm" Subkey="of a ring element under an rcwa mapping">
-  <C>PreImagesElm</C>
+<Index Key="PreImagesElmNC" Subkey="of a ring element under an rcwa mapping">
+  <C>PreImagesElmNC</C>
 </Index>
 <Index Key="PreImage"
        Subkey="of a set of ring elements under an rcwa mapping">
@@ -781,14 +781,14 @@ gap> List([[0,3],[1,3],[2,3]],ResidueClass)^a;
 </Index>
 
 For computing preimages of elements under rcwa mappings,
-there are methods for <C>PreImageElm</C> and <C>PreImagesElm</C>.
+there are methods for <C>PreImageElm</C> and <C>PreImagesElmNC</C>.
 The preimage of a finite set of ring elements or of a union of finitely
 many residue classes under an rcwa mapping can be computed by
 <C>PreImage</C>.
 
 <Example>
 <![CDATA[
-gap> PreImagesElm(T,8);
+gap> PreImagesElmNC(T,8);
 [ 5, 16 ]
 gap> PreImage(T,ResidueClass(Integers,3,2));
 Z \ 0(6) U 2(6)

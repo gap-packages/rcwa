@@ -384,7 +384,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     Check whether <C>h</C> lies in <C>H</C>. If not, return <C>false</C>.
     Compute an element <C>g1</C> of <A>G</A> which acts on&nbsp;<C>P</C>
     like&nbsp;<A>g</A>. For this purpose, factor <A>h</A> into generators
-    of&nbsp;<C>H</C> using <C>PreImagesRepresentative</C>, and compute the
+    of&nbsp;<C>H</C> using <C>PreImagesRepresentativeNC§</C>, and compute the
     corresponding product of generators of&nbsp;<A>G</A>.
     Let <C>k := g/g1</C>. The mapping <C>k</C> is always integral.
     Compute the kernel&nbsp;<C>K</C> of the action of <A>G</A>
@@ -407,7 +407,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
     not leave a partition of&nbsp;&ZZ; into unions of residue
     classes (mod&nbsp;<M>m</M>) invariant which is fixed by&nbsp;<A>G</A>.
     If successful, return <C>false</C>. If not, try to factor <A>g</A> into
-    generators of&nbsp;<A>G</A> using <C>PreImagesRepresentative</C>.
+    generators of&nbsp;<A>G</A> using <C>PreImagesRepresentativeNC</C>.
     If successful, return <C>true</C>. If <A>g</A> is in <A>G</A>, this
     terminates after a finite number of steps. Both run time and memory
     requirements are exponential in the word length. If <A>g</A> is not
@@ -1148,7 +1148,7 @@ algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
   </Item>
 
   <Mark>
-    <C>PreImagesRepresentative(<A>phi</A>,<A>g</A>)</C>, &nbsp;
+    <C>PreImagesRepresentativeNC(<A>phi</A>,<A>g</A>)</C>, &nbsp;
     <C>PreImagesRepresentatives(<A>phi</A>,<A>g</A>)</C>
   </Mark>
   <Item>

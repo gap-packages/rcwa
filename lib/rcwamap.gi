@@ -5754,11 +5754,11 @@ InstallMethod( PreImageElm,
 
 #############################################################################
 ##
-#M  PreImagesElm( <f>, <n> ) . . . . . for an rcwa mapping and a ring element
+#M  PreImagesElmNC( <f>, <n> ) . . . . for an rcwa mapping and a ring element
 ##
 ##  Returns the preimages of <n> under the rcwa mapping <f>. 
 ##
-InstallMethod( PreImagesElm,
+InstallMethod( PreImagesElmNC,
                "for an rcwa mapping and a ring element (RCWA)", ReturnTrue, 
                [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
 
@@ -5788,9 +5788,9 @@ InstallMethod( PreImagesElm,
 
 #############################################################################
 ##
-#M  PreImagesElm( <f>, <n> ) . . . .  for an rcwa mapping of Z and an integer
+#M  PreImagesElmNC( <f>, <n> ) . . .  for an rcwa mapping of Z and an integer
 ##
-InstallMethod( PreImagesElm,
+InstallMethod( PreImagesElmNC,
                "for an rcwa mapping of Z and an integer (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
 
@@ -5818,12 +5818,12 @@ InstallMethod( PreImagesElm,
 
 #############################################################################
 ##
-#M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping and ring element
+#M  PreImagesRepresentativeNC( <f>, <n> ) . for rcwa mapping and ring element
 ##
 ##  Returns a representative of the set of preimages of the integer <n> under
 ##  the rcwa mapping <f>. 
 ##
-InstallMethod( PreImagesRepresentative,
+InstallMethod( PreImagesRepresentativeNC,
                "for an rcwa mapping and a ring element (RCWA)",
                ReturnTrue, [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
 
@@ -5847,9 +5847,9 @@ InstallMethod( PreImagesRepresentative,
 
 #############################################################################
 ##
-#M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping of Z and integer
+#M  PreImagesRepresentativeNC( <f>, <n> ) . for rcwa mapping of Z and integer
 ##
-InstallMethod( PreImagesRepresentative,
+InstallMethod( PreImagesRepresentativeNC,
                "for an rcwa mapping of Z and an integer (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
 
@@ -5871,12 +5871,12 @@ InstallMethod( PreImagesRepresentative,
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <R> ) . .  for an rcwa mapping and its underlying ring
+#M  PreImagesSetNC( <f>, <R> ) .  for an rcwa mapping and its underlying ring
 ##
 ##  Returns the source of the rcwa mapping <f>.
 ##  For technical purposes, only.
 ##
-InstallMethod( PreImagesSet,
+InstallMethod( PreImagesSetNC,
                "for an rcwa mapping and its underlying ring (RCWA)", true, 
                [ IsRcwaMapping, IsRing ], 0,
 
@@ -5887,26 +5887,26 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <l> ) . . . . . . for an rcwa mapping and a finite set
+#M  PreImagesSetNC( <f>, <l> ) . . . . . for an rcwa mapping and a finite set
 ##
 ##  Returns the preimage of the finite set <l> under the rcwa mapping <f>.
 ##
-InstallMethod( PreImagesSet,
+InstallMethod( PreImagesSetNC,
                "for an rcwa mapping and a finite set (RCWA)",
                true, [ IsRcwaMapping, IsList ], 0,
 
   function ( f, l )
-    return Union( List( Set( l ), n -> PreImagesElm( f, n ) ) );
+    return Union( List( Set( l ), n -> PreImagesElmNC( f, n ) ) );
   end );
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <S> ) .  for an rcwa mapping and a residue class union
+#M  PreImagesSetNC( <f>, <S> )  for an rcwa mapping and a residue class union
 ##
 ##  Returns the preimage of the residue class union <S> under the
 ##  rcwa mapping <f>.
 ##
-InstallMethod( PreImagesSet,
+InstallMethod( PreImagesSetNC,
                "for an rcwa mapping and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMapping, IsResidueClassUnion ], 0,
 
@@ -5920,13 +5920,13 @@ InstallMethod( PreImagesSet,
     premod := Modulus(f) * Divisor(f) * Modulus(S);
     preres := Filtered( AllResidues( R, premod ), n -> n^f in rump );
     parts := [ ResidueClassUnion( R, premod, preres ) ];
-    Append( parts, List( IncludedElements(S), n -> PreImagesElm( f, n ) ) );
+    Append( parts, List( IncludedElements(S), n -> PreImagesElmNC( f, n ) ) );
     preimage := Union( parts );
     excluded := ExcludedElements(S);
     for n in excluded do
-      pre  := PreImagesElm( f, n );
+      pre  := PreImagesElmNC( f, n );
       im   := ImagesSet( f, pre );
-      pre2 := PreImagesSet( f, Difference( im, excluded ) );
+      pre2 := PreImagesSetNC( f, Difference( im, excluded ) );
       diff := Difference( pre, pre2 );
       if   not IsEmpty( diff )
       then preimage := Difference( preimage, diff ); fi;
@@ -5936,9 +5936,9 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <S> ) .  for rcwa mapping of Z and residue class union
+#M  PreImagesSetNC( <f>, <S> )  for rcwa mapping of Z and residue class union
 ##
-InstallMethod( PreImagesSet,
+InstallMethod( PreImagesSetNC,
                "for an rcwa mapping of Z and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
                              IsResidueClassUnionOfZ ], 0,
@@ -5966,12 +5966,12 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
-#M  PreImagesSet( <f>, <U> ) . . . . as above, but with fixed representatives
+#M  PreImagesSetNC( <f>, <U> ) . . . as above, but with fixed representatives
 ##
 ##  Returns the preimage of the union <U> of residue classes of Z with fixed
 ##  representatives under the rcwa mapping <f>.
 ##
-InstallMethod( PreImagesSet,
+InstallMethod( PreImagesSetNC,
                Concatenation("for an rcwa mapping of Z and a union of ",
                              "residue classes with fixed rep's (RCWA)"),
                ReturnTrue,
@@ -5989,8 +5989,8 @@ InstallMethod( PreImagesSet,
     cls := AsListOfClasses(U);
     cls := List([1..l],i->RepresentativeStabilizingRefinement(cls[i],k[i]));
     cls := Flat(List(cls,cl->AsListOfClasses(cl)));
-    rep := List(cls,cl->PreImagesElm(f,Classes(cl)[1][2]));
-    cls := List(cls,cl->PreImagesSet(f,AsOrdinaryUnionOfResidueClasses(cl)));
+    rep := List(cls,cl->PreImagesElmNC(f,Classes(cl)[1][2]));
+    cls := List(cls,cl->PreImagesSetNC(f,AsOrdinaryUnionOfResidueClasses(cl)));
     clm := AllResidueClassesModulo(Integers,m);
     cls := List(cls,cl1->List(clm,cl2->Intersection(cl1,cl2)));
     cls := List(cls,list->Filtered(list,cl->cl<>[]));
@@ -6249,7 +6249,7 @@ InstallGlobalFunction( InjectiveAsMappingFrom,
       imcl    := cl^f;
       overlap := Intersection(im,imcl);
       im      := Union(im,imcl);
-      pre     := Difference(pre,Intersection(PreImagesSet(f,overlap),cl));
+      pre     := Difference(pre,Intersection(PreImagesSetNC(f,overlap),cl));
     od;
     return pre;
   end );
@@ -8338,9 +8338,9 @@ InstallMethod( Sources,
     adj   := TransitionGraph(f,Modulus(f)).adjacencies;
     comps := List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(adj),
                   comp->ResidueClassUnion(Source(f),Modulus(f),res{comp}));
-    sources := Filtered(comps,comp ->    IsSubset(comp,PreImagesSet(f,comp))
-                                     and IsSubset(comp^f,comp)
-                                     and comp^f <> comp);
+    sources := Filtered(comps,comp -> IsSubset(comp,PreImagesSetNC(f,comp))
+                                        and IsSubset(comp^f,comp)
+                                        and comp^f <> comp);
     return sources;
   end );
 
@@ -8359,9 +8359,9 @@ InstallMethod( Sinks,
     adj   := TransitionGraph(f,Modulus(f)).adjacencies;
     comps := List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(adj),
                   comp->ResidueClassUnion(Source(f),Modulus(f),res{comp}));
-    sinks := Filtered(comps,comp ->    IsSubset(PreImagesSet(f,comp),comp)
-                                   and IsSubset(comp,comp^f)
-                                   and comp <> comp^f);
+    sinks := Filtered(comps,comp -> IsSubset(PreImagesSetNC(f,comp),comp)
+                                      and IsSubset(comp,comp^f)
+                                      and comp <> comp^f);
     return sinks;
   end );
 
