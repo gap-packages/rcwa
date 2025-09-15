@@ -157,7 +157,7 @@ InstallMethod( Display,
 ##
 #V  TrivialRcwaMonoidOverZ . . . . . . . . . . . . trivial rcwa monoid over Z
 ##
-InstallValue( TrivialRcwaMonoidOverZ, Monoid( IdentityRcwaMappingOfZ ) );
+BindGlobal( "TrivialRcwaMonoidOverZ", Monoid( IdentityRcwaMappingOfZ ) );
 
 #############################################################################
 ##
