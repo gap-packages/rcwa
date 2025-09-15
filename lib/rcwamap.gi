@@ -4449,7 +4449,7 @@ BindGlobal( "ZeroRcwaMappingOfZxZ",
               RcwaMapping( Integers^2, [ [ 1, 0 ], [ 0, 1 ] ],
                            [ [ [ [ 0, 0 ], [ 0, 0 ] ], [ 0, 0 ], 1 ] ] ) );
 SetIsZero( ZeroRcwaMappingOfZxZ, true );
-SetImagesSource( ZeroRcwaMappingOfZ, [ 0, 0 ] );
+SetImagesSource( ZeroRcwaMappingOfZxZ, [ [ 0, 0 ] ] );
 
 #############################################################################
 ##
@@ -5672,7 +5672,7 @@ InstallMethod( ImagesSet,
 ##
 InstallMethod( ImagesSource,
                "for an rcwa mapping and a residue class union (RCWA)",
-               true, [ IsRcwaMapping ], 2 * SUM_FLAGS,
+               true, [ IsRcwaMapping ], SUM_FLAGS,
                f -> ImagesSet( f, Source( f ) ) );
 
 #############################################################################
