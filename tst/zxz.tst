@@ -9,6 +9,14 @@
 
 gap> START_TEST( "zxz.tst" );
 gap> RCWADoThingsToBeDoneBeforeTest();
+gap> ImagesSource(IdentityRcwaMappingOfZ);  
+Integers
+gap> ImagesSource(ZeroRcwaMappingOfZ);  
+[ 0 ]
+gap> ImagesSource(IdentityRcwaMappingOfZxZ);
+( Integers^2 )
+gap> ImagesSource(ZeroRcwaMappingOfZxZ);
+[ [ 0, 0 ] ]
 gap> L1 := [ [ 2, 1 ], [ -1, 2 ] ];;
 gap> L2 := [ [ 6, 2 ], [ 0, 6 ] ];;
 gap> R := DefaultRing(L1,L2);
