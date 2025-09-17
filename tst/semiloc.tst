@@ -268,9 +268,9 @@ Rcwa mapping of Z_( 2 ) with modulus 4
 
 gap> IsomorphismRcwaGroup(Group(()),Z_pi(2));
 [ () ] -> [ IdentityMapping( Z_( 2 ) ) ]
-gap> IsomorphismRcwaGroup(SmallGroup(1,1),Z_pi(2));
+gap> IsomorphismRcwaGroup(TrivialGroup(IsPcGroup),Z_pi(2));
 [ <identity> of ... ] -> [ IdentityMapping( Z_( 2 ) ) ]
-gap> phi := IsomorphismRcwaGroup(SmallGroup(8,4),Z_pi(2));;
+gap> phi := IsomorphismRcwaGroup(QuaternionGroup(8),Z_pi(2));;
 gap> StructureDescription(Image(phi));
 "Q8"
 gap> phi := IsomorphismRcwaGroup(SymmetricGroup(5),Z_pi([2,3,5]));

@@ -418,9 +418,9 @@ gap> StructureDescription(Group(ClassTransposition(Zero(R),x,One(R),x^2)));
 "C2"
 gap> IsomorphismRcwaGroup(Group(()),R);
 [ () ] -> [ IdentityMapping( GF(2)[x] ) ]
-gap> IsomorphismRcwaGroup(SmallGroup(1,1),R);
+gap> IsomorphismRcwaGroup(TrivialGroup(IsPcGroup),R);
 [ <identity> of ... ] -> [ IdentityMapping( GF(2)[x] ) ]
-gap> phi := IsomorphismRcwaGroup(SmallGroup(6,1),R);;
+gap> phi := IsomorphismRcwaGroup(SymmetricGroup(3),R);;
 gap> StructureDescription(Image(phi));
 "S3"
 gap> IsomorphismRcwaGroup(MathieuGroup(11),R);
