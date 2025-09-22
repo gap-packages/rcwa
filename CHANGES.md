@@ -1,5 +1,21 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.7.1 and RCWA 4.8.0 (September 22, 2025):
+
+  - Fixed an error in the database of products of 2 class transpositions
+    which has been found by a recomputation of the data (the order of
+    (9(10),0(12)) * (1(11),10(11)) is not 12, but 60).
+  - Added a function CTPairIntersectionTypeNumber to the database of
+    products of two class transpositions
+  - Fixed representation issue in ImagesSet(f,cl): if both inputs
+    are sparse, then output now is as well
+  - Added preliminary support for operations `PreImagesNC`,
+    `PreImagesElmNC`, `PreImagesSetNC`, `PreImagesRepresentativeNC`
+    (for now they are just synonyms to their non-NC counterparts,
+    but future GAP versions may change that)
+  - Avoid use of `InstallValue` on non-plain objects in preparation
+    for some future GAP version possibly dropping support for this.
+
 ## Changes between RCWA 4.7.0 and RCWA 4.7.1 (December 6, 2022):
 
   - Added a global switch `CTSparse` to choose sparse representation
