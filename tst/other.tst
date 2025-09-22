@@ -185,7 +185,7 @@ gap> Q := F/[a^2,b^2,c^2,(a*b)^3,(a*c)^3,(b*c)^3];
 <fp group on the generators [ a, b, c ]>
 gap> epis := EpimorphismsUpToAutomorphisms(Q,SymmetricGroup(4));  
 [ [ a, b, c ] -> [ (3,4), (2,3), (1,3) ] ]
-gap> epis := EpimorphismsUpToAutomorphisms(Q,SmallGroup(18,4));
+gap> epis := EpimorphismsUpToAutomorphisms(Q,PcGroupCode(5475,18)); # the group is SmallGroup(18,4)
 [ [ a, b, c ] -> [ f1, f1*f2, f1*f3 ] ]
 gap> StructureDescription(Image(epis[1]));
 "(C3 x C3) : C2"

@@ -1750,9 +1750,9 @@ gap> Size(G);
 48
 gap> IsomorphismRcwaGroup(Group(()));
 [ () ] -> [ IdentityMapping( Integers ) ]
-gap> IsomorphismRcwaGroup(SmallGroup(1,1));
+gap> IsomorphismRcwaGroup(TrivialGroup(IsPcGroup));
 [ <identity> of ... ] -> [ IdentityMapping( Integers ) ]
-gap> phi := IsomorphismRcwaGroup(SmallGroup(6,1),Integers);;
+gap> phi := IsomorphismRcwaGroup(SymmetricGroup(3),Integers);;
 gap> StructureDescription(Image(phi));
 "S3"
 gap> M11 := MathieuGroup(11);;
