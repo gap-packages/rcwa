@@ -682,6 +682,18 @@ DeclareAttribute( "DecreasingOn", IsRcwaMapping );
 
 #############################################################################
 ##
+#O  PowersIncreasingOn( <f>, <maxexp> ) 
+##
+##  Returns the same as
+##
+##  List([1..maxexp],exp->Intersection(List([1..exp],e->IncreasingOn(f^e))));
+##
+##  just the computation is done much faster in suitable cases.
+##
+DeclareOperation( "PowersIncreasingOn", [ IsRcwaMapping, IsPosInt ] );
+
+#############################################################################
+##
 #A  ShiftsUpOn( <f> ) . . . union of residue classes S s.th. f|_S: n -> n + c
 #A  ShiftsDownOn( <f> ) . . union of residue classes S s.th. f|_S: n -> n - c
 ##

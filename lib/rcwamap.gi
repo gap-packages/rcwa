@@ -4949,6 +4949,52 @@ InstallMethod( DecreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
 
 #############################################################################
 ##
+#M  PowersIncreasingOn( <f>, <maxexp> )  . . . . . . . for rcwa mappings of Z
+##
+InstallMethod( PowersIncreasingOn,
+               "for rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ, IsPosInt ], 0,
+
+  function ( f, maxexp )
+
+    local  incs, rc, rc_new, rcs, entry, coeffs, c, I, e, i, j;
+
+    f      := SparseRep(f);
+    coeffs := List(Coefficients(f),
+                 c->[ResidueClass(c[1],c[2]),c[3],c[4],c[5]]);
+    rc     := List(coeffs,c->[Intersection(c[1],IncreasingOn(f)),
+                              Intersection(c[1],IncreasingOn(f))^f,
+                              c[2],c[3],c[4]]);
+    rc     := Filtered(rc,c->c[1]<>[]);
+    rcs    := [rc];
+    for e in [2..maxexp] do
+      rc_new := [];
+      for i in [1..Length(rc)] do
+        for j in [1..Length(coeffs)] do
+          c := coeffs[j];
+          I := Intersection(rc[i][2],c[1]);
+          if I = [] then continue; fi;
+          entry := [,(c[2]*I+c[3])/c[4],
+                    rc[i][3]*c[2],c[2]*rc[i][4]+c[3]*rc[i][5],rc[i][5]*c[4]];
+          if entry[3] > entry[5] then
+            entry[1] := (entry[5]*entry[2]-entry[4])/entry[3];
+            Add(rc_new,entry);
+          fi;    
+        od;
+      od;
+      rc := rc_new;
+      Add(rcs,rc);
+    od;
+    if ValueOption("ReturnRaw") = true then
+      return rcs;
+    else
+      incs := List(rcs,rc->Union(List(rc,entry->entry[1])));
+      return incs;
+    fi;
+  end );
+
+#############################################################################
+##
 #M  ShiftsUpOn( <f> )  . . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
 InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in standard rep. (RCWA)",
