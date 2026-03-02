@@ -61,6 +61,9 @@ gap> T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);
 true
 gap> StandardRepresentation(T) = T;
 true
+gap> PowersIncreasingOn(T,6);
+[ 1(2), 3(4), 3(4), 7(8) U 11(16), 15(16) U 7(32) U 27(32), 
+  15(16) U 7(32) U 27(32) ]
 gap> f := PiecewiseMapping(AllResidueClassesModulo(3),[T,T^2,T^3]);
 <rcwa mapping of Z with modulus 24 and 14 affine parts>
 gap> Display(f);
