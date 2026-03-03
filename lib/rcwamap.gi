@@ -4982,17 +4982,14 @@ InstallMethod( PowersIncreasingOn,
           image  := (C[2]*I+C[3])/C[4];
           source := (c * image - b)/a;
           entry  := [source,image,a,b,c];
-          if a > c then
-            Add(rc_new,entry);
-          elif a < c then
+          if   a < c then
             bound := Int(b/(c-a)); # n <= bound
             Add(entry,bound);
-            Add(rc_new,entry);
           elif a = c then
             bound := infinity;
             Add(entry,bound);
-            Add(rc_new,entry);
           fi;
+          Add(rc_new,entry);
         od;
       od;
       rc := rc_new;
