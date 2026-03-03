@@ -4957,7 +4957,8 @@ InstallMethod( PowersIncreasingOn,
 
   function ( f, maxexp )
 
-    local  incs, rc, rc_new, rcs, entry, coeffs, c, I, e, i, j;
+    local  incs, rc, rc_new, rcs, entry, coeffs, C, I,
+           bound, bounds, e, i, j, source, image, a, b, c;
 
     f      := SparseRep(f);
     coeffs := List(Coefficients(f),
@@ -4970,25 +4971,48 @@ InstallMethod( PowersIncreasingOn,
     for e in [2..maxexp] do
       rc_new := [];
       for i in [1..Length(rc)] do
+        if Length(rc[i]) > 5 then continue; fi;
         for j in [1..Length(coeffs)] do
-          c := coeffs[j];
-          I := Intersection(rc[i][2],c[1]);
+          C := coeffs[j];
+          I := Intersection(rc[i][2],C[1]);
           if I = [] then continue; fi;
-          entry := [,(c[2]*I+c[3])/c[4],
-                    rc[i][3]*c[2],c[2]*rc[i][4]+c[3]*rc[i][5],rc[i][5]*c[4]];
-          if entry[3] > entry[5] then
-            entry[1] := (entry[5]*entry[2]-entry[4])/entry[3];
+          a := rc[i][3]*C[2];
+          b := C[2]*rc[i][4]+C[3]*rc[i][5];
+          c := rc[i][5]*C[4];
+          image  := (C[2]*I+C[3])/C[4];
+          source := (c * image - b)/a;
+          entry  := [source,image,a,b,c];
+          if a > c then
             Add(rc_new,entry);
-          fi;    
+          elif a < c then
+            bound := Int(b/(c-a)); # n <= bound
+            Add(entry,bound);
+            Add(rc_new,entry);
+          elif a = c then
+            bound := infinity;
+            Add(entry,bound);
+            Add(rc_new,entry);
+          fi;
         od;
       od;
       rc := rc_new;
       Add(rcs,rc);
     od;
     if ValueOption("ReturnRaw") = true then
-      return rcs;
+      bounds := [];
+      for e in [1..maxexp] do
+        bounds[e] := List(Filtered(rcs[e],tuple->Length(tuple)=6),
+                          entry->entry[6]);
+        if bounds[e] = [] then
+          bounds[e] := 1;
+        else
+          bounds[e] := Maximum(1,Maximum(bounds[e]));
+        fi;
+      od;
+      return [rcs,bounds];
     else
-      incs := List(rcs,rc->Union(List(rc,entry->entry[1])));
+      incs := List(rcs,rc->Union(List(Filtered(rc,tuple->Length(tuple)=5),
+                                      entry->entry[1])));
       return incs;
     fi;
   end );
