@@ -30,8 +30,7 @@ in this chapter.
     individual groups and mappings.
     A detailed description of some of the examples can be found in
     Chapter&nbsp;<Ref Label="ch:Examples"/>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadRCWAExamples();
 "RCWAExamples"                                
 gap> Set(RecNames(RCWAExamples));
@@ -50,8 +49,7 @@ gap> Set(RecNames(RCWAExamples));
 gap> AssignGlobals(RCWAExamples.CollatzMapping);
 The following global variables have been assigned:
 [ "T", "T5", "T5m", "T5p", "Tm", "Tp" ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -256,8 +254,7 @@ The following global variables have been assigned:
     the <Q>Collatz group</Q> -- its action on the set of positive integers
     which are not multiples of 6 is transitive if and only if the Collatz
     conjecture holds.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions();
 "3CTsGroups6"
 gap> AssignGlobals(3CTsGroups6); # for convenience
@@ -342,8 +339,7 @@ gap> Collected(trsstatus);
   [ "there are infinite orbits which have unclear sphere size growth", 
       86 ], [ "transitive", 562 ], 
   [ "transitive up to one finite orbit", 40 ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -409,8 +405,7 @@ gap> Collected(trsstatus);
       </Item>
 
     </List>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions(9);
 "3CTsGroups9"
 gap> AssignGlobals(3CTsGroups9);
@@ -419,8 +414,7 @@ The following global variables have been assigned:
   "sizes" ]
 gap> PrintFactorsInt(Maximum(Filtered(Flat(sizes),n->n<>infinity)));
 2^1283*3^673*5^305*7^193*11^98*13^84*17^50*19^41*23^25*29^13*31^4
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -486,8 +480,7 @@ gap> PrintFactorsInt(Maximum(Filtered(Flat(sizes),n->n<>infinity)));
     Note that the database contains an entry for every suitable unordered
     4-tuple of distinct class transpositions in <C>cts</C>, which means
     that it contains multiple copies of equal groups. 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions(); 
 "4CTsGroups6"
 gap> AssignGlobals(4CTsGroups6);
@@ -518,8 +511,7 @@ gap> grps4_3finite[1] = grps4_3finite[23];
 true
 gap> grps4_3finite[4] = grps4_3finite[16];
 false
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -559,8 +551,7 @@ false
     <C>CTProds12</C> and <C>CTProds32</C>.
     -- For the description of these components, see the file
     <F>pkg/rcwa/data/ctproducts/ctprodclass.g</F>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadDatabaseOfProductsOf2ClassTranspositions();
 "CTProducts"
 gap> Set(RecNames(CTProducts));
@@ -573,8 +564,7 @@ gap> Collected(List(CTProducts.CTPairsProductType,l->l[2])); # order stats
 [ [ 2, 165 ], [ 3, 255 ], [ 4, 173 ], [ 6, 693 ], [ 10, 2 ], 
   [ 12, 345 ], [ 15, 4 ], [ 20, 10 ], [ 30, 120 ], [ 60, 44 ], 
   [ infinity, 535 ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -591,8 +581,7 @@ gap> Collected(List(CTProducts.CTPairsProductType,l->l[2])); # order stats
     <M>\leq 6</M> and whose product is not balanced, as well as a list
     of all 36 essentially distinct triples of such class transpositions
     whose product has coprime multiplier and divisor.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadDatabaseOfNonbalancedProductsOfClassTranspositions();
 "CTProductsNB"
 gap> Set(RecNames(CTProductsNB));
@@ -612,8 +601,7 @@ gap> CTProductsNB.PairsOfCTsWhoseProductIsNotBalanced;
   [ ( 0(2), 3(6) ), ( 2(4), 3(6) ) ], [ ( 0(2), 3(6) ), ( 0(4), 3(6) ) ], 
   [ ( 0(2), 5(6) ), ( 2(4), 5(6) ) ], [ ( 0(2), 5(6) ), ( 0(4), 5(6) ) ] 
  ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 

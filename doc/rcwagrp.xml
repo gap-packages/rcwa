@@ -8,12 +8,10 @@
 <Heading>Residue-Class-Wise Affine Groups</Heading>
 
 <Ignore Remark="settings for the example tester">
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SizeScreen([75,24]);;
 gap> SetAssertionLevel(0);
-]]>
-</Example>
+]]></Example>
 </Ignore>
 
 In this chapter, we describe how to construct residue-class-wise affine
@@ -32,8 +30,7 @@ As any other groups in &GAP;, residue-class-wise affine (rcwa-) groups
 can be constructed by <C>Group</C>, <C>GroupByGenerators</C> or
 <C>GroupWithGenerators</C>.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));
 <rcwa group over Z with 2 generators>
 gap> IsTame(G); Size(G); IsSolvable(G); IsPerfect(G);
@@ -41,8 +38,7 @@ true
 infinity
 false
 false
-]]>
-</Example>
+]]></Example>
 
 An rcwa group isomorphic to a given group can be obtained by taking
 the image of a faithful rcwa representation:
@@ -65,8 +61,7 @@ the image of a faithful rcwa representation:
     method for free groups uses an adaptation of the construction given
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;)
     to RCWA(&ZZ;). <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> F := FreeProduct(Group((1,2)(3,4),(1,3)(2,4)),Group((1,2,3)),
 >                     SymmetricGroup(3));
 <fp group on the generators [ f1, f2, f3, f4, f5 ]>
@@ -81,8 +76,7 @@ gap> IsomorphismRcwaGroup(FreeGroup(2));
   <wild rcwa permutation of Z with modulus 8> ]
 gap> F2 := Image(last);
 <wild rcwa group over Z with 2 generators>
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -106,15 +100,13 @@ groups or with the infinite cyclic group:
     (<M>\rightarrow</M>&nbsp;<Ref Oper="Restriction"
     Label="of an rcwa group, by an injective rcwa mapping"/>),
     where <M>m</M> denotes the number of groups given as arguments.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
 gap> F2xF2 := DirectProduct(F2,F2);
 <wild rcwa group over Z with 4 generators>
 gap> Image(Projection(F2xF2,1)) = F2;
 true
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -144,8 +136,7 @@ true
     the group&nbsp;<A>G</A> to the residue class&nbsp;3(4), and maps the
     generator of the infinite cyclic group&nbsp;<A>Z</A>
     to <C>ClassTransposition(0,2,1,2) * ClassTransposition(0,2,1,4)</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> F2 := Image(IsomorphismRcwaGroup(FreeGroup(2)));;
 gap> F2wrA5 := WreathProduct(F2,AlternatingGroup(5));;
 gap> Embedding(F2wrA5,1);
@@ -163,8 +154,7 @@ gap> Embedding(ZwrZ,1);
 [ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
 gap> Embedding(ZwrZ,2);
 [ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -197,8 +187,7 @@ permutation groups:
     by the involution <M>\sigma</M>. --
     On first reading, this may look a little complicated, but really the
     code of the method is only about half as long as this description.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> # First example -- a group isomorphic to PSL(2,Z):
 gap> G := MergerExtension(Group((1,2,3)),[1,2],3);
 <rcwa group over Z with 2 generators>
@@ -224,8 +213,7 @@ gap> List(B,Length);
 gap> G = Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
 >                   ClassTransposition));
 true
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -246,8 +234,7 @@ It is also possible to build an rcwa group from a list of residue classes:
     <A>classes</A>. If any two residue classes in <A>classes</A>
     intersect non-trivially, then the returned group is trivial.
     In many other cases, the returned group is infinite.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := GroupByResidueClasses(List([[0,2],[0,4],[1,4],[2,4],[3,4]],
 >                                    ResidueClass));
 <rcwa group over Z with 8 generators>
@@ -256,8 +243,7 @@ gap> H := Group(List([[0,2,1,2],[1,2,2,4],[0,2,1,4],[1,4,2,4]],
 <(0(2),1(2)),(1(2),2(4)),(0(2),1(4)),(1(4),2(4))>
 gap> G = H;
 true
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -295,14 +281,12 @@ under these embeddings of RCWA(<M>R</M>) into itself:
     the restrictions of the elements of&nbsp;<A>G</A> by&nbsp;<A>f</A>.
     The restriction of&nbsp;<A>G</A> by&nbsp;<A>f</A> acts on the
     image of&nbsp;<A>f</A> and fixes its complement pointwise.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> F2tilde := Restriction(F2,RcwaMapping([[5,3,1]]));
 <wild rcwa group over Z with 2 generators>
 gap> Support(F2tilde);
 3(5)
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -324,12 +308,10 @@ gap> Support(F2tilde);
     <C>Induction(Restriction(<A>G</A>,<A>f</A>),<A>f</A>) = <A>G</A></C>.
     The mapping&nbsp;<A>g</A> respectively the group&nbsp;<A>G</A> must not
     move points outside the image of&nbsp;<A>f</A>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Induction(F2tilde,RcwaMapping([[5,3,1]])) = F2;
 true
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -399,16 +381,14 @@ There are corresponding methods available for <C>IsClassWiseTranslating</C>,
 over&nbsp;&ZZ; acts on the set of nonnegative integers.
 The latter holds for any subgroup of CT(&ZZ;) (cf. below).
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,6),
 >               ClassReflection(2,4));
 <rcwa group over Z with 3 generators>
 gap> List([Modulus,Multiplier,Divisor,PrimeSet,IsClassWiseTranslating,
 >          IsIntegral,IsClassWiseOrderPreserving,IsSignPreserving],f->f(G));
 [ 24, 2, 2, [ 2, 3 ], false, false, false, false ]
-]]>
-</Example>
+]]></Example>
 
 All rcwa groups over a ring <M>R</M> are subgroups of RCWA(<M>R</M>).
 The group RCWA(<M>R</M>) itself is not finitely generated, thus cannot
@@ -422,14 +402,12 @@ be constructed as described above. It is handled as a special case:
     permutations of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> RCWA_Z := RCWA(Integers);
 RCWA(Z)
 gap> IsSubgroup(RCWA_Z,G);
 true
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -445,12 +423,10 @@ given order is known, cf. Corollary&nbsp;2.7.1&nbsp;(b)
 in&nbsp;<Cite Key="Kohl05"/>. It can be determined by the function
 <C>NrConjugacyClassesOfRCWAZOfOrder</C>:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> List([2,105],NrConjugacyClassesOfRCWAZOfOrder);
 [ infinity, 218 ]
-]]>
-</Example>
+]]></Example>
 
 We denote the group which is generated by all
 class transpositions of the ring&nbsp;<M>R</M> by CT(<M>R</M>).
@@ -469,8 +445,7 @@ This group is handled as a special case as well:
     whose moduli have only prime factors in the finite set <A>P</A>.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> CT_Z := CT(Integers);
 CT(Z)
 gap> IsSimpleGroup(CT_Z); # One of a number of stored attributes/properties.
@@ -484,8 +459,7 @@ CT_[ 2, 3 ](Z)
 gap> GeneratorsOfGroup(G);
 [ ( 0(2), 1(2) ), ( 0(3), 1(3) ), ( 1(3), 2(3) ), ( 0(2), 1(4) ), 
   ( 0(2), 5(6) ), ( 0(3), 1(6) ) ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -498,8 +472,7 @@ rcwa mapping of &ZZ; or to an rcwa group over &ZZ; by the operation
 nonnegative integers as <A>G</A> acts on the negative integers, and vice
 versa.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ct := ClassTransposition(0,2,1,6);
 ( 0(2), 1(6) )
 gap> Mirrored(ct);
@@ -509,8 +482,7 @@ gap> ShortOrbits(G,[-100..100],100);
 [ [ 0 .. 5 ] ]
 gap> ShortOrbits(Mirrored(G),[-100..100],100);
 [ [ -6 .. -1 ] ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="AllElementsOfCTZWithGivenModulus">
   <C>AllElementsOfCTZWithGivenModulus</C>
@@ -528,12 +500,10 @@ the function <C>AllElementsOfCTZWithGivenModulus</C>, and the numbers
 of such elements for <M>m \leq 24</M> are stored in the list
 <C>NrElementsOfCTZWithGivenModulus</C>.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> NrElementsOfCTZWithGivenModulus{[1..8]};
 [ 1, 1, 17, 238, 4679, 115181, 3482639, 124225680 ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="NrConjugacyClassesOfRCWAZOfOrder">
   <C>NrConjugacyClassesOfCTZOfOrder</C>
@@ -585,8 +555,7 @@ information on the group structure is a dedicated method for the operation
     group with unknown structure are denoted by <C>&lt;unknown&gt;</C>.
     In general, the structure of a section denoted by <C>&lt;unknown&gt;</C>
     can be very complicated and very difficult to exhibit.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
 gap> StructureDescription(G);
 "(Z x Z x Z x Z x Z x Z x Z) . (C2 x S7)"
@@ -609,8 +578,7 @@ gap> Collatz := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);;
 gap> G := Group(Collatz,ClassShift(0,1));;
 gap> StructureDescription(G:short);
 "<unknown>.Z"
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -631,15 +599,13 @@ the problem of deciding whether it is tame, the problem of deciding whether
 it acts faithfully on a respected partition and the problem of computing the
 order of the finite permutation group induced on the respected partition.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,3,2,3),
 >               ClassReflection(0,5));
 <rcwa group over Z with 3 generators>
 gap> Size(G);
 46080
-]]>
-</Example>
+]]></Example>
 
 <Index Key="IsomorphismPermGroup" Subkey="for a finite rcwa group">
   <C>IsomorphismPermGroup</C>
@@ -648,13 +614,11 @@ gap> Size(G);
 For a finite rcwa group, an isomorphism to a permutation group can be
 computed by <C>IsomorphismPermGroup</C>:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));;
 gap> IsomorphismPermGroup(G);
 [ ( 0(2), 1(2) ), ( 0(3), 1(3) ) ] -> [ (1,2)(3,4)(5,6), (1,2)(4,5) ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="rcwa group" Subkey="membership test">rcwa group</Index>
 <Index Key="OrbitLengthBound"><C>OrbitLengthBound</C></Index>
@@ -683,16 +647,14 @@ problem, &RCWA; has no means to check the correctness of such bound
 in a given case. So the correct use of this option has to remain within
 the full responsibility of the user.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassShift(0,3),ClassTransposition(0,3,2,6));;
 gap>  ClassShift(2,6)^7 * ClassTransposition(0,3,2,6)
 >   * ClassShift(0,3)^-3 in G;
 true
 gap> ClassShift(0,1) in G;
 false
-]]>
-</Example>
+]]></Example>
 
 <Index Key="rcwa group" Subkey="conjugacy problem">rcwa group</Index>
 <Index Key="IsConjugate" Subkey="for elements of RCWA(R)">
@@ -705,8 +667,7 @@ false
 The conjugacy problem for rcwa groups is difficult, and &RCWA; provides
 only methods to solve it in some reasonably easy cases.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> IsConjugate(RCWA(Integers),
 >                ClassTransposition(0,2,1,4),ClassShift(0,1));
 false
@@ -718,23 +679,20 @@ gap> g := RepresentativeAction(CT(Integers),ClassTransposition(0,2,1,6),
 <rcwa permutation of Z with modulus 48>
 gap> ClassTransposition(0,2,1,6)^g = ClassTransposition(1,4,0,8);
 true
-]]>
-</Example>
+]]></Example>
 
 <Index Key="IsTame" Subkey="for an rcwa group"><C>IsTame</C></Index>
 There is a property <C>IsTame</C> which indicates whether an rcwa group
 is tame or not:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(1,3));;
 gap> H := Group(ClassTransposition(0,2,1,6),ClassShift(1,3));;
 gap> IsTame(G);
 true
 gap> IsTame(H);
 false
-]]>
-</Example>
+]]></Example>
 
 <Index Key="IsSolvableGroup" Subkey="for an rcwa group"><C>IsSolvableGroup</C></Index>
 <Index Key="IsPerfectGroup"  Subkey="for an rcwa group"><C>IsPerfectGroup</C></Index>
@@ -757,8 +715,7 @@ have in general no faithful finite-dimensional linear representations.
 There is a method for <C>Exponent</C> available, which works basically
 for any rcwa group.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(1,2));;
 gap> IsPerfect(G);
 false
@@ -787,8 +744,7 @@ gap> Display(Image(phi,ClassTransposition(0,2,1,4)));
   [     0,     1,     0,     0,     0,     0 ], 
   [     0,     0,     0,     0,     1,     0 ], 
   [     0,     0,     0,     0,     0,     1 ] ]
-]]>
-</Example>
+]]></Example>
 
 When investigating a group, a basic task is to find relations among
 the generators:
@@ -812,8 +768,7 @@ the generators:
     provided that <A>r</A> is chosen large enough.
     If the optional argument <A>maxparts</A> is given, it limits the
     search space to elements with at most <A>maxparts</A> affine parts.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a := ClassTransposition(2,4,3,4);;
 gap> b := ClassTransposition(4,6,8,12);;
 gap> c := ClassTransposition(3,4,4,6);;
@@ -826,8 +781,7 @@ gap> phi := EpimorphismFromFpGroup(G,6);
 gap> RelatorsOfFpGroup(Source(phi));
 [ a^2, b^2, c^2, (b*c)^3, (a*b)^6, (a*b*c*b)^3, (a*c*b*c)^3, 
   (a*b*a*c)^12, ((a*b)^2*a*c)^12, (a*b*(a*c)^2)^12, (a*b*c*a*c*b)^12 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -862,8 +816,7 @@ A related very common task is to factor group elements into generators:
     <C>PreImagesRepresentative</C> and returns a list of preimages.
     If multiple preimages are found, their quotients give rise to nontrivial
     relations among the generators of the image of&nbsp;<A>phi</A>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
 gap> b := ClassShift(0,1);; SetName(b,"b");
 gap> G := Group(a,b);; # G = <<Collatz permutation>, n -> n + 1>
@@ -882,8 +835,7 @@ gap> rel := pre[1]/pre[2]; # -> a nontrivial relation
 (b^-1*a^-1)^2*b^3*a*b^2*a^-1*b^-2*(b^-1*a)^2*b
 gap> rel^phi;
 IdentityMapping( Integers )
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -913,13 +865,11 @@ determined by <C>Support</C> or <C>MovedPoints</C> (these are synonyms).
 Testing for transitivity on the underlying ring or on a union of residue
 classes thereof is often feasible:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(1,2,0,4),ClassShift(0,2));;
 gap> IsTransitive(G,Integers);
 true
-]]>
-</Example>
+]]></Example>
 
 <Alt Only="LaTeX">
 <Index Key="IsTransitiveOnNonnegativeIntegersInSupport"
@@ -1013,8 +963,7 @@ the set of positive integers in the support of <A>G</A> for which no
 group element is found which maps them to smaller integers reaches
 or drops below <C>abortdensity</C>. A simplified certificate can be
 obtained via <C>SimplifiedCertificate(<A>cert</A>)</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,4]],
 >                    ClassTransposition));
 <(0(2),1(2)),(0(3),2(3)),(1(2),2(4))>
@@ -1064,8 +1013,7 @@ gap> Difference(Integers,Union(Flat(cert.classes)));
 <union of 44 residue classes (mod 768) (14 classes)>
 gap> Intersection([0..100],last);
 [ 52, 60, 76, 84 ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="SupersetOfOrbitRepresentatives"
        Subkey="for an rcwa group over Z and search limits">
@@ -1114,8 +1062,7 @@ This operation returns a record with the following components:
   </Item>
 
 </List>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(1,3,2,3),ClassTransposition(3,4,4,6),
 >               ClassTransposition(2,4,1,6));
 <(1(3),2(3)),(3(4),4(6)),(2(4),1(6))>
@@ -1127,8 +1074,7 @@ rec( D := [ 2(3), 4(6), 1(6) ], R := 0(3) U [ 1 ],
         5 affine parts> ], 
   pi := [ a, b, c ] -> [ ( 1(3), 2(3) ), ( 3(4), 4(6) ), ( 2(4), 1(6) ) ], 
   w := [ a, b, c ] )
-]]>
-</Example>
+]]></Example>
 Further, there are methods to compute orbits under the
 action of an rcwa group:
 
@@ -1152,8 +1098,7 @@ action of an rcwa group:
     orbits returned as orbit objects, they can be compared and
     there is a membership test for them. However note that equality
     and membership for such orbits cannot always be decided.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassShift(0,2),ClassTransposition(0,3,1,3));
 <rcwa group over Z with 2 generators>
 gap> Orbit(G,0);
@@ -1175,8 +1120,7 @@ gap> 1015808 in orb;
 true
 gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
 -19
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1196,8 +1140,7 @@ gap> First(orb,n->ForAll([n,n+2,n+6,n+8,n+30,n+32,n+36,n+38],IsPrime));
      An option <C>"small"</C> is interpreted -- see example below.
      In place of the group <A>G</A> and the point <A>n</A>, one can pass as
      first argument also an rcwa group orbit object <A>orb</A>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(List([[0,4,1,4],[0,3,5,6],[0,4,5,6]],ClassTransposition));
 <(0(4),1(4)),(0(3),5(6)),(0(4),5(6))>
 gap> GrowthFunctionOfOrbit(G,18,100,20);
@@ -1221,8 +1164,7 @@ gap> GrowthFunctionOfOrbit(G,0,100,10000);
   29, 37, 42, 55, 57, 72, 78, 99, 113, 148, 164, 215, 226, 288, 344, 
   462, 478, 612, 686, 894, 985, 1284, 1416, 1847, 2018, 2620, 2902, 
   3786, 4167, 5432, 5958, 7749, 8568, 11178 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1263,15 +1205,13 @@ further with many common graphics programs:
     can be passed. The picture is written in bitmap- (bmp-) format to a file
     named <A>filename</A>. This is done using the utility function
     <C>SaveAsBitmapPicture</C> from &ResClasses;.
-<Log>
-<![CDATA[
+<Log><![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
 >                                                    CyclicGroup(3))));;
 gap> DrawOrbitPicture(PSL2Z,[0,1],2000,512,512,false,fail,"example1.bmp");
 gap> DrawOrbitPicture(PSL2Z,Combinations([1..4],2),2000,512,512,true,
 >                     [[255,0,0],[0,255,0],[0,0,255]],"example2.bmp");
-]]>
-</Log>
+]]></Log>
   </Description>
 </ManSection>
 
@@ -1330,8 +1270,7 @@ to determine them:
     orbit of the point <A>n</A> under the action of the rcwa group <A>G</A>.
     Here <A>g</A> is assumed to be an element of <A>G</A>, and the orbit
     of <A>n</A> is assumed to be finite.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
 >               ClassTransposition(3,9,6,18)*ClassTransposition(1,6,3,9));;
 gap> List(ShortOrbits(G,[-15..15],100),
@@ -1350,8 +1289,7 @@ gap> CyclesOnFiniteOrbit(G,G.1*G.2,0);
 [ [ 0, 1, 4, 9, 8, 5 ], [ 6, 7 ], [ 10, 11, 14, 19, 18, 15 ], [ 12, 13 ] ]
 gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
 [ 3148, 3148 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1394,8 +1332,7 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     which do not contain a residue class <M>r(m)</M> such that <M>m</M>
     divides <A>modulusbound</A>, but which happen to be found without
     additional efforts.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
 <rcwa permutation of Z with modulus 12>
 gap> ShortResidueClassCycles(g,Mod(g)^2,20);
@@ -1427,8 +1364,7 @@ gap> ShortResidueClassOrbits(G,48,10);
   [ 12(24), 17(24), 28(36) ], [ 18(24), 23(24), 27(36) ], 
   [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ], 
   [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1450,8 +1386,7 @@ gap> ShortResidueClassOrbits(G,48,10);
     The function also interprets an option <C>"small"</C>, which may be set to
     a range within which small points are recorded and returned in a component
     <C>smallpoints</C>. 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> g := Product(List([[0,5,3,5],[1,2,0,6],[2,4,3,6]],
 >                      ClassTransposition));
 <rcwa permutation of Z with modulus 180>
@@ -1477,8 +1412,7 @@ rec( aborted := false, g := <rcwa permutation of Z with modulus 180>,
 8092502449690267365120996852, maxpos := 19825, n := 20, 
   smallpoints := [ 20, 23, 66, 99, 294, 295, 298, 441, 447, 882, 890, 
       893 ] )
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1496,8 +1430,7 @@ rec( aborted := false, g := <rcwa permutation of Z with modulus 180>,
     non-trivially with <A>S</A>, this may cause an infinite loop
     unless a cycle length limit is set via the option <C>abortat</C>.
     The output can be suppressed by the option <C>quiet</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);;
 gap> CycleRepresentativesAndLengths(g,[0..50]);
 [ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], 
@@ -1528,8 +1461,7 @@ n = 100: after 100000 steps, the iterate has 7918 binary digits.
   [ 59, 564 ], [ 61, 577 ], [ 65, 3 ], [ 67, 23 ], [ 71, 41 ],
   [ 79, 16984 ], [ 80, 5 ], [ 85, 3 ], [ 86, 3 ], [ 89, 2 ], [ 91, 9 ],
   [ 94, 1355 ], [ 97, 7 ], [ 100, fail ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1547,15 +1479,13 @@ or an rcwa group fixes setwise:
     respectively the rcwa group <A>G</A>, fixes setwise. 
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
 [ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
 gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),
 >                              ClassTransposition(0,3,1,3)),12);
 [ 2(3), 8(9), 11(12) ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1605,8 +1535,7 @@ properties or be it for other purposes:
       <C>RestrictedBall</C>
     </Index>
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> PSL2Z := Image(IsomorphismRcwaGroup(FreeProduct(CyclicGroup(2),
 >                                                    CyclicGroup(3))));;
 gap> List([1..10],k->Length(Ball(PSL2Z,[0,1],k,OnTuples)));
@@ -1618,8 +1547,7 @@ gap> G := Group(List([[1,2,4,6],[1,3,2,6],[2,3,4,6]],ClassTransposition));;
 gap> B := RestrictedBall(G,One(G),20,36:Spheres);; # try replacing 36 by 72
 gap> List(B,Length);
 [ 1, 3, 6, 12, 4, 6, 6, 4, 4, 4, 6, 6, 3, 3, 2, 0, 0, 0, 0, 0, 0 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1659,8 +1587,7 @@ of the underlying ring to a given other tuple, if such elements exist:
     The algorithm is based on computing balls of increasing radius
     around <A>source</A> and <A>destination</A> until they intersect
     non-trivially.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);; SetName(a,"a");
 gap> b := ClassShift(1,4:Name:="b");; G := Group(a,b);;
 gap> elm := RepresentativeAction(G,[7,4,9],[4,5,13],OnTuples);;
@@ -1704,8 +1631,7 @@ gap> elm := w^phi;
 <rcwa permutation of Z with modulus 324>
 gap> List([10,-4,9,5],n->n^elm);
 [ 4, 5, 13, -8 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1728,8 +1654,7 @@ gives rise to proper quotients of the group:
     <Index Key="OrbitsModulo" Subkey="for an rcwa group and a modulus">
       <C>OrbitsModulo</C>
     </Index>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
 [ [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
@@ -1738,8 +1663,7 @@ gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
     [ ( 2(4), 3(4) ), <rcwa permutation of Z with modulus 4> ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(4) U 1(4), 2(4) U 3(4) ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1766,8 +1690,7 @@ maps the one to the other:
     If the option <C>IsTame</C> is not set and the partitions <A>P1</A>
     and <A>P2</A> both consist entirely of single residue classes, then
     the returned mapping is affine on any residue class in&nbsp;<A>P1</A>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> P1 := AllResidueClassesModulo(3);
 [ 0(3), 1(3), 2(3) ]
 gap> P2 := List([[0,2],[1,4],[3,4]],ResidueClass);
@@ -1790,8 +1713,7 @@ gap> elm := RepresentativeAction(RCWA(Integers),
 <rcwa permutation of Z with modulus 6>
 gap> [ResidueClass(1,3),ResidueClassUnion(Integers,3,[0,2])]^elm;
 [ 2(5) U 4(5), Z \ 2(5) U 4(5) ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1808,8 +1730,7 @@ gap> [ResidueClass(1,3),ResidueClassUnion(Integers,3,[0,2])]^elm;
     Obviously not for every rcwa group and every root point a mapping
     <M>f</M> with these properties exists, and if it exists, it
     usually depends on the choice of generators of the group.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(1,2,2,4),
 >               ClassTransposition(1,4,2,6));;
 gap> G := SparseRep(G);;
@@ -1845,8 +1766,7 @@ gap> Trajectory(f,52,[0,1]);
   9230, 4615, 4614, 2307, 2306, 1153, 1730, 865, 1298, 649, 974, 487, 486, 
   243, 242, 121, 182, 91, 90, 45, 68, 69, 104, 105, 158, 79, 78, 39, 38, 19, 
   18, 9, 14, 7, 6, 3, 2, 1 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1909,8 +1829,7 @@ these computations.
     <Index Key="PermutationOpNC" Subkey="g, P, OnPoints">
       <C>PermutationOpNC</C>
     </Index>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));
 <rcwa group over Z with 2 generators>
 gap> IsTame(G);
@@ -1919,8 +1838,7 @@ gap> Size(G);
 infinity
 gap> P := RespectedPartition(G);
 [ 0(4), 2(4), 1(6), 3(6), 5(6) ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1946,8 +1864,7 @@ gap> P := RespectedPartition(G);
     The rank of the largest free abelian subgroup of the kernel of the
     action of&nbsp;<A>G</A> on its stored respected partition is
     <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
 gap> H := ActionOnRespectedPartition(G);
 Group([ (1,3), (1,2) ])
@@ -1965,8 +1882,7 @@ gap> List(GeneratorsOfGroup(K),Factorization);
 [ [ ClassShift( 0(4) ) ], [ ClassShift( 2(4) ) ], [ ClassShift( 1(6) ) ] ]
 gap> Image(IsomorphismPcpGroup(K));
 Pcp-group with orders [ 0, 0, 0 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -1997,8 +1913,7 @@ Both operations are applicable to rcwa permutations as well.
 Note that a tame rcwa group does not determine its integral conjugate
 uniquely.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G := Group(ClassTransposition(0,4,1,6),ClassShift(0,2));;
 gap> G^IntegralizingConjugator(G) = IntegralConjugate(G);
 true
@@ -2008,8 +1923,7 @@ gap> RespectedPartition(G)^IntegralizingConjugator(G);
 [ 0(5), 1(5), 2(5), 3(5), 4(5) ]
 gap> last = RespectedPartition(IntegralConjugate(G));
 true
-]]>
-</Example>
+]]></Example>
 
 </Section>
 
@@ -2024,8 +1938,7 @@ There are methods for the operation <C>Random</C> for RCWA(<M>R</M>)
 and CT(<M>R</M>). These methods are designed to be suitable for generating
 interesting examples. No particular distribution is guaranteed.
 
-<Log>
-<![CDATA[
+<Log><![CDATA[
 gap> elm := Random(RCWA(Integers));;
 gap> Display(elm);
 
@@ -2048,8 +1961,7 @@ Rcwa permutation of Z with modulus 180
         | (-n+29)/6 if n in 167(180)
         |
         \
-]]>
-</Log>
+]]></Log>
 
 The elements which are returned by this method are obtained by
 multiplying class shifts (see <Ref Func="ClassShift" Label="r, m"/>),
@@ -2058,14 +1970,12 @@ class transpositions (see <Ref Func="ClassTransposition"
                           Label="r1, m1, r2, m2"/>).
 These factors can be retrieved by factoring:
 
-<Log>
-<![CDATA[
+<Log><![CDATA[
 gap> Factorization(elm);
 [ ClassTransposition(0,2,3,4), ClassTransposition(1,2,4,6), ClassShift(0,2), 
   ClassShift(1,3), ClassReflection(2,5), ClassReflection(1,3), 
   ClassReflection(1,2) ]
-]]>
-</Log>
+]]></Log>
 
 </Section>
 

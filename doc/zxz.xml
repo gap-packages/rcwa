@@ -10,11 +10,9 @@
 </Heading>
 
 <Ignore Remark="set screen width to 75, for the example tester">
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SizeScreen([75,24]);;
-]]>
-</Example>
+]]></Example>
 </Ignore>
 
 This chapter describes how to compute with residue-class-wise affine mappings
@@ -164,8 +162,7 @@ or the more specialized functions
     Last but not least, regarding Method&nbsp;(d) it should be mentioned
     that only very special rcwa mappings of&nbsp;<M>&ZZ;^2</M> have
     projections to coordinates.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> R := Integers^2;;
 gap> twice := RcwaMapping(R,[[1,0],[0,1]],
 >                           [[[[2,0],[0,2]],[0,0],1]]);       # method (a)
@@ -261,8 +258,7 @@ gap> g^2;
 IdentityMapping( ( Integers^2 ) )
 gap> List(ProjectionsToCoordinates(g),Factorization);
 [ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -320,8 +316,7 @@ gap> List(ProjectionsToCoordinates(g),Factorization);
     product of the returned class transpositions is not always equal to
     the class transposition passed as first argument. However this equality
     holds if the first entry of the second argument is&nbsp;1. <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);
 ( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z )
 gap> Display(ct);
@@ -348,8 +343,7 @@ gap> SplittedClassTransposition(ct,[2,1]);
   ( (2,1)+(4,0)Z+(0,2)Z, (3,1)+(4,2)Z+(0,4)Z ) ]
 gap> Product(last) = ct;
 false
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -373,8 +367,7 @@ false
     residue class&nbsp;<M>r+&ZZ;^dL</M>. Enclosing the argument list in list
     brackets is permitted. The argument <A>u</A> is stored as an attribute
     <C>RotationFactor</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> interchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);
 ClassRotation( Z^2, [ [ 0, 1 ], [ 1, 0 ] ] )
 gap> Display(interchange);
@@ -393,8 +386,7 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
  (m,n) |-> <  (m,n)           otherwise
             |
             \
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -414,8 +406,7 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
     In the two-argument form, the argument&nbsp;<A>cl</A> stands for the
     residue class&nbsp;<M>r+&ZZ;^dL</M>. Enclosing the argument list in
     list brackets is permitted.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> shift1 := ClassShift([0,0],[[1,0],[0,1]],1);
 ClassShift( Z^2, 1 )
 gap> Display(shift1);
@@ -431,8 +422,7 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
  (m,n) |-> <  (m,n)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z U 
             |                     (1,0)+(2,1)Z+(0,2)Z
             \
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -611,8 +601,7 @@ of&nbsp;<M>&ZZ;^2</M> are described in the sequel. <P/>
     only if the first / second coordinate of the image of a point depends
     only on the first / second coordinate of the preimage. Note that this is
     a very strong and restrictive condition.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> f := RcwaMapping(ClassTransposition(0,2,1,2),ClassReflection(0,2));;
 gap> Display(f);
 
@@ -628,8 +617,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
 
 gap> List(ProjectionsToCoordinates(f),Factorization);
 [ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -709,8 +697,7 @@ of the image is a specified residue class:
     are affine on&nbsp;<A>cl</A>.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> sl := SL(2,Integers);
 SL(2,Integers)
 gap> phi := IsomorphismRcwaGroup(sl,ResidueClass([1,0],[[2,2],[0,3]]));
@@ -738,8 +725,7 @@ Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
  [0,0] [0,1] [0,2] [1,1]     |
  [1,2]                       | [m,n]
  [1,0]                       | [(-263m+122n+266)/3,(-1147m+532n+1147)/6]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
