@@ -3162,7 +3162,8 @@ InstallMethod( ViewObj,
 
     local  l, grpelms, coeffs, supplng, g, i;
 
-    if not IsRcwaMapping(CoefficientsAndMagmaElements(One(elm))[1]) then
+    g := One(elm);
+    if g = fail or not IsRcwaMapping(CoefficientsAndMagmaElements(g)[1]) then
       TryNextMethod();
     fi;
     l       := CoefficientsAndMagmaElements(elm);
