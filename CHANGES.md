@@ -4,6 +4,9 @@
 
   - An operation `PowersIncreasingOn' has been added, together with
     a method for rcwa mappings of Z. (Not documented so far.)
+  - The operation `TryToComputeDegreeOfTransitivity` has been renamed
+    to `LowerBoundOnDegreeOfTransitivity`, and the method has been
+    polished.
 
 ## Changes between RCWA 4.7.1 and RCWA 4.8.0 (September 22, 2025):
 
