@@ -428,15 +428,18 @@ DeclareOperation( "SimplifiedCertificate", [ IsRecord ] );
 
 #############################################################################
 ##
-#O  TryToComputeDegreeOfTransitivity( <G>, <timelimit> )
+#O  LowerBoundOnDegreeOfTransitivity( <G>, <timelimit>, <orbitlengthbound> )
 ##
-##  Tries to determine the degree of transirivity of the action of the group
-##  <G> on its support, and -- after approximately <timelimit> milliseconds
-##  have passed -- returns part of a stabilizer chain. Information on the
-##  progress of the computation is printed to the screen.
+##  Returns a lower bound on the degree of transitivity of the action of the
+##  group <G> on its support. The arguments <timelimit> (in milliseconds)
+##  and <orbitlengthbound> are used to limit the resources spent on the
+##  computation. Note that <timelimit> is not strict as reaching the time
+##  limit is not checked at every point during the computation, and setting
+##  an appropriate value for <orbitlengthbound> is needed to prevent
+##  infinite loops or exhausting the memory.
 ##  
-DeclareOperation( "TryToComputeDegreeOfTransitivity",
-                  [ IsRcwaGroup, IsPosInt ] );
+DeclareOperation( "LowerBoundOnDegreeOfTransitivity",
+                  [ IsRcwaGroup, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##

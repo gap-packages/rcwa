@@ -5307,43 +5307,50 @@ InstallMethod( SimplifiedCertificate,
 
 #############################################################################
 ##
-#M  TryToComputeDegreeOfTransitivity( <G>, <timelimit> )
+#M  LowerBoundOnDegreeOfTransitivity( <G>, <timelimit>, <orbitlengthbound> )
 ##
-InstallMethod( TryToComputeDegreeOfTransitivity,
+##  Interprets an option `ReturnChain'. If set, the computed approximation
+##  of a stabilizer chain is returned instead of the lower bound on the
+##  degree of transitivity.
+##
+InstallMethod( LowerBoundOnDegreeOfTransitivity,
                "for rcwa groups over Z (RCWA)",
-               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt ], 0,
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 0,
 
-  function ( G, timelimit )
+  function ( G, timelimit, orbitlengthbound )
 
     local  chain, cert, deg, fixed, pts, gens, S, F, names, 
-           pi, words, elms, start, n, n0;
+           pi, words, elms, start, n, n0, returnchain;
 
+    returnchain := ValueOption("ReturnChain");
     names := ["a","b","c","d","e","f","g","h","i","j","k","l"];
     F  := FreeGroup(names{[1..Length(GeneratorsOfGroup(G))]});
     pi := EpimorphismByGenerators(F,G);
-    Print("Checking transitivity ... \n");
+    Info(InfoRCWA,1,"Checking transitivity ... \n");
     cert := TryToComputeTransitivityCertificate(G,100);
     if cert = fail then
-      Print("The group does not act transitively.\n");
+      Info(InfoRCWA,1,"The group does not act transitively.\n");
       return 0;
     elif cert.status = "unclear" then
-      Print("Failed to figure out whether the group acts transitively.\n");
-      return fail;
+      Info(InfoRCWA,1,
+           "Failed to figure out whether the group acts transitively.\n");
+      return 0;
     elif cert.status = "transitive" then
-      Print("The group acts at least 1-transitively on the set of ",
-            "nonnegative integers in its support.\n");
+      Info(InfoRCWA,1,
+           "The group acts at least 1-transitively on the set of ",
+           "nonnegative integers in its support.\n");
       chain := [G];
       deg   := 1;
       start := Runtime();
       repeat
-        Print("Checking for ",deg+1,"-transitivity ...\n");
+        Info(InfoRCWA,1,"Checking for ",deg+1,"-transitivity ...\n");
         n     := 0;
         fixed := [];
         while Length(fixed) < deg do
           if n in Support(G) then Add(fixed,n); fi;
           n := n + 1;
         od;
-        Print("Stabilized points: ",fixed,"\n");
+        Info(InfoRCWA,1,"Stabilized points: ",fixed,"\n");
         while not n in Support(G) do
           n := n + 1;
         od;
@@ -5356,35 +5363,49 @@ InstallMethod( TryToComputeDegreeOfTransitivity,
           until n in Support(G)
             and (       Density(Support(S)) = Density(Support(G))
                  or not n in Support(S));
-          Print("Searching stabilizer elements mapping ",n0,
-                " to ",n," ...\n");
+          Info(InfoRCWA,1,"Searching stabilizer elements mapping ",n0,
+               " to ",n," ...\n");
           words := RepresentativesActionPreImage(G,Concatenation(fixed,[n0]),
                                                    Concatenation(fixed,[n]),
-                                                 OnTuples,F);
-          elms  := List(words,w->w^pi);
-          gens := Union(gens,elms);
-          Print("Number of stabilizer generators before reduction: ",
-                Length(gens),"\n");
-          S := Group(gens);
-          gens := SmallGeneratingSet(S);
-          Print("Number of stabilizer generators after reduction: ",
-                Length(gens),"\n");
-          S := Group(gens);
-          Print("Support(S) = "); View(Support(S)); Print("\n");
-          if Support(S) = Difference(Support(G),fixed) then
-            cert := TryToComputeTransitivityCertificate(S,3);
-          else
-            cert := rec(status := "intransitive");
+                              OnTuples,F:OrbitLengthBound:=orbitlengthbound);
+          if words <> [] then
+            elms  := List(words,w->w^pi);
+            gens := Union(gens,elms);
+            Info(InfoRCWA,1,
+                 "Number of stabilizer generators before reduction: ",
+                 Length(gens),"\n");
+            S := Group(gens);
+            gens := SmallGeneratingSet(S);
+            Info(InfoRCWA,1,
+                 "Number of stabilizer generators after reduction: ",
+                 Length(gens),"\n");
+            S := Group(gens);
+            if InfoLevel(InfoRCWA) > 0 then
+              Print("Support(S) = "); View(Support(S)); Print("\n");
+            fi;
+            if Support(S) = Difference(Support(G),fixed) then
+              cert := TryToComputeTransitivityCertificate(S,3);
+            else
+              cert := rec(status := "intransitive");
+            fi;
           fi;
-          if Runtime() - start >= timelimit then
-            return chain;
+          if words = [] or Runtime() - start >= timelimit then
+            if returnchain = true then
+              return chain;
+            else
+              return deg;
+            fi;
           fi;
         until cert <> fail and cert.status = "transitive";
         deg := deg + 1;
-        Print(deg,"-transitivity established.\n");
+        Info(InfoRCWA,1,deg,"-transitivity established.\n");
         Add(chain,S);
       until Runtime() - start >= timelimit;
-      return chain;
+      if returnchain = true then
+        return chain;
+      else
+        return deg;
+      fi;
     else
       return fail;
     fi;
