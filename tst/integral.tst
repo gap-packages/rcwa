@@ -3136,6 +3136,10 @@ gap> Size(A);
 32
 gap> StructureDescription(A);
 "C2 x C2 x C2 x C2 x C2"
+gap> G := Group(List([[0,2,1,2],[0,3,2,3],[1,2,2,6]],ClassTransposition));
+<(0(2),1(2)),(0(3),2(3)),(1(2),2(6))>
+gap> LowerBoundOnDegreeOfTransitivity(G,1000,500);         
+2
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 7150000000 );
 
