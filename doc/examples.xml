@@ -257,8 +257,8 @@ Setting the Info level of <C>InfoRCWA</C> equal to&nbsp;2 (simply issue
 information on the progress of the factoring process. For reasons of saving
 space, this is not done in this manual. <P/>
 
-We would like to get a factorization into fewer factors. Firstly, we try
-to factor the inverse -- just like the various options interpreted by the
+We would like to get a factorization into fewer factors. First we try
+to factor the inverse. Just like the various options interpreted by the
 factorization routine, this has influence on decisions taken during the
 factoring process:
 
