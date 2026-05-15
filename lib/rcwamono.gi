@@ -753,6 +753,53 @@ InstallMethod( RestrictedBall,
 
 #############################################################################
 ##
+#M  ClassTranspositionConjugationBall( <G>, <maxmod> )
+##
+InstallMethod( ClassTranspositionConjugationBall,
+               "for rcwa groups over Z gen. by class transpositions (RCWA)",
+               ReturnTrue, [ IsRcwaGroup, IsPosInt ], 0,
+
+  function ( G, maxmod )
+
+    local  gens, B, S, S_last, S_next, respects, r;
+
+    respects := function ( ct1, ct2 )
+
+      local  cls1, cls2, i, j;
+
+      cls1 := TransposedClasses(ct1);
+      cls2 := TransposedClasses(ct2);
+      for i in [1..2] do
+        for j in [1..2] do
+          if Intersection(cls1[i],cls2[j]) <> []
+            and not IsSubset(cls2[j],cls1[i])
+          then return false; fi;
+        od;
+      od;
+      return true;
+    end;
+
+    gens := GeneratorsOfGroup(G);
+    S_last := []; S := gens; B := [S]; r := 0;
+    repeat
+      r := r + 1;
+      S_next := List(S,ct->Filtered(List(Filtered(gens,c->respects(ct,c)),
+                                         ct2->ct^ct2),IsClassTransposition));
+      S_next := Set(Flat(S_next));
+      S_next := Difference(S_next,S);
+      S_next := Difference(S_next,S_last);
+      S_next := Filtered(S_next,ct->Maximum(List(TransposedClasses(ct),Mod))
+                                    <= maxmod);
+      S_last := S;
+      S      := S_next;
+      Info(InfoRCWA,2,"r = ",r,": |S| = ",Length(S),"\n");
+      Add(B,S);
+    until S = [];
+    return B;
+  end );
+
+#############################################################################
+##
 #S  The modulus of an rcwa monoid, and tame rcwa monoids. ///////////////////
 ##
 #############################################################################
