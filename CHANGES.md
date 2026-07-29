@@ -5,6 +5,11 @@
   - An operation `ClassTranspositionConjugationBall` has been added,
     together with a method for rcwa groups over Z.
     (Not documented so far.)
+  - RCWA no longer requires the SmallGrp package: viewing and displaying
+    an rcwa group used the attribute `IdGroup` and its tester
+    `HasIdGroup`, which are provided by that package, and thus failed if
+    it was not loaded. The isomorphism type is still shown whenever
+    `IdGroup` is known, and the order is printed otherwise.
 
 ## Changes between RCWA 4.8.0 and RCWA 4.9.0 (May 4, 2026):
 
