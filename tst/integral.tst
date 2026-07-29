@@ -1111,10 +1111,15 @@ gap> IsBijective(phi);
 true
 gap> Size(Image(phi));
 24
+#@if IsPackageMarkedForLoading( "smallgrp", "" )
 gap> IdGroup(G);
 [ 24, 12 ]
 gap> G;
 <rcwa group over Z with 2 generators, of isomorphism type [ 24, 12 ]>
+#@else
+gap> G;
+<rcwa group over Z with 2 generators, of order 24>
+#@fi
 gap> Modulus(G);
 6
 gap> A4 := DerivedSubgroup(G);
@@ -2023,12 +2028,16 @@ gap> StructureDescription(G);
 "C2 x C2"
 gap> G := Group(ClassTransposition(0,4,1,4),ClassShift(0,4),
 >               ClassReflection(1,4),ClassReflection(2,4),ClassShift(3,4));;
+#@if IsPackageMarkedForLoading( "smallgrp", "" )
 gap> StructureDescription(G:short);
 "Z^2.((S3xS3):2)x2xZ"
+#@fi
 gap> G := Group(ClassTransposition(0,2,1,4),
 >               ClassShift(2,4),ClassReflection(1,2));;
+#@if IsPackageMarkedForLoading( "smallgrp", "" )
 gap> StructureDescription(G:short);
 "Z^2.((S3xS3):2)"
+#@fi
 gap> G := Group(ClassTransposition(0,2,1,4),ClassShift(0,5));;
 gap> StructureDescription(G);
 "(Z x Z x Z x Z x Z x Z x Z) . (C2 x S7)"
