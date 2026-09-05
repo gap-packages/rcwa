@@ -6073,6 +6073,26 @@ InstallMethod( PreImagesSetNC,
 
 #############################################################################
 ##
+#M  PreImagesSet( <f>, <U> ) . . . . . . . . . . . with fixed representatives
+##
+##  A union of residue classes with fixed representatives is not a subset of
+##  the range of <f>, so the checks done by the library method for
+##  `PreImagesSet' do not apply. Delegate directly to `PreImagesSetNC'.
+##  (In GAP versions without `PreImagesSetNC', both names denote the same
+##  operation, see init.g.)
+##
+if not IsIdenticalObj( PreImagesSet, PreImagesSetNC ) then
+  InstallMethod( PreImagesSet,
+                 Concatenation("for an rcwa mapping of Z and a union of ",
+                               "residue classes with fixed rep's (RCWA)"),
+                 ReturnTrue,
+                 [ IsRcwaMappingOfZ,
+                   IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
+                 PreImagesSetNC );
+fi;
+
+#############################################################################
+##
 #S  Testing an rcwa mapping for injectivity and surjectivity. ///////////////
 ##
 #############################################################################
