@@ -8177,8 +8177,28 @@ InstallMethod( Order,
     local  cycs, density, lastdensity, pow, partsbound, modbound, lngbound, n;
 
     if   not IsRcwaMappingOfZ(g) or not IsBijective(g)
-      or not IsSignPreserving(g) or ValueOption("new_order") <> true
+      or not IsSignPreserving(g)
     then TryNextMethod(); fi;
+
+    if HasIsTame(g) then
+      if not IsTame(g) then
+        return infinity;
+      else
+        return Order(Permutation(g,RespectedPartition(g)));
+      fi;
+    fi;
+
+    if HasRespectedPartition(g) then
+      if RespectedPartition(g) = fail then
+        return infinity;
+      else
+        return Order(Permutation(g,RespectedPartition(g)));
+      fi;
+    fi;
+
+    if ValueOption("new_order") <> true then
+      TryNextMethod();
+    fi;
 
     if IsOne(g) then return 1; fi;
     if IsIntegral(g) then
