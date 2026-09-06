@@ -3621,6 +3621,7 @@ InstallMethod( RespectedPartition,
              return c1{[2,1]} < c2{[2,1]};
            end);
     SetModulusOfRcwaMonoid(G,Lcm(List(P,cl->cl[2])));
+    SetIsTame(G,true);
     return List(P,ResidueClass);
   end );
 

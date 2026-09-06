@@ -7787,8 +7787,15 @@ InstallMethod( RespectedPartition,
                [ IsRcwaMapping ], 0,
 
   function ( sigma )
+
+    local  P;
+
     if not IsBijective(sigma) then return fail; fi;
-    return RespectedPartition( Group( sigma ) );
+    P := RespectedPartition( Group( sigma ) );
+    if P <> fail then
+      SetIsTame(sigma,true);
+    fi;
+    return P;
   end );
 
 #############################################################################
