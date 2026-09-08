@@ -1,5 +1,10 @@
 # Version history of the RCWA package
 
+## Changes between RCWA 4.10.0 and RCWA 4.10.1 (September 8, 2026):
+
+  - The computation of the order of some elements of CT(Z)
+    has been made faster.
+
 ## Changes between RCWA 4.9.0 and RCWA 4.10.0 (July 30, 2026):
 
   - An operation `ClassTranspositionConjugationBall` has been added,

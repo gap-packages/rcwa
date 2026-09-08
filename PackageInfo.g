@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "4.10.0",
-Date             := "30/07/2026", # dd/mm/yyyy format
+Version          := "4.10.1",
+Date             := "08/09/2026", # dd/mm/yyyy format
 License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -77,7 +77,7 @@ Keywords         := [ "infinite permutation groups", "permutation groups over ri
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := """
-&copyright; 2003 - 2018 by Stefan Kohl. <P/>
+&copyright; 2003 - 2026 by Stefan Kohl. <P/>
 
 &RCWA; is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
