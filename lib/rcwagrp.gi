@@ -6200,7 +6200,7 @@ InstallMethod( ShortOrbits,
 
     ceiling := ValueOption("ceiling");
 
-    gens := Set(GeneratorsAndInverses(StandardRep(G)));
+    gens := Set(GeneratorsAndInverses(G),StandardRep);
     coeffs := List(gens,Coefficients);
 
     orbs := []; remaining := ListWithIdenticalEntries(max+1,true); n0 := 0;
