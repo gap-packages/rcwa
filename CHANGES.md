@@ -1,5 +1,9 @@
 # Version history of the RCWA package
 
+## 4.10.2 (2026-10-12)
+
+  - A performance bug in `ShortOrbits` has been fixed.
+
 ## 4.10.1 (2026-09-08)
 
   - The computation of the order of some elements of CT(Z)
